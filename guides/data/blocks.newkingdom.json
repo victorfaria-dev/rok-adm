@@ -1,0 +1,697 @@
+[
+  {
+    "id": "nk-overview-2026-start",
+    "title": "Starting in a new kingdom in 2026: what is different now",
+    "phase": "overview",
+    "section": "overview",
+    "order": 10,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**What a new kingdom looks like today**\n- **No jumping.** Beginner's Immigration has not been given to new characters since **2025-03-26** [C04-0026]. You cannot test a kingdom for a few days and hop to a fresher one with a free item.\n- **Moving later is harder too.** Since 1.1.06 (2026-03-24) new kingdoms are restricted from same-season immigration until the end of Season 1 (pioneer on select continents), and the character-age limits for immigration were cut [C04-0008, B06-0003].\n- **About 85–100 days of Preparation Season** before KvK1; pre-KvK (Eve of the Crusade) starts around day 85–95 [B01-0500].\n- **3 starting provinces**, not 6, since 1.0.78 [C04-0033].\n- **Legendary Pelagius event from kingdom day 5** (1.1.09) [C04-0005].\n\n**What this means for you:** the kingdom you start in is, in practice, the kingdom you play until KvK1. The decisions that still matter in week 1 are **which alliance**, **how you protect what you have**, and **how you spend your first gems and AP** (see the F2P guide blocks *Join an active alliance* and *Day 0–3 build order*).",
+    "why_md": "Most \"how to start\" advice online was written when jumping was normal. Following it now means waiting for a Beginner's Immigration item that never comes, or planning a move the game no longer allows. Knowing the current rules first keeps the rest of this guide honest.",
+    "cards": [
+      "B01-0500",
+      "B06-0003",
+      "C04-0005",
+      "C04-0008",
+      "C04-0026",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0005",
+      "C04-0008",
+      "C04-0026",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0026 rests on an in-game mail quoted by players plus wiki/guide (no official forum post); it is a patch-state card. C04-0008's new-kingdom lock is a pioneer on select continents, so it may not apply to your kingdom. C04-0033 and C04-0005 are patch-state cards (official notes, status bruto).",
+    "gaps": [
+      "L-B01-02",
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-choose-start-strategy",
+    "title": "Choosing how to start: fresh kingdom, established kingdom, or an organised group",
+    "phase": "overview",
+    "section": "overview",
+    "order": 20,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "View A (start fresh): a new kingdom gives every player the same event calendar and catch-up events from day 1 (old 2019 player guide, noted in B01-0506, not fetched). View B (avoid fresh as solo F2P): new kingdoms are the hardest place for F2P because spenders overpower them early; the gap narrows over time [B01-0506].",
+    "body_md": "There are three ways people start. None is free of trade-offs; pick the one that fits **your time and budget**.\n\n| Strategy | What it means | Upside | Downside for a solo F2P |\n|---|---|---|---|\n| **Fresh kingdom (natural start)** | Start in a kingdom that just opened | Everyone starts the event calendar together | Spenders dominate the first 60–90 days and set the hierarchy [B01-0506] |\n| **Established kingdom** | Reach an older kingdom by migration later | Settled leadership and rules | Migration needs CH16+, passports and a cooldown [B06-0001]; age limits per route [B06-0003]; kingdoms add their own intake requirements [B06-0004] |\n| **Organised group (\"project\"/sleeper)** | A group plans to grow together in one kingdom | Coordination from day 1 | Usually built around spenders; not researched as a fact card (gap) |\n\n**How a new character is placed in a kingdom**, and whether you can pick a specific newly opened kingdom at creation, is not covered by a fact card yet: pending in-game check (T0). Character Management can create a **second city in the same kingdom** (commonly two per kingdom) [A13-0001], which is a farm tool, not a way to change kingdoms.\n\n**Our default for a solo F2P:** whichever kingdom you are in, the plan is the same: join the strongest *active* alliance that accepts you [A06-0516] and stop measuring yourself against the top of the power ranking.",
+    "why_md": "Players ask \"which kingdom should I start in\" as if the answer were a kingdom number. With jumping gone [C04-0026], the realistic choice is a *strategy*, and the honest answer is that each strategy trades early competition against later mobility.",
+    "cards": [
+      "A06-0516",
+      "A13-0001",
+      "B01-0506",
+      "B06-0001",
+      "B06-0003",
+      "B06-0004",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0026"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "B01-0506 is verificado/baixa (T3 guides only). B06-0001 (passport table, 30-day cooldown) and B06-0004 (kingdom intake rules) are organizado. A13-0001 is organizado (two cities per kingdom is the commonly documented limit). C04-0026 is a patch-state card. No fact card covers organised sleeper/project groups or how new characters are placed into kingdoms (PROPOSED-KINGDOM-PLACEMENT).",
+    "gaps": [
+      "L-B06-01",
+      "PROPOSED-KINGDOM-PLACEMENT"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-jumpers-whales-meaning",
+    "title": "What jumpers, sleepers and whales mean for you",
+    "phase": "overview",
+    "section": "overview",
+    "order": 30,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Facts first**\n- Free jumper accounts (Beginner's Immigration) ended on 2025-03-26 [C04-0026]. Strong accounts still exist on day 1: spenders, and players who planned together.\n- Expect spenders to be far ahead for the first 60–90 days [B01-0506]. That is the normal shape of a new kingdom, not a sign you are doing it wrong.\n\n**How to turn it into an advantage**\n- **Their spending feeds your alliance gifts.** Spenders in your alliance generate gift chests with sculptures, keys and VIP points [A06-0516, A05-0004].\n- **Be useful, not big.** A F2P adds real value by filling strong rallies and reinforcing, not by trading alone [A08-0503].\n- **Compete where milestones pay**, e.g. MGE milestone rewards, not the ranking [A11-0500].\n- **Skip** open power rankings and repeated gem-spending events [A11-0511].\n- **Follow the kingdom's rules.** Leadership enforces rules with kicks, migration orders and zeroing [B03-0005]; being on the right side of the rules is cheap protection.",
+    "why_md": "New-kingdom reviews are full of players who quit because someone had a million power on day 1. Those players are also the people whose spending pays your gift chests and leads the rallies you join. Treating them as the environment, not the opponent, is what keeps a F2P account growing.",
+    "cards": [
+      "A05-0004",
+      "A06-0516",
+      "A08-0503",
+      "A11-0500",
+      "A11-0511",
+      "B01-0506",
+      "B03-0005",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0026"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B01-0506 and A11-0511 are verificado/baixa. B03-0005 is organizado (kingdom rule sites and Reddit; two sites share a template). C04-0026 is a patch-state card. The day-1 power of organised groups is reported by players (pain D-0018), not measured.",
+    "gaps": [
+      "L-B01-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-day1-protection-pending",
+    "title": "Day-1 protection and shields (pending in-game measurement)",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 10,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "**Pending in-game measurement (T0).** We do not publish shield or beginner-protection numbers until we have checked them in game. Older guides quote durations and prices that may no longer be current.\n\nWhat the T0 check will record, and what you can check yourself today:\n1. Whether a new city has beginner protection, how long it lasts, and **what ends it early** (read the tooltip on your city).\n2. Which peace shield durations exist, their item sources and gem prices in your shop.\n3. Whether a shield blocks scouting as well as attacks.\n\nUntil then, protect what you can control: see the next block (*Keep nothing worth taking*).",
+    "why_md": "Newcomers report being hit repeatedly in their first days and say shields feel too expensive (pain D-0041). A wrong number here (for example a protection window that is shorter than you think) is exactly how a new player gets zeroed, so this block stays empty of numbers until they are measured.",
+    "cards": [],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "No fact card covers shields or beginner protection (PROPOSED-SHIELDS).",
+    "gaps": [
+      "PROPOSED-SHIELDS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-day1-keep-nothing-worth-taking",
+    "title": "Day-1 survival: keep nothing worth taking",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 20,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Attackers in the first days are mostly after what is lying around. Make your city a bad target:\n1. **Leave resources as unopened items** until you need them: items cannot be plundered and have no storage limit; gems cannot be plundered at all [A03-0007].\n2. **Keep raw resources at or below Storehouse protection** [A03-0006]; big raw stockpiles at low CH attract raids, especially during kill events [A13-0005].\n3. **Keep hospital capacity ahead of your army.** Wounded troops beyond capacity die [A08-0502].\n4. **Gather where you are protected:** armies gathering at an alliance resource center cannot be attacked (CH8+, one army per governor per center) [A03-0012]; gathering inside alliance territory is also +25% faster [A03-0009].\n5. **Use the built-in auto-peacekeeping, never a script** [A09-0008].\n6. Shields: see the pending block above.",
+    "why_md": "None of these steps costs gems. Together they remove most of the reward for hitting a new account, which is the main thing a F2P controls before the shield rules are measured.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A03-0009",
+      "A03-0012",
+      "A08-0502",
+      "A09-0008",
+      "A13-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Storehouse protection values below L25 differ between sources (A03-0006; L-A03-05). Shield rules: PROPOSED-SHIELDS.",
+    "gaps": [
+      "L-A03-05",
+      "PROPOSED-SHIELDS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-first-72-hours",
+    "title": "Your first 72 hours, in order",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 30,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Hours 0–24**\n- Join an **active alliance with spenders** as soon as one accepts you [A06-0516]. Its helps shorten every timer (1% per help) [A10-0006].\n- Rush **City Hall and its prerequisites**; everything else waits [A01-0007].\n- Claim the **free VIP points** every day: the streak gives 40 on day 1, +20 per consecutive day, capped at 200/day, and a missed day resets it to 40 [A05-0003].\n- Reach the **100-point Daily Objectives chest**: 100 gems a day, your only guaranteed gem income [A04-0001].\n\n**Hours 24–72**\n- Spend regenerating AP on barbarians; only Lv1–6 exist at kingdom opening and higher levels unlock over the following days [A09-0004]. Save AP *potions* for later scored events [A09-0007].\n- Put free gems into **VIP**, not into finishing builds [A04-0009].\n- The **queue panel** unlocks at CH8 and makes refilling queues faster [A01-0011].\n- Decide early whether you will invest in **Legendary Pelagius** (event from day 5) [C04-0005].\n- Every step of the way: *Keep nothing worth taking* (previous block).",
+    "why_md": "The first three days decide two things that are hard to fix later: whether you are inside a protective, generous alliance, and whether your daily streaks (VIP points, the gem chest) started on day 1. Everything else in a F2P plan builds on those two.",
+    "cards": [
+      "A01-0007",
+      "A01-0011",
+      "A04-0001",
+      "A04-0009",
+      "A05-0003",
+      "A06-0516",
+      "A09-0004",
+      "A09-0007",
+      "A10-0006",
+      "C04-0005"
+    ],
+    "patch_cards": [
+      "C04-0005"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0005 is a patch-state card (official 1.1.09 note, status bruto). Whether Pelagius is worth it for F2P is divided (see the F2P guide).",
+    "gaps": [
+      "L-A01-01",
+      "L-A09-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-pick-alliance-checklist",
+    "title": "Picking your first alliance: a 5-point check",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 40,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "unanimous",
+    "split_views": null,
+    "body_md": "Before you settle in, check the alliance on these points (all visible in game):\n1. **Active:** members online and helps arriving within minutes. Helps per job grow with the Alliance Center level (5 at Lv1 up to 30 at Lv25) [A10-0006].\n2. **Spenders inside:** gift chests are a F2P's main free source of sculptures, keys and VIP points [A06-0516].\n3. **Territory:** an alliance with territory gives +25% gathering inside it [A03-0009] and room for a resource center where gatherers cannot be attacked [A03-0012].\n4. **Your language:** since 1.0.91 there are language-based chat channels across kingdoms, and the game has no in-game translation feature in the 1.0.90–1.1.09 notes [B07-0004]. Pick an alliance whose officers you can understand.\n5. **Rules written down:** ask where the alliance and kingdom rules are. Rules enforced by zeroing are common [B03-0005]; know them before you break one.\n\nIf an alliance kicks you for low power, that is common in week 1 (pain D-0041): try the next one, or the academy/sister alliance many kingdoms run next to their main alliances [B04-0003].",
+    "why_md": "For a F2P, the alliance is the largest free income and the main protection in the first weeks. An inactive alliance or one you cannot talk to gives neither.",
+    "cards": [
+      "A03-0009",
+      "A03-0012",
+      "A06-0516",
+      "A10-0006",
+      "B03-0005",
+      "B04-0003",
+      "B07-0004"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005 is organizado (enforcement by zeroing, from kingdom rule sites and Reddit). B04-0003 (main + academy/farm alliance families) is organizado/baixa. Kicks for low power are a player report (pain D-0041).",
+    "gaps": [
+      "L-B07-02",
+      "L-B07-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-week-two-positioning",
+    "title": "Days 4–14: the kingdom sorts itself out",
+    "phase": "day4-14",
+    "section": "plan",
+    "order": 10,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Legendary Pelagius** event runs from day 5 [C04-0005].\n- **Barbarian levels** keep unlocking kingdom-wide; beating a level unlocks the next one for you [A09-0004].\n- **Kingdom Chronicles** chapters show a default duration and can end early when their objective is met, so unlocks may come sooner than a fixed table says [B01-0505].\n- **Events are not on a fixed schedule:** plan from the in-game calendar, which looks a few days ahead [A11-0512].\n- **More Than Gems** reaches kingdoms older than about 21 days; save gems for it [A11-0502].\n- Some new kingdoms run **Radiant Rivalry**, a 1v1 kingdom event, as a pioneer [C04-0002]. If yours does, follow your alliance's call; rules are not researched yet.\n\nBy the end of week 2 the top alliances are usually known. If your alliance is fading, move to an active one now, while switching is cheap.",
+    "why_md": "Week 2 is when hierarchy forms [B01-0506]. A F2P who is in an active alliance by then gets carried by its rallies and gifts; one who waits ends up in a dead alliance with no territory.",
+    "cards": [
+      "A09-0004",
+      "A11-0502",
+      "A11-0512",
+      "B01-0505",
+      "B01-0506",
+      "C04-0002",
+      "C04-0005"
+    ],
+    "patch_cards": [
+      "C04-0005"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B01-0505 is organizado/baixa (Monument table undated T3; early ending is T1). B01-0506 is verificado/baixa. C04-0002 is bruto/baixa (third-party report of 1.1.12; Radiant Rivalry rules are a gap). C04-0005 is a patch-state card.",
+    "gaps": [
+      "L-B01-01",
+      "L-B01-04",
+      "L-A11-01",
+      "L-A09-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-avoid-early-zeroing",
+    "title": "Avoiding early zeroing: a logging-off checklist",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 10,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Before you put the phone down, check five things:\n1. **Raw resources at or below Storehouse protection**, the rest as items [A03-0006, A03-0007].\n2. **Hospital capacity** covers the troops at home [A08-0502].\n3. **Kill events running?** Raids spike during kill events; be extra careful then [A13-0005].\n4. **Have you broken a kingdom or alliance rule today?** (attacking a protected alliance, ignoring an order, migrating in without approval). Zeroing is a common enforcement tool [B03-0005], and unannounced migrants are often suspected as spies or farms [B03-0006].\n5. **Shield:** pending in-game measurement (PROPOSED-SHIELDS); do not rely on numbers from old guides.\n\nIf you were zeroed anyway: see the F2P guide block *If you got zeroed* (heal before retraining, rebuild one march).",
+    "why_md": "Being zeroed is one of the top reasons players quit (pain D-0003). Some zeroings are political and no checklist prevents them; the ones caused by an exposed stockpile, an overflowing hospital or a broken rule are avoidable.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A08-0502",
+      "A13-0005",
+      "B03-0005",
+      "B03-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005 is organizado; B03-0006 is organizado/baixa (one Reddit voice plus a marketplace guide). Shields: PROPOSED-SHIELDS. Storehouse values below L25: L-A03-05.",
+    "gaps": [
+      "PROPOSED-SHIELDS",
+      "L-A03-05",
+      "L-A08-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-play-it-safe-offgame",
+    "title": "Stay safe off the map: no bots, no shared logins, no links in game chat",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 20,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **No third-party scripts or bots.** The game has built-in auto-peacekeeping, and scripts cost you **Conduct Score** [A09-0008, C04-0006]. Lilith's terms ban bots and third-party software that gives an advantage [C02-0002].\n- **Never give anyone your login.** Account sharing is prohibited and soliciting other players' credentials is banned [C02-0005, C02-0004]. No fan tool, including this hub, should ever ask for it.\n- **Don't post or ask for Discord or website links in game chat.** Players report being muted or banned for \"third-party information\" after asking for an alliance Discord (pain D-0022). Ask officers to share links through mail or another channel your alliance already uses, and check your kingdom's rules.\n- **Accounts are not yours to sell**, and buying accounts or items outside the game breaks the terms [C02-0010].",
+    "why_md": "A ban or mute in week 1 costs more than any mistake on the map. These rules are cheap to follow and old guides still recommend some of the banned shortcuts.",
+    "cards": [
+      "A09-0008",
+      "C02-0002",
+      "C02-0004",
+      "C02-0005",
+      "C02-0010",
+      "C04-0006"
+    ],
+    "patch_cards": [
+      "C04-0006"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C02-0002, C02-0004, C02-0005 and C02-0010 quote Lilith's Terms of Service directly but are organizado (not yet adversarially verified). The chat-link ban is a player report (pain D-0022), not a fact card. C04-0006 is a patch-state card.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-returning-what-changed",
+    "title": "Returning player: what changed while you were away",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Find the date you stopped playing and read every row after it.\n\n| Since | Change | Card |\n|---|---|---|\n| 2024-06 | Cross-season immigration needs a refundable 20,000-gem deposit; under 10M power ineligible; cap 85M | C04-0025 |\n| 2024-10 | **VIP19 and SVIP**; excess VIP points refunded | C04-0024 |\n| 2025-01 | **Legendary Commander Swap** and **Armament Conversion** | C04-0023 |\n| 2025-03 | Wheel of Fortune needs **Spin Tickets** (later Season 2 and, per T3, Season 1) | C04-0022 |\n| 2025-03-26 | **Beginner's Immigration gone** for new characters | C04-0026 |\n| 2025-05 | Takeda, Cyrus, Cheok, Bertrand moved to Season 2 and reworked | C04-0021 |\n| 2025-07 | Special-talent equipment dismantle refunds 100% | C04-0010 |\n| 2025-11 | **Civilization buff switching at CH16** | C04-0016 |\n| 2025-12 | Daily AP claim can push AP above the cap | C04-0032 |\n| 2026-02 | Talent/inscription damage-reduction rework (Season 2+) | C04-0011 |\n| 2026-03 | **Immigration age limits tightened** | C04-0008 |\n| 2026-05 | **Conduct Score** penalises scripts | C04-0006 |\n| 2026-05 → | Season 3 moving to King of All Britain | C04-0007 |\n| 2026-06 | **Resource boost items removed**; VIP production bonuses raised | C04-0004 |\n\nOfficial English notes stop at 1.1.09 (2026-06-30); later versions are known only from a third-party source [C04-0001].",
+    "why_md": "Returning players are one of the largest groups asking for help (pain D-0016), and most of their questions come from advice that was true when they left. Respec tools (Swap, Conversion, dismantle refunds) in particular mean old investments are not always lost.",
+    "cards": [
+      "C04-0001",
+      "C04-0004",
+      "C04-0006",
+      "C04-0007",
+      "C04-0008",
+      "C04-0010",
+      "C04-0011",
+      "C04-0016",
+      "C04-0021",
+      "C04-0022",
+      "C04-0023",
+      "C04-0024",
+      "C04-0025",
+      "C04-0026",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0001",
+      "C04-0004",
+      "C04-0006",
+      "C04-0007",
+      "C04-0008",
+      "C04-0010",
+      "C04-0011",
+      "C04-0016",
+      "C04-0021",
+      "C04-0022",
+      "C04-0023",
+      "C04-0024",
+      "C04-0025",
+      "C04-0026",
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "All rows are patch-state cards (official notes, status bruto). C04-0026 rests on an in-game mail plus wiki/guide. The Season 1 part of C04-0022 and the King of All Britain status in C04-0007 rely partly on T3. C04-0001 is third-party for 1.1.10–1.1.12.",
+    "gaps": [
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-returning-migration",
+    "title": "Returning player: can you move, and should you?",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**What the game checks** (official, 1.1.06):\n- Same-season immigration into a SoC kingdom in its first story: your character may be at most **150 days older** than the target kingdom; cross-season into Season 2: **80 days**; into Season 3: **120 days** [B06-0003, C04-0008].\n- New kingdoms are restricted from same-season immigration until the end of Season 1 (pioneer) [C04-0008].\n- Cross-season immigration: 20,000-gem refundable deposit, minimum 10M power, maximum 85M [C04-0025].\n\n**What players and guides report** (not yet verified in game):\n- CH16+, no alliance, troops home, resources within Storehouse protection, Passport Pages scaled to power, and a cooldown of about 30 days after a move [B06-0001].\n- Kingdoms add their own requirements (forms, KP, deaths, power) [B06-0004] and often expect you to ask the king **before** you move [B03-0006].\n\n**Decision:** if the age rule blocks you, staying and rebuilding in your current kingdom is usually the only option; a new character cannot jump to a fresh kingdom with Beginner's Immigration any more [C04-0026].",
+    "why_md": "\"No kingdom accepts returning players\" and \"why does account age block me\" are the two most common returning-player complaints (pain D-0016). Knowing which rule is the game's and which is a kingdom's tells you whether to negotiate or to stay.",
+    "cards": [
+      "B03-0006",
+      "B06-0001",
+      "B06-0003",
+      "B06-0004",
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B06-0001 (passport table, CH16, 30-day cooldown) and B06-0004 are organizado; B03-0006 is organizado/baixa. C04-0008, C04-0025 and C04-0026 are patch-state cards. Migration rules may have changed in 1.1.10–1.1.12 (L-B06-03).",
+    "gaps": [
+      "L-B06-01",
+      "L-B06-02",
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-returning-first-actions",
+    "title": "Returning player: your first five actions",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Restart your daily streaks today:** free VIP points (40 on day 1, +20 per day, cap 200) [A05-0003] and the 100-gem Daily Objectives chest [A04-0001].\n2. **Join an active alliance with spenders**, even a smaller one, before anything else [A06-0516].\n3. **Check your account is bound and note your governor ID**; never share your password with anyone, including fan tools [C02-0005].\n4. **Audit before you invest:** commanders or armaments you regret may be fixable with Commander Swap, Armament Conversion or a full-refund equipment dismantle [C04-0023, C04-0010]. Concentrate on **one complete march** [A06-0500].\n5. **Drop outdated routines:** no resource boosts to buy any more [C04-0004]; AP claims can go above the cap [C04-0032]; use built-in auto-peacekeeping, not scripts [A09-0008].",
+    "why_md": "A returning account usually has more stored resources and commanders than a new one, but older habits. Five quick actions turn that stock into progress instead of spending it on systems that changed.",
+    "cards": [
+      "A04-0001",
+      "A05-0003",
+      "A06-0500",
+      "A06-0516",
+      "A09-0008",
+      "C02-0005",
+      "C04-0004",
+      "C04-0010",
+      "C04-0023",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0010",
+      "C04-0023",
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C02-0005 quotes the ToS but is organizado. C04-0023, C04-0010, C04-0004 and C04-0032 are patch-state cards. Account binding and support steps are not covered by a fact card (pain D-0017).",
+    "gaps": [
+      "PROPOSED-ACCOUNT-RECOVERY"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "nk-open-pending",
+    "title": "Open questions for this guide (pending research)",
+    "phase": "anytime",
+    "section": "open",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "These parts of the New Kingdom Start Guide stay empty until measured or sourced:\n- **Shields and beginner protection:** durations, what ends protection early, prices (PROPOSED-SHIELDS).\n- **How new characters are placed in a kingdom** and whether a specific new kingdom can be chosen (PROPOSED-KINGDOM-PLACEMENT).\n- **Organised sleeper/project groups:** how common they are and what they require (no source yet).\n- **Radiant Rivalry** rules and timing (L-B01-04).\n- **Monument/Chronicles dates** in a live new kingdom (L-B01-01) and first-occurrence day of each event (L-A11-01).\n- **Migration changes in 1.1.10–1.1.12** (L-B06-03) and the passport table in game (L-B06-01).\n- **Account recovery and binding steps** for returning players (PROPOSED-ACCOUNT-RECOVERY).",
+    "why_md": "Listing what we do not know keeps the guide honest and tells the research side (T0 diary) what to measure next in a fresh kingdom.",
+    "cards": [],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "",
+    "gaps": [
+      "PROPOSED-SHIELDS",
+      "PROPOSED-KINGDOM-PLACEMENT",
+      "PROPOSED-ACCOUNT-RECOVERY",
+      "L-B01-04",
+      "L-B01-01",
+      "L-A11-01",
+      "L-B06-03",
+      "L-B06-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  }
+]

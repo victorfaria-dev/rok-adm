@@ -9,9 +9,10 @@ Pipeline: `research/facts/` (cards) → `guides/data/blocks.*.json` (blocks) →
 | Path | What |
 |---|---|
 | `data/blocks.f2p.json` | F2P base blocks, v1 (43 blocks). **The source of truth**: edit here. |
+| `data/blocks.newkingdom.json` | F-12 New Kingdom Start Guide + Day-1 Survival + Returning-player branch, v1 (14 blocks, ids `nk-*`). |
 | `data/blocks.schema.json` | JSON Schema of a blocks file. |
 | `f2p-early-kingdom-guide.md` | Human-readable F2P guide, **generated** from the blocks. Don't edit by hand. |
-| `tools/validate_blocks.py` | Validator: schema plus editorial rules checked against `research/facts`. Stdlib only. |
+| `tools/validate_blocks.py` | Validator: schema plus editorial rules checked against `research/facts`. With no arguments it checks every `data/blocks.*.json` and that ids are unique across files (profile delta files excepted). Stdlib only. |
 | `tools/assemble_guide.py` | Builds the Markdown guide from a blocks file (filter by profile, order by phase). |
 | `tools/factlib.py` | Shared helpers: read card front matter and gap IDs. |
 
