@@ -42,8 +42,11 @@ describe("Sun Tzu mascot", () => {
     expect(clipSrc(MASCOT_CLIPS, "idle", true)).toBe("/mascot/idle-720.mp4");
     expect(clipSrc(MASCOT_CLIPS, "talking", false)).toBe("/mascot/talk-480.mp4");
     expect(clipSrc(MASCOT_CLIPS, "talking", true)).toBe("/mascot/talk-720.mp4");
-    // No clip yet: idle plays (the stage shakes for grumble in CSS).
-    for (const s of ["grumble", "greet", "approve", "victory"] as const) expect(clipSrc(MASCOT_CLIPS, s, false)).toBe("/mascot/idle-480.mp4");
+    expect(clipSrc(MASCOT_CLIPS, "grumble", false)).toBe("/mascot/grumble-480.mp4");
+    expect(clipSrc(MASCOT_CLIPS, "approve", true)).toBe("/mascot/approve-720.mp4");
+    expect(MASCOT_CLIPS.grumble?.once && MASCOT_CLIPS.approve?.once).toBe(true);
+    // No clip yet: idle plays.
+    for (const s of ["greet", "victory"] as const) expect(clipSrc(MASCOT_CLIPS, s, false)).toBe("/mascot/idle-480.mp4");
     expect(clipSrc(MASCOT_CLIPS, undefined, false)).toBeNull();
   });
 
@@ -118,6 +121,23 @@ describe("Sun Tzu mascot", () => {
     await tick();
     expect(container.querySelector("video")!.getAttribute("src")).toBe("/m/idle-480.mp4");
     expect(container.querySelector("video")!.hasAttribute("loop")).toBe(true);
+  });
+
+  it("a one-shot clip finishes after the state is back to idle; talking cuts it; a clip-less grumble is flagged for the CSS shake", async () => {
+    mockMedia({});
+    const clips = { ...CLIPS, talking: { sd: "/m/talk-480.mp4" } };
+    const { container, rerender } = render(h(SunTzuMascot, { state: "greet", stage: true, clips }));
+    await tick();
+    rerender(h(SunTzuMascot, { state: "idle", stage: true, clips }));
+    await tick();
+    expect(container.querySelector("video")!.getAttribute("src")).toBe("/m/greet-480.mp4");
+    rerender(h(SunTzuMascot, { state: "talking", stage: true, clips }));
+    await tick();
+    expect(container.querySelector("video")!.getAttribute("src")).toBe("/m/talk-480.mp4");
+    rerender(h(SunTzuMascot, { state: "grumble", stage: true, clips: MASCOT_CLIPS, pulse: 1 }));
+    expect(container.firstElementChild!.hasAttribute("data-fallback")).toBe(false);
+    rerender(h(SunTzuMascot, { state: "grumble", stage: true, clips: { poster: "/p.webp", idle: { sd: "/i.mp4" } }, pulse: 2 }));
+    expect(container.firstElementChild!.hasAttribute("data-fallback")).toBe(true);
   });
 
   it("under reduced motion: poster only, no video", async () => {

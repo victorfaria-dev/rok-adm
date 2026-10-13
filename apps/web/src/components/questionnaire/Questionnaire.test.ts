@@ -120,6 +120,16 @@ describe("questionnaire island: chat", () => {
     for (const a of avatars) expect(a.getAttribute("aria-hidden")).toBe("true");
   });
 
+  it("Sun Tzu nods (approve) at an accepted answer and talks after Skip, while the new bubble types", () => {
+    setup();
+    const stageState = () => document.querySelector(".st-stage")!.getAttribute("data-state");
+    expect(stageState()).toBe("greet");
+    enter();
+    expect(stageState()).toBe("approve");
+    fireEvent.click(screen.getByRole("button", { name: "Skip" }));
+    expect(stageState()).toBe("talking");
+  });
+
   it("one stage, above the current question; history shows still posters", () => {
     setup();
     enter();

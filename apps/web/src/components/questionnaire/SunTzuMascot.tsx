@@ -48,13 +48,16 @@ export function SunTzuMascot({ clips = MASCOT_CLIPS, stage = false, ...props }: 
   const { state, size = 40 } = props;
   // Decided after mount so the server render (and hydration) is the poster.
   const [media, setMedia] = useState<{ play: boolean; hd: boolean }>({ play: false, hd: false });
-  // A one-shot clip (greet, approve, victory) that has ended for this state: idle takes over.
+  // A one-shot clip (grumble, approve, greet, victory) still playing: it finishes even when the state
+  // has already gone back to a state without its own clip (idle), so a 2 s clip is not cut at 0.7 s.
+  const [playing, setPlaying] = useState<MascotState | null>(null);
+  // The one-shot state whose clip has ended: idle takes over while the state stays the same.
   const [ended, setEnded] = useState<MascotState | null>(null);
   const [compact, setCompact] = useState(false);
   const card = useRef<HTMLSpanElement>(null);
   const video = useRef<HTMLVideoElement>(null);
   const onScreen = useRef(true);
-  const shown: MascotState | undefined = stage ? (ended && ended === state ? "idle" : state) : undefined;
+  const shown: MascotState | undefined = !stage ? undefined : (playing ?? (ended && ended === state ? "idle" : state));
   const clip = clipFor(clips, shown);
   const src = stage && media.play ? clipSrc(clips, shown, media.hd) : null;
 
@@ -92,7 +95,22 @@ export function SunTzuMascot({ clips = MASCOT_CLIPS, stage = false, ...props }: 
     };
   }, [stage]);
 
-  useEffect(() => setEnded(null), [state]);
+  // A state with its own one-shot clip starts it (again, for a repeated grumble); a state with its
+  // own looping clip (talking) takes over at once; idle, or a state without a clip, lets a one-shot finish.
+  // Under reduced motion nothing plays, so nothing is latched.
+  useEffect(() => {
+    setEnded(null);
+    if (!stage || !media.play || !state) return setPlaying(null);
+    const own = clips[state];
+    if (own?.once) {
+      setPlaying(state);
+      const v = video.current;
+      if (v && playing === state) {
+        v.currentTime = 0;
+        sync();
+      }
+    } else if (own && state !== "idle") setPlaying(null);
+  }, [state, props.pulse, media.play]);
   useEffect(sync, [src]);
 
   if (!clips.poster) return <SunTzuAvatar {...props} size={stage ? SVG_STAGE_PX : size} />;
@@ -111,6 +129,7 @@ export function SunTzuMascot({ clips = MASCOT_CLIPS, stage = false, ...props }: 
       class="st-avatar st-card st-stage"
       data-state={state}
       data-pulse={pulseAttr(props.pulse)}
+      data-fallback={state && !clips[state] ? "" : undefined}
       data-compact={compact ? "" : undefined}
       aria-hidden="true"
     >
@@ -128,7 +147,11 @@ export function SunTzuMascot({ clips = MASCOT_CLIPS, stage = false, ...props }: 
           preload="metadata"
           disablePictureInPicture
           tabIndex={-1}
-          onEnded={() => clip?.once && setEnded(state ?? null)}
+          onEnded={() => {
+            if (!clip?.once) return;
+            setPlaying(null);
+            setEnded(state ?? null);
+          }}
         />
       ) : (
         <img src={clipPoster(clips, shown)} width={480} height={480} alt="" decoding="async" />

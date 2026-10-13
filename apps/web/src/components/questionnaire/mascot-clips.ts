@@ -1,7 +1,7 @@
 // Video clips for Sun Tzu (owner decision: short clips, not 3D). Files live in
 // apps/web/public/mascot/ (sources and processing notes in design/mascot/suntzu/clips/README.md).
 // Format: MP4 (H.264), square, muted, on the clip's own dark graphite background.
-// A state without a clip plays the idle clip (the stage still shakes for "grumble", via CSS).
+// A state without a clip plays the idle clip (a clip-less "grumble" shakes the stage, via CSS).
 // With no poster configured, the 2D SVG avatar is shown instead.
 import type { MascotState } from "./SunTzuAvatar";
 
@@ -35,7 +35,9 @@ export const MASCOT_CLIPS: MascotClips = {
   idle: { sd: "/mascot/idle-480.mp4", hd: "/mascot/idle-720.mp4", poster: "/mascot/idle-poster.webp" },
   // While a new bot bubble appears; then back to idle.
   talking: { sd: "/mascot/talk-480.mp4", hd: "/mascot/talk-720.mp4", poster: "/mascot/talk-poster.webp" },
-  // Not recorded yet (they play idle until then; grumble also shakes the stage in CSS):
-  // grumble: { sd: "/mascot/grumble-480.mp4", hd: "/mascot/grumble-720.mp4", poster: "/mascot/grumble-poster.webp" },
-  // greet:   { ..., once: true },  approve: { ..., once: true },  victory: { ..., once: true },
+  // Empty or invalid answer (2.25 s, once; replaces the CSS shake).
+  grumble: { sd: "/mascot/grumble-480.mp4", hd: "/mascot/grumble-720.mp4", poster: "/mascot/grumble-poster.webp", once: true },
+  // Accepted answer (1.75 s, once): plays while the next bubble types, never delays it.
+  approve: { sd: "/mascot/approve-480.mp4", hd: "/mascot/approve-720.mp4", poster: "/mascot/approve-poster.webp", once: true },
+  // Not recorded yet (they play idle until then): greet: { ..., once: true }, victory: { ..., once: true },
 };

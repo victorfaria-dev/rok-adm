@@ -31,10 +31,8 @@
   .st-avatar[data-state] .st-eyes { animation: st-blink calc(var(--ko-duration-slow) * 13) linear infinite; }
   .st-avatar[data-state="talking"] .st-mouth { animation: st-talk var(--ko-duration-fast) var(--ko-ease-in-out) 4; }
   .st-avatar[data-state="grumble"] .st-figure { animation: st-shake var(--ko-duration-instant) linear 4 alternate; transform-origin: 32px 60px; }
-  /* Video card: no face to animate, so the whole card shakes (the idle clip keeps playing). */
-  .st-card[data-state="grumble"] { animation: st-shake var(--ko-duration-instant) linear 4 alternate; }
   /* Same shake under another name: switching names replays it for a repeated mistake. */
-  .st-avatar[data-state="grumble"][data-pulse="odd"] .st-figure, .st-card[data-state="grumble"][data-pulse="odd"] { animation-name: st-shake-2; }
+  .st-avatar[data-state="grumble"][data-pulse="odd"] .st-figure { animation-name: st-shake-2; }
 }
 
 /* Video mascot (SunTzuMascot.tsx, when clips are configured): a card on the clip's dark graphite
@@ -71,10 +69,9 @@
   .st-stage[data-compact] > video, .st-stage[data-compact] > img { scale: .45; } /* 72 / 160 */
 }
 @media (prefers-reduced-motion: no-preference) {
-  /* Grumble on the stage: the clip shakes, not the whole wide card. */
-  .st-stage.st-card[data-state="grumble"] { animation: none; }
-  .st-stage[data-state="grumble"] > video, .st-stage[data-state="grumble"] > img { animation: st-shake var(--ko-duration-instant) linear 4 alternate; }
-  .st-stage[data-state="grumble"][data-pulse="odd"] > video, .st-stage[data-state="grumble"][data-pulse="odd"] > img { animation-name: st-shake-2; }
+  /* Grumble with no grumble clip configured (data-fallback): the idle clip shakes, not the wide card. */
+  .st-stage[data-state="grumble"][data-fallback] > video, .st-stage[data-state="grumble"][data-fallback] > img { animation: st-shake var(--ko-duration-instant) linear 4 alternate; }
+  .st-stage[data-state="grumble"][data-fallback][data-pulse="odd"] > video, .st-stage[data-state="grumble"][data-fallback][data-pulse="odd"] > img { animation-name: st-shake-2; }
 }
 
 @keyframes st-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
