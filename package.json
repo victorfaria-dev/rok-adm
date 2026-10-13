@@ -10,7 +10,8 @@
     "validate": "python3 research/tools/validate_facts.py && python3 guides/tools/validate_blocks.py && pnpm --filter @rokadm/planner check:data && python3 design/tools/build_tokens.py --check",
     "check": "pnpm typecheck && pnpm test && pnpm validate",
     "build:web": "pnpm --filter @rokadm/web build",
-    "e2e": "pnpm --filter @rokadm/web e2e"
+    "e2e": "pnpm --filter @rokadm/web e2e",
+    "api:dev": "pnpm --filter @rokadm/api dev"
   },
   "devDependencies": {
     "typescript": "5.6.3",
