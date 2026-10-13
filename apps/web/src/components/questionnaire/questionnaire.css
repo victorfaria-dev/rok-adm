@@ -1,4 +1,4 @@
-/* Questionnaire island (/start). Operate mode: Plex Sans for labels and options, Chakra Petch for
+/* Questionnaire island (/start): a chat with Sun Tzu. Operate mode: Plex Sans for labels and options, Chakra Petch for
    the question title and buttons, Plex Mono for numbers. Only --ko-* tokens. */
 
 .q { max-width: 640px; margin-inline: auto; display: grid; gap: var(--ko-space-4); min-width: 0; }
@@ -17,21 +17,67 @@
   transition: transform var(--ko-duration-base) var(--ko-ease-out);
 }
 
-/* Step change: short fade and a small lift; no lift with reduced motion. */
-.q-step {
-  display: grid; gap: var(--ko-space-4); padding-top: var(--ko-space-4);
+/* Chat log: Sun Tzu's messages on the left with the mascot, the player's answers on the right. */
+.q-log { display: grid; gap: var(--ko-space-3); padding-top: var(--ko-space-2); min-width: 0; }
+.q-msg { display: flex; align-items: flex-start; gap: var(--ko-space-2); min-width: 0; }
+.q-msg-bot { scroll-margin-top: var(--ko-space-4); }
+.q-bubble {
+  position: relative; display: grid; gap: var(--ko-space-1); min-width: 0; max-width: 65ch;
+  padding: var(--ko-space-2) var(--ko-space-3);
+  background: var(--ko-surface); border: 1px solid var(--ko-border);
+  border-radius: var(--ko-radius-sm) var(--ko-radius-lg) var(--ko-radius-lg) var(--ko-radius-lg);
+  overflow-wrap: anywhere;
+}
+.q-msg-bot[data-current] .q-bubble { padding: var(--ko-space-3) var(--ko-space-4); gap: var(--ko-space-2); }
+.q-bubble-text { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.q-who { font: var(--ko-weight-semibold) var(--ko-text-xs)/var(--ko-leading-xs) var(--ko-font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); }
+.q-lead { line-height: var(--ko-leading-md); }
+.q-asked { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-msg-user { justify-content: flex-end; padding-left: var(--ko-space-10); }
+.q-bubble-user {
+  display: block; background: var(--ko-surface-raised); font-weight: var(--ko-weight-medium);
+  border-radius: var(--ko-radius-lg) var(--ko-radius-sm) var(--ko-radius-lg) var(--ko-radius-lg);
+}
+
+/* Typing dots: shown only for a new message, for one slow duration, over text that is already in
+   the DOM (screen readers and the reply area never wait). None under reduced motion. */
+.q-typing { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .q-msg[data-typing] .q-typing {
+    position: absolute; top: var(--ko-space-4); left: var(--ko-space-4);
+    display: inline-flex; gap: var(--ko-space-1);
+    animation: q-hide 1ms linear var(--ko-duration-slow) forwards;
+  }
+  .q-typing span {
+    width: 6px; height: 6px; border-radius: var(--ko-radius-pill); background: var(--ko-text-muted);
+    animation: q-dot var(--ko-duration-slow) var(--ko-ease-in-out) infinite alternate;
+  }
+  .q-typing span:nth-child(2) { animation-delay: var(--ko-duration-instant); }
+  .q-typing span:nth-child(3) { animation-delay: calc(var(--ko-duration-instant) * 2); }
+  .q-msg[data-typing] .q-bubble-text, .q-msg[data-typing] .q-who {
+    animation: q-reveal var(--ko-duration-fast) var(--ko-ease-out) var(--ko-duration-slow) backwards;
+  }
+}
+@keyframes q-hide { to { visibility: hidden; opacity: 0; } }
+@keyframes q-dot { from { opacity: .35; transform: translateY(0); } to { opacity: 1; transform: translateY(-2px); } }
+@keyframes q-reveal { from { opacity: 0; } to { opacity: 1; } }
+
+/* Reply area: a short fade when a new question's replies appear; no lift with reduced motion. */
+.q-reply {
+  display: grid; gap: var(--ko-space-4);
   transition: opacity var(--ko-duration-fast) var(--ko-ease-out), transform var(--ko-duration-fast) var(--ko-ease-out);
 }
 @starting-style {
-  .q-step { opacity: 0; transform: translateY(var(--ko-space-2)); }
+  .q-reply { opacity: 0; transform: translateY(var(--ko-space-2)); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .q-step, .q-bar span { transition: none; }
-  @starting-style { .q-step { transform: none; } }
+  .q-reply, .q-bar span { transition: none; }
+  @starting-style { .q-reply { transform: none; } }
 }
 
 .q-title {
-  font-size: var(--ko-text-2xl); line-height: var(--ko-leading-2xl);
+  font-family: var(--ko-font-display); font-weight: var(--ko-weight-bold); text-wrap: balance;
+  font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl);
   outline: none; scroll-margin-top: var(--ko-space-6); overflow-wrap: anywhere;
 }
 .q-title:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 4px; }
@@ -40,23 +86,30 @@
 .q-body { display: grid; gap: var(--ko-space-4); min-width: 0; }
 .q-note { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 65ch; }
 
-/* Large radio options: whole row is the target (≥ 48 px). */
+/* Quick replies: large buttons (whole row is the target, >= 48 px) with a one-line why. The radio
+   is kept for keyboard and screen readers but drawn as the button itself; a check mark (not just
+   color) shows the picked one. */
 .q-options { display: grid; gap: var(--ko-space-2); }
 .q-option {
-  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--ko-space-3);
-  min-height: 56px; padding: var(--ko-space-3) var(--ko-space-4);
-  background: var(--ko-surface); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
-  cursor: pointer; user-select: none;
-  transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out);
+  position: relative;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--ko-space-3);
+  min-height: 48px; padding: var(--ko-space-3) var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-lg);
+  cursor: pointer; user-select: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out), transform var(--ko-duration-fast) var(--ko-ease-out);
 }
+.q-option input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
 .q-option:has(input:checked) { border-color: var(--ko-accent); background: var(--ko-surface-raised); }
 .q-option:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
-.q-option:active { background: var(--ko-surface-raised); }
-.q-option input { width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); }
-.q-option input:focus-visible { outline: none; }
+.q-option:active { background: var(--ko-surface-raised); transform: scale(.97); }
 .q-option-text { display: grid; gap: var(--ko-space-1); min-width: 0; overflow-wrap: anywhere; }
 .q-option-label { font-weight: var(--ko-weight-medium); }
 .q-option-help { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-option-check { color: var(--ko-accent); visibility: hidden; }
+.q-option:has(input:checked) .q-option-check { visibility: visible; }
+@media (prefers-reduced-motion: reduce) {
+  .q-option:active { transform: none; }
+}
 
 /* Number field: label above, hint, input, error below. */
 .q-field { display: grid; gap: var(--ko-space-2); min-width: 0; }
@@ -101,8 +154,12 @@
 .q-notes-error li { display: grid; justify-items: start; }
 .q-notes-error .q-change { padding-inline: 0; }
 
+/* Wider screens: replies line up under Sun Tzu's bubble (48 px avatar + gap). */
+@media (min-width: 480px) {
+  .q-reply .q-body { padding-left: calc(48px + var(--ko-space-2)); }
+}
 @media (min-width: 768px) {
-  .q-title { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  .q-title { font-size: var(--ko-text-2xl); line-height: var(--ko-leading-2xl); }
   .q-actions { margin-inline: 0; padding-inline: 0; }
   .q-actions .btn { flex: 0 0 auto; }
   .q-next { margin-left: auto; min-width: 200px; }

@@ -4,6 +4,7 @@ import { cleanup, fireEvent, render, screen } from "@testing-library/preact";
 import { h } from "preact";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { STORE_KEY, readStore } from "../../lib/store";
+import { LEADS } from "../../lib/sun-tzu";
 import Questionnaire from "./Questionnaire";
 
 const stepOf = (id: string): number => QUESTIONS.findIndex((q) => q.id === id);
@@ -22,27 +23,29 @@ beforeEach(() => localStorage.clear());
 afterEach(cleanup);
 
 describe("questionnaire island: keyboard", () => {
-  it("Enter moves forward and focus goes to the new question heading", () => {
+  it("Enter moves forward and focus goes to the new question's options, not the log", () => {
     setup();
     expect(title().textContent).toBe(label(0));
     expect(screen.getByText(/of 10/).textContent).toContain("1 of 10");
     enter();
     expect(title().textContent).toBe(label(1));
-    expect(document.activeElement).toBe(title());
+    // Total spend has presets and no answer: the first quick reply.
+    expect(document.activeElement).toBe(screen.getAllByRole("radio")[0]);
+    expect(screen.getByRole("log").contains(document.activeElement)).toBe(false);
     expect(screen.getByText(/of 10/).textContent).toContain("2 of 10");
   });
 
-  it("first load focuses the question heading", async () => {
+  it("first load focuses the picked option of the first question", async () => {
     setup();
     await new Promise((r) => setTimeout(r, 0));
-    expect(document.activeElement).toBe(title());
+    expect(document.activeElement).toBe(screen.getByRole("radio", { name: /F2P/ }));
   });
 
-  it("first load on a resumed step focuses that step's heading", async () => {
+  it("first load on a resumed number step focuses its field", async () => {
     setup({ draft: { step: stepOf("kingdomDay"), answers: {} } });
     await new Promise((r) => setTimeout(r, 0));
     expect(title().textContent).toBe(label(stepOf("kingdomDay")));
-    expect(document.activeElement).toBe(title());
+    expect(document.activeElement).toBe(screen.getByRole("textbox"));
   });
 
   it("first load does not steal focus the user already placed", async () => {
@@ -77,7 +80,7 @@ describe("questionnaire island: keyboard", () => {
     expect(title().textContent).toBe(label(stepOf("cityHall")));
     fireEvent.click(screen.getByRole("button", { name: "Back" }));
     expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("5000");
-    expect(document.activeElement).toBe(title());
+    expect(document.activeElement).toBe(screen.getByRole("textbox"));
   });
 
   it("Esc closes to the home page and keeps the draft", () => {
@@ -92,6 +95,75 @@ describe("questionnaire island: keyboard", () => {
     const backBtn = screen.getByRole("button", { name: "Back" });
     enter(backBtn);
     expect(title().textContent).toBe(label(2));
+  });
+});
+
+describe("questionnaire island: chat", () => {
+  it("Sun Tzu asks in a polite log; answers appear as the player's bubbles", () => {
+    setup();
+    const log = screen.getByRole("log");
+    expect(log.getAttribute("aria-live")).toBe("polite");
+    expect(log.textContent).toContain("Sun Tzu");
+    expect(log.textContent).toContain(LEADS.spending);
+    fireEvent.click(screen.getByRole("radio", { name: /Whale/ }));
+    enter(screen.getByRole("radio", { name: /Whale/ }));
+    expect(log.textContent).toContain("You: Whale");
+    expect(log.textContent).toContain(LEADS.lifetimeSpendUsd);
+    // One page heading: the current question only.
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  });
+
+  it("the mascot is decorative and the bot's name is text", () => {
+    setup();
+    const avatars = document.querySelectorAll(".st-avatar");
+    expect(avatars.length).toBeGreaterThan(0);
+    for (const a of avatars) expect(a.getAttribute("aria-hidden")).toBe("true");
+  });
+
+  it("a tap on a quick reply answers and moves on in one go", () => {
+    setup();
+    const radio = screen.getByRole("radio", { name: /Medium spender/ });
+    fireEvent.pointerDown(radio.closest("label")!);
+    fireEvent.click(radio);
+    expect(title().textContent).toBe(label(1));
+    expect((readStore().draft as { answers: Record<string, unknown> }).answers.spending).toBe("medium");
+    // The late change event of the old step does not touch the new one.
+    fireEvent.change(radio);
+    expect((readStore().draft as { answers: Record<string, unknown> }).answers.lifetimeSpendUsd).toBeUndefined();
+  });
+
+  it("every option shows its one-line why", () => {
+    setup();
+    for (const r of screen.getAllByRole("radio")) {
+      const help = document.getElementById(r.getAttribute("aria-describedby") ?? "");
+      expect(help?.textContent?.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("no option is marked Recommended (decision QC-1)", () => {
+    for (let step = 0; step <= QUESTIONS.length; step++) {
+      setup({ draft: { step, answers: {} } });
+      expect(document.body.textContent).not.toMatch(/recommended/i);
+      cleanup();
+      localStorage.clear();
+    }
+  });
+
+  it("the new message shows typing dots that any key skips; the reply is ready at once", () => {
+    setup();
+    enter();
+    const current = document.querySelector(".q-msg-bot[data-current]")!;
+    expect(current.hasAttribute("data-typing")).toBe(true);
+    expect(screen.getAllByRole("radio").length).toBeGreaterThan(0);
+    fireEvent.keyDown(document.body, { key: "Shift" });
+    expect(document.querySelector(".q-msg-bot[data-current]")!.hasAttribute("data-typing")).toBe(false);
+  });
+
+  it("Sun Tzu grumbles at an empty or invalid answer, next to the error text", () => {
+    setup({ draft: { step: stepOf("cityHall"), answers: { cityHall: "" } } });
+    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    expect(document.querySelector(".q-msg-bot[data-current] .st-avatar")!.getAttribute("data-state")).toBe("grumble");
+    expect(screen.getByText(/Enter a number from 1 to 25/)).toBeTruthy();
   });
 });
 
