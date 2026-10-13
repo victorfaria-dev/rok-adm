@@ -17,4 +17,4 @@ research/
   context/           pacotes de contexto para escrever guias/sistema
 ```
 
-Comece por [`research/00-PLANO.md`](research/00-PLANO.md).
+Comece por [`research/00-PLANO.md`](research/00-PLANO.md). Funcionalidades do sistema: [`produto/backlog-sistema.md`](produto/backlog-sistema.md).
