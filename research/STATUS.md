@@ -49,4 +49,5 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 3. **Síntese de dores:** ranking único jogadores + líderes → escolha do MVP do megahub (`brainstorm/`).
 4. **Context packs:** `context/` por tema.
 5. **Guia F2P v1** (EN) e **guia de administração de reino v1**; depois deltas Low → Medium → High → Whale → Kraken (`perfis.md`).
-6. **Especificação do sistema:** requisitos, modelo de dados, arquitetura.
+6. **Mapas de processo + árvore de funcionalidades** (Sub-admin PRODUTO): processo completo de conta e de reino → pontos de apoio do sistema → árvore de funcionalidades. Método: `produto/metodo-arvore-funcionalidades.md`.
+7. **Especificação do sistema:** requisitos, modelo de dados, arquitetura.
