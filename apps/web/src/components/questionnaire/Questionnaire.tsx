@@ -40,6 +40,8 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   const [closeHref, setCloseHref] = useState("/");
   const stateRef = useRef(state);
   const ready = useRef(false);
+  // Set once the profile is saved: a draft save still pending from the last step must not resurrect the draft.
+  const finished = useRef(false);
   const focusHeading = useRef(false);
   const focusInput = useRef(false);
   const focusOnMount = useRef(true);
@@ -62,6 +64,7 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   const complete = (): void => {
     const out = finish(stateRef.current.answers);
     if (out.ok) {
+      finished.current = true;
       writeStore({ profileCode: out.code, draft: null });
       navigate(guideUrl(out.code));
       return;
@@ -88,7 +91,7 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   // Save the draft on every answer and step change.
   useEffect(() => {
     // Read the ref: on the first render the layout effect has already resumed a newer state.
-    if (ready.current) writeStore({ draft: toDraft(stateRef.current) as unknown as Record<string, unknown> });
+    if (ready.current && !finished.current) writeStore({ draft: toDraft(stateRef.current) as unknown as Record<string, unknown> });
   }, [state.step, state.answers]);
 
   // Focus: question heading on every step change; the field when an error appears.
