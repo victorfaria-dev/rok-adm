@@ -12,13 +12,26 @@ async function seed(page: Page, store: object) {
   await page.evaluate((s) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: "dark", ...s })), store);
 }
 
+const focused = (page: Page, selector: string) => page.evaluate((sel) => document.activeElement?.matches(sel) ?? false, selector);
+
 /** Press Tab until the focused element matches (keyboard only, no clicks). */
 async function tabTo(page: Page, selector: string) {
   for (let i = 0; i < 25; i++) {
+    if (await focused(page, selector)) return;
     await page.keyboard.press("Tab");
-    if (await page.evaluate((sel) => document.activeElement?.matches(sel) ?? false, selector)) return;
   }
   throw new Error(`Tab never reached ${selector}`);
+}
+
+/** Open /start and wait for the island to hydrate (keys and clicks are handled by it). */
+async function open(page: Page) {
+  await page.goto("/start/");
+  await page.waitForSelector("astro-island:not([ssr])");
+}
+
+/** Focus sits in the reply area, never in the chat log. */
+async function expectFocusInReply(page: Page) {
+  await expect.poll(() => page.evaluate(() => !!document.activeElement?.closest(".q-reply") && !document.activeElement?.closest("[role=log]"))).toBe(true);
 }
 
 async function enter(page: Page, times = 1) {
@@ -30,14 +43,16 @@ async function enter(page: Page, times = 1) {
 }
 
 test("keyboard only: answer every question and land on /guide/?p=", async ({ page }) => {
-  await page.goto("/start/");
+  await open(page);
   await expect(title(page)).toHaveText(QUESTIONS[0]!.label);
   await expect(page.getByText("1 of 10")).toBeVisible();
+  await expect(page.getByRole("radio", { name: /F2P/ })).toBeFocused(); // first load: the picked option
 
   await tabTo(page, "input[type=radio]");
   await page.keyboard.press("ArrowDown"); // Low spender
   await enter(page);
-  await expect(title(page)).toBeFocused();
+  await expectFocusInReply(page);
+  await expect(page.getByRole("log")).toContainText("Low spender");
   await enter(page); // total spend: left blank = skipped
 
   await tabTo(page, "#q-input"); // minutes per day: "Other"
@@ -53,7 +68,7 @@ test("keyboard only: answer every question and land on /guide/?p=", async ({ pag
   await enter(page, 3); // City Hall, civilization, returning player
 
   await expect(title(page)).toHaveText("Check your answers");
-  await expect(title(page)).toBeFocused();
+  await expect(title(page)).toBeFocused(); // the summary has no options: its heading
   await page.keyboard.press("Enter");
   await page.waitForURL(/\/guide\/\?p=/);
   expect(new URL(page.url()).searchParams.get("p")).toBe("1.1.0.0.12.45.....0");
@@ -63,9 +78,9 @@ test("keyboard only: answer every question and land on /guide/?p=", async ({ pag
 });
 
 test("reload resumes on the same step with the answers kept", async ({ page }) => {
-  await page.goto("/start/");
-  await page.getByRole("radio", { name: /Medium spender/ }).check();
-  await page.getByRole("button", { name: "Next" }).click();
+  await open(page);
+  await page.getByRole("radio", { name: /Medium spender/ }).click(); // a tap on a quick reply sends it
+  await expect(page.getByText("2 of 10")).toBeVisible();
   await page.getByRole("button", { name: "Skip" }).click();
   await expect(page.getByText("3 of 10")).toBeVisible();
   await page.reload();
@@ -76,13 +91,38 @@ test("reload resumes on the same step with the answers kept", async ({ page }) =
   await expect(page.getByRole("radio", { name: /Medium spender/ })).toBeChecked();
 });
 
+test("Sun Tzu asks in a live log; the reply is ready at once and focus skips the log", async ({ page }) => {
+  await open(page);
+  const log = page.getByRole("log");
+  await expect(log).toHaveAttribute("aria-live", "polite");
+  await expect(log).toContainText("Sun Tzu");
+  await page.keyboard.press("Enter");
+  // Typing dots never hold the reply back: the new options take focus within ~400 ms.
+  await expect(page.getByRole("radio").first()).toBeFocused({ timeout: 400 });
+  await expectFocusInReply(page);
+  await expect(log).toContainText("You: F2P");
+  // Every option explains why it matters; no option is marked Recommended (QC-1).
+  for (const r of await page.getByRole("radio").all()) await expect(r).toHaveAttribute("aria-describedby", /help/);
+  await expect(page.locator("main")).not.toContainText(/recommended/i);
+});
+
+test("no typing dots under reduced motion", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await open(page);
+  await page.keyboard.press("Enter");
+  await expect(page.locator(".q-msg-bot[data-current]")).toBeVisible();
+  await expect(page.locator(".q-msg-bot[data-current] .q-typing")).toBeHidden();
+  await expect(page.locator(".q-msg-bot[data-current] .q-title")).toHaveCSS("opacity", "1");
+});
+
 test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }) => {
   await seed(page, { draft: { step: stepOf("cityHall"), answers: {} } });
-  await page.goto("/start/");
+  await open(page);
   const field = page.getByRole("textbox", { name: QUESTIONS[stepOf("cityHall")]!.label });
   await field.fill("30");
   await page.getByRole("button", { name: "Next" }).click();
   await expect(page.getByText("30 is out of range. Enter a number from 1 to 25.")).toBeVisible();
+  await expect(page.locator(".q-msg-bot[data-current] .st-avatar")).toHaveAttribute("data-state", "grumble");
   await expect(field).toHaveAttribute("aria-invalid", "true");
   await expect(field).toBeFocused();
   await field.press("Enter");
@@ -93,8 +133,7 @@ test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }
 });
 
 test("Close keeps the draft and returns to the previous page", async ({ page }) => {
-  await page.goto("/start/"); // direct load: referrer is empty, Close goes home
-  await page.waitForSelector("astro-island:not([ssr])"); // hydrated: Next and Esc are handled by the island
+  await open(page); // direct load: referrer is empty, Close goes home
   await page.getByRole("button", { name: "Next" }).click();
   await expect(page.getByText("2 of 10")).toBeVisible();
   await page.keyboard.press("Escape");
@@ -111,7 +150,7 @@ test("worst case answers fit 360 px on every step and the summary", async ({ pag
   await page.setViewportSize({ width: 360, height: 740 });
   for (let step = 0; step <= QUESTIONS.length; step++) {
     await seed(page, { draft: { step, answers: { ...WORST, lifetimeSpendUsd: "10,000,000" } } });
-    await page.goto("/start/");
+    await open(page);
     await expect(title(page)).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `step ${step}`).toBeLessThanOrEqual(0);
@@ -123,6 +162,7 @@ test("worst case answers fit 360 px on every step and the summary", async ({ pag
 test.describe("accessibility", () => {
   const cases = [
     { name: "first question", draft: null },
+    { name: "question with chat history", draft: { step: stepOf("cityHall"), answers: { spending: "low", minutesPerDay: 45, sessionsPerDay: 2 } } },
     { name: "number step with error", draft: { step: stepOf("cityHall"), answers: { cityHall: "99" } }, submit: true },
     { name: "summary with warnings", draft: { step: QUESTIONS.length, answers: { ...WORST, spending: "f2p" } } },
   ];
@@ -130,12 +170,13 @@ test.describe("accessibility", () => {
     for (const c of cases) {
       test(`axe ${theme}: ${c.name}`, async ({ page }) => {
         await seed(page, { theme, draft: c.draft });
-        await page.goto("/start/");
+        await open(page);
         await expect(title(page)).toBeVisible();
         if (c.submit) {
           await page.getByRole("button", { name: "Next" }).click();
           await expect(page.locator("#q-error")).toBeVisible();
         }
+        await expect(page.locator("[data-typing]")).toHaveCount(0); // typing dots done: text fully shown
         const result = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
         const serious = result.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
         expect(serious.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
