@@ -782,3 +782,301 @@ F-43 Kingdom Directory, F-46 Leadership Weekly Cockpit, F-39 Seed Simulator, F-5
 **D-0021..D-0024: por que estas duas funcionalidades e nada além.** O que seria "resolver" essas dores (punir bots, moderar o chat, responder suporte) só a Lilith pode fazer. Ideias como lista pública de cheaters ou ranking de reinos tóxicos foram recusadas (§4): expõem dados de terceiros (17.1.13) e criam risco de difamação. O que é legal e útil é (a) ajudar o jogador a usar bem o canal oficial (F-82) e (b) garantir que o hub não reproduza o problema (F-83).
 
 Das 72 dores (D-0001..D-0044, D-0500..D-0527), só D-0039 (fora de escopo) e D-0523 (descartada) ficam sem funcionalidade. D-0021..D-0024 passam de "só informação" para funcionalidades próprias, ainda que limitadas. As demais 66 têm ao menos uma funcionalidade ligada; D-0020 (farms) passa de 2 para 10 funcionalidades.
+
+## 10. Grafo de dependências e caminho crítico
+
+Seta `A --> B` = B depende de A. Hexágonos são bloqueios externos (T0, pesquisa, decisão, identidade visual). Contorno grosso = **caminho crítico**; preenchido = `construindo`. Funcionalidades sem dependência relevante (F-19, F-26, F-32, F-39, F-42, F-45, F-47, F-87) foram omitidas para manter o grafo legível; as dependências completas estão na coluna "Depende de" do §3 e do backlog.
+
+```mermaid
+flowchart LR
+  VI{{Identidade visual}}
+  DEC{{Decisão 1: primeiro backend}}
+  T0Q16{{T0 Q16 loja}}
+  T0OCR{{T0 OCR}}
+  T0COD{{T0 código}}
+  T0FARM{{T0 L-A13-01 / L-A13-03}}
+  TOOLKIT{{T0 L-B08-01 Toolkit}}
+  ENTREV{{Entrevistas com líderes}}
+  PESQ{{Pesquisa Medium+}}
+
+  subgraph MVP
+    F50[F-50 Rules Library v0]
+    F51[F-51 Block Engine]
+    F01[F-01 Questionnaire]
+    F02[F-02 F2P Guide]
+    F12[F-12 New Kingdom Guide]
+    F14[F-14 Budget Check]
+    F15[F-15 Routine]
+    F20[F-20 Commander Checklist]
+    F52[F-52 App Shell]
+    F56[F-56 Trust Center]
+    F57[F-57 Share Kit]
+    F85[F-85 Accessibility]
+  end
+
+  subgraph R1
+    F16[F-16 Snapshot]
+    F17[F-17 Next 3 Actions]
+    F18[F-18 Benchmark]
+    F81[F-81 Calculator Kit]
+    F67[F-67 Transfer Calc]
+    F66[F-66 Farm Setup]
+    F65[F-65 Variant Picker]
+    F21[F-21 Gem Table]
+    F22[F-22 Healing Calc]
+    F31[F-31 Migration Checker]
+    F34[F-34 Requirements Card]
+    F30[F-30 My Requirements]
+    F33[F-33 Charter]
+    F28[F-28 What Changed]
+    F24[F-24 Kingdom Clock]
+    F25[F-25 Hoard Advisor]
+    F10[F-10 Profile Card]
+    F60[F-60 3D Card]
+    F72[F-72 Lifetime Spend]
+    F73[F-73 Pack Value]
+    F75[F-75 Low Delta]
+    F88[F-88 Glossary]
+    F11[F-11 First 30 Days]
+    F84[F-84 i18n]
+    F86[F-86 Reminders]
+    F82[F-82 Ticket Builder]
+  end
+
+  subgraph R2
+    F53[F-53 Accounts & Sync]
+    F54[F-54 OCR]
+    F55[F-55 Verification Code]
+    F83[F-83 Safety Baseline]
+    F35[F-35 MGE Ledger]
+    F36[F-36 Decision Log]
+    F37[F-37 Data Intake]
+    F38[F-38 DKP Doctor]
+    F40[F-40 Exit Notice]
+    F41[F-41 Migration Pipeline]
+    F44[F-44 Roster]
+    F68[F-68 Farm Targets]
+    F69[F-69 Shipment Ledger]
+    F70[F-70 Idle Reminder]
+    F71[F-71 Farm ROI]
+    F89[F-89 Alt-Main Declaration]
+    F04[F-04 Farm Hub]
+    F29[F-29 Returner Mode]
+    F23[F-23 Path to T4/T5]
+    F78[F-78 Gold-Head Projection]
+    F79[F-79 Season Plan]
+    F74[F-74 Spend Cap]
+    F76[F-76 Medium Delta]
+    F05[F-05 Player Profile]
+    F48[F-48 Journey Timeline]
+  end
+
+  subgraph R3
+    F43[F-43 Kingdom Directory]
+    F46[F-46 Leadership Cockpit]
+    F58[F-58 Discord Bot]
+    F59[F-59 Assistant]
+    F64[F-64 KvK Map 3D]
+    F62[F-62 Progress Tower]
+    F80[F-80 Event Forecast]
+    F77[F-77 High+ Deltas]
+    F06[F-06 Alliance Page]
+    F09[F-09 Crest Editor]
+    F61[F-61 3D Crest]
+    F07[F-07 Alliance Avatar]
+    F49[F-49 Verified Channels]
+  end
+
+  F50 --> F51 --> F01
+  F51 --> F02 --> F01
+  F51 --> F12
+  F51 --> F15
+  F50 --> F14 --> F01
+  F50 --> F20
+  VI --> F52
+  F85 --> F52
+  F52 --> F16
+  F16 --> F17
+  F16 --> F18
+  F50 --> F81
+  F16 --> F81
+  F81 --> F67
+  F81 --> F21
+  F81 --> F22
+  F81 --> F31
+  F81 --> F73
+  F67 --> F66
+  F65 --> F66
+  T0FARM --> F65
+  T0Q16 --> F73
+  F02 --> F75
+  F01 --> F72
+  F50 --> F88 --> F11
+  F88 --> F84
+  F50 --> F34 --> F30
+  F50 --> F33
+  F84 --> F33
+  F50 --> F28
+  F52 --> F24 --> F86
+  F25 --> F86
+  F57 --> F10 --> F60
+  F56 --> F82
+
+  F52 --> F53
+  F56 --> F53
+  DEC --> F53
+  T0OCR --> F54
+  T0COD --> F55
+  F56 --> F83
+  F53 --> F35
+  F53 --> F36
+  F55 --> F36
+  F53 --> F37
+  TOOLKIT --> F37
+  F37 --> F38
+  F34 --> F38
+  F89 --> F38
+  F38 --> F40
+  F36 --> F40
+  F31 --> F41
+  F54 --> F41
+  F53 --> F44
+  F86 --> F44
+  F52 --> F68 --> F70
+  F86 --> F70
+  F67 --> F69
+  F22 --> F69
+  F55 --> F89
+  F53 --> F89
+  F67 --> F71
+  T0FARM --> F71
+  F68 --> F04
+  F69 --> F04
+  F70 --> F04
+  F89 --> F04
+  F53 --> F04
+  F28 --> F29
+  F31 --> F29
+  F17 --> F29
+  F16 --> F23
+  F16 --> F78
+  F18 --> F79
+  F23 --> F79
+  F24 --> F79
+  F25 --> F79
+  F52 --> F74
+  PESQ --> F76
+  F53 --> F05
+  F05 --> F48
+  F54 --> F60
+
+  F33 --> F43
+  F55 --> F43
+  F83 --> F43
+  F35 --> F46
+  F38 --> F46
+  F40 --> F46
+  F44 --> F46
+  F53 --> F58
+  F16 --> F59
+  F50 --> F59
+  ENTREV --> F64
+  F53 --> F64
+  F18 --> F62
+  F53 --> F80
+  PESQ --> F77
+  F55 --> F06
+  F05 --> F06
+  F83 --> F06
+  F09 --> F61
+  F06 --> F07
+  F09 --> F07
+  F55 --> F49
+
+  classDef crit stroke:#c0392b,stroke-width:4px
+  classDef built fill:#d5f5e3,stroke:#1e8449
+  class F50,F51,F01,F02,F12,F14,F15,F20,F56,F57 built
+  class VI,F52,F56,DEC,F53,TOOLKIT,F37,F38,F40,F46 crit
+```
+
+**Caminho crítico** (a cadeia mais longa; define quando o R3 do reino fica pronto):
+
+`[identidade visual] → F-52 → F-53 (exige F-56 e a decisão 1) → F-37 (exige o T0 L-B08-01) → F-38 → F-40 → F-46`
+
+Em paralelo corre a trilha de lógica do MVP, `F-50 v0 → F-51 → F-01/F-02`, que já está em construção e por isso não é o gargalo.
+
+- **Gargalo de hoje:** F-52, bloqueado pela identidade visual. Tudo que tem tela espera por ele; a lógica (F-01, F-14, F-15, F-20) pode avançar antes.
+- **Gargalo do R2:** a decisão 1 do Victor (qual módulo puxa o backend) e o T0 do ROK Toolkit (define se o F-37 é "import do Toolkit", de esforço menor, ou um importador genérico).
+- **Caminho do jogador** (mais curto, sem backend): `F-52 → F-16 → F-81 → calculadoras (F-21, F-22, F-31, F-67, F-73)` e `F-16 → F-17 → F-29`. O F-16 (snapshot) é o nó com mais dependentes do R1: atrasá-lo atrasa F-17, F-18, F-23, F-78, F-79 e F-81.
+- **Caminho das farms:** `F-81 → F-67 → F-69 → F-04` (com sync do F-53); o F-66 e o F-65 não dependem de backend.
+
+## 11. Índice de jobs-to-be-done
+
+Para cada ator: os jobs mais importantes (no formato "quando…, quero…, para…"), as dores e as funcionalidades que servem cada job. ★ = ideia do Victor; **negrito** = funcionalidade do MVP ou `construindo`.
+
+### Jogador F2P (reino novo, dia 0 → KvK1)
+
+| Job | Dores | Funcionalidades |
+|---|---|---|
+| Quando abro o jogo com pouco tempo, quero saber o que fazer hoje e o que posso pular, para o jogo não virar segundo emprego. | D-0002, D-0026, D-0006 | **F-15**, F-17, F-11, F-86 |
+| Quando começo num reino novo, quero um caminho para meu perfil e meu tempo, para não seguir conselho de whale nem de 2020. | D-0006, D-0018, D-0031, D-0030 | **F-01** ★, **F-02** ★, **F-12**, F-11, F-88, F-87 |
+| Quando vejo whales na frente, quero metas realistas para meu orçamento, para não sentir que meu esforço é inútil. | D-0001, D-0034 | **F-14**, F-72, F-75, F-73, F-60 (marca F2P Achiever) |
+| Antes de gastar cabeças, gemas ou aceleradores, quero saber se é a hora e o alvo certos, para não me arrepender de algo irreversível. | D-0008, D-0010, D-0011, D-0029 | **F-20**, F-78, F-21, F-25, F-79 |
+| Quando o KvK1 se aproxima, quero saber se estou no caminho e o que falta, para chegar pronto. | D-0007, D-0012, D-0028 | F-18, F-79, F-23, F-26, F-22 |
+| Quando sou atacado ou zerado, quero sobreviver e me recuperar, para não largar o jogo. | D-0041, D-0003 | **F-12**, F-13 |
+| Quando o reino publica requisitos, quero entender e acompanhar minha meta, para não entrar na lista de expurgo. | D-0004, D-0005, D-0501 | F-30, F-34, F-88 |
+
+### Jogador retornante
+
+| Job | Dores | Funcionalidades |
+|---|---|---|
+| Quando volto depois de meses, quero ver o que mudou e o que importa agora, para recuperar o atraso em minutos. | D-0016, D-0013, D-0031 | F-28, F-88 |
+| Quando minha conta parece defasada, quero decidir entre ficar, migrar ou recomeçar com regras atuais, para não perder passaportes nem meses. | D-0016, D-0019, D-0015 | F-29, F-31, F-19, F-18 |
+| Quando decido migrar, quero achar um reino que aceite retornantes, para não ser recusado em todo lugar. | D-0016, D-0037 | F-43, F-42, F-41 |
+| Quando perco acesso à conta, quero o caminho certo no suporte oficial, para não depender de terceiros. | D-0017, D-0023 | F-32, F-82 |
+| Quando retomo, quero uma rotina leve de 14 dias, para não queimar de novo. | D-0002, D-0026 | F-29, **F-15** |
+
+### Jogador com farms
+
+| Job | Dores | Funcionalidades |
+|---|---|---|
+| Quando a principal chega ao CH11, quero saber se preciso de farm, quantas e de qual tipo, para não criar trabalho que não paga. | D-0020, D-0002 | F-65, F-71, F-03 ★ |
+| Quando crio a farm, quero a ordem de montagem até CH17 e TP15, para ela render cedo. | D-0020 | F-66 |
+| Quando envio recursos, quero saber quanto chega depois da taxa e da proteção do armazém, para não errar a meta. | D-0020, D-0028 | F-67, F-69 |
+| Quando opero várias farms, quero ver qual precisa de mim agora com 1 toque, para logar menos. | D-0020, D-0002 | F-68, F-70, F-04 ★, **F-15** |
+| Quando o reino pede, quero declarar minhas farms com prova e mostrar o que enviaram, para não ser acusado de esconder alts. | D-0522, D-0503 | F-89, F-69 |
+| Quando há evento de kill, quero proteger a farm, para não perder o estoque. | D-0003 | F-13, F-67 (excedente acima da proteção) |
+
+### R4/R5 (oficiais de aliança)
+
+| Job | Dores | Funcionalidades |
+|---|---|---|
+| Quando falta rally lead ou guarnição, quero publicar vagas por papel fora do jogo, para recrutar pelo que falta e não só por poder. | D-0510 | F-42, F-84 |
+| Quando monto Ark/KvK, quero inscrições por papel e fuso com lembretes, para largar Forms e planilhas. | D-0517, D-0526 | F-44, F-86, F-58 |
+| Quando preciso remover inativos, quero uma definição publicada e um histórico privado, para o kick não ser contestado. | D-0511, D-0512 | F-45 |
+| Quando alguém se passa por líder, quero provar quem lidera sem dar senha, para proteger os membros. | D-0514, D-0515 | F-55, F-49, F-06 ★ |
+| Quando a aliança mistura línguas, quero regras e avisos traduzidos com o original valendo, para todos entenderem. | D-0025, D-0527 | F-84, F-33 |
+
+### Rei / conselho
+
+| Job | Dores | Funcionalidades |
+|---|---|---|
+| Quando o reino abre, quero uma carta de regras assinada pelos R5, para evitar guerra civil antes do KvK1. | D-0513, D-0518, D-0525 | F-33, F-36 |
+| Antes do KvK, quero requisitos justos e explicados, testados em contas de exemplo, para que os membros aceitem. | D-0501, D-0502, D-0004 | F-34, F-30 |
+| Depois do KvK, quero calcular DKP a partir dos dados que já temos, sem escanear, para parar horas de planilha. | D-0500, D-0503, D-0504, D-0522 | F-37, F-38, F-89 |
+| Quando distribuo MGE, quero um registro público de quem pegou e por quê, para acabar com a acusação de "hoarding". | D-0506, D-0505 | F-35, F-36 |
+| Quando faço expurgos e migração, quero avisos padrão com prazo e recurso, e triagem automática de elegibilidade, para reduzir vingança e trabalho manual. | D-0507, D-0508, D-0509, D-0524 | F-40, F-31, F-41 |
+| Na SoC, quero simular o seed, para não zerar nossos próprios jogadores. | D-0520 | F-39 |
+| Toda semana, quero uma visão única do que está pendente e um plano de KvK compartilhável, para a liderança não ser um segundo emprego. | D-0519, D-0040, D-0516 | F-46, F-64 |
+
+## 12. Registro de mudanças (2026-10-13, enriquecimento)
+
+- **F-60..F-64 (3D)** integradas às áreas e épicos certos, com rastreabilidade, score e release: F-60 em E-I1 (com a **regra de raridade v2 por City Hall**), F-61 em E-I2, F-62 em E-C3, F-63 em E-P3, F-64 em E-R5.
+- **Farms:** de 2 para 10 funcionalidades (F-65..F-71, F-89). Variantes só com o nível de evidência do `farms.md`; par de recursos oculto até o T0.
+- **Perfil de gasto:** épico novo E-C8 (F-72..F-77); F-78 (projeção de cabeças) em E-C3.
+- **Lacunas de concorrência:** G2 → F-81 (inventário compartilhado e selo de patch em todas as calculadoras); G7 → F-79 (plano de longo prazo) e F-80 (previsão com probabilidade).
+- **Dores só informativas (D-0021..D-0024):** F-82 e F-83; o resto foi recusado com motivo (§4, §9).
+- **Transversais ligadas a dor ou passo:** F-84 (idiomas: D-0025, D-0527), F-85 (acessibilidade e desempenho: G9, D-0032), F-86 (lembretes: D-0014, D-0517), F-87 e F-88 (onboarding: D-0035, D-0030, D-0013). Offline/PWA continua dentro do F-52 (sem dor própria).
+- **Toda funcionalidade** tem agora critérios de aceite, métrica, entradas, integrações, risco de ToS/privacidade e status em `produto/arvore-funcionalidades-detalhe.md`.
+- **Scores** de F-01..F-59 mantidos; F-60..F-89 pontuados com a mesma fórmula. **MVP sem mudança de escopo.** Mudanças de release explicadas no §6.
+- Novo: grafo de dependências com caminho crítico (§10) e índice de jobs-to-be-done (§11).
