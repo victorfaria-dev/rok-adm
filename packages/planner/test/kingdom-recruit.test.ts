@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   DISCORD_LIMIT, RECRUIT_LIMITS, REDDIT_TITLE_LIMIT, emptyRecruitInput, escapeMarkdown, kingdomLabel, parseCityHall, parseRecruitDoc,
-  recruitErrors, recruitIsEmpty, recruitPost, redditTitle, type RecruitInput,
+  recruitErrors, recruitIsEmpty, recruitPost, redditTitle, type RecruitInput, REDDIT_BODY_LIMIT, parseRoleCount, roleCountError,
 } from "../src/kingdom-recruit";
 
 function filled(): RecruitInput {
@@ -110,6 +110,34 @@ describe("recruitPost reddit", () => {
     const t = redditTitle({ ...emptyRecruitInput(), kingdom: "z".repeat(400) });
     expect(t).toHaveLength(REDDIT_TITLE_LIMIT);
     expect(t.endsWith("…")).toBe(true);
+  });
+
+  it("reports title length and cut, and the body against the 40,000-character limit", () => {
+    const p = recruitPost(filled(), "reddit");
+    expect(p.titleChars).toBe(p.title!.length);
+    expect(p.titleCut).toBe(false);
+    expect(p.limit).toBe(REDDIT_BODY_LIMIT);
+    const cut = recruitPost({ ...emptyRecruitInput(), kingdom: "z".repeat(400) }, "reddit");
+    expect(cut.titleChars).toBe(REDDIT_TITLE_LIMIT);
+    expect(cut.titleCut).toBe(true);
+    // Unparsed input can exceed what the form allows; the planner still flags it.
+    const huge = recruitPost({ ...emptyRecruitInput(), migrationNote: "m".repeat(REDDIT_BODY_LIMIT) }, "reddit");
+    expect(huge.chars).toBeGreaterThan(REDDIT_BODY_LIMIT);
+    expect(huge.over).toBe(true);
+    expect(recruitPost(filled(), "discord").titleChars).toBeUndefined();
+  });
+});
+
+describe("role count", () => {
+  it("accepts whole numbers 1–99 and explains anything else", () => {
+    expect(parseRoleCount(" 7 ")).toBe(7);
+    expect(parseRoleCount("99")).toBe(99);
+    for (const bad of ["0", "100", "1.5", "two", "-1", "1e1", ""]) expect(parseRoleCount(bad), bad).toBeNull();
+    expect(roleCountError("")).toBeUndefined();
+    expect(roleCountError("  ")).toBeUndefined();
+    expect(roleCountError("3")).toBeUndefined();
+    expect(roleCountError("x")).toBe("Write a whole number from 1 to 99, or leave it empty.");
+    expect(roleCountError("0")).toBeDefined();
   });
 });
 

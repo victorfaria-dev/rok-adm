@@ -155,6 +155,19 @@ export function parseCityHall(text: string): number | null {
   return n >= 1 && n <= 25 ? n : null;
 }
 
+/** How many people a role needs, as typed: a whole number 1–99, or null for anything else. */
+export function parseRoleCount(text: string): number | null {
+  const s = text.trim();
+  if (!/^\d{1,2}$/.test(s)) return null;
+  const n = Number(s);
+  return n >= 1 && n <= RECRUIT_LIMITS.roleCount ? n : null;
+}
+
+/** Message for a role count the post cannot use (empty is fine: the count is optional). */
+export function roleCountError(text: string): string | undefined {
+  return text.trim() && parseRoleCount(text) === null ? `Write a whole number from 1 to ${RECRUIT_LIMITS.roleCount}, or leave it empty.` : undefined;
+}
+
 export function recruitErrors(input: RecruitInput): RecruitErrors {
   const e: RecruitErrors = {};
   if (input.minPower.trim() && parseQuantity(input.minPower) === null) e.minPower = "Write the power as a number, for example 30m, 30,000,000 or 500k.";
@@ -193,6 +206,9 @@ export interface RecruitPost {
   format: RecruitFormat;
   /** Reddit only: post title (≤ 300 characters). */
   title?: string;
+  /** Reddit only: characters in the title, and true when it was cut to fit 300. */
+  titleChars?: number;
+  titleCut?: boolean;
   body: string;
   /** Characters in the body. */
   chars: number;
@@ -245,15 +261,18 @@ function headline(i: RecruitInput, esc: (s: string) => string): string {
   return i.kingdom ? `${esc(kingdomLabel(i.kingdom))} is recruiting` : "We are recruiting";
 }
 
-/** Reddit title: "[K1234] KvK2 kingdom recruiting: Rally leader, Translator", cut to 300 characters. */
-export function redditTitle(i: RecruitInput): string {
+function fullRedditTitle(i: RecruitInput): string {
   const k = i.kingdom.trim();
   const tag = k ? (/^\d+$/.test(k) ? `[K${k}] ` : `[${k}] `) : "";
   const stage = stageLabel(i);
   const roles = [...new Set(i.roles.map((r) => roleLabel(r.role)))];
-  let t = `${tag}${stage ? `${stage} kingdom` : "Kingdom"} recruiting${roles.length ? `: ${roles.join(", ")}` : ""}`;
-  if (t.length > REDDIT_TITLE_LIMIT) t = `${t.slice(0, REDDIT_TITLE_LIMIT - 1).trimEnd()}…`;
-  return t;
+  return `${tag}${stage ? `${stage} kingdom` : "Kingdom"} recruiting${roles.length ? `: ${roles.join(", ")}` : ""}`;
+}
+
+/** Reddit title: "[K1234] KvK2 kingdom recruiting: Rally leader, Translator", cut to 300 characters. */
+export function redditTitle(i: RecruitInput): string {
+  const t = fullRedditTitle(i);
+  return t.length > REDDIT_TITLE_LIMIT ? `${t.slice(0, REDDIT_TITLE_LIMIT - 1).trimEnd()}…` : t;
 }
 
 /**
@@ -287,9 +306,10 @@ export function recruitPost(input: RecruitInput, format: RecruitFormat): Recruit
   const body = parts.map((p) => p.join("\n")).join("\n\n");
   const limit = format === "discord" ? DISCORD_LIMIT : format === "reddit" ? REDDIT_BODY_LIMIT : null;
   const chars = body.length;
+  const title = format === "reddit" ? redditTitle(input) : undefined;
   return {
     format,
-    ...(format === "reddit" ? { title: redditTitle(input) } : {}),
+    ...(title !== undefined ? { title, titleChars: title.length, titleCut: fullRedditTitle(input).length > REDDIT_TITLE_LIMIT } : {}),
     body,
     chars,
     limit,

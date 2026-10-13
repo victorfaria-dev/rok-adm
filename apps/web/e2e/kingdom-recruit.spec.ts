@@ -101,6 +101,47 @@ test.describe("recruitment post generator", () => {
     await expect(page.locator("[data-over-limit]")).toHaveCount(0);
   });
 
+  test("a role count it cannot read shows an error instead of vanishing", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.setViewportSize({ width: 360, height: 780 });
+    await gotoHydrated(page, "/kingdom/recruit/");
+    await page.getByRole("button", { name: "Add role" }).click();
+    const count = page.locator("#kt-count-0");
+    await count.fill("two");
+    await expect(count).toHaveValue("two");
+    await expect(count).toHaveAttribute("aria-invalid", "true");
+    await expect(count).toHaveAttribute("aria-describedby", "kt-count-0-error");
+    await expect(page.locator("#kt-count-0-error")).toHaveText("Write a whole number from 1 to 99, or leave it empty.");
+    await expect(page.locator("#kt-body-out")).toHaveValue(/- Rally leader$/m);
+    await count.fill("0");
+    await expect(page.locator("#kt-count-0-error")).toBeVisible();
+    await count.fill("3");
+    await expect(page.locator("#kt-count-0-error")).toHaveCount(0);
+    await expect(count).not.toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#kt-body-out")).toHaveValue(/- Rally leader ×3/);
+    // Errors follow their role when an earlier one is removed.
+    await page.getByRole("button", { name: "Add role" }).click();
+    await page.locator("#kt-count-1").fill("x1");
+    await page.getByRole("button", { name: "Remove role 1" }).click();
+    await expect(page.locator("#kt-count-0")).toHaveValue("x1");
+    await expect(page.locator("#kt-count-0-error")).toBeVisible();
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+    expect(errors).toEqual([]);
+  });
+
+  test("Reddit shows title and body lengths against their limits", async ({ page }) => {
+    await gotoHydrated(page, "/kingdom/recruit/");
+    await page.getByLabel("Kingdom number or name").fill("1234");
+    await page.getByLabel("Format").selectOption("reddit");
+    await expect(page.locator("[data-title-count]")).toHaveText("Title: 26 / 300 characters");
+    await expect(page.locator("[data-char-count]")).toHaveText(/^Body: \d+ \/ 40,000 characters$/);
+    await expect(page.locator("[data-title-cut]")).toHaveCount(0);
+    await expect(page.locator("[data-over-limit]")).toHaveCount(0);
+    await page.getByLabel("Format").selectOption("discord");
+    await expect(page.locator("[data-title-count]")).toHaveCount(0);
+  });
+
   test("escapes markdown typed by the council", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/recruit/");
     await page.getByLabel("Migration note").fill("# Open now\n@everyone welcome");
@@ -118,6 +159,8 @@ test.describe("recruitment post generator", () => {
           await expect(page.locator("#kt-body-out")).toHaveValue(/Garrison leader — infantry/);
           await page.getByLabel("Minimum City Hall level").fill("30");
           await expect(page.locator("#kt-ch-error")).toBeVisible();
+          await page.locator("#kt-count-0").fill("lots");
+          await expect(page.locator("#kt-count-0-error")).toBeVisible();
           await page.getByLabel("Format").selectOption("reddit");
         }
         await expectAxeClean(page);
