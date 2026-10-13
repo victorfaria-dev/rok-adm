@@ -11,7 +11,13 @@ export interface MascotProps {
   state?: MascotState;
   /** Rendered size in px (square). */
   size?: number;
+  /** Bumps on every grumble so the shake replays without remounting (a video keeps playing). */
+  pulse?: number;
 }
+
+/** "odd"/"even": the CSS swaps between two identical shake keyframes, which restarts the animation. */
+export const pulseAttr = (pulse: number | undefined): string | undefined =>
+  pulse === undefined ? undefined : pulse % 2 ? "odd" : "even";
 
 /**
  * Sun Tzu, the questionnaire's guide: an original chibi strategist drawn as a grumpy, comic old
@@ -20,9 +26,9 @@ export interface MascotProps {
  * so it follows the palette. Decorative: the bot's name is always printed next to it as text.
  * Motion lives in sun-tzu.css and only runs under prefers-reduced-motion: no-preference.
  */
-export function SunTzuAvatar({ state, size = 40 }: MascotProps) {
+export function SunTzuAvatar({ state, size = 40, pulse }: MascotProps) {
   return (
-    <span class="st-avatar" data-state={state} style={{ width: `${size}px`, height: `${size}px` }} aria-hidden="true">
+    <span class="st-avatar" data-state={state} data-pulse={pulseAttr(pulse)} style={{ width: `${size}px`, height: `${size}px` }} aria-hidden="true">
       <svg viewBox="0 0 64 64" width={size} height={size} focusable="false">
         <circle class="st-bg" cx="32" cy="32" r="32" />
         <g class="st-figure">

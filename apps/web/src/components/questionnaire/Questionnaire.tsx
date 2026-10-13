@@ -49,8 +49,7 @@ function BotMessage(props: { current: boolean; typing: boolean; grumble?: number
   const mood: MascotState | undefined = !current ? undefined : grumble > 0 ? "grumble" : typing ? "talking" : "idle";
   return (
     <div class="q-msg q-msg-bot" data-current={current ? "" : undefined} data-typing={typing ? "" : undefined}>
-      {/* A new key per grumble restarts the shake when the same mistake is made twice. */}
-      <Mascot key={grumble} size={current ? 48 : 32} state={mood} />
+      <Mascot size={current ? 48 : 32} state={mood} pulse={current ? grumble : undefined} />
       <div class="q-bubble">
         <p class={current ? "q-who" : "q-who visually-hidden"}>{MASCOT_NAME}</p>
         <span class="q-typing" aria-hidden="true"><span /><span /><span /></span>

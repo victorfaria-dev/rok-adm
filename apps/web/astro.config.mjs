@@ -74,7 +74,9 @@ function serviceWorker() {
           }
         };
         walk(root);
-        const precache = files.filter((f) => f !== "/sw.js" && !f.startsWith("/ocr/"));
+        // Mascot clips (120–280 KB each, Range requests) stay out of the precache: network on demand,
+        // the poster (small) is precached so the avatar still shows offline.
+        const precache = files.filter((f) => f !== "/sw.js" && !f.startsWith("/ocr/") && !/^\/mascot\/.*\.mp4$/.test(f));
         const urls = precache.map((f) => f.replace(/index\.html$/, ""));
         // Hash contents too: a file whose bytes change under the same URL (e.g. /data/guide.json) must bust the cache.
         const version = cacheVersion(precache.map((f, i) => ({ url: urls[i], bytes: readFileSync(join(root, f.slice(1))) })));
