@@ -159,6 +159,7 @@ Cada frente da onda J registra aqui, **só na sua subseção**, as fontes novas 
 
 | Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | IDs antigos | Notas |
 |---|---|---|---|---|---|---|---|---|
+| `src:topuplive` | TopUpLive blog (topuplive.com/news): "Rise of Kingdoms Commanders Tier List 2026" | T3 (vendedor de recarga: **conflito de interesse**) | pub 2026-08-14, mod 2026-08-18 | curl (UA padrão) | — | **sim** (top-up) | — | Mantém conteúdo antigo com data nova (ex.: recomenda Alexander/Saladin para KvK3). Versões em outros idiomas trazem listas diferentes. Não é independente de outras lojas (lootbar/topuplist) em formato, mas o texto não é cópia literal das que foram verificadas. |
 
 <!-- separador J1/J2: não editar -->
 <!-- . -->
