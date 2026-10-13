@@ -1,0 +1,739 @@
+[
+  {
+    "id": "ret-overview-start-here",
+    "title": "Returning player: start here (find your stop date, your kingdom's stage, then decide)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "This guide is for an account that stopped playing and is coming back. Work through it in this order:\n\n1. **Find the date you stopped.** Read every \"What changed\" block from that date on (the blocks below are split by period, oldest first; each later block assumes you read the earlier ones).\n2. **Find where your kingdom is now.** Official notes name the stages Preparation Season → Season 1 → Season 2 (\"Distant Journey\") → Season 3 (\"Light and Darkness\") → Season of Conquest (SoC), and SoC story registration needs **City Hall 25** [C04-0033]. Season 3 is moving to **King of All Britain** (pioneer in 1.1.07, May 2026; described as the Season 3 story in a Sep 2026 third-party summary) [C04-0007]. A kingdom that was in Season 1 when you left may be in SoC now.\n3. **Know which version you are on.** The newest version with official English notes is **1.1.09** (deployed **2026-06-30**); 1.1.10–1.1.12 are known only from a third-party source, and 1.1.12 (2026-09-22) is most likely live [C04-0001]. Anything after 1.1.09 in this guide is marked T3.\n4. **Follow the 14-day plan** (days 1–3, 4–7, 8–14) and make the **stay / migrate / restart** decision by day 7.\n\n**Returner rewards or comeback events:** no fact card covers them. Whether the game gives a returning account a welcome-back event, what it contains and how long it lasts is **unknown** (PROPOSED-RETURNER-REWARDS). If one appears in your inbox or event list, screenshot it; do not plan around it.\n\nThe short version of this branch lives in the New Kingdom guide (*Returning player: what changed / can you move / first five actions*); this guide goes deeper.",
+    "why_md": "Returning players ask \"what changed\" and \"should I stay, move or restart\" (pains D-0016, D-0015, D-0019; features F-28 and F-29). Most of their mistakes come from advice that was true on the day they stopped, so the stop date is the right key for everything else.",
+    "cards": [
+      "C04-0001",
+      "C04-0007",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0001",
+      "C04-0007",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0001, C04-0007 and C04-0033 are patch-state cards (official notes, status bruto). The Season 3 = King of All Britain part of C04-0007 and versions 1.1.10–1.1.12 in C04-0001 rely on a third-party (T3) source. No card exists for returner rewards.",
+    "gaps": [
+      "PROPOSED-RETURNER-REWARDS",
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-changed-before-2024-06",
+    "title": "What changed: if you stopped before June 2024 (1.0.67–1.0.82)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| If you stopped before | Change | Impact for a returner | Card |\n|---|---|---|---|\n| 2023-03 | SoC story **Siege of Orléans** (Mar 2023), later **Storm of Stratagems** (Jul 2023), **Tides of War** (Nov 2023), **Alliance Invictus** (Mar 2024), **Warriors Unbound** mini-season (May 2024) | Medium if your kingdom is in SoC: \"SoC = Heroic Anthem\" guides are out of date | C04-0017 |\n| 2023-07 | **Greece** civilization added (1.0.71) | Low: one more option if you change civilization | C04-0016 |\n| 2023-12 | **Iconic equipment**: Legendary equipment (except Trial of the Lost Kingdom and gathering sets) can be awakened, **5 tiers**, kingdom in Season 1 or later (1.0.77) | Medium: your old Legendary pieces may be upgradable | C04-0027 |\n| 2024-04 | SoC Lost Kingdom events **Now or Never, Barbarian Buster, Lord of War, Territory Grab, Strategic Reserves** removed (1.0.81) | Medium for SoC: event-prep plans built on them are void | C04-0030 |\n\n**Not covered by a card:** what the commander meta looks like now. A tier list from the time you left is very likely outdated; check its date before trusting it (L-A06-01). Continue with the next block (June 2024 – March 2025).",
+    "why_md": "A player who left in 2023 has the most stale knowledge. This block lists only changes backed by a patch card; it is short on purpose so the later, higher-impact blocks are not buried.",
+    "cards": [
+      "C04-0016",
+      "C04-0017",
+      "C04-0027",
+      "C04-0030"
+    ],
+    "patch_cards": [
+      "C04-0016",
+      "C04-0017",
+      "C04-0027",
+      "C04-0030"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "All rows are patch-state cards (official notes, status bruto). The current commander meta has no card (L-A06-01).",
+    "gaps": [
+      "L-A06-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-changed-2024-06-to-2025-03",
+    "title": "What changed: if you stopped between June 2024 and March 2025 (1.0.83–1.0.92)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| If you stopped before | Change | Impact for a returner | Card |\n|---|---|---|---|\n| 2024-06 | **Cross-season immigration**: refundable **20,000-gem** deposit when eligibility is granted (lost if not used); under **10M** power ineligible; power limit lowered from **100M to 85M** (1.0.83) | High if you plan to move | C04-0025 |\n| 2024-06 | SoC story **Shifting Gears**; later **King of All Britain** (Oct 2024) and **Keener Blades** (Feb 2025) | Medium for SoC | C04-0017 |\n| 2024-08 | **Delta** formation (+10% combo) (1.0.85) | Low–medium (Season 2+ formations) | C04-0029 |\n| 2024-10 | **VIP19 and SVIP**; points above the old cap were refunded as VIP point items (1.0.87) | Medium: check your VIP inventory | C04-0024 |\n| 2024-10 | **Vacation Permit**: in SoC the king can put a governor \"on vacation\" (not counted in matchmaking score, stays in the starting province); holders need fewer Passport Pages to emigrate (1.0.89) | High if you return mid-SoC: ask your king | B03-0007 |\n| 2024-12 | **Hall of Heroes** also returns part of the resources spent healing in the Lost Kingdom (1.0.89) | Medium: part of what you spend healing in the Lost Kingdom comes back | C04-0028 |\n| 2025-01 | **Legendary Commander Swap**, **Armament Conversion**, **Gathering of Heroes**; **Maya** civilization (1.0.90) | **High**: old commander and armament investments are not always lost | C04-0023, C04-0016 |\n| 2025-03 | **Wheel of Fortune needs Spin Tickets** in Season 3 and SoC (1.0.92) | Medium: old gem-per-spin math is wrong | C04-0022 |\n| 2025-03 | SoC event **Enemy Elimination** replaced by **Midseason Review** (1.0.92) | Low | C04-0030 |\n| 2025-03-26 | **Beginner's Immigration** no longer given to new characters: no more jumper accounts | **High** for the restart option | C04-0026 |",
+    "why_md": "This period holds the two changes that most affect a returner's big decisions: the respec tools (Swap, Conversion) that make an old account worth keeping, and the end of jumping, which makes restarting much less attractive.",
+    "cards": [
+      "B03-0007",
+      "C04-0016",
+      "C04-0017",
+      "C04-0022",
+      "C04-0023",
+      "C04-0024",
+      "C04-0025",
+      "C04-0026",
+      "C04-0028",
+      "C04-0029",
+      "C04-0030"
+    ],
+    "patch_cards": [
+      "C04-0016",
+      "C04-0017",
+      "C04-0022",
+      "C04-0023",
+      "C04-0024",
+      "C04-0025",
+      "C04-0026",
+      "C04-0028",
+      "C04-0029",
+      "C04-0030"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "All C04 rows are patch-state cards (official notes, status bruto). C04-0026 rests on an in-game mail quoted by players plus wiki/guide (no official forum post). B03-0007 is firm.",
+    "gaps": [
+      "L-B03-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-changed-2025-04-to-2025-12",
+    "title": "What changed: if you stopped between April and December 2025 (1.0.94–1.1.02)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| If you stopped before | Change | Impact for a returner | Card |\n|---|---|---|---|\n| 2025-05 | **Takeda, Cyrus, Cheok, Bertrand** moved to Season 2; Cheok and Bertrand talents/skills reworked; these four **can no longer be swapped** in Legendary Commander Swap (1.0.94) | High if you own one of them | C04-0021 |\n| 2025-05 | Spin Tickets extended to the **Season 2** Wheel of Fortune (1.0.94) | Medium | C04-0022 |\n| 2025-05 → | **Crystal tech rework** (SoC): Unit Capacity earlier, invest only in your preferred unit type, Rapid Retreat instant return **200 → 80 gems** | Medium for SoC: old research orders are wrong | C04-0018 |\n| 2025-06 | **Kingdom power formula**: your power counts 100% up to 150M, 80% for 150–300M, 50% for 300–500M, nothing above 500M (top 300 governors); Imperium threshold 23.5B (1.0.95) | Low for most returners; matters for SoC seeding | C04-0020 |\n| 2025-07 | **Supreme Strife** cross-kingdom tournament for CH25 governors in SoC (1.0.96) | Low | C04-0019 |\n| 2025-07 | Dismantling Legendary equipment with a special talent refunds **100% of forging** and **50% of awakening** cost (1.0.96) | High: wrong equipment can be recycled | C04-0010 |\n| 2025-09 | **Double Line** formation (+10% march speed to barbarians) (1.0.99) | Low | C04-0029 |\n| 2025-10 | **Oasis Bazaar** event: sell resources for gems (1.1.00); SoC story **Song of Troy** | Medium: a use for a returner's resource stockpile | C04-0009, C04-0017 |\n| 2025-11 | **Acclaim** (KvK contribution currency) in new SoC Lost Kingdoms (1.1.01) | Medium for SoC | C04-0015 |\n| 2025-11 | **Civilization buff switching at City Hall 16** (1.1.01) | Medium: see the days 4–7 audit | C04-0016 |\n| 2025-11 | **Auto-peacekeeping** gets batch assignment and group attacks (1.1.01) | High for time budget: no need for scripts | A09-0008 |\n| 2025-12 | **Daily AP claim** can be taken whenever AP is below cap and may push AP above it; **Army Groups** for all SoC alliances (1.1.02) | Medium | C04-0032 |",
+    "why_md": "A returner who left in 2025 mostly missed quality-of-life changes and SoC systems. The two that change concrete decisions are the commander rework (some commanders can no longer be swapped) and the full-refund equipment dismantle.",
+    "cards": [
+      "A09-0008",
+      "C04-0009",
+      "C04-0010",
+      "C04-0015",
+      "C04-0016",
+      "C04-0017",
+      "C04-0018",
+      "C04-0019",
+      "C04-0020",
+      "C04-0021",
+      "C04-0022",
+      "C04-0029",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0009",
+      "C04-0010",
+      "C04-0015",
+      "C04-0016",
+      "C04-0017",
+      "C04-0018",
+      "C04-0019",
+      "C04-0020",
+      "C04-0021",
+      "C04-0022",
+      "C04-0029",
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "All C04 rows are patch-state cards (official notes, status bruto). Oasis Bazaar permanent access is a pioneer in select kingdoms (C04-0009). A09-0008 is firm.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-changed-2026-01-to-2026-06",
+    "title": "What changed: if you stopped between January and June 2026 (1.1.03–1.1.09)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 50,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| If you stopped before | Change | Impact for a returner | Card |\n|---|---|---|---|\n| 2026-01-20 | **Armament honing** (Legendary armaments): +0.2% per hone up to +3.5% for unit Attack/Defense/Health/March Speed, or +0.1% up to +2.0% all damage; Honing Stones only from the Autarch-limited section of the Lost Kingdom Inscription Shop (1.1.03) | Medium for SoC | C04-0012 |\n| 2026-01 | **Kingdom Merger** needs 2 kingdoms (was 3) and 150 active governors (was 200); SoC coalitions start with 4 alliances (was 2) (1.1.03) | Medium: your kingdom may have merged | C04-0013 |\n| 2026-01 | In SoC you can **no longer attack cities inside other alliances' territory in the Home Kingdom** (1.1.03) | Medium for SoC | C04-0014 |\n| 2026-02-27 | **Talent/inscription rework**: in Season 2+ every \"skill damage taken\" reduction also reduces **combo and smite** damage (1.1.04) | High: talent builds made before this undervalue those talents | C04-0011 |\n| 2026-02 | Acclaim from level-1 units cut (anti T1 trading); **Acclaim Shop** (pioneer) with Recovery Potions (1.1.04) | Medium for SoC | C04-0015 |\n| 2026-03-24 | **Immigration age limits tightened**: same-season into a first-story SoC kingdom **150 days** (was 240); cross-season into Season 2 **80** (was 120); into Season 3 **120** (was 180); new kingdoms locked from same-season immigration until end of Season 1 (pioneer) (1.1.06) | **High** for the migrate option | C04-0008 |\n| 2026-03/04 | Oasis Bazaar permanent in SoC via Trading Post Lv25 (pioneer); limited-time gem events to reset a Legendary item's special talent or dismantle one item with all materials returned (1.1.06) | Medium | C04-0009, C04-0010 |\n| 2026-03 | **Wedge Formation II** (+12% skill damage) (1.1.06) | Low–medium | C04-0029 |\n| 2026-05-07 | **Conduct Score**: scripts and cheats lose score and get penalties, SoC first (1.1.07) | **High**: an old bot habit is now detected in game | C04-0006 |\n| 2026-05 | **King of All Britain** pioneered as the Season 3 story (1.1.07) | Medium for Season 3 kingdoms | C04-0007 |\n| 2026-06-03 | **Rest Mode** vote for a Lost Kingdom season (pioneer; >50% of kingdoms) (1.1.08) | Low | C04-0031 |\n| 2026-06-30 | **Resource boost items and Deceptive Troops removed** (inventories converted); VIP production bonuses raised: VIP0–5 = +5/+10/+15/+20/+28/+37%, above VIP5 +25% relative to old values; daily quests needing boosts replaced by login and alliance-donation quests (1.1.09) | **High** for your daily routine | C04-0004 |\n| 2026-06-30 | **Legendary Pelagius** event from day 5 of new kingdoms (1.1.09) | Low for returners (new-kingdom feature); relevant only if you restart | C04-0005 |",
+    "why_md": "This is the most recent period with official notes. A player who left in early 2026 mainly needs the immigration cut (it decides whether moving is possible), the boost removal (it changes the daily routine) and the Conduct Score (it makes scripts risky).",
+    "cards": [
+      "C04-0004",
+      "C04-0005",
+      "C04-0006",
+      "C04-0007",
+      "C04-0008",
+      "C04-0009",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0013",
+      "C04-0014",
+      "C04-0015",
+      "C04-0029",
+      "C04-0031"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0005",
+      "C04-0006",
+      "C04-0007",
+      "C04-0008",
+      "C04-0009",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0013",
+      "C04-0014",
+      "C04-0015",
+      "C04-0029",
+      "C04-0031"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "All rows are patch-state cards (official notes, status bruto). Several items are pioneers in select kingdoms only (same-season immigration lock, Oasis Bazaar permanent access, Rest Mode, Acclaim Shop, King of All Britain in Season 3), so they may not apply to your kingdom.",
+    "gaps": [
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-changed-since-1-1-09",
+    "title": "What changed: July 2026 to now (1.1.10–1.1.12, third-party only)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 60,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "There are **no official English patch notes after 1.1.09** (2026-06-30). Versions 1.1.10 (2026-07-30), 1.1.11 (2026-08-27) and 1.1.12 (2026-09-22) are known only from a commercial third-party blog [C04-0001]. Treat this table as reported, not confirmed.\n\n| Reported in | Change | Impact for a returner | Card |\n|---|---|---|---|\n| 1.1.10 (Jul 2026) | SoC story **Mighty Assembly** (pioneer); **Yahya ibn Khalid**, Legendary gathering commander from Season 1; Pincer Formation changed to +12% smite | Low–medium | C04-0003 |\n| 1.1.12 (Sep 2026) | **Season 1 Wheel of Fortune needs Spin Tickets** | Medium | C04-0022 |\n| 1.1.12 (Sep 2026) | Radiant Rivalry (1v1 kingdom event) widened; Eve of the Crusade opens with the Lost Kingdom; Acclaim added to earlier seasons; Chronicle key chapters fixed to Friday–Saturday | Low–medium | C04-0002 |\n\n**Migration rules may have changed in this period** and are not confirmed (L-B06-03). Check the in-game immigration screen before you rely on any number in the migration blocks.",
+    "why_md": "A player who left only a few months ago needs to know that the most recent changes are the least verified. Showing them separately keeps the confirmed periods clean.",
+    "cards": [
+      "C04-0001",
+      "C04-0002",
+      "C04-0003",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0001",
+      "C04-0022"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "C04-0002 and C04-0003 are bruto/baixa (single commercial T3 source, not verified). The Season 1 part of C04-0022 is T3 only. C04-0001 and C04-0022 are patch-state cards.",
+    "gaps": [
+      "L-B06-03",
+      "L-B01-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-plan-days-1-3",
+    "title": "14-day plan, days 1–3: restart the streaks, find your people, stop the leaks",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Goal: lose nothing more while you read the rest of this guide. **Do not spend sculptures, armament materials or saved speedups yet**: the days 4–7 audit may change where they should go.\n\n**Day 1**\n- **Claim the daily VIP chest** and keep claiming it every day: the streak gives 40 VIP points on day 1, +20 per consecutive day, capped at **200/day** (reached on day 9 of the streak); missing a day resets it to 40. The first 9 days add up to **1,080** VIP points [A05-0003].\n- **Reach 100 points in Daily Objectives**: the final chest gives **100 gems** (plus 1 Golden Key, 1 Magic Box, 3 Epic Commander Sculptures) and is the only guaranteed daily gem source found [A04-0001].\n- **Claim daily AP** even if your AP looks full: since 1.1.02 the claim may push AP above the cap [C04-0032, A09-0001].\n- **Secure the account**: never share your password or let anyone else log in, including \"helpers\" offering to run your account [C02-0005]. Binding and recovery steps are not covered by a card (PROPOSED-ACCOUNT-RECOVERY).\n\n**Day 2**\n- **Check your alliance.** Returning players often find their alliance dead or with an absent leader, sometimes with themselves as leader [B04-0004]. If it is inactive, move to an **active, spending alliance**: alliance gift chests are a major source of sculptures, keys and VIP points [A06-0516].\n- **Protect resources**: keep raw resources within Storehouse protection and the rest as resource items; items and gems cannot be plundered [A03-0006, A03-0007].\n\n**Day 3**\n- **Talk to kingdom leadership** (king or top alliance). Ask: which stage is the kingdom in, is there a post-KvK migration list you might be on (kingdoms publish lists of low-DKP accounts that must leave) [B06-0005], and, if the kingdom is in SoC, whether a **Vacation Permit** is available for you [B03-0007].\n- Read the \"What changed\" blocks from your stop date.",
+    "why_md": "The first three days decide whether a returner stays. Streaks and the daily gem chest compound from day 1, so they come first; the alliance and the kingdom's view of you decide whether staying is even possible, so they come before any big spending.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A04-0001",
+      "A05-0003",
+      "A06-0516",
+      "A09-0001",
+      "B03-0007",
+      "B04-0004",
+      "B06-0005",
+      "C02-0005",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B04-0004 (organizado/baixa) and B06-0005 (organizado/media) describe player practice, not game rules. C02-0005 quotes the ToS but is organizado. C04-0032 is a patch-state card. Whether a returning account gets special rewards on login is unknown.",
+    "gaps": [
+      "PROPOSED-ACCOUNT-RECOVERY",
+      "PROPOSED-RETURNER-REWARDS",
+      "L-A03-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-plan-days-4-7",
+    "title": "14-day plan, days 4–7: audit the account and use the respec tools before investing",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Goal: know what you have and fix past investments **before** you spend anything new. Then make the stay / migrate / restart decision (next block) by day 7.\n\n| Check | What the game now allows | Card |\n|---|---|---|\n| Commanders you regret | **Legendary Commander Swap** swaps levels, skill levels and stars of two Legendary commanders using Swap Tickets; developers said it targets new kingdoms around the end of Season 2, **once per character**. **Gathering of Heroes** gives points to recruit Legendaries you do not own | C04-0023 |\n| Takeda, Cyrus, Cheok, Bertrand | Moved to Season 2 and **cannot be swapped**; Cheok and Bertrand were reworked | C04-0021 |\n| Legendary armaments | **Armament Conversion** moves a Legendary armament to the same slot of another formation; in SoC, **honing** adds small bonuses | C04-0023, C04-0012 |\n| Legendary equipment with a special talent | Dismantle refunds **100% of forging** and **50% of awakening** cost; limited-time gem events (from Apr 2026) reset a special talent or dismantle one item with all materials returned | C04-0010 |\n| Talents (Season 2+) | \"Skill damage taken\" reductions now also cut combo and smite damage: rebuild old talent pages with this in mind | C04-0011 |\n| Civilization | City Hall 16 unlocks civilization **buff switching** (since 1.1.01) [C04-0016]. A full civilization change otherwise costs **10,000 gems** or **2,000,000 individual credits** [A14-0002] | C04-0016, A14-0002 |\n\n**Then concentrate**: finish **one complete march** before starting others [A06-0500], and keep universal (gold) sculptures for one long-term Legendary, not for gatherers or stopgaps [A06-0510].\n\n**Set up a routine you can keep**: use built-in **auto-peacekeeping** for barbarians, not scripts (scripts lose Conduct Score since 1.1.07) [A09-0008, C04-0006].",
+    "why_md": "A returning account often holds resources and commanders that were built for an older meta. Since 2025 several respec tools exist, so the cheapest progress is often undoing a past mistake rather than starting a new investment. Checking first avoids spending twice.",
+    "cards": [
+      "A06-0500",
+      "A06-0510",
+      "A09-0008",
+      "A14-0002",
+      "C04-0006",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0016",
+      "C04-0021",
+      "C04-0023"
+    ],
+    "patch_cards": [
+      "C04-0006",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0016",
+      "C04-0021",
+      "C04-0023"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0023, C04-0021, C04-0012, C04-0010, C04-0011, C04-0016 and C04-0006 are patch-state cards. Whether a returner in an older kingdom (already past Season 2) can still enter the Commander Swap event is not stated in any card; the dev Q&A only targets new kingdoms around the end of Season 2. Mechanics and cost of CH16 buff switching are unmeasured (L-A14-01).",
+    "gaps": [
+      "PROPOSED-SWAP-ACCESS",
+      "L-A14-01",
+      "L-A06-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-plan-days-8-14",
+    "title": "14-day plan, days 8–14: a routine that does not burn you out again",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Goal: a daily routine you can keep after day 14. By now the VIP streak reaches its **200/day** cap (day 9 of an unbroken streak) [A05-0003].\n\n**Every day**\n- Daily Objectives to 100 points [A04-0001]; 20 alliance helps are worth 10 Daily Objective points [A10-0006].\n- Spend regenerating AP instead of letting it sit at the cap; save AP recovery items for events [A09-0007]. Free recurring AP: the daily claim, one 100 AP item from the 60-point Daily Objectives chest, and up to 30 × 100 AP per week from the VIP Shop at 12,000 food each (VIP 2+) [A09-0006].\n- No resource boosts to use any more: VIP now gives larger production bonuses instead [C04-0004].\n\n**If your kingdom is in a Lost Kingdom season**\n- Keep hospitals large and clear before fights: wounded troops beyond hospital capacity die [A08-0502]. The Hall of Heroes returns part of the resources spent healing at the end of the Lost Kingdom [C04-0028].\n- Wheel of Fortune needs **Spin Tickets** (Season 3/SoC since Mar 2025, Season 2 since May 2025, Season 1 reportedly since Sep 2026); do not use old gem-per-spin plans [C04-0022].\n- In SoC, surplus resources can be sold for gems at the **Oasis Bazaar** (weekly limits; permanent access via Trading Post Lv25 is a pioneer) [C04-0009].\n\n**Day 14 review**: are you still logging in daily, and is the kingdom treating you as a member? If not, re-read the stay / migrate / restart block. If yes, switch to the regular F2P daily-routine blocks.\n\nMinutes per task are not measured yet (L-A10-01); keep the routine short at first.",
+    "why_md": "Returners who quit again usually do it in the second week, when the novelty ends and an old, heavy routine comes back. A short, current routine (no boosts, auto-peacekeeping, AP claimed above cap) keeps the account moving at lower cost.",
+    "cards": [
+      "A04-0001",
+      "A05-0003",
+      "A08-0502",
+      "A09-0006",
+      "A09-0007",
+      "A10-0006",
+      "C04-0004",
+      "C04-0009",
+      "C04-0022",
+      "C04-0028"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0009",
+      "C04-0022",
+      "C04-0028"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0004, C04-0022, C04-0009 and C04-0028 are patch-state cards; the Season 1 part of C04-0022 is T3 only. The daily AP claim amount in 2026 is not re-measured (L-A09-02). Real daily gem income beyond the 100-gem chest is unknown (L-A04-01).",
+    "gaps": [
+      "L-A10-01",
+      "L-A09-02",
+      "L-A04-01",
+      "L-A10-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-decision-stay-migrate-restart",
+    "title": "Stay, migrate or restart: the conditions that decide it",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Decide by day 7. Check the conditions in this order; the first one that fails usually decides for you.\n\n| Option | Conditions that must hold | Card |\n|---|---|---|\n| **Migrate (same season)** | Your character is at most **150 days older** than a target SoC kingdom in its first story; new kingdoms may be locked from same-season immigration until the end of Season 1 (pioneer) | B06-0003, C04-0008 |\n| **Migrate (cross-season)** | Into Season 2: at most **80 days** older; into Season 3: at most **120 days**. Power between **10M** and **85M**; a refundable **20,000-gem** deposit when eligibility is granted (lost if not used) | B06-0003, C04-0025 |\n| Migrate: what players report on top | CH16+, no alliance, troops home, resources within Storehouse protection, Passport Pages scaled to power, about 30 days of cooldown after a move | B06-0001 |\n| Migrate: the target kingdom's side | The king sets the immigration power cap and approves special immigration, but cannot bypass season, age, cooldown or system rules [B06-0002]; kingdoms add their own forms and minimums [B06-0004] and expect you to ask first [B03-0006] | B06-0002, B06-0004, B03-0006 |\n| **Stay** | You pass none of the age rules above, **or** the kingdom is active and leadership accepts you. In SoC, a **Vacation Permit** keeps you out of the matchmaking score and, if you leave later, means fewer Passport Pages | B03-0007 |\n| **Restart** | Only if the account is not worth keeping. A new character gets **no Beginner's Immigration** since 2025-03-26 (no jumping) [C04-0026]; KvK1 starts around **kingdom day 100** [B01-0500]; and the F2P–spender gap is largest in new kingdoms [B01-0506] | C04-0026, B01-0500, B01-0506 |\n\n**Signals that point to moving rather than staying:** your name is on a post-KvK migration list with a deadline [B06-0005], or your alliance and kingdom are inactive [B04-0004].\n\n**Never buy or sell an account to skip this decision**: accounts and virtual items are not user property and may not be sold or transferred [C02-0010].",
+    "why_md": "\"No kingdom accepts returning players\" and \"I'm too old to migrate\" are the two most common returner complaints (pain D-0016). The age and power rules are game rules (firm or official notes); everything else is kingdom practice that can be negotiated. Restarting lost its main advantage when jumping ended, so it is the last option, not the default.",
+    "cards": [
+      "B01-0500",
+      "B01-0506",
+      "B03-0006",
+      "B03-0007",
+      "B04-0004",
+      "B06-0001",
+      "B06-0002",
+      "B06-0003",
+      "B06-0004",
+      "B06-0005",
+      "C02-0010",
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B06-0001 (passport table, CH16, 30-day cooldown; T3), B06-0002, B06-0004, B06-0005 are organizado; B03-0006 and B04-0004 are organizado/baixa; B01-0506 is verificado/baixa; C02-0010 quotes the ToS but is organizado. C04-0008, C04-0025 and C04-0026 are patch-state cards; C04-0026 rests on an in-game mail plus wiki/guide. Migration rules may have changed in 1.1.10–1.1.12 (L-B06-03).",
+    "gaps": [
+      "L-B06-01",
+      "L-B06-02",
+      "L-B06-03",
+      "L-B03-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-returning-into-soc",
+    "title": "Returning into a Season of Conquest kingdom: what is new there",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 50,
+    "stage": [
+      "soc"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "If your kingdom reached Season of Conquest while you were away, these systems are new to you:\n\n- **Registration** for a SoC story needs **City Hall 25**; after a season ends the next registration can start immediately [C04-0033].\n- **Acclaim** is the KvK contribution currency, earned from severe wounds and kills (inflicted and suffered), scaled by troop level; some Crusader Achievements need it [C04-0015].\n- **Army Groups**: one officer controls troops that members assign [C04-0032].\n- You **cannot attack cities inside other alliances' territory** in the Home Kingdom once SoC starts [C04-0014].\n- **Conduct Score** penalises scripts and cheats, rolled out in SoC first [C04-0006].\n- **Crystal tech** was reworked: invest only in your preferred unit type [C04-0018].\n- **Oasis Bazaar** (Trading Post Lv25; pioneer) sells resources for gems [C04-0009]; **armament honing** uses Honing Stones from the Lost Kingdom Inscription Shop [C04-0012].\n- **Vacation Permit**: if you cannot play the season fully, ask the king; you will not count toward the matchmaking score but cannot leave the starting province [B03-0007].\n\nSeveral of these are pioneers in select kingdoms only; check in game which ones your kingdom has.",
+    "why_md": "A returner whose kingdom moved from Season 1–3 to SoC faces a different game: contribution is tracked by Acclaim, and old tactics such as attacking cities in others' home territory no longer work. Knowing the new rules avoids being listed as low-contribution in the first season back.",
+    "cards": [
+      "B03-0007",
+      "C04-0006",
+      "C04-0009",
+      "C04-0012",
+      "C04-0014",
+      "C04-0015",
+      "C04-0018",
+      "C04-0032",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0006",
+      "C04-0009",
+      "C04-0012",
+      "C04-0014",
+      "C04-0015",
+      "C04-0018",
+      "C04-0032",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "All C04 cards here are patch-state cards (official notes, status bruto); Oasis Bazaar permanent access and the Acclaim Shop are pioneers. B03-0007 is firm. Vacation Permit quotas per kingdom are unknown (L-B03-03).",
+    "gaps": [
+      "L-B03-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-mistakes-returners-make",
+    "title": "Mistakes returning players make",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Spending sculptures before checking the respec tools.** Commander Swap, Armament Conversion and the full-refund equipment dismantle may fix an old investment more cheaply [C04-0023, C04-0010]; four commanders can no longer be swapped [C04-0021].\n2. **Following the routine you remember.** Resource boosts are gone [C04-0004]; Wheel of Fortune needs Spin Tickets [C04-0022]; daily AP can be claimed above the cap [C04-0032].\n3. **Using old talent pages in Season 2+.** Damage-reduction talents now also cut combo and smite damage [C04-0011].\n4. **Going back to bots or scripts.** They break the ToS [C02-0002] and lose Conduct Score since 1.1.07 [C04-0006]; use auto-peacekeeping [A09-0008].\n5. **Breaking the VIP streak in week 1.** One missed day resets it to 40 points [A05-0003].\n6. **Migrating on old numbers or without asking.** Age limits were cut in March 2026 [C04-0008]; kingdoms expect you to ask the king first, and unannounced migrants may be attacked [B03-0006].\n7. **Leaving a returner's stockpile as raw resources.** Raw resources above Storehouse protection can be plundered; items cannot [A03-0007].\n8. **Restarting to \"jump\" to a fresh kingdom.** Beginner's Immigration is no longer given to new characters [C04-0026].\n9. **Letting someone else play the account, or buying one.** Account sharing and selling accounts or items are prohibited [C02-0005, C02-0010].",
+    "why_md": "Each item is a habit that was reasonable when the player left and is wrong or risky now. Listing them in one place is faster than finding them across the era blocks.",
+    "cards": [
+      "A03-0007",
+      "A05-0003",
+      "A09-0008",
+      "B03-0006",
+      "C02-0002",
+      "C02-0005",
+      "C02-0010",
+      "C04-0004",
+      "C04-0006",
+      "C04-0008",
+      "C04-0010",
+      "C04-0011",
+      "C04-0021",
+      "C04-0022",
+      "C04-0023",
+      "C04-0026",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0006",
+      "C04-0008",
+      "C04-0010",
+      "C04-0011",
+      "C04-0021",
+      "C04-0022",
+      "C04-0023",
+      "C04-0026",
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C02-0002, C02-0005 and C02-0010 quote the ToS but are organizado. B03-0006 is organizado/baixa (player practice). The C04 cards are patch-state cards; C04-0026 rests on an in-game mail plus wiki/guide.",
+    "gaps": [
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ret-open-pending",
+    "title": "Open questions for returning players (pending research)",
+    "phase": "anytime",
+    "section": "open",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "These parts of the returning-player guide stay empty until measured or sourced:\n- **Returner rewards / comeback events**: whether they exist, what they give, how long they last, and how long you must be away to qualify (PROPOSED-RETURNER-REWARDS).\n- **What happens to an inactive city**: shield state, whether it can be burned or relocated, and whether inactivity affects alliance rank or titles (PROPOSED-INACTIVE-ACCOUNT-STATE). Leadership transfer when an R5 is inactive (L-B04-03).\n- **Commander Swap access for older kingdoms**: whether a returner whose kingdom is past Season 2 can still use the once-per-character Swap event (PROPOSED-SWAP-ACCESS).\n- **Account binding and recovery steps** (PROPOSED-ACCOUNT-RECOVERY).\n- **Migration changes in 1.1.10–1.1.12** (L-B06-03), the passport table in game (L-B06-01), the king's immigration cap UI (L-B06-02) and Vacation Permit quotas (L-B03-03).\n- **Current commander meta** for a returner's rebuild (L-A06-01) and CH16 buff-switching cost (L-A14-01).\n- **Time per daily task** (L-A10-01) and the current Daily Objectives list after 1.1.09 (L-A10-02).",
+    "why_md": "A returner needs to know which parts of the advice are unconfirmed. Listing them also tells the research side what to measure with an account that has been away.",
+    "cards": [],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "",
+    "gaps": [
+      "PROPOSED-RETURNER-REWARDS",
+      "PROPOSED-INACTIVE-ACCOUNT-STATE",
+      "PROPOSED-SWAP-ACCESS",
+      "PROPOSED-ACCOUNT-RECOVERY",
+      "L-B04-03",
+      "L-B06-03",
+      "L-B06-01",
+      "L-B06-02",
+      "L-B03-03",
+      "L-A06-01",
+      "L-A14-01",
+      "L-A10-01",
+      "L-A10-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  }
+]
