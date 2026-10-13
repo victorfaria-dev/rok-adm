@@ -48,9 +48,29 @@ describe("guide payload (build time)", () => {
     expect(JSON.stringify(budget)).not.toContain("invalidatedBy");
   });
 
-  it("labels task-list checkboxes", () => {
-    const html = renderMarkdown("- [ ] one\n- [x] two");
-    expect(html.match(/<input [^>]*type="checkbox"[^>]*>/g)?.every((i) => i.includes("aria-label="))).toBe(true);
+  it("renders task lists as plain list items, without fake checkboxes", () => {
+    for (const src of ["- [ ] one\n- [x] two", "- [ ] one\n\n- [x] two\n"]) {
+      const html = renderMarkdown(src);
+      expect(html).not.toContain("<input");
+      expect(html.match(/<li class="ko-task[^"]*">/g)).toHaveLength(2);
+      expect(html).toContain('<li class="ko-task ko-task-done">');
+      expect(html).toContain('<span class="visually-hidden">Done: </span>');
+    }
+  });
+
+  it("names each table region after its block, uniquely across the guide", () => {
+    const one = renderMarkdown("| a | b |\n|---|---|\n| 1 | 2 |", "Daily 15 minutes");
+    expect(one).toContain('aria-label="Daily 15 minutes, table (scrolls sideways)"');
+    const two = renderMarkdown("| a |\n|---|\n| 1 |\n\ntext\n\n| b |\n|---|\n| 2 |", "X");
+    expect(two).toContain('aria-label="X, table 1 (scrolls sideways)"');
+    expect(two).toContain('aria-label="X, table 2 (scrolls sideways)"');
+    for (const set of Object.keys(BLOCK_SETS)) {
+      const html = buildGuidePayload(set).blocks.flatMap((b) => [b.bodyHtml, b.whyHtml, b.uncertain_notes ?? "", b.low_spender_note ?? "", b.split_views ?? ""]).join("");
+      const labels = [...html.matchAll(/role="region" aria-label="([^"]*)"/g)].map((m) => m[1]);
+      expect(labels.length, set).toBeGreaterThan(0);
+      expect(new Set(labels).size, set).toBe(labels.length);
+      expect(html, set).not.toContain('type="checkbox"');
+    }
   });
 
   it("parses the patch reference into a version and a note", () => {

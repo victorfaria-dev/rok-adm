@@ -2,6 +2,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -78,6 +79,20 @@ test("the theme picker closes when focus leaves it", async ({ page, isMobile }) 
   await expect(picker.locator("input:focus")).toHaveCount(1);
   await page.keyboard.press("Tab"); // out of the picker
   await expect(picker).not.toHaveAttribute("open", "");
+});
+
+for (const url of ["/guide/", "/guides/new-kingdom/"]) {
+  test(`${url}: table regions have unique names and the prose has no fake checkboxes`, async ({ page }) => {
+    await page.goto(url);
+    const result = await new AxeBuilder({ page }).withRules(["landmark-unique"]).analyze();
+    expect(result.violations.map((v) => v.id)).toEqual([]);
+    await expect(page.locator(".g-prose input[type=checkbox]")).toHaveCount(0);
+  });
+}
+
+test("the guide's task list renders as list items with a done/undone marker", async ({ page }) => {
+  await page.goto("/guide/");
+  await expect(page.locator(".g-prose li.ko-task").first()).toBeAttached();
 });
 
 test("home counts the researched fact cards from the data", async ({ page }) => {

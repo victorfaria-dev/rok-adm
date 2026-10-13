@@ -28,17 +28,33 @@ export const BLOCK_SETS: Record<string, readonly GuideBlock[]> = {
 const md = new Marked({ gfm: true, breaks: false });
 const CARD_RE = /\b(?:A\d{2}|B\d{2}|C\d{2})-\d{4}\b/g;
 
-/** Markdown → HTML (trusted repo content). Tables get a focusable scroll wrapper; fact ids get mono. */
-export function renderMarkdown(text: string): string {
+/**
+ * Markdown → HTML (trusted repo content). Tables get a focusable scroll region named
+ * after `label` (the block title), so every region on a page has its own name; fact ids
+ * get mono. GFM task lists become plain list items with a decorative marker: there is no
+ * persisted checklist yet, so no fake (disabled) checkboxes.
+ */
+export function renderMarkdown(text: string, label = "Table"): string {
   const html = md.parse(text, { async: false }) as string;
+  const tables = (html.match(/<table>/g) ?? []).length;
+  let n = 0;
   return html
-    .replace(/<table>/g, '<div class="ko-table" tabindex="0" role="region" aria-label="Table, scrolls sideways"><table>')
+    .replace(/<table>/g, () => {
+      n += 1;
+      const name = `${label}${tables > 1 ? `, table ${n}` : ", table"} (scrolls sideways)`;
+      return `<div class="ko-table" tabindex="0" role="region" aria-label="${escapeAttr(name)}"><table>`;
+    })
     .replace(/<\/table>/g, "</table></div>")
-    // GFM task lists: read-only checkboxes need a name (axe "label").
-    .replace(/<input (checked="" )?disabled="" type="checkbox">/g, (_m, on: string | undefined) =>
-      `<input ${on ?? ""}disabled="" type="checkbox" aria-label="${on ? "Checklist item, done" : "Checklist item"}">`)
+    .replace(/<li>(<p>)?<input (checked="" )?disabled="" type="checkbox">\s?/g, (_m, p: string | undefined, on: string | undefined) =>
+      on
+        ? `<li class="ko-task ko-task-done">${p ?? ""}<span class="visually-hidden">Done: </span>`
+        : `<li class="ko-task">${p ?? ""}`)
     .replace(CARD_RE, (id) => `<span class="ko-ref">${id}</span>`)
     .trim();
+}
+
+function escapeAttr(s: string): string {
+  return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 }
 
 export function patchBadge(b: GuideBlock): PatchBadge {
@@ -63,16 +79,16 @@ export function cardBadge(id: string): CardBadge {
 }
 
 function toPayloadBlock(b: GuideBlock): PayloadBlock {
-  const opt = (s: string | null) => (s && s.trim() !== "" ? renderMarkdown(s) : null);
+  const opt = (s: string | null, what: string) => (s && s.trim() !== "" ? renderMarkdown(s, `${b.title}, ${what}`) : null);
   return {
     ...b,
     body_md: "",
     why_md: "",
-    bodyHtml: renderMarkdown(b.body_md),
-    whyHtml: renderMarkdown(b.why_md),
-    uncertain_notes: opt(b.uncertain_notes),
-    low_spender_note: opt(b.low_spender_note),
-    split_views: typeof b.split_views === "string" && b.split_views !== "" ? renderMarkdown(b.split_views) : null,
+    bodyHtml: renderMarkdown(b.body_md, b.title),
+    whyHtml: renderMarkdown(b.why_md, `${b.title}, why`),
+    uncertain_notes: opt(b.uncertain_notes, "uncertain"),
+    low_spender_note: opt(b.low_spender_note, "low spender note"),
+    split_views: typeof b.split_views === "string" && b.split_views !== "" ? renderMarkdown(b.split_views, `${b.title}, split views`) : null,
     patch: patchBadge(b),
   };
 }
