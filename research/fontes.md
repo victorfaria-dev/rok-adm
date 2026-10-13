@@ -150,3 +150,30 @@ Fichas B02–B09 migradas para slugs em 2026-10-13 (PL01–PL13).
 - `src:heaven-guardian` declara copiar um guia-fonte; tabelas de Trading Post ≈ `src:rkg`.
 - `src:rkg-lyceum` (texto oficial do quiz) **é** independente de `src:fandom`, mas pode estar desatualizado.
 - `src:youtube-summary` é derivado de `src:youtube` e não é literal.
+
+## Onda J (2026-10-13) — fontes novas por frente
+
+Cada frente da onda J registra aqui, **só na sua subseção**, as fontes novas que cita (mesmas colunas da tabela de guias). Evita conflito de merge entre worktrees.
+
+### J1 — Progressão tardia: comandantes e equipamento (A06, A07)
+
+| Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | IDs antigos | Notas |
+|---|---|---|---|---|---|---|---|---|
+
+<!-- separador J1/J2: não editar -->
+<!-- . -->
+<!-- . -->
+
+### J2 — Progressão tardia: tropas, cura, pesquisa, economia de gemas (A08, A02, A04, B01)
+
+| Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | IDs antigos | Notas |
+|---|---|---|---|---|---|---|---|---|
+
+<!-- separador J2/J3: não editar -->
+<!-- . -->
+<!-- . -->
+
+### J3 — Compras baratas (Low spender) e valor por dólar (A12, A11)
+
+| Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | IDs antigos | Notas |
+|---|---|---|---|---|---|---|---|---|
