@@ -174,12 +174,12 @@
       "C04-0028"
     ],
     "confidence": "medium",
-    "uncertain_notes": "C04-0028 is a patch-state card (official 1.0.89 notes); the refund percentage and any unit-return rate are not stated (PROPOSED-HALL-OF-HEROES-RETURN). A08-0502 rests on third-party guides only; severe-wound rules lack official text (L-A08-03). Storehouse protection values below L25 differ between sources (L-A03-05).",
+    "uncertain_notes": "C04-0028 is a patch-state card (official 1.0.89 notes); the refund percentage and any unit-return rate are not stated (L-A08-04). A08-0502 rests on third-party guides only; severe-wound rules lack official text (L-A08-03). Storehouse protection values below L25 differ between sources (L-A03-05).",
     "gaps": [
       "L-A03-05",
       "L-A08-03",
       "PROPOSED-ZEROING-LOSS-SCOPE",
-      "PROPOSED-HALL-OF-HEROES-RETURN"
+      "L-A08-04"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
@@ -512,7 +512,7 @@
     "civ": [],
     "consensus": "n/a",
     "split_views": null,
-    "body_md": "These gaps limit the recovery playbook; the blocks above say \"unknown\" instead of guessing:\n- **Peace shields:** durations, costs, sources and what breaks them (PROPOSED-SHIELDS).\n- **Scope of a zeroing:** whether anything besides troops and plunderable raw resources can be lost (PROPOSED-ZEROING-LOSS-SCOPE).\n- **Heal vs retrain cost** for T4/T5 (L-A08-01) and the official **severe-wound** rules (L-A08-03).\n- **Hall of Heroes** return percentage after a Lost Kingdom [C04-0028] (PROPOSED-HALL-OF-HEROES-RETURN).\n- **City relocation (teleport)** after a zeroing: costs and rules (PROPOSED-TELEPORT).\n- **Storehouse protection** L6–L24 (L-A03-05) and **migration rules** after 1.1.09 (L-B06-03).\n- **Rebuild speed:** how many days a F2P needs to regain a march (L-A03-02).",
+    "body_md": "These gaps limit the recovery playbook; the blocks above say \"unknown\" instead of guessing:\n- **Peace shields:** durations, costs, sources and what breaks them (PROPOSED-SHIELDS).\n- **Scope of a zeroing:** whether anything besides troops and plunderable raw resources can be lost (PROPOSED-ZEROING-LOSS-SCOPE).\n- **Heal vs retrain cost** for T4/T5 (L-A08-01) and the official **severe-wound** rules (L-A08-03).\n- **Hall of Heroes** return percentage after a Lost Kingdom [C04-0028] (L-A08-04).\n- **City relocation (teleport)** after a zeroing: costs and rules (PROPOSED-TELEPORT).\n- **Storehouse protection** L6–L24 (L-A03-05) and **migration rules** after 1.1.09 (L-B06-03).\n- **Rebuild speed:** how many days a F2P needs to regain a march (L-A03-02).",
     "why_md": "Listing the unknowns keeps the recovery advice honest and gives the T0 measurement plan a clear target list.",
     "cards": [
       "C04-0028"
@@ -525,7 +525,7 @@
     "gaps": [
       "PROPOSED-SHIELDS",
       "PROPOSED-ZEROING-LOSS-SCOPE",
-      "PROPOSED-HALL-OF-HEROES-RETURN",
+      "L-A08-04",
       "PROPOSED-TELEPORT",
       "L-A08-01",
       "L-A08-03",

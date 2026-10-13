@@ -195,7 +195,8 @@
     "gaps": [
       "L-A12-01",
       "L-A12-03",
-      "PROPOSED-RECHARGE-EVENT"
+      "L-A11-07",
+      "L-A11-08"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
@@ -227,7 +228,7 @@
     "civ": [],
     "consensus": "single-source",
     "split_views": null,
-    "body_md": "Add one step to the F2P 15-minute routine, next to the VIP claim: **claim the 30-day gem supply** (650 gems/day while it runs) [A12-0002].\n\n- The card notes that the supply **requires a daily login to claim** [A12-0002]. Whether a missed day is lost or can be claimed later is **unknown** (gap PROPOSED-SUPPLY-DEPOT-CLAIM).\n- Until that is measured, treat it like the VIP streak: **claim every day** [A05-0003].\n\n**Time cost:** Pending in-game measurement (T0), gap L-A10-01 (the card's notes say seconds).",
+    "body_md": "Add one step to the F2P 15-minute routine, next to the VIP claim: **claim the 30-day gem supply** (650 gems/day while it runs) [A12-0002].\n\n- The card notes that the supply **requires a daily login to claim** [A12-0002]. Whether a missed day is lost or can be claimed later is **unknown** (gap L-A12-05).\n- Until that is measured, treat it like the VIP streak: **claim every day** [A05-0003].\n\n**Time cost:** Pending in-game measurement (T0), gap L-A10-01 (the card's notes say seconds).",
     "why_md": "If unclaimed days are lost, a missed login is gems you already paid for. Bundling the claim with the VIP claim means it costs no extra trip into the game.",
     "cards": [
       "A05-0003",
@@ -238,7 +239,7 @@
     "uncertain_notes": "The daily-claim requirement is in A12-0002's notes, not in its main claim; the missed-day rule is unmeasured.",
     "gaps": [
       "L-A10-01",
-      "PROPOSED-SUPPLY-DEPOT-CLAIM"
+      "L-A12-05"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
@@ -374,7 +375,7 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "- The low-spender advice is to **time purchases around the Recharge event**; one guide says timing the 30-day gem supply (and the 7-day material supply) to give you time for the recharge event should be your top priority [A12-0005].\n- **What is not known:** what the Recharge event pays, how often it runs and whether the passes count toward it. No card states these (gap PROPOSED-RECHARGE-EVENT).\n- **Until measured:** when the 30-day supply runs out, check the event calendar before renewing; if a Recharge event is announced, renew during it. Prices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).",
+    "body_md": "- The low-spender advice is to **time purchases around the Recharge event**; one guide says timing the 30-day gem supply (and the 7-day material supply) to give you time for the recharge event should be your top priority [A12-0005].\n- **What is not known:** what the Recharge event pays, how often it runs and whether the passes count toward it. No card states these (gap L-A11-07).\n- **Until measured:** when the 30-day supply runs out, check the event calendar before renewing; if a Recharge event is announced, renew during it. Prices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).",
     "why_md": "The low-spender sources tie the low-spender advice to this event, so it probably adds value to a purchase you would make anyway. Without its reward table there is nothing more specific to say, and inventing one would be worse.",
     "cards": [
       "A12-0005"
@@ -383,9 +384,10 @@
     "confidence": "pending",
     "uncertain_notes": "A12-0005's sources monetise purchases (bias risk). The 7-day material supply has no firm card of its own and is not part of the ranked pass-only purchases.",
     "gaps": [
-      "PROPOSED-RECHARGE-EVENT",
+      "L-A11-07",
       "L-A11-01",
-      "L-A12-01"
+      "L-A12-01",
+      "L-A11-08"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
@@ -467,7 +469,7 @@
     "civ": [],
     "consensus": "n/a",
     "split_views": null,
-    "body_md": "These gaps weaken the Low blocks above; most close with **store screenshots, no purchase needed** (T0).\n\n| Gap | What it would change | Blocks affected |\n|---|---|---|\n| L-A12-01 in-game prices and contents by region (USD, BRL) | Every price in this guide | all low-* blocks |\n| L-A12-02 Growth Fund milestone table; official VIP per $ | VIP 10 date; Growth Fund value by KvK1 | d41-vip10-reality, low-growth-fund |\n| L-A12-03 first-purchase gem multiplier | Whether the first pack is worth more | low-supply-depot |\n| PROPOSED-RECHARGE-EVENT rewards and cadence | When to renew the supply | low-recharge-event |\n| PROPOSED-SUPPLY-DEPOT-CLAIM missed-day rule | Whether a missed login loses gems | low-daily-supply-claim |\n| L-A05-01 cumulative VIP thresholds | VIP 6 / VIP 10 arithmetic | d41-vip10-reality |\n| L-A11-02 More Than Gems reward table | The 7,000/day tier target | ev-more-than-gems |\n\nPending: a VIP-level requirement for the Growth Fund (an unverified 2019 report) [A12-0001].",
+    "body_md": "These gaps weaken the Low blocks above; most close with **store screenshots, no purchase needed** (T0).\n\n| Gap | What it would change | Blocks affected |\n|---|---|---|\n| L-A12-01 in-game prices and contents by region (USD, BRL) | Every price in this guide | all low-* blocks |\n| L-A12-02 Growth Fund milestone table; official VIP per $ | VIP 10 date; Growth Fund value by KvK1 | d41-vip10-reality, low-growth-fund |\n| L-A12-03 first-purchase gem multiplier | Whether the first pack is worth more | low-supply-depot |\n| L-A11-07 rewards and cadence | When to renew the supply | low-recharge-event |\n| L-A12-05 missed-day rule | Whether a missed login loses gems | low-daily-supply-claim |\n| L-A05-01 cumulative VIP thresholds | VIP 6 / VIP 10 arithmetic | d41-vip10-reality |\n| L-A11-02 More Than Gems reward table | The 7,000/day tier target | ev-more-than-gems |\n\nPending: a VIP-level requirement for the Growth Fund (an unverified 2019 report) [A12-0001].",
     "why_md": "Every Low recommendation rests on seller-site prices and T3 reports. Listing what is unknown lets a reader check the store before trusting a number, and tells the research side what to measure.",
     "cards": [
       "A12-0001"
@@ -479,10 +481,11 @@
       "L-A12-01",
       "L-A12-02",
       "L-A12-03",
-      "PROPOSED-RECHARGE-EVENT",
-      "PROPOSED-SUPPLY-DEPOT-CLAIM",
+      "L-A11-07",
+      "L-A12-05",
       "L-A05-01",
-      "L-A11-02"
+      "L-A11-02",
+      "L-A11-08"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",

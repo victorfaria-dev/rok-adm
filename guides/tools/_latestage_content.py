@@ -149,3 +149,100 @@ block(
     uncertain="A04-0600 (gem priorities after VIP 10, 2022–2023 text without recent confirmation) and A04-0601 (derived gem price) are weak.",
     gaps=["L-A04-07", "L-A04-08"],
 )
+
+# ---- Commanders and equipment (J1 cards) ----
+
+block(
+    "ls-commander-swap",
+    "The Legendary Commander Swap: build one commander, then move it",
+    "plan", 120,
+    "**What it is.** The Legendary Commander Swap (1.0.90) swaps the levels, skill levels and stars of two permanently recruited legendary commanders. Each governor gets **2 swaps**, each commander can be swapped **only once**, and swaps cannot be undone (a one-time gem **Revoke** was added in 1.1.02). Tickets needed grow with the skill-level gap: expertised↔1111 costs **120** tickets, expertised↔5551 costs **2**; level and stars do not change the cost. Per the January 2025 FAQ, tickets cost **100 gems** each (max 120 via gems) or come from a **US$4.99 bundle of 12** (max 120 via the bundle). Since 1.0.94, **Takeda Shingen, Cyrus the Great, Cheok Jun-gyeong and Bertrand du Guesclin can no longer be swapped** [A06-0602].\n\n"
+    "**When.** The window sits at the end of Season 2 / start of Season 3. The January 2025 FAQ said it starts 3 days before the end of Season 2 and lasts 5 days; since 1.1.02 it is listed among Season 3 events, and players in 2025–2026 report it starts right after KvK2 ends [A06-0603]. **Decide your swap targets before KvK2 ends.**\n\n"
+    "**Gathering of Heroes** runs alongside it: event points recruit legendaries you do not own, and the Swap FAQ names it as the way for a Season 2 kingdom to get a Season of Conquest commander to swap into. Since 1.1.02 recruitable commanders come in tiers with rising cost [A06-0604]. Bank event points' worth of activity, gems and speedups before it.\n\n"
+    "**What free and low spenders are told to do:** put universal (gold) sculptures into **one** commander you will actually finish for KvK1–KvK2, instead of several half-built ones, then move that build at the swap to the commander you need for Season 3/SoC. Check first that the commander you plan to swap away is still swappable [A06-0605].",
+    "Sculptures are the scarcest commander resource for a free account. The swap means a finished commander keeps its value when the meta moves, while several half-built ones never become useful. The four non-swappable commanders and the ticket cost are where players get caught out.",
+    stage=["kvk1", "kvk2", "kvk3"], priority=5, consensus="majority", recommended=("f2p", "low"),
+    uncertain="The ticket prices (100 gems, US$4.99 for 12) are from the January 2025 official FAQ and were not re-confirmed officially since; check the event page. The exact swap day comes from player reports (A06-0603).",
+    gaps=["L-A06-08", "L-A06-09"],
+    low=("A low spender can buy swap tickets instead of gems (US$4.99 for 12 per the January 2025 FAQ) [A06-0602]; at 120 tickets for an expertised↔1111 swap, plan the ticket budget a season ahead."),
+)
+
+block(
+    "ls-commander-pools-by-season",
+    "Which commanders you can win depends on your kingdom's season",
+    "plan", 130,
+    "- **Season 3:** since 1.0.91 (Feb 2025) the Mightiest Governor and Wheel of Fortune reward lists in Season 3 kingdoms include all commanders, so Season of Conquest commanders can be won there. The lists still change by patch (1.0.94 moved four commanders to Season 2) [A06-0600].\n"
+    "- **Season of Conquest:** kingdoms entering SoC get a Tavern **Legendary Chest** from day 7, opened with **Sovereign Keys** or gems; since 1.1.02 the SoC Daily Objective chest gives a Sovereign Key instead of a Golden Key, and Silk Road drops can also give Sovereign Keys [A06-0609].\n"
+    "- **King Arthur** was claimable for free through the King's Trials event in kingdoms that completed Season 2 (1.0.90 notes); nothing after January 2025 re-confirms the event [A06-0601, weak card].\n"
+    "- **Release pace.** In 2022 the developers said they would space commander generations about 7 months apart; observed releases have been faster, so any named commander list goes stale within months [A06-0611].\n\n"
+    "**What to do:** save sculptures and event currency for the season in which the commander you want enters the pools, and date every tier list you read.",
+    "Players at KvK2 often chase commanders their kingdom cannot win yet, or invest in a KvK1 favourite just before a better one becomes available. The season gate is official and predictable; the specific names are not.",
+    priority=4, consensus="mechanic",
+    uncertain="A06-0601 (free King Arthur via King's Trials) is weak: official notes from January 2025 only.",
+    gaps=["L-A06-06", "L-A06-07"],
+)
+
+block(
+    "ls-older-legendaries",
+    "Older legendaries: what carries into SoC and what does not",
+    "plan", 140,
+    "2026 tier lists mark a group of older legendaries as worth investing in **only before Season of Conquest**, with no new investment after: Minamoto, Alexander the Great, Mehmed, Saladin, Charles Martel and Richard I are named. Over-investing in KvK1 favourites expecting them to carry into SoC is called a common mistake [A06-0606].\n\n"
+    "**The usual exception is Yi Seong-Gye (YSG):** no longer top of tier lists, but still strong for archers behind newer archer primaries, with Museum relic upgrades; free players are told to build and keep him [A06-0607].\n\n"
+    "**Museum relics** boost specific older commanders; relic bonuses added since 1.0.81 work only in Season of Conquest, and since 1.1.03 some relics (Mary I, Archimedes, Takeda Shingen, Siyaj K'ak') can be bought in Season 3 [A06-0608].\n\n"
+    "**How far a free account gets in SoC is disputed:** one long free account reports T5 plus about one expertised legendary and two or three commanders at ~5511; others say an active VIP 14 player can max about one commander per KvK cycle and field one or two competitive marches [A06-0610, weak card].",
+    "The names above are dated 2026 tier-list opinions, not mechanics. The block is here so a KvK2 player can weigh a sculpture investment against its shelf life, not to rank commanders.",
+    priority=3, consensus="majority", perfil=("f2p", "low"), stage=["kvk1", "kvk2", "kvk3", "soc"],
+    split="Pessimistic: a long F2P account reports about one expertised legendary in SoC. Optimistic: others say an active VIP 14 player maxes about one commander per KvK cycle [A06-0610].",
+    uncertain="A06-0610 (F2P pace in SoC) is weak and divided. Named commanders come from 2026 tier lists (A06-0606, A06-0607) and go stale quickly.",
+    gaps=["L-A06-01", "L-A06-10"],
+)
+
+block(
+    "ls-equipment-by-season",
+    "Equipment after KvK1: armaments, Iconic awakening and SoC shops",
+    "plan", 150,
+    "- **Armaments** arrive mostly from Season 2: Formation Choice Chests and Random Armament Chests come from Lucerne Scrolls, Silk Road, civilization and Lost Kingdom events in Season 2 through SoC; Transmutation Stones and the In Search of Wonders event are Season 3/SoC [A07-0604].\n"
+    "- **Iconic awakening** needs the kingdom in Season 1 or later. Iconic I costs Iconic Crystals and gold; crystals come from the Artisan's Forge event, the Lost Canyon Shop, Crystal Quest rewards, 12 equipment 'Champion' achievements and SoC Crusader achievements; the total a free player can collect is not stated [A07-0601]. One guide says Iconic attributes grow by season group (Seasons 1–2, Season 3, SoC) [A07-0602, weak card] and advises putting the first crystals on accessories [A07-0603, weak card].\n"
+    "- **SoC shops** add channels earlier seasons lack: discounted legendary sculptures and Legendary Equipment Material Choice Chests in the Season Shop, and the smite/combo accessories in the SoC Combat Shop [A07-0605].\n"
+    "- **The 13 'KvK' pieces** (Hammer of the Sun and Moon, Pride of the Khan and others) were announced as restricted to SoC in 2021; it was never re-confirmed and does not say whether it limits use or purchase. Players in 2026 buy them with Conquest Coins in SoC [A07-0600, weak card]. Do not plan a Season 1–3 build around them.\n\n"
+    "**Order that guides agree on:** every main pairing on epic gear before any legendary piece. Whether a free player can finish a full legendary set by SoC is disputed [A07-0606, weak card].",
+    "Equipment sources open by season, so a KvK2 player who plans around SoC-shop items or Iconic tiers of a later season wastes materials. The gated sources are official; the per-season Iconic numbers are not.",
+    priority=3, consensus="mechanic",
+    uncertain="A07-0600 (2021 SoC-only list, never re-confirmed), A07-0602 (Iconic scaling numbers, one 2022 guide), A07-0603 (crystal priority, single source) and A07-0606 (full legendary set for F2P, divided) are weak.",
+    gaps=["L-A07-04", "L-A07-05", "L-A07-07"],
+)
+
+# ---- Low spender at late stages (J3 cards) ----
+
+block(
+    "ls-low-spender-late",
+    "Low spender after KvK1: what still pays, and when to buy",
+    "plan", 160,
+    "**The core does not change.** The community order for small budgets is Growth Fund (once), then the 30-day Gem Supply, then Lucerne Scrolls, then pop-ups such as Writer of History [A12-0615].\n\n"
+    "**Growth Fund is a City Hall 25 purchase in practice:** players report its City Hall 25 milestone alone pays **40,000** of the ~81,000 gems [A12-0605, weak card]; whether buying it late still pays the milestones you already passed is disputed [A12-0606, weak card].\n\n"
+    "**Recharge events change with the season.** Official notes list **Gem Rush** only for kingdoms over 21 days old and **before Season 2**; for Season 2 or later they list Road to Greatness (1.0.82) and Epic Glory (1.0.86) [A11-0600]. Players report that the Gem Supply, material supply and daily offers count toward recharge thresholds, so time renewals inside one [A11-0602, weak card].\n\n"
+    "**Swap tickets.** The Commander Swap can be fed with tickets bought as a US$4.99 bundle of 12 instead of 100 gems each (January 2025 FAQ) [A06-0602].\n\n"
+    "**Daily Special Offers** (about $3 a day, ~$90 a month) use almost the whole Low range; treat them as the ceiling, not the default [A12-0611, weak card].\n\n"
+    "Raw gems per dollar (Growth Fund 5,400, Gem Supply 1,952) are the only defensible value comparison; item values swing rankings by up to 5× [A12-0618, weak card].",
+    "A low spender's money buys the most when it lands on the few high-ratio purchases and inside recharge events; both of those depend on the kingdom's season, which is why this is repeated for later stages.",
+    perfil=("low",), recommended=("low",), priority=4, consensus="majority", confidence="medium",
+    uncertain="A12-0605, A12-0606, A11-0602, A12-0611 and A12-0618 are weak (player reports, seller sites, a derived method with weak inputs). Prices are USD list prices; your store may differ (L-A12-01).",
+    gaps=["L-A12-01", "L-A12-06", "L-A11-07", "L-A11-08"],
+)
+
+block(
+    "ls-open-questions",
+    "Open questions for KvK2, KvK3 and SoC (pending in-game measurement)",
+    "open", 900,
+    "These numbers are not in any source we could verify. Each needs an in-game screenshot or measurement (T0):\n"
+    "- Hall of Heroes return percentage and healing refund percentage by Lost Kingdom tier (L-A08-04).\n"
+    "- Healing vs training cost per unit, T4 vs T5 (L-A08-05); hospital capacity buffs (L-A08-06); whether upgrading T4→T5 costs more than training T5 (L-A08-07).\n"
+    "- Research time to T5 with bonuses applied (L-A02-05); the current crystal tech tree (L-A02-04).\n"
+    "- A healing-speedup budget per KvK (L-A04-09); gem priorities after VIP 14 (L-A04-08); Books of Covenant prices (L-A04-07).\n"
+    "- Current season lengths and the gap between seasons (L-B01-05).\n"
+    "- Commander pools by season (L-A06-06), King's Trials (L-A06-07), current swap timing and free tickets (L-A06-08), Gathering of Heroes costs (L-A06-09).\n"
+    "- Whether the 13 SoC-only equipment pieces are still restricted (L-A07-04); Iconic scaling and crystal totals (L-A07-05); SoC shop prices (L-A07-07).",
+    "Listing what is unknown keeps the guide honest: a player can measure these in their own account, and the research side can close them.",
+    priority=1, consensus="n/a", confidence="pending",
+    gaps=["L-A08-04", "L-A08-05", "L-A08-06", "L-A08-07", "L-A02-04", "L-A02-05", "L-A04-07", "L-A04-08", "L-A04-09", "L-B01-05", "L-A06-06", "L-A06-07", "L-A06-08", "L-A06-09", "L-A07-04", "L-A07-05", "L-A07-07"],
+)
