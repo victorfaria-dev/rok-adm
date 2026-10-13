@@ -19,6 +19,7 @@ import f2pBlocks from "../../../../guides/data/blocks.f2p.json";
 import farmsBlocks from "../../../../guides/data/blocks.farms.json";
 import first30Blocks from "../../../../guides/data/blocks.first30.json";
 import kingdomAdminBlocks from "../../../../guides/data/blocks.kingdomadmin.json";
+import lateStageBlocks from "../../../../guides/data/blocks.latestage.json";
 import lowBlocks from "../../../../guides/data/blocks.low.json";
 import newKingdomBlocks from "../../../../guides/data/blocks.newkingdom.json";
 import recoveryBlocks from "../../../../guides/data/blocks.recovery.json";
@@ -35,6 +36,7 @@ export const BLOCK_SETS: Record<string, readonly GuideBlock[]> = {
   returning: returningBlocks as unknown as GuideBlock[],
   recovery: recoveryBlocks as unknown as GuideBlock[],
   kingdomadmin: kingdomAdminBlocks as unknown as GuideBlock[],
+  latestage: lateStageBlocks as unknown as GuideBlock[],
 };
 
 const md = new Marked({ gfm: true, breaks: false });

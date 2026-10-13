@@ -15,6 +15,7 @@ const GUIDES = [
   ["/guides/returning/", "returning", "Coming back to the game"],
   ["/guides/recovery/", "recovery", "Recovering after being zeroed"],
   ["/guides/kingdom-admin/", "kingdomadmin", "Kingdom administration"],
+  ["/guides/late-game/", "latestage", "Late game guide"],
 ] as const;
 
 async function axe(page: Page) {
@@ -51,7 +52,7 @@ test.describe("without JavaScript", () => {
     await page.goto("/guides/");
     await expect(page.locator("h1")).toHaveText("All guides");
     const entries = page.locator("[data-guide-entry]");
-    await expect(entries).toHaveCount(8);
+    await expect(entries).toHaveCount(9);
     for (const href of ["/guide/", "/guides/new-kingdom/", "/guides/farms/", ...GUIDES.map(([u]) => u)]) {
       await expect(page.locator(`.gi-item h2 a[href="${href}"]`)).toHaveCount(1);
     }

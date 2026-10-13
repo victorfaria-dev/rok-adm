@@ -15,6 +15,8 @@ import {
   type GuideBlock,
   type GuideSetId,
   type LoadedGuideSets,
+  isLateStage,
+  LATE_STAGES,
 } from "../src/index";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
@@ -153,6 +155,43 @@ describe("selectGuide on the wave H sets", () => {
 
   it("a delta id cannot be selected as a guide", () => {
     expect(() => blocksForGuide("low", LOADED, profile())).toThrow();
+  });
+});
+
+describe("late-game guide (wave J)", () => {
+  it("is registered as a standalone guide with ls-* blocks for KvK2, KvK3 and SoC", () => {
+    const set = GUIDE_SETS.find((s) => s.id === "latestage")!;
+    expect(set.kind).toBe("guide");
+    expect(set.file).toBe("blocks.latestage.json");
+    expect(LOADED.latestage!.length).toBeGreaterThan(0);
+    for (const b of LOADED.latestage!) {
+      expect(b.id, b.id).toMatch(/^ls-/);
+      expect(b.stage.some((s) => s === "kvk2" || s === "kvk3" || s === "soc"), b.id).toBe(true);
+    }
+  });
+
+  it("is offered only when the kingdom is at KvK2, KvK3 or SoC", () => {
+    expect(LATE_STAGES).toEqual(["kvk2", "kvk3", "soc"]);
+    for (const kingdomStage of ["pre_kvk", "kvk1"] as const) expect(offered(profile({ kingdomStage }))).not.toContain("latestage");
+    for (const kingdomStage of LATE_STAGES) {
+      expect(isLateStage(kingdomStage)).toBe(true);
+      expect(offered(profile({ kingdomStage, cityHall: 25 }))[0], kingdomStage).toBe("latestage");
+    }
+  });
+
+  it("comes right after the situations the player reported (zeroed, returning), before the rest", () => {
+    const p = profile({ kingdomStage: "soc", returningPlayer: true, role: "lider", cityHall: 25 });
+    expect(offered(p, true).slice(0, 4)).toEqual(["recovery", "returning", "latestage", "kingdomadmin"]);
+  });
+
+  it("shows blocks to a late-stage F2P and Low player, and the Low-only block only to Low", () => {
+    const f2p = shownIds("latestage", profile({ kingdomStage: "kvk3", cityHall: 25 }));
+    const low = shownIds("latestage", profile({ kingdomStage: "kvk3", cityHall: 25, spending: "low" }));
+    expect(f2p.length).toBeGreaterThan(5);
+    expect(f2p).not.toContain("ls-low-spender-late");
+    expect(low).toContain("ls-low-spender-late");
+    expect(shownIds("latestage", profile({ kingdomStage: "soc", cityHall: 25 }))).toContain("ls-crystal-tech");
+    expect(shownIds("latestage", profile({ kingdomStage: "kvk2", cityHall: 25 }))).not.toContain("ls-crystal-tech");
   });
 });
 

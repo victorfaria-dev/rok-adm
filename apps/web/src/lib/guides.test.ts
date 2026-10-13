@@ -23,7 +23,7 @@ describe("guide directory", () => {
   });
 
   it("builds static pages at the agreed slugs", () => {
-    expect(STATIC_GUIDES.map((g) => g.slug).sort()).toEqual(["first-30-days", "kingdom-admin", "low-spender", "recovery", "returning"]);
+    expect(STATIC_GUIDES.map((g) => g.slug).sort()).toEqual(["first-30-days", "kingdom-admin", "late-game", "low-spender", "recovery", "returning"]);
     for (const g of STATIC_GUIDES) expect(g.href).toBe(`/guides/${g.slug}/`);
   });
 

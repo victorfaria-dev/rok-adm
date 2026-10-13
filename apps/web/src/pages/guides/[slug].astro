@@ -1,5 +1,5 @@
 ---
-// Wave H guides (first 30 days, low spender, returning, recovery, kingdom admin):
+// Wave H and J guides (first 30 days, low spender, returning, recovery, kingdom admin, late game):
 // static pages rendered at build from guides/data/blocks.<set>.json with the same
 // block component as /guide/. No island: readable with JS off, no client payload.
 import Shell from "../../layouts/Shell.astro";
@@ -29,6 +29,11 @@ const forWho = page.audience.replace(/\.$/, "");
       <p class="g-intro">
         These steps are a delta over the F2P plan: a step here replaces the F2P step with the same topic, the rest are added.
         If your profile is Low or higher, <a href="/guide/">your guide</a> already merges them in.
+      </p>
+    ) : set === "latestage" ? (
+      <p class="g-intro">
+        The plan after KvK1, for kingdoms in KvK2, KvK3 or Season of Conquest. If your profile is at one of those stages,
+        <a href="/guide/">your guide</a> shows these steps as its main plan. Other guides are on <a href="/guides/">all guides</a>.
       </p>
     ) : set === "recovery" ? (
       <p class="g-intro">Start with the first step, even if you read nothing else today. Then come back for the rest. Other guides are on <a href="/guides/">all guides</a>.</p>

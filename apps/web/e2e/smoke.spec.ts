@@ -3,7 +3,7 @@ import { expect, test } from "@playwright/test";
 
 const ROUTES = [
   "/", "/start/", "/guide/", "/guides/", "/guides/new-kingdom/", "/guides/first-30-days/", "/guides/low-spender/",
-  "/guides/returning/", "/guides/recovery/", "/guides/kingdom-admin/", "/routine/", "/commanders/", "/me/", "/trust/",
+  "/guides/returning/", "/guides/recovery/", "/guides/kingdom-admin/", "/guides/late-game/", "/routine/", "/commanders/", "/me/", "/trust/",
 ];
 const DESTS = [["/guide/", "Guide"], ["/routine/", "Routine"], ["/commanders/", "Commanders"], ["/me/", "You"]] as const;
 

@@ -25,6 +25,14 @@ export const GUIDE_PAGES: readonly GuidePage[] = [
     audience: "Every account. It filters to your spending, play time and City Hall once you answer 10 questions.",
   },
   {
+    set: "latestage",
+    href: "/guides/late-game/",
+    slug: "late-game",
+    title: "Late game guide",
+    summary: "After KvK1: T5 as a research project, healing and the Hall of Heroes, commander swaps and pools, gear by season.",
+    audience: "Players whose kingdom is in KvK2, KvK3 or Season of Conquest.",
+  },
+  {
     set: "newkingdom",
     href: "/guides/new-kingdom/",
     title: "New kingdom guide",
