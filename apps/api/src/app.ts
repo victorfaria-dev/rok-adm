@@ -4,14 +4,14 @@ import type { AddressInfo } from "node:net";
 import { randomUUID } from "node:crypto";
 import { authenticate, authorize } from "./auth";
 import type { Config } from "./config";
-import { applyCors, preflightHeaders } from "./cors";
+import { applyCors, hostAllowed, preflightHeaders } from "./cors";
 import { openDb, type Db } from "./db";
 import { handlers } from "./handlers";
 import { HttpError, badRequest, forbidden, sendEmpty, sendError, sendJson } from "./http";
 import { createLogger, safeMethod, type LogSink, type Logger } from "./log";
 import { RateLimiter } from "./rate-limit";
 import { matchRoute } from "./router";
-import { createStore } from "./store";
+import { createStore, type Store } from "./store";
 
 /** How long a rejected request body may keep streaming (discarded) before the socket is dropped. */
 const BODY_GRACE_MS = 1_000;
@@ -26,6 +26,7 @@ export interface AppDeps {
 export interface App {
   server: Server;
   db: Db;
+  store: Store;
   log: Logger;
   close(): Promise<void>;
 }
@@ -43,13 +44,17 @@ export function createApp(config: Config, deps: AppDeps = {}): App {
     new HttpError(429, "rate_limited", "Too many requests; retry later.", { headers: { "Retry-After": String(retryAfterSec) } });
 
   async function handle(req: IncomingMessage, res: ServerResponse, setRoute: (r: string) => void): Promise<void> {
+    // Checked before the rate limiter, so a foreign web page can neither use the API (DNS
+    // rebinding, simple cross-site requests) nor spend the local user's rate-limit budget.
+    if (!hostAllowed(req.headers.host, config.host)) throw forbidden("Host not allowed.");
     const originOk = applyCors(req, res, config.origins);
+    if (!originOk) throw forbidden("Origin not allowed.");
     const clientKey = req.socket.remoteAddress ?? "unknown";
     const g = general.hit(clientKey);
     if (!g.ok) throw rateLimited(g.retryAfterSec);
 
     if (req.method === "OPTIONS") {
-      if (req.headers.origin === undefined || !originOk) throw forbidden("Origin not allowed.");
+      if (req.headers.origin === undefined) throw forbidden("Origin not allowed.");
       sendEmpty(res, 204, preflightHeaders());
       return;
     }
@@ -108,7 +113,8 @@ export function createApp(config: Config, deps: AppDeps = {}): App {
         return;
       }
       if (err instanceof HttpError) {
-        if (err.extra.closeConnection) {
+        // Also when an early error (401, 403, 429, 404…) left a body unread: never drain it.
+        if (err.extra.closeConnection || !req.complete) {
           // The body was not (fully) read: answer with Connection: close, discard what is still in
           // flight for a short grace period (so the client can read the answer instead of getting
           // a reset), then drop the connection rather than draining an unbounded body.
@@ -137,6 +143,7 @@ export function createApp(config: Config, deps: AppDeps = {}): App {
   return {
     server,
     db,
+    store,
     log,
     close() {
       closed ??= new Promise<void>((resolve) => {

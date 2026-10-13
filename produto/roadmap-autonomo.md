@@ -22,7 +22,7 @@ Merge na main; publicar/hospedar; serviços pagos, chaves ou contas; qualquer co
 | C | Farms: F-65 escolha de variante, F-66 caminho de montagem, F-67 calculadora do Trading Post, F-68 metas diárias + checklist, F-69 registro de envios; guias de farm por recurso e geral (pares só como hipótese rotulada) | `apps/web/farms`, `packages/planner`, `guides/data` | concluída (2026-10-13): /farms/ (hub, choose, build, trading-post, log) + /guides/farms/ (geral + 4 recursos); check, build e e2e verdes |
 | D | Kit de calculadoras (F-81) e trilha R1 do jogador: F-21, F-22, F-31, F-28, F-88 glossário, F-13, F-32 + F-82, F-11, F-18, F-25, F-26 | `apps/web/tools`, `packages/data` | planejada |
 | E | Kit do conselho: F-33 página de regras, F-34 card de requisitos + sandbox de fórmula, F-30 meus requisitos, F-35 MGE (v0 local), F-42 gerador de post de recrutamento, F-39 simulador de seed; guia de administração de reino | `apps/web/kingdom` | planejada |
-| F | **Backend** (decisão do Victor: dados do reino + sync de farms): `apps/api` com espaços de reino por código de convite, sync de farms e do MGE; sem senha (token por código); SQLite embutido do Node; só local, sem deploy | `apps/api`, `packages/core` (contratos) | planejada |
+| F | **Backend** (decisão do Victor: dados do reino + sync de farms): `apps/api` com espaços de reino por código de convite, sync de farms e do MGE; sem senha (token por código); SQLite embutido do Node; só local, sem deploy | `apps/api`, `packages/core` (contratos) | pronta no ramo `claude/kingdomops-wave-f` (aguarda integração): `apps/api` local (node:http + node:sqlite, zero dependência de runtime), contratos e cliente tipado no `core`, OpenAPI 3.1 testado, 57 testes de API (fluxo, segurança, endurecimento) no `pnpm check`; ADR 0003 com STRIDE; decisões F1–F12; site não ligado (F9) |
 | G | Integrações sem credenciais: ICS, CSV (importar/exportar, F-37 lite), webhook do Discord colado pelo próprio usuário, OCR local de prints próprios (F-54 experimental, Tesseract no navegador, imagem nunca sai do aparelho) | `apps/web` | planejada |
 | H | Mais guias: delta Low pass-only (F-75), retornante (F-29 + F-28), primeiros 30 dias (F-11), recuperação após zerar (F-13), guia de administração de reino; só com fichas existentes e confiança exibida | `guides/data` | planejada |
 | I | 3D e motion: brasão 3D (F-61, experimental, Three.js sob demanda), torre de progresso (F-62, experimental), transições de tela | `apps/web` | planejada |
@@ -38,5 +38,6 @@ Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre on
 | H | session_01Lyh5XwMC41fqS3unC6F1GY | `claude/kingdomops-wave-h` (entregue; falta renderizar no site) |
 | D | session_01PfcmoBAphnvyuxaEFxSUdC | `claude/kingdomops-wave-d` |
 | E | session_01QbeBBwUnFmrJ7mFDqYj6P7 | `claude/kingdomops-wave-e` |
+| F | session_01NENTYn8ubqpoWRkR9Y5YQv | `claude/kingdomops-wave-f` |
 
 O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` depois de `pnpm check`, build e e2e.

@@ -11,7 +11,7 @@ Até a onda E tudo vive no aparelho (`ko:v1`, `ko:farms:v1`). Líderes precisam 
 - **Contratos em `packages/core/src/contracts.ts`**: tabela de rotas, tipos de request/response, limites e validadores escritos à mão (sem zod: menos dependência, e a validação recusa em vez de "consertar"). O cliente tipado (`contracts-client.ts`) e o teste do OpenAPI usam a mesma tabela de rotas.
 - **Espaço de reino**: criar devolve um token de admin e um código de convite. Membros entram pelo código e escolhem um apelido. Sem senha, e-mail ou dado pessoal além do que o usuário digita.
 - **Documentos sincronizados**: `farms` (forma das entradas de `ko:farms:v1`, validação estrita), `mge-plan`, `council-requirements` e `kingdom` (JSON genérico com limite de tamanho e profundidade até as lojas da onda E estabilizarem). Cada documento tem `id`, `kind`, `version`, `updatedAt`. Escrita com **concorrência otimista**: o cliente manda `baseVersion`; diferente da versão atual → **409** com o documento atual, e o cliente decide (mesclar ou sobrescrever reenviando com a versão nova). Na prática é "último que escreve vence", mas nunca por cima de algo que ele não viu.
-- **Permissões**: `farms` só o dono escreve; `mge-plan`, `council-requirements` e `kingdom` só admin escreve; todos os membros leem.
+- **Permissões**: `farms` é um documento por membro, com id = id do membro, e só ele escreve; `mge-plan`, `council-requirements` e `kingdom` só admin escreve; todos os membros leem.
 - **Auditoria** por espaço (quem fez o quê, sem conteúdo). **Exportar** (JSON completo) e **apagar espaço** (cascade) atendem ao direito de apagamento; o membro pode sair e leva junto os documentos dele.
 - **OpenAPI 3.1** escrito à mão em `apps/api/openapi.json`, validado no teste contra a tabela de rotas e os limites dos contratos.
 - O site **não** é ligado ao servidor nesta onda.
@@ -27,7 +27,8 @@ Até a onda E tudo vive no aparelho (`ko:v1`, `ko:farms:v1`). Líderes precisam 
 ## Segurança
 - Token: `kot_` + 32 bytes aleatórios (base64url), mostrado uma vez. No banco fica só **HMAC-SHA256** com um segredo local (`KO_API_SECRET` ou `apps/api/.data/secret`, gerado no primeiro uso com modo 600 e fora do git). O HMAC é determinístico, então a busca é por índice e não depende de comparação de strings.
 - Código de convite: 12 símbolos de um alfabeto de 30 sem caracteres parecidos (~59 bits), também guardado como HMAC; expira (padrão 72 h, máx. 14 dias), tem limite de usos e pode ser revogado. Código desconhecido, expirado, revogado ou esgotado dá a **mesma** resposta (404 `invite_invalid`).
-- Limite de taxa por IP (sem confiar em `X-Forwarded-For`): geral e um mais estrito para criar espaço e entrar. Corpo limitado (413), só JSON (415), CORS só para as origens configuradas, servidor ligado em `127.0.0.1` por padrão.
+- Limite de taxa por IP (sem confiar em `X-Forwarded-For`): geral e um mais estrito para criar espaço e entrar. Corpo limitado (413), só JSON (415), CORS só para as origens configuradas, servidor ligado em `127.0.0.1` por padrão. Host fora de loopback (DNS rebinding) e Origin não permitida dão 403 antes do limite de taxa, para uma página qualquer não gastar a cota do usuário local.
+- Banco em modo 600; auditoria limitada às 5.000 entradas mais novas por espaço; nomes sem caracteres bidi ou de largura zero; lista de `issues` limitada a 20.
 - SQL só com statements preparados. Logs em JSON com a rota-modelo (`/v1/spaces/{spaceId}`), status e tempo; nunca IP, token, código, corpo ou apelido.
 
 ### Modelo de ameaças (STRIDE resumido)
@@ -39,6 +40,9 @@ Até a onda E tudo vive no aparelho (`ko:v1`, `ko:farms:v1`). Líderes precisam 
 | **I**nformation disclosure | Ler outro espaço; descobrir se um espaço existe; logs com dados | 403 igual para espaço alheio e inexistente; resposta única para convite inválido; logs sem PII; hashes nunca saem no export | Qualquer membro lê todos os documentos do espaço (por desenho); o banco local não é criptografado em disco |
 | **D**enial of service | Corpo gigante, muitas requisições, muitos documentos | 413, limites de taxa, limites por espaço (500 docs, 300 membros), timeouts do servidor | Limite de taxa em memória (zera ao reiniciar); suficiente para uso local |
 | **E**levation of privilege | Membro chama rota de admin; último admin sai | Papel checado em toda rota; último admin não sai com outros membros no espaço | Não há troca de admin nesta onda |
+
+## Revisão adversarial
+Um agente revisor (só leitura, com provas de conceito) não achou falha alta; os 8 achados médios/baixos foram corrigidos com teste em `apps/api/test/hardening.test.ts` (decisão F12). Apelidos únicos por espaço ficaram de fora.
 
 ## Consequências
 - `pnpm check` passa a rodar os testes da API (integração com servidor em porta efêmera e banco temporário).

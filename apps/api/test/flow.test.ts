@@ -67,10 +67,10 @@ describe("space lifecycle", () => {
     const members = await s.call("GET", `/v1/spaces/${spaceId}/members`, { token: joined.token });
     expect(members.body.members.map((m: { displayName: string }) => m.displayName)).toEqual(["Ana", "Bruno"]);
 
-    const docPath = `/v1/spaces/${spaceId}/docs/farms/bruno-farms`;
+    const docPath = `/v1/spaces/${spaceId}/docs/farms/${joined.member.id}`;
     const put1 = await s.call("PUT", docPath, { token: joined.token, body: { baseVersion: 0, data: farmsData() } });
     expect(put1.status).toBe(201);
-    expect(put1.body.doc).toMatchObject({ id: "bruno-farms", kind: "farms", version: 1, ownerId: joined.member.id, updatedBy: joined.member.id });
+    expect(put1.body.doc).toMatchObject({ id: joined.member.id, kind: "farms", version: 1, ownerId: joined.member.id, updatedBy: joined.member.id });
 
     const get1 = await s.call("GET", docPath, { token: created.token });
     expect(get1.status).toBe(200);
@@ -86,9 +86,12 @@ describe("space lifecycle", () => {
     expect(stale.body.current.version).toBe(2);
     expect(stale.body.current.data.farms[0].name).toBe("Farm renamed");
 
-    const missing = await s.call("PUT", `/v1/spaces/${spaceId}/docs/farms/other`, { token: joined.token, body: { baseVersion: 3, data: farmsData() } });
-    expect(missing.status).toBe(409);
-    expect(missing.body).toMatchObject({ error: "version_conflict", current: null });
+    // A farms document id must be the writer's own member id.
+    const squat = await s.call("PUT", `/v1/spaces/${spaceId}/docs/farms/${created.member.id}`, { token: joined.token, body: { baseVersion: 0, data: farmsData() } });
+    expect(squat.status).toBe(403);
+    const fresh = await s.call("PUT", `/v1/spaces/${spaceId}/docs/kingdom/profile`, { token: created.token, body: { baseVersion: 3, data: {} } });
+    expect(fresh.status).toBe(409);
+    expect(fresh.body).toMatchObject({ error: "version_conflict", current: null });
 
     const list = await s.call("GET", `/v1/spaces/${spaceId}/docs?kind=farms`, { token: joined.token });
     expect(list.status).toBe(200);
@@ -113,7 +116,8 @@ describe("space lifecycle", () => {
     expect((await s.call("POST", "/v1/spaces", { body: "{not json" })).body.error).toBe("bad_request");
     expect((await s.call("POST", "/v1/spaces")).status).toBe(400);
     const { space, token } = await s.createSpace();
-    const bad = await s.call("PUT", `/v1/spaces/${space.id}/docs/farms/a`, { token, body: { baseVersion: 0, data: { farms: "x" } } });
+    const { member } = (await s.call("GET", `/v1/spaces/${space.id}`, { token })).body;
+    const bad = await s.call("PUT", `/v1/spaces/${space.id}/docs/farms/${member.id}`, { token, body: { baseVersion: 0, data: { farms: "x" } } });
     expect(bad.status).toBe(400);
     expect(bad.body.error).toBe("validation_failed");
     expect((await s.call("GET", `/v1/spaces/${space.id}/docs?kind=nope`, { token })).status).toBe(400);
@@ -161,15 +165,15 @@ describe("space lifecycle", () => {
     const b = await s.join(admin.invite.code, "Bruno");
     const c = await s.join(admin.invite.code, "Carla");
     const sp = admin.space.id;
-    await s.call("PUT", `/v1/spaces/${sp}/docs/farms/b`, { token: b.token, body: { baseVersion: 0, data: farmsData() } });
-    await s.call("PUT", `/v1/spaces/${sp}/docs/farms/c`, { token: c.token, body: { baseVersion: 0, data: farmsData() } });
+    await s.call("PUT", `/v1/spaces/${sp}/docs/farms/${b.member.id}`, { token: b.token, body: { baseVersion: 0, data: farmsData() } });
+    await s.call("PUT", `/v1/spaces/${sp}/docs/farms/${c.member.id}`, { token: c.token, body: { baseVersion: 0, data: farmsData() } });
 
     // Member cannot remove someone else.
     expect((await s.call("DELETE", `/v1/spaces/${sp}/members/${c.member.id}`, { token: b.token })).status).toBe(403);
     // Admin removes Carla; her doc goes too.
     expect((await s.call("DELETE", `/v1/spaces/${sp}/members/${c.member.id}`, { token: admin.token })).status).toBe(204);
     expect((await s.call("GET", `/v1/spaces/${sp}`, { token: c.token })).status).toBe(401);
-    expect((await s.call("GET", `/v1/spaces/${sp}/docs/farms/c`, { token: admin.token })).status).toBe(404);
+    expect((await s.call("GET", `/v1/spaces/${sp}/docs/farms/${c.member.id}`, { token: admin.token })).status).toBe(404);
     expect((await s.call("DELETE", `/v1/spaces/${sp}/members/${c.member.id}`, { token: admin.token })).status).toBe(404);
 
     // Last admin cannot leave while Bruno remains.
@@ -179,7 +183,7 @@ describe("space lifecycle", () => {
 
     // Bruno leaves; his doc goes too.
     expect((await s.call("DELETE", `/v1/spaces/${sp}/members/me`, { token: b.token })).status).toBe(204);
-    expect((await s.call("GET", `/v1/spaces/${sp}/docs/farms/b`, { token: admin.token })).status).toBe(404);
+    expect((await s.call("GET", `/v1/spaces/${sp}/docs/farms/${b.member.id}`, { token: admin.token })).status).toBe(404);
 
     const audit = await s.call("GET", `/v1/spaces/${sp}/audit`, { token: admin.token });
     expect(audit.body.entries.map((e: { action: string }) => e.action)).toEqual([
@@ -214,7 +218,7 @@ describe("space lifecycle", () => {
   it("export holds docs with data and no hashes; audits itself", async () => {
     const admin = await s.createSpace();
     const b = await s.join(admin.invite.code);
-    await s.call("PUT", `/v1/spaces/${admin.space.id}/docs/farms/b`, { token: b.token, body: { baseVersion: 0, data: farmsData() } });
+    await s.call("PUT", `/v1/spaces/${admin.space.id}/docs/farms/${b.member.id}`, { token: b.token, body: { baseVersion: 0, data: farmsData() } });
     const r = await s.call("GET", `/v1/spaces/${admin.space.id}/export`, { token: admin.token });
     expect(r.status).toBe(200);
     expect(r.headers.get("content-disposition")).toBe(`attachment; filename="kingdomops-space-${admin.space.id}.json"`);
@@ -235,7 +239,7 @@ describe("space lifecycle", () => {
     const admin = await s.createSpace();
     const b = await s.join(admin.invite.code);
     const sp = admin.space.id;
-    await s.call("PUT", `/v1/spaces/${sp}/docs/farms/b`, { token: b.token, body: { baseVersion: 0, data: farmsData() } });
+    await s.call("PUT", `/v1/spaces/${sp}/docs/farms/${b.member.id}`, { token: b.token, body: { baseVersion: 0, data: farmsData() } });
     expect((await s.call("DELETE", `/v1/spaces/${sp}`, { token: b.token })).status).toBe(403);
     expect((await s.call("DELETE", `/v1/spaces/${sp}`, { token: admin.token })).status).toBe(204);
     expect((await s.call("GET", `/v1/spaces/${sp}`, { token: admin.token })).status).toBe(401);

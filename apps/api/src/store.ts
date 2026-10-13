@@ -11,6 +11,7 @@ import type {
   SpaceRole,
   SyncDoc,
 } from "@rokadm/core";
+import { AUDIT_KEEP_PER_SPACE } from "@rokadm/core";
 import type { Db, SqlValue } from "./db";
 
 export interface SpaceRow {
@@ -89,13 +90,14 @@ export function createStore(db: Db) {
     consumeInvite: q("UPDATE invites SET uses = uses + 1 WHERE id = ? AND revoked = 0 AND uses < max_uses AND expires_at > ?"),
     invitesOfSpace: q("SELECT * FROM invites WHERE space_id = ? ORDER BY created_at DESC, id"),
     getInvite: q("SELECT * FROM invites WHERE id = ?"),
-    revokeInvite: q("UPDATE invites SET revoked = 1 WHERE id = ? AND space_id = ?"),
+    revokeInvite: q("UPDATE invites SET revoked = 1 WHERE id = ? AND space_id = ? AND revoked = 0"),
+    inviteExists: q("SELECT 1 AS n FROM invites WHERE id = ? AND space_id = ?"),
 
     getDoc: q("SELECT * FROM docs WHERE space_id = ? AND kind = ? AND id = ?"),
     docMetas: q(`SELECT ${DOC_META_COLUMNS} FROM docs WHERE space_id = ? ORDER BY kind, id`),
     docMetasOfKind: q(`SELECT ${DOC_META_COLUMNS} FROM docs WHERE space_id = ? AND kind = ? ORDER BY id`),
     docsOfSpace: q("SELECT * FROM docs WHERE space_id = ? ORDER BY kind, id"),
-    countDocs: q("SELECT COUNT(*) AS n FROM docs WHERE space_id = ?"),
+    countDocs: q("SELECT COUNT(*) AS n FROM docs WHERE space_id = ? AND kind <> 'farms'"),
     insertDoc: q(
       "INSERT INTO docs (space_id, kind, id, owner_id, version, data, updated_at, updated_by) VALUES (?, ?, ?, ?, 1, ?, ?, ?)",
     ),
@@ -103,6 +105,9 @@ export function createStore(db: Db) {
     deleteDoc: q("DELETE FROM docs WHERE space_id = ? AND kind = ? AND id = ?"),
     deleteFarmsOfOwner: q("DELETE FROM docs WHERE space_id = ? AND owner_id = ? AND kind = 'farms'"),
 
+    pruneAudit: q(
+      "DELETE FROM audit WHERE space_id = ? AND id <= (SELECT id FROM audit WHERE space_id = ? ORDER BY id DESC LIMIT 1 OFFSET ?)",
+    ),
     insertAudit: q("INSERT INTO audit (space_id, at, actor_id, action, target) VALUES (?, ?, ?, ?, ?)"),
     auditPage: q("SELECT * FROM audit WHERE space_id = ? AND id < ? ORDER BY id DESC LIMIT ?"),
     auditAll: q("SELECT * FROM audit WHERE space_id = ? ORDER BY id"),
@@ -115,6 +120,8 @@ export function createStore(db: Db) {
     },
     audit(spaceId: string, at: string, actorId: string | null, action: AuditAction, target: string | null): void {
       s.insertAudit.run(spaceId, at, actorId, action, target);
+      // Keep the newest AUDIT_KEEP_PER_SPACE entries; older ones are dropped (bounded growth).
+      s.pruneAudit.run(spaceId, spaceId, AUDIT_KEEP_PER_SPACE);
     },
   };
 }

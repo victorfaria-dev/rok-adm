@@ -26,6 +26,10 @@ export const INVITE_TTL_HOURS_MAX = 24 * 14;
 export const INVITE_USES_DEFAULT = 50;
 export const INVITE_USES_MAX = 300;
 export const AUDIT_PAGE_MAX = 200;
+/** Older audit entries of a space are pruned beyond this. */
+export const AUDIT_KEEP_PER_SPACE = 5000;
+/** Validators stop collecting issues after this many (bounded error bodies). */
+export const ISSUES_MAX = 20;
 
 /** Invite codes: 12 symbols from INVITE_CODE_ALPHABET (30 symbols, ~58.9 bits), shown as XXXX-XXXX-XXXX. */
 export const INVITE_CODE_LENGTH = 12;
@@ -298,6 +302,7 @@ export function routePath(template: string, params: Record<string, string>): str
   return template.replace(/\{(\w+)\}/g, (_, k: string) => {
     const v = params[k];
     if (v === undefined) throw new Error(`missing path param ${k}`);
+    if (v === "" || v === "." || v === "..") throw new Error(`invalid path param ${k}`);
     return encodeURIComponent(v);
   });
 }
@@ -312,7 +317,7 @@ export interface Issue {
 export type Result<T> = { ok: true; value: T } | { ok: false; issues: Issue[] };
 
 const ok = <T>(value: T): Result<T> => ({ ok: true, value });
-const fail = <T>(issues: Issue[]): Result<T> => ({ ok: false, issues });
+const fail = <T>(issues: Issue[]): Result<T> => ({ ok: false, issues: issues.slice(0, ISSUES_MAX) });
 
 const isRecord = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
 const isIsoTime = (x: unknown): x is string =>
@@ -325,8 +330,8 @@ export function isIsoDay(x: unknown): x is string {
   return !Number.isNaN(d.getTime()) && d.toISOString().slice(0, 10) === x;
 }
 
-/** Control characters and line/paragraph separators are refused in every user string. */
-const CONTROL = /[\u0000-\u001f\u007f\u2028\u2029]/;
+/** Control, zero-width and bidi-override characters (spoofing) and line separators are refused in every user string. */
+const CONTROL = /[\u0000-\u001f\u007f-\u009f\u200b-\u200f\u2028-\u202e\u2060-\u2069\ufeff]/;
 
 function text(issues: Issue[], path: string, x: unknown, min: number, max: number): string | undefined {
   if (typeof x !== "string") {
@@ -338,7 +343,7 @@ function text(issues: Issue[], path: string, x: unknown, min: number, max: numbe
     issues.push({ path, message: `must be ${min}..${max} characters` });
     return undefined;
   }
-  if (CONTROL.test(s)) {
+  if (CONTROL.test(x)) {
     issues.push({ path, message: "must not contain control characters" });
     return undefined;
   }
@@ -354,7 +359,10 @@ function int(issues: Issue[], path: string, x: unknown, min: number, max: number
 }
 
 function noExtraKeys(issues: Issue[], path: string, obj: Record<string, unknown>, allowed: readonly string[]): void {
-  for (const k of Object.keys(obj)) if (!allowed.includes(k)) issues.push({ path: `${path}/${k}`, message: "unknown field" });
+  for (const k of Object.keys(obj)) {
+    if (issues.length >= ISSUES_MAX) return;
+    if (!allowed.includes(k)) issues.push({ path: `${path}/${k.slice(0, 32)}`, message: "unknown field" });
+  }
 }
 
 export function isDocKind(x: unknown): x is DocKind {
@@ -542,7 +550,7 @@ export function validateGenericDoc(x: unknown): Result<JsonObject> {
   const issues: Issue[] = [];
   if (!isRecord(x)) return fail([{ path: "/data", message: "must be an object" }]);
   const walk = (v: unknown, p: string, depth: number): void => {
-    if (issues.length >= 20) return;
+    if (issues.length >= ISSUES_MAX) return;
     if (depth > GENERIC_DOC_MAX_DEPTH) {
       issues.push({ path: p, message: `nesting deeper than ${GENERIC_DOC_MAX_DEPTH}` });
       return;

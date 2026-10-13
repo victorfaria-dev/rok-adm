@@ -67,7 +67,7 @@ describe("authentication and authorization", () => {
     const admin = await t.createSpace();
     const b = await t.join(admin.invite.code, "Bruno");
     const c = await t.join(admin.invite.code, "Carla");
-    const p = `/v1/spaces/${admin.space.id}/docs/farms/b`;
+    const p = `/v1/spaces/${admin.space.id}/docs/farms/${b.member.id}`;
     expect((await t.call("PUT", p, { token: b.token, body: { baseVersion: 0, data: farmsData() } })).status).toBe(201);
     expect((await t.call("PUT", p, { token: c.token, body: { baseVersion: 1, data: farmsData("hijack") } })).status).toBe(403);
     // Not even an admin may overwrite a member's farms.

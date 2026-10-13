@@ -4,7 +4,7 @@
     "title": "KingdomOps local API",
     "version": "v1",
     "summary": "Local-only backend for kingdom spaces and farm/MGE/council sync.",
-    "description": "Local-only backend (`apps/api`, node:http + node:sqlite) for kingdom spaces and sync of farms, MGE and council documents. It is not deployed anywhere.\n\nGeneral behaviour:\n- Every body is `application/json` (otherwise 415) and at most 540672 bytes (otherwise 413).\n- Authenticated routes take `Authorization: Bearer <token>`. Missing or unknown token: 401. Token of another space, a space that does not exist, or a role that is not enough: 403.\n- `x-rokadm-auth` on each operation is the required role: `none`, `member` or `admin`.\n- Rate limits apply everywhere (429); creating a space and joining use a stricter bucket.\n- An unknown route answers 404 `not_found`; a known path with a wrong method answers 405.\n- Unexpected failures answer 500 `internal` with a generic message.\n- Errors use ErrorResponse `{ error, message, issues? }`.",
+    "description": "Local-only backend (`apps/api`, node:http + node:sqlite) for kingdom spaces and sync of farms, MGE and council documents. It is not deployed anywhere.\n\nGeneral behaviour:\n- Every body is `application/json` (otherwise 415) and at most 540672 bytes (otherwise 413).\n- Authenticated routes take `Authorization: Bearer <token>`. Missing or unknown token: 401. Token of another space, a space that does not exist, or a role that is not enough: 403.\n- `x-rokadm-auth` on each operation is the required role: `none`, `member` or `admin`.\n- Rate limits apply everywhere (429); creating a space and joining use a stricter bucket.\n- An unknown route answers 404 `not_found`; a known path with a wrong method answers 405.\n- Unexpected failures answer 500 `internal` with a generic message.\n- Errors use ErrorResponse `{ error, message, issues? }`.\n\nRequests with a Host header other than a loopback name (127.0.0.1, localhost, [::1]) or with a disallowed Origin get 403 before rate limiting. Validation `issues` are capped at 20.",
     "license": {
       "name": "Local-only; not deployed and not licensed for public hosting"
     }
@@ -649,7 +649,7 @@
           "docs"
         ],
         "summary": "Create or replace a document",
-        "description": "Optimistic concurrency: `baseVersion` 0 creates, otherwise it must equal the stored version. Members may not write admin-only kinds (mge-plan, council-requirements, kingdom) and may only write `farms` documents they own (403). 409 is either a ConflictResponse (`version_conflict`, `current` may be null) or an ErrorResponse `limit_reached` (too many documents in the space).",
+        "description": "Optimistic concurrency: `baseVersion` 0 creates, otherwise it must equal the stored version. Members may not write admin-only kinds (mge-plan, council-requirements, kingdom) and may only write their own `farms` document, whose `docId` must equal their member id (403 otherwise). `farms` documents do not count toward the per-space document limit, which applies to council kinds. 409 is either a ConflictResponse (`version_conflict`, `current` may be null) or an ErrorResponse `limit_reached` (too many documents in the space).",
         "parameters": [
           {
             "name": "spaceId",

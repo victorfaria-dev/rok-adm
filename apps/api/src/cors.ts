@@ -25,3 +25,18 @@ export function preflightHeaders(): Record<string, string> {
     "Access-Control-Max-Age": "600",
   };
 }
+
+const LOOPBACK_NAMES = ["127.0.0.1", "localhost", "[::1]"];
+
+/**
+ * Host header guard against DNS rebinding: only loopback names (and the configured bind host)
+ * are served. A missing Host (HTTP/1.0 tools) is refused as well.
+ */
+export function hostAllowed(host: string | undefined, configHost: string): boolean {
+  if (!host) return false;
+  const m = /^(\[[0-9a-fA-F:.]+\]|[^:]+)(?::\d{1,5})?$/.exec(host.trim());
+  if (!m) return false;
+  const name = m[1]!.toLowerCase();
+  const bind = configHost.includes(":") && !configHost.startsWith("[") ? `[${configHost}]` : configHost.toLowerCase();
+  return LOOPBACK_NAMES.includes(name) || name === bind;
+}

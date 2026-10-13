@@ -39,9 +39,10 @@ curl -s -X POST "$API/v1/spaces" -H 'content-type: application/json' \
 curl -s -X POST "$API/v1/join" -H 'content-type: application/json' \
   -d '{"inviteCode":"ABCD-EFGH-JKMN","displayName":"Farm Lord"}'
 
-# Gravar um documento (baseVersion 0 cria; depois envie a versão que você leu)
-SPACE=sp_xxxxxxxxxxxxxxxx; TOKEN=...
-curl -s -X PUT "$API/v1/spaces/$SPACE/docs/farms/main" \
+# Gravar as suas farms (baseVersion 0 cria; depois envie a versão que você leu).
+# O id do documento farms é o seu próprio id de membro (member.id da resposta do join).
+SPACE=sp_xxxxxxxxxxxxxxxx; ME=mb_xxxxxxxxxxxxxxxx; TOKEN=...
+curl -s -X PUT "$API/v1/spaces/$SPACE/docs/farms/$ME" \
   -H "authorization: Bearer $TOKEN" -H 'content-type: application/json' \
   -d '{"baseVersion":0,"data":{"farms":[],"shipments":[]}}'
 ```

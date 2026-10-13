@@ -35,9 +35,9 @@ describe("typed client against the server", () => {
     const member = anon.withToken(joined.token);
     expect((await member.me(spaceId)).member.role).toBe("member");
 
-    const put = await member.putDoc(spaceId, "farms", "main", { baseVersion: 0, data: farmsData() });
+    const put = await member.putDoc(spaceId, "farms", joined.member.id, { baseVersion: 0, data: farmsData() });
     expect(put.doc.version).toBe(1);
-    const stale = await rejection(member.putDoc(spaceId, "farms", "main", { baseVersion: 0, data: farmsData("Other") }));
+    const stale = await rejection(member.putDoc(spaceId, "farms", joined.member.id, { baseVersion: 0, data: farmsData("Other") }));
     expect(stale.status).toBe(409);
     expect(stale.code).toBe("version_conflict");
     expect(stale.current?.version).toBe(1);

@@ -244,7 +244,10 @@ export const handlers: Record<RouteName, Handler> = {
     const inviteId = ctx.params.inviteId!;
     if (!isEntityId(inviteId)) throw badRequest("Malformed invite id.");
     transaction(ctx.db, () => {
-      if (ctx.store.revokeInvite.run(inviteId, me.space_id).changes === 0) throw notFound("No such invite in this space.");
+      if (ctx.store.revokeInvite.run(inviteId, me.space_id).changes === 0) {
+        if (!ctx.store.inviteExists.get(inviteId, me.space_id)) throw notFound("No such invite in this space.");
+        return; // already revoked: idempotent, no new audit entry
+      }
       ctx.store.audit(me.space_id, ctx.now.toISOString(), me.id, "invite.revoke", inviteId);
     });
     return { status: 204 };
@@ -271,6 +274,9 @@ export const handlers: Record<RouteName, Handler> = {
     const me = caller(ctx);
     const { kind, docId } = docPath(ctx);
     if (ADMIN_WRITE_KINDS.includes(kind) && me.role !== "admin") throw forbidden(`Only an admin may write ${kind} documents.`);
+    // One farms document per member, keyed by the member id: nobody can squat another member's id
+    // or fill the space's quota with farms documents.
+    if (kind === "farms" && docId !== me.id) throw forbidden("A farms document id must be your own member id.");
     const v = validatePutDoc(kind, await readJsonBody(ctx.req));
     if (!v.ok) throw validationFailed(v.issues);
     const data = JSON.stringify(v.value.data);
@@ -287,8 +293,8 @@ export const handlers: Record<RouteName, Handler> = {
         ctx.store.updateDoc.run(current.version + 1, data, at, me.id, me.space_id, kind, docId);
       } else {
         if (baseVersion !== 0) throw conflict(undefined);
-        if (ctx.store.count(ctx.store.countDocs, me.space_id) >= DOCS_PER_SPACE_MAX) {
-          throw limitReached(`A space holds at most ${DOCS_PER_SPACE_MAX} documents.`);
+        if (kind !== "farms" && ctx.store.count(ctx.store.countDocs, me.space_id) >= DOCS_PER_SPACE_MAX) {
+          throw limitReached(`A space holds at most ${DOCS_PER_SPACE_MAX} council documents.`);
         }
         ctx.store.insertDoc.run(me.space_id, kind, docId, me.id, data, at, me.id);
       }

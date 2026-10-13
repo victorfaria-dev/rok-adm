@@ -1,6 +1,6 @@
 // SQLite access through the built-in node:sqlite. Vite (and so vitest) cannot resolve the
 // `node:sqlite` import (it strips the prefix), so the module is loaded with require here, once.
-import { mkdirSync } from "node:fs";
+import { chmodSync, existsSync, mkdirSync } from "node:fs";
 import { createRequire } from "node:module";
 import { dirname } from "node:path";
 
@@ -71,7 +71,11 @@ export function openDb(path: string): Db {
   const memory = path === ":memory:";
   if (!memory) mkdirSync(dirname(path), { recursive: true, mode: 0o700 });
   const db = new sqlite.DatabaseSync(path);
-  if (!memory) db.exec("PRAGMA journal_mode = WAL");
+  if (!memory) {
+    db.exec("PRAGMA journal_mode = WAL");
+    // SQLite creates files with the process umask (often 0644); the data is private to this user.
+    for (const f of [path, `${path}-wal`, `${path}-shm`]) if (existsSync(f)) chmodSync(f, 0o600);
+  }
   db.exec("PRAGMA foreign_keys = ON");
   db.exec("PRAGMA busy_timeout = 5000");
   migrate(db);
