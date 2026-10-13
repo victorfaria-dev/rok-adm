@@ -194,3 +194,11 @@ describe("presets (B08-0001)", () => {
     expect(Math.max(...ratios)).toBe(5);
   });
 });
+
+describe("prototype names", () => {
+  it.each(["constructor", "__proto__", "toString", "valueOf", "hasOwnProperty", "constructor * 2 + t4"])("rejects %j as an unknown name", (f) => {
+    const r = parseFormula(f);
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(r.error.code).toBe("unknown_name");
+  });
+});

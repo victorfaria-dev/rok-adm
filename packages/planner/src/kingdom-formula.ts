@@ -15,7 +15,8 @@ export type FormulaVars = Partial<Record<FormulaVar, number>>;
 
 /** Accepted spellings (lower case) for each variable. */
 const ALIASES: Readonly<Record<string, FormulaVar>> = (() => {
-  const m: Record<string, FormulaVar> = {};
+  // Null prototype: names like "constructor" or "__proto__" must not resolve through Object.prototype.
+  const m: Record<string, FormulaVar> = Object.create(null) as Record<string, FormulaVar>;
   for (const t of [1, 2, 3, 4, 5] as const) {
     const v = `t${t}` as FormulaVar;
     for (const a of [v, `${v}_kills`, `${v}kills`, `${v}_kill`, `${v}kill`]) m[a] = v;
@@ -244,7 +245,7 @@ class Parser {
         }
         return this.node({ type: "call", fn: name, args, pos: t.pos });
       }
-      const v = ALIASES[name];
+      const v = Object.prototype.hasOwnProperty.call(ALIASES, name) ? ALIASES[name] : undefined;
       if (!v) {
         if (isFn(name)) return fail("arity", t.pos, `${name} ${at(t.pos)} needs parentheses, like ${name}(t4 * 10${FUNCS[name] === 2 ? ", 0" : ""}).`);
         return fail("unknown_name", t.pos, `Unknown name '${t.v}' ${at(t.pos)}. ${VAR_HINT}`);
