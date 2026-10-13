@@ -58,6 +58,10 @@ Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco 
 - Primeiro acesso curto caindo na aba City Hall (jogador) ou Kingdom (líder); `/` vira landing page pública.
 - Brand, More e Trust saem da navegação (rodapé). URLs antigas continuam funcionando.
 
+### Profundidade das seções — decidido (Victor, 2026-10-13)
+- Variante B "camadas" (protótipo na branch `worktree-agent-afe752d92a7ba9a99`, commit 8f88a2d): seção = painel nível 1, elementos interativos/principais = cartão nível 2 sobreposto ao cabeçalho.
+- Ajustes antes de aplicar no site todo: aumentar o contraste entre níveis no tema escuro; reduzir a quantidade de cartões nos guias longos; aplicar depois da etapa UX 1 para não conflitar com a reestruturação.
+
 ## Pendências para o próximo ciclo de correções
 - ~~`/tools/migration/`: começa com valores de exemplo e mostra "Eligible" antes de o usuário digitar nada (onda D).~~ Corrigido na onda G (G9).
 - Tabelas A01 com linhas corrompidas (ex.: Farm nível 25 = 2 de comida); as calculadoras excluem e avisam; precisa reextrair da fonte (onda D).
