@@ -71,3 +71,13 @@ Accessed 2026-10-13. Rule: every number has a URL + quote; "DERIVED" marks my ow
 - Quantified farm time/day and yield/day — none.
 - Resource-pair recommendations — none in sources.
 - Reddit threads (current) — inaccessible from this environment.
+
+## T1 updates (official Lilith forum API, accessed 2026-10-13)
+Source: https://forum-global.lilithgame.com/api/v2/posts?account_id=10000000 (832 official posts); post URLs https://forum-global.lilithgame.com/rok/post/<id>/?lang=en_US
+- 1.0.44 (post 1055096, 2021-03-04): "Resources protected by storehouses can no longer be transported." → a farm can only ship resources ABOVE its storehouse protection; don't over-level a farm's storehouse expecting to ship it.
+- 1.0.90 (post 1896244, 2024-12-31): "The transportation capacity of level 25 Trading Posts has been increased from 5,000,000 to 10,000,000." → wiki table (L25 10M, L24 4M, L15 1.6M) is the current one; guide tables (L24 2M, L25 2.5M) are outdated/erroneous.
+- 1.1.09 (post 2259768, 2026-06-23): "all resource boost items for Food, Wood, Stone, and Gold (8 or 24 Hours) have been removed" (production boosts) and "Enhanced gathering items can now be used in bulk. When using these items en masse, their durations can stack for up to 30 items at once." → gathering boosts still exist; farms rely on gathering, not production boosts. VIP production buffs raised (C04-0004).
+- 2021-04-27 (post 1066656): "As kingdoms grow more developed, the level of resource points in provinces barred by Lvl 1 and Lvl 2 passes will increase accordingly." → in a new kingdom, high-level nodes are limited early.
+- 1.1.03 (C04-0014): in SoC, cities inside other alliances' home territory can't be attacked (farm safety, later stage).
+- Oasis Bazaar (C04-0009): sell resources for gems, needs TP25 + SoC (pioneer) — future value of excess farm resources, out of pre-KvK scope.
+- No official post found on gold transferability, farm/multi-account policy, or node amounts.
