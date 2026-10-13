@@ -1,7 +1,20 @@
 ---
+// F-12: static new-kingdom guide, rendered at build from guides/data/blocks.newkingdom.json
+// with the same block component as /guide/. No island: it applies to every profile.
 import Shell from "../../../layouts/Shell.astro";
-import ComingNext from "../../../components/ComingNext.astro";
+import { GuideBody, GuideMeta } from "../../../components/guide/GuideBody";
+import { buildGuidePayload } from "../../../lib/guide-payload";
+import { fullGuide } from "../../../lib/guide-view";
+import "../../../styles/guide.css";
+
+const payload = buildGuidePayload("newkingdom");
+const view = fullGuide(payload);
 ---
-<Shell title="New kingdom guide" description="Survive day 1 of a new kingdom and set up the first weeks." mode="read">
-  <ComingNext what="Survive day 1 of a new kingdom and set up the first weeks." when="Coming with the guide screen."><Fragment slot="title">New kingdom guide</Fragment></ComingNext>
+<Shell title="New kingdom guide" description="Survive day 1 of a new kingdom and set up the first weeks, with sources and patch checks for every step." mode="read">
+  <div class="g-page">
+    <h1>New kingdom guide</h1>
+    <GuideMeta view={view} label="For every spending profile in a kingdom that just opened" />
+    <p class="g-intro">Read this first if your kingdom opened in the last few days. Then follow <a href="/guide/">your guide</a> for the rest of the road to KvK1.</p>
+    <GuideBody view={view} badges={payload.badges} profileTags={false} />
+  </div>
 </Shell>
