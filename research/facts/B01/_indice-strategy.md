@@ -44,3 +44,11 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | B01-0505 | evento | baixa | organizado |  |
 | B01-0506 | estrategia | baixa | verificado |  |
 | B01-0700 | estrategia | baixa | verificado |  |
+
+## Onda J (J2, 2026-10-13) — lifecycle after KvK1
+
+| ID | Tipo | Conf. | Status | Título | Conflitos |
+|---|---|---|---|---|---|
+| [B01-0900](B01-0900.md) | mecanica | alta | organizado | Official season lengths (49 d S1–S2 in 2020; Heroic Anthem 50 d) | B01-0502 |
+| [B01-0901](B01-0901.md) | mecanica | alta | organizado | Dev Q&A Oct 2024: offseason strain, healing refund, shorter KvK under study | — |
+| [B01-0902](B01-0902.md) | mecanica | baixa | organizado | Gap between seasons: 2 vs 3 months (guides); SoC immediate re-registration | — |

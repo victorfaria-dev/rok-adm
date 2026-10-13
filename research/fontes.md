@@ -150,3 +150,18 @@ Fichas B02–B09 migradas para slugs em 2026-10-13 (PL01–PL13).
 - `src:heaven-guardian` declara copiar um guia-fonte; tabelas de Trading Post ≈ `src:rkg`.
 - `src:rkg-lyceum` (texto oficial do quiz) **é** independente de `src:fandom`, mas pode estar desatualizado.
 - `src:youtube-summary` é derivado de `src:youtube` e não é literal.
+
+## Onda J
+
+### J2
+
+No new slugs. Access notes from J2 (2026-10-13), for reuse:
+
+| Slug | What J2 used | Access | Notes |
+|---|---|---|---|
+| `src:lilith-forum` | 832 official posts via list API (`limit=100`, offsets 0–800) — list pages already include full `content` | curl, header `language: en_US` | Latest English post still 2026-06-23 (1.1.09). Key late-game posts: 1030636, 1062616, 1071541, 1108303/1108923, 1359527, 1589003, 1599092, 1831889, 1868790, 1896244, 2030530, 2179486, 2213663. |
+| `src:rkg` | WordPress REST `wp-json/wp/v2/posts/<id>` and `?search=`; `date` = real publication, `modified` 2026-01-02 = mass edit | curl default UA | Calculator constants live in plugin JS (e.g. `plugins/healing-calculator/healing-calculator.js`) — literal but T3 tool data. |
+| `src:fandom` | `Buildings/Hospital`, `Technology/Medical_Corps`, `Technology/Royal_Guard`, `Buildings/Castle/Requirements`, `Frequently_Asked_Questions`, `Events/The_Mightiest_Governor` | MediaWiki API | No Hall of Heroes / Healing / Crystal Technology pages; no per-unit troop costs. |
+| `src:packsify`, `src:lootbar`, `src:boostroom` | late-game T5/healing/KvK-prep guides (2026) | curl Firefox UA | CoI (top-up / boosting sellers). |
+| `src:reddit` | — | Arctic Shift full-text search returned "Timeout"/"Too many requests" all session | Not used by J2. |
+| (appgamer.com, everycalculators.com) | — | Cloudflare 403 | Not cited. |

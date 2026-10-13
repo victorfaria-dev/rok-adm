@@ -48,3 +48,14 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A04-0009 | estrategia | media | verificado |  |
 | A04-0010 | mecanica | media | verificado |  |
 | A04-0011 | estrategia | media | verificado |  |
+
+## Onda J (J2, 2026-10-13) — late stages
+
+| ID | Tipo | Conf. | Status | Título |
+|---|---|---|---|---|
+| [A04-0600](A04-0600.md) | estrategia | media | organizado | Gems after VIP 10: books vs VIP 12/14; WoF/shops last |
+| [A04-0601](A04-0601.md) | derivado | baixa | organizado | Gem price of Castle 25 / blueprints if bought |
+| [A04-0602](A04-0602.md) | estrategia | baixa | organizado | Universal speedups: research vs KvK healing (divided) |
+| [A04-0603](A04-0603.md) | estrategia | media | organizado | Heal in small batches with alliance help |
+| [A04-0604](A04-0604.md) | estrategia | media | organizado | Pre-KvK stockpile practice (numbers single-source) |
+| [A04-0605](A04-0605.md) | mecanica | alta | organizado | 2021 daily cap on assistance/plunder was cancelled |
