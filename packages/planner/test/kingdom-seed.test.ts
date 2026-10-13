@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  QUICK_DEFAULT_AVERAGE, SEED_BANDS, SEED_MAX_COUNTED_PER_GOVERNOR, SEED_RULE, SEED_SOURCES, applyWhatIf, compareWhatIf, countedPower, emptyQuick,
+  QUICK_DEFAULT_AVERAGE, SEED_BANDS, SEED_MAX_COUNTED_PER_GOVERNOR, SEED_RULE, SEED_SOURCES, applyWhatIf, compareWhatIf, remapWhatIf, countedPower, emptyQuick,
   emptySeedDoc, parseGovernorLines, parseSeedDoc, quickAverageFits, quickToGovernors, seedGovernors, seedRuleFreshness, simulateSeed,
   type SeedGovernor,
 } from "../src/kingdom-seed";
@@ -190,5 +190,23 @@ describe("freshness and sources", () => {
   it("B03-0007 still words the exclusion as the matchmaking score (hypothesis label stays)", () => {
     expect(card("B03-0007")).toContain("not be counted towards their kingdom's matchmaking score");
     expect(readFileSync(join(__dirname, "../../../research/facts/B03/_lacunas.md"), "utf8")).toContain("L-B03-03");
+  });
+});
+
+describe("quick mode default for the top band", () => {
+  it("fits its own band and counts as above 500M", () => {
+    expect(quickAverageFits(">500M", QUICK_DEFAULT_AVERAGE[">500M"])).toBe(true);
+    expect(QUICK_DEFAULT_AVERAGE[">500M"]).toBeGreaterThan(500e6);
+  });
+});
+
+describe("remapWhatIf", () => {
+  it("keeps marks on the same governor when lines are inserted, drops marks of removed governors", () => {
+    const old = "Alpha, 400m\nBravo, 300m\nCharlie, 200m";
+    const w = { vacation: ["L1"], zeroed: { L3: 50e6 } };
+    const r = remapWhatIf(old, "Newbie, 450m\n" + old, w);
+    expect(r).toEqual({ vacation: ["L2"], zeroed: { L4: 50e6 } });
+    expect(remapWhatIf(old, "Bravo, 300m\nCharlie, 200m", w)).toEqual({ vacation: [], zeroed: { L2: 50e6 } });
+    expect(remapWhatIf(old, "Alpha, 410m\nBravo, 300m", w)).toEqual({ vacation: [], zeroed: {} });
   });
 });

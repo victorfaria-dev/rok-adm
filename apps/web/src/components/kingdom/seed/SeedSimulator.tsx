@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import {
-  QUICK_DEFAULT_AVERAGE, SEED_BANDS, SEED_LIMITS, SEED_RULE, compareWhatIf, emptySeedDoc, formatCompact, formatInt, newDocId, parseQuantity,
+  QUICK_DEFAULT_AVERAGE, SEED_BANDS, SEED_LIMITS, SEED_RULE, compareWhatIf, emptySeedDoc, remapWhatIf, formatCompact, formatInt, newDocId, parseQuantity,
   quickAverageFits, seedGovernors, seedRuleFreshness,
   type QuickBandKey, type SeedDoc, type SeedResult,
 } from "@rokadm/planner";
@@ -115,7 +115,7 @@ export default function SeedSimulator({ clock = realClock }: Props) {
               label="Governor powers, one per line"
               value={doc.listText}
               rows={8}
-              onValue={(v) => set({ listText: v.slice(0, SEED_LIMITS.text), whatIf: doc.whatIf })}
+              onValue={(v) => { const listText = v.slice(0, SEED_LIMITS.text); set({ listText, whatIf: remapWhatIf(doc.listText, listText, doc.whatIf) }); }}
               hint="Write 1.5m, 300k or 1,200,000. A name is optional: Name, power. Paste up to 2,000 lines."
               error={input.errors.length ? `${input.errors.length} line${input.errors.length === 1 ? "" : "s"} could not be read.` : undefined}
             />
@@ -144,7 +144,7 @@ export default function SeedSimulator({ clock = realClock }: Props) {
 function QuickInputs({ doc, onChange }: { doc: SeedDoc; onChange: (q: SeedDoc["quick"]) => void }) {
   return (
     <div class="kg-grid" data-quick>
-      <p class="kg-note">Enter how many governors are in each band and, if you know it, their average power. An empty average uses the middle of the band (500M for the top band).</p>
+      <p class="kg-note">Enter how many governors are in each band and, if you know it, their average power. An empty average uses the middle of the band (600M for the top band; above 500M every governor counts the same).</p>
       <div class="kg-grid kg-grid-2">
         {SEED_BANDS.map((b) => <QuickBand key={b.key} band={b.key} label={b.label} value={doc.quick[b.key]} onChange={(v) => onChange({ ...doc.quick, [b.key]: v })} />)}
       </div>

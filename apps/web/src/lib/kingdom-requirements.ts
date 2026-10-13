@@ -42,11 +42,19 @@ export type Parsed<T> = { ok: true; value: T } | { ok: false; error: string } | 
 
 const QTY_ERROR = "Enter a whole number like 1,200,000, 10.5m or 300k.";
 
+/** A well-formed quantity that parseQuantity refused only for its size (past the safe-integer range). */
+function looksTooLarge(text: string): boolean {
+  const m = /^(\d[\d,\s]*(?:\.\d+)?)\s*([kmb]?)$/i.exec(text.trim());
+  if (!m) return false;
+  const mult = { "": 1, k: 1e3, m: 1e6, b: 1e9 }[m[2]!.toLowerCase() as "" | "k" | "m" | "b"];
+  return Number(m[1]!.replace(/[,\s]/g, "")) * mult > Number.MAX_SAFE_INTEGER;
+}
+
 /** Optional game quantity ("10.5m", "1,200,000"); null when empty. */
 export function parseQty(text: string): Parsed<number> {
   if (!text.trim()) return null;
   const v = parseQuantity(text);
-  if (v === null) return { ok: false, error: QTY_ERROR };
+  if (v === null) return { ok: false, error: looksTooLarge(text) ? "This number is too large." : QTY_ERROR };
   if (v > REQ_MAX_NUMBER) return { ok: false, error: "This number is too large." };
   return { ok: true, value: v };
 }

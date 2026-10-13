@@ -35,8 +35,8 @@ export function parseQuantity(text: string): number | null {
   if (!s) return null;
   const m = /^(\d+(?:\.\d+)?)([kmb])$/.exec(s);
   if (m) {
-    const v = Number(m[1]) * SUFFIX[m[2]!]!;
-    return Number.isFinite(v) ? Math.round(v) : null;
+    const v = Math.round(Number(m[1]) * SUFFIX[m[2]!]!);
+    return Number.isSafeInteger(v) ? v : null;
   }
   if (/^\d{1,3}(,\d{3})+$/.test(s)) return Number(s.replace(/,/g, ""));
   if (/^\d+$/.test(s)) {

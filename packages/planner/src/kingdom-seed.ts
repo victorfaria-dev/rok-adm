@@ -223,6 +223,35 @@ export function parseGovernorLines(text: string): { governors: SeedGovernor[]; e
   return { governors, errors, truncated };
 }
 
+/**
+ * Keep what-if marks on the same governors after the pasted list is edited. Marks are keyed by line
+ * (L1, L2…); a mark moves with its governor (same name and power, matched in order) and is dropped
+ * when that governor is no longer in the list.
+ */
+export function remapWhatIf(oldText: string, newText: string, w: SeedWhatIf): SeedWhatIf {
+  const key = (g: SeedGovernor): string => `${g.name.toLowerCase()}|${g.power}`;
+  const before = parseGovernorLines(oldText).governors;
+  const after = parseGovernorLines(newText).governors;
+  const free = new Map<string, string[]>();
+  for (const g of after) free.set(key(g), [...(free.get(key(g)) ?? []), g.id]);
+  const move = new Map<string, string>();
+  for (const g of before) {
+    const ids = free.get(key(g));
+    const next = ids?.shift();
+    if (next) move.set(g.id, next);
+  }
+  const out: SeedWhatIf = { vacation: [], zeroed: {} };
+  for (const id of w.vacation) {
+    const n = move.get(id);
+    if (n) out.vacation.push(n);
+  }
+  for (const [id, v] of Object.entries(w.zeroed)) {
+    const n = move.get(id);
+    if (n) out.zeroed[n] = v;
+  }
+  return out;
+}
+
 export type QuickBandKey = SeedBand["key"];
 export interface QuickBandInput {
   count: number;
@@ -236,7 +265,7 @@ export const QUICK_DEFAULT_AVERAGE: Readonly<Record<QuickBandKey, number>> = {
   "0-150M": 75e6,
   "150-300M": 225e6,
   "300-500M": 400e6,
-  ">500M": 500e6,
+  ">500M": 600e6, // no upper edge: any value above 500M counts the same (370M)
 };
 
 export const emptyQuick = (): QuickInput => ({
