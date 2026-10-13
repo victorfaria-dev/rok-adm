@@ -1,0 +1,26 @@
+/* My requirements (/kingdom/my/). Only --ko-* tokens. */
+
+.km { display: grid; gap: var(--ko-space-5); min-width: 0; }
+.km-fields { display: grid; gap: var(--ko-space-3); min-width: 0; }
+@media (min-width: 640px) { .km-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+.km-alert { padding: var(--ko-space-3) var(--ko-space-4); border: 1px solid var(--ko-error); border-radius: var(--ko-radius-md); background: var(--ko-surface); }
+.km-byline { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+
+.km-dl, .km-results { display: grid; gap: var(--ko-space-3); margin: 0; }
+.km-dl > div, .km-results > div { display: grid; gap: var(--ko-space-1); min-width: 0; }
+.km-dl dt, .km-results dt { font-size: var(--ko-text-sm); color: var(--ko-text-muted); font-weight: var(--ko-weight-medium); }
+.km-dl dd, .km-results dd { margin: 0; display: grid; gap: var(--ko-space-1); }
+.km-dl code { font-family: var(--ko-font-mono); overflow-wrap: anywhere; }
+.km-results dd { font-family: var(--ko-font-mono); font-variant-numeric: tabular-nums; font-size: var(--ko-text-lg); }
+.km-bands { margin: 0; padding-left: var(--ko-space-5); }
+.km-notes { white-space: pre-wrap; }
+
+.km-summary { font-weight: var(--ko-weight-semibold); }
+.km-bar-wrap { display: grid; gap: var(--ko-space-1); }
+.km-bar { height: 16px; border-radius: var(--ko-radius-pill); background: var(--ko-surface-raised); border: 1px solid var(--ko-border); overflow: hidden; }
+.km-bar-fill { height: 100%; background: var(--ko-accent); }
+.km-bar-text { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+
+.km-explainer { display: grid; gap: var(--ko-space-2); max-width: 70ch; }
+.km-explainer h2 { font-size: var(--ko-text-lg); }
