@@ -1,0 +1,21 @@
+---
+import "./farms.css";
+import { isActive } from "../../../lib/nav";
+
+const LINKS = [
+  { href: "/farms/", label: "My farms", exact: true },
+  { href: "/farms/choose/", label: "Which farm?" },
+  { href: "/farms/build/", label: "Build path" },
+  { href: "/farms/trading-post/", label: "Trading Post" },
+  { href: "/farms/log/", label: "Shipment log" },
+  { href: "/guides/farms/", label: "Farm guides" },
+];
+const path = Astro.url.pathname;
+const norm = (p: string) => (p.endsWith("/") ? p : `${p}/`);
+const current = (l: { href: string; exact?: boolean }) => (l.exact ? norm(path) === l.href : isActive(l.href, path));
+---
+<nav class="fm-subnav" aria-label="Farm hub">
+  <ul>
+    {LINKS.map((l) => <li><a href={l.href} aria-current={current(l) ? "page" : undefined}>{l.label}</a></li>)}
+  </ul>
+</nav>

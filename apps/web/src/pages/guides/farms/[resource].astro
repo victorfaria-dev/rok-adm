@@ -1,0 +1,10 @@
+---
+import type { GetStaticPaths } from "astro";
+import FarmGuidePage from "../../../components/farms/guide/FarmGuidePage.astro";
+import { RESOURCES, type Resource } from "../../../lib/farms-guide";
+
+export const getStaticPaths = (() => RESOURCES.map((resource) => ({ params: { resource } }))) satisfies GetStaticPaths;
+
+const resource = Astro.params.resource as Resource;
+---
+<FarmGuidePage page={resource} />

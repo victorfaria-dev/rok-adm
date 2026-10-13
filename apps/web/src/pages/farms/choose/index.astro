@@ -1,0 +1,18 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../../../components/farms/shared/FarmsNav.astro";
+import FarmChooser from "../../../components/farms/tools/FarmChooser";
+import "../../../components/farms/shared/farms.css";
+import "../../../components/farms/tools/tools.css";
+---
+<Shell title="Which farm should I build?" description="How many farms to run, which kind, and which civilization, from your main's City Hall, daily time and spending. Every answer cites its sources." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Which farm should I build?</h1>
+      <p class="fm-lead">Tell us about your main. We suggest how many farms to run, which kind fits you and which civilization gathers best, with the sources behind each answer.</p>
+      <p class="ft-guardrail" data-guardrail>Planning and bookkeeping only. You do every in-game action yourself.</p>
+    </header>
+    <FarmsNav />
+    <FarmChooser client:load />
+  </div>
+</Shell>

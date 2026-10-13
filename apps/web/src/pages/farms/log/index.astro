@@ -1,0 +1,17 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../../../components/farms/shared/FarmsNav.astro";
+import ShipmentLog from "../../../components/farms/log/ShipmentLog";
+import "../../../components/farms/shared/farms.css";
+---
+<Shell title="Shipment log" description="Log what your farms send to your main through the Trading Post: tax paid, amount received, weekly totals and CSV export. Stays in this browser." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Shipment log</h1>
+      <p class="fm-lead">Write down each resource assistance you send from a farm to your main. See the tax you paid and what the main received, week by week.</p>
+      <p class="fm-note" data-guardrail><strong>Planning and bookkeeping only. You do every in-game action yourself.</strong></p>
+    </header>
+    <FarmsNav />
+    <ShipmentLog client:load />
+  </div>
+</Shell>

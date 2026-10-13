@@ -1,0 +1,1085 @@
+[
+  {
+    "id": "farms-general-purpose",
+    "title": "What a farm is for",
+    "phase": "overview",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "A farm is a second city that **you play yourself**. It gathers resources and ships them to your main through the Trading Post, which takes a tax [A13-0010].\n\nGuides also list side uses: MGE points, Books of Covenant and KvK support (fodder, honor) [A13-0010].\n\nGuides say farms become especially valuable once the main unlocks T5, because the gold and resource drain spikes [A13-0010].",
+    "why_md": "A farm costs daily minutes, so it only makes sense if what it ships is worth that time. The purpose is well documented (three guides agree, A13-0010), but the minutes per day and the yield per day are not measured yet, so the trade-off for a time-limited F2P player is still open.",
+    "cards": [
+      "A13-0010"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Minutes per farm per day and yield per day are not measured (L-A13-01). No source says how many farms fit each spending tier (L-A13-04).",
+    "gaps": [
+      "L-A13-01",
+      "L-A13-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-accounts",
+    "title": "Accounts: a second city in your kingdom, played by hand",
+    "phase": "overview",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "**How you get one.** The built-in Character Management lets you create a second city in the same kingdom; the commonly documented limit is two cities per kingdom [A13-0001]. Path reported by one guide: Profile → Settings → Character Management → Create New Character → choose the kingdom number [A13-0001]. More accounts in one kingdom are reported only via migration/passports, and that claim is unverified [A13-0001].\n\n**What the rules say.** Secondary guides state that farm accounts are allowed and that creating and manually switching characters through Character Management is a normal game feature, while bots, macros, automated gathering and modified clients should be avoided [A13-0008]. This is a secondary source only: no official text has been collected yet.\n\nSince 1.1.07, players using third-party tools such as scripts or cheats lose Conduct Score, and penalties apply below thresholds [C04-0006].\n\n**What this means for you:**\n- You do every action on the farm by hand: switching cities, gathering, shipping.\n- No bots, macros, scripts or modified clients.\n- KingdomOps only helps you plan and keep notes.",
+    "why_md": "Getting this wrong can cost the main account, not just the farm. The Conduct Score system (C04-0006) penalises third-party scripts, and the only statements that farms are fine come from secondary guides (A13-0008), so the safe reading is: farms by hand, nothing automated.",
+    "cards": [
+      "A13-0001",
+      "A13-0008",
+      "C04-0006"
+    ],
+    "patch_cards": [
+      "C04-0006"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "A13-0001 is organised but not verified: the two-cities limit is 'commonly documented' by guides, not an official number, and the migration claim could not be re-fetched. A13-0008 is verified but low confidence: secondary sources only, one of them an account marketplace (conflict of interest); the official position belongs to the Terms of Service research, not collected yet. C04-0006 is a patch-state card (official patch notes, not yet cross-checked).",
+    "gaps": [
+      "L-A13-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-ch-targets",
+    "title": "City Hall targets for the farm: CH11, CH17, CH22",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "The number of marches a city can send at once grows with City Hall: 1 below CH5, 2 from CH5, 3 from CH11, 4 from CH17, 5 from CH22 [A03-0023].\n\nGuides set the farm's milestones on those steps:\n- **CH11** (3 marches) as the starter target.\n- **CH17** (4 marches) as the practical minimum for a serious farm.\n- **CH22** (5 marches, T4) as the strongest general target.\n- CH24–25 only for advanced farms.\n\nSource for the milestones: [A13-0002]. City Hall costs and build times are in the City Hall table [A01-0001]; no source gives the time or cost of each milestone for a farm.",
+    "why_md": "Each extra march is another gathering army out at the same time, so the march steps are where a farm's output jumps. One guide warns that getting an account to City Hall 22 takes a lot of time (A13-0002), and the yield gained per step is still unmeasured.",
+    "cards": [
+      "A01-0001",
+      "A03-0023",
+      "A13-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Yield gained per march and farm minutes per day are not measured (L-A13-01).",
+    "gaps": [
+      "L-A13-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-trading-post",
+    "title": "Trading Post: the tax, the level to aim for, and the Goldmine it needs",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Tax by Trading Post level:** 35% at L1, 31% at L5, 26% at L10, 21% at L15, 19% at L17, 16% at L20, 15% at L21, 14% at L22, 12% at L23, 10% at L24, 8% at L25 [A03-0024].\n\n**Level to aim for on the farm:**\n- Guides recommend a farm Trading Post of **15 or higher** (21% tax) [A13-0003].\n- One guide's tiers: casual 15–16, active 21 (15%), frequent/KvK 24 (10%); L25 (8%) only for well-developed farms [A13-0003].\n- Your main needs Trading Post 24 anyway for CH25 [A13-0003].\n\n**Goldmine requirement:** Trading Post L10+ requires a Goldmine of the same level [A03-0024], so the farm levels its Goldmines too.\n\n**What the tax means:** to receive X on the main at tax t, the farm sends X / (1 − t): 1.27× at 21% and 1.11× at 10% [A03-0024].\n\n**When it unlocks is disputed:** City Hall 12 is the most probable, against City Hall 10 in an older table. Pending in-game check [A03-0025, A01-0009].",
+    "why_md": "The tax is the price of every shipment, and it falls steeply with Trading Post level, so the Trading Post is the farm building that pays back most directly. The tax table agrees in every source (A03-0024, high confidence); the unlock level does not.",
+    "cards": [
+      "A01-0009",
+      "A03-0024",
+      "A03-0025",
+      "A13-0003"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0025 is disputed (Trading Post unlock: City Hall 12 vs 10). A01-0009 is disputed and low confidence (early prerequisites differ between the wiki and a guide site). The Goldmine requirement starts at L10 on the wiki but at L1 on one guide site (minor conflict noted in A03-0024).",
+    "gaps": [
+      "L-A03-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-storehouse",
+    "title": "Only what is above Storehouse protection can be shipped",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 50,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Since update 1.0.44 (March 2021), resources protected by the Storehouse can no longer be sent via the Trading Post; only resources above the protected amount are transferable [A03-0030].\n\n- The Storehouse protects 2.5M of each resource at L25; lower-level values differ between sources from L6 upward [A03-0006].\n- So a high farm Storehouse does **not** help you feed the main: the protected amount is a floor you cannot ship [A03-0030].\n- Resources kept as items (unopened boxes) cannot be plundered and have no storage limit [A03-0007].",
+    "why_md": "Players often level the farm Storehouse expecting to protect more for shipping; since 1.0.44 that stock is exactly what cannot be shipped (A03-0030, official notes). Reading 'only the excess is transferable' follows the wording of the patch note and still needs an in-game check.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A03-0030"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Storehouse protection between L6 and L24 differs by 10–35% between two tables (A03-0006).",
+    "gaps": [
+      "L-A03-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-transfer-march",
+    "title": "Every shipment takes a march and travel time",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 60,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Transfers are not instant: a trader occupies a troop dispatch queue (shared with commanders), walks to the target city and back [A03-0026]. Each Trading Post transfer occupies one march queue [A03-0023].\n\n- While a shipment travels, that march is not gathering.\n- Keep the farm close to the main to shorten trips [A03-0026].\n- Capacity per trip: Trading Post L25 carries 10,000,000 (official patch 1.0.90); the wiki gives L1 10,000, L15 1.6M, L24 4.0M, and guide tables with half these values are outdated [A03-0025].",
+    "why_md": "On a farm with 3 or 4 marches, a shipment is a real cost: it takes one of the gathering armies off the map for the whole round trip. Capacity at L25 is official; lower levels rest on the wiki only.",
+    "cards": [
+      "A03-0023",
+      "A03-0025",
+      "A03-0026"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0025 is disputed (unlock City Hall) and its L1–L24 capacities come from a single wiki source.",
+    "gaps": [
+      "L-A03-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-gathering",
+    "title": "Gathering on a farm: what makes it faster",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 70,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Alliance territory:** gathering at normal resource points inside your alliance territory is 25% faster [A03-0009].\n- **Enhanced Gathering items:** +50% gathering speed for all resources for 8 or 24 hours. Both appear at the Mysterious Merchant and can be bought with resources (e.g. 90k wood) instead of gems; since 1.1.09 they can be used in bulk [A03-0013]. Resource *production* boost items were removed in 1.1.09; gathering boosts are not affected [A03-0013].\n- **Node size:** higher-level nodes hold more but do not gather faster. When online, send to the closest node; before going offline, send to large nodes so the march does not return early [A03-0016].\n- **Troop type:** siege units carry the most per unit: Battering Ram (T1) 20 against Infantry T1 7 [A03-0015].\n- **Gathering commander:** only the primary commander's talents apply; level 37 unlocks Superior Tools (~25% gathering speed) [A03-0017].",
+    "why_md": "These are the levers a farm controls without spending: where it gathers, which boosts it buys with resources, which nodes it picks, what it sends, and who leads the march. The amount per node level and the base gathering speed are not published anywhere we could reach, so exact yields stay pending.",
+    "cards": [
+      "A03-0009",
+      "A03-0013",
+      "A03-0015",
+      "A03-0016",
+      "A03-0017"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Talent values (A03-0017) may have changed since 2020. Node amounts per level and base gathering speed are pending (L-A03-01); yield by City Hall is pending (L-A03-02).",
+    "gaps": [
+      "L-A03-01",
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-safety",
+    "title": "Keep the farm from becoming a target",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 80,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Farms holding large raw stockpiles at low City Hall attract raids, especially during kill events. Ship the surplus to the main and keep exposed raw resources within Storehouse protection [A13-0005].\n- Resources kept as items cannot be plundered [A03-0007].\n- One guide suggests a defensive commander (Sun Tzu or Kusunoki) because farms get swarmed during kill events [A13-0005].\n- Some players zero their own farm for MGE or kill points; the guide author advises against it unless you need it for a commander [A13-0005].",
+    "why_md": "A farm's stock is only useful once it reaches the main. Two guides agree that a low City Hall farm sitting on a big pile is the easiest target in the kingdom (A13-0005).",
+    "cards": [
+      "A03-0007",
+      "A13-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-placement",
+    "title": "Where the farm lives: alliance and kingdom etiquette",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 90,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "View A (same alliance): one 2019 guide prefers having both the main and the farm in the main alliance [A13-0006]. View B (separate farm alliance): a 2026 guide says alliance slots may be needed for fighters, so a weak farm should not join the main alliance without approval [A13-0006].",
+    "body_md": "- Put the farm in your main's alliance or in an approved farm alliance, and gather inside territory (+25%) [A13-0006, A03-0009].\n- Don't move a weak farm into the main (fighting) alliance without approval: slots may be needed for fighters [A13-0006].\n- What a farm does in KvK and whether MGE points can be traded follow your kingdom's and alliance's rules, which vary. Ask your leadership [A13-0006].\n- Settle the farm close to the main so shipments are short [A03-0026].",
+    "why_md": "Kingdoms set their own farm rules and we found no concrete rule set to quote, so this block can only tell you which questions to ask. Territory (+25%, A03-0009) and distance (A03-0026) are mechanics; the rest is etiquette.",
+    "cards": [
+      "A03-0009",
+      "A03-0026",
+      "A13-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0006 is verified but low confidence: two guides, no concrete kingdom rule sets found.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-daily-routine",
+    "title": "A farm day (qualitative only; minutes not measured)",
+    "phase": "daily",
+    "section": "farms",
+    "order": 100,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "No source quantifies minutes per farm per day [A13-0007]. The guidance is qualitative:\n- Minimise farm time.\n- On login, dispatch; refresh during the day; before logging out, dispatch to large nodes.\n- Collect buildings within 10 hours: they store 10× their hourly output and stop producing when full [A03-0002].\n- Log in at least twice a day for alliance resource center marches.\n- Ship what is above Storehouse protection [A03-0030].\n\nRoutine source: [A13-0007]. Every step is done by hand in the game.",
+    "why_md": "The time a farm costs decides whether it is worth having, and nobody has measured it. Until an in-game stopwatch measurement exists (L-A13-01), this page shows the routine but no minutes.",
+    "cards": [
+      "A03-0002",
+      "A03-0030",
+      "A13-0007"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0007 is verified but low confidence: qualitative advice only, no measured minutes.",
+    "gaps": [
+      "L-A13-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-bottlenecks",
+    "title": "What your main runs short of, by City Hall stage",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 110,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Early game:** food and wood dominate building costs [A03-0021].\n- **Around CH6:** stone becomes required for most buildings, is the main Wall resource, and is produced more slowly [A03-0021]. City Hall upgrades cost food and wood, plus stone from CH6, and no gold [A01-0001].\n- **From CH10:** gold unlocks with the first Goldmine at CH10. It is not used for any building, but it is required for all Academy tech after Academy 10 and for Tier 3+ troops [A03-0001, A03-0021].\n- **Near T5:** gold becomes the main bottleneck when approaching or using T5 (training and healing) [A03-0021].\n\nSo a farm feeds food and wood first, then stone, then gold. See the per-resource guides below.",
+    "why_md": "A farm is only useful if it ships what the main is short of. No source gives a precise City Hall by City Hall table, but the order food/wood → stone → gold is agreed (A03-0021).",
+    "cards": [
+      "A01-0001",
+      "A03-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0001 is disputed on the stone unlock only (first Quarry at City Hall 4 or 6); the gold facts in it are not disputed.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-general-variants",
+    "title": "Which kind of farm: one general farm is the norm",
+    "phase": "overview",
+    "section": "farms",
+    "order": 120,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **One farm that gathers everything (the default).** Guides describe one active farm as the norm [A13-0007]; one guide recommends France for a single active farm (Joan of Arc start, +10% wood) [A13-0009].\n- **One farm per resource:** only one 2019 guide, and it says this is only for players that spend a lot of time [A13-0009]. The commonly documented limit of two cities per kingdom also gets in the way [A13-0001]. Weak evidence.\n- **Gold farm:** disputed. Gold can be sent through the Trading Post [A03-0027], but guides advise gathering gold on the main [A13-0004]. See the gold guide.\n- **Two-resource farm:** no source recommends pairs. The only pair discussed here is a labelled hypothesis (food + wood), shown below.",
+    "why_md": "Specialised farms multiply the daily time cost, which is the one thing a F2P player is short of, and the only source for them is a single 2019 guide. A general farm is what every guide assumes.",
+    "cards": [
+      "A03-0027",
+      "A13-0001",
+      "A13-0004",
+      "A13-0007",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0007 and A13-0009 are verified but low confidence (A13-0009 rests on one 2019 guide). A13-0001 is organised but not verified. A13-0004 is organised, low confidence and split. Gold transfer (A03-0027) still needs an in-game check.",
+    "gaps": [
+      "L-A03-03",
+      "L-A13-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-pair-food-wood",
+    "title": "Hypothesis: a food + wood farm",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 130,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 1,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "Hypothesis: a farm that gathers mainly food and wood may be the one pair that pays off at a low farm City Hall. **No source recommends resource pairs**; this is our own derived reasoning, not advice.\n\nInputs:\n- Food and wood get their first +15% gathering tech at Academy 5–9, while stone and gold need Academy 12–15 [A03-0028].\n- Food and wood dominate early building costs on the main [A03-0021].\n- Rome (+10% food gathering) and France (+10% wood gathering) [A03-0029].\n\nMethod: compare the earliest Academy level that gives each resource +15% with the main's early bottleneck. Not tested in game: a farm's yield per day is pending measurement.",
+    "why_md": "No source recommends resource pairs: the farm research says so explicitly (A13-0009). This block exists only so the reasoning is visible. It is derived from three inputs: Academy tech timing (A03-0028), the main's early bottleneck (A03-0021) and civilization perks (A03-0029). Until in-game farm yields test it (L-A13-03), treat it as a hypothesis.",
+    "cards": [
+      "A03-0021",
+      "A03-0028",
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "A13-0009 is verified but low confidence and is cited only for the absence of any source on pairs. The recommendation itself has no source.",
+    "gaps": [
+      "L-A13-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-food-when",
+    "title": "When your main needs food",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Food and wood dominate building costs early in the game [A03-0021].\n- City Hall upgrades cost food and wood (stone from CH6, no gold) [A01-0001].\n- Food stays in every City Hall upgrade, so a farm's food remains useful later, but it is no longer the scarcest resource once stone and gold join [A03-0021].",
+    "why_md": "A new farm can gather food from day one, and food is what the main burns first, so food is the natural first shipment.",
+    "cards": [
+      "A01-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-food-tech",
+    "title": "Academy: the food gathering techs come early",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Sickle:** +15% food gathering at Academy 5–9 [A03-0028].\n- **Scythe:** +35% food gathering at Academy 17–20 [A03-0028].\n\nA young farm reaches the first food tech long before the stone and gold ones (Academy 12–15).",
+    "why_md": "Gathering techs are the farm's own permanent speed boost. The values come from old wiki revisions and may have been rebalanced since.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-food-civ",
+    "title": "Civilization: Rome gives +10% food gathering",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Rome:** +10% food gathering; **Japan:** +5% all resource gathering [A03-0029].\n- **Spain:** +20% resource *production* — city buildings, **not** gathering [A03-0029].\n- One 2019 guide: if you build several farm accounts and this one gathers food, Rome is the best choice [A13-0009].",
+    "why_md": "A civilization perk is a permanent percentage on everything the farm gathers. Only the perk table is firm; the Rome-for-food advice comes from one guide aimed at players with several farms.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 is verified but low confidence (one 2019 guide). One guide reportedly lists Japan without a gathering bonus (minor conflict in A03-0029).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-food-buildings",
+    "title": "Food from the farm's own buildings",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- A Farm building produces 400/h at L1, rising to 10,400/h at L24 and 20,800/h at L25 [A03-0002].\n- Storage is always 10× hourly output, so it stops producing if you don't collect within ~10 hours [A03-0002].\n- Map gathering is reported to outproduce buildings by a wide margin, but the numbers behind that are outdated [A03-0022].",
+    "why_md": "Buildings produce without marches, but slowly; gathering is where a farm's volume comes from. Measured gathering yields by City Hall are still missing.",
+    "cards": [
+      "A03-0002",
+      "A03-0022"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0022 is partly outdated and low confidence: author yields from 2019–2020, before the 1.0.49 gathering changes.",
+    "gaps": [
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-wood-when",
+    "title": "When your main needs wood",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Food and wood dominate building costs early in the game [A03-0021].\n- City Hall upgrades cost food and wood (stone from CH6, no gold) [A01-0001].\n- Like food, wood stays in every City Hall upgrade but stops being the scarcest resource once stone and gold join [A03-0021].",
+    "why_md": "Wood is the other early building resource, available from day one on the farm, so it ships from the start together with food.",
+    "cards": [
+      "A01-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-wood-tech",
+    "title": "Academy: the wood gathering techs come early",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Handaxe:** +15% wood gathering at Academy 5–9 [A03-0028].\n- **Whipsaw:** +35% wood gathering at Academy 17–20 [A03-0028].",
+    "why_md": "Same timing as food: a young farm gets its first wood tech early. The values come from old wiki revisions and may have been rebalanced since.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-wood-civ",
+    "title": "Civilization: France gives +10% wood gathering",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **France:** +10% wood gathering; **Japan:** +5% all resource gathering [A03-0029].\n- **Spain:** +20% resource *production* — city buildings, **not** gathering [A03-0029].\n- One 2019 guide recommends France for a single active farm (Joan of Arc start, +10% wood) [A13-0009].",
+    "why_md": "If you have one general farm, the only civilization a guide names for it is France. The perk is firm; the recommendation is one guide.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 is verified but low confidence (one 2019 guide).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-wood-merchant",
+    "title": "Wood buys gathering boosts at the Mysterious Merchant",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- Enhanced Gathering items (+50% for 8 or 24 hours) appear at the Mysterious Merchant and can be bought with resources (e.g. 90k wood) instead of gems [A03-0013].\n- The Lumber Mill has the same table as the Farm: 400/h at L1, 10,400/h at L24, 20,800/h at L25 [A03-0002].",
+    "why_md": "Spending farm wood on gathering boosts turns a surplus resource into faster gathering of everything, without gems.",
+    "cards": [
+      "A03-0002",
+      "A03-0013"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-stone-when",
+    "title": "When your main needs stone",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Around CH6 stone becomes required for most buildings; it is the main Wall resource and is produced more slowly [A03-0021].\n- City Hall upgrades cost stone from CH6 [A01-0001].\n- Stone unlocks with the first Quarry, and map gathering needs the Quarrying tech; whether the first Quarry comes at City Hall 4 or 6 is disputed [A03-0001, A01-0009].",
+    "why_md": "Stone is where most mains first feel short, because building costs need it and it is produced slowly. A farm that can ship stone helps from the mid game on.",
+    "cards": [
+      "A01-0001",
+      "A01-0009",
+      "A03-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0001 and A01-0009 are disputed on the stone unlock level (City Hall 4 vs 6).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-stone-tech",
+    "title": "Academy: the stone techs come later, so stone is a later farm stage",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Handcart:** +15% stone gathering at Academy 12–15 [A03-0028].\n- **Stone Saw:** +35% stone gathering at Academy 20–25 [A03-0028].\n\nA farm needs Academy 12+ before stone gathers at a boosted rate, so stone fits a more developed farm.",
+    "why_md": "Compared with food and wood (Academy 5–9), the stone techs need a much more developed farm. The values come from old wiki revisions and may have been rebalanced since.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-stone-civ",
+    "title": "Civilization: Greece and Byzantium give +10% stone gathering",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Greece:** +10% stone gathering; **Byzantium:** +10% stone gathering; **Japan:** +5% all resource gathering [A03-0029].\n- One 2019 guide names Byzantium for a stone farm in a one-farm-per-resource setup, which it says is only for players that spend a lot of time [A13-0009].",
+    "why_md": "Two civilizations boost stone. A stone-only farm is weakly supported (one guide, heavy players), so for most players this perk matters only if the general farm already uses one of them.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 is verified but low confidence (one 2019 guide).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-gold-when",
+    "title": "When your main needs gold",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Gold unlocks with the first Goldmine at CH10 (map gathering needs Metallurgy). It is not used in any building upgrade, but it is required for all Academy tech after Academy 10 and for training or upgrading Tier 3+ troops [A03-0001].\n- It becomes the main bottleneck when approaching or using T5 (training and healing) [A03-0021].\n- One guide: when you unlock tier 5 troops, you will need a farm account [A13-0010].\n- The farm levels Goldmines anyway: Trading Post L10+ needs a Goldmine of the same level [A03-0024].",
+    "why_md": "Gold is the late bottleneck, so it decides how useful a farm is in the long run, and also where the gold-farm debate below matters.",
+    "cards": [
+      "A03-0001",
+      "A03-0021",
+      "A03-0024",
+      "A13-0010"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0001 is disputed on the stone unlock only; its gold facts are not disputed.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-gold-tech",
+    "title": "Academy: the gold techs come late, so gold is a late farm stage",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Placer Mining:** +15% gold gathering at Academy 12–15 [A03-0028].\n- **Shaft Mining:** +35% gold gathering at Academy 20–25 [A03-0028].\n\nThe +35% tier needs Academy 20+, which a farm reaches late.",
+    "why_md": "The main usually has these techs long before the farm does, which is one reason guides tell you to gather gold on the main. The values come from old wiki revisions and may have been rebalanced since.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-gold-civ",
+    "title": "Civilization: Maya gives +10% gold gathering",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Maya:** +10% gold gathering; **Japan:** +5% all resource gathering [A03-0029].\n- A 2019 guide named Japan for a gold farm; that advice predates Maya [A13-0009, A03-0029].",
+    "why_md": "If a farm gathers gold at all, Maya is the only civilization with a gold-specific perk today.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 is verified but low confidence (one 2019 guide). One guide reportedly lists Japan without a gathering bonus (minor conflict in A03-0029).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farms-gold-ship-or-main",
+    "title": "Gold on the farm or on the main? Sources are split",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "View A (the farm can ship gold): gold is one of the four resources you can choose in resource assistance (\"Choose Food, Wood, Stone, or Gold\"), a 2021 player report describes donating gold, and the limit is the Storehouse rule: only the amount above protection can be sent [A03-0027, A03-0030]. View B (gather gold on the main): guides advise gathering gold on the main account, because it has a better gathering commander and technology and avoids the transfer tax [A13-0004].",
+    "body_md": "**Can a farm send gold?** Yes, according to the best evidence we have: gold is selectable in resource assistance, and only the amount above Storehouse protection can be sent [A03-0027, A03-0030]. This still needs an in-game check, including whether gold assistance needs a particular Trading Post level.\n\n**Should it?** Guides advise gathering gold on the main: better commander and tech, no tax [A13-0004]. Gems cannot be transferred from farms at all, so gem gathering is main-only [A13-0004].\n\n**Our default for F2P:** don't build a dedicated gold farm until the in-game check confirms gold shipping and its yield. A general farm can still ship gold it has above protection.",
+    "why_md": "Gold is the late bottleneck, so the question matters, but the two sides answer different questions: one is about what the game allows (A03-0027), the other about what is efficient (A13-0004). Neither has an in-game measurement behind it yet.",
+    "cards": [
+      "A03-0027",
+      "A03-0030",
+      "A13-0004"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0004 is organised, low confidence and split; its gem statement is a paraphrase that could not be re-located. A03-0027 is verified at medium confidence but still waits for an in-game check (L-A03-03).",
+    "gaps": [
+      "L-A03-03",
+      "L-A13-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  }
+]

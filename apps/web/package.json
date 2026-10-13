@@ -17,6 +17,8 @@
     "@fontsource/ibm-plex-mono": "5.2.7",
     "@fontsource/ibm-plex-sans": "5.2.8",
     "@rokadm/core": "workspace:*",
+    "@rokadm/data": "workspace:*",
+    "@rokadm/planner": "workspace:*",
     "astro": "5.18.2",
     "preact": "10.29.8"
   },

@@ -1,0 +1,363 @@
+{
+  "_about": "Farm hub data (F-65 variant picker, F-66 build path, F-67 transfer warnings, F-68 daily checklist). Every game claim cites fact cards; `evidence` maps a fact ID to a literal substring of that card and scripts/build-data.ts fails if it is missing. `hypothesis: true` marks planner reasoning that no source states. Trading Post tax/capacity rows live in trading-post.json (generated from research/facts/A03/data/trading-post.csv). Farms are planning and bookkeeping only: the player does every in-game action by hand.",
+  "asOf": "2026-10-13",
+  "tradingPostUnlock": {
+    "text": "Trading Post unlock is contested: City Hall 12 is the most probable (Fandom), an older City Hall table says City Hall 10. Check it in game.",
+    "probableCityHall": 12,
+    "otherCityHall": 10,
+    "facts": ["A03-0025"],
+    "gaps": ["L-A03-04"],
+    "evidence": { "A03-0025": "Unlock CH: CH12 is most probable" }
+  },
+  "transferWarnings": {
+    "gold_pending_t0": {
+      "text": "Gold can be selected in resource assistance, but this is not yet confirmed in game, and gold assistance may need a higher Trading Post level. Check the assistance screen before you plan around it.",
+      "facts": ["A03-0027"],
+      "gaps": ["L-A03-03"],
+      "hypothesis": false,
+      "evidence": { "A03-0027": "Choose Food, Wood, Stone, or Gold" }
+    },
+    "protected_not_shippable": {
+      "text": "Resources protected by the farm's Storehouse cannot be sent. Only the stock above the protected amount can be shipped.",
+      "facts": ["A03-0030"],
+      "gaps": [],
+      "hypothesis": false,
+      "evidence": { "A03-0030": "Resources protected by storehouses can no longer be transported." }
+    },
+    "protection_is_input": {
+      "text": "Storehouse protection is something you type in. Sources disagree for Storehouse levels 6–24, so read the value on the farm's Storehouse screen.",
+      "facts": ["A03-0006"],
+      "gaps": ["L-A03-05"],
+      "hypothesis": false,
+      "evidence": { "A03-0006": "Lower-level values differ between sources from L6 upward." }
+    },
+    "capacity_contested": {
+      "text": "Capacity per trip for Trading Post levels 1–24 comes from one wiki table (older guides list half). Only level 25 (10,000,000) is official. Check the Trading Post screen, or type the capacity you see.",
+      "facts": ["A03-0025"],
+      "gaps": ["L-A03-04"],
+      "hypothesis": false,
+      "evidence": { "A03-0025": "raised Trading Post L25 capacity from 5,000,000 to 10,000,000" }
+    },
+    "capacity_unknown": {
+      "text": "Capacity per trip is unknown, so trips cannot be counted. Enter your Trading Post level or the capacity you see in game.",
+      "facts": ["A03-0025"],
+      "gaps": ["L-A03-04"],
+      "hypothesis": false
+    },
+    "capacity_counts_gross": {
+      "text": "Trips assume the amount the farm sends (before tax) counts against capacity per trip. No source says whether capacity applies before or after tax.",
+      "facts": ["A03-0025"],
+      "gaps": ["L-A03-04"],
+      "hypothesis": true
+    },
+    "march_queue": {
+      "text": "Each trip uses one of the farm's march queues and has travel time there and back. Keep the farm close to the main.",
+      "facts": ["A03-0026"],
+      "gaps": [],
+      "hypothesis": false,
+      "evidence": { "A03-0026": "a trader occupies a troop dispatch queue" }
+    },
+    "tax_unknown": {
+      "text": "Tax rate unknown. Enter the farm's Trading Post level or the tax rate you see in game.",
+      "facts": ["A03-0024"],
+      "gaps": [],
+      "hypothesis": false
+    }
+  },
+  "bottlenecks": [
+    {
+      "id": "early", "minCityHall": 1, "maxCityHall": 5, "stageLabel": "CH1–CH5: building costs",
+      "resources": ["food", "wood"],
+      "facts": ["A03-0021", "A01-0001"],
+      "evidence": { "A03-0021": "Early game: food and wood dominate building costs." }
+    },
+    {
+      "id": "stone", "minCityHall": 6, "maxCityHall": 9, "stageLabel": "CH6–CH9: stone joins (Wall, most buildings)",
+      "resources": ["food", "wood", "stone"],
+      "facts": ["A03-0021"],
+      "evidence": { "A03-0021": "Stone becomes required for most buildings around CH6" }
+    },
+    {
+      "id": "gold", "minCityHall": 10, "maxCityHall": 20, "stageLabel": "CH10–CH20: gold for research and T3+ troops, stone for buildings",
+      "resources": ["gold", "stone"],
+      "facts": ["A03-0021", "A03-0001"],
+      "evidence": { "A03-0021": "Gold enters at CH10", "A03-0001": "gold unlocks with the first Goldmine at CH10" }
+    },
+    {
+      "id": "t4t5", "minCityHall": 21, "maxCityHall": 25, "stageLabel": "CH21+ (T4, then T5 at CH25): gold for training and healing",
+      "resources": ["gold"],
+      "facts": ["A03-0021", "A01-0001", "A13-0010"],
+      "evidence": { "A03-0021": "it becomes the main bottleneck when approaching/using T5", "A01-0001": "Tier 4 troops" }
+    }
+  ],
+  "civByResource": {
+    "food": { "civs": ["rome", "japan"], "bonus": "Rome +10% food gathering; Japan +5% all resources", "facts": ["A03-0029"], "evidence": { "A03-0029": "Rome +10% food gathering" } },
+    "wood": { "civs": ["france", "japan"], "bonus": "France +10% wood gathering; Japan +5% all resources", "facts": ["A03-0029"], "evidence": { "A03-0029": "France +10% wood gathering" } },
+    "stone": { "civs": ["greece", "byzantium", "japan"], "bonus": "Greece and Byzantium +10% stone gathering; Japan +5% all resources", "facts": ["A03-0029"], "evidence": { "A03-0029": "Byzantium +10% stone gathering" } },
+    "gold": { "civs": ["maya", "japan"], "bonus": "Maya +10% gold gathering; Japan +5% all resources", "facts": ["A03-0029"], "evidence": { "A03-0029": "Maya +10% gold gathering" } }
+  },
+  "variants": {
+    "general": {
+      "label": "One all-resource farm",
+      "why": "Guides describe one active farm that gathers whatever the main needs as the norm. One guide suggests France for a single active farm.",
+      "facts": ["A13-0007", "A13-0009"],
+      "gaps": [],
+      "hypothesis": false
+    },
+    "single-resource": {
+      "label": "One farm per resource",
+      "why": "Only one 2019 guide suggests one farm per resource (Rome food, Byzantium stone, Japan gold), and only for players who spend a lot of time. About two cities per kingdom also limits it.",
+      "facts": ["A13-0009", "A13-0007", "A13-0001"],
+      "gaps": ["L-A13-01"],
+      "hypothesis": false,
+      "evidence": { "A13-0007": "one farm per resource is described as only for players with a lot of time" }
+    },
+    "gold": {
+      "label": "Gold farm",
+      "why": "Gold can be sent (pending in-game check), but guides advise gathering gold on the main: better gathering tech and no transfer tax. Evidence is divided.",
+      "facts": ["A03-0027", "A13-0004"],
+      "gaps": ["L-A03-03"],
+      "hypothesis": false,
+      "evidence": { "A13-0004": "Guides advise gathering gold on the main account" }
+    },
+    "pair-food-wood": {
+      "label": "Food + wood farm",
+      "why": "No source recommends resource pairs. Planner reasoning: food and wood get their first +15% gathering tech at Academy 5–9 (stone and gold need 12–15), and they dominate early main costs. Test with in-game yields before relying on it.",
+      "facts": ["A03-0028", "A03-0021", "A03-0029"],
+      "gaps": ["L-A13-03"],
+      "hypothesis": true
+    }
+  },
+  "farmCount": {
+    "base": {
+      "why": "Guides frame a farm as a resource feed for the main and describe one active farm as the norm. Character Management allows a second city in the same kingdom.",
+      "facts": ["A13-0010", "A13-0007", "A13-0001"],
+      "gaps": ["L-A13-04"]
+    },
+    "two": {
+      "why": "You asked for more than one and declared a lot of time. The common limit is two cities per kingdom (your main plus one farm); more cities in one kingdom are reported only through migration and are unverified.",
+      "facts": ["A13-0001", "A13-0007"],
+      "gaps": ["L-A13-04", "L-A13-01"]
+    },
+    "zero": {
+      "why": "Your declared daily time is very low. A farm adds logins (guides say at least twice a day), and no source measures farm minutes per day.",
+      "facts": ["A13-0007"],
+      "gaps": ["L-A13-01", "L-A13-04"],
+      "evidence": { "A13-0007": "log in at least twice daily" }
+    }
+  },
+  "buildStages": [
+    {
+      "id": "start",
+      "label": "Start: CH11 / 3 marches",
+      "steps": [
+        {
+          "id": "civ",
+          "label": "Pick the farm's civilization",
+          "detail": "Match the civilization to what the farm will gather: France (+10% wood) for one all-resource farm per one guide, Rome food, Greece or Byzantium stone, Maya gold, Japan +5% all.",
+          "facts": ["A03-0029", "A13-0009"],
+          "gaps": []
+        },
+        {
+          "id": "ch11",
+          "label": "City Hall 11 (3rd march queue)",
+          "detail": "Three marches gather much more than two, so CH11 is the first farm target.",
+          "facts": ["A13-0002", "A03-0023"],
+          "gaps": [],
+          "check": { "field": "cityHall", "min": 11 },
+          "evidence": { "A13-0002": "CH11 (3 marches) as starter", "A03-0023": "3 from CH11" }
+        },
+        {
+          "id": "placement",
+          "label": "Place the farm close to the main, inside alliance territory",
+          "detail": "Each Trading Post trip walks there and back, so distance costs march time. Gathering in alliance territory is 25% faster. Join the main's alliance or an approved farm alliance (rules vary by kingdom).",
+          "facts": ["A03-0026", "A03-0009", "A13-0006"],
+          "gaps": [],
+          "evidence": { "A03-0009": "25% faster" }
+        },
+        {
+          "id": "academy-foodwood-15",
+          "label": "Food and wood gathering techs +15% (Academy 5–9)",
+          "detail": "Sickle (food) and Handaxe (wood) reach +15% by Academy 9.",
+          "facts": ["A03-0028"],
+          "gaps": [],
+          "resources": ["food", "wood"],
+          "check": { "field": "academy", "min": 9 },
+          "evidence": { "A03-0028": "food (Sickle) and wood (Handaxe) +15% at Academy 5–9" }
+        }
+      ]
+    },
+    {
+      "id": "practical",
+      "label": "Practical minimum: CH17 / 4 marches",
+      "steps": [
+        {
+          "id": "tp-unlock",
+          "label": "Unlock the Trading Post (CH12 probable, CH10 in an older table)",
+          "detail": "The unlock City Hall is contested. Without a Trading Post the farm cannot ship.",
+          "facts": ["A03-0025"],
+          "gaps": ["L-A03-04"],
+          "check": { "field": "tradingPost", "min": 1 }
+        },
+        {
+          "id": "goldmine",
+          "label": "Goldmine at the same level as the Trading Post (from Trading Post 10)",
+          "detail": "Trading Post level 10 and up needs a Goldmine of the same level, so level both together. Target Goldmine 15 for Trading Post 15.",
+          "facts": ["A03-0024", "A13-0003"],
+          "gaps": [],
+          "check": { "field": "goldmine", "min": 15 },
+          "evidence": { "A03-0024": "Trading Post L10+ requires a Goldmine of the same level" }
+        },
+        {
+          "id": "tp15",
+          "label": "Trading Post 15 (21% tax)",
+          "detail": "Guides set Trading Post 15 as the farm minimum: tax falls from 35% at level 1 to 21% at level 15.",
+          "facts": ["A13-0003", "A03-0024"],
+          "gaps": [],
+          "check": { "field": "tradingPost", "min": 15 },
+          "evidence": { "A13-0003": "Guides recommend farm Trading Post ≥15 (21% tax)" }
+        },
+        {
+          "id": "ch17",
+          "label": "City Hall 17 (4th march queue)",
+          "detail": "CH17 is the practical minimum for a serious farm because it unlocks the fourth march queue.",
+          "facts": ["A13-0002", "A03-0023"],
+          "gaps": [],
+          "check": { "field": "cityHall", "min": 17 },
+          "evidence": { "A13-0002": "CH17 (4 marches) as practical minimum", "A03-0023": "4 from CH17" }
+        },
+        {
+          "id": "commander37",
+          "label": "Gathering commander level 37 (Superior Tools)",
+          "detail": "Only the primary commander's talents apply. Level 37 unlocks Superior Tools (about +25% gathering speed).",
+          "facts": ["A03-0017"],
+          "gaps": [],
+          "check": { "field": "commanderLevel", "min": 37 },
+          "evidence": { "A03-0017": "Reaching level 37 unlocks Superior Tools (~25% gathering speed)" }
+        },
+        {
+          "id": "academy-stonegold-15",
+          "label": "Stone and gold gathering techs +15% (Academy 12–15)",
+          "detail": "Handcart (stone) and Placer Mining (gold) reach +15% by Academy 15.",
+          "facts": ["A03-0028"],
+          "gaps": [],
+          "resources": ["stone", "gold"],
+          "check": { "field": "academy", "min": 15 },
+          "evidence": { "A03-0028": "stone (Handcart) and gold (Placer Mining) +15% at Academy 12–15" }
+        },
+        {
+          "id": "storehouse",
+          "label": "Don't over-level the farm's Storehouse",
+          "detail": "Protected stock cannot be shipped, so a high farm Storehouse does not feed the main. Read the protection value on the Storehouse screen (sources differ for levels 6–24).",
+          "facts": ["A03-0030", "A03-0006"],
+          "gaps": ["L-A03-05"]
+        }
+      ]
+    },
+    {
+      "id": "strong",
+      "label": "Strong: CH22 / 5 marches",
+      "steps": [
+        {
+          "id": "ch22",
+          "label": "City Hall 22 (5th march queue)",
+          "detail": "CH22 is the strongest general farm target (5 marches), but it takes a lot of time.",
+          "facts": ["A13-0002", "A03-0023"],
+          "gaps": [],
+          "check": { "field": "cityHall", "min": 22 },
+          "evidence": { "A13-0002": "CH22 (5 marches, T4)", "A03-0023": "5 from CH22" }
+        },
+        {
+          "id": "academy-foodwood-35",
+          "label": "Food and wood gathering techs +35% (Academy 17–20)",
+          "detail": "Scythe (food) and Whipsaw (wood) reach +35% by Academy 20.",
+          "facts": ["A03-0028"],
+          "gaps": [],
+          "resources": ["food", "wood"],
+          "check": { "field": "academy", "min": 20 },
+          "evidence": { "A03-0028": "food (Scythe) and wood (Whipsaw) at Academy 17–20" }
+        },
+        {
+          "id": "tp21",
+          "label": "Trading Post 21 for an active farm (15% tax)",
+          "detail": "One guide tier: casual farms 15–16, active farms 21, frequent-transfer and KvK farms 24 (10%).",
+          "facts": ["A13-0003", "A03-0024"],
+          "gaps": [],
+          "check": { "field": "tradingPost", "min": 21 },
+          "evidence": { "A13-0003": "active 21 (15%)" }
+        },
+        {
+          "id": "academy-stonegold-35",
+          "label": "Stone and gold gathering techs +35% (Academy 20–25)",
+          "detail": "Stone Saw (stone) and Shaft Mining (gold) reach +35% by Academy 25.",
+          "facts": ["A03-0028"],
+          "gaps": [],
+          "resources": ["stone", "gold"],
+          "check": { "field": "academy", "min": 25 },
+          "evidence": { "A03-0028": "stone (Stone Saw) and gold (Shaft Mining) at Academy 20–25" }
+        }
+      ]
+    }
+  ],
+  "dailyTasks": [
+    {
+      "id": "dispatch-big-nodes",
+      "label": "Before you log out, send every march to a large node",
+      "detail": "Node level changes how much a node holds, not gathering speed. Big nodes keep marches out while you are offline.",
+      "facts": ["A03-0016", "A13-0007"],
+      "gaps": ["L-A13-01"],
+      "optional": false
+    },
+    {
+      "id": "gather-territory",
+      "label": "Gather inside alliance territory",
+      "detail": "Gathering at resource points in your alliance territory is 25% faster.",
+      "facts": ["A03-0009"],
+      "gaps": ["L-A13-01"],
+      "optional": false
+    },
+    {
+      "id": "ship-surplus",
+      "label": "Ship the surplus above Storehouse protection to the main",
+      "detail": "Only stock above protection can be sent. Big raw piles on a low City Hall farm attract raids, so ship regularly. Each trip uses a march queue.",
+      "facts": ["A03-0030", "A13-0005", "A03-0026"],
+      "gaps": ["L-A13-01"],
+      "optional": false
+    },
+    {
+      "id": "collect-buildings",
+      "label": "Collect resource buildings",
+      "detail": "Farm and Lumber Mill storage holds about 10 hours of output, then production stops.",
+      "facts": ["A03-0002", "A13-0007"],
+      "gaps": ["L-A13-01"],
+      "optional": false,
+      "evidence": { "A13-0007": "collect buildings within 10h" }
+    },
+    {
+      "id": "kill-event-stock",
+      "label": "During kill events, keep raw stock low",
+      "detail": "Farms with big raw stockpiles get raided, especially during kill events. Ship first; a defensive commander helps.",
+      "facts": ["A13-0005", "A03-0007"],
+      "gaps": ["L-A13-01"],
+      "optional": true
+    },
+    {
+      "id": "enhanced-gathering",
+      "label": "Use Enhanced Gathering if you have it",
+      "detail": "+50% gathering speed for 8 or 24 hours. Buy it with resources at the Mysterious Merchant, not gems.",
+      "facts": ["A03-0013"],
+      "gaps": ["L-A13-01"],
+      "optional": true,
+      "evidence": { "A03-0013": "by 50% for 8 or 24 hours" }
+    },
+    {
+      "id": "siege-gather",
+      "label": "Gather with siege units",
+      "detail": "Siege units carry the most per unit (T1 ram 20 vs T1 infantry 7).",
+      "facts": ["A03-0015"],
+      "gaps": ["L-A13-01"],
+      "optional": true,
+      "evidence": { "A03-0015": "Battering Ram (T1) 20" }
+    }
+  ]
+}

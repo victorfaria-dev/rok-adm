@@ -1,0 +1,25 @@
+/* Shipment log (/farms/log/). Only --ko-* tokens. */
+
+.fl-form { display: grid; gap: var(--ko-space-4); }
+.fl-grid { display: grid; gap: var(--ko-space-3); grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); }
+.fl-warn {
+  display: grid; gap: var(--ko-space-2); padding: var(--ko-space-3);
+  border: 1px solid var(--ko-warning); border-left-width: 4px; border-radius: var(--ko-radius-sm); font-size: var(--ko-text-sm);
+}
+.fl-preview { font-size: var(--ko-text-sm); }
+
+.fl-entries { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.fl-filters { display: grid; gap: var(--ko-space-3); }
+@media (min-width: 768px) { .fl-filters { grid-template-columns: minmax(0, 220px) minmax(0, 1fr); align-items: end; } }
+.fl-week { display: grid; gap: var(--ko-space-2); }
+.fl-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--ko-space-3); }
+.fl-item {
+  display: grid; gap: var(--ko-space-2); padding: var(--ko-space-3);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  overflow-wrap: anywhere;
+}
+.fl-item-nums { font-size: var(--ko-text-sm); }
+.fl-item .btn { justify-self: start; }
+
+.fl-summary .fm-table caption { text-align: left; padding-bottom: var(--ko-space-2); }
+.fl-total { font-size: var(--ko-text-lg); }
