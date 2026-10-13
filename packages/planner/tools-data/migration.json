@@ -1,0 +1,147 @@
+{
+  "_about": "Rules of the Migration checker (/tools/migration/, F-31). Each rule names its cards and the patch or source date it was checked on. Passport pages: only the data points B06-0001 gives; the page shows ranges between them, never interpolated numbers.",
+  "chMin": {
+    "value": 16,
+    "unit": "City Hall level",
+    "facts": ["B06-0001"],
+    "patch": "community guide of 2026-10-09 (after 1.1.06)",
+    "evidence": { "B06-0001": "To migrate a governor needs City Hall 16+" }
+  },
+  "cooldownDays": {
+    "value": 30,
+    "unit": "days",
+    "facts": ["B06-0001"],
+    "patch": "community guide of 2026-10-09 (after 1.1.06)",
+    "evidence": { "B06-0001": "a standard migration normally starts a 30-day cooldown" }
+  },
+  "personal": {
+    "facts": ["B06-0001"],
+    "patch": "community guide of 2026-10-09 (after 1.1.06)",
+    "evidence": { "B06-0001": "no alliance, troops home, resources within storehouse protection" }
+  },
+  "ageLimit": {
+    "same-soc": {
+      "value": 150,
+      "unit": "max days older than the target kingdom",
+      "facts": ["B06-0003", "C04-0008"],
+      "patch": "1.1.06",
+      "evidence": {
+        "B06-0003": "same-season immigration into a SoC kingdom in its first story: character ≤150 days older than the target kingdom (was 240)",
+        "C04-0008": "SoC first story same-season 240→150 days older max"
+      }
+    },
+    "cross-s2": {
+      "value": 80,
+      "unit": "max days older than the target kingdom",
+      "facts": ["B06-0003", "C04-0008"],
+      "patch": "1.1.06",
+      "evidence": {
+        "B06-0003": "cross-season into Season 2: ≤80 days (was 120)",
+        "C04-0008": "cross-season to Season 2 120→80 days"
+      }
+    },
+    "cross-s3": {
+      "value": 120,
+      "unit": "max days older than the target kingdom",
+      "facts": ["B06-0003", "C04-0008"],
+      "patch": "1.1.06",
+      "evidence": {
+        "B06-0003": "into Season 3: ≤120 days (was 180)",
+        "C04-0008": "to Season 3 180→120 days"
+      }
+    }
+  },
+  "passport": {
+    "facts": ["B06-0001"],
+    "patch": "community guide of 2026-10-09 (T3 table, in-game check pending)",
+    "bands": [
+      {
+        "fromM": 0,
+        "toM": 10,
+        "value": 1,
+        "unit": "Passport Pages",
+        "facts": ["B06-0001"],
+        "evidence": { "B06-0001": "1 page at 0–10M" }
+      },
+      {
+        "fromM": 50,
+        "toM": 55,
+        "value": 25,
+        "unit": "Passport Pages",
+        "facts": ["B06-0001"],
+        "evidence": { "B06-0001": "\"pages 50-55M\", valor: \"25\"" }
+      },
+      {
+        "fromM": 100,
+        "toM": null,
+        "value": 75,
+        "unit": "Passport Pages",
+        "facts": ["B06-0001"],
+        "evidence": { "B06-0001": "rising to 75 pages above 100M" }
+      }
+    ]
+  },
+  "crossPower": {
+    "minM": 10,
+    "maxM": 85,
+    "facts": ["C04-0025"],
+    "patch": "1.0.83",
+    "evidence": { "C04-0025": "governors under 10M power are ineligible, and the power limit was lowered from 100M to 85M" }
+  },
+  "kingdom": {
+    "facts": ["B06-0002", "B06-0004"],
+    "patch": "set by each kingdom (special immigration confirmed in 1.1.03)",
+    "evidence": {
+      "B06-0002": "The king controls the normal immigration power cap",
+      "B06-0004": "kingdoms screen migrants with application forms and account reviews and set minimums"
+    }
+  },
+  "checklist": [
+    {
+      "id": "ask-officer",
+      "text": "Ask the target kingdom's migration officer for their own requirements (power, kills, deads, role).",
+      "detail": "Kingdoms screen applicants on top of the game's rules, and the king sets the normal power cap.",
+      "facts": ["B06-0002", "B06-0004"],
+      "evidence": { "B06-0004": "screening is done by the king or migration officers through DMs/Discord" }
+    },
+    {
+      "id": "pages",
+      "text": "Have enough Passport Pages for your power.",
+      "detail": "Pages are sold in the Alliance Shop's Weekly Limit section for Individual Credits.",
+      "facts": ["B06-0001"],
+      "evidence": { "B06-0001": "the Alliance Shop has a weekly-restocked 'Weekly Limit' section of Passport Pages bought with Individual Credits" }
+    },
+    {
+      "id": "resources",
+      "text": "Spend or use resources above your storehouse protection.",
+      "facts": ["B06-0001"],
+      "evidence": { "B06-0001": "resources within storehouse protection" }
+    },
+    {
+      "id": "troops",
+      "text": "Bring every march home and leave your alliance.",
+      "facts": ["B06-0001"],
+      "evidence": { "B06-0001": "no alliance, troops home" }
+    },
+    {
+      "id": "age",
+      "text": "Compare your character age with the target kingdom's age for your route.",
+      "detail": "The limits were cut in 1.1.06, and players report confusing official mails about them.",
+      "facts": ["B06-0003"],
+      "evidence": { "B06-0003": "Players are confused by the age rule and by withdrawn official mails" }
+    },
+    {
+      "id": "deposit",
+      "text": "Cross-season: keep 20,000 gems for the refundable deposit (lost if you don't use the eligibility).",
+      "facts": ["C04-0025"],
+      "evidence": { "C04-0025": "requires a refundable 20,000 Gem deposit when eligibility is granted (lost if not used)" }
+    },
+    {
+      "id": "lost-kingdom",
+      "text": "Check the target is not inside an active Lost Kingdom.",
+      "detail": "Such destinations are generally closed to standard migration.",
+      "facts": ["B06-0003"],
+      "evidence": { "B06-0003": "A destination inside an active Lost Kingdom is generally closed to standard migration" }
+    }
+  ]
+}

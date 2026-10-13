@@ -1,0 +1,101 @@
+{
+  "_about": "Hoard advisor rules (/tools/hoard/, F-25): what to save for which goal and why, without dates. Targets the cards don't give are the player's own (pending).",
+  "goals": [
+    {
+      "id": "lohar",
+      "title": "Lohar's Trial",
+      "save": ["ap"],
+      "rules": [
+        {
+          "id": "lohar-ap",
+          "text": "Save your first AP recovery items for Lohar's Trial: it is a priority event for free players.",
+          "facts": ["A11-0505"],
+          "evidence": { "A11-0505": "is a priority F2P event; save the first AP potion(s) for it" }
+        },
+        {
+          "id": "lohar-why",
+          "text": "Barbarian kills there pay out gems and arrows.",
+          "facts": ["A09-0007"],
+          "evidence": { "A09-0007": "Lohar's Trial (gems, arrows)" }
+        }
+      ]
+    },
+    {
+      "id": "mtg",
+      "title": "More Than Gems",
+      "save": ["gems"],
+      "rules": [
+        {
+          "id": "mtg-gems",
+          "text": "Save gems and spend them during More Than Gems, a 2-day event with daily gem-spend milestones (skip it below VIP 6).",
+          "facts": ["A11-0502", "A04-0009"],
+          "evidence": {
+            "A11-0502": "More Than Gems (2-day event with daily gem-spend milestones) is the best window for F2P to spend gems (except below VIP 6)",
+            "A04-0009": "ideally be spent during the 'More Than Gems' event for bonus rewards"
+          }
+        },
+        {
+          "id": "mtg-tier",
+          "text": "Reported free-player tier: 7,000 gems a day for 5 universal legendary sculptures.",
+          "value": 7000,
+          "unit": "gems per day",
+          "facts": ["A11-0502"],
+          "evidence": { "A11-0502": "7,000 gems/day → 5 universal legendary sculptures" }
+        }
+      ]
+    },
+    {
+      "id": "eve",
+      "title": "Eve of the Crusade and KvK",
+      "save": ["ap", "speedups", "resources"],
+      "rules": [
+        {
+          "id": "eve-ap",
+          "text": "Save AP recovery items above all for Eve of the Crusade: its marauders drop speedups, gems and credits.",
+          "facts": ["A09-0007"],
+          "evidence": { "A09-0007": "especially the pre-KvK Eve of the Crusade (marauders drop speedups, gems, credits)" }
+        },
+        {
+          "id": "kvk-stock",
+          "text": "Save speedups and resources as items for scored events and KvK healing, instead of spending them as they come.",
+          "facts": ["A11-0501"],
+          "evidence": { "A11-0501": "save speedups, resources (as items), AP potions for scoring events and KvK healing" }
+        }
+      ]
+    },
+    {
+      "id": "mge",
+      "title": "Mightiest Governor (MGE)",
+      "save": ["speedups", "resources"],
+      "rules": [
+        {
+          "id": "mge-milestones",
+          "text": "Save for the milestone rewards, not for the ranking: ranking is out of reach for most free players in a new kingdom.",
+          "facts": ["A11-0500"],
+          "evidence": { "A11-0500": "target individual milestone rewards (or coordinate with kingdom MGE rules)" }
+        }
+      ]
+    }
+  ],
+  "general": [
+    {
+      "id": "universal",
+      "text": "Where universal speedups should go (research, City Hall, or the hoard) is divided: sources disagree.",
+      "divided": true,
+      "facts": ["A02-0503"],
+      "evidence": { "A02-0503": "One source says use universal speedups only on research; an older one says pour speedups into City Hall; others say hoard them." }
+    },
+    {
+      "id": "schedule",
+      "text": "There is no fixed event schedule: watch the in-game calendar, which shows upcoming events a few days ahead.",
+      "facts": ["A11-0512"],
+      "evidence": { "A11-0512": "Events in RoK do not follow a fixed schedule; the calendar shows upcoming events a few days ahead" }
+    },
+    {
+      "id": "ap-daily",
+      "text": "Hoard AP items, not regenerating AP: AP that sits at its cap is wasted.",
+      "facts": ["A09-0007"],
+      "evidence": { "A09-0007": "idle AP at cap is wasted" }
+    }
+  ]
+}
