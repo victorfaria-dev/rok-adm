@@ -39,3 +39,11 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A05-0006 | mecanica | media | verificado |  |
 | A05-0007 | derivado | baixa | verificado |  |
 | A05-0008 | estrategia | media | verificado |  |
+
+## Onda J (J3, 2026-10-13)
+
+| ID | Tipo | Conf. | Status | Title |
+|---|---|---|---|---|
+| A05-0600 | mecanica | media | organizado | VIP Special Privileges one-time packs: $0.99..$99.99; Minamoto sculptures 10..270 |
+
+New gap L-A05-04.
