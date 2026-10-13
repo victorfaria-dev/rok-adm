@@ -8,10 +8,14 @@ Gerados pelo Victor com o Veo 3 (imagem para vídeo, a partir da referência que
 | talk | `source/talk-veo.mp4` (1280×720, 10 s) | `talk-720.mp4`, `talk-480.mp4`, `talk-poster.webp` — recorte x=264; curva de cor para o fundo neutro (47) virar o grafite do idle (~28,29,34) |
 | grumble | derivado de `source/idle-veo.mp4` 3,25–5,5 s | `grumble-720/480.mp4`, `grumble-poster.webp` — tremor de cabeça amortecido + leve aproximação (ffmpeg crop animado) |
 | approve | derivado de `source/talk-veo.mp4` 7,0–8,75 s | `approve-720/480.mp4`, `approve-poster.webp` — curva de cor do talk + dois acenos (crop vertical animado) |
+| greet | derivado de `source/talk-veo.mp4` 1,0–3,5 s | `greet-720/480.mp4`, `greet-poster.webp` — afastamento de câmera (provisório até haver clipe próprio) |
+| victory | derivado de `source/talk-veo.mp4` 7,0–9,6 s | `victory-720/480.mp4`, `victory-poster.webp` — aproximação lenta (provisório) |
 | idle | `source/idle-veo.mp4` (1280×720, 10 s, 24 fps) | `idle-720.mp4`, `idle-480.mp4`, `idle-poster.webp` |
 
 Processamento (ffmpeg): recorte quadrado 720×720 centrado no personagem (x=216), sem áudio, loop por crossfade de 0,6 s (fim → início), H.264 CRF 26/27, `+faststart`; poster = primeiro quadro (WebP).
 
 Regras de uso: MP4 mudo, `muted playsinline loop`, `preload="metadata"`, poster, `aria-hidden` (o texto da bolha carrega o sentido), só o poster com `prefers-reduced-motion`, pausar fora da tela e com a aba oculta.
 
-Onde aparece (decisão QC-4): no "palco" acima da pergunta atual do `/start` (160 px no celular, até 240 px no desktop), o único `<video>` da página; as bolhas antigas usam só `idle-poster.webp`. Clipe 720 só quando o palco passa de 480 px de dispositivo. Clipes ficam em `apps/web/src/components/questionnaire/mascot-clips.ts`: grumble e approve com `once: true` (tocam uma vez e voltam ao idle; approve toca enquanto a próxima bolha digita); greet e victory, quando chegarem, também com `once: true`. Fundo do clipe: grafite próximo de (28,29,34); as laterais do quadrado são esfumadas no card.
+Onde aparece (decisão QC-4): no "palco" acima da pergunta atual do `/start` (160 px no celular, até 240 px no desktop), o único `<video>` da página; as bolhas antigas usam só `idle-poster.webp`. Clipe 720 só quando o palco passa de 480 px de dispositivo. Clipes ficam em `apps/web/src/components/questionnaire/mascot-clips.ts`: grumble, approve, greet e victory com `once: true` (tocam uma vez e voltam ao idle; approve toca enquanto a próxima bolha digita; greet na primeira pergunta, victory na revisão). Fundo do clipe: grafite próximo de (28,29,34); as laterais do quadrado são esfumadas no card.
+
+Geração automática pelo conector da ElevenLabs testada em 2026-10-13: vídeo exige plano pago; `source/start-frame.png` é o quadro inicial para futuras gerações (imagem para vídeo).
