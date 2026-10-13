@@ -5,7 +5,9 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 ## Idiomas
 - Pedido: pacote de traduções para o público global.
 - Proposta: escolher línguas pelo público de RoK (não pelas mais faladas no mundo); infraestrutura i18n + interface na etapa 1; guias só depois da compressão de conteúdo; glossário com os termos oficiais do jogo por idioma.
-- Pendente: lista de idiomas (pesquisar ou definida pelo Victor).
+- Pesquisa: `research/idiomas-publico-rok.md`.
+- Decidido (Victor, 2026-10-13, revisão): usar todas as línguas do Discord oficial que conseguirmos: EN, PT, ES, FR, DE, IT, RU, TR, ID, VI, KO, ZH, AR. Ordem de entrega por custo técnico: latinas (EN, PT, ES, FR, DE, IT, TR, ID, VI) → RU (cirílico) → KO, ZH (fontes CJK) → AR (RTL). Traduções por IA marcadas como sem revisão nativa até haver revisor; glossário de termos do jogo por idioma marcado como não verificado quando não houver fonte.
+- Decisão anterior (substituída): foco em Américas e Europa primeiro; Ásia (KO, JA, ZH, VI) depois. Proposta de conjunto inicial: EN, PT-BR, ES, FR, DE (+ RU como 6º, a confirmar). Todos são idiomas oficiais do cliente do jogo.
 
 ## Login
 - Pedido: e-mail, Google e, se possível, conta Lilith.
@@ -25,3 +27,17 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 - Conquistas: dados do jogo não podem ser lidos (ToS); só autodeclarados (marcados como não verificados) ou conquistas do próprio site.
 - Base existente: o Governor card pode virar o embrião do perfil público.
 - Pendente: escopo do MVP e ordem em relação a login e modo líder.
+
+## Comandantes (Victor, 2026-10-13)
+- Separar guia de comandantes (público, aba Guides) da administração dos comandantes próprios (dentro do hub da cidade, por conta: principal, farms e alts têm comandantes diferentes). Estrutura passada para a etapa UX 1.
+- Cada cidade do carrossel é um contexto próprio: trocar de cidade troca funções, status, avisos e tarefas. Passado para a etapa UX 1.
+- Agrupar comandantes pelo período em que aparecem (temporada/KvK). Fora do período, não fazer perguntas. Próxima etapa.
+- Fotos dos comandantes: pedido do Victor para reconhecimento visual. Retratos do jogo são arte da Lilith (proibido pelas regras do projeto). Política de conteúdo de fãs da Lilith não encontrada em busca. Opções: (a) arte própria por comandante; (b) retratos históricos em domínio público; (c) Victor revisar a regra se a Lilith permitir uso por fãs. Pendente.
+- Decidido (Victor, 2026-10-13): opção (c), aceitar o risco e usar imagens do jogo como conteúdo editorial (retratos de comandantes, ícones de itens, edifícios, equipamentos, capturas de tela). Ampliado na mesma data: "não tem como criar conteúdo sobre um jogo sem usar imagens do jogo". Continua fora: logo e marca da Lilith como identidade do site, qualquer coisa que faça o site parecer oficial; mascote e identidade visual seguem próprios. Mitigações: aviso "Rise of Kingdoms © Lilith Games; site de fãs sem afiliação" nas páginas com retratos; retirar imediatamente se a Lilith pedir; não extrair imagens de arquivos ou tráfego do jogo (regra de ToS continua); servir os arquivos do próprio site, sem hotlink.
+
+## Verificação de perfil (proposta, 2026-10-13)
+- Níveis: (1) declarado, "não verificado"; (2) conferido por print, OCR no servidor com imagem guardada para auditoria; (3) conta comprovada.
+- Conta comprovada via Álbum do governador (achado do Victor): o jogo permite enviar qualquer foto ao Álbum. O site gera uma imagem com código aleatório; o jogador a envia ao Álbum e manda print do Álbum + print do Perfil do Governador (que mostra o ID fixo). Dispensa trocar o nome (que custa item).
+- Limite: prints podem ser editados; nível 3 prova controle da conta, não autenticidade de cada número. Moderador revisa por amostragem e em denúncias.
+- Achado de OCR com prints reais (4 contas do Victor, cliente em PT): o Tesseract lê bem ID, poder e pontos de abate, mas a tela de perfil não mostra nível da prefeitura e o VIP fica parcialmente coberto; o parser atual (rótulos em inglês) não serve. Reescrita em andamento (trilha OCR). Prints reais ficam fora do repositório (IDs e foto pessoal).
+- Decidido (Victor, 2026-10-13): os 3 níveis aprovados. Fluxo de prints: Perfil do Governador (ID, nome, poder, abates, civilização) + cidade com a prefeitura tocada ("Prefeitura · Nível N", VIP e poder no HUD) + Álbum com o código (posse da conta, ligada ao ID pelo nome).

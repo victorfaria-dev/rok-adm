@@ -43,6 +43,9 @@ Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre on
 
 O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` depois de `pnpm check`, build e e2e.
 
+## Descongelamento (Victor, 2026-10-13, noite)
+Trabalho em paralelo liberado para o backlog aprovado (login, perfil público, camadas, comandantes, idiomas), respeitando dependências: só fica parado o que depende de outra trilha estar pronta.
+
 ## Congelamento de funcionalidades (2026-10-13, decisão do Victor)
 Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco do Sun Tzu no chat; guia visual com linha do tempo e calendário). Depois disso começa a fase de experiência do usuário: definir as 3 tarefas principais, teste de usabilidade com o Victor no preview e reorganização da navegação a partir dos resultados. O loop autônomo foi parado.
 
@@ -54,9 +57,13 @@ Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco 
 - Skill `ui-ux-pro-max` (em `.claude/skills/`) é usada como checklist e referência de padrões; não substitui os tokens `--ko-*`.
 
 ### Etapa UX 1 — aprovada (Victor, 2026-10-13)
-- Navegação jogador: City Hall · Guides · Tools · Me. Navegação líder: Kingdom · Members · Events · Guides · Me. Troca de papel em Me.
+- Navegação jogador: City Hall · Tools · Me. Navegação líder: Kingdom · Members · Events · Me. Troca de papel em Me. Após login, Guides fica dentro do menu (Me); antes do login, guias seguem públicos via landing e links (Victor, 2026-10-13).
 - Primeiro acesso curto caindo na aba City Hall (jogador) ou Kingdom (líder); `/` vira landing page pública.
 - Brand, More e Trust saem da navegação (rodapé). URLs antigas continuam funcionando.
+
+### Profundidade das seções — decidido (Victor, 2026-10-13)
+- Variante B "camadas" (protótipo na branch `worktree-agent-afe752d92a7ba9a99`, commit 8f88a2d): seção = painel nível 1, elementos interativos/principais = cartão nível 2 sobreposto ao cabeçalho.
+- Ajustes antes de aplicar no site todo: aumentar o contraste entre níveis no tema escuro; reduzir a quantidade de cartões nos guias longos; aplicar depois da etapa UX 1 para não conflitar com a reestruturação.
 
 ## Pendências para o próximo ciclo de correções
 - ~~`/tools/migration/`: começa com valores de exemplo e mostra "Eligible" antes de o usuário digitar nada (onda D).~~ Corrigido na onda G (G9).
