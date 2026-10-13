@@ -26,8 +26,11 @@ describe("profile precedence", () => {
     expect(c.error).toBeNull();
   });
 
-  it("?p= equal to the saved profile needs no save button", () => {
-    expect(chooseProfile(`?p=${saved}`, saved).canSave).toBe(false);
+  it("?p= equal to the saved profile is 'Your profile' with no save button", () => {
+    const c = chooseProfile(`?p=${saved}`, saved);
+    expect(c.canSave).toBe(false);
+    expect(c.source).toBe("saved");
+    expect(c.code).toBe(saved);
   });
 
   it("uses the saved profile without ?p=", () => {

@@ -41,7 +41,11 @@ export function chooseProfile(search: string, savedCode: string | null): Profile
   if (params.has("p")) {
     const code = (params.get("p") ?? "").trim();
     const r = decodeProfile(code);
-    if ("profile" in r) return { source: "url", profile: r.profile, code, error: null, canSave: code !== savedCode };
+    if ("profile" in r) {
+      // A link to your own saved profile (e.g. right after the questionnaire) is "Your profile".
+      if (code === savedCode) return { source: "saved", profile: r.profile, code, error: null, canSave: false };
+      return { source: "url", profile: r.profile, code, error: null, canSave: true };
+    }
     return { ...fallback, error: "This profile link is not valid, so you are seeing the default F2P guide. Ask for a new link or build your own profile." };
   }
   if (savedCode) {
