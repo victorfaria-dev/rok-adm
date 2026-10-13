@@ -35,7 +35,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 |--------|-------------|--------|
 | Integração + verificação + lacunas + protocolo T0 + context packs de conta | Sub-admin CONTA | A01–A14, B01 |
 | Verificação + dores de líderes + context packs de administração de reino | Sub-admin REINO | B02–B09, D-05xx |
-| Soluções conceituais por dor (hipóteses) | Brainstorm | `brainstorm/solucoes/` |
+| Soluções conceituais por dor (hipóteses) | Brainstorm | `brainstorm/solucoes/` — **concluída**: 70 dores cobertas, 34 fichas, matriz + top 10 |
 
 ## Bloqueios
 
