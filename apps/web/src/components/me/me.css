@@ -44,7 +44,10 @@
 /* Radio groups: the whole row is the target (≥ 44 px). */
 .me-choices { margin: 0; padding: 0; border: 0; display: grid; gap: var(--ko-space-2); min-width: 0; }
 .me-choices legend { padding: 0; margin-bottom: var(--ko-space-2); font-weight: var(--ko-weight-semibold); }
-.me-choices-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+/* Theme: three short options side by side; they wrap as whole words when space runs out. */
+.me-choices-row { display: flex; flex-wrap: wrap; }
+.me-choices-row legend { flex-basis: 100%; }
+.me-choices-row .me-choice { flex: 1 1 auto; padding-inline: var(--ko-space-3); gap: var(--ko-space-2); overflow-wrap: normal; white-space: nowrap; }
 .me-choice {
   display: flex; align-items: center; gap: var(--ko-space-3);
   min-height: 48px; padding: var(--ko-space-2) var(--ko-space-4);
@@ -86,9 +89,6 @@
 .me-btn-danger:active { background: var(--ko-error); }
 .me-btn-danger-outline { background: transparent; color: var(--ko-error); box-shadow: inset 0 0 0 1px var(--ko-error); }
 
-@media (max-width: 359px) {
-  .me-choices-row { grid-template-columns: minmax(0, 1fr); }
-}
 @media (min-width: 768px) {
   .me-row { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: baseline; gap: var(--ko-space-4); }
 }
