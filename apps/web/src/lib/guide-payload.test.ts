@@ -2,9 +2,11 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
-import type { GuideBlock } from "@rokadm/core";
-import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildGuidePayload, patchBadge, renderMarkdown, vipByKvk1Text } from "./guide-payload";
+import { defaultProfile, type AccountProfile, type GuideBlock } from "@rokadm/core";
+import { lowSpenderTargets } from "@rokadm/planner";
+import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildLowBudgetPayload, buildGuidePayload, patchBadge, renderMarkdown, vipByKvk1Text } from "./guide-payload";
 
+const make = (p: Partial<AccountProfile>): AccountProfile => ({ ...defaultProfile(), ...p });
 const GUIDES = join(__dirname, "../../../../guides/data");
 const files = readdirSync(GUIDES).filter((f) => /^blocks\..+\.json$/.test(f) && f !== "blocks.schema.json");
 
@@ -102,5 +104,51 @@ describe("guide payload (build time)", () => {
     expect(b.unchanged.length).toBeGreaterThan(0);
     for (const u of b.unchanged) expect(u.text).not.toMatch(/https?:|buy now|\$/i);
     expect(b.researched).toEqual(["f2p"]);
+  });
+});
+
+describe("Low spender targets payload (wave J)", () => {
+  const low = buildLowBudgetPayload();
+  const text = JSON.stringify(low);
+  const t = lowSpenderTargets(make({ spending: "low" }));
+
+  it("is its own lean file: ≤ 15 KB gzip, no fact-dataset markers", () => {
+    expect(gzipSync(text).length).toBeLessThanOrEqual(15 * 1024);
+    for (const marker of ["invalidatedBy", "accessedAt"]) expect(text).not.toContain(marker);
+  });
+
+  it("carries the planner's pass-only and low-full tiers with the same numbers", () => {
+    expect(low.tiers.map((x) => x.id)).toEqual(["pass-only", "low-full"]);
+    for (const tier of t.tiers) {
+      const row = low.tiers.find((x) => x.id === tier.id)!;
+      expect(row.monthlyUsd.value).toBe(tier.monthlyUsd.value);
+      expect(row.monthlyGems.value).toBe(tier.monthlyGems.value);
+      expect(row.oneTimeUsd.value).toBe(tier.oneTimeUsd.value);
+      expect(row.lines.map((l) => l.purchaseId)).toEqual(tier.lines.map((l) => l.purchase.id));
+    }
+  });
+
+  it("every purchase row has a price, confidence and fact ids; ratios cite the A12-0618 method", () => {
+    expect(low.priceWarning).toMatch(/region/);
+    for (const p of low.purchases) {
+      expect(p.priceUsd.value, p.id).toBeGreaterThan(0);
+      expect(p.facts.length, p.id).toBeGreaterThan(0);
+      expect(["high", "medium", "low", "pending"]).toContain(p.confidence);
+      for (const r of [p.gemsPerUsd, p.vipPerUsd]) if (r) expect(r.facts, p.id).toContain("A12-0618");
+    }
+    expect(low.purchases.find((p) => p.id === "gem-supply-30d")!.gemsPerUsd!.value).toBe(1952);
+    expect(low.valueMethod.facts).toContain("A12-0618");
+  });
+
+  it("lists the daily-offers ceiling apart from the tiers, and a VIP timeline with the supply", () => {
+    expect(low.outsideTiers).toContain("daily-special-offers");
+    for (const tier of low.tiers) expect(tier.lines.map((l) => l.purchaseId)).not.toContain("daily-special-offers");
+    expect(low.vip.rows.length).toBeGreaterThan(10);
+    expect(low.vip.facts).toContain("A12-0601");
+  });
+
+  it("does not change the F2P reality check: Low is still not a researched profile there", () => {
+    expect(buildBudgetPayload().researched).toEqual(["f2p"]);
+    expect(text).not.toContain("byDay");
   });
 });

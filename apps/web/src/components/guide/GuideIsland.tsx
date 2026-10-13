@@ -6,13 +6,15 @@ import { useEffect, useMemo, useState } from "preact/hooks";
 import { readStore, writeStore } from "../../lib/store";
 import { profileSummary } from "../../lib/profile";
 import { deltaSetsFor, isLateStage } from "@rokadm/core";
-import type { GuideData, GuidePayload } from "../../lib/guide-types";
+import type { GuideData, GuidePayload, LowBudgetPayload } from "../../lib/guide-types";
 import {
   chooseProfile,
   deltaUrl,
   FALLBACK_STAGE,
   LATE_SET,
+  LOW_BUDGET_URL,
   selectGuideWithFallback,
+  showsLowTargets,
   shareUrl,
   STAGE_NAMES,
   withDeltas,
@@ -85,6 +87,8 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const [data, setData] = useState<GuideData | null>(null);
   /** Late-game guide (KvK2, KvK3, SoC profiles); null when not needed or it failed to load. */
   const [late, setLate] = useState<GuidePayload | null>(null);
+  /** Low spender targets (Low profile only); null when not needed or it failed to load. */
+  const [lowBudget, setLowBudget] = useState<LowBudgetPayload | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [live, setLive] = useState("");
   const [manualUrl, setManualUrl] = useState<string | null>(null);
@@ -106,10 +110,13 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     const deltas = deltaSetsFor(c.profile.spending).map((d) => get<GuidePayload>(deltaUrl(d.id)));
     // KvK2, KvK3 and SoC: the late-game guide is the main plan. If it fails, the guide falls back to KvK1 as a whole.
     const lateGuide = isLateStage(c.profile.kingdomStage) ? get<GuidePayload>(deltaUrl(LATE_SET)).catch(() => null) : Promise.resolve(null);
-    Promise.all([get<GuideData>(dataUrl), Promise.all(deltas), lateGuide])
-      .then(([d, ds, l]) => {
+    // Low: its own purchase targets for the budget. If they fail, the budget shows the labelled F2P baseline only.
+    const lowTargets = showsLowTargets(c.profile) ? get<LowBudgetPayload>(LOW_BUDGET_URL).catch(() => null) : Promise.resolve(null);
+    Promise.all([get<GuideData>(dataUrl), Promise.all(deltas), lateGuide, lowTargets])
+      .then(([d, ds, l, lb]) => {
         setData({ ...d, guide: withDeltas(d.guide, ds) });
         setLate(l);
+        setLowBudget(lb);
         setStatus("ready");
       })
       .catch(() => setStatus("failed"));
@@ -236,7 +243,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
               </p>
             </aside>
           )}
-          <GuideBody view={view} badges={data!.guide.badges} budget={data!.budget} limit={shownSteps} />
+          <GuideBody view={view} badges={data!.guide.badges} budget={data!.budget} lowBudget={lowBudget} limit={shownSteps} />
         </div>
       ) : (
         children

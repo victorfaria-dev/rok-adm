@@ -1,6 +1,6 @@
 import { Component } from "preact";
 import { PHASE_TITLES, type AccountProfile, type GuidePhase } from "@rokadm/core";
-import type { BudgetPayload, CardBadge } from "../../lib/guide-types";
+import type { BudgetPayload, CardBadge, LowBudgetPayload } from "../../lib/guide-types";
 import { confidenceCounts, sectionTitle, type GuideView, type ViewBlock } from "../../lib/guide-view";
 import { Block } from "./Block";
 import { Budget } from "./Budget";
@@ -12,6 +12,8 @@ interface Props {
   badges: Record<string, CardBadge>;
   /** Budget Reality Check; omitted on guides without one (new kingdom). */
   budget?: BudgetPayload;
+  /** Low spender targets for the budget (Low profile only). */
+  lowBudget?: LowBudgetPayload | null;
   /** Recommended / Upcoming tags (needs a profile). */
   profileTags?: boolean;
   /** Prefix for ids, so two bodies never clash. */
@@ -48,7 +50,7 @@ export function renderSteps(view: GuideView): number {
 }
 
 /** The guide itself: section index, sections in GUIDE_SECTIONS order, "Already done?", budget. */
-export function GuideBody({ view, badges, budget, profileTags = true, idPrefix = "s", limit }: Props) {
+export function GuideBody({ view, badges, budget, lowBudget = null, profileTags = true, idPrefix = "s", limit }: Props) {
   // Progressive render (Q2 P2-10): a step budget spent in page order.
   let left = limit ?? Number.POSITIVE_INFINITY;
   const take = (items: ViewBlock[]): ViewBlock[] => {
@@ -123,7 +125,7 @@ export function GuideBody({ view, badges, budget, profileTags = true, idPrefix =
         </section>
       )}
 
-      {budget && left > 0 && <Budget budget={budget} profile={view.profile as AccountProfile} />}
+      {budget && left > 0 && <Budget budget={budget} profile={view.profile as AccountProfile} low={lowBudget} />}
     </div>
   );
 }

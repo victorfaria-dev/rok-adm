@@ -2,8 +2,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { defaultProfile, encodeProfile, flattenGuide, GUIDE_SECTIONS, selectBlocks, type AccountProfile, type GuideBlock } from "@rokadm/core";
-import { buildBudgetPayload, buildGuidePayload } from "./guide-payload";
-import { budgetView, chooseProfile, FALLBACK_STAGE, selectGuide, selectGuideWithFallback, shareUrl, stageHasContent, withDeltas } from "./guide-view";
+import { buildBudgetPayload, buildGuidePayload, buildLowBudgetPayload } from "./guide-payload";
+import { budgetView, chooseProfile, FALLBACK_STAGE, lowBudgetView, selectGuide, selectGuideWithFallback, shareUrl, showsLowTargets, stageHasContent, withDeltas } from "./guide-view";
 
 const raw = JSON.parse(readFileSync(join(__dirname, "../../../../guides/data/blocks.f2p.json"), "utf8")) as GuideBlock[];
 const payload = buildGuidePayload("f2p");
@@ -164,6 +164,28 @@ describe("stage-aware guide (KvK2, KvK3, SoC)", () => {
       expect(sel.lateStage).toBe(false);
       expect(ids(sel.view).some((id) => id.startsWith("ls-"))).toBe(false);
     }
+  });
+});
+
+describe("Low spender targets view (wave J)", () => {
+  const low = buildLowBudgetPayload();
+
+  it("is shown to the Low profile only (F2P numbers never shown as Low's, Low numbers never shown to others)", () => {
+    expect(showsLowTargets(LOW_D20_CH12)).toBe(true);
+    for (const spending of ["f2p", "medium", "high", "whale", "kraken"] as const) expect(showsLowTargets(make({ spending })), spending).toBe(false);
+  });
+
+  it("resolves each tier's purchases and the purchases outside the tiers", () => {
+    const v = lowBudgetView(low, LOW_D20_CH12);
+    expect(v.tiers.map((t) => t.id)).toEqual(["pass-only", "low-full"]);
+    for (const t of v.tiers) for (const l of t.lines) expect(l.purchase.id).toBe(low.purchases.find((p) => p.id === l.purchase.id)!.id);
+    expect(v.tiers[0]!.lines.map((l) => l.purchase.id)).toContain("gem-supply-30d");
+    expect(v.outside.map((p) => p.id)).toContain("daily-special-offers");
+  });
+
+  it("marks the Growth Fund City Hall 25 milestone from the player's City Hall", () => {
+    expect(lowBudgetView(low, make({ spending: "low", cityHall: 24 })).reachedCH25).toBe(false);
+    expect(lowBudgetView(low, make({ spending: "low", cityHall: 25 })).reachedCH25).toBe(true);
   });
 });
 

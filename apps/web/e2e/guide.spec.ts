@@ -71,13 +71,48 @@ test("Low profile: budget says what buying doesn't change, with no purchase link
   await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}`);
   const unchanged = page.locator("#budget-unchanged");
   await expect(unchanged.getByRole("heading", { name: "What buying doesn't change" })).toBeVisible();
-  await expect(page.locator("#budget a")).toHaveCount(0);
+  // The only link is our own pack value calculator: nothing points to a store.
+  await expect(page.locator("#budget-low")).toBeVisible();
+  const hrefs = await page.locator("#budget a").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
+  expect(hrefs).toEqual(["/tools/pack-value/"]);
   await expect(page.locator("#budget .g-row-you")).toContainText("20");
   const expected = selectBlocks(blocksFor(LOW_D20), LOW_D20);
   await expect(personal(page).locator("article[data-block-id]")).toHaveCount(expected.meta.shownBlocks + expected.alreadyDone.length);
   const done = page.locator("#already-done > details");
   await expect(done).not.toHaveAttribute("open", "");
   await expect(done.locator("article").first()).toBeHidden();
+});
+
+test("Low profile: Low spender targets, with tiers, per-dollar caveat, price warnings, confidence and fact ids", async ({ page }) => {
+  await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}#budget`);
+  const low = page.locator("#budget-low");
+  await expect(low.getByRole("heading", { name: "Low spender targets" })).toBeVisible();
+  await expect(low.locator("[data-low-tier='pass-only'] h4")).toContainText("Pass-only");
+  await expect(low.locator("[data-low-tier='low-full'] h4")).toContainText("fuller budget");
+  await expect(low.locator("#budget-low-method")).toContainText("Gems and raw VIP points per dollar only");
+  await expect(low.locator("[data-low-purchase='gem-supply-30d']").first()).toContainText("1,952");
+  // Every line with a price carries the regional warning; every purchase row has confidence and fact ids.
+  for (const item of await low.locator("[data-low-purchase]").all()) {
+    await expect(item.locator("[data-price-warning]")).toHaveCount(1);
+    await expect(item.locator("[data-confidence]").first()).toBeAttached();
+    await expect(item.locator(".g-facts .mono").first()).toBeAttached();
+  }
+  await expect(low.locator("[data-low-outside] [data-low-purchase='daily-special-offers']")).toHaveCount(1);
+  await expect(low.locator("table")).toBeAttached();
+  // The F2P numbers below stay labelled as the F2P baseline, never as Low's.
+  await expect(page.locator("#budget [data-f2p-baseline]")).toContainText("F2P baseline");
+  await expect(page.locator("#budget h3", { hasText: "(F2P baseline)" }).first()).toBeVisible();
+});
+
+test("F2P and Medium profiles never get the Low targets payload", async ({ page }) => {
+  const requests: string[] = [];
+  page.on("request", (r) => requests.push(new URL(r.url()).pathname));
+  for (const p of [F2P_CH12, make({ spending: "medium", cityHall: 20 })]) {
+    await page.goto(`/guide/?p=${encodeProfile(p)}#budget`);
+    await expect(page.locator("#budget")).toBeAttached();
+    await expect(page.locator("#budget-low")).toHaveCount(0);
+  }
+  expect(requests).not.toContain("/data/guide-low-budget.json");
 });
 
 test("the personal guide renders in steps after idle, and a #section link renders it all at once (Q2 P2-10)", async ({ page }) => {

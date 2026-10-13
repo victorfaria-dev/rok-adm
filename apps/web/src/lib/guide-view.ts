@@ -17,7 +17,7 @@ import {
   type StructuredGuide,
   type StructuredGuideSection,
 } from "@rokadm/core";
-import type { BudgetPayload, DayRow, GuidePayload, PayloadBlock } from "./guide-types";
+import type { BudgetPayload, DayRow, GuidePayload, LowBudgetPayload, LowPurchaseRow, LowTierRow, PayloadBlock } from "./guide-types";
 
 // ---------------------------------------------------------------------------
 // Which profile the guide shows
@@ -234,6 +234,41 @@ export function budgetView(b: BudgetPayload, p: AccountProfile): BudgetView {
     daysToKvK1: day !== null ? Math.max(0, kvk - day) : null,
     rows,
     oneTime: b.oneTimeGems.map((g) => ({ ...g, reached: g.unlockCityHall === null ? null : p.cityHall >= g.unlockCityHall })),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Low spender targets (wave J), for the Low profile only
+
+/** Precomputed Low targets, fetched by the island for the Low profile. */
+export const LOW_BUDGET_URL = "/data/guide-low-budget.json";
+
+/**
+ * Low targets are shown to the Low profile only. Medium and above are not Low (and their own targets are
+ * not researched), and F2P has its own numbers; never the other way round either.
+ */
+export function showsLowTargets(p: AccountProfile): boolean {
+  return p.spending === "low";
+}
+
+export interface LowBudgetView {
+  tiers: Array<Omit<LowTierRow, "lines"> & { lines: Array<{ purchase: LowPurchaseRow; timesPerMonth: number; assumed: boolean }> }>;
+  /** Purchases in no tier (the daily-offers ceiling, the one-time half-price coupon). */
+  outside: LowPurchaseRow[];
+  reachedCH25: boolean;
+}
+
+export function lowBudgetView(b: LowBudgetPayload, p: AccountProfile): LowBudgetView {
+  const byId = new Map(b.purchases.map((x) => [x.id, x]));
+  const get = (id: string): LowPurchaseRow => {
+    const x = byId.get(id);
+    if (!x) throw new Error(`unknown low purchase ${id}`);
+    return x;
+  };
+  return {
+    tiers: b.tiers.map((t) => ({ ...t, lines: t.lines.map((l) => ({ purchase: get(l.purchaseId), timesPerMonth: l.timesPerMonth, assumed: l.assumed })) })),
+    outside: b.outsideTiers.map(get),
+    reachedCH25: p.cityHall >= 25,
   };
 }
 
