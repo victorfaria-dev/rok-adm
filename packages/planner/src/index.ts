@@ -3,6 +3,7 @@ export * from "./routine";
 export * from "./budget";
 export * from "./commander";
 export * from "./commander-periods";
+export * from "./commander-portraits";
 export * from "./farms";
 export * from "./effective-profile";
 export * from "./kingdom";
