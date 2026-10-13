@@ -14,7 +14,7 @@
 .cmd-select {
   width: 100%; min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
   color: var(--ko-text); background: var(--ko-surface); accent-color: var(--ko-accent);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
 }
 .cmd-empty { color: var(--ko-text-muted); max-width: 65ch; }
 
@@ -62,7 +62,7 @@
 .cmd-option {
   display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--ko-space-3);
   min-height: 48px; padding: var(--ko-space-2) var(--ko-space-4);
-  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  background: var(--ko-surface); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
   cursor: pointer; user-select: none;
   transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out);
 }

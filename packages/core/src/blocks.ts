@@ -87,6 +87,11 @@ export interface SelectOptions {
   profileFallback?: Partial<Record<SpendingProfile, SpendingProfile>>;
   /** Which block ids are cumulative daily tiers. Default: ids like `daily-15min`. */
   isDailyTier?: (block: GuideBlock) => boolean;
+  /**
+   * Chapter titles that replace the F2P guide's defaults (`GUIDE_SECTIONS`) for
+   * another guide, e.g. the kingdom administration guide. Default `{}`.
+   */
+  sectionTitles?: Partial<Record<GuideSection, string>>;
 }
 
 export type CheckCriterion =
@@ -170,6 +175,7 @@ const DEFAULTS: Required<Omit<SelectOptions, "isDailyTier">> = {
   usePhaseByKingdomDay: true,
   dailyTiers: "all",
   profileFallback: { low: "f2p" },
+  sectionTitles: {},
 };
 
 function resolveOptions(opts: SelectOptions | undefined): Required<Omit<SelectOptions, "isDailyTier">> {
@@ -426,7 +432,7 @@ export function selectBlocks(
 
   const sections: StructuredGuideSection[] = GUIDE_SECTIONS.map((s) => ({
     id: s.id,
-    title: s.title,
+    title: o.sectionTitles[s.id] ?? s.title,
     blocks: guideBlocks.filter((g) => g.block.section === s.id),
   })).filter((s) => s.blocks.length > 0);
 

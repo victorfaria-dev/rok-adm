@@ -17,7 +17,7 @@
 .fh-radios { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
 .fh-radio {
   display: inline-flex; align-items: center; gap: var(--ko-space-2); min-height: 44px; padding-inline: var(--ko-space-3);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-pill); cursor: pointer; font-size: var(--ko-text-sm);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-pill); cursor: pointer; font-size: var(--ko-text-sm);
 }
 .fh-radio:has(input:checked) { border-color: var(--ko-accent); }
 .fh-radio input, .fh-task input { width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); flex: none; }

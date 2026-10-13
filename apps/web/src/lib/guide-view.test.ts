@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { defaultProfile, encodeProfile, flattenGuide, GUIDE_SECTIONS, selectBlocks, type AccountProfile, type GuideBlock } from "@rokadm/core";
 import { buildBudgetPayload, buildGuidePayload } from "./guide-payload";
-import { budgetView, chooseProfile, FALLBACK_STAGE, selectGuide, selectGuideWithFallback, shareUrl } from "./guide-view";
+import { budgetView, chooseProfile, FALLBACK_STAGE, selectGuide, selectGuideWithFallback, shareUrl, stageHasContent } from "./guide-view";
 
 const raw = JSON.parse(readFileSync(join(__dirname, "../../../../guides/data/blocks.f2p.json"), "utf8")) as GuideBlock[];
 const payload = buildGuidePayload("f2p");
@@ -94,12 +94,15 @@ describe("stage fallback (KvK2+ not researched yet)", () => {
   for (const stage of ["kvk2", "kvk3", "soc"] as const) {
     it(`${stage} falls back to the KvK1 selection, labelled`, () => {
       const p = make({ spending: "f2p", kingdomStage: stage, cityHall: 12 });
-      // Core stays strict: nothing applies at this stage.
-      expect(selectGuide(payload, p).meta.shownBlocks).toBe(0);
+      // Core stays strict: only the every-stage blocks (daily tiers) apply at this stage.
+      const strict = flattenGuide(selectGuide(payload, p));
+      expect(strict.every((s) => s.block.stage.includes("todos"))).toBe(true);
+      expect(stageHasContent(payload, stage)).toBe(false);
       const sel = selectGuideWithFallback(payload, p);
       expect(sel.fallbackFrom).toBe(stage);
       expect(FALLBACK_STAGE).toBe("kvk1");
       const kvk1 = selectGuide(payload, { ...p, kingdomStage: "kvk1" });
+      expect(kvk1.meta.shownBlocks).toBeGreaterThan(strict.length);
       expect(sel.view.meta.shownBlocks).toBe(kvk1.meta.shownBlocks);
       expect(sel.view.meta.shownBlocks).toBeGreaterThan(0);
     });

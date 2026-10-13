@@ -1,7 +1,7 @@
 ---
 // 24 px stroke icons drawn for KingdomOps (no icon runtime).
 import type { IconName } from "../lib/nav";
-interface Props { name: IconName | "theme" | "close" }
+interface Props { name: IconName | "theme" | "close" | "more" }
 const { name } = Astro.props;
 const paths: Record<string, string> = {
   guide: "M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5C4.7 20 4 19.3 4 18.5zM13 4h5.5c.8 0 1.5.7 1.5 1.5v13c0 .8-.7 1.5-1.5 1.5H13zM7 8h1.5M7 11h1.5M16 8h1.5M16 11h1.5",
@@ -10,6 +10,7 @@ const paths: Record<string, string> = {
   you: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4.5 20.5c1.2-3.5 4.2-5.5 7.5-5.5s6.3 2 7.5 5.5",
   theme: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 3v18",
   close: "M6 6l12 12M18 6L6 18",
+  more: "M4 7h16M4 12h16M4 17h16",
 };
 ---
 <svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">

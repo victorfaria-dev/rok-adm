@@ -6,6 +6,7 @@ import ThemePicker from "../components/ThemePicker.astro";
 import ProfileChip from "../components/ProfileChip.astro";
 import Footer from "../components/Footer.astro";
 import LogoSting from "../components/LogoSting.astro";
+import MoreMenu from "../components/MoreMenu.astro";
 import { DESTINATIONS, SECONDARY, isActive } from "../lib/nav";
 import { THEME_BOOT_SCRIPT } from "../lib/theme";
 
@@ -51,6 +52,7 @@ const fullTitle = docTitle ?? `${title} · KingdomOps`;
         <p class="page" aria-hidden="true">{title}</p>
         <ThemePicker id="top" placement="down" />
         <ProfileChip />
+        <MoreMenu />
       </header>
     )}
 
@@ -135,7 +137,7 @@ const fullTitle = docTitle ?? `${title} · KingdomOps`;
     flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     font: var(--ko-weight-semibold) var(--ko-text-md)/1 var(--ko-font-display); letter-spacing: .02em;
   }
-  .top :global(.chip) { max-width: 46vw; }
+  .top :global(.chip) { max-width: 40vw; }
 
   /* Bottom tabs: phone only. */
   .tabs {
