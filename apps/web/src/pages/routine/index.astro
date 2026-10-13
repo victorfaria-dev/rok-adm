@@ -1,7 +1,7 @@
 ---
 import Shell from "../../layouts/Shell.astro";
-import ComingNext from "../../components/ComingNext.astro";
+import Routine from "../../components/routine/Routine";
 ---
-<Shell title="Routine" description="What to do today in the time you have, most valuable first." mode="read">
-  <ComingNext what="What to do today in the time you have, most valuable first." when="Coming after the guide."><Fragment slot="title">Routine</Fragment></ComingNext>
+<Shell title="Routine" description="What to do today in the time you have, most valuable first. Break Mode for busy days." mode="operate">
+  <Routine client:load />
 </Shell>

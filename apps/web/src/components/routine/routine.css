@@ -1,0 +1,100 @@
+/* Routine island (/routine). Operate mode: Chakra Petch for titles and buttons, Plex Sans for
+   task text, Plex Mono for numbers. Only --ko-* tokens. Check-off does not animate (frequent action). */
+
+.rt { max-width: 960px; margin-inline: auto; display: grid; gap: var(--ko-space-6); min-width: 0; }
+.rt ul { margin: 0; padding: 0; list-style: none; }
+.rt h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); overflow-wrap: anywhere; }
+.rt h2 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); text-transform: uppercase; letter-spacing: .04em; }
+.rt h3 { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); }
+
+.rt-head { display: grid; gap: var(--ko-space-2); }
+.rt-lede { color: var(--ko-text-muted); max-width: 65ch; }
+.rt-for { font-size: var(--ko-text-sm); color: var(--ko-text-muted); overflow-wrap: anywhere; }
+.rt-for a { color: var(--ko-text); display: inline-block; min-height: 24px; }
+
+.rt-help { display: block; color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 65ch; overflow-wrap: anywhere; }
+
+.rt-banner {
+  display: grid; gap: var(--ko-space-3); justify-items: start;
+  padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+
+.rt-section { display: grid; gap: var(--ko-space-4); min-width: 0; }
+
+/* Break Mode switch and option rows: the whole row is the target (>= 44 px). */
+.rt-switch, .rt-check, .rt-choice, .rt-task {
+  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--ko-space-3);
+  min-height: 48px; padding: var(--ko-space-3) var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  cursor: pointer; user-select: none; min-width: 0;
+}
+.rt-switch:has(input:checked), .rt-choice:has(input:checked) { border-color: var(--ko-accent); background: var(--ko-surface-raised); }
+.rt-switch:has(input:focus-visible), .rt-check:has(input:focus-visible), .rt-choice:has(input:focus-visible), .rt-task:has(input:focus-visible) {
+  outline: 2px solid var(--ko-focus); outline-offset: 2px;
+}
+.rt-switch input, .rt-check input, .rt-choice input { width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); }
+.rt-task input { width: 24px; height: 24px; margin: 0; accent-color: var(--ko-accent); }
+.rt input:focus-visible { outline: none; }
+.rt-switch-label { font-weight: var(--ko-weight-semibold); }
+.rt-switch > span, .rt-check > span { display: grid; gap: var(--ko-space-1); min-width: 0; }
+
+fieldset.rt-budget, fieldset.rt-extra { margin: 0; padding: 0; border: 0; min-width: 0; display: grid; gap: var(--ko-space-2); }
+.rt legend { padding: 0; margin-bottom: var(--ko-space-2); font-weight: var(--ko-weight-semibold); }
+.rt-choices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ko-space-2); }
+@media (min-width: 640px) { .rt-choices { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* Checklist */
+.rt-progress { font-weight: var(--ko-weight-semibold); }
+.rt-list { display: grid; gap: var(--ko-space-2); }
+.rt-item { display: grid; min-width: 0; }
+.rt-task { min-height: 56px; }
+.rt-task-text { display: grid; gap: var(--ko-space-1); min-width: 0; overflow-wrap: anywhere; }
+.rt-task-title { font-weight: var(--ko-weight-medium); }
+.rt-task:has(input:checked) .rt-task-title { color: var(--ko-text-muted); text-decoration: line-through; }
+.rt-min { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.rt-min-est { color: var(--ko-text-muted); }
+.rt-why summary, .rt-more summary {
+  display: flex; align-items: center; min-height: 44px; padding-inline: var(--ko-space-4);
+  cursor: pointer; color: var(--ko-text-muted); font-size: var(--ko-text-sm);
+}
+.rt-why p { padding: 0 var(--ko-space-4) var(--ko-space-3); color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 72ch; overflow-wrap: anywhere; }
+.rt-more { border-top: 1px solid var(--ko-border); }
+.rt-more summary { padding-inline: 0; color: var(--ko-text); font-weight: var(--ko-weight-medium); }
+.rt-more > :not(summary) { padding-bottom: var(--ko-space-3); }
+.rt-empty { color: var(--ko-text-muted); }
+
+.rt-plain { display: grid; gap: var(--ko-space-2); }
+.rt-plain li { display: grid; gap: var(--ko-space-1); min-width: 0; overflow-wrap: anywhere; }
+.rt-skip-title { font-weight: var(--ko-weight-medium); }
+.rt-sub { margin-top: var(--ko-space-4); }
+
+.rt-warn {
+  display: grid; gap: var(--ko-space-2); padding: var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-warning); border-radius: var(--ko-radius-md);
+}
+.rt-warn ul { display: grid; gap: var(--ko-space-1); }
+
+.rt-notes { display: grid; gap: var(--ko-space-2); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 72ch; overflow-wrap: anywhere; }
+.rt-pending { color: var(--ko-text); }
+.rt-facts { color: var(--ko-text-muted); }
+
+.rt-reality { padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); }
+.rt-facts-list { display: grid; gap: var(--ko-space-2); max-width: 72ch; overflow-wrap: anywhere; }
+
+/* Calendar export */
+.rt-cal { display: flex; flex-wrap: wrap; align-items: flex-end; gap: var(--ko-space-3); }
+.rt-field { display: grid; gap: var(--ko-space-2); }
+.rt-field label { font-weight: var(--ko-weight-semibold); }
+.rt-field input {
+  min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
+  font-family: var(--ko-font-mono); font-size: 16px; font-variant-numeric: tabular-nums;
+  color: var(--ko-text); background: var(--ko-surface); caret-color: var(--ko-accent);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); color-scheme: inherit;
+}
+.rt-field input:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.rt-status { min-height: 1.5em; font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+
+@media (hover: hover) and (pointer: fine) {
+  .rt-switch:hover, .rt-check:hover, .rt-choice:hover, .rt-task:hover { border-color: var(--ko-text-muted); }
+  .rt-why summary:hover, .rt-more summary:hover { color: var(--ko-text); }
+}

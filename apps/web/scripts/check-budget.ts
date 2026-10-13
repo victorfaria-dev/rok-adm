@@ -8,8 +8,9 @@ import { gzipSync } from "node:zlib";
 const DIST = resolve(dirname(fileURLToPath(import.meta.url)), "../dist");
 const ROUTE_LIMIT = 200 * 1024;
 const HOME_LIMIT = 30 * 1024;
-/** Key that only exists in the generated facts dataset (packages/data/generated/facts.json). */
-const DATASET_MARKER = "invalidatedBy";
+/** Key that only exists in the full generated facts dataset (packages/data/generated/facts.json): source
+ * citations. The planner's slim index (packages/planner/data/facts-meta.json) is allowed in the client. */
+const DATASET_MARKER = "accessedAt";
 
 const gz = (s: string | Buffer): number => gzipSync(s).length;
 

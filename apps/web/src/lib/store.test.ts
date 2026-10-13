@@ -49,4 +49,41 @@ describe("store", () => {
     expect(() => importStore("{}")).toThrow(/not a KingdomOps export/);
     expect(() => importStore("nope")).toThrow(/Pick the .json file/);
   });
+
+  it("parses wave B fields tolerantly", () => {
+    const s = parseStore(JSON.stringify({
+      v: 1, profileOverride: "whale", routinePrefs: { minutes: 45, breakMode: true },
+      commanders: { "sun-tzu": { purpose: "field_main", bad: 3 }, junk: 7 },
+    }));
+    expect(s.profileOverride).toBe("whale");
+    expect(s.routinePrefs).toEqual({ minutes: 45, breakMode: true });
+    expect(s.commanders).toEqual({ "sun-tzu": { purpose: "field_main" } });
+    const bad = parseStore(JSON.stringify({ v: 1, profileOverride: "gold", routinePrefs: { minutes: -5, breakMode: "yes" }, commanders: [] }));
+    expect(bad.profileOverride).toBeNull();
+    expect(bad.routinePrefs).toEqual({ minutes: null, breakMode: false });
+    expect(bad.commanders).toEqual({});
+  });
+
+  it("export then import keeps wave B fields", () => {
+    const s = { ...defaultStore(), profileOverride: "low" as const, routinePrefs: { minutes: 15, breakMode: false, includeWeekly: true, includeEvents: false }, commanders: { cyrus: { purpose: "gatherer" } } };
+    expect(importStore(exportStore(s))).toEqual(s);
+  });
+
+  it("parses saved profiles tolerantly", () => {
+    const s = parseStore(JSON.stringify({
+      v: 1,
+      savedProfiles: [
+        { id: "a", name: " Main ", code: "1.0.0.0.12.30.....0", override: "low" },
+        { id: "a", name: "dup", code: "x" },
+        { id: "b", name: "", code: "x" },
+        { id: "c", name: "Farm", code: "1.0.1.0.8.15.....0", override: "gold" },
+        7,
+      ],
+    }));
+    expect(s.savedProfiles).toEqual([
+      { id: "a", name: "Main", code: "1.0.0.0.12.30.....0", override: "low" },
+      { id: "c", name: "Farm", code: "1.0.1.0.8.15.....0", override: null },
+    ]);
+    expect(parseStore(JSON.stringify({ v: 1, savedProfiles: "no" })).savedProfiles).toEqual([]);
+  });
 });
