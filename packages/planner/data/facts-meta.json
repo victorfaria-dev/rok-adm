@@ -1,0 +1,655 @@
+{
+  "_generated": "by scripts/build-data.ts from research/facts — do not edit",
+  "facts": [
+    {
+      "id": "A01-0001",
+      "title": "City Hall CH1→CH25: requirements, cost, raw time, troop capacity, unlocks (table)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-04",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (Fandom page revised 2026-01-04)"
+    },
+    {
+      "id": "A01-0002",
+      "title": "City Hall upgrade rewards per level (resources, speedups, gems, civilization change)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2024-05-24",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (Fandom page revised 2023-03-24)"
+    },
+    {
+      "id": "A01-0006",
+      "title": "Builder queue: 1 by default, 2nd via Builder Recruitment (2 days) or permanently at VIP 6",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (VIP page revised 2026-08-02)"
+    },
+    {
+      "id": "A01-0011",
+      "title": "Queue management dashboard unlocks at City Hall 8 (construction, training, research, healing, scouting, alliance donations)",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-11-08",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.01"
+    },
+    {
+      "id": "A03-0002",
+      "title": "Farm and Lumber Mill production per hour and capacity by level",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-09-19",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0009",
+      "title": "Alliance territory gives +25% gathering speed",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0014",
+      "title": "Mysterious Merchant: daily at 00:00 UTC, food/wood-priced items",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2020-01-11",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0016",
+      "title": "Node level affects total amount, not gathering speed; pick node by availability",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0023",
+      "title": "March queues (gathering armies) by CH level",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A04-0001",
+      "title": "Daily Objectives 100-activity-point chest gives 100 gems per day (main guaranteed F2P gem income)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-06-30",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (Fandom page last revised 2020-01-11; LootBar 2026-06-30 confirms 100 gems)"
+    },
+    {
+      "id": "A04-0002",
+      "title": "Where gem items drop (10-gem, 100-gem, 650-gem, 2,000-gem items)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-01-29",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revised 2025-01-29)"
+    },
+    {
+      "id": "A04-0003",
+      "title": "Barbarian kills: gems are an optional 4th drop (10-gem items, count rising with level)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revised 2024-11-07)"
+    },
+    {
+      "id": "A04-0004",
+      "title": "Gem deposits on the map: Lv.1 = 10 gems, Lv.2 = 20 gems (single low-quality source); need 'Jewelry' research; not findable with search",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A04-0005",
+      "title": "One-time F2P gem sources found (CH upgrade rewards, account binding, redeem codes, KvK first occupations)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A04-0006",
+      "title": "F2P gem income estimate per day in an early kingdom (derived; only 100/day is guaranteed)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A04-0007",
+      "title": "VIP Shop: items, gem/resource prices, VIP level required, quantity per refresh (table) + derived gem cost per speedup minute",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A04-0009",
+      "title": "Where F2P should spend gems: VIP first; avoid finishing builds with gems; save for More Than Gems; books of covenant disputed",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-06-30",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A04-0010",
+      "title": "Free speedup sources for F2P (qualitative list) and early fixed speedups",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A04-0011",
+      "title": "Mysterious Merchant / Courier Station: 5 refreshes per visit, 1 free refresh per 24h; buy discounted speedups with resources, gems only at ≥60% off",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A05-0001",
+      "title": "VIP points needed per VIP level (VIP 1–18)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (Fandom VIP page revised 2026-08-02)"
+    },
+    {
+      "id": "A05-0003",
+      "title": "Daily free VIP points: 40 on day 1, +20 per consecutive day, capped at 200/day; missing a day resets to 40",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A05-0004",
+      "title": "F2P sources of VIP points (daily chest, gems 1:1, alliance shop, alliance gifts, Mysterious Caves)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A05-0006",
+      "title": "Daily free VIP chest contents by level; legendary commander sculptures from VIP 10 (1/day), VIP 12 (2/day), VIP 14 (3/day)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A05-0007",
+      "title": "Realistic F2P VIP: days to reach VIP 5/6/7/8/10 from daily chest alone vs daily chest + 100 gems/day (derived)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A05-0008",
+      "title": "F2P VIP target: spend free gems on VIP to reach VIP 6 early, then VIP 10 (majority) vs. never rush VIP with gems (AllClash)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-08-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A06-0500",
+      "title": "F2P: concentrate on one complete march instead of spreading sculptures",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "unanime",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0501",
+      "title": "Sun Tzu (epic) is the safest early F2P investment",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-08",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0502",
+      "title": "Yi Seong-Gye (YSG) is the top F2P legendary target",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-26",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0503",
+      "title": "Mid-tier legendaries (Richard I, Charles Martel, Cao Cao): divided",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-09-10",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0504",
+      "title": "Aethelflaed is a free legendary obtainable via Expedition Store",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-08",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0505",
+      "title": "Early barbarian/PvE commander: level only one of Boudica or Lohar; no gold sculptures",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-10",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0506",
+      "title": "Level a gathering commander to 37 early (Centurion first)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0507",
+      "title": "Minamoto: cheapest legendary to max, good only before SoC",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-10",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0508",
+      "title": "Pelagius (legendary) as an early-server pick: divided",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-09-10",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0509",
+      "title": "Long-term value of epic commanders: divided",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0510",
+      "title": "Reserve universal (gold) sculptures and tomes for one long-term legendary",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-04-10",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0512",
+      "title": "F2P should favor open-field (fighting, AoE) commanders over rally/garrison",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "fonte_unica",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0513",
+      "title": "Pairs suggested for an F2P first KvK",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0515",
+      "title": "Legendaries flagged 'no priority' for F2P (2026)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "fonte_unica",
+      "validUntil": "2026-09-10",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0516",
+      "title": "Alliance gift chests are a major F2P sculpture/gem source — join a spending alliance",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "unanime",
+      "validUntil": "2026-04-10",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A09-0001",
+      "title": "Action Points: cap 1,500 (raised from 1,000 in 1.0.41, Dec 2020) plus a claimable 500 AP/day; base regeneration rate NOT found",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-12-12",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A09-0002",
+      "title": "Barbarian attack cost: 50 AP, −2 AP per consecutive attack without returning (max −10), further −10 with 'Insight' talent",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revised 2024-11-07)"
+    },
+    {
+      "id": "A09-0005",
+      "title": "Barbarian Forts: rally-only; Lv.1–5 recommended troops and alliance gift keys; ~50% chance of Books of Covenant per reward tier",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revised 2024-11-25)"
+    },
+    {
+      "id": "A09-0006",
+      "title": "Free AP recovery items for F2P: 100 AP daily (Daily Objectives 60-pt chest), 30×100 AP weekly for food (VIP2 shop), 50 AP from alliance fort gifts",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida; daily AP claim rule from 1.1.02 (2025-12-18)"
+    },
+    {
+      "id": "A09-0007",
+      "title": "AP spending strategy for F2P: never cap AP; forts for Books of Covenant until Castle 25; barbarians otherwise; stockpile AP items for Lohar's Trial and Eve of the Crusade (pre-KvK)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-08-29",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A09-0008",
+      "title": "Built-in auto-peacekeeping (automatic barbarian hunting) exists; third-party scripts are penalised by Conduct Score",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-04-30",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.01–1.1.07"
+    },
+    {
+      "id": "A10-0001",
+      "title": "Daily Objectives: tasks, activity points and chest thresholds (20/40/60/80/100) — list partly outdated by 1.1.09",
+      "confidence": "baixa",
+      "status": "parcialmente_obsoleto",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": "C04-0004",
+      "gameVersion": "list = Fandom rev 2020-01-11 (pre-1.1.09); changes from 1.1.02 and 1.1.09"
+    },
+    {
+      "id": "A10-0002",
+      "title": "Consolidated F2P daily/weekly checklist (tasks, frequency/cap, yield, dependency) — minutes per task NOT found",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-06-30",
+      "invalidatedBy": null,
+      "gameVersion": "state as of 1.1.09 (2026-06-30) where known"
+    },
+    {
+      "id": "A10-0003",
+      "title": "Tavern: daily free silver chests (3 → 10 by Tavern level) and free golden chest interval (3d → 2d)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-05",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (rev 2026-01-05)"
+    },
+    {
+      "id": "A10-0004",
+      "title": "Expedition: 3-star missions give a free daily claim; Medal Shop (1 free refresh/day, then 100 gems); legendary sculpture = 1,500 medals",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revised 2024-03-11)"
+    },
+    {
+      "id": "A10-0005",
+      "title": "Peerless Scholar (Lyceum of Wisdom, CH10): one Mock Exam per weekday; Preliminary and Final every two weeks; passers split a gem pool",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-04",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.79 (2024-02/03); no later change found"
+    },
+    {
+      "id": "A10-0006",
+      "title": "Alliance help: each help fills 1% of the bar; times you can be helped = Alliance Center level-based (5 at Lv1 → 18 at Lv14 → 30 at Lv25); troop training cannot be helped",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A10-0007",
+      "title": "Gathering boosts: +25% speed in alliance territory (5% also goes to alliance storage); Enhanced Gathering item +50%, stackable in bulk up to 30 since 1.1.09",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.09 for bulk use"
+    },
+    {
+      "id": "A10-0008",
+      "title": "Sunset Canyon: daily free attempts (VIP adds +1…+5); top-5 daily rank gives Golden Key rewards",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A11-0502",
+      "title": "More Than Gems: the best window to spend gems; F2P target 7k/day tier",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A11-0503",
+      "title": "Wheel of Fortune: F2P do the first 10 spins on a commander they need",
+      "confidence": "baixa",
+      "status": "parcialmente_obsoleto",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": "C04-0022",
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A11-0512",
+      "title": "Event schedule is not fixed — plan from the in-game calendar",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "unanime",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A14-0001",
+      "title": "Civilization bonuses, starting commanders and special units (15 civilizations) — table",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revised 2025-12-04; includes Maya, added in 1.0.90)"
+    },
+    {
+      "id": "B01-0500",
+      "title": "First KvK starts when kingdom is ~85–100 days old",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-15",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "B01-0503",
+      "title": "Lost Kingdom (KvK1) entry needs City Hall 17; opens after Eve of the Crusade",
+      "confidence": "baixa",
+      "status": "parcialmente_obsoleto",
+      "consensus": "n/a",
+      "validUntil": "2026-09-25",
+      "invalidatedBy": "C04-0002",
+      "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "B01-0700",
+      "title": "Player reports (2026): F2P accounts typically enter KvK1 below CH25 (CH21–22 is workable); 10–20M power is a \"realistic\" F2P/low target",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-06",
+      "invalidatedBy": null,
+      "gameVersion": "state reported Aug–Oct 2026 (1.1.10–1.1.12 era)"
+    },
+    {
+      "id": "C04-0004",
+      "title": "1.1.09: resource boost items and Deceptive Troops removed; VIP production buffs raised",
+      "confidence": "alta",
+      "status": "bruto",
+      "consensus": "n/a",
+      "validUntil": "2026-06-30",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.09"
+    },
+    {
+      "id": "C04-0005",
+      "title": "1.1.09: Legendary Pelagius event for new kingdoms from day 5",
+      "confidence": "alta",
+      "status": "bruto",
+      "consensus": "n/a",
+      "validUntil": "2026-06-30",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.09"
+    },
+    {
+      "id": "C04-0021",
+      "title": "1.0.94: four commanders moved to Season 2 and reworked",
+      "confidence": "alta",
+      "status": "bruto",
+      "consensus": "n/a",
+      "validUntil": "2025-05-13",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.94"
+    },
+    {
+      "id": "C04-0023",
+      "title": "1.0.90: Armament Conversion, Legendary Commander Swap, Gathering of Heroes",
+      "confidence": "alta",
+      "status": "bruto",
+      "consensus": "n/a",
+      "validUntil": "2025-01-07",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.90"
+    }
+  ]
+}

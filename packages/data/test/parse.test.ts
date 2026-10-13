@@ -106,8 +106,8 @@ describe("versions and patches", () => {
       { date: "2026-07-30", t3: true, version: "1.1.10", change: "Pincer.", cards: ["C04-0003"] },
     ]);
     const mk = (id: string, title: string, conf: "alta" | "media" | "baixa", vj: string, vmin: string | null) => {
-      const raw = parseFrontMatter(CARD.replace("A99-0001", id).replace("A99-0001", id).replace("dominio: A99", "dominio: C04")
-        .replace("A99", "C04").replace("titulo: 'Test: card'", `titulo: '${title}'`).replace("confianca: media", `confianca: ${conf}`)
+      const raw = parseFrontMatter(CARD.replace(/A99-0001/g, id).replace("dominio: A99", "dominio: C04")
+        .replace("titulo: 'Test: card'", `titulo: '${title}'`).replace("confianca: media", `confianca: ${conf}`)
         .replace("versao_jogo: 1.0.90+", `versao_jogo: '${vj}'`).replace("versao_minima: null", `versao_minima: ${vmin ?? "null"}`));
       return { raw, fact: cardToFact(raw) };
     };

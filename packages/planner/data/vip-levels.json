@@ -1,0 +1,149 @@
+{
+  "_generated": "by scripts/build-data.ts from research/facts/A05/data/vip-levels.csv — do not edit",
+  "levels": [
+    {
+      "vip": 1,
+      "threshold": 200,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 2,
+      "threshold": 400,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 3,
+      "threshold": 1200,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 4,
+      "threshold": 3500,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 5,
+      "threshold": 6000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 6,
+      "threshold": 11500,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 7,
+      "threshold": 17500,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 8,
+      "threshold": 35000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 9,
+      "threshold": 75000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 10,
+      "threshold": 150000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 11,
+      "threshold": 250000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 12,
+      "threshold": 350000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 13,
+      "threshold": 500000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 14,
+      "threshold": 750000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 15,
+      "threshold": 1000000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 16,
+      "threshold": 1500000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 17,
+      "threshold": 2500000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    },
+    {
+      "vip": 18,
+      "threshold": 4000000,
+      "reading": "cumulative total (T4-supported, T0 pending)",
+      "facts": [
+        "A05-0001"
+      ]
+    }
+  ]
+}
