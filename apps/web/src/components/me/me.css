@@ -1,0 +1,100 @@
+/* You page island (/me). Operate mode: Plex Sans for text and labels, Chakra Petch for headings
+   and buttons, Plex Mono for numbers. Only --ko-* tokens. */
+
+.me { max-width: 720px; margin-inline: auto; display: grid; gap: var(--ko-space-8); min-width: 0; }
+
+.me-head { display: grid; gap: var(--ko-space-3); }
+.me-head h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+.me-lead { color: var(--ko-text-muted); max-width: 65ch; }
+
+.me-section { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.me-section h2 {
+  font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl);
+  letter-spacing: .04em; text-transform: uppercase;
+}
+.me-section h3 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); }
+.me-section h4 { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); outline: none; }
+.me-section h4:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 4px; }
+.me-section p { max-width: 65ch; overflow-wrap: anywhere; }
+
+/* Answers: question above, answer below; long labels wrap. */
+.me-answers { margin: 0; display: grid; border-top: 1px solid var(--ko-border); }
+.me-row { display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.me-row dt { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.me-row dd { margin: 0; font-weight: var(--ko-weight-medium); overflow-wrap: anywhere; }
+.me-row-strong dd { color: var(--ko-accent); font-weight: var(--ko-weight-semibold); }
+
+.me-skeleton { display: grid; gap: var(--ko-space-3); }
+.me-skeleton span { display: block; height: var(--ko-space-10); background: var(--ko-surface); border-radius: var(--ko-radius-md); }
+
+.me-empty {
+  display: grid; gap: var(--ko-space-4); justify-items: start;
+  padding: var(--ko-space-5); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+
+.me-rule {
+  display: grid; gap: var(--ko-space-2); padding: var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm);
+}
+.me-rule-label { font-weight: var(--ko-weight-semibold); }
+
+.me-note { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+
+/* Radio groups: the whole row is the target (≥ 44 px). */
+.me-choices { margin: 0; padding: 0; border: 0; display: grid; gap: var(--ko-space-2); min-width: 0; }
+.me-choices legend { padding: 0; margin-bottom: var(--ko-space-2); font-weight: var(--ko-weight-semibold); }
+/* Theme: three short options side by side; they wrap as whole words when space runs out. */
+.me-choices-row { display: flex; flex-wrap: wrap; }
+.me-choices-row legend { flex-basis: 100%; }
+.me-choices-row .me-choice { flex: 1 1 auto; padding-inline: var(--ko-space-3); gap: var(--ko-space-2); overflow-wrap: normal; white-space: nowrap; }
+.me-choice {
+  display: flex; align-items: center; gap: var(--ko-space-3);
+  min-height: 48px; padding: var(--ko-space-2) var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  cursor: pointer; user-select: none; min-width: 0; overflow-wrap: anywhere;
+  transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out);
+}
+.me-choice:has(input:checked) { border-color: var(--ko-accent); background: var(--ko-surface-raised); }
+.me-choice:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.me-choice input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); }
+.me-choice input:focus-visible { outline: none; }
+
+.me-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
+
+/* File input is visually hidden; its label is the visible button and shows the focus ring. */
+.me-file { position: relative; }
+.me-file:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 3px; }
+
+.me-status { font-weight: var(--ko-weight-medium); }
+.me-error { color: var(--ko-error); font-weight: var(--ko-weight-medium); }
+
+.me-danger {
+  display: grid; gap: var(--ko-space-3); justify-items: start;
+  margin-top: var(--ko-space-4); padding-top: var(--ko-space-6); border-top: 1px solid var(--ko-border);
+}
+.me-confirm {
+  display: grid; gap: var(--ko-space-3); width: 100%;
+  padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-error); border-radius: var(--ko-radius-md);
+  transition: opacity var(--ko-duration-base) var(--ko-ease-out), transform var(--ko-duration-base) var(--ko-ease-out);
+}
+@starting-style {
+  .me-confirm { opacity: 0; transform: translateY(var(--ko-space-1)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  @starting-style { .me-confirm { transform: none; } }
+}
+
+.me-btn-danger { background: var(--ko-error); color: var(--ko-background); }
+.me-btn-danger:active { background: var(--ko-error); }
+.me-btn-danger-outline { background: transparent; color: var(--ko-error); box-shadow: inset 0 0 0 1px var(--ko-error); }
+
+@media (min-width: 768px) {
+  .me-row { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); align-items: baseline; gap: var(--ko-space-4); }
+}
+@media (hover: hover) and (pointer: fine) {
+  .me-choice:hover { border-color: var(--ko-text-muted); }
+  .me-choice:has(input:checked):hover { border-color: var(--ko-accent); }
+  .me-btn-danger:hover { box-shadow: inset 0 0 0 2px var(--ko-text); }
+  .me-btn-danger-outline:hover { box-shadow: inset 0 0 0 2px var(--ko-error); }
+}
