@@ -11,7 +11,8 @@ tipo: mecanica               # mecanica | estrategia | evento | regra | ferramen
 afirmacao: "Texto curto e objetivo da afirmação."
 valores:                     # opcional: dados estruturados
   - {chave: "...", valor: "...", unidade: "..."}
-perfil: [todos]              # todos | f2p | baixo | medio | alto | lutador | farm | rally | guarnicao | lider
+perfil: [todos]              # gasto: todos | f2p | low | medium | high | whale | kraken  (ver perfis.md)
+funcao: [todas]              # todas | lutador | farm | rally | guarnicao | lider
 estagio_reino: [todos]       # todos | pre_kvk | kvk1 | kvk2 | kvk3 | soc
 fontes:
   - id: S03                  # ID em fontes.md
@@ -39,3 +40,4 @@ notas: ""
 - Sem `url` + `trecho` → a ficha não pode sair de `bruto`.
 - Números nunca são inferidos ou "arredondados de memória". Se não encontrado, registrar lacuna em `notas`.
 - Estratégia (`tipo: estrategia`) sempre tem `consenso` e `perfil` preenchidos.
+- Fichas antigas com `baixo|medio|alto` são lidas como `low|medium|high` (migração na integração).

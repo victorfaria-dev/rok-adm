@@ -2,6 +2,21 @@
 
 Atualizado: 2026-10-13
 
+## Organização (delegação)
+
+```
+Victor (direção, ideias, decisões finais)
+  └─ Admin geral (Claude): prioridades, integração, revisão, commits, interface com o Victor
+       ├─ Sub-admin CONTA      → W1, W2, W6, W7 + verificadores → context packs → Guia F2P → deltas por perfil (perfis.md)
+       ├─ Sub-admin REINO      → W4 + verificadores → Guia de administração de reino
+       ├─ Sub-admin PRODUTO    → W3, W4 (dores), W5 → ranking de dores → MVP e especificação do megahub
+       └─ Sub-admin ENGENHARIA (a partir da onda de especificação) → modelo de dados, arquitetura, protótipo
+```
+
+Regras: cada sub-admin recebe um objetivo e critérios de aceitação, dispara seus próprios workers, só escreve nas suas pastas e devolve um relatório curto. Só o admin geral faz commit e muda `00-PLANO.md`, `fontes.md` e schemas.
+
+Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 os sub-admins assumem.
+
 ## Frentes em execução (subagentes)
 
 | # | Frente | Domínios | Saída | Status |
@@ -20,5 +35,5 @@ Atualizado: 2026-10-13
 2. **Verificação adversarial:** um verificador por grupo de domínios, cruzando com W7 (obsolescência).
 3. **Síntese de dores:** ranking único jogadores + líderes → escolha do MVP do megahub (`brainstorm/`).
 4. **Context packs:** `context/` por tema.
-5. **Guia F2P v1** (EN) e **guia de administração de reino v1**.
+5. **Guia F2P v1** (EN) e **guia de administração de reino v1**; depois deltas Low → Medium → High → Whale → Kraken (`perfis.md`).
 6. **Especificação do sistema:** requisitos, modelo de dados, arquitetura.
