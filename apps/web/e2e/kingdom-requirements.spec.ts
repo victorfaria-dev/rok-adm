@@ -20,9 +20,9 @@ test.describe("requirements card (F-34)", () => {
     const res = await page.goto("/kingdom/requirements/");
     expect(res?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page.locator("[data-guardrail]")).toContainText("No bots, no scanning");
-    await expect(page.locator("[data-privacy]")).toContainText("other players' names");
-    await expect(page.getByRole("navigation", { name: "Council kit" }).getByRole("link", { name: "Requirements", exact: true })).toHaveAttribute("aria-current", "page");
+    await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
+    await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
+    await expect(page.getByRole("navigation", { name: "Members pages" }).getByRole("link", { name: "Requirements", exact: true })).toHaveAttribute("aria-current", "page");
     await expect(page.locator('[data-explain="kr-formula"]')).toContainText("Each T4 kill = 10 points, each T5 kill = 20 points, each dead = 50 points.");
     await expect(page.locator("[data-source]")).toContainText("B08-0001, medium confidence");
     await expect(page.locator("[data-not-comparable]")).toContainText("not comparable across kingdoms");

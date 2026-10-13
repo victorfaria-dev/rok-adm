@@ -16,9 +16,9 @@ test.describe("recruitment post generator", () => {
     const res = await page.goto("/kingdom/recruit/");
     expect(res?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page.locator("[data-guardrail]")).toBeVisible();
+    await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await expect(page.locator("[data-chat-warning]")).toContainText("Never paste links in in-game chat");
-    await expect(page.locator("[data-privacy]")).toBeVisible();
+    await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await expect(page.locator("#kt-body-out")).toHaveValue("**We are recruiting**");
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);

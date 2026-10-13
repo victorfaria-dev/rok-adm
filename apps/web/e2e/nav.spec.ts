@@ -1,0 +1,165 @@
+// UX stage 1 navigation (replaces the More menu spec): two tab sets by "Playing as", old URLs that
+// still resolve, and the footer holding the off-nav pages.
+import AxeBuilder from "@axe-core/playwright";
+import { expect, test, type Page } from "@playwright/test";
+import { LEADER_NAV, PLAYER_NAV } from "../src/lib/nav";
+
+const PROFILE = "1.0.0.0.12.30.....0";
+
+async function store(page: Page, data: object) {
+  await page.goto("/?about");
+  await page.evaluate((d) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, ...d })), data);
+}
+
+/** Visible tab labels: bottom tabs on a phone, the rail's long labels on desktop. */
+const tabLabels = (page: Page, isMobile: boolean) => (isMobile ? page.locator("nav.tabs:visible a span") : page.locator("nav.rail ul.dest:visible a .long"));
+
+/** The visible main nav: bottom tabs on a phone, the rail on desktop. */
+const mainNav = (page: Page, isMobile: boolean) => (isMobile ? page.locator("nav.tabs:visible") : page.locator("nav.rail ul.dest:visible"));
+
+async function axe(page: Page) {
+  const r = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+  return r.violations.filter((v) => v.impact === "serious" || v.impact === "critical").map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`);
+}
+
+test.describe("without JavaScript", () => {
+  test.use({ javaScriptEnabled: false });
+
+  test("player tabs are plain links; no More menu anywhere", async ({ page, isMobile }) => {
+    await page.goto("/guide/");
+    const nav = mainNav(page, isMobile);
+    for (const d of PLAYER_NAV) await expect(nav.getByRole("link", { name: d.label, exact: true })).toHaveAttribute("href", d.href);
+    await expect(page.getByRole("button", { name: "More" })).toHaveCount(0);
+    await expect(page.getByRole("link", { name: "More pages" })).toHaveCount(0);
+  });
+
+  test("old URLs still resolve: /more/ and /routine/ redirect", async ({ page }) => {
+    const more = await page.request.get("/more/");
+    expect(more.ok()).toBe(true);
+    expect(await more.text()).toMatch(/http-equiv="refresh" content="0;url=\/"/);
+    const routine = await page.request.get("/routine/");
+    expect(await routine.text()).toMatch(/url=\/city-hall\/today\//);
+  });
+});
+
+test("player by default: City Hall · Tools · Me, with the current tab marked; guides mark Me", async ({ page, isMobile }) => {
+  await page.goto("/tools/pack-value/");
+  const nav = mainNav(page, isMobile);
+  await expect(tabLabels(page, isMobile)).toHaveText(PLAYER_NAV.map((d) => d.label));
+  await expect(nav.getByRole("link", { name: "Tools", exact: true })).toHaveAttribute("aria-current", "page");
+  // Guides are public pages, reached from Me's first row (and the landing page), not a tab.
+  await page.goto("/guides/recovery/");
+  await expect(mainNav(page, isMobile).getByRole("link", { name: "Me", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(mainNav(page, isMobile).getByRole("link", { name: "Guides", exact: true })).toHaveCount(0);
+});
+
+test("leader: the Me switch swaps to Kingdom · Members · Events · Me at once", async ({ page, isMobile }) => {
+  await store(page, { profileCode: PROFILE });
+  await page.goto("/me/");
+  await page.getByRole("radio", { name: "Leader" }).check();
+  const nav = mainNav(page, isMobile);
+  await expect(tabLabels(page, isMobile)).toHaveText(LEADER_NAV.map((d) => d.label));
+  await expect(nav.getByRole("link", { name: "Me", exact: true })).toHaveAttribute("aria-current", "page");
+  // Next page: the boot script picks the leader tabs before paint.
+  await page.goto("/kingdom/recruit/");
+  await expect(mainNav(page, isMobile).getByRole("link", { name: "Members", exact: true })).toHaveAttribute("aria-current", "page");
+  await page.goto("/tools/kvk/");
+  await expect(mainNav(page, isMobile).getByRole("link", { name: "Events", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("navigation", { name: "Events pages" })).toBeVisible();
+});
+
+test("a returning visitor skips the landing page; /?about still shows it", async ({ page }) => {
+  await store(page, { profileCode: PROFILE });
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/city-hall\/$/);
+  await store(page, { profileCode: PROFILE, playingAs: "leader" });
+  await page.goto("/");
+  await expect(page).toHaveURL(/\/kingdom\/$/);
+  await page.goto("/?about");
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Plan your Rise of Kingdoms account");
+});
+
+test("the footer links Trust & privacy and Brand (off the tabs)", async ({ page }) => {
+  await page.goto("/tools/");
+  const foot = page.locator("footer.foot");
+  await expect(foot.getByRole("link", { name: "Trust & privacy" })).toHaveAttribute("href", "/trust/");
+  await expect(foot.getByRole("link", { name: "Brand" })).toHaveAttribute("href", "/brand/");
+});
+
+for (const theme of ["dark", "light"] as const) {
+  for (const [role, url] of [["player", "/city-hall/"], ["leader", "/kingdom/"], ["leader", "/kingdom/requirements/"]] as const) {
+    test(`axe ${theme} ${role} ${url}`, async ({ page }) => {
+      await store(page, { theme, playingAs: role, profileCode: PROFILE });
+      await page.goto(url);
+      expect(await axe(page)).toEqual([]);
+    });
+  }
+}
+
+test.describe("City Hall hub", () => {
+  const FARM = "1.0.1.0.9.15.....0";
+  const accounts = { profileCode: PROFILE, activeAccountId: "main", savedProfiles: [{ id: "main", name: "Main", code: PROFILE, override: null }, { id: "farm", name: "Farm 1", code: FARM, override: null }] };
+
+  test("an older single profile becomes account #1 with one card and no dots", async ({ page }) => {
+    await store(page, { profileCode: PROFILE });
+    await page.goto("/city-hall/");
+    await expect(page.locator("[data-city-card]")).toHaveCount(1);
+    await expect(page.locator("[data-city-card]")).toContainText("Main");
+    await expect(page.locator(".ch-dots")).toHaveCount(0);
+    const s = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1")!));
+    expect(s.activeAccountId).toBe("main");
+    expect(s.profileCode).toBe(PROFILE);
+  });
+
+  test("one card per account; a dot switches the account and the whole sheet follows", async ({ page }) => {
+    await store(page, accounts);
+    await page.goto("/city-hall/");
+    await expect(page.locator("[data-city-card]")).toHaveCount(2);
+    await expect(page.locator(".ch-tile").filter({ hasText: "Next: CH 13" })).toHaveCount(1);
+    await page.getByRole("button", { name: "Show Farm 1" }).click();
+    await expect(page.getByRole("button", { name: "Show Farm 1" })).toHaveAttribute("aria-current", "true");
+    await expect(page.locator(".ch-tile").filter({ hasText: "Next: CH 10" })).toHaveCount(1);
+    const s = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1")!));
+    expect(s.activeAccountId).toBe("farm");
+    expect(s.profileCode).toBe(FARM);
+    await expect(page.locator(".ch-tile").filter({ hasText: "My commanders" })).toHaveAttribute("href", "/city-hall/commanders/");
+  });
+
+  test("phone: the sheet opens with a button (no drag needed); Today's tasks opens it too", async ({ page, isMobile }) => {
+    test.skip(!isMobile, "the sheet folds on phones only");
+    await store(page, accounts);
+    await page.goto("/city-hall/");
+    const toggle = page.locator("[data-sheet-toggle]");
+    await expect(toggle).toHaveAttribute("aria-expanded", "false");
+    await expect(page.locator("#ch-sheet-more")).toBeHidden();
+    await toggle.focus();
+    await page.keyboard.press("Enter");
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await expect(page.locator("[data-alerts]")).toBeVisible();
+    await toggle.click();
+    await expect(page.locator("#ch-sheet-more")).toBeHidden();
+    await page.locator(".ch-tile").filter({ hasText: "Today's tasks" }).click();
+    await expect(page.locator("[data-today]")).toBeVisible();
+    await expect(page.locator("[data-today]")).toBeFocused();
+  });
+
+  test("reduced motion: the sheet is expanded and static", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await store(page, accounts);
+    await page.goto("/city-hall/");
+    await expect(page.locator("[data-today]")).toBeVisible();
+    await expect(page.locator("[data-sheet-toggle]")).toHaveCount(0);
+  });
+
+  test("My commanders keeps answers per account", async ({ page }) => {
+    await store(page, { ...accounts, commanders: { minamoto: { q1: "a" } } });
+    await page.goto("/city-hall/commanders/");
+    await expect(page.locator("[data-account-name]")).toContainText("Main");
+    await page.goto("/city-hall/");
+    await page.getByRole("button", { name: "Show Farm 1" }).click();
+    await expect(page.getByRole("button", { name: "Show Farm 1" })).toHaveAttribute("aria-current", "true");
+    const s = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1")!));
+    expect(s.commanders).toEqual({});
+    expect(s.savedProfiles.find((a: { id: string }) => a.id === "main").commanders).toEqual({ minamoto: { q1: "a" } });
+  });
+});

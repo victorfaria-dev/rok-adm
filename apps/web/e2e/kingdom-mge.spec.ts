@@ -28,8 +28,8 @@ test.describe("MGE planner", () => {
     const errors = trackErrors(page);
     await gotoHydrated(page, "/kingdom/mge/");
     await expect(page.locator("h1")).toHaveText("MGE planner");
-    await expect(page.locator("[data-guardrail]")).toContainText("No bots");
-    await expect(page.locator("[data-privacy]")).toContainText("other players' names");
+    await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
+    await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await page.getByRole("button", { name: "New plan" }).click();
 
     await page.getByLabel("Plan name").fill("K1234 KvK3 MGE");

@@ -39,8 +39,8 @@ test.describe("rules page builder", () => {
     const res = await page.goto("/kingdom/rules/");
     expect(res?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page.locator("[data-guardrail]")).toBeVisible();
-    await expect(page.locator("[data-privacy]")).toContainText("other players' names");
+    await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
+    await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await expect(page.getByText("No rules pages saved on this device yet.")).toBeVisible();
     await expect(page.getByRole("link", { name: "kingdom admin guide" })).toHaveAttribute("href", "/guides/kingdom-admin/");
     await expectNoSidewaysScroll(page);
@@ -119,7 +119,7 @@ test.describe("rules page builder", () => {
 
     await view.emulateMedia({ media: "print" });
     await expect(view.locator("[data-print]")).toBeHidden();
-    await expect(view.locator("nav.tabs")).toBeHidden();
+    await expect(view.locator("nav.tabs:visible")).toHaveCount(0);
     await view.emulateMedia({ media: "screen" });
 
     await view.getByRole("button", { name: "Make an editable copy" }).click();

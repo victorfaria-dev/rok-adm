@@ -1,10 +1,11 @@
 import AxeBuilder from "@axe-core/playwright";
-import { QUESTIONS } from "@rokadm/core";
 import { expect, test, type Page } from "@playwright/test";
+import { STEPS } from "../src/lib/questionnaire-flow";
 
-const stepOf = (id: string): number => QUESTIONS.findIndex((q) => q.id === id);
+// UX stage 1: 5 steps (playing as, spending, minutes, City Hall, kingdom stage), then the summary.
+const stepOf = (id: string): number => STEPS.findIndex((q) => q.id === id);
 const title = (page: Page) => page.getByRole("heading", { level: 1 });
-const WORST = { spending: "kraken", lifetimeSpendUsd: 10_000_000, minutesPerDay: 1440, sessionsPerDay: 24, kingdomDay: 5000, cityHall: 25, civilization: null };
+const WORST = { playingAs: "leader", spending: "kraken", minutesPerDay: 1440, cityHall: 25, kingdomStage: "soc" };
 
 /** Seed localStorage before the island reads it. */
 async function seed(page: Page, store: object) {
@@ -42,51 +43,58 @@ async function enter(page: Page, times = 1) {
   }
 }
 
-test("keyboard only: answer every question and land on /guide/?p=", async ({ page }) => {
+test("keyboard only: answer the 5 questions and land on City Hall, not the long guide", async ({ page }) => {
   await open(page);
-  await expect(title(page)).toHaveText(QUESTIONS[0]!.label);
-  await expect(page.getByText("1 of 10")).toBeVisible();
-  await expect(page.getByRole("radio", { name: /F2P/ })).toBeFocused(); // first load: the picked option
+  await expect(title(page)).toHaveText(STEPS[0]!.label);
+  await expect(page.getByText("1 of 5")).toBeVisible();
+  await expect(page.getByRole("radio", { name: /As a player/ })).toBeFocused(); // first load: the picked option
+  await enter(page); // player
 
+  await expectFocusInReply(page);
   await tabTo(page, "input[type=radio]");
   await page.keyboard.press("ArrowDown"); // Low spender
   await enter(page);
-  await expectFocusInReply(page);
   await expect(page.getByRole("log")).toContainText("Low spender");
-  await enter(page); // total spend: left blank = skipped
 
   await tabTo(page, "#q-input"); // minutes per day: "Other"
   await page.keyboard.type("45");
   await enter(page);
-  await expect(page.getByText("4 of 10")).toBeVisible();
-  await enter(page, 4); // sessions, role, stage, kingdom day: defaults
+  await expect(page.getByText("4 of 5")).toBeVisible();
 
-  await expect(title(page)).toHaveText(QUESTIONS[stepOf("cityHall")]!.label);
+  await expect(title(page)).toHaveText(STEPS[stepOf("cityHall")]!.label);
   await tabTo(page, "#q-input");
   await page.keyboard.press("Backspace");
   await page.keyboard.type("12");
-  await enter(page, 3); // City Hall, civilization, returning player
+  await enter(page, 2); // City Hall, kingdom stage (default)
 
   await expect(title(page)).toHaveText("Check your answers");
   await expect(title(page)).toBeFocused(); // the summary has no options: its heading
   await page.keyboard.press("Enter");
-  await page.waitForURL(/\/guide\/\?p=/);
-  expect(new URL(page.url()).searchParams.get("p")).toBe("1.1.0.0.12.45.....0");
+  await page.waitForURL(/\/city-hall\/$/);
   const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1")!));
   expect(stored.profileCode).toBe("1.1.0.0.12.45.....0");
+  expect(stored.playingAs).toBe("player");
   expect(stored.draft).toBeNull();
+});
+
+test("a leader lands on Kingdom with the leader tabs", async ({ page, isMobile }) => {
+  await seed(page, { draft: { step: 5, answers: { playingAs: "leader" } } });
+  await open(page);
+  await page.getByRole("button", { name: "Open my Kingdom" }).click();
+  await page.waitForURL(/\/kingdom\/$/);
+  const labels = isMobile ? page.locator("nav.tabs:visible a span") : page.locator("nav.rail ul.dest:visible a .long");
+  await expect(labels).toHaveText(["Kingdom", "Members", "Events", "Me"]);
 });
 
 test("reload resumes on the same step with the answers kept", async ({ page }) => {
   await open(page);
-  await page.getByRole("radio", { name: /Medium spender/ }).click(); // a tap on a quick reply sends it
-  await expect(page.getByText("2 of 10")).toBeVisible();
-  await page.getByRole("button", { name: "Skip" }).click();
-  await expect(page.getByText("3 of 10")).toBeVisible();
+  await page.getByRole("radio", { name: /As a player/ }).click(); // a tap on a quick reply sends it
+  await expect(page.getByText("2 of 5")).toBeVisible();
+  await page.getByRole("radio", { name: /Medium spender/ }).click();
+  await expect(page.getByText("3 of 5")).toBeVisible();
   await page.reload();
-  await expect(title(page)).toHaveText(QUESTIONS[2]!.label);
-  await expect(page.getByText("3 of 10")).toBeVisible();
-  await page.getByRole("button", { name: "Back" }).click();
+  await expect(title(page)).toHaveText(STEPS[2]!.label);
+  await expect(page.getByText("3 of 5")).toBeVisible();
   await page.getByRole("button", { name: "Back" }).click();
   await expect(page.getByRole("radio", { name: /Medium spender/ })).toBeChecked();
 });
@@ -100,7 +108,7 @@ test("Sun Tzu asks in a live log; the reply is ready at once and focus skips the
   // Typing dots never hold the reply back: the new options take focus within ~400 ms.
   await expect(page.getByRole("radio").first()).toBeFocused({ timeout: 400 });
   await expectFocusInReply(page);
-  await expect(log).toContainText("You: F2P");
+  await expect(log).toContainText("You: As a player");
   // Every option explains why it matters; no option is marked Recommended (QC-1).
   for (const r of await page.getByRole("radio").all()) await expect(r).toHaveAttribute("aria-describedby", /help/);
   await expect(page.locator("main")).not.toContainText(/recommended/i);
@@ -117,7 +125,7 @@ test("no typing dots under reduced motion", async ({ page }) => {
 
 test.describe("Sun Tzu's stage", () => {
   test("one <video> on the page, on the stage above the current question; history is posters", async ({ page }) => {
-    await seed(page, { draft: { step: 3, answers: { spending: "low", minutesPerDay: 45 } } });
+    await seed(page, { draft: { step: 2, answers: { playingAs: "player", spending: "low" } } });
     await open(page);
     const video = page.locator("video");
     await expect(video).toHaveCount(1);
@@ -133,7 +141,7 @@ test.describe("Sun Tzu's stage", () => {
     expect(await page.locator(".q-msg-bot:not([data-current]) img").count()).toBeGreaterThan(0);
     // Advancing keeps a single video (the talk clip plays on the new stage).
     await page.getByRole("button", { name: "Next" }).click();
-    await expect(page.getByText("5 of 10")).toBeVisible();
+    await expect(page.getByText("4 of 5")).toBeVisible();
     await expect(page.locator("video")).toHaveCount(1);
   });
 
@@ -141,7 +149,7 @@ test.describe("Sun Tzu's stage", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await open(page);
     await page.keyboard.press("Enter");
-    await expect(page.getByText("2 of 10")).toBeVisible();
+    await expect(page.getByText("2 of 5")).toBeVisible();
     await expect(page.locator("video")).toHaveCount(0);
     await expect(page.locator(".st-stage img")).toHaveAttribute("src", /poster\.webp$/);
   });
@@ -166,6 +174,8 @@ test.describe("Sun Tzu's stage", () => {
 
   test("phones: once scrolled, the stage sticks to the top as a 72 px strip", async ({ page }) => {
     await page.setViewportSize({ width: 390, height: 844 });
+    // The spending step (six options) is tall enough to scroll; the first step has only two.
+    await seed(page, { draft: { step: 1, answers: { playingAs: "player" } } });
     await open(page);
     const stage = page.locator(".st-stage");
     await expect(stage).not.toHaveAttribute("data-compact", "");
@@ -179,7 +189,7 @@ test.describe("Sun Tzu's stage", () => {
 test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }) => {
   await seed(page, { draft: { step: stepOf("cityHall"), answers: {} } });
   await open(page);
-  const field = page.getByRole("textbox", { name: QUESTIONS[stepOf("cityHall")]!.label });
+  const field = page.getByRole("textbox", { name: STEPS[stepOf("cityHall")]!.label });
   await field.fill("30");
   // The grumble is brief (~700 ms): record it as it happens instead of racing it under load.
   await page.evaluate(() => {
@@ -195,45 +205,45 @@ test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }
   await expect(field).toHaveAttribute("aria-invalid", "true");
   await expect(field).toBeFocused();
   await field.press("Enter");
-  await expect(title(page)).toHaveText(QUESTIONS[stepOf("cityHall")]!.label);
+  await expect(title(page)).toHaveText(STEPS[stepOf("cityHall")]!.label);
   await field.fill("25");
   await field.press("Enter");
-  await expect(title(page)).toHaveText(QUESTIONS[stepOf("cityHall") + 1]!.label);
+  await expect(title(page)).toHaveText(STEPS[stepOf("cityHall") + 1]!.label);
 });
 
 test("Close keeps the draft and returns to the previous page", async ({ page }) => {
   await open(page); // direct load: referrer is empty, Close goes home
   await page.getByRole("button", { name: "Next" }).click();
-  await expect(page.getByText("2 of 10")).toBeVisible();
+  await expect(page.getByText("2 of 5")).toBeVisible();
   await page.keyboard.press("Escape");
   await page.waitForURL((u) => u.pathname === "/");
   await page.goto("/me/");
   await page.locator("a[href='/start/']").first().evaluate((a: HTMLAnchorElement) => a.click());
   await page.waitForURL(/\/start\/$/);
-  await expect(page.getByText("2 of 10")).toBeVisible();
+  await expect(page.getByText("2 of 5")).toBeVisible();
   await page.getByRole("link", { name: "Close" }).click();
   await page.waitForURL(/\/me\/$/);
 });
 
 test("worst case answers fit 360 px on every step and the summary", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 });
-  for (let step = 0; step <= QUESTIONS.length; step++) {
-    await seed(page, { draft: { step, answers: { ...WORST, lifetimeSpendUsd: "10,000,000" } } });
+  for (let step = 0; step <= STEPS.length; step++) {
+    await seed(page, { draft: { step, answers: { ...WORST, minutesPerDay: "1,440" } } });
     await open(page);
     await expect(title(page)).toBeVisible();
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `step ${step}`).toBeLessThanOrEqual(0);
   }
-  await expect(page.getByText("10,000,000 USD")).toBeVisible();
-  await expect(page.getByText("5,000 days")).toBeVisible();
+  await expect(page.getByText("1,440 min")).toBeVisible();
+  await expect(page.getByText("Season of Conquest (SoC)")).toBeVisible();
 });
 
 test.describe("accessibility", () => {
   const cases = [
     { name: "first question", draft: null },
-    { name: "question with chat history", draft: { step: stepOf("cityHall"), answers: { spending: "low", minutesPerDay: 45, sessionsPerDay: 2 } } },
+    { name: "question with chat history", draft: { step: stepOf("cityHall"), answers: { playingAs: "player", spending: "low", minutesPerDay: 45 } } },
     { name: "number step with error", draft: { step: stepOf("cityHall"), answers: { cityHall: "99" } }, submit: true },
-    { name: "summary with warnings", draft: { step: QUESTIONS.length, answers: { ...WORST, spending: "f2p" } } },
+    { name: "summary with warnings", draft: { step: STEPS.length, answers: { ...WORST, spending: "f2p", minutesPerDay: 10 } } },
   ];
   for (const theme of ["dark", "light"] as const) {
     for (const c of cases) {

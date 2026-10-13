@@ -21,7 +21,7 @@ test.describe("seed simulator", () => {
     await expect(page.locator("[data-assumptions] li")).toHaveCount(8);
     await expect(page.locator("[data-assumptions]")).toContainText("L-B03-03");
     await expect(page.locator("[data-sources]")).toContainText("B08-0008 (confidence: high)");
-    await expect(page.locator("[data-privacy]")).toContainText("other players' names");
+    await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await expect(page.locator("[data-summary]")).toHaveText("No governors entered yet.");
     expect(errors).toEqual([]);
   });

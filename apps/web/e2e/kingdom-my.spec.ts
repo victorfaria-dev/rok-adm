@@ -26,7 +26,7 @@ test.describe("my requirements (F-30)", () => {
     const res = await page.goto("/kingdom/my/");
     expect(res?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
-    await expect(page.locator("[data-guardrail]")).toContainText("No bots, no scanning");
+    await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await expect(page.locator("[data-explainer]")).toContainText("DKP isn't a game number: each kingdom sets its own formula");
     await expect(page.locator("[data-explainer]")).toContainText("250% of power");
     await expect(page.locator("[data-self]")).toBeVisible();

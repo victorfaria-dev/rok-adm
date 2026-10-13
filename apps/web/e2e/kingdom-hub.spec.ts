@@ -4,7 +4,7 @@ import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, s
 const DOC = { id: "r1", kind: "rules", title: "K1234 rules", updatedAt: "2026-10-13T10:00:00.000Z", data: { sections: [] } };
 
 test.describe("council kit hub", () => {
-  test("renders: one h1, guardrail, privacy note, tool links, no sideways scroll at 360px", async ({ page }) => {
+  test("renders: one h1, guardrail, privacy note, one section nav (no card grid), no sideways scroll at 360px", async ({ page }) => {
     const errors = trackErrors(page);
     await page.setViewportSize({ width: 360, height: 780 });
     const res = await page.goto("/kingdom/");
@@ -12,11 +12,14 @@ test.describe("council kit hub", () => {
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("[data-guardrail]")).toContainText("No bots, no scanning");
     await expect(page.locator("[data-privacy]")).toContainText("Nothing is sent to a server");
-    await expect(page.getByRole("navigation", { name: "Council kit" })).toBeVisible();
+    const nav = page.getByRole("navigation", { name: "Kingdom pages" });
+    await expect(nav).toBeVisible();
+    await expect(nav.getByRole("link")).toHaveText(["Overview", "Rules", "Alliance crest", "Seed (experimental)"]);
+    await expect(nav.getByRole("link", { name: "Overview" })).toHaveAttribute("aria-current", "page");
     await expect(page.getByRole("link", { name: /kingdom admin guide/i })).toHaveAttribute("href", "/guides/kingdom-admin/");
-    for (const href of ["/kingdom/rules/", "/kingdom/requirements/", "/kingdom/my/", "/kingdom/mge/", "/kingdom/recruit/", "/kingdom/seed/"]) {
-      await expect(page.locator(`#main .kg-tools a[href="${href}"]`)).toHaveCount(1);
-    }
+    // UX stage 1: no card grid repeating the nav, and the one section nav is the only in-page nav.
+    await expect(page.locator("#main .kg-tools")).toHaveCount(0);
+    await expect(page.locator("#main nav.kg-subnav")).toHaveCount(1);
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
     expect(errors).toEqual([]);

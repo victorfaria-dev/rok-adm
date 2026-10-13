@@ -44,7 +44,7 @@ const path = Astro.url.pathname;
 const norm = (p: string) => (p.endsWith("/") ? p : `${p}/`);
 const current = (l: { href: string; exact?: boolean }) => (l.exact ? norm(path) === l.href : isActive(l.href, path));
 ---
-<nav class:list={["kg-subnav", "kg-noprint", { "kg-leader-only": leaderOnly }]} aria-label={s.label} data-section={section}>
+<nav class:list={["kg-subnav", "kg-noprint", { "kg-leader-only": leaderOnly }]} aria-label={`${s.label} pages`} data-kingdom-section={section}>
   <p class="kg-section" aria-hidden="true">{s.label}</p>
   <ul>
     {s.links.map((l) => <li><a href={l.href} aria-current={current(l) ? "page" : undefined}>{l.label}</a></li>)}

@@ -1,11 +1,7 @@
-// Regression tests for QA findings: focus ring, control borders, theme picker, home count.
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
+// Regression tests for QA findings: focus ring, control borders, theme picker, landing page.
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 
-const here = dirname(fileURLToPath(import.meta.url));
 
 async function setTheme(page: Page, theme: "dark" | "light") {
   await page.goto("/");
@@ -70,7 +66,7 @@ for (const theme of ["dark", "light"] as const) {
 }
 
 test("the theme picker closes when focus leaves it", async ({ page, isMobile }) => {
-  await page.goto("/");
+  await page.goto("/guides/");
   const picker = page.locator(isMobile ? "header.top [data-theme-picker]" : "nav.rail [data-theme-picker]");
   await picker.locator("summary").focus();
   await page.keyboard.press("Enter");
@@ -95,9 +91,12 @@ test("the guide's task list renders as list items with a done/undone marker", as
   await expect(page.locator(".g-prose li.ko-task").first()).toBeAttached();
 });
 
-test("home counts the researched fact cards from the data", async ({ page }) => {
-  const facts = JSON.parse(readFileSync(join(here, "../../../packages/data/generated/facts.json"), "utf8")) as unknown[];
+test("landing: what it is, for whom, 3 examples, the trust points and one Start", async ({ page }) => {
   await page.goto("/");
-  const row = page.locator(".facts dl > div").filter({ hasText: "researched fact cards" });
-  await expect(row.locator("dt")).toHaveText(String(facts.length));
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Plan your Rise of Kingdoms account");
+  await expect(page.locator(".lp-card h3")).toHaveText(["Players", "Kingdom and alliance leaders"]);
+  await expect(page.locator(".lp-examples > li")).toHaveCount(3);
+  await expect(page.locator(".lp-trust dt")).toHaveText(["Sourced data", "No bots", "Within Lilith's terms"]);
+  for (const a of await page.locator("[data-start]").all()) await expect(a).toHaveAttribute("href", "/start/");
+  await expect(page.locator("video[data-mascot]")).toHaveAttribute("poster", /\/mascot\//);
 });

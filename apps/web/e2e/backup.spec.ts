@@ -21,7 +21,7 @@ test("export holds every section but never the webhook; restore shows the diff a
   const errors: string[] = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await seedAll(page);
-  await page.goto("/me/");
+  await page.goto("/me/#me-row-backup"); // UX stage 1: the Backup row opens from its link
   await hydrated(page);
   const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Back up everything" }).click()]);
   expect(download.suggestedFilename()).toMatch(/^kingdomops-backup-\d{4}-\d{2}-\d{2}\.json$/);
@@ -62,7 +62,7 @@ test("export holds every section but never the webhook; restore shows the diff a
 
 test("a wrong file is refused with a message; cancel leaves the device as it was", async ({ page }) => {
   await seedAll(page);
-  await page.goto("/me/");
+  await page.goto("/me/#me-row-backup"); // UX stage 1: the Backup row opens from its link
   await hydrated(page);
   const input = page.locator("[data-backup-file]");
   await input.setInputFiles({ name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"app":"kingdomops","v":1}') });
@@ -81,7 +81,7 @@ for (const theme of ["dark", "light"] as const) {
   test(`axe ${theme} /me/ with the restore plan open`, async ({ page }) => {
     await seedAll(page);
     await page.evaluate((t) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: t })), theme);
-    await page.goto("/me/");
+    await page.goto("/me/#me-row-backup"); // UX stage 1: the Backup row opens from its link
     await hydrated(page);
     await page.locator("[data-backup-file]").setInputFiles({
       name: "b.json", mimeType: "application/json",
