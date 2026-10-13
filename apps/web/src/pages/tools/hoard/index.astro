@@ -1,0 +1,52 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import HoardCalc, { type SaveKind } from "../../../components/tools/hoard/HoardCalc";
+import RuleList from "../../../components/tools/hoard/RuleList.astro";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import hoard from "../../../../../../packages/planner/tools-data/hoard.json";
+import "../../../components/tools/kit/tools.css";
+
+const SAVE: Record<SaveKind, string> = { ap: "AP recovery items", gems: "gems", speedups: "speedups", resources: "resources (as items)" };
+const goals = hoard.goals.map((g) => ({ id: g.id, title: g.title, save: g.save as SaveKind[] }));
+const cites = Object.fromEntries(hoard.goals.map((g) => [g.id, cite(g.rules.flatMap((r) => r.facts))]));
+const ids = [...hoard.goals.flatMap((g) => g.rules.flatMap((r) => r.facts)), ...hoard.general.flatMap((r) => r.facts)];
+---
+<Shell title="Hoard advisor" description="What to save in Rise of Kingdoms for Lohar's Trial, More Than Gems, Eve of the Crusade, KvK and MGE, and why. No dates: events have no fixed schedule. Every rule cites its source." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Hoard advisor</h1>
+      <p class="t-lead">What to save for which event, and why. No dates: the event schedule is not fixed, so watch the in-game calendar. Values you type stay on this device.</p>
+      <DataStamp />
+    </header>
+
+    {hoard.goals.map((g) => (
+      <section class="t-section" aria-labelledby={`hoard-${g.id}-h`} data-goal={g.id}>
+        <h2 id={`hoard-${g.id}-h`}>{g.title}</h2>
+        <p class="t-note">Save: {g.save.map((s) => SAVE[s as SaveKind]).join(", ")}.</p>
+        <RuleList rules={g.rules} />
+      </section>
+    ))}
+
+    <section class="t-section" aria-labelledby="hoard-general-h">
+      <h2 id="hoard-general-h">For every goal</h2>
+      <RuleList rules={hoard.general} testId="hoard-general" />
+    </section>
+
+    <section class="t-section" aria-labelledby="hoard-calc-h">
+      <h2 id="hoard-calc-h">Saved vs target</h2>
+      <p class="t-note">Saved amounts are shared with the other tools on this device. Targets are your own: no card gives them.</p>
+      <HoardCalc client:load goals={goals} cites={cites} />
+    </section>
+
+    <section class="t-deferred" aria-labelledby="t-deferred-h">
+      <h2 id="t-deferred-h">Not here yet</h2>
+      <ul>
+        <li>Suggested amounts per event (how many AP items for Lohar's Trial, speedups for MGE milestones): needs in-game measurements.</li>
+        <li>Reminders before an event: waits on the kingdom calendar.</li>
+      </ul>
+    </section>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

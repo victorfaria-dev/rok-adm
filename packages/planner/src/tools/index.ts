@@ -9,3 +9,5 @@ export * from "./ap";
 export * from "./glossary";
 export * from "./changes";
 export * from "./ticket";
+export * from "./gems";
+export * from "./migration";

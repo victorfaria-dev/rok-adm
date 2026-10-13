@@ -95,3 +95,28 @@
 .t-sp-job { display: grid; gap: var(--ko-space-3); min-width: 0; }
 .t-prompt { font-family: var(--ko-font-body); font-size: var(--ko-text-md); color: var(--ko-text); }
 .t-callout { display: grid; gap: var(--ko-space-2); padding: var(--ko-space-4); border: 1px solid var(--ko-border); border-left-width: 4px; border-radius: var(--ko-radius-md); font-size: var(--ko-text-sm); }
+/* Plan pages (gems, migration, kvk, hoard) */
+.t-divided {
+  display: inline-block; padding: 0 var(--ko-space-2); border-radius: var(--ko-radius-pill);
+  font-size: var(--ko-text-xs); font-weight: var(--ko-weight-semibold);
+  color: var(--ko-text); box-shadow: inset 0 0 0 1px var(--ko-confidence-low);
+}
+.t-rules { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--ko-space-3); }
+.t-rules li { display: grid; gap: var(--ko-space-1); padding-bottom: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.t-patch { font-size: var(--ko-text-xs); color: var(--ko-text-muted); }
+.t-section { display: grid; gap: var(--ko-space-3); min-width: 0; }
+.t-section > p, .t-section li { max-width: 72ch; }
+.t-verdict { font-family: var(--ko-font-display); font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl); }
+.t-checks { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--ko-space-3); }
+.t-checks li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--ko-space-1) var(--ko-space-3); align-items: start; min-width: 0; }
+.t-checks li > div { display: grid; gap: var(--ko-space-1); min-width: 0; }
+.t-status-tag {
+  display: inline-block; min-width: 7ch; text-align: center; padding: 0 var(--ko-space-2); border-radius: var(--ko-radius-pill);
+  font-size: var(--ko-text-xs); font-weight: var(--ko-weight-semibold); color: var(--ko-text);
+}
+.t-status-tag[data-ok="true"] { box-shadow: inset 0 0 0 1px var(--ko-confidence-high); }
+.t-status-tag[data-ok="false"] { box-shadow: inset 0 0 0 2px var(--ko-error); }
+.t-links { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); }
+.t-links a { display: inline-flex; align-items: center; min-height: 44px; }
+.t-table caption { text-align: left; font-size: var(--ko-text-sm); color: var(--ko-text-muted); padding-bottom: var(--ko-space-2); }
+.t-table:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 3px; }
