@@ -150,3 +150,17 @@ Fichas B02–B09 migradas para slugs em 2026-10-13 (PL01–PL13).
 - `src:heaven-guardian` declara copiar um guia-fonte; tabelas de Trading Post ≈ `src:rkg`.
 - `src:rkg-lyceum` (texto oficial do quiz) **é** independente de `src:fandom`, mas pode estar desatualizado.
 - `src:youtube-summary` é derivado de `src:youtube` e não é literal.
+
+## Onda J
+
+### J3
+
+Worker J3 (gasto low / valor por dólar), 2026-10-13. Notas brutas: `research/raw/J3-low-spender/`.
+
+| Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | Notas |
+|---|---|---|---|---|---|---|---|
+| `src:gamerefinery` | GameRefinery blog — "Rise of Kingdoms: a player perspective on monetization" (analista de monetização escrevendo como jogador) | T3 | pub 2021-01-07 | curl -L (URL com barra final) | — | — (consultoria de mercado) | Antigo; útil para VIP Special Privileges e para o método de valorar itens pelo preço em gemas. |
+| `src:igitems` | igitems.com — página de venda de gemas RoK (FAQ) | T3 | `dateModified` = data de acesso (não confiável) | curl | — | **sim** (vende gemas/contas) | Só a FAQ do 30-day gem supply ($4.99; 2,000 + 650/dia). |
+
+Reutilizados por J3 (sem linha nova): `src:lilith-forum` (lista de posts via API, 832 posts, grep local), `src:fandom` (Buildings/Shop rev. 2023-10-12; VIP rev. 2026-08-02), `src:rkg` (bundles, gems), `src:lootbar` (spending guide 2026-03-20), `src:packsify` (growth fund/monthly pass 2026-03-21), `src:rokhandbook` (riseofkingdomshandbook.com: shop-and-bundles e best-events, 2026-08-18), `src:reddit` (Arctic Shift: busca de posts funcionou; busca de comentários por texto deu timeout quase sempre; por `link_id` funcionou).
+Falharam: `src:ldshop` (spending-guide e bundles-spending-guide: Access Denied/Akamai mesmo com UA Firefox), heaven-guardian (túnel fechado), gamsgo (página JS sem texto), AppGamer (403, não tentado de novo).
