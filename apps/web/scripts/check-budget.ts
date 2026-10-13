@@ -45,6 +45,14 @@ for (const html of htmlFiles(DIST).sort()) {
     if (src) moduleGraph(join(DIST, src), modules);
     else bytes += gz(m[2]!);
   }
+  // Preact islands load their component and renderer from <astro-island> attributes, not <script src>.
+  // client:load/idle/visible all run on the first visit, so they count.
+  for (const m of page.matchAll(/<astro-island\b[^>]*>/g)) {
+    for (const attr of ["component-url", "renderer-url"]) {
+      const src = new RegExp(`${attr}="([^"]+)"`).exec(m[0])?.[1];
+      if (src) moduleGraph(join(DIST, src), modules);
+    }
+  }
   for (const f of modules) {
     const code = readFileSync(f, "utf8");
     bytes += gz(code);

@@ -1,7 +1,7 @@
 ---
 import Shell from "../../layouts/Shell.astro";
-import ComingNext from "../../components/ComingNext.astro";
+import Questionnaire from "../../components/questionnaire/Questionnaire";
 ---
-<Shell title="Build my guide" description="Ten questions about your account to build your guide." mode="read">
-  <ComingNext what="Ten questions about your spending, play time and kingdom. Your answers stay in this browser." when="Building now: screen 2 of the first release."><Fragment slot="title">Build my guide</Fragment></ComingNext>
+<Shell title="Build my guide" description="Ten questions about your account to build your guide. Your answers stay in this browser." mode="operate" bare>
+  <Questionnaire client:load />
 </Shell>
