@@ -64,7 +64,7 @@ Se outra pessoa gravou antes, a resposta é `409 version_conflict` com o documen
 - **Logs** sem dados pessoais, tokens ou códigos.
 - **Exportação e exclusão**: o admin baixa todos os dados do espaço (`GET …/export`) e pode
   apagar o espaço inteiro (`DELETE /v1/spaces/{id}`), o que remove membros, tokens, convites,
-  documentos e auditoria. Quem sai do espaço (`DELETE …/members/me`) perde o acesso na hora.
+  documentos e auditoria. Quem sai do espaço (`DELETE …/members/me`) perde o acesso na hora e leva junto os documentos `farms` dele; os documentos do conselho (`mge-plan`, `council-requirements`, `kingdom`) ficam no espaço.
 
 ## Testes
 

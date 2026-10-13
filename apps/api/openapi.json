@@ -308,7 +308,7 @@
           "members"
         ],
         "summary": "Remove a member or leave the space",
-        "description": "`me` leaves the space. An admin may remove others; a member removing someone else gets 403. The last admin cannot leave while other members remain (409 limit_reached).",
+        "description": "`me` leaves the space. An admin may remove others; a member removing someone else gets 403. The last admin cannot leave while other members remain (409 limit_reached). The removed member's `farms` documents are deleted; council documents (`mge-plan`, `council-requirements`, `kingdom`) stay in the space.",
         "parameters": [
           {
             "name": "spaceId",
