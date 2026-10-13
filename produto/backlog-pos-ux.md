@@ -26,3 +26,9 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 - Conquistas: dados do jogo não podem ser lidos (ToS); só autodeclarados (marcados como não verificados) ou conquistas do próprio site.
 - Base existente: o Governor card pode virar o embrião do perfil público.
 - Pendente: escopo do MVP e ordem em relação a login e modo líder.
+
+## Comandantes (Victor, 2026-10-13)
+- Separar guia de comandantes (público, aba Guides) da administração dos comandantes próprios (dentro do hub da cidade, por conta: principal, farms e alts têm comandantes diferentes). Estrutura passada para a etapa UX 1.
+- Cada cidade do carrossel é um contexto próprio: trocar de cidade troca funções, status, avisos e tarefas. Passado para a etapa UX 1.
+- Agrupar comandantes pelo período em que aparecem (temporada/KvK). Fora do período, não fazer perguntas. Próxima etapa.
+- Fotos dos comandantes: pedido do Victor para reconhecimento visual. Retratos do jogo são arte da Lilith (proibido pelas regras do projeto). Política de conteúdo de fãs da Lilith não encontrada em busca. Opções: (a) arte própria por comandante; (b) retratos históricos em domínio público; (c) Victor revisar a regra se a Lilith permitir uso por fãs. Pendente.
