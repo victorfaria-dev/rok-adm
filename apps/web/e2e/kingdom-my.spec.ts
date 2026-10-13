@@ -72,6 +72,63 @@ test.describe("my requirements (F-30)", () => {
     expect(errors).toEqual([]);
   });
 
+  test("excluded deads: rule on the card, extra input validated and subtracted before the formula", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.setViewportSize({ width: 360, height: 780 });
+    await seed(page, []);
+    await openCard(page, { ...CARD, requirement: { mode: "fixed", target: 10_000_000 }, excludedDeads: { enabled: true, label: "zeroed in a 'terrible trade'" } });
+    await expect(page.locator("[data-excluded-rule]")).toHaveText("Deads on days you were zeroed in a 'terrible trade' don't count: they are taken off your deads before your DKP is worked out.");
+    const ex = page.getByLabel("Deads on excluded days");
+    await expect(ex).toBeVisible();
+    await page.getByLabel(/^My power/).fill("10m");
+    await page.locator("#km-deads").fill("100k");
+    await ex.fill("150k");
+    await expect(ex).toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#km-excluded-deads-error")).toHaveText("This can't be more than your deads (100,000).");
+    await expect(page.locator("[data-summary]")).toHaveText("Fix the highlighted fields to see your progress.");
+    await ex.fill("25k");
+    await expect(ex).not.toHaveAttribute("aria-invalid", "true");
+    // (100,000 - 25,000) deads × 80 = 6,000,000
+    await expect(page.locator("[data-summary]")).toContainText("You have 6,000,000 DKP of 10,000,000 (60%)");
+    await expect(page.locator('[data-row="counted-deads"]')).toContainText("75,000");
+    await page.getByRole("button", { name: "Save on this device" }).click();
+    await gotoHydrated(page, "/kingdom/my/");
+    await expect(page.getByLabel("Deads on excluded days")).toHaveValue("25k");
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+    expect(errors).toEqual([]);
+  });
+
+  test("requirement groups: card lists them, the player picks one, target scales and is remembered", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.setViewportSize({ width: 360, height: 780 });
+    await seed(page, []);
+    // Group names and percents are test values typed as if by a council.
+    await openCard(page, { ...CARD, groups: [{ id: "young", name: "Accounts under 6 months", percent: 80 }, { id: "seed", name: "Seed group", percent: 150 }] });
+    await expect(page.locator("[data-card]")).toContainText("Requirement groups (set by your council)");
+    await expect(page.locator("[data-groups] li")).toHaveText(["Accounts under 6 months: 80% of the normal target", "Seed group: 150% of the normal target"]);
+    const pick = page.getByLabel("My group");
+    await expect(pick).toHaveValue("");
+    await page.getByLabel(/^My power/).fill("10.5m");
+    await expect(page.locator('[data-row="target"]')).toContainText("26,250,000 (250% of 10,500,000)");
+    await pick.selectOption("young");
+    await expect(page.locator('[data-row="target"]')).toContainText("21,000,000 (250% of 10,500,000 × 80% for Accounts under 6 months)");
+    await expect(page.locator("[data-summary]")).toContainText("of 21,000,000");
+    await page.getByRole("button", { name: "Save on this device" }).click();
+    await gotoHydrated(page, "/kingdom/my/");
+    await expect(page.getByLabel("My group")).toHaveValue("young");
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+    expect(errors).toEqual([]);
+  });
+
+  test("old links without the new fields still open (rule off, no group picker)", async ({ page }) => {
+    await openCard(page);
+    await expect(page.locator("[data-excluded-rule]")).toHaveCount(0);
+    await expect(page.getByLabel("Deads on excluded days")).toHaveCount(0);
+    await expect(page.locator("#km-group")).toHaveCount(0);
+  });
+
   test("non-linear formula: no 'close the gap' sentence", async ({ page }) => {
     await openCard(page, { ...CARD, formula: "max(t4, deads * 10)", requirement: { mode: "fixed", target: 1000 } });
     await page.getByLabel(/^My power/).fill("1m");
@@ -133,9 +190,14 @@ test.describe("my requirements (F-30)", () => {
       test(`axe ${theme} ${state}`, async ({ page }) => {
         await seed(page, [], theme);
         if (state === "filled") {
-          await openCard(page);
+          await openCard(page, { ...CARD, excludedDeads: { enabled: true, label: "zeroed in a 'terrible trade'" }, groups: [{ id: "young", name: "Accounts under 6 months", percent: 80 }] });
           await page.getByLabel(/^My power/).fill("10m");
           await page.locator("#km-deads").fill("100k");
+          await page.getByLabel("My group").selectOption("young");
+          await page.getByLabel("Deads on excluded days").fill("200k"); // error state
+          await expect(page.getByLabel("Deads on excluded days")).toHaveAttribute("aria-invalid", "true");
+          await expectAxeClean(page);
+          await page.getByLabel("Deads on excluded days").fill("20k");
           await expect(page.getByRole("progressbar")).toBeVisible();
         } else {
           await gotoHydrated(page, "/kingdom/my/");

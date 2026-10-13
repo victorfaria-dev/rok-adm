@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   DKP_FACT_ID, FORMULA_MAX_CHARS, FORMULA_MAX_DEPTH, FORMULA_PRESETS, WEIGHTS_NOT_COMPARABLE, evaluate, evaluateFormula, explainFormula,
-  explainLinear, formatFormula, linearWeights, parseFormula, presetById, usedVariables, type FormulaNode,
+  explainLinear, formatFormula, formatWeight, linearWeights, parseFormula, plainNumber, presetById, usedVariables, type FormulaNode,
 } from "../src/kingdom-formula";
 
 const ast = (text: string): FormulaNode => {
@@ -99,11 +99,15 @@ describe("errors (typed, positioned, never thrown)", () => {
 
   it("limits: length, depth, nodes", () => {
     expect(errOf("1+".repeat(150) + "1").code).toBe("too_long");
-    expect(parseFormula("1".repeat(FORMULA_MAX_CHARS)).ok).toBe(true);
+    expect(parseFormula("t4 * 10" + " ".repeat(FORMULA_MAX_CHARS - 7)).ok).toBe(true);
+    expect(parseFormula("1".repeat(FORMULA_MAX_CHARS)).ok).toBe(false); // too large a number, not too long
     const deep = (n: number) => "(".repeat(n) + "1" + ")".repeat(n);
     expect(parseFormula(deep(FORMULA_MAX_DEPTH)).ok).toBe(true);
     expect(errOf(deep(FORMULA_MAX_DEPTH + 1)).code).toBe("too_deep");
     expect(errOf("-".repeat(40) + "1").code).toBe("too_deep");
+    // Neutral wording: unary minus nests too, so the message does not talk about parentheses.
+    expect(errOf("-".repeat(FORMULA_MAX_DEPTH + 1) + "1").message).toBe(`This formula is nested too deeply at character ${FORMULA_MAX_DEPTH + 1} (at most ${FORMULA_MAX_DEPTH} levels). Simplify it.`);
+    expect(errOf(deep(FORMULA_MAX_DEPTH + 1)).message).not.toMatch(/parenthes/);
     expect(errOf(Array.from({ length: 60 }, () => "t4").join("+")).code).toBe("too_many_nodes");
   });
 
@@ -112,6 +116,14 @@ describe("errors (typed, positioned, never thrown)", () => {
     expect(errOf("1 / (2 - 2)").code).toBe("div_zero");
     expect(errOf("t4 * t4 * t4", { t4: 1e200 }).code).toBe("not_finite");
     expect(val("t4 / deads", { t4: 10, deads: 4 })).toBe(2.5);
+  });
+
+  it("numbers above the safe-integer range are rejected at parse time", () => {
+    expect(parseFormula(`t4 * ${Number.MAX_SAFE_INTEGER}`).ok).toBe(true);
+    expect(errOf("t4 * 1000000000000000000000")).toEqual({
+      code: "number_too_large", pos: 6, message: "The number at character 6 is too large. Use numbers up to 9,007,199,254,740,991.",
+    });
+    expect(errOf("9007199254740993.5").code).toBe("number_too_large");
   });
 
   it("non-string input does not throw", () => {
@@ -138,6 +150,28 @@ describe("linearWeights and explanations", () => {
     expect(explainLinear({ weights: { t5: 1 }, constant: -5 })).toBe("Each T5 kill = 1 point, minus 5 points for everyone.");
     expect(explainLinear({ weights: {}, constant: 0 })).toMatch(/same score/);
     expect(explainFormula(ast("max(t4, deads)"))).toMatch(/^Your score is max\(t4, deads\)\. It uses T4 kills and deads/);
+  });
+
+  it("tiny weights keep significant digits instead of reading as 0", () => {
+    expect(formatWeight(0.0000001)).toBe("0.0000001");
+    expect(formatWeight(0.000000123456789)).toBe("0.000000123457");
+    expect(formatWeight(-0.0000005)).toBe("-0.0000005");
+    expect(formatWeight(0.5)).toBe("0.5");
+    expect(formatWeight(1000)).toBe("1,000");
+    expect(formatWeight(12.3456789)).toBe("12.345679");
+    expect(explainFormula(ast("t4 * 0.0000001"))).toBe("Each T4 kill = 0.0000001 points.");
+    expect(explainFormula(ast("deads / 10000000"))).toBe("Each dead = 0.0000001 points.");
+  });
+
+  it("formatFormula never prints exponent notation", () => {
+    expect(formatFormula(ast("t4 * 0.0000001"))).toBe("t4 * 0.0000001");
+    expect(formatFormula(ast("t4 * 0.000000000000000000001"))).toBe("t4 * 0.000000000000000000001");
+    expect(formatFormula(ast(`t4 * ${Number.MAX_SAFE_INTEGER}`))).toBe(`t4 * ${Number.MAX_SAFE_INTEGER}`);
+    expect(plainNumber(1e21)).toBe("1000000000000000000000");
+    expect(plainNumber(1.5e-7)).toBe("0.00000015");
+    expect(plainNumber(-2.5e22)).toBe("-25000000000000000000000");
+    expect(plainNumber(1.2345e3)).toBe("1234.5");
+    for (const f of ["t4 * 0.0000001", "deads * 0.00000000123 + 1"]) expect(formatFormula(ast(formatFormula(ast(f))))).toBe(formatFormula(ast(f)));
   });
 
   it("formatFormula is canonical and round-trips", () => {

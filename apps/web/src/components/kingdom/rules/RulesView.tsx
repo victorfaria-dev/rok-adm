@@ -1,11 +1,13 @@
 import type { JSX } from "preact";
-import { bodyToBlocks, rulesDisplayTitle, type RulesBlock, type RulesDoc } from "@rokadm/planner";
+import { ORIGINAL_KEY, TRANSLATION_NOTE, UNTRANSLATED_NOTE, bodyToBlocks, cleanLangCode, resolveRules, type RulesBlock, type RulesDoc } from "@rokadm/planner";
 import { formatDay } from "../../../lib/kingdom-rules";
 
 interface Props {
   doc: RulesDoc;
   /** 1 on the view page (title is the page h1), 2 inside the builder preview. */
   level: 1 | 2;
+  /** Language version to show (ORIGINAL_KEY or a translation id). */
+  version?: string;
 }
 
 /** Text with kept line breaks; rendered as text nodes, so nothing the council typed becomes HTML. */
@@ -25,30 +27,49 @@ export function Blocks({ text }: { text: string }) {
   );
 }
 
-/** Read-only rendering of a rules document (view page and builder preview). */
-export default function RulesView({ doc, level }: Props): JSX.Element {
-  const title = rulesDisplayTitle(doc);
+/** Interface text (English) inside content that may be in another language. */
+const EN = "en";
+
+/**
+ * Read-only rendering of a rules document (view page and builder preview). The article carries the
+ * version's lang attribute; English interface lines carry lang="en", and parts shown in the original
+ * because they are not translated yet carry the original's lang ("" = unknown, never the wrong one).
+ */
+export default function RulesView({ doc, level, version = ORIGINAL_KEY }: Props): JSX.Element {
+  const v = resolveRules(doc, version);
   const H = level === 1 ? "h1" : "h2";
   const S = level === 1 ? "h2" : "h3";
   const { agreedOn, signers } = doc.charter;
   const council = doc.kingdom ? `the council of ${doc.kingdom}` : "the kingdom's council";
+  // Original with no code: inherit the page language, as before languages existed.
+  const articleLang = v.isOriginal ? (v.lang || undefined) : v.lang;
+  const origLang = v.isOriginal ? undefined : cleanLangCode(doc.originalLang);
+  const hasVersions = doc.translations.length > 0;
   return (
-    <article class="kq-doc" data-rules-doc>
+    <article class="kq-doc" lang={articleLang} data-rules-doc data-version={v.key}>
       <header class="kq-doc-head">
-        <H class="kq-doc-title">{title}</H>
+        <H class="kq-doc-title" lang={v.titleFallback ? origLang : undefined}>{v.title}</H>
         {doc.kingdom && doc.title && <p class="kq-doc-kingdom">{doc.kingdom}</p>}
-        {doc.languageNote && <p class="kq-doc-meta">{doc.languageNote}</p>}
-        {doc.lastReviewed && <p class="kq-doc-meta">Last reviewed {formatDay(doc.lastReviewed)}</p>}
+        {!v.isOriginal && <p class="kq-doc-meta kq-tr-note" lang={EN} data-translation-note>{TRANSLATION_NOTE}</p>}
+        {v.isOriginal && hasVersions && <p class="kq-doc-meta" lang={EN} data-original-note>This is the original version.</p>}
+        {doc.languageNote && <p class="kq-doc-meta" lang={origLang}>{doc.languageNote}</p>}
+        {doc.lastReviewed && <p class="kq-doc-meta" lang={EN}>Last reviewed {formatDay(doc.lastReviewed)}</p>}
       </header>
-      {doc.intro && <div class="kq-doc-intro kq-section"><Blocks text={doc.intro} /></div>}
-      {doc.sections.map((s, i) => (
-        <section key={s.id} class="kq-section" aria-labelledby={`kq-s-${level}-${i}`}>
-          <S id={`kq-s-${level}-${i}`}>{s.heading || "Untitled section"}</S>
-          <Blocks text={s.body} />
+      {v.intro && (
+        <div class="kq-doc-intro kq-section" data-untranslated={v.introFallback ? "" : undefined}>
+          {v.introFallback && <p class="kq-untr" lang={EN}>{UNTRANSLATED_NOTE}</p>}
+          <div class="kq-body" lang={v.introFallback ? origLang : undefined}><Blocks text={v.intro} /></div>
+        </div>
+      )}
+      {v.sections.map((s, i) => (
+        <section key={s.id} class="kq-section" aria-labelledby={`kq-s-${level}-${i}`} data-untranslated={s.fallback ? "" : undefined}>
+          <S id={`kq-s-${level}-${i}`} lang={s.heading ? (s.fallback ? origLang : undefined) : EN}>{s.heading || "Untitled section"}</S>
+          {s.fallback && <p class="kq-untr" lang={EN} data-untranslated-note>{UNTRANSLATED_NOTE}</p>}
+          <div class="kq-body" lang={s.fallback ? origLang : undefined}><Blocks text={s.body} /></div>
         </section>
       ))}
       {(agreedOn || signers.length > 0) && (
-        <section class="kq-charter" aria-labelledby={`kq-charter-${level}`}>
+        <section class="kq-charter" aria-labelledby={`kq-charter-${level}`} lang={EN}>
           <S id={`kq-charter-${level}`}>Charter</S>
           {agreedOn && <p>Agreed on {formatDay(agreedOn)}.</p>}
           {signers.length > 0 && (
@@ -59,7 +80,7 @@ export default function RulesView({ doc, level }: Props): JSX.Element {
           )}
         </section>
       )}
-      <p class="kq-byline" data-byline>Written by {council}, not by KingdomOps.</p>
+      <p class="kq-byline" lang={EN} data-byline>Written by {council}, not by KingdomOps.</p>
     </article>
   );
 }

@@ -1,13 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import {
-  DISCORD_LIMIT, RECRUIT_LIMITS, RECRUIT_OFFERS, RECRUIT_ROLES, RECRUIT_STAGES, emptyRecruitInput, newDocId, recruitErrors, recruitIsEmpty,
-  recruitPost, type RecruitFormat, type RecruitInput, type RecruitRole, type RecruitRoleKey, type RecruitStage,
+  RECRUIT_LIMITS, RECRUIT_OFFERS, RECRUIT_ROLES, RECRUIT_STAGES, REDDIT_TITLE_LIMIT, emptyRecruitInput, newDocId, parseRoleCount, recruitErrors,
+  recruitIsEmpty, recruitPost, roleCountError, type RecruitFormat, type RecruitInput, type RecruitRole, type RecruitRoleKey, type RecruitStage,
 } from "@rokadm/planner";
 import ConfirmAction from "../shared/ConfirmAction";
 import CopyText from "../shared/CopyText";
 import { CheckField, SelectField, TextAreaField, TextField } from "../shared/Field";
 import { kingdomStorage, removeDoc, type StorageLike } from "../../../lib/kingdom-store";
-import { charCount, draftInput, listRecruit, recruitTitle, saveRecruit, type RecruitListItem } from "../../../lib/kingdom-recruit";
+import { charCount, draftInput, listRecruit, overLimitText, recruitTitle, saveRecruit, titleCutText, type RecruitListItem } from "../../../lib/kingdom-recruit";
 import { formatDay } from "../../../lib/kingdom-rules";
 import { recruitMessage } from "../../../lib/discord";
 import DiscordPost from "../../discord/DiscordPost";
@@ -20,12 +20,8 @@ const FORMATS: ReadonlyArray<{ value: RecruitFormat; label: string }> = [
 const STAGE_OPTIONS = RECRUIT_STAGES.map((s) => ({ value: s.value, label: s.label }));
 const ROLE_OPTIONS = RECRUIT_ROLES.map((r) => ({ value: r.key, label: r.label }));
 
-function parseCount(text: string): number | null {
-  const s = text.trim();
-  if (!/^\d{1,2}$/.test(s)) return null;
-  const n = Number(s);
-  return n >= 1 && n <= RECRUIT_LIMITS.roleCount ? n : null;
-}
+/** Count text as typed, per role (kept so an unreadable count shows an error instead of vanishing). */
+const countTexts = (roles: readonly RecruitRole[]): string[] => roles.map((r) => (r.count === null ? "" : String(r.count)));
 
 /** Recruitment post generator (F-42): form, live post for Discord/Reddit/plain text, saved drafts. */
 export default function RecruitBuilder() {
@@ -34,6 +30,7 @@ export default function RecruitBuilder() {
   const [drafts, setDrafts] = useState<RecruitListItem[]>([]);
   const [draftId, setDraftId] = useState<string | null>(null);
   const [input, setInput] = useState<RecruitInput>(emptyRecruitInput());
+  const [counts, setCounts] = useState<string[]>([]);
   const [format, setFormat] = useState<RecruitFormat>("discord");
   const [status, setStatus] = useState("");
   const [error, setError] = useState("");
@@ -61,12 +58,19 @@ export default function RecruitBuilder() {
   function setRole(idx: number, patch: Partial<RecruitRole>) {
     setInput((i) => ({ ...i, roles: i.roles.map((r, j) => (j === idx ? { ...r, ...patch } : r)) }));
   }
+  function setCount(idx: number, text: string) {
+    setCounts((c) => input.roles.map((_, j) => (j === idx ? text : (c[j] ?? ""))));
+    // An unreadable count is left out of the post (and the error under the field says why).
+    setRole(idx, { count: parseRoleCount(text) });
+  }
   function addRole() {
     if (input.roles.length >= RECRUIT_LIMITS.roles) return;
     focusId.current = `kt-role-${input.roles.length}`;
+    setCounts((c) => [...input.roles.map((_, j) => c[j] ?? ""), ""]);
     setInput((i) => ({ ...i, roles: [...i.roles, { role: "rally-leader", count: null, note: "" }] }));
   }
   function removeRole(idx: number) {
+    setCounts((c) => input.roles.map((_, j) => c[j] ?? "").filter((_, j) => j !== idx));
     setInput((i) => ({ ...i, roles: i.roles.filter((_, j) => j !== idx) }));
     focusId.current = "kt-add-role";
   }
@@ -88,6 +92,7 @@ export default function RecruitBuilder() {
   }
   function open(item: RecruitListItem) {
     setInput(draftInput(item.doc));
+    setCounts(countTexts(item.doc.roles));
     setDraftId(item.id);
     setError("");
     setStatus(`Opened ${item.title}.`);
@@ -95,6 +100,7 @@ export default function RecruitBuilder() {
   }
   function startNew() {
     setInput(emptyRecruitInput());
+    setCounts([]);
     setDraftId(null);
     setError("");
     setStatus("New post: the form is empty.");
@@ -107,9 +113,8 @@ export default function RecruitBuilder() {
     setStatus("Draft deleted from this device.");
   }
 
-  const overText = post.over && post.limit !== null
-    ? `This post is ${post.chars.toLocaleString("en-US")} characters, over Discord's ${DISCORD_LIMIT.toLocaleString("en-US")}-character limit by ${(post.chars - post.limit).toLocaleString("en-US")}. Shorten the notes or split it into two messages.`
-    : "";
+  const overText = overLimitText(post);
+  const cutText = titleCutText(post);
 
   return (
     <div class="kt" data-recruit>
@@ -172,7 +177,8 @@ export default function RecruitBuilder() {
               {input.roles.map((r, i) => (
                 <li key={i} class="kt-role" data-role>
                   <SelectField id={`kt-role-${i}`} label={`Role ${i + 1}`} value={r.role} options={ROLE_OPTIONS} onValue={(v) => setRole(i, { role: v as RecruitRoleKey })} />
-                  <TextField id={`kt-count-${i}`} label="How many (optional)" inputMode="numeric" value={r.count === null ? "" : String(r.count)} maxLength={2} onValue={(v) => setRole(i, { count: parseCount(v) })} />
+                  <TextField id={`kt-count-${i}`} label="How many (optional)" inputMode="numeric" value={counts[i] ?? (r.count === null ? "" : String(r.count))}
+                    error={roleCountError(counts[i] ?? "")} maxLength={3} onValue={(v) => setCount(i, v)} />
                   <TextField id={`kt-note-${i}`} label="Note (optional)" hint="For example: cavalry, evening UTC." value={r.note} maxLength={RECRUIT_LIMITS.roleNote} onValue={(v) => setRole(i, { note: v })} />
                   <div class="kg-actions">
                     <button type="button" class="btn btn-secondary" aria-label={`Remove role ${i + 1}`} onClick={() => removeRole(i)}>Remove</button>
@@ -203,9 +209,15 @@ export default function RecruitBuilder() {
         <h2 id="kt-out-h">Your post</h2>
         <SelectField id="kt-format" label="Format" value={format} options={FORMATS} onValue={setFormat} />
         {recruitIsEmpty(input) && <p class="kg-note">Fill in the form above; the post updates as you type and leaves out anything you leave empty.</p>}
-        {post.title !== undefined && <CopyText id="kt-title-out" label="Post title" variant="link" text={post.title} copyLabel="Copy title" />}
+        {post.title !== undefined && (
+          <>
+            <CopyText id="kt-title-out" label="Post title" variant="link" text={post.title} copyLabel="Copy title" />
+            <p class="kt-count" data-title-count>Title: {charCount(post.titleChars ?? post.title.length, REDDIT_TITLE_LIMIT)}</p>
+            <div aria-live="polite">{cutText && <p class="kg-error" data-title-cut>{cutText}</p>}</div>
+          </>
+        )}
         <CopyText id="kt-body-out" label={post.title !== undefined ? "Post body" : "Post"} text={post.body} copyLabel={post.title !== undefined ? "Copy body" : "Copy post"} />
-        <p class="kt-count" data-char-count>{charCount(post.chars, post.limit)}</p>
+        <p class="kt-count" data-char-count>{post.title !== undefined ? "Body: " : ""}{charCount(post.chars, post.limit)}</p>
         <div aria-live="polite">{overText && <p class="kg-error" data-over-limit>{overText}</p>}</div>
         <DiscordPost id="recruit" summary="Post to Discord (Discord format)" message={recruitMessage(discordBody)} />
         <p class="kg-note" data-chat-warning><strong>Post on Discord, Reddit or your own channels. Never paste links in in-game chat:</strong> players report mutes and account flags for sharing outside links there. Use the in-game Recruitment Plaza for in-game ads.</p>

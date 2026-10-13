@@ -239,3 +239,190 @@ test.describe("rules view page", () => {
     });
   }
 });
+
+// Language versions (F-33 + F-84 on demand): written by the council, never machine translated.
+const SPANISH = {
+  id: "es", label: "Español", lang: "es", title: "Reglas de K1234", intro: "Lee esto primero.",
+  sections: [{ id: "a", heading: "Política de MGE", body: "Rotación.\n\n- Top 10 fijo" }],
+};
+const MULTI = { ...RULES, originalLabel: "English", originalLang: "en", translations: [SPANISH] };
+
+test.describe("rules in more than one language", () => {
+  test("add a Spanish version → share → view switches language and lang; untranslated section shows the note", async ({ page, context, browser }) => {
+    const errors = trackErrors(page);
+    await page.setViewportSize({ width: 360, height: 780 });
+    await seed(page, [DOC]);
+    await gotoHydrated(page, "/kingdom/rules/?doc=r1");
+    await page.getByLabel("Language of the original").fill("English");
+    await page.getByLabel("Code of the original language (optional)").fill("en");
+
+    await page.getByRole("button", { name: "Add a language" }).click();
+    await expect(page.getByLabel("Language name")).toBeFocused();
+    await page.getByLabel("Language name").fill("Español");
+    const code = page.getByLabel("Language code (optional)");
+    await code.fill("es_ES");
+    await expect(code).toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#kq-t-lang-error")).toContainText("short code of a real language");
+    await expect(code).toHaveAttribute("aria-describedby", /kq-t-lang-error/);
+    await code.fill("es");
+    await expect(page.locator("#kq-t-lang-error")).toHaveCount(0);
+
+    await expect(page.locator("[data-untranslated-count]")).toHaveText("3 of 3 parts not translated yet.");
+    await page.getByLabel("Translated title").fill("Reglas de K1234");
+    await page.getByLabel("Translated introduction").fill("Lee esto primero.");
+    await page.locator("#kq-th-a").fill("Política de MGE");
+    await page.locator("#kq-tb-a").fill("Rotación.\n\n- Top 10 [fijo]");
+    await expect(page.locator("[data-prompts-left-lang]")).toBeVisible();
+    await expect(page.locator("[data-prompts-left]")).toContainText("(Español)");
+    await page.locator("#kq-tb-a").fill("Rotación.\n\n- Top 10 fijo");
+    await expect(page.locator("[data-prompts-left]")).toHaveCount(0);
+    await expect(page.locator("[data-untranslated-count]")).toHaveText("1 of 3 parts not translated yet.");
+    await expect(page.locator("[data-untranslated-summary]")).toContainText("Español: 1 part not translated yet");
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+
+    // Preview follows the version being edited.
+    await page.getByRole("button", { name: "Preview" }).click();
+    await expect(page.locator("[data-preview] [data-rules-doc]")).toHaveAttribute("lang", "es");
+    await expect(page.locator("[data-preview] h2").first()).toHaveText("Reglas de K1234");
+    await page.getByRole("button", { name: "Preview" }).click();
+    await expect(page.locator("[data-save-status]")).toHaveText("All changes saved on this device.");
+    const stored = await storedDocs(page);
+    expect((stored[0]!.data.translations as unknown[]).length).toBe(1);
+
+    await page.getByRole("button", { name: "Share view-only link" }).click();
+    const link = await page.locator("#kq-link").inputValue();
+    await expect(page.locator("[data-link-partial]")).toHaveCount(0);
+
+    const view = await context.newPage();
+    const viewErrors = trackErrors(view);
+    await view.setViewportSize({ width: 360, height: 780 });
+    await gotoHydrated(view, link);
+    const doc = view.locator("[data-rules-doc]");
+    // English reader: the original first.
+    await expect(view.locator("h1")).toHaveText("K1234 rules");
+    await expect(doc).toHaveAttribute("lang", "en");
+    const switcher = view.getByRole("group", { name: "Language" });
+    await expect(switcher.getByRole("button", { name: "English (original)" })).toHaveAttribute("aria-pressed", "true");
+    await expect(view.locator("[data-original-note]")).toBeVisible();
+
+    await switcher.getByRole("button", { name: "Español" }).click();
+    await expect(switcher.getByRole("button", { name: "Español" })).toHaveAttribute("aria-pressed", "true");
+    await expect(view.locator("h1")).toHaveText("Reglas de K1234");
+    await expect(doc).toHaveAttribute("lang", "es");
+    await expect(view.locator("[data-translation-note]")).toHaveText("Translation by the council. If it differs, the original prevails.");
+    await expect(view.locator("[data-translation-note]")).toHaveAttribute("lang", "en");
+    await expect(doc.locator("h2").first()).toHaveText("Política de MGE");
+    const untranslated = doc.locator("section[data-untranslated]");
+    await expect(untranslated).toHaveCount(1);
+    await expect(untranslated.locator("h2")).toHaveText("Farms & alt accounts");
+    await expect(untranslated.locator("h2")).toHaveAttribute("lang", "en");
+    await expect(untranslated.locator("[data-untranslated-note]")).toHaveText("Not translated yet. Shown in the original language.");
+    await expect(view.locator("[data-byline]")).toHaveAttribute("lang", "en");
+    await expect(view).toHaveURL(/&lang=es$/);
+    await expect(view).toHaveTitle(/Reglas de K1234/);
+    await expectNoSidewaysScroll(view);
+    await expectTargets44(view);
+
+    // The choice survives a reload (it is in the link), and a Spanish browser opens in Spanish.
+    await view.reload();
+    await expect(view.locator("h1")).toHaveText("Reglas de K1234");
+    const esContext = await browser.newContext({ locale: "es-ES" });
+    const esPage = await esContext.newPage();
+    await esPage.goto(link);
+    await expect(esPage.locator("h1")).toHaveText("Reglas de K1234");
+    await esContext.close();
+
+    // Back to the original.
+    await switcher.getByRole("button", { name: "English (original)" }).click();
+    await expect(view.locator("h1")).toHaveText("K1234 rules");
+    await expect(view).toHaveURL(/&lang=en$/);
+    expect(errors).toEqual([]);
+    expect(viewErrors).toEqual([]);
+  });
+
+  test("old links and documents without languages show no switcher", async ({ page }) => {
+    const link = await (async () => {
+      await seed(page, [DOC]);
+      await gotoHydrated(page, "/kingdom/rules/?doc=r1");
+      await page.getByRole("button", { name: "Share view-only link" }).click();
+      return page.locator("#kq-link").inputValue();
+    })();
+    await gotoHydrated(page, link);
+    await expect(page.locator("h1")).toHaveText("K1234 rules");
+    await expect(page.locator("[data-lang-switcher]")).toHaveCount(0);
+    await expect(page.locator("[data-rules-doc]")).not.toHaveAttribute("lang", /.*/);
+  });
+
+  test("remove a language asks first, then goes back to the original", async ({ page }) => {
+    await seed(page, [{ ...DOC, data: MULTI }]);
+    await gotoHydrated(page, "/kingdom/rules/?doc=r1");
+    await page.getByRole("button", { name: "Español" }).click();
+    await expect(page.locator("[data-translation-editor]")).toBeVisible();
+    await expect(page.getByLabel("Translated title")).toHaveValue("Reglas de K1234");
+    await page.getByRole("button", { name: "Remove the Español version" }).click();
+    await page.getByRole("button", { name: "No, keep it" }).click();
+    await expect(page.locator("[data-translation-editor]")).toBeVisible();
+    await page.getByRole("button", { name: "Remove the Español version" }).click();
+    await page.getByRole("button", { name: "Yes, remove" }).click();
+    await expect(page.locator("[data-translation-editor]")).toHaveCount(0);
+    await expect(page.locator("#kq-langs-h")).toBeFocused();
+    await expect(page.getByLabel("Title", { exact: true })).toHaveValue("K1234 rules");
+    await expect(page.locator("[data-save-status]")).toHaveText("All changes saved on this device.");
+    expect((await storedDocs(page))[0]!.data.translations).toEqual([]);
+  });
+
+  test("a link too long with every language offers the original plus one language", async ({ page, context }) => {
+    const errors = trackErrors(page);
+    const sections = [0, 1].map((i) => ({ id: `n${i}`, heading: `Part ${i}`, body: noise(450, i + 11) }));
+    const translations = ["es", "pt-BR", "fr", "de", "ru"].map((lang, t) => ({
+      id: `t${t}`, label: `Lang ${lang}`, lang, title: `Title ${lang}`, intro: "",
+      sections: [0, 1].map((i) => ({ id: `n${i}`, heading: `P${t}${i}`, body: noise(450, 100 * (t + 1) + i) })),
+    }));
+    await seed(page, [{ ...DOC, data: { ...RULES, intro: "", sections, originalLabel: "English", originalLang: "en", translations } }]);
+    await gotoHydrated(page, "/kingdom/rules/?doc=r1");
+    await expect(page.getByRole("button", { name: "Add a language" })).toHaveCount(0);
+    await page.getByRole("button", { name: "Share view-only link" }).click();
+    const box = page.locator("[data-too-large]");
+    await expect(box).toContainText("links stop at 24,000");
+    await expect(page.locator("#kq-link")).toHaveCount(0);
+    await expect(page.getByLabel("Language to include")).toBeFocused();
+    await page.getByLabel("Language to include").selectOption("t1");
+    await page.getByRole("button", { name: "Share only this language" }).click();
+    await expect(page.locator("[data-link-partial]")).toHaveText("This link carries only: English (original) and Lang pt-BR. Readers of the other languages need their own link.");
+    const link = await page.locator("#kq-link").inputValue();
+    expect(link.length).toBeLessThan(24_000);
+
+    const view = await context.newPage();
+    await gotoHydrated(view, link);
+    const buttons = view.getByRole("group", { name: "Language" }).getByRole("button");
+    await expect(buttons).toHaveText(["English (original)", "Lang pt-BR"]);
+    await buttons.nth(1).click();
+    await expect(view.locator("h1")).toHaveText("Title pt-BR");
+    await expect(view.locator("[data-rules-doc]")).toHaveAttribute("lang", "pt-BR");
+    expect(errors).toEqual([]);
+  });
+
+  for (const theme of ["dark", "light"] as const) {
+    test(`axe with two languages ${theme} (builder translation editor and view in Spanish)`, async ({ page }) => {
+      await seed(page, [{ ...DOC, data: MULTI }], theme);
+      await gotoHydrated(page, "/kingdom/rules/?doc=r1");
+      await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+      await page.getByRole("button", { name: "Español" }).click();
+      await expect(page.locator("[data-translation-editor]")).toBeVisible();
+      await page.getByLabel("Language code (optional)").fill("x_y");
+      await expect(page.locator("#kq-t-lang-error")).toBeVisible();
+      await expectAxeClean(page);
+      await page.getByLabel("Language code (optional)").fill("es");
+      await page.getByRole("button", { name: "Preview" }).click();
+      await expect(page.locator("[data-preview] [data-rules-doc]")).toHaveAttribute("lang", "es");
+      await expectAxeClean(page);
+      await page.getByRole("button", { name: "Share view-only link" }).click();
+      const link = await page.locator("#kq-link").inputValue();
+      await gotoHydrated(page, `${link}&lang=es`);
+      await expect(page.locator("[data-rules-doc]")).toHaveAttribute("lang", "es");
+      await expect(page.locator("section[data-untranslated]")).toHaveCount(1);
+      await expectAxeClean(page);
+    });
+  }
+});

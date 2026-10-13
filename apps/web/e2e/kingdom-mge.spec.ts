@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { readFile } from "node:fs/promises";
+import { expect, test, type Download, type Page } from "@playwright/test";
 import { expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const cand = (id: string, name: string, score: number | null) => ({ id, name, score, tags: [] });
@@ -75,18 +76,19 @@ test.describe("MGE planner", () => {
     await seed(page, [PLAN]);
     await gotoHydrated(page, "/kingdom/mge/");
     await expect(page.locator("[data-plans]")).toContainText("K1234 MGE");
-    // Manual placement first, then score rank among applicants; Delta did not apply.
+    // Manual placement first, then score rank among applicants not placed by hand; Delta did not apply.
+    const rest = "among applicants not placed by hand";
     expect(await ledgerRows(page, "2026-10-01")).toEqual([
-      ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", "score rank 1 (4,200,000)"], ["3", "Bravo", "score rank 2 (3,000,000)"],
+      ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest} (4,200,000)`], ["3", "Bravo", `score rank 2 ${rest} (3,000,000)`],
     ]);
-    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 (4,200,000)"], ["2", "Bravo", "score rank 2 (3,000,000)"], ["3", "Not filled", ""]]);
+    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 among applicants (4,200,000)"], ["2", "Bravo", "score rank 2 among applicants (3,000,000)"], ["3", "Not filled", ""]]);
     await expect(page.locator("[data-plan-warnings]")).toContainText("Delta has no score");
 
     await page.getByRole("button", { name: "Create public link" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
     await expect(page.locator("[data-view]")).toContainText("Scores are not included in this link.");
     await expect(page.locator("[data-view]")).not.toContainText("4,200,000");
-    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", "score rank 1"], ["3", "Bravo", "score rank 2"]]);
+    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest}`], ["3", "Bravo", `score rank 2 ${rest}`]]);
 
     await gotoHydrated(page, "/kingdom/mge/");
     await page.getByLabel("Include scores in the public link").check();
@@ -121,6 +123,107 @@ test.describe("MGE planner", () => {
     await expect(page.locator('[data-event="2026-10-01"]').getByText("Locked", { exact: true })).toBeVisible();
   });
 
+  test("inline edit by keyboard: rename keeps placements and locked history; bad scores are refused", async ({ page }) => {
+    const errors = trackErrors(page);
+    await seed(page, [PLAN]);
+    await gotoHydrated(page, "/kingdom/mge/");
+    const first = page.locator('[data-event="2026-10-01"]');
+    await first.getByRole("button", { name: "Lock event" }).click();
+    await expect(first.getByText("Locked", { exact: true })).toBeVisible();
+
+    // Open the editor from the keyboard; focus lands in the name field.
+    await page.getByRole("button", { name: "Edit Echo" }).focus();
+    await page.keyboard.press("Enter");
+    const editor = page.locator('[data-editor="e"]');
+    await expect(editor.getByRole("group", { name: "Edit Echo" })).toBeVisible();
+    await expect(page.getByLabel("Name for Echo")).toBeFocused();
+
+    // Escape cancels and returns focus to the row's Edit button.
+    await page.keyboard.press("Escape");
+    await expect(editor).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Edit Echo" })).toBeFocused();
+
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Control+A");
+    await page.keyboard.type("Echo Prime");
+    await page.keyboard.press("Tab");
+    await expect(page.getByLabel("Score for Echo (optional)")).toBeFocused();
+    await page.keyboard.press("Control+A");
+    await page.keyboard.type("9,007,199,254,740,992");
+    await page.keyboard.press("Enter");
+    const scoreInput = page.getByLabel("Score for Echo (optional)");
+    await expect(scoreInput).toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#kx-edit-e-score-error")).toContainText("too large");
+    await expect(scoreInput).toHaveAttribute("aria-describedby", /kx-edit-e-score-error/);
+    await expect(scoreInput).toBeFocused();
+
+    await page.keyboard.press("Control+A");
+    await page.keyboard.type("5m");
+    await page.keyboard.press("Tab");
+    await expect(page.getByLabel("Tags for Echo (optional)")).toBeFocused();
+    await page.keyboard.type("Garrison Lead");
+    await page.keyboard.press("Enter");
+    await expect(editor).toHaveCount(0);
+    await expect(page.locator("[data-cand-status]")).toHaveText("Saved Echo Prime (was Echo).");
+    await expect(page.getByRole("button", { name: "Edit Echo Prime" })).toBeFocused();
+    await expect(page.locator('tr[data-candidate="e"]')).toContainText("5,000,000");
+    await expect(page.locator('tr[data-candidate="e"]')).toContainText("garrison lead");
+
+    // The locked event keeps the old name; the open event uses the new one and the manual placement stays attached.
+    expect((await ledgerRows(page, "2026-10-01"))[0]).toEqual(["1", "Echo", "manual: Garrison lead for Kingsland"]);
+    await page.reload();
+    await expect(page.locator('tr[data-candidate="e"] td').first()).toHaveText("Echo Prime");
+    expect((await ledgerRows(page, "2026-10-01"))[0]![1]).toBe("Echo");
+
+    // Duplicate name: allowed, with the warning.
+    await page.getByRole("button", { name: "Edit Bravo" }).click();
+    await page.getByLabel("Name for Bravo").fill("alpha");
+    await page.getByRole("button", { name: "Save" }).click();
+    await expect(page.locator("[data-cand-status]")).toContainText("Another governor is also named alpha");
+    await expect(page.locator("[data-plan-warnings]")).toContainText('share the name "Alpha"');
+    expect(errors).toEqual([]);
+  });
+
+  test("CSV downloads: ledger (scores off by default, then on) and governors, UTF-8 with BOM, no network", async ({ page }) => {
+    const errors = trackErrors(page);
+    await seed(page, [PLAN]);
+    await gotoHydrated(page, "/kingdom/mge/");
+    const requests: string[] = [];
+    page.on("request", (r) => { if (!r.url().startsWith("blob:") && !r.url().startsWith("data:")) requests.push(r.url()); });
+    const get = async (name: string): Promise<{ file: string; bytes: Buffer }> => {
+      const [dl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name }).click()]) as [Download, unknown];
+      return { file: dl.suggestedFilename(), bytes: await readFile((await dl.path())!) };
+    };
+
+    const ledger = await get("Download ledger CSV");
+    expect(ledger.file).toMatch(/^kingdomops-mge-ledger-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
+    expect([...ledger.bytes.subarray(0, 3)]).toEqual([0xef, 0xbb, 0xbf]);
+    const text = ledger.bytes.toString("utf8").slice(1);
+    const rest = "among applicants not placed by hand";
+    expect(text.split("\r\n")).toEqual([
+      "date,commander,slot,governor,reason,locked",
+      "2026-10-01,Cao Cao,1,Echo,manual: Garrison lead for Kingsland,no",
+      `2026-10-01,Cao Cao,2,Alpha,score rank 1 ${rest},no`,
+      `2026-10-01,Cao Cao,3,Bravo,score rank 2 ${rest},no`,
+      "2026-10-15,,1,Alpha,score rank 1 among applicants,no",
+      "2026-10-15,,2,Bravo,score rank 2 among applicants,no",
+      "2026-10-15,,3,,not filled,no",
+      "",
+    ]);
+    await expect(page.locator("[data-csv-status]")).toContainText("is ready: check your downloads.");
+
+    await page.getByLabel("Include scores in the ledger CSV").check();
+    const scored = (await get("Download ledger CSV")).bytes.toString("utf8");
+    expect(scored).toContain("date,commander,slot,governor,reason,locked,score\r\n");
+    expect(scored).toContain(`2026-10-01,Cao Cao,2,Alpha,"score rank 1 ${rest} (4,200,000)",no,4200000\r\n`);
+
+    const gov = await get("Download governors CSV");
+    expect(gov.file).toMatch(/^kingdomops-mge-governors-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
+    expect(gov.bytes.toString("utf8")).toBe("\uFEFFname,score,tags\r\nAlpha,4200000,\r\nBravo,3000000,\r\nCharlie,2000000,\r\nDelta,,\r\nEcho,1000000,\r\n");
+    expect(requests).toEqual([]);
+    expect(errors).toEqual([]);
+  });
+
   test("bad links show a plain error", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/mge/view/#d=1zNOT-A-REAL-LINK");
     await expect(page.getByRole("alert")).toContainText("This link is damaged");
@@ -135,6 +238,12 @@ test.describe("MGE planner", () => {
     await expect(page.locator("[data-event]")).toHaveCount(2);
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
+    // With the inline governor editor open, too.
+    await page.getByRole("button", { name: "Edit Charlie" }).click();
+    await expect(page.getByLabel("Name for Charlie")).toBeVisible();
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+    await page.getByRole("button", { name: "Cancel" }).click();
     await page.getByRole("button", { name: "Create public link" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
     await expect(page.locator("[data-view]")).toBeVisible();
@@ -153,6 +262,16 @@ test.describe("MGE planner", () => {
         await expectAxeClean(page);
       });
     }
+
+    test(`axe planner ${theme} with the governor editor open (and an error)`, async ({ page }) => {
+      await seed(page, [PLAN], theme);
+      await gotoHydrated(page, "/kingdom/mge/");
+      await page.getByRole("button", { name: "Edit Alpha" }).click();
+      await page.getByLabel("Score for Alpha (optional)").fill("lots");
+      await page.getByRole("button", { name: "Save" }).click();
+      await expect(page.locator("#kx-edit-a-score-error")).toBeVisible();
+      await expectAxeClean(page);
+    });
 
     test(`axe view ${theme} (ledger and error)`, async ({ page }) => {
       await seed(page, [PLAN], theme);

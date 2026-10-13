@@ -8,10 +8,11 @@ import {
   type AccountProfile,
   type GuideBlock,
   type GuideSection,
+  type KingdomStage,
   type SpendingProfile,
 } from "./types";
 
-export type GuideSetId = "f2p" | "newkingdom" | "low" | "returning" | "first30" | "recovery" | "kingdomadmin" | "farms";
+export type GuideSetId = "f2p" | "newkingdom" | "low" | "returning" | "first30" | "recovery" | "kingdomadmin" | "farms" | "latestage";
 
 /**
  * - `base`: a full guide that profile deltas extend (the F2P guide).
@@ -49,6 +50,13 @@ export const FIRST30_MAX_CITY_HALL = 16;
 
 /** Last kingdom day for which the New Kingdom Start guide is offered (its blocks cover days 0–14). */
 export const NEWKINGDOM_MAX_DAY = 14;
+
+/** Kingdom stages after KvK1, for which the late-game guide (wave J, `blocks.latestage.json`) is offered. */
+export const LATE_STAGES: readonly KingdomStage[] = ["kvk2", "kvk3", "soc"];
+
+export function isLateStage(stage: KingdomStage): boolean {
+  return LATE_STAGES.includes(stage);
+}
 
 export const GUIDE_SETS: readonly GuideSetInfo[] = [
   {
@@ -127,6 +135,20 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
     },
   },
   {
+    // Wave J: progression after KvK1 (ids `ls-*`). Offered first when kingdomStage is kvk2, kvk3 or soc.
+    id: "latestage",
+    file: "blocks.latestage.json",
+    kind: "guide",
+    title: "Late game: KvK2, KvK3 and Season of Conquest",
+    features: ["F-02", "F-14"],
+    sectionTitles: {
+      overview: "1. What changes after KvK1",
+      plan: "2. Late-game plan: troops, healing, commanders and gear",
+      events: "3. Events after KvK1",
+      open: "4. Open questions and pending measurements",
+    },
+  },
+  {
     // Farm guide (wave C, /guides/farms/): its own pages route blocks by id prefix;
     // registered here so every blocks file in guides/data is known. Never offered by guidesForProfile.
     id: "farms",
@@ -172,6 +194,9 @@ export function guidesForProfile(profile: AccountProfile, situation: GuideSituat
 
   if (situation.zeroed) add("recovery", "You said you were just zeroed.");
   if (profile.returningPlayer) add("returning", "You are coming back after a break.");
+  // Late game right after the situations the player reported (zeroed, returning): for a KvK2+ kingdom it is
+  // the plan itself, since the base guide's phase plan ends at KvK1.
+  if (isLateStage(profile.kingdomStage)) add("latestage", "Your kingdom is past KvK1: the plan for KvK2, KvK3 and Season of Conquest.");
   if (profile.role === "lider") add("kingdomadmin", "You lead an alliance or sit on the kingdom council.");
   if (profile.kingdomStage === "pre_kvk" && (profile.kingdomDay === null || profile.kingdomDay <= NEWKINGDOM_MAX_DAY))
     add("newkingdom", profile.kingdomDay === null

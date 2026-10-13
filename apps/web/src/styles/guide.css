@@ -60,6 +60,12 @@
 .g-notice-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-font-display); }
 .g-notice p:not(.g-notice-title) { color: var(--ko-text-muted); }
 .g-loading { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+/* Stage-aware guide: one section still shows KvK1 steps. */
+.g-section-fallback {
+  padding: var(--ko-space-3); border-inline-start: 3px solid var(--ko-warning);
+  font-size: var(--ko-text-sm); color: var(--ko-text-muted); overflow-wrap: anywhere;
+}
+.g-section-fallback strong { color: var(--ko-text); }
 
 /* Section index: collapsible, at the top. */
 .g-toc details { border-block: 1px solid var(--ko-border); }
@@ -169,6 +175,14 @@ h4.g-block-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-fo
 .g-by { color: var(--ko-success); font-size: var(--ko-text-xs); white-space: nowrap; }
 .g-row-you th, .g-row-you td { background: var(--ko-surface-raised); }
 .g-you { font-family: var(--ko-font-display); font-size: var(--ko-text-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--ko-accent); }
+/* Low spender targets (wave J). */
+.g-low { border-top: 1px solid var(--ko-border); padding-top: var(--ko-space-4); }
+.g-low h4 { font-size: var(--ko-text-md); line-height: 1.3; font-weight: var(--ko-weight-semibold); }
+.g-low-tier, .g-low-method { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.g-low-method a { display: inline-flex; align-items: center; min-height: 44px; font-weight: var(--ko-weight-medium); }
+.g-low-list { margin: 0; padding: 0; list-style: none; display: grid; }
+.g-low-item { display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); min-width: 0; overflow-wrap: anywhere; }
+.g-price-warn { font-size: var(--ko-text-xs); color: var(--ko-text-muted); }
 .g-assume summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: var(--ko-weight-medium); }
 
 /* Static guide pages: confidence at a glance. */

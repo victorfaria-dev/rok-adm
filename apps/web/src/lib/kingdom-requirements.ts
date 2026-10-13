@@ -1,9 +1,10 @@
 // Web glue for the requirements card (F-34) and My requirements (F-30): defaults, form text ↔ card,
 // and the device store (ko:kingdom:v1, kinds "requirements" and "my-requirements").
 import {
-  FORMULA_PRESETS, FORMULA_VARS, REQ_MAX_BANDS, REQ_MAX_NUMBER, REQ_MAX_PERCENT, REQ_MAX_SAMPLES, cardSharePayload, defaultRequirementsCard,
-  encodeShare, evaluatePlayer, isRecord, newDocId, parseQuantity, parseRequirementsCard, readCsvTable, toCsv, validateBands,
-  type BandIssue, type FormulaVar, type FormulaVars, type PowerBand, type ReqStage, type RequirementsCard, type SampleAccount,
+  FORMULA_PRESETS, FORMULA_VARS, REQ_GROUP_MAX_PERCENT, REQ_MAX_BANDS, REQ_MAX_GROUPS, REQ_MAX_NUMBER, REQ_MAX_PERCENT, REQ_MAX_SAMPLES,
+  cardSharePayload, defaultRequirementsCard, encodeShare, evaluatePlayer, excludedDeadsIssue, isRecord, newDocId, parseQuantity, parseRequirementsCard,
+  readCsvTable, toCsv, validateBands, validateGroups,
+  type BandIssue, type FormulaVar, type FormulaVars, type PowerBand, type ReqStage, type RequirementGroup, type RequirementsCard, type SampleAccount,
 } from "@rokadm/planner";
 import { listDocs, removeDoc, saveDoc, type StorageLike } from "./kingdom-store";
 import { shareUrl } from "./kingdom-share";
@@ -69,7 +70,17 @@ export function parsePct(text: string): Parsed<number> {
   return { ok: true, value: v };
 }
 
-export const errorOf = (p: Parsed<unknown>): string | undefined => (p && !p.ok ? p.error : undefined);
+/** Group percent of the normal target, e.g. "80" (a trailing % is allowed). Bounds only; the value is the council's. */
+export function parseGroupPct(text: string): Parsed<number> {
+  const s = text.trim().replace(/%$/, "").trim();
+  if (!s) return null;
+  if (!/^\d+(\.\d+)?$/.test(s)) return { ok: false, error: "Enter a percent like 80." };
+  const v = Number(s);
+  if (v <= 0 || v > REQ_GROUP_MAX_PERCENT) return { ok: false, error: `Enter more than 0 and at most ${REQ_GROUP_MAX_PERCENT.toLocaleString("en-US")}.` };
+  return { ok: true, value: v };
+}
+
+export const errorOf =(p: Parsed<unknown>): string | undefined => (p && !p.ok ? p.error : undefined);
 export const valueOf = <T>(p: Parsed<T>): T | null => (p && p.ok ? p.value : null);
 
 const qtyText = (n: number | null | undefined): string => (typeof n === "number" && Number.isFinite(n) ? n.toLocaleString("en-US") : "");
@@ -78,6 +89,7 @@ const qtyText = (n: number | null | undefined): string => (typeof n === "number"
 // Form state (strings, as typed) ↔ card
 
 export interface BandRow { key: string; min: string; max: string; pct: string }
+export interface GroupRow { key: string; id: string; name: string; pct: string }
 export interface SampleRow { id: string; name: string; values: Record<FormulaVar, string> }
 
 export interface CardForm {
@@ -91,6 +103,11 @@ export interface CardForm {
   mode: "percent" | "fixed";
   bands: BandRow[];
   fixed: string;
+  /** Deads on excluded days don't count (K2779 rule, B08-0001). */
+  excludedOn: boolean;
+  excludedLabel: string;
+  /** Requirement groups (B08-0002); every value typed by the council. */
+  groups: GroupRow[];
   powerBasis: string;
   notes: string;
   samples: SampleRow[];
@@ -106,6 +123,18 @@ export function statsToValues(stats: FormulaVars): Record<FormulaVar, string> {
 
 export function emptyBand(min = ""): BandRow {
   return { key: rowKey(), min, max: "", pct: "" };
+}
+
+/** Short random id for a new group, unique among `taken` (players' saved picks refer to it). */
+export function newGroupId(taken: readonly string[], rnd: () => number = Math.random): string {
+  for (;;) {
+    const id = `g${Math.floor(rnd() * 36 ** 6).toString(36).padStart(6, "0")}`;
+    if (!taken.includes(id)) return id;
+  }
+}
+
+export function emptyGroup(taken: readonly string[]): GroupRow {
+  return { key: rowKey(), id: newGroupId(taken), name: "", pct: "" };
 }
 
 export function emptySample(n: number): SampleRow {
@@ -126,6 +155,9 @@ export function cardToForm(c: RequirementsCard): CardForm {
       ? c.requirement.bands.map((b) => ({ key: rowKey(), min: qtyText(b.minPower), max: b.maxPower === null ? "" : qtyText(b.maxPower), pct: String(b.percent) }))
       : [{ key: rowKey(), min: "0", max: "", pct: String(EXAMPLE_PERCENT) }],
     fixed: c.requirement.mode === "fixed" ? qtyText(c.requirement.target) : "",
+    excludedOn: c.excludedDeads.enabled,
+    excludedLabel: c.excludedDeads.label,
+    groups: c.groups.map((g) => ({ key: rowKey(), id: g.id, name: g.name, pct: String(g.percent) })),
     powerBasis: c.powerBasis,
     notes: c.notes,
     samples: c.sampleAccounts.map((s) => ({ id: s.id, name: s.name, values: statsToValues(s.stats) })),
@@ -135,7 +167,7 @@ export function cardToForm(c: RequirementsCard): CardForm {
 
 export interface FormCheck {
   card: RequirementsCard;
-  /** Field errors keyed by input id suffix, e.g. "fixed", "band-0-min", "sample-<id>-t4". */
+  /** Field errors keyed by input id suffix, e.g. "fixed", "band-0-min", "group-0-pct", "sample-<id>-t4". Band issues tied to a field appear here too. */
   errors: Record<string, string>;
   bandIssues: BandIssue[];
 }
@@ -158,6 +190,25 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
     });
     if (Object.keys(errors).length === 0) bandIssues = validateBands(bands);
     if (f.bands.length === 0) bandIssues = validateBands([]);
+    // Tie each band issue to the input at fault (aria-invalid + its own message under the field).
+    for (const x of bandIssues) {
+      if (x.index < 0 || !x.field) continue;
+      const k = `band-${x.index}-${x.field}`;
+      if (!errors[k]) errors[k] = x.message;
+    }
+  }
+  const groups: RequirementGroup[] = [];
+  const groupRows = f.groups.slice(0, REQ_MAX_GROUPS);
+  groupRows.forEach((g, i) => {
+    const pct = parseGroupPct(g.pct);
+    if (!g.name.trim()) errors[`group-${i}-name`] = "Enter a name for this group.";
+    if (errorOf(pct)) errors[`group-${i}-pct`] = errorOf(pct)!;
+    else if (!pct) errors[`group-${i}-pct`] = "Enter the percent of the normal target.";
+    groups.push({ id: g.id, name: g.name, percent: valueOf(pct) ?? 0 });
+  });
+  for (const x of validateGroups(groups)) {
+    const k = `group-${x.index}-${x.field}`;
+    if (!errors[k]) errors[k] = x.message;
   }
   const fixed = parseQty(f.fixed);
   if (f.mode === "fixed") {
@@ -184,6 +235,8 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
     formula: f.formula,
     presetId: f.presetId,
     requirement: f.mode === "fixed" ? { mode: "fixed", target: valueOf(fixed) ?? 0 } : { mode: "percent", bands },
+    excludedDeads: { enabled: f.excludedOn, label: f.excludedLabel },
+    groups,
     powerBasis: f.powerBasis,
     notes: f.notes,
     sampleAccounts: samples,
@@ -227,6 +280,10 @@ export interface MyRequirementsDoc {
   myStats: Partial<Record<FormulaVar, string>>;
   /** true when the player built the card themselves (no council link). */
   selfMade: boolean;
+  /** Raw text for "Deads on excluded days" (only used when the card's rule is on). */
+  excludedDeads?: string;
+  /** Id of the requirement group the player picked on this card. */
+  group?: string;
 }
 
 export function parseMyDoc(x: unknown): MyRequirementsDoc | null {
@@ -240,7 +297,18 @@ export function parseMyDoc(x: unknown): MyRequirementsDoc | null {
       if (typeof s === "string") myStats[v] = s.slice(0, 30);
     }
   }
-  return { card: { ...card, sampleAccounts: [], compareFormula: "" }, myStats, selfMade: x.selfMade === true };
+  const doc: MyRequirementsDoc = { card: { ...card, sampleAccounts: [], compareFormula: "" }, myStats, selfMade: x.selfMade === true };
+  if (typeof x.excludedDeads === "string") doc.excludedDeads = x.excludedDeads.slice(0, 30);
+  if (typeof x.group === "string" && card.groups.some((g) => g.id === x.group)) doc.group = x.group;
+  return doc;
+}
+
+/** "Deads on excluded days" as typed: null when empty, an error when it is not a quantity or exceeds the deads. */
+export function parseExcluded(text: string, deads: number | null): Parsed<number> {
+  const p = parseQty(text);
+  if (!p || !p.ok) return p;
+  const issue = excludedDeadsIssue(deads ?? 0, p.value);
+  return issue ? { ok: false, error: issue } : p;
 }
 
 export function saveMine(doc: MyRequirementsDoc, st: StorageLike | null): void {
@@ -258,6 +326,7 @@ export function latestMine(st: StorageLike | null): MyRequirementsDoc | null {
 }
 
 export const MAX_BANDS = REQ_MAX_BANDS;
+export const MAX_GROUPS = REQ_MAX_GROUPS;
 
 // ---------------------------------------------------------------------------
 // Sandbox roster as CSV (stays on this device; never in the published link)

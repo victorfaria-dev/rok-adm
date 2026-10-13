@@ -3,6 +3,8 @@ import { decodeShare, encodeShare } from "../src/kingdom-codec";
 import {
   CHARTER_STARTER_KEYS, DEFAULT_LANGUAGE_NOTE, RULES_LIMITS, RULES_TEMPLATES, bodyToBlocks, emptyRulesDoc, hasPrompts, isCalendarDay,
   moveSection, newCharterDoc, parseRulesDoc, parseSigners, rulesDisplayTitle, rulesToPlainText, sectionFromTemplate, type RulesDoc,
+  TRANSLATION_NOTE, UNTRANSLATED_NOTE, cleanLangCode, emptyTranslation, isLangCode, originalName, pickVersion, pruneTranslations, resolveRules,
+  rulesVersions, rulesWithOnly, setTranslatedSection, translationName, versionsWithPrompts,
 } from "../src/kingdom-rules";
 
 const NOW = new Date("2026-10-13T10:00:00.000Z");
@@ -188,5 +190,156 @@ describe("share round trip", () => {
   it("rejects a non-object document", async () => {
     const code = await encodeShare("rules", "text");
     expect(await decodeShare(code, "rules", parseRulesDoc)).toEqual({ ok: false, error: "bad_json" });
+  });
+});
+
+describe("language versions", () => {
+  function multi(): RulesDoc {
+    return {
+      ...sample(),
+      originalLabel: "English",
+      originalLang: "en",
+      translations: [
+        {
+          id: "es", label: "Español", lang: "es", title: "Reglas de K1234", intro: "Lee esto primero.",
+          sections: [{ id: "a", heading: "Política de MGE", body: "Rotación." }],
+        },
+      ],
+    };
+  }
+
+  it("old documents parse with no translations; new ones round-trip", () => {
+    const old: Record<string, unknown> = { ...sample() };
+    delete old.translations;
+    delete old.originalLabel;
+    delete old.originalLang;
+    const d = parseRulesDoc(old)!;
+    expect(d.translations).toEqual([]);
+    expect(d.originalLabel).toBe("");
+    expect(d.originalLang).toBe("");
+    expect(parseRulesDoc(JSON.parse(JSON.stringify(multi())))).toEqual(multi());
+  });
+
+  it("validates lang codes with a simple BCP-47 shape", () => {
+    for (const ok of ["es", "pt-BR", "zh-Hant", "sr-Latn-RS", "fil"]) expect(isLangCode(ok), ok).toBe(true);
+    for (const bad of ["", "e", "español", "es_ES", "es-", "-es", "1x", "a".repeat(40), 5, null]) expect(isLangCode(bad), String(bad)).toBe(false);
+    expect(cleanLangCode("  pt-BR ")).toBe("pt-BR");
+    expect(cleanLangCode("<x>")).toBe("");
+  });
+
+  it("parses translations tolerantly: caps, invalid codes, orphan and duplicate sections, ids", () => {
+    const d = parseRulesDoc({
+      ...sample(),
+      originalLang: "not a code",
+      translations: [
+        { id: "x", label: "L".repeat(80), lang: "es_ES", sections: [{ id: "a", heading: "A", body: "B" }, { id: "a", heading: "dup" }, { id: "gone", heading: "orphan" }, "junk"] },
+        { id: "x", label: "Dup id" },
+        "junk",
+        ...Array.from({ length: 6 }, (_, i) => ({ id: `n${i}`, label: `N${i}` })),
+      ],
+    })!;
+    expect(d.originalLang).toBe("");
+    expect(d.translations).toHaveLength(RULES_LIMITS.translations);
+    const [t0, t1] = d.translations;
+    expect(t0!.label).toHaveLength(RULES_LIMITS.langLabel);
+    expect(t0!.lang).toBe("");
+    expect(t0!.sections).toEqual([{ id: "a", heading: "A", body: "B" }]);
+    expect(t1!.id).not.toBe("x");
+    expect(new Set(d.translations.map((t) => t.id)).size).toBe(d.translations.length);
+  });
+
+  it("resolves a translation and falls back to the original per section", () => {
+    const v = resolveRules(multi(), "es");
+    expect(v.isOriginal).toBe(false);
+    expect(v.name).toBe("Español");
+    expect(v.lang).toBe("es");
+    expect(v.title).toBe("Reglas de K1234");
+    expect(v.intro).toBe("Lee esto primero.");
+    expect(v.sections).toEqual([
+      { id: "a", heading: "Política de MGE", body: "Rotación.", fallback: false },
+      { id: "b", heading: "Farms", body: "Register farms.", fallback: true },
+    ]);
+    expect(v.untranslated).toBe(1);
+    // A heading without its body is not a translation yet.
+    const half = setTranslatedSection(multi().translations[0]!, "b", { heading: "Granjas" });
+    expect(resolveRules({ ...multi(), translations: [half] }, "es").sections[1]!.fallback).toBe(true);
+    // Untranslated title and intro fall back to the original.
+    const bare = resolveRules({ ...multi(), translations: [emptyTranslation("t", "Português", "pt-BR")] }, "t");
+    expect(bare.title).toBe("K1234 rules");
+    expect(bare.titleFallback).toBe(true);
+    expect(bare.introFallback).toBe(true);
+    expect(bare.untranslated).toBe(3);
+    // An unknown key reads the original.
+    expect(resolveRules(multi(), "nope").isOriginal).toBe(true);
+    expect(rulesVersions(multi()).map((x) => x.name)).toEqual(["English", "Español"]);
+  });
+
+  it("sets, clears and prunes translated sections", () => {
+    let t = emptyTranslation("t");
+    t = setTranslatedSection(t, "a", { heading: "H" });
+    t = setTranslatedSection(t, "a", { body: "B" });
+    expect(t.sections).toEqual([{ id: "a", heading: "H", body: "B" }]);
+    t = setTranslatedSection(t, "a", { heading: "", body: "" });
+    expect(t.sections).toEqual([]);
+    const pruned = pruneTranslations({ ...multi(), sections: multi().sections.filter((s) => s.id !== "a") });
+    expect(pruned.translations[0]!.sections).toEqual([]);
+  });
+
+  it("names versions and picks the reader's language", () => {
+    expect(translationName({ label: "", lang: "uk" }, 0)).toBe("uk");
+    expect(translationName({ label: "", lang: "" }, 1)).toBe("Language 3");
+    expect(originalName({ originalLabel: "", originalLang: "" })).toBe("Original");
+    const d = { ...multi(), translations: [...multi().translations, emptyTranslation("br", "Português", "pt-BR")] };
+    expect(pickVersion(d, ["es-MX", "en"])).toBe("es");
+    expect(pickVersion(d, ["pt"])).toBe("br");
+    expect(pickVersion(d, ["pt-br"])).toBe("br");
+    expect(pickVersion(d, ["fr", "en-GB"])).toBe("original");
+    expect(pickVersion(d, ["ru"])).toBe("original");
+  });
+
+  it("lists versions with prompts left and keeps one translation for a shorter link", () => {
+    const d = multi();
+    expect(versionsWithPrompts(d)).toEqual([]);
+    d.translations[0]!.intro = "Rey: [nombre]";
+    d.intro = "King: [name]";
+    expect(versionsWithPrompts(d)).toEqual(["English", "Español"]);
+    const two = { ...d, translations: [...d.translations, emptyTranslation("pt", "Português")] };
+    expect(rulesWithOnly(two, "pt").translations.map((t) => t.id)).toEqual(["pt"]);
+    expect(rulesWithOnly(two, null).translations).toEqual([]);
+  });
+
+  it("exports one version or all versions as plain text", () => {
+    const es = rulesToPlainText(multi(), { version: "es" });
+    expect(es).toContain("Language: Español\n\nReglas de K1234");
+    expect(es).toContain(TRANSLATION_NOTE);
+    expect(es).toContain(`Farms\n(${UNTRANSLATED_NOTE})\nRegister farms.`);
+    const all = rulesToPlainText(multi(), { all: true });
+    expect(all.startsWith("Language: English (original)\n\nK1234 rules")).toBe(true);
+    expect(all).toContain("----------------------------------------");
+    expect(rulesToPlainText(sample())).not.toContain("Language:");
+  });
+
+  it("share links carry every version", async () => {
+    const code = await encodeShare("rules", multi());
+    expect(await decodeShare(code, "rules", parseRulesDoc)).toEqual({ ok: true, data: multi() });
+  });
+});
+
+describe("language codes must name a real language", () => {
+  it("accepts known codes and rejects well-formed unknown ones", async () => {
+    const { isLangCode } = await import("../src/kingdom-rules");
+    for (const c of ["es", "pt-BR", "zh-Hans", "vi", "ar"]) expect(isLangCode(c), c).toBe(true);
+    for (const c of ["xx", "qq", "zz-ZZ", "e", "english"]) expect(isLangCode(c), c).toBe(false);
+  });
+});
+
+describe("review fixes", () => {
+  it("canonicalises 3-letter codes and refuses them as typed", async () => {
+    const { isLangCode, cleanLangCode } = await import("../src/kingdom-rules");
+    expect(isLangCode("spa")).toBe(false);
+    expect(isLangCode("eng")).toBe(false);
+    expect(cleanLangCode("spa")).toBe("es");
+    expect(cleanLangCode("pt-br")).toBe("pt-BR");
+    expect(cleanLangCode("xx")).toBe("");
   });
 });

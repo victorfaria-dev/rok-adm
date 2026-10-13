@@ -1,7 +1,8 @@
 // CSV import/export of the council kit (wave G): MGE governors and ledger, requirements sandbox roster.
-import { emptyMgeDoc, parseCsv, type MgePublic } from "@rokadm/planner";
+// The ledger CSV export is tested in packages/planner/test/kingdom-mge.test.ts (mgeLedgerCsv).
+import { emptyMgeDoc, parseCsv } from "@rokadm/planner";
 import { describe, expect, it } from "vitest";
-import { addCandidatesFromCsv, mgeLedgerCsv } from "./kingdom-mge";
+import { addCandidatesFromCsv } from "./kingdom-mge";
 import { cardToForm, formToCard, newCard, rosterFromCsv, rosterToCsv } from "./kingdom-requirements";
 
 let n = 0;
@@ -24,19 +25,6 @@ describe("MGE governors from CSV", () => {
 
   it("throws a readable message without a name column", () => {
     expect(() => addCandidatesFromCsv(emptyMgeDoc("p"), "who,score\nA,1")).toThrow(/Missing: "name"/);
-  });
-});
-
-describe("MGE ledger CSV", () => {
-  const pub: MgePublic = {
-    title: "K1", policy: "score", slotsPerEvent: 2, cooldownEvents: 0, applicationsRequired: false, includeScores: false, publishedOn: "2026-10-13",
-    events: [{ date: "2026-10-01", commander: "Cao Cao", locked: true, slots: [{ slot: 1, name: "=Alpha", reason: "score rank 1", score: 9 }], unfilled: [2] }],
-  };
-
-  it("one row per slot, unfilled included, guarded names, no scores unless asked", () => {
-    const csv = mgeLedgerCsv(pub);
-    expect(csv).toBe("event_date,commander,locked,slot,governor,why\r\n2026-10-01,Cao Cao,yes,1,'=Alpha,score rank 1\r\n2026-10-01,Cao Cao,yes,2,,Not filled\r\n");
-    expect(mgeLedgerCsv({ ...pub, includeScores: true }).split("\r\n")[1]).toBe("2026-10-01,Cao Cao,yes,1,'=Alpha,score rank 1,9");
   });
 });
 

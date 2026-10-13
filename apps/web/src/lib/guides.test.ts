@@ -23,7 +23,7 @@ describe("guide directory", () => {
   });
 
   it("builds static pages at the agreed slugs", () => {
-    expect(STATIC_GUIDES.map((g) => g.slug).sort()).toEqual(["first-30-days", "kingdom-admin", "low-spender", "recovery", "returning"]);
+    expect(STATIC_GUIDES.map((g) => g.slug).sort()).toEqual(["first-30-days", "kingdom-admin", "late-game", "low-spender", "recovery", "returning"]);
     for (const g of STATIC_GUIDES) expect(g.href).toBe(`/guides/${g.slug}/`);
   });
 
@@ -64,6 +64,17 @@ describe("guides for you", () => {
     expect(guidesForYou(back)[0]?.set).toBe("returning");
     expect(guidesForYou(back).map((l) => l.set)).not.toContain("first30");
     expect(guidesForYou(back, { zeroed: true }).map((l) => l.set).slice(0, 2)).toEqual(["recovery", "returning"]);
+  });
+
+  it("puts Late game first for KvK2, KvK3 and SoC, and never offers it earlier", () => {
+    for (const kingdomStage of ["kvk2", "kvk3", "soc"] as const) {
+      const links = guidesForYou(make({ kingdomStage, cityHall: 25, role: "lider" }));
+      expect(links[0]?.set, kingdomStage).toBe("latestage");
+      expect(links[0]?.href).toBe("/guides/late-game/");
+      expect(links[0]?.reason).toMatch(/main plan on this page/);
+    }
+    for (const kingdomStage of ["pre_kvk", "kvk1"] as const)
+      expect(guidesForYou(make({ kingdomStage })).map((l) => l.set), kingdomStage).not.toContain("latestage");
   });
 
   it("offers First 30 days to a new player and Kingdom administration to leaders", () => {

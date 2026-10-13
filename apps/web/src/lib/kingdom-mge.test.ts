@@ -1,6 +1,6 @@
 import { emptyMgeDoc, planMge } from "@rokadm/planner";
 import { describe, expect, it } from "vitest";
-import { addCandidatesFromText, deleteMgePlan, listMgePlans, loadMgePlan, localDay, longDay, publishMge, readMgeLink, saveMgePlan } from "./kingdom-mge";
+import { addCandidatesFromText, deleteMgePlan, downloadMgeCsv, listMgePlans, loadMgePlan, localDay, longDay, mgeCsvFilename, publishMge, readMgeLink, saveMgePlan } from "./kingdom-mge";
 import { memoryStorage, saveDoc } from "./kingdom-store";
 
 let n = 0;
@@ -88,5 +88,31 @@ describe("dates", () => {
   it("formats days", () => {
     expect(localDay(new Date(2026, 9, 3, 23, 0))).toBe("2026-10-03");
     expect(longDay("2026-10-01")).toBe("Thu, Oct 1, 2026");
+  });
+});
+
+describe("CSV downloads", () => {
+  it("names files from the plan title and day", () => {
+    expect(mgeCsvFilename("ledger", "K1234 KvK3 MGE", "2026-10-13")).toBe("kingdomops-mge-ledger-k1234-kvk3-mge-2026-10-13.csv");
+    expect(mgeCsvFilename("governors", "Ação/Été", "2026-10-13")).toBe("kingdomops-mge-governors-acao-ete-2026-10-13.csv");
+    expect(mgeCsvFilename("ledger", "名前", "2026-10-13")).toBe("kingdomops-mge-ledger-2026-10-13.csv");
+  });
+
+  it("hands a BOM-prefixed CSV to the saver, scores only when asked", () => {
+    const d = {
+      ...emptyMgeDoc("p"), title: "K1", policy: "score" as const, slotsPerEvent: 1,
+      candidates: [{ id: "a", name: "Alpha", score: 4_200_000, tags: ["rally lead"] }],
+      events: [{ id: "e", date: "2026-10-01", commander: "", applicants: [], overrides: [], locked: false, result: null }],
+    };
+    const calls: Array<[string, string, string]> = [];
+    const save = (f: string, t: string, ty: string) => void calls.push([f, t, ty]);
+    downloadMgeCsv("ledger", d, planMge(d), false, "2026-10-13", save);
+    expect(calls[0]![0]).toBe("kingdomops-mge-ledger-k1-2026-10-13.csv");
+    expect(calls[0]![1]).toBe("\uFEFFdate,commander,slot,governor,reason,locked\r\n2026-10-01,,1,Alpha,score rank 1,no\r\n");
+    expect(calls[0]![2]).toBe("text/csv;charset=utf-8");
+    downloadMgeCsv("ledger", d, planMge(d), true, "2026-10-13", save);
+    expect(calls[1]![1]).toContain("score rank 1 (4,200,000)\",no,4200000");
+    const g = downloadMgeCsv("governors", d, planMge(d), false, "2026-10-13", save);
+    expect(g.text).toBe("\uFEFFname,score,tags\r\nAlpha,4200000,rally lead\r\n");
   });
 });

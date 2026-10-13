@@ -169,6 +169,8 @@ export async function decodeShare<T>(text: string | null | undefined, kind: stri
   }
   if (typeof env !== "object" || env === null || Array.isArray(env)) return { ok: false, error: "bad_json" };
   const e = env as { k?: unknown; d?: unknown; h?: unknown };
+  // Envelopes only ever hold k, d and h: any other key is a damaged "h" (which would skip the checksum).
+  if (Object.keys(e).some((key) => key !== "k" && key !== "d" && key !== "h")) return { ok: false, error: "bad_json" };
   if (e.k !== kind) return { ok: false, error: "wrong_kind" };
   // Links made since Q2 carry a checksum of the document: a changed character that still decodes is "damaged".
   if (e.h !== undefined && e.h !== shareChecksum(JSON.stringify(e.d) ?? "")) return { ok: false, error: "bad_json" };

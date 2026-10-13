@@ -1,10 +1,10 @@
 // Web glue for the MGE planner (F-35): saved plans in ko:kingdom:v1 (kind "mge"), pasted
 // candidate lists and the public ledger link. Logic lives in @rokadm/planner (kingdom-mge.ts).
 import {
-  MGE_LIMITS, cleanLine, decodeShare, parseQuantity, readCsvTable, toCsv, encodeShare, mgePublicPayload, newDocId, parseCandidateLines, parseMgeDoc, parseMgePublic, shareFromHash,
+  MGE_LIMITS, cleanLine, decodeShare, encodeShare, mgeGovernorsCsv, mgeLedgerCsv, mgePublicPayload, newDocId, parseCandidateLines, parseMgeDoc, parseMgePublic, parseMgeScore, readCsvTable, shareFromHash,
   type DecodeResult, type LineError, type MgeDoc, type MgePlan, type MgePublic,
 } from "@rokadm/planner";
-import { getDoc, listDocs, removeDoc, saveDoc, type StorageLike, type StoredDoc } from "./kingdom-store";
+import { downloadText, getDoc, listDocs, removeDoc, saveDoc, type StorageLike, type StoredDoc } from "./kingdom-store";
 import { linkLengthHint, shareUrl } from "./kingdom-share";
 
 export const MGE_KIND = "mge";
@@ -75,27 +75,13 @@ export function addCandidatesFromCsv(doc: MgeDoc, text: string, makeId: () => st
     if (name.length > MGE_LIMITS.name) { errors.push({ line, text: raw, message: `Name is longer than ${MGE_LIMITS.name} characters.` }); continue; }
     let score: number | null = null;
     if (values.score) {
-      score = parseQuantity(values.score);
-      if (score === null) { errors.push({ line, text: raw, message: "The score is not a number (use 4200000, 4,200,000 or 4.2m)." }); continue; }
+      const r = parseMgeScore(values.score);
+      if (!r.ok) { errors.push({ line, text: raw, message: r.tooBig ? r.message : "The score is not a number (use 4200000, 4,200,000 or 4.2m)." }); continue; }
+      score = r.score;
     }
     rows.push({ name, score });
   }
   return mergeCandidates(doc, rows, errors, makeId);
-}
-
-/** The ledger as CSV, one row per slot (filled or not). Scores only when the payload carries them. */
-export function mgeLedgerCsv(p: MgePublic): string {
-  const header = ["event_date", "commander", "locked", "slot", "governor", "why", ...(p.includeScores ? ["score"] : [])];
-  const rows = p.events.flatMap((e) => {
-    const slots: Array<{ slot: number; name: string; reason: string; score?: number }> = [
-      ...e.slots,
-      ...e.unfilled.map((slot) => ({ slot, name: "", reason: "Not filled" })),
-    ];
-    return slots
-      .sort((a, b) => a.slot - b.slot)
-      .map((s) => [e.date, e.commander, e.locked, s.slot, s.name, s.reason, ...(p.includeScores ? [s.score ?? null] : [])]);
-  });
-  return toCsv(header, rows);
 }
 
 /** Merge parsed rows into the list. A name already listed (any case) is not added again. */
@@ -154,4 +140,23 @@ export async function publishMge(doc: MgeDoc, plan: MgePlan, includeScores: bool
 /** Read a ledger from a location hash (#d=...). Never throws. */
 export function readMgeLink(hash: string): Promise<DecodeResult<MgePublic>> {
   return decodeShare(shareFromHash(hash), MGE_KIND, parseMgePublic);
+}
+
+export type MgeCsvKind = "ledger" | "governors";
+
+/** "kingdomops-mge-ledger-k1234-kvk3-2026-10-13.csv": plan title as an ASCII slug, then the day. */
+export function mgeCsvFilename(kind: MgeCsvKind, title: string, today: string): string {
+  const slug = title.normalize("NFKD").replace(/\p{M}+/gu, "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase().slice(0, 40).replace(/-+$/, "");
+  return `kingdomops-mge-${kind}${slug ? `-${slug}` : ""}-${today}.csv`;
+}
+
+/** Build a CSV (UTF-8 with BOM) and hand it to the browser as a download (Blob, no network). */
+export function downloadMgeCsv(
+  kind: MgeCsvKind, doc: MgeDoc, plan: MgePlan, includeScores: boolean, today: string,
+  save: (filename: string, text: string, type: string) => void = downloadText,
+): { filename: string; text: string } {
+  const text = kind === "ledger" ? mgeLedgerCsv(plan, includeScores) : mgeGovernorsCsv(doc);
+  const filename = mgeCsvFilename(kind, doc.title, today);
+  save(filename, text, "text/csv;charset=utf-8");
+  return { filename, text };
 }

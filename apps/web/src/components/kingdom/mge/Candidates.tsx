@@ -1,12 +1,13 @@
-import { useState } from "preact/hooks";
+import { useRef, useState } from "preact/hooks";
 import {
-  MGE_LIMITS, cleanLine, formatInt, newDocId, parseQuantity, removeCandidate,
-  type LineError, type MgeDoc, type MgePlan,
+  MGE_LIMITS, formatInt, newDocId, readCandidateInput, removeCandidate,
+  type LineError, type MgeCandidateErrors, type MgeDoc, type MgePlan,
 } from "@rokadm/planner";
 import { addCandidatesFromCsv, addCandidatesFromText, type AddCandidatesResult } from "../../../lib/kingdom-mge";
 import CsvImport from "../shared/CsvImport";
 import ConfirmAction from "../shared/ConfirmAction";
 import { TextAreaField, TextField } from "../shared/Field";
+import CandidateEditor from "./CandidateEditor";
 
 interface Props {
   doc: MgeDoc;
@@ -14,21 +15,15 @@ interface Props {
   onChange: (d: MgeDoc) => void;
 }
 
-function parseTags(text: string): string[] {
-  const out: string[] = [];
-  for (const t of text.split(",")) {
-    const s = cleanLine(t, MGE_LIMITS.tag).toLowerCase();
-    if (s && !out.includes(s) && out.length < MGE_LIMITS.tags) out.push(s);
-  }
-  return out;
-}
-
-/** Candidate list: add one, paste many, remove. Names and scores are typed by the council. */
+/** Candidate list: add one, paste many, edit in place, remove. Names and scores are typed by the council. */
 export default function Candidates({ doc, plan, onChange }: Props) {
   const [name, setName] = useState("");
   const [score, setScore] = useState("");
   const [tags, setTags] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; score?: string }>({});
+  const [errors, setErrors] = useState<MgeCandidateErrors>({});
+  /** Id of the governor being edited inline (one at a time). */
+  const [editing, setEditing] = useState<string | null>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const [paste, setPaste] = useState("");
   const [pasteErrors, setPasteErrors] = useState<LineError[]>([]);
   const [status, setStatus] = useState("");
@@ -36,32 +31,31 @@ export default function Candidates({ doc, plan, onChange }: Props) {
   const slotsSoFar = new Map<string, number>();
   for (const e of plan.events) for (const a of e.assignments) slotsSoFar.set(a.candidateId, (slotsSoFar.get(a.candidateId) ?? 0) + 1);
 
+  /** Close the inline editor and put focus back on that row's Edit button (WCAG 2.4.3). */
+  function closeEditor(id: string) {
+    setEditing(null);
+    setTimeout(() => tableRef.current?.querySelector<HTMLButtonElement>(`button[data-edit="${id}"]`)?.focus(), 0);
+  }
+
   function addOne() {
-    const n = cleanLine(name, MGE_LIMITS.name + 1);
-    const e: typeof errors = {};
-    if (!n) e.name = "Enter the governor's name.";
-    else if (n.length > MGE_LIMITS.name) e.name = `Use at most ${MGE_LIMITS.name} characters.`;
-    let s: number | null = null;
-    if (score.trim()) {
-      s = parseQuantity(score);
-      if (s === null) e.score = "Enter a whole number, for example 4200000, 4,200,000 or 4.2m.";
-    }
-    setErrors(e);
-    if (e.name || e.score) {
+    const r = readCandidateInput({ name, score, tags });
+    setErrors(r.ok ? {} : r.errors);
+    if (!r.ok) {
       setStatus("");
       return;
     }
+    const n = r.name, s = r.score;
     const i = doc.candidates.findIndex((c) => c.name.toLowerCase() === n.toLowerCase());
     if (i >= 0) {
       const candidates = [...doc.candidates];
-      candidates[i] = { ...candidates[i]!, score: s ?? candidates[i]!.score, tags: tags.trim() ? parseTags(tags) : candidates[i]!.tags };
+      candidates[i] = { ...candidates[i]!, score: s ?? candidates[i]!.score, tags: tags.trim() ? r.tags : candidates[i]!.tags };
       onChange({ ...doc, candidates });
       setStatus(`Updated ${candidates[i]!.name}.`);
     } else if (doc.candidates.length >= MGE_LIMITS.candidates) {
       setErrors({ name: `The list is full (${MGE_LIMITS.candidates} governors). Remove someone first.` });
       return;
     } else {
-      onChange({ ...doc, candidates: [...doc.candidates, { id: newDocId(), name: n, score: s, tags: parseTags(tags) }] });
+      onChange({ ...doc, candidates: [...doc.candidates, { id: newDocId(), name: n, score: s, tags: r.tags }] });
       setStatus(`Added ${n}.`);
     }
     setName("");
@@ -104,7 +98,7 @@ export default function Candidates({ doc, plan, onChange }: Props) {
           <h3 class="kx-h3">Add one</h3>
           <TextField id="kx-cand-name" label="Governor name" value={name} onValue={setName} error={errors.name} maxLength={MGE_LIMITS.name + 1} />
           <TextField id="kx-cand-score" label="Score (optional)" value={score} onValue={setScore} error={errors.score} hint="4200000, 4,200,000 or 4.2m" />
-          <TextField id="kx-cand-tags" label="Tags (optional)" value={tags} onValue={setTags} hint="Separate with commas, for example: rally lead, garrison lead" />
+          <TextField id="kx-cand-tags" label="Tags (optional)" value={tags} onValue={setTags} error={errors.tags} hint="Separate with commas, for example: rally lead, garrison lead" />
           <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={addOne}>Add governor</button></div>
         </div>
         <div class="kg-grid">
@@ -133,7 +127,7 @@ export default function Candidates({ doc, plan, onChange }: Props) {
       </div>
       <p class="kg-status" role="status" aria-live="polite" data-cand-status>{status}</p>
       {doc.candidates.length > 0 && (
-        <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Governor list">
+        <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Governor list" ref={tableRef}>
           <table class="kg-table" data-candidates>
             <caption class="visually-hidden">Governors in this plan</caption>
             <thead>
@@ -146,14 +140,32 @@ export default function Candidates({ doc, plan, onChange }: Props) {
               </tr>
             </thead>
             <tbody>
-              {doc.candidates.map((c) => (
-                <tr key={c.id}>
+              {doc.candidates.map((c) => editing === c.id ? (
+                <tr key={c.id} data-editing={c.id}>
+                  <td colSpan={5}>
+                    <CandidateEditor
+                      doc={doc}
+                      candidate={c}
+                      onSave={(next, msg) => {
+                        onChange(next);
+                        setStatus(msg);
+                        closeEditor(c.id);
+                      }}
+                      onCancel={() => closeEditor(c.id)}
+                    />
+                  </td>
+                </tr>
+              ) : (
+                <tr key={c.id} data-candidate={c.id}>
                   <td>{c.name}</td>
                   <td class="num">{c.score === null ? "—" : formatInt(c.score)}</td>
                   <td>{c.tags.join(", ")}</td>
                   <td class="num">{slotsSoFar.get(c.id) ?? 0}</td>
                   <td>
-                    <ConfirmAction label="Remove" ariaLabel={`Remove ${c.name}`} question={`Remove ${c.name} from this plan? Locked events keep their name.`} yesLabel="Yes, remove" onConfirm={() => onChange(removeCandidate(doc, c.id))} />
+                    <div class="kg-actions kx-row-actions">
+                      <button type="button" class="btn btn-secondary" data-edit={c.id} aria-label={`Edit ${c.name}`} onClick={() => { setEditing(c.id); setStatus(""); }}>Edit</button>
+                      <ConfirmAction label="Remove" ariaLabel={`Remove ${c.name}`} question={`Remove ${c.name} from this plan? Locked events keep their name.`} yesLabel="Yes, remove" onConfirm={() => onChange(removeCandidate(doc, c.id))} />
+                    </div>
                   </td>
                 </tr>
               ))}

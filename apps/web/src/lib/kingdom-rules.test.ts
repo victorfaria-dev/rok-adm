@@ -1,7 +1,7 @@
-import { compactRulesShare, decodeShare, emptyRulesDoc, encodeShare, newCharterDoc, newDocId, parseRulesDoc, shareFromHash } from "@rokadm/planner";
+import { compactRulesShare, decodeShare, emptyRulesDoc, emptyTranslation, encodeShare, newCharterDoc, newDocId, parseRulesDoc, shareFromHash } from "@rokadm/planner";
 import { describe, expect, it } from "vitest";
 import { getDoc, memoryStorage, saveDoc } from "./kingdom-store";
-import { docFromSearch, formatDay, listRules, rulesShareLink, saveRules, saveRulesCopy } from "./kingdom-rules";
+import { docFromSearch, formatDay, hashWithVersion, listRules, rulesShareLink, saveRules, saveRulesCopy, versionFromHash } from "./kingdom-rules";
 
 const NOW = new Date("2026-10-13T10:00:00.000Z");
 
@@ -40,6 +40,49 @@ describe("rules store glue", () => {
     expect(r).toEqual({ ok: true, data: doc });
   });
 
+  it("builds a full link or a shorter one with the original and one language", async () => {
+    const doc = {
+      ...emptyRulesDoc("r1", NOW), title: "Rules", originalLabel: "English", originalLang: "en",
+      translations: [emptyTranslation("es", "Español", "es"), emptyTranslation("pt", "Português", "pt-BR")],
+    };
+    const read = async (url: string) => decodeShare(shareFromHash(new URL(url).hash), "rules", parseRulesDoc);
+    expect(await read(await rulesShareLink(doc, "https://x.test"))).toEqual({ ok: true, data: doc });
+    const one = await read(await rulesShareLink(doc, "https://x.test", "pt"));
+    expect(one.ok && one.data.translations.map((t) => t.id)).toEqual(["pt"]);
+    const none = await read(await rulesShareLink(doc, "https://x.test", null));
+    expect(none.ok && none.data.translations).toEqual([]);
+  });
+
+  it("reads and writes the lang= hash param", () => {
+    const doc = {
+      ...emptyRulesDoc("r1", NOW), originalLang: "en",
+      translations: [emptyTranslation("es", "Español", "es"), emptyTranslation("t2", "Klingon")],
+    };
+    expect(versionFromHash(doc, "#d=1zAAA&lang=ES")).toBe("es");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=t2")).toBe("t2");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=en")).toBe("original");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=original")).toBe("original");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=fr")).toBeNull();
+    expect(versionFromHash(doc, "#d=1zAAA&lang=%E0")).toBeNull();
+    expect(versionFromHash(doc, "#d=1zAAA")).toBeNull();
+    expect(hashWithVersion(doc, "#d=1zAAA&lang=es", "t2")).toBe("#d=1zAAA&lang=t2");
+    expect(hashWithVersion(doc, "#d=1zAAA", "es")).toBe("#d=1zAAA&lang=es");
+    expect(hashWithVersion(doc, "#d=1zAAA&lang=es", "original")).toBe("#d=1zAAA&lang=en");
+    expect(hashWithVersion({ ...doc, translations: [] }, "#d=1zAAA&lang=es", "original")).toBe("#d=1zAAA");
+  });
+
+  it("language versions travel in the compact link and decode exactly", async () => {
+    const doc = newCharterDoc("c1", NOW);
+    const es = emptyTranslation("es", "Español", "es");
+    es.title = "Reglas";
+    es.sections = [{ id: doc.sections[0]!.id, heading: "Liderazgo", body: "- Rey: Dave" }];
+    const full = { ...doc, originalLabel: "English", originalLang: "en", translations: [es] };
+    const url = await rulesShareLink(full, "https://x.test");
+    expect(await decodeShare(shareFromHash(new URL(url).hash), "rules", parseRulesDoc)).toEqual({ ok: true, data: full });
+    // Old full-document links with translations (made before the compact form) still open.
+    expect(await decodeShare(await encodeShare("rules", full), "rules", parseRulesDoc)).toEqual({ ok: true, data: full });
+  });
+
   it("a new charter's link fits well inside one Discord message (Q2 P2-1)", async () => {
     const doc = newCharterDoc(newDocId(), NOW, () => newDocId());
     const url = await rulesShareLink(doc, "https://kingdomops.example");
@@ -76,5 +119,22 @@ describe("rules store glue", () => {
     expect(docFromSearch(`?doc=${"x".repeat(65)}`)).toBeNull();
     expect(formatDay("2026-10-03")).toBe("3 Oct 2026");
     expect(formatDay("nope")).toBe("nope");
+  });
+});
+
+describe("review fixes", () => {
+  it("lang= uses the id when two versions share a code, so the right one reopens", () => {
+    const doc = { ...emptyRulesDoc("r"), translations: [emptyTranslation("t1", "A", "es"), emptyTranslation("t2", "B", "es"), emptyTranslation("t3", "C", "fr")] };
+    const h2 = hashWithVersion(doc, "#d=1zAAA", "t2");
+    expect(h2).toBe("#d=1zAAA&lang=t2");
+    expect(versionFromHash(doc, h2)).toBe("t2");
+    expect(hashWithVersion(doc, "#d=1zAAA", "t3")).toBe("#d=1zAAA&lang=fr");
+  });
+
+  it("a translated intro disappears when the original intro is removed", async () => {
+    const { resolveRules } = await import("@rokadm/planner");
+    const t = { ...emptyTranslation("t1", "Español", "es"), intro: "Lea esto" };
+    expect(resolveRules({ ...emptyRulesDoc("r"), intro: "", translations: [t] }, "t1").intro).toBe("");
+    expect(resolveRules({ ...emptyRulesDoc("r"), intro: "Read this", translations: [t] }, "t1").intro).toBe("Lea esto");
   });
 });

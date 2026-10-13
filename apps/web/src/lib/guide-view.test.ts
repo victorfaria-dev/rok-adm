@@ -2,8 +2,8 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import { defaultProfile, encodeProfile, flattenGuide, GUIDE_SECTIONS, selectBlocks, type AccountProfile, type GuideBlock } from "@rokadm/core";
-import { buildBudgetPayload, buildGuidePayload } from "./guide-payload";
-import { budgetView, chooseProfile, FALLBACK_STAGE, selectGuide, selectGuideWithFallback, shareUrl, stageHasContent } from "./guide-view";
+import { buildBudgetPayload, buildGuidePayload, buildLowBudgetPayload } from "./guide-payload";
+import { budgetView, chooseProfile, FALLBACK_STAGE, lowBudgetView, selectGuide, selectGuideWithFallback, shareUrl, showsLowTargets, stageHasContent, withDeltas } from "./guide-view";
 
 const raw = JSON.parse(readFileSync(join(__dirname, "../../../../guides/data/blocks.f2p.json"), "utf8")) as GuideBlock[];
 const payload = buildGuidePayload("f2p");
@@ -90,28 +90,102 @@ describe("block counts match selectBlocks", () => {
   });
 });
 
-describe("stage fallback (KvK2+ not researched yet)", () => {
+describe("stage-aware guide (KvK2, KvK3, SoC)", () => {
+  const late = buildGuidePayload("latestage");
+  const low = buildGuidePayload("low");
+  const ids = (v: { sections: { blocks: { block: { id: string } }[] }[] }) => v.sections.flatMap((s) => s.blocks.map((b) => b.block.id));
+
   for (const stage of ["kvk2", "kvk3", "soc"] as const) {
-    it(`${stage} falls back to the KvK1 selection, labelled`, () => {
-      const p = make({ spending: "f2p", kingdomStage: stage, cityHall: 12 });
-      // Core stays strict: only the every-stage blocks (daily tiers) apply at this stage.
-      const strict = flattenGuide(selectGuide(payload, p));
-      expect(strict.every((s) => s.block.stage.includes("todos"))).toBe(true);
+    it(`${stage}: the late-game plan is the main content, the daily routine stays, KvK1 only where no late step exists`, () => {
+      const p = make({ spending: "f2p", kingdomStage: stage, cityHall: 25, minutesPerDay: 120 });
       expect(stageHasContent(payload, stage)).toBe(false);
-      const sel = selectGuideWithFallback(payload, p);
+      expect(stageHasContent(late, stage)).toBe(true);
+      const sel = selectGuideWithFallback(payload, p, late);
+      expect(sel.lateStage).toBe(true);
+      const shown = ids(sel.view);
+      // Late-game blocks fitting the stage are all in; none of the KvK1 phase plan or day 0-3 setup is.
+      for (const b of selectBlocks(late.blocks, p).sections.flatMap((s) => s.blocks)) expect(shown).toContain(b.block.id);
+      expect(shown.some((id) => id.startsWith("ls-"))).toBe(true);
+      const plan = sel.view.sections.find((s) => s.id === "plan")!;
+      expect(plan.fallback).toBeUndefined();
+      expect(plan.blocks.every((b) => b.block.id.startsWith("ls-"))).toBe(true);
+      expect(sel.view.sections.find((s) => s.id === "day0")).toBeUndefined();
+      // Daily routine kept, never labelled as a fallback.
+      const daily = sel.view.sections.find((s) => s.id === "daily")!;
+      expect(daily.blocks.map((b) => b.block.id)).toContain("daily-15min");
+      expect(daily.fallback).toBeUndefined();
+      // Fallback only for sections without a late-stage step, labelled per section.
+      expect(sel.fallbackSections.length).toBeGreaterThan(0);
       expect(sel.fallbackFrom).toBe(stage);
-      expect(FALLBACK_STAGE).toBe("kvk1");
-      const kvk1 = selectGuide(payload, { ...p, kingdomStage: "kvk1" });
-      expect(kvk1.meta.shownBlocks).toBeGreaterThan(strict.length);
-      expect(sel.view.meta.shownBlocks).toBe(kvk1.meta.shownBlocks);
-      expect(sel.view.meta.shownBlocks).toBeGreaterThan(0);
+      for (const s of sel.view.sections) {
+        const isFallback = sel.fallbackSections.includes(s.id);
+        expect(s.fallback === true, s.id).toBe(isFallback);
+        if (isFallback) expect(s.blocks.every((b) => !b.block.id.startsWith("ls-")), s.id).toBe(true);
+        else expect(s.blocks.every((b) => b.block.stage.includes(stage) || b.block.stage.includes("todos")), s.id).toBe(true);
+      }
+      for (const id of ["plan", "day0", "overview", "daily", "open"] as const) expect(sel.fallbackSections, id).not.toContain(id);
+      expect(sel.fallbackSections).toContain("mistakes");
+      // Sections in GUIDE_SECTIONS order; counts add up.
+      const order = GUIDE_SECTIONS.map((s) => s.id);
+      const secIds = sel.view.sections.map((s) => s.id);
+      expect([...secIds].sort((x, y) => order.indexOf(x) - order.indexOf(y))).toEqual(secIds);
+      expect(sel.view.meta.shownBlocks).toBe(shown.length);
+      expect(sel.view.meta.totalBlocks).toBe(payload.blocks.length + late.blocks.length);
     });
   }
 
-  it("pre-KvK and KvK1 never fall back", () => {
+  it("uses the late-game chapter titles for the late sections", () => {
+    const sel = selectGuideWithFallback(payload, make({ kingdomStage: "kvk2", cityHall: 25 }), late);
+    expect(sel.view.sections.find((s) => s.id === "plan")!.title).toMatch(/Late-game plan/);
+  });
+
+  it("Low at KvK3 gets the Low-only late block; F2P does not", () => {
+    const lowP = make({ spending: "low", kingdomStage: "kvk3", cityHall: 25 });
+    const merged = withDeltas(payload, [low]);
+    expect(ids(selectGuideWithFallback(merged, lowP, late).view)).toContain("ls-low-spender-late");
+    expect(ids(selectGuideWithFallback(payload, { ...lowP, spending: "f2p" }, late).view)).not.toContain("ls-low-spender-late");
+  });
+
+  it("without the late-game payload (failed to load), the whole guide falls back to KvK1, labelled", () => {
+    const p = make({ spending: "f2p", kingdomStage: "soc", cityHall: 12 });
+    const sel = selectGuideWithFallback(payload, p, null);
+    expect(sel.lateStage).toBe(false);
+    expect(sel.fallbackFrom).toBe("soc");
+    expect(FALLBACK_STAGE).toBe("kvk1");
+    const kvk1 = selectGuide(payload, { ...p, kingdomStage: "kvk1" });
+    expect(sel.view.meta.shownBlocks).toBe(kvk1.meta.shownBlocks);
+    expect(sel.fallbackSections).toEqual(kvk1.sections.map((s) => s.id));
+  });
+
+  it("pre-KvK and KvK1 never fall back and never use the late guide", () => {
     for (const stage of ["pre_kvk", "kvk1"] as const) {
-      expect(selectGuideWithFallback(payload, make({ kingdomStage: stage })).fallbackFrom).toBeNull();
+      const sel = selectGuideWithFallback(payload, make({ kingdomStage: stage }), late);
+      expect(sel.fallbackFrom).toBeNull();
+      expect(sel.lateStage).toBe(false);
+      expect(ids(sel.view).some((id) => id.startsWith("ls-"))).toBe(false);
     }
+  });
+});
+
+describe("Low spender targets view (wave J)", () => {
+  const low = buildLowBudgetPayload();
+
+  it("is shown to the Low profile only (F2P numbers never shown as Low's, Low numbers never shown to others)", () => {
+    expect(showsLowTargets(LOW_D20_CH12)).toBe(true);
+    for (const spending of ["f2p", "medium", "high", "whale", "kraken"] as const) expect(showsLowTargets(make({ spending })), spending).toBe(false);
+  });
+
+  it("resolves each tier's purchases and the purchases outside the tiers", () => {
+    const v = lowBudgetView(low, LOW_D20_CH12);
+    expect(v.tiers.map((t) => t.id)).toEqual(["pass-only", "low-full"]);
+    for (const t of v.tiers) for (const l of t.lines) expect(l.purchase.id).toBe(low.purchases.find((p) => p.id === l.purchase.id)!.id);
+    expect(v.tiers[0]!.lines.map((l) => l.purchase.id)).toContain("gem-supply-30d");
+    expect(v.outside.map((p) => p.id)).toContain("daily-special-offers");
+  });
+
+  it("marks the Growth Fund City Hall 25 milestone from the player's City Hall", () => {
+    expect(lowBudgetView(low, make({ spending: "low", cityHall: 24 })).reachedCH25).toBe(false);
+    expect(lowBudgetView(low, make({ spending: "low", cityHall: 25 })).reachedCH25).toBe(true);
   });
 });
 

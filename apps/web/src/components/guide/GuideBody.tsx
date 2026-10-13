@@ -1,6 +1,6 @@
 import { Component } from "preact";
 import { PHASE_TITLES, type AccountProfile, type GuidePhase } from "@rokadm/core";
-import type { BudgetPayload, CardBadge } from "../../lib/guide-types";
+import type { BudgetPayload, CardBadge, LowBudgetPayload } from "../../lib/guide-types";
 import { confidenceCounts, sectionTitle, type GuideView, type ViewBlock } from "../../lib/guide-view";
 import { Block } from "./Block";
 import { Budget } from "./Budget";
@@ -12,6 +12,8 @@ interface Props {
   badges: Record<string, CardBadge>;
   /** Budget Reality Check; omitted on guides without one (new kingdom). */
   budget?: BudgetPayload;
+  /** Low spender targets for the budget (Low profile only). */
+  lowBudget?: LowBudgetPayload | null;
   /** Recommended / Upcoming tags (needs a profile). */
   profileTags?: boolean;
   /** Prefix for ids, so two bodies never clash. */
@@ -48,7 +50,7 @@ export function renderSteps(view: GuideView): number {
 }
 
 /** The guide itself: section index, sections in GUIDE_SECTIONS order, "Already done?", budget. */
-export function GuideBody({ view, badges, budget, profileTags = true, idPrefix = "s", limit }: Props) {
+export function GuideBody({ view, badges, budget, lowBudget = null, profileTags = true, idPrefix = "s", limit }: Props) {
   // Progressive render (Q2 P2-10): a step budget spent in page order.
   let left = limit ?? Number.POSITIVE_INFINITY;
   const take = (items: ViewBlock[]): ViewBlock[] => {
@@ -77,12 +79,19 @@ export function GuideBody({ view, badges, budget, profileTags = true, idPrefix =
       {view.sections.map((s) => {
         const hid = `${idPrefix}-${s.id}-h`;
         if (left <= 0) return null;
+        const fallback = s.fallback ? (
+          <p class="g-section-fallback" data-section-fallback>
+            <strong>Closest available: KvK1 content.</strong> No step in this section is written for your kingdom's stage
+            yet, so it shows the steps written for KvK1. Check them against what your kingdom is doing now.
+          </p>
+        ) : null;
         if (s.id === "plan") {
           const phases = PLAN_PHASES.map((ph) => ({ ph, items: take(withFolded(s.blocks.filter((b) => b.block.phase === ph))) })).filter((x) => x.items.length > 0);
           const other = take(withFolded(s.blocks.filter((b) => !PLAN_PHASES.includes(b.block.phase))));
           return (
             <section class="g-section" id={`${idPrefix}-${s.id}`} aria-labelledby={hid} key={s.id}>
               <h2 id={hid}>{sectionTitle(s.title)}</h2>
+              {fallback}
               {phases.map(({ ph, items }) => (
                 <div class="g-phase" key={ph}>
                   <h3 class="g-phase-title">{PHASE_TITLES[ph] ?? ph}</h3>
@@ -96,6 +105,7 @@ export function GuideBody({ view, badges, budget, profileTags = true, idPrefix =
         return (
           <section class="g-section" id={`${idPrefix}-${s.id}`} aria-labelledby={hid} key={s.id}>
             <h2 id={hid}>{sectionTitle(s.title)}</h2>
+            {fallback}
             {take(withFolded(s.blocks)).map((b) => blk(b, 3))}
           </section>
         );
@@ -115,7 +125,7 @@ export function GuideBody({ view, badges, budget, profileTags = true, idPrefix =
         </section>
       )}
 
-      {budget && left > 0 && <Budget budget={budget} profile={view.profile as AccountProfile} />}
+      {budget && left > 0 && <Budget budget={budget} profile={view.profile as AccountProfile} low={lowBudget} />}
     </div>
   );
 }

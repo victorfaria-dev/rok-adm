@@ -5,7 +5,7 @@
 // rule here is the planner's own, plain and checkable: longest wait since the last slot.
 // No MGE point or reward value is sourced, so none appears here. Pure functions, no fact data.
 
-import { cleanLine, formatInt, isRecord, parseQuantity, type KingdomDocBase } from "./kingdom-common";
+import { cleanLine, formatInt, isRecord, readQuantity, type KingdomDocBase } from "./kingdom-common";
 
 /** Confidence of a fact card as written in its file (`confianca:`), and the English label shown. */
 export type CardConfidence = "alta" | "media" | "baixa";
@@ -355,12 +355,89 @@ export function parseCandidateLines(text: string): { rows: Array<{ name: string;
     if (clean.length > MGE_LIMITS.name) return void errors.push({ line: i + 1, text, message: `Name is longer than ${MGE_LIMITS.name} characters.` });
     let score: number | null = null;
     if (number !== null) {
-      score = parseQuantity(number);
-      if (score === null) return void errors.push({ line: i + 1, text, message: "The score is not a number (use 4200000, 4,200,000 or 4.2m)." });
+      const r = parseMgeScore(number);
+      if (!r.ok) return void errors.push({ line: i + 1, text, message: r.tooBig ? r.message : "The score is not a number (use 4200000, 4,200,000 or 4.2m)." });
+      score = r.score;
     }
     rows.push({ name: clean, score });
   });
   return { rows, errors };
+}
+
+// ---------------------------------------------------------------------------
+// Typed governor fields (add form and inline edit)
+
+export const MGE_SCORE_HELP = "Enter a whole number, for example 4200000, 4,200,000 or 4.2m.";
+
+/**
+ * A score typed by the council. Empty = no score. Anything that is not a whole number, or is above
+ * Number.MAX_SAFE_INTEGER (where JavaScript numbers stop being exact), is refused at entry.
+ */
+export function parseMgeScore(text: string): { ok: true; score: number | null } | { ok: false; tooBig: boolean; message: string } {
+  if (!text.trim()) return { ok: true, score: null };
+  // readQuantity only reports "too_large" for well-formed numbers: "1,5m" (decimal comma) is a format error.
+  const r = readQuantity(text);
+  if (r.ok) return { ok: true, score: r.value };
+  if (r.error === "too_large") return { ok: false, tooBig: true, message: `The score is too large (at most ${formatInt(Number.MAX_SAFE_INTEGER)}).` };
+  return { ok: false, tooBig: false, message: MGE_SCORE_HELP };
+}
+
+/** Comma-separated tags, lower case, duplicates dropped. Too many or too long is an error, not a silent cut. */
+export function parseMgeTagsText(text: string): { tags: string[]; error?: string } {
+  const tags: string[] = [];
+  for (const t of text.split(",")) {
+    const s = cleanLine(t, 1000).toLowerCase();
+    if (!s) continue;
+    if (s.length > MGE_LIMITS.tag) return { tags, error: `Each tag can have at most ${MGE_LIMITS.tag} characters ("${s.slice(0, MGE_LIMITS.tag)}…").` };
+    if (!tags.includes(s)) tags.push(s);
+  }
+  if (tags.length > MGE_LIMITS.tags) return { tags: tags.slice(0, MGE_LIMITS.tags), error: `Use at most ${MGE_LIMITS.tags} tags.` };
+  return { tags };
+}
+
+export interface MgeCandidateInput {
+  name: string;
+  score: string;
+  tags: string;
+}
+
+export type MgeCandidateErrors = Partial<Record<keyof MgeCandidateInput, string>>;
+
+/** Check the three typed fields of a governor. */
+export function readCandidateInput(input: MgeCandidateInput): { ok: true; name: string; score: number | null; tags: string[] } | { ok: false; errors: MgeCandidateErrors } {
+  const errors: MgeCandidateErrors = {};
+  const name = cleanLine(input.name, MGE_LIMITS.name + 1);
+  if (!name) errors.name = "Enter the governor's name.";
+  else if (name.length > MGE_LIMITS.name) errors.name = `Use at most ${MGE_LIMITS.name} characters.`;
+  const score = parseMgeScore(input.score);
+  if (!score.ok) errors.score = score.message;
+  const tags = parseMgeTagsText(input.tags);
+  if (tags.error) errors.tags = tags.error;
+  if (errors.name || errors.score || errors.tags || !score.ok) return { ok: false, errors };
+  return { ok: true, name, score: score.score, tags: tags.tags };
+}
+
+export type UpdateCandidateResult =
+  | { ok: true; doc: MgeDoc; candidate: MgeCandidate; previousName: string; duplicate: boolean }
+  | { ok: false; errors: MgeCandidateErrors };
+
+/**
+ * Edit an existing governor's name, score and tags. The id stays, so applicants, manual placements
+ * and rotation history stay attached. Locked events keep the name stored when they were locked.
+ * Renaming to a name already listed is allowed (the plan shows the duplicate-name warning).
+ */
+export function updateCandidate(doc: MgeDoc, candidateId: string, input: MgeCandidateInput): UpdateCandidateResult {
+  const i = doc.candidates.findIndex((c) => c.id === candidateId);
+  if (i < 0) return { ok: false, errors: { name: "This governor is no longer in the plan." } };
+  const r = readCandidateInput(input);
+  if (!r.ok) return r;
+  const previousName = doc.candidates[i]!.name;
+  const candidate: MgeCandidate = { id: candidateId, name: r.name, score: r.score, tags: r.tags };
+  const candidates = [...doc.candidates];
+  candidates[i] = candidate;
+  const k = r.name.toLowerCase();
+  const duplicate = candidates.some((c) => c.id !== candidateId && c.name.toLowerCase() === k);
+  return { ok: true, doc: { ...doc, candidates }, candidate, previousName, duplicate };
 }
 
 // ---------------------------------------------------------------------------
@@ -379,6 +456,17 @@ export function orderedEvents(doc: Pick<MgeDoc, "events">): MgeEvent[] {
 
 function plural(n: number, one: string, many = `${one}s`): string {
   return `${n} ${n === 1 ? one : many}`;
+}
+
+/**
+ * Who a score rank is counted among, written out so the ledger is exact: "" when every listed
+ * governor competes, else " among applicants", " among governors not placed by hand" or both.
+ */
+export function scoreRankScope(applicationsRequired: boolean, someoneManual: boolean): string {
+  if (applicationsRequired && someoneManual) return " among applicants not placed by hand";
+  if (applicationsRequired) return " among applicants";
+  if (someoneManual) return " among governors not placed by hand";
+  return "";
 }
 
 /**
@@ -469,7 +557,12 @@ export function planMge(doc: MgeDoc): MgePlan {
         }
       } else if (doc.policy === "score") {
         const ranked = pool.filter((c) => c.score !== null).sort((a, b) => (b.score! !== a.score! ? b.score! - a.score! : byNameThenId(a, b)));
-        ranked.forEach((c, i) => queue.push({ c, reason: `score rank ${i + 1} (${formatInt(c.score!)})`, publicReason: `score rank ${i + 1}`, score: c.score }));
+        // The rank is among the pool only (applicants, minus governors placed by hand): say so.
+        const among = scoreRankScope(doc.applicationsRequired, taken.size > 0);
+        ranked.forEach((c, i) => {
+          const rank = `score rank ${i + 1}${among}`;
+          queue.push({ c, reason: `${rank} (${formatInt(c.score!)})`, publicReason: rank, score: c.score });
+        });
       }
 
       let qi = 0;
@@ -624,4 +717,63 @@ export function describeMgeRules(p: Pick<MgeDoc, "policy" | "slotsPerEvent" | "c
   }
   parts.push(p.applicationsRequired ? "Only governors who applied for an event can get a slot in it." : "Every listed governor is considered; no application needed.");
   return parts.join(" ");
+}
+
+// ---------------------------------------------------------------------------
+// CSV export (RFC 4180, CRLF, UTF-8 with BOM) with a guard against spreadsheet formula injection.
+// Same rules as csv.ts (csvSafeText/csvField); a unit test pins the two to the same output.
+
+/** Byte-order mark so spreadsheet apps open the file as UTF-8 (names with accents, CJK, emoji). */
+export const MGE_CSV_BOM = "\uFEFF";
+export const MGE_LEDGER_CSV_HEADER = ["date", "commander", "slot", "governor", "reason", "locked"] as const;
+export const MGE_GOVERNORS_CSV_HEADER = ["name", "score", "tags"] as const;
+
+/** Text cells starting with = + - @ TAB or CR get a leading ' so spreadsheets do not run them. */
+export function mgeCsvSafeText(s: string): string {
+  return /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
+}
+
+/** Quote a cell when it holds a comma, a quote or a line break; quotes are doubled. */
+export function mgeCsvField(s: string): string {
+  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+const csvText = (s: string): string => mgeCsvField(mgeCsvSafeText(s));
+const csvDoc = (rows: string[][]): string => MGE_CSV_BOM + rows.map((r) => r.join(",")).join("\r\n") + "\r\n";
+
+/**
+ * Ledger CSV, oldest event first, one row per slot (unfilled slots included, governor empty).
+ * Scores (a "score" column, and the score inside score-policy reasons) only when `includeScores`.
+ */
+export function mgeLedgerCsv(plan: MgePlan, includeScores: boolean): string {
+  const header: string[] = [...MGE_LEDGER_CSV_HEADER];
+  if (includeScores) header.push("score");
+  const rows: string[][] = [header];
+  const events = [...plan.events].map((e, i) => ({ e, i })).sort((a, b) => (a.e.date < b.e.date ? -1 : a.e.date > b.e.date ? 1 : a.i - b.i));
+  for (const { e } of events) {
+    const slots: Array<{ slot: number; a: MgeAssignment | null }> = [
+      ...e.assignments.map((a) => ({ slot: a.slot, a })),
+      ...e.unfilled.map((slot) => ({ slot, a: null })),
+    ].sort((x, y) => x.slot - y.slot);
+    for (const { slot, a } of slots) {
+      const row = [
+        csvText(e.date),
+        csvText(e.commander),
+        String(slot),
+        csvText(a ? a.name : ""),
+        csvText(a ? (includeScores ? a.reason : a.publicReason) : "not filled"),
+        e.locked ? "yes" : "no",
+      ];
+      if (includeScores) row.push(a && a.score !== null ? String(a.score) : "");
+      rows.push(row);
+    }
+  }
+  return csvDoc(rows);
+}
+
+/** Governors CSV in list order: name, score (empty when not entered), tags joined with "; ". */
+export function mgeGovernorsCsv(doc: Pick<MgeDoc, "candidates">): string {
+  const rows: string[][] = [[...MGE_GOVERNORS_CSV_HEADER]];
+  for (const c of doc.candidates) rows.push([csvText(c.name), c.score === null ? "" : String(c.score), csvText(c.tags.join("; "))]);
+  return csvDoc(rows);
 }

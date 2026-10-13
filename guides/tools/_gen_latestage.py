@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""One-off generator for guides/data/staging/blocks.latestage.json (wave J).
+"""One-off generator for guides/data/blocks.latestage.json (wave J).
 Kept so the director can regenerate after edits; the JSON is the source of truth once rendered."""
 import json, os, re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OUT = os.path.join(HERE, "..", "data", "staging", "blocks.latestage.json")
+OUT = os.path.join(HERE, "..", "data", "blocks.latestage.json")
 AS_OF = "2026-10-13"
 PATCH = "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
 LATE = ["kvk2", "kvk3", "soc"]

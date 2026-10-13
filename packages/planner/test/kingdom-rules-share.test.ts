@@ -30,7 +30,8 @@ describe("compact rules share form (Q2 P2-1)", () => {
         const t = code.slice(0, i) + (code[i] === "A" ? "B" : "A") + code.slice(i + 1);
         const r = await decodeShare(t, "rules", parseRulesDoc);
         if (r.ok) other++;
-        else if (r.error === "bad_json" || r.error === "bad_encoding") damaged++;
+        // A flip inside "rules" makes another kind: refused too, with its own message.
+        else if (r.error === "bad_json" || r.error === "bad_encoding" || r.error === "wrong_kind") damaged++;
       }
       expect(other).toBe(0);
       expect(damaged).toBeGreaterThan(10);
@@ -38,6 +39,9 @@ describe("compact rules share form (Q2 P2-1)", () => {
     // Links made before the checksum (no "h") still open.
     const legacy = "1j" + toBase64Url(new TextEncoder().encode(JSON.stringify({ k: "rules", d: doc })));
     expect(await decodeShare(legacy, "rules", parseRulesDoc)).toEqual({ ok: true, data: doc });
+    // A damaged "h" key would otherwise read as a link without a checksum.
+    const renamed = "1j" + toBase64Url(new TextEncoder().encode(JSON.stringify({ k: "rules", d: doc, i: 1 })));
+    expect(await decodeShare(renamed, "rules", parseRulesDoc)).toEqual({ ok: false, error: "bad_json" });
   });
 
   it("rejects bad references and bad line operations", () => {

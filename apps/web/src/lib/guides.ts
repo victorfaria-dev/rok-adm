@@ -25,6 +25,14 @@ export const GUIDE_PAGES: readonly GuidePage[] = [
     audience: "Every account. It filters to your spending, play time and City Hall once you answer 10 questions.",
   },
   {
+    set: "latestage",
+    href: "/guides/late-game/",
+    slug: "late-game",
+    title: "Late game guide",
+    summary: "After KvK1: T5 as a research project, healing and the Hall of Heroes, commander swaps and pools, gear by season.",
+    audience: "Players whose kingdom is in KvK2, KvK3 or Season of Conquest.",
+  },
+  {
     set: "newkingdom",
     href: "/guides/new-kingdom/",
     title: "New kingdom guide",
@@ -114,7 +122,9 @@ export function guidesForYou(profile: AccountProfile, situation: GuideSituation 
     .filter((g) => g.set.kind === "guide")
     .map((g) => {
       const page = guidePage(g.set.id);
-      return { set: page.set, href: page.href, title: page.title, reason: g.reason };
+      // Late game (KvK2+): core lists it right after the reported situations; on /guide/ it is also the main plan.
+      const reason = g.set.id === "latestage" ? `${g.reason} Its steps are the main plan on this page; read them on their own here.` : g.reason;
+      return { set: page.set, href: page.href, title: page.title, reason };
     });
   if (profile.role === "farm") {
     const page = guidePage("farms");

@@ -14,6 +14,7 @@ export const TOOLS: readonly ToolEntry[] = [
   { href: "/tools/speedups/", title: "Speedups and time", blurb: "Add up your speedups and compare them with a job's time.", features: ["F-81"], group: "calculators" },
   { href: "/tools/buildings/", title: "Building costs", blurb: "Resources and raw time from one level to another, any building.", features: ["F-81"], group: "calculators" },
   { href: "/tools/healing/", title: "Healing planner", blurb: "Hospital capacity and what one full hospital costs to heal.", features: ["F-22"], group: "calculators" },
+  { href: "/tools/pack-value/", title: "Pack value", blurb: "Gems and VIP points per dollar at the price you see. Items are not counted.", features: ["F-14"], group: "calculators" },
   { href: "/tools/action-points/", title: "Action Points", blurb: "Barbarian hits per AP and the gem price of buying more.", features: ["F-81"], group: "calculators" },
   { href: "/tools/migration/", title: "Migration checker", blurb: "Can you migrate, and what is missing, for the current rules.", features: ["F-31"], group: "plan" },
   { href: "/tools/kvk/", title: "KvK readiness", blurb: "A checklist for your first KvK, with a plain season explainer.", features: ["F-26"], group: "plan" },

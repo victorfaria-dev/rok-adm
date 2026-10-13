@@ -2,7 +2,7 @@ import { decodeShare, evaluatePlayer, parseRequirementsCard, shareFromHash } fro
 import { describe, expect, it } from "vitest";
 import {
   EXAMPLE_PERCENT, cardTitle, cardToForm, deleteCard, emptyBand, emptySample, formToCard, latestMine, listCards, newCard, parseMyDoc,
-  parsePct, parseQty, publishLink, saveCard, saveMine,
+  emptyGroup, newGroupId, parseExcluded, parseGroupPct, parsePct, parseQty, publishLink, saveCard, saveMine,
 } from "./kingdom-requirements";
 import { listDocs, memoryStorage } from "./kingdom-store";
 
@@ -46,6 +46,7 @@ describe("new card and form round trip", () => {
     const f = cardToForm(newCard());
     f.bands = [{ ...emptyBand("0"), max: "20m", pct: "250" }, { ...emptyBand("10m"), pct: "300" }];
     expect(formToCard(f).bandIssues[0]!.message).toMatch(/overlaps/);
+    expect(formToCard(f).errors).toEqual({ "band-1-min": "Band 2 overlaps band 1: start it at or above where band 1 ends." });
     f.bands = [{ ...emptyBand("x"), pct: "" }];
     const r = formToCard(f);
     expect(r.errors["band-0-min"]).toMatch(/whole number/);
@@ -94,6 +95,81 @@ describe("store", () => {
     expect(m.myStats).toEqual({ power: "10m", t4: "1k" });
     expect(parseMyDoc({ card: "x" })).toBeNull();
     expect(parseMyDoc({ card: {}, myStats: { t4: 5, t5: "2" }, selfMade: "yes" })).toMatchObject({ myStats: { t5: "2" }, selfMade: false });
+  });
+});
+
+describe("requirement groups", () => {
+  it("parseGroupPct", () => {
+    expect(parseGroupPct("")).toBeNull();
+    expect(parseGroupPct("80")).toEqual({ ok: true, value: 80 });
+    expect(parseGroupPct("112.5%")).toEqual({ ok: true, value: 112.5 });
+    expect(parseGroupPct("0")).toMatchObject({ ok: false });
+    expect(parseGroupPct("1001")).toEqual({ ok: false, error: "Enter more than 0 and at most 1,000." });
+    expect(parseGroupPct("eighty")).toEqual({ ok: false, error: "Enter a percent like 80." });
+  });
+
+  it("new group ids are short and unique", () => {
+    const seq = [0, 0, 0.5];
+    const rnd = () => seq.shift()!;
+    const a = newGroupId([], () => 0);
+    expect(a).toBe("g000000");
+    expect(newGroupId([a], rnd)).not.toBe(a);
+    expect(emptyGroup([])).toMatchObject({ name: "", pct: "", id: expect.stringMatching(/^g[0-9a-z]{6}$/) });
+  });
+
+  it("form round trip and field errors", () => {
+    const f = cardToForm(newCard());
+    expect(f.groups).toEqual([]);
+    f.groups = [{ ...emptyGroup([]), id: "young", name: "Accounts under 6 months", pct: "80" }];
+    const c = formToCard(f);
+    expect(c.errors).toEqual({});
+    expect(c.card.groups).toEqual([{ id: "young", name: "Accounts under 6 months", percent: 80 }]);
+    expect(cardToForm(c.card).groups[0]).toMatchObject({ id: "young", name: "Accounts under 6 months", pct: "80" });
+
+    f.groups = [{ ...emptyGroup([]), name: "", pct: "" }, { ...emptyGroup([]), name: "A", pct: "x" }, { ...emptyGroup([]), name: "a", pct: "90" }, { ...emptyGroup([]), name: "B", pct: "90" }];
+    const r = formToCard(f);
+    expect(r.errors["group-0-name"]).toBe("Enter a name for this group.");
+    expect(r.errors["group-0-pct"]).toBe("Enter the percent of the normal target.");
+    expect(r.errors["group-1-pct"]).toBe("Enter a percent like 80.");
+    expect(r.errors["group-2-name"]).toBe("Group 3 has the same name as group 2.");
+    expect(r.errors["group-3-name"]).toBeUndefined();
+  });
+
+  it("my doc keeps the picked group only when the card has it", () => {
+    const c = { ...newCard(), groups: [{ id: "young", name: "Young", percent: 80 }] };
+    expect(parseMyDoc({ card: c, group: "young" })!.group).toBe("young");
+    expect(parseMyDoc({ card: c, group: "gone" })!.group).toBeUndefined();
+  });
+});
+
+describe("excluded deads", () => {
+  it("form round trip keeps the rule and its label", () => {
+    const f = cardToForm(newCard());
+    expect(f.excludedOn).toBe(false);
+    expect(f.excludedLabel).toBe("zeroed in a 'terrible trade'");
+    f.excludedOn = true;
+    f.excludedLabel = "zeroed by a bad trade";
+    const c = formToCard(f).card;
+    expect(c.excludedDeads).toEqual({ enabled: true, label: "zeroed by a bad trade" });
+    expect(cardToForm(c)).toMatchObject({ excludedOn: true, excludedLabel: "zeroed by a bad trade" });
+    f.excludedLabel = "  ";
+    expect(formToCard(f).card.excludedDeads.label).toBe("zeroed in a 'terrible trade'");
+  });
+
+  it("parseExcluded: empty, bad text, more than deads", () => {
+    expect(parseExcluded("", 100)).toBeNull();
+    expect(parseExcluded("50", 100)).toEqual({ ok: true, value: 50 });
+    expect(parseExcluded("1k", 1000)).toEqual({ ok: true, value: 1000 });
+    expect(parseExcluded("x", 100)).toMatchObject({ ok: false, error: expect.stringMatching(/whole number/) });
+    expect(parseExcluded("101", 100)).toEqual({ ok: false, error: "This can't be more than your deads (100)." });
+    expect(parseExcluded("1", null)).toEqual({ ok: false, error: "This can't be more than your deads (0)." });
+  });
+
+  it("my doc keeps the excluded deads text", () => {
+    const st = memoryStorage();
+    saveMine({ card: newCard(), myStats: { deads: "300" }, selfMade: false, excludedDeads: "100" }, st);
+    expect(latestMine(st)!.excludedDeads).toBe("100");
+    expect(parseMyDoc({ card: {}, excludedDeads: 5 })!.excludedDeads).toBeUndefined();
   });
 });
 

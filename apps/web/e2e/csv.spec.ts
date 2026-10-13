@@ -25,14 +25,14 @@ test("MGE: import governors from a CSV, then download the ledger as CSV", async 
   await expect(page.locator("table[data-candidates]")).toContainText("Bo, Jr");
   await expect(page.locator("table[data-candidates]")).toContainText("=Cmd");
 
-  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download ledger (.csv)" }).click()]);
-  expect(download.suggestedFilename()).toMatch(/^kingdomops-mge-ledger-\d{4}-\d{2}-\d{2}\.csv$/);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download ledger CSV" }).click()]);
+  expect(download.suggestedFilename()).toMatch(/^kingdomops-mge-ledger-k1-mge-\d{4}-\d{2}-\d{2}\.csv$/);
   const text = readFileSync((await download.path())!, "utf8").replace(/^﻿/, "");
   const lines = text.split("\r\n");
-  expect(lines[0]).toBe("event_date,commander,locked,slot,governor,why");
-  expect(lines[1]).toMatch(/^2026-10-01,Cao Cao,no,1,Alpha,/);
+  expect(lines[0]).toBe("date,commander,slot,governor,reason,locked");
+  expect(lines[1]).toMatch(/^2026-10-01,Cao Cao,1,Alpha,.*,no$/);
   expect(text).not.toContain("4200000");
-  await expect(page.locator("[data-csv-status]")).toContainText("CSV ready");
+  await expect(page.locator("[data-csv-status]")).toContainText("is ready: check your downloads.");
   expect(errors).toEqual([]);
 });
 

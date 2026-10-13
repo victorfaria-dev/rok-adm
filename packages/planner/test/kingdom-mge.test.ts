@@ -3,9 +3,11 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   MGE_LIMITS, MGE_SOURCES, describeMgeRules, emptyMgeDoc, isDay, mgePublicPayload, orderedEvents, parseCandidateLines, parseMgeDoc, parseMgePublic,
-  planMge, removeCandidate, setEventLocked, splitNameAndNumber,
+  parseMgeScore, parseMgeTagsText, planMge, readCandidateInput, removeCandidate, scoreRankScope, setEventLocked, splitNameAndNumber, updateCandidate,
   type MgeCandidate, type MgeDoc, type MgeEvent,
+  MGE_CSV_BOM, MGE_GOVERNORS_CSV_HEADER, MGE_LEDGER_CSV_HEADER, mgeCsvField, mgeCsvSafeText, mgeGovernorsCsv, mgeLedgerCsv,
 } from "../src/kingdom-mge";
+import { csvField, csvSafeText } from "../src/csv";
 
 const cand = (id: string, name: string, score: number | null = null, tags: string[] = []): MgeCandidate => ({ id, name, score, tags });
 const ev = (id: string, date: string, over: Partial<MgeEvent> = {}): MgeEvent => ({ id, date, commander: "", applicants: [], overrides: [], locked: false, result: null, ...over });
@@ -64,6 +66,19 @@ describe("score policy", () => {
     expect(p.events[0]!.assignments[2]!.publicReason).toBe("score rank 3");
     expect(p.warnings.filter((w) => w.code === "no_score").map((w) => w.candidateId)).toEqual(["z"]);
     expect(planMge({ ...d, candidates: [cand("x", "X", 4_200_000)] }).events[0]!.assignments[0]!.reason).toBe("score rank 1 (4,200,000)");
+  });
+
+  it("says exactly who the rank is counted among (applicants, governors not placed by hand)", () => {
+    const over = [{ slot: 1, candidateId: "a", reason: "Rally lead" }];
+    const reasons = (d: MgeDoc) => planMge(d).events[0]!.assignments.map((a) => [a.name, a.reason, a.publicReason]);
+    const d = doc({ policy: "score", slotsPerEvent: 2, candidates: FIVE, events: [ev("e1", "2026-10-01", { overrides: over })] });
+    // Alpha (top score) is placed by hand, so Bravo is first among the rest, not first overall.
+    expect(reasons(d)).toEqual([["Alpha", "manual: Rally lead", "manual: Rally lead"], ["Bravo", "score rank 1 among governors not placed by hand (400)", "score rank 1 among governors not placed by hand"]]);
+    const apps = { ...d, applicationsRequired: true, events: [ev("e1", "2026-10-01", { applicants: ["c", "e"] })] };
+    expect(reasons(apps)[0]).toEqual(["Charlie", "score rank 1 among applicants (300)", "score rank 1 among applicants"]);
+    const both = { ...apps, events: [ev("e1", "2026-10-01", { applicants: ["c", "e"], overrides: over })] };
+    expect(reasons(both)[1]).toEqual(["Charlie", "score rank 1 among applicants not placed by hand (300)", "score rank 1 among applicants not placed by hand"]);
+    expect(scoreRankScope(false, false)).toBe("");
   });
 
   it("score policy has no cooldown: the same top scores win every event", () => {
@@ -299,5 +314,200 @@ describe("locked history after lowering slots", () => {
     const pub = parseMgePublic(JSON.parse(JSON.stringify(mgePublicPayload(d, false, "2026-10-13"))));
     expect(pub!.events[0]!.slots).toHaveLength(20);
     expect(planMge(d).events[0]!.assignments).toHaveLength(20);
+  });
+});
+
+describe("typed governor fields", () => {
+  it("parseMgeScore: empty is no score, safe whole numbers pass, the rest is refused", () => {
+    expect(parseMgeScore("  ")).toEqual({ ok: true, score: null });
+    expect(parseMgeScore("4,200,000")).toEqual({ ok: true, score: 4_200_000 });
+    expect(parseMgeScore("4.2m")).toEqual({ ok: true, score: 4_200_000 });
+    expect(parseMgeScore(String(Number.MAX_SAFE_INTEGER))).toEqual({ ok: true, score: Number.MAX_SAFE_INTEGER });
+    for (const big of ["9007199254740992", "9,007,199,254,740,992", "99999999999999999999", "9999999999b"]) {
+      const r = parseMgeScore(big);
+      expect(r.ok, big).toBe(false);
+      if (!r.ok) {
+        expect(r.tooBig, big).toBe(true);
+        expect(r.message).toContain("9,007,199,254,740,991");
+      }
+    }
+    for (const bad of ["lots", "-5", "1.5", "1,00"]) {
+      const r = parseMgeScore(bad);
+      expect(r.ok, bad).toBe(false);
+      if (!r.ok) expect(r.tooBig, bad).toBe(false);
+    }
+  });
+
+  it("pasted lists refuse scores above the safe limit too", () => {
+    const r = parseCandidateLines("Big, 9,007,199,254,740,992\nOk, 5");
+    expect(r.rows).toEqual([{ name: "Ok", score: 5 }]);
+    expect(r.errors[0]!.message).toMatch(/too large/);
+  });
+
+  it("parseMgeTagsText lower-cases, drops duplicates and refuses too many or too long", () => {
+    expect(parseMgeTagsText(" Rally Lead, rally lead ,, garrison lead")).toEqual({ tags: ["rally lead", "garrison lead"] });
+    expect(parseMgeTagsText("a,b,c,d,e,f").error).toMatch(/at most 5 tags/);
+    expect(parseMgeTagsText("x".repeat(25)).error).toMatch(/at most 24 characters/);
+    expect(parseMgeTagsText("")).toEqual({ tags: [] });
+  });
+
+  it("readCandidateInput reports every bad field at once", () => {
+    const r = readCandidateInput({ name: " ", score: "abc", tags: "a,b,c,d,e,f" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(Object.keys(r.errors).sort()).toEqual(["name", "score", "tags"]);
+    const long = readCandidateInput({ name: "N".repeat(41), score: "", tags: "" });
+    expect(!long.ok && long.errors.name).toMatch(/at most 40/);
+  });
+});
+
+describe("updateCandidate (inline edit)", () => {
+  const base = () => doc({
+    policy: "rotation", slotsPerEvent: 2, cooldownEvents: 0, candidates: FIVE,
+    events: [ev("e1", "2026-10-01", { applicants: ["a", "b"] }), ev("e2", "2026-10-15", { overrides: [{ slot: 1, candidateId: "a", reason: "Rally lead" }] })],
+  });
+
+  it("renames in place: same id, applicants and overrides stay attached", () => {
+    const r = updateCandidate(base(), "a", { name: "Alpha Prime", score: "1.5m", tags: "Rally Lead" });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.previousName).toBe("Alpha");
+    expect(r.duplicate).toBe(false);
+    expect(r.doc.candidates[0]).toEqual({ id: "a", name: "Alpha Prime", score: 1_500_000, tags: ["rally lead"] });
+    expect(r.doc.candidates).toHaveLength(5);
+    expect(r.doc.events[0]!.applicants).toEqual(["a", "b"]);
+    expect(r.doc.events[1]!.overrides[0]!.candidateId).toBe("a");
+    const p = planMge(r.doc);
+    expect(p.events[1]!.assignments[0]).toMatchObject({ candidateId: "a", name: "Alpha Prime", reason: "manual: Rally lead" });
+  });
+
+  it("never rewrites the stored names of locked events", () => {
+    const locked = setEventLocked(base(), "e1", true);
+    expect(locked.events[0]!.result!.map((a) => a.name)).toEqual(["Alpha", "Bravo"]);
+    const r = updateCandidate(locked, "a", { name: "Renamed", score: "", tags: "" });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.doc.events[0]).toBe(locked.events[0]);
+    expect(planMge(r.doc).events[0]!.assignments.map((a) => a.name)).toEqual(["Alpha", "Bravo"]);
+    // The open event follows the new name, and rotation history (by id) still counts the locked slot.
+    expect(planMge(r.doc).events[1]!.assignments[0]!.name).toBe("Renamed");
+  });
+
+  it("allows a duplicate name and keeps the plan warning", () => {
+    const r = updateCandidate(base(), "b", { name: "alpha", score: "400", tags: "" });
+    expect(r.ok && r.duplicate).toBe(true);
+    if (r.ok) expect(planMge(r.doc).warnings.map((w) => w.code)).toContain("duplicate_name");
+  });
+
+  it("clearing the score sets it to null; bad input and unknown ids change nothing", () => {
+    const r = updateCandidate(base(), "a", { name: "Alpha", score: "", tags: "" });
+    expect(r.ok && r.candidate.score).toBeNull();
+    const bad = updateCandidate(base(), "a", { name: "Alpha", score: "9007199254740992", tags: "" });
+    expect(bad.ok).toBe(false);
+    if (!bad.ok) expect(bad.errors.score).toMatch(/too large/);
+    const gone = updateCandidate(base(), "zzz", { name: "X", score: "", tags: "" });
+    expect(gone.ok).toBe(false);
+  });
+});
+
+describe("CSV export", () => {
+  /** Minimal RFC 4180 reader for the tests: BOM stripped, CRLF rows, quoted cells. */
+  function readCsv(text: string): string[][] {
+    expect(text.startsWith(MGE_CSV_BOM)).toBe(true);
+    expect(text.endsWith("\r\n")).toBe(true);
+    const body = text.slice(1);
+    const rows: string[][] = [];
+    let row: string[] = [], cell = "", q = false;
+    for (let i = 0; i < body.length; i++) {
+      const ch = body[i]!;
+      if (q) {
+        if (ch === '"' && body[i + 1] === '"') { cell += '"'; i++; } else if (ch === '"') q = false; else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ",") { row.push(cell); cell = ""; }
+      else if (ch === "\r" && body[i + 1] === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; i++; }
+      else cell += ch;
+    }
+    return rows;
+  }
+
+  it("uses the same safety rules as the farms ledger CSV (pinned)", () => {
+    const samples = ["plain", "=SUM(A1)", "+1", "-1", "@cmd", "\tTab", "\rCR", "a,b", 'say "hi"', "line\nbreak", "ação 名前 🛡", "", " =lead"];
+    for (const x of samples) {
+      expect(mgeCsvSafeText(x), x).toBe(csvSafeText(x));
+      expect(mgeCsvField(x), x).toBe(csvField(x));
+    }
+  });
+
+  it("quotes commas, quotes and newlines; guards formulas; keeps unicode", () => {
+    expect(mgeCsvField("a,b")).toBe('"a,b"');
+    expect(mgeCsvField('He said "go"')).toBe('"He said ""go"""');
+    expect(mgeCsvField("two\nlines")).toBe('"two\nlines"');
+    expect(mgeCsvField("cr\rhere")).toBe('"cr\rhere"');
+    for (const f of ["=1+1", "+cmd", "-2", "@SUM", "\tx", "\rx"]) expect(mgeCsvSafeText(f)).toBe(`'${f}`);
+    expect(mgeCsvSafeText("Ålpha 王")).toBe("Ålpha 王");
+  });
+
+  const d = doc({
+    policy: "score", slotsPerEvent: 3, title: "K1",
+    candidates: [cand("a", "=HYPERLINK(\"x\")", 500, ["rally lead", "garrison lead"]), cand("b", "Bravo, Jr", 400), cand("c", "Ünïcödé 名前", null)],
+    events: [
+      ev("e2", "2026-10-15", { commander: '"Cao" Cao' }),
+      ev("e1", "2026-10-01", { commander: "+Ramesses", overrides: [{ slot: 1, candidateId: "b", reason: "Garrison, Kingsland" }] }),
+    ],
+  });
+
+  it("ledger CSV: oldest event first, one row per slot, scores left out by default", () => {
+    const csv = mgeLedgerCsv(planMge(d), false);
+    const rows = readCsv(csv);
+    expect(rows[0]).toEqual([...MGE_LEDGER_CSV_HEADER]);
+    expect(rows.slice(1)).toEqual([
+      ["2026-10-01", "'+Ramesses", "1", "Bravo, Jr", "manual: Garrison, Kingsland", "no"],
+      ["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "score rank 1 among governors not placed by hand", "no"],
+      ["2026-10-01", "'+Ramesses", "3", "", "not filled", "no"],
+      ["2026-10-15", '"Cao" Cao', "1", "'=HYPERLINK(\"x\")", "score rank 1", "no"],
+      ["2026-10-15", '"Cao" Cao', "2", "Bravo, Jr", "score rank 2", "no"],
+      ["2026-10-15", '"Cao" Cao', "3", "", "not filled", "no"],
+    ]);
+    expect(csv).not.toContain("500");
+    expect(csv).not.toContain("400");
+  });
+
+  it("ledger CSV: score column and scored reasons only when asked; locked events say yes", () => {
+    const locked = setEventLocked(d, "e1", true);
+    const rows = readCsv(mgeLedgerCsv(planMge(locked), true));
+    expect(rows[0]).toEqual([...MGE_LEDGER_CSV_HEADER, "score"]);
+    expect(rows[1]).toEqual(["2026-10-01", "'+Ramesses", "1", "Bravo, Jr", "manual: Garrison, Kingsland", "yes", ""]);
+    expect(rows[2]).toEqual(["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "score rank 1 among governors not placed by hand (500)", "yes", "500"]);
+    expect(rows[4]![5]).toBe("no");
+    expect(rows[4]![6]).toBe("500");
+  });
+
+  it("governors CSV: name, score, tags in list order, unicode kept", () => {
+    const csv = mgeGovernorsCsv(d);
+    expect(readCsv(csv)).toEqual([
+      [...MGE_GOVERNORS_CSV_HEADER],
+      ["'=HYPERLINK(\"x\")", "500", "rally lead; garrison lead"],
+      ["Bravo, Jr", "400", ""],
+      ["Ünïcödé 名前", "", ""],
+    ]);
+    expect(csv.split("\r\n")[2]).toBe('"Bravo, Jr",400,');
+  });
+
+  it("an empty plan gives a header-only file", () => {
+    expect(mgeLedgerCsv(planMge(doc()), false)).toBe(`${MGE_CSV_BOM}${MGE_LEDGER_CSV_HEADER.join(",")}\r\n`);
+    expect(mgeGovernorsCsv(doc())).toBe(`${MGE_CSV_BOM}name,score,tags\r\n`);
+  });
+});
+
+describe("score format vs size", () => {
+  it("a decimal comma is a format error, not 'too large'", async () => {
+    const { parseMgeScore } = await import("../src/kingdom-mge");
+    for (const t of ["1,5m", "4,2m", "1,234567890123456"]) {
+      const r = parseMgeScore(t);
+      expect(r.ok).toBe(false);
+      if (!r.ok) expect(r.tooBig, t).toBe(false);
+    }
+    const big = parseMgeScore("99,999,999,999,999,999");
+    expect(!big.ok && big.tooBig).toBe(true);
+    expect(parseMgeScore("1.5m")).toEqual({ ok: true, score: 1_500_000 });
   });
 });

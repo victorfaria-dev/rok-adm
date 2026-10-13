@@ -12,6 +12,7 @@ import {
   confidenceOf,
   factConfidence,
   indexFacts,
+  lowSpenderTargets,
   realityCheck,
   type Sourced,
 } from "@rokadm/planner";
@@ -19,11 +20,12 @@ import f2pBlocks from "../../../../guides/data/blocks.f2p.json";
 import farmsBlocks from "../../../../guides/data/blocks.farms.json";
 import first30Blocks from "../../../../guides/data/blocks.first30.json";
 import kingdomAdminBlocks from "../../../../guides/data/blocks.kingdomadmin.json";
+import lateStageBlocks from "../../../../guides/data/blocks.latestage.json";
 import lowBlocks from "../../../../guides/data/blocks.low.json";
 import newKingdomBlocks from "../../../../guides/data/blocks.newkingdom.json";
 import recoveryBlocks from "../../../../guides/data/blocks.recovery.json";
 import returningBlocks from "../../../../guides/data/blocks.returning.json";
-import type { BudgetPayload, CardBadge, GuideData, GuidePayload, PayloadBlock, PatchBadge } from "./guide-types";
+import type { BudgetPayload, CardBadge, GuideData, GuidePayload, LowBudgetPayload, LowValue, PayloadBlock, PatchBadge } from "./guide-types";
 
 /** Every blocks file in guides/data, by set name. */
 export const BLOCK_SETS: Record<string, readonly GuideBlock[]> = {
@@ -35,6 +37,7 @@ export const BLOCK_SETS: Record<string, readonly GuideBlock[]> = {
   returning: returningBlocks as unknown as GuideBlock[],
   recovery: recoveryBlocks as unknown as GuideBlock[],
   kingdomadmin: kingdomAdminBlocks as unknown as GuideBlock[],
+  latestage: lateStageBlocks as unknown as GuideBlock[],
 };
 
 const md = new Marked({ gfm: true, breaks: false });
@@ -198,6 +201,65 @@ export function buildBudgetPayload(): BudgetPayload {
       { text: `Lost Kingdom entry still needs City Hall ${k.lostKingdomEntryCH.value}.`, ...unchangedFacts(k.lostKingdomEntryCH.facts) },
     ],
     researched: [...BUDGET_DATA.researchedProfiles],
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Low spender targets (wave J): its own payload, fetched by the island for the Low profile only.
+
+const lowValue = (s: Sourced<number>): LowValue => ({ value: s.value, facts: [...s.facts], confidence: s.confidence, derived: s.derived, gaps: [...s.pendingGaps] });
+const lowValueOrNull = (s: Sourced<number> | null): LowValue | null => (s ? lowValue(s) : null);
+
+export function buildLowBudgetPayload(): LowBudgetPayload {
+  // The profile only sets growthFund.reachedCH25, which the page works out from the viewer's City Hall.
+  const t = lowSpenderTargets({ ...defaultProfile(), spending: "low" }, facts);
+  const inTier = new Set(t.tiers.flatMap((x) => x.lines.map((l) => l.purchase.id)));
+  return {
+    v: 1,
+    asOf: t.asOf,
+    message: t.message,
+    priceWarning: t.priceWarning,
+    rangeUsdPerMonth: { ...t.rangeUsdPerMonth },
+    purchases: t.purchases.map((p) => ({
+      id: p.id,
+      label: p.label,
+      kind: p.kind,
+      periodDays: p.periodDays,
+      items: p.items,
+      note: p.note,
+      priceUsd: lowValue(p.price),
+      gems: lowValueOrNull(p.gems),
+      vipPoints: lowValueOrNull(p.vipPoints),
+      gemsPerUsd: lowValueOrNull(p.gemsPerUsd),
+      vipPerUsd: lowValueOrNull(p.vipPerUsd),
+      confidence: p.confidence,
+      facts: [...p.facts],
+    })),
+    tiers: t.tiers.map((x) => ({
+      id: x.id,
+      label: x.label,
+      note: x.note,
+      lines: x.lines.map((l) => ({ purchaseId: l.purchase.id, timesPerMonth: Math.round(l.timesPerMonth * 100) / 100, assumed: l.assumed })),
+      monthlyUsd: lowValue(x.monthlyUsd),
+      monthlyGems: lowValue(x.monthlyGems),
+      monthlyVipPoints: lowValue(x.monthlyVipPoints),
+      oneTimeUsd: lowValue(x.oneTimeUsd),
+      oneTimeGems: lowValue(x.oneTimeGems),
+      withinLowRange: x.withinLowRange,
+    })),
+    outsideTiers: t.purchases.filter((p) => !inTier.has(p.id)).map((p) => p.id),
+    growthFund: { ch25Gems: lowValue(t.growthFund.ch25Gems), note: t.growthFund.note },
+    vip: {
+      label: t.vipTimeline.label,
+      rows: t.vipTimeline.milestones.map((m) => ({ vip: m.vip, threshold: m.threshold, day: m.day })),
+      facts: [...t.vipTimeline.facts],
+      confidence: t.vipTimeline.confidence,
+      gaps: [...t.vipTimeline.pendingGaps],
+      note: t.vipTimeline.note,
+    },
+    recharge: { text: t.recharge.text, facts: t.recharge.facts, confidence: t.recharge.confidence, gaps: t.recharge.pendingGaps },
+    valueMethod: { ...t.valueMethod },
+    confidence: t.confidence,
   };
 }
 
