@@ -1,0 +1,2024 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "KingdomOps local API",
+    "version": "v1",
+    "summary": "Local-only backend for kingdom spaces and farm/MGE/council sync.",
+    "description": "Local-only backend (`apps/api`, node:http + node:sqlite) for kingdom spaces and sync of farms, MGE and council documents. It is not deployed anywhere.\n\nGeneral behaviour:\n- Every body is `application/json` (otherwise 415) and at most 540672 bytes (otherwise 413).\n- Authenticated routes take `Authorization: Bearer <token>`. Missing or unknown token: 401. Token of another space, a space that does not exist, or a role that is not enough: 403.\n- `x-rokadm-auth` on each operation is the required role: `none`, `member` or `admin`.\n- Rate limits apply everywhere (429); creating a space and joining use a stricter bucket.\n- An unknown route answers 404 `not_found`; a known path with a wrong method answers 405.\n- Unexpected failures answer 500 `internal` with a generic message.\n- Errors use ErrorResponse `{ error, message, issues? }`.",
+    "license": {
+      "name": "Local-only; not deployed and not licensed for public hosting"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8787",
+      "description": "Local development server"
+    }
+  ],
+  "tags": [
+    {
+      "name": "system",
+      "description": "Health."
+    },
+    {
+      "name": "spaces",
+      "description": "Create, join, read and delete spaces."
+    },
+    {
+      "name": "members",
+      "description": "Members of a space."
+    },
+    {
+      "name": "invites",
+      "description": "Invite codes (admin)."
+    },
+    {
+      "name": "docs",
+      "description": "Synced documents: farms, MGE plan, council requirements, kingdom."
+    },
+    {
+      "name": "audit",
+      "description": "Audit log and full export (admin)."
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/v1/health": {
+      "get": {
+        "operationId": "health",
+        "tags": [
+          "system"
+        ],
+        "summary": "Health check",
+        "responses": {
+          "200": {
+            "description": "Server is up.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "none",
+        "security": []
+      }
+    },
+    "/v1/spaces": {
+      "post": {
+        "operationId": "createSpace",
+        "tags": [
+          "spaces"
+        ],
+        "summary": "Create a space",
+        "description": "Creates a space, its first admin member and a first invite. The token and invite code are shown only in this response. Stricter rate limit.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateSpaceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Space created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateSpaceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "413": {
+            "$ref": "#/components/responses/PayloadTooLarge"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "none",
+        "security": []
+      }
+    },
+    "/v1/join": {
+      "post": {
+        "operationId": "join",
+        "tags": [
+          "spaces"
+        ],
+        "summary": "Join a space with an invite code",
+        "description": "Stricter rate limit.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JoinRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Joined; the token is shown only here.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JoinResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "404": {
+            "$ref": "#/components/responses/InviteInvalid"
+          },
+          "409": {
+            "$ref": "#/components/responses/LimitReached"
+          },
+          "413": {
+            "$ref": "#/components/responses/PayloadTooLarge"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "none",
+        "security": []
+      }
+    },
+    "/v1/spaces/{spaceId}": {
+      "get": {
+        "operationId": "me",
+        "tags": [
+          "spaces"
+        ],
+        "summary": "The space and the calling member",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Space and member.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteSpace",
+        "tags": [
+          "spaces"
+        ],
+        "summary": "Delete the space (admin)",
+        "description": "Erases all data of the space: members, tokens, invites, documents and audit log.",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Space and all its data erased."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "admin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/members": {
+      "get": {
+        "operationId": "members",
+        "tags": [
+          "members"
+        ],
+        "summary": "List members",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Members.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MembersResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/members/{memberId}": {
+      "delete": {
+        "operationId": "removeMember",
+        "tags": [
+          "members"
+        ],
+        "summary": "Remove a member or leave the space",
+        "description": "`me` leaves the space. An admin may remove others; a member removing someone else gets 403. The last admin cannot leave while other members remain (409 limit_reached).",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          },
+          {
+            "name": "memberId",
+            "in": "path",
+            "required": true,
+            "description": "A member id, or `me` for the caller.",
+            "schema": {
+              "type": "string",
+              "pattern": "^(?:me|[a-z]{2}_[A-Za-z0-9_-]{16,32})$"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Member removed and their tokens revoked."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/LimitReached"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/invites": {
+      "get": {
+        "operationId": "invites",
+        "tags": [
+          "invites"
+        ],
+        "summary": "List invites (admin)",
+        "description": "Codes are never returned here; only their metadata.",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invites without codes.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvitesResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "admin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "operationId": "createInvite",
+        "tags": [
+          "invites"
+        ],
+        "summary": "Create an invite (admin)",
+        "description": "The body is optional; defaults apply. The code is shown only in this response.",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateInviteRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Invite created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CreateInviteResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "413": {
+            "$ref": "#/components/responses/PayloadTooLarge"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "admin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/invites/{inviteId}": {
+      "delete": {
+        "operationId": "revokeInvite",
+        "tags": [
+          "invites"
+        ],
+        "summary": "Revoke an invite (admin)",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          },
+          {
+            "name": "inviteId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Invite revoked."
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "admin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/docs": {
+      "get": {
+        "operationId": "docs",
+        "tags": [
+          "docs"
+        ],
+        "summary": "List document metadata",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "description": "Only documents of this kind; an unknown kind is a 400.",
+            "schema": {
+              "$ref": "#/components/schemas/DocKind"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Document metadata (no data).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/docs/{kind}/{docId}": {
+      "get": {
+        "operationId": "getDoc",
+        "tags": [
+          "docs"
+        ],
+        "summary": "Read a document",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DocKind"
+            }
+          },
+          {
+            "name": "docId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DocId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The document.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "put": {
+        "operationId": "putDoc",
+        "tags": [
+          "docs"
+        ],
+        "summary": "Create or replace a document",
+        "description": "Optimistic concurrency: `baseVersion` 0 creates, otherwise it must equal the stored version. Members may not write admin-only kinds (mge-plan, council-requirements, kingdom) and may only write `farms` documents they own (403). 409 is either a ConflictResponse (`version_conflict`, `current` may be null) or an ErrorResponse `limit_reached` (too many documents in the space).",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DocKind"
+            }
+          },
+          {
+            "name": "docId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DocId"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PutDocRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Document replaced.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocResponse"
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Document created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DocResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "409": {
+            "description": "`version_conflict` (ConflictResponse) or `limit_reached` (ErrorResponse).",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/ConflictResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/ErrorResponse"
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "413": {
+            "$ref": "#/components/responses/PayloadTooLarge"
+          },
+          "415": {
+            "$ref": "#/components/responses/UnsupportedMediaType"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      },
+      "delete": {
+        "operationId": "deleteDoc",
+        "tags": [
+          "docs"
+        ],
+        "summary": "Delete a document",
+        "description": "Same write permissions as PUT.",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          },
+          {
+            "name": "kind",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DocKind"
+            }
+          },
+          {
+            "name": "docId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/DocId"
+            }
+          },
+          {
+            "name": "version",
+            "in": "query",
+            "required": true,
+            "description": "The version the client last saw.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Document deleted."
+          },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
+          },
+          "409": {
+            "$ref": "#/components/responses/VersionConflict"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "member",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/audit": {
+      "get": {
+        "operationId": "audit",
+        "tags": [
+          "audit"
+        ],
+        "summary": "Read the audit log (admin)",
+        "description": "Newest first. `before` pages backwards by entry id.",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            }
+          },
+          {
+            "name": "before",
+            "in": "query",
+            "required": false,
+            "description": "Only entries with an id lower than this.",
+            "schema": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Audit entries.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuditResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "admin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/v1/spaces/{spaceId}/export": {
+      "get": {
+        "operationId": "exportSpace",
+        "tags": [
+          "audit"
+        ],
+        "summary": "Export all space data (admin)",
+        "parameters": [
+          {
+            "name": "spaceId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/EntityId"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Every record of the space.",
+            "headers": {
+              "Content-Disposition": {
+                "description": "attachment; filename=\"…\"",
+                "schema": {
+                  "type": "string",
+                  "pattern": "^attachment"
+                }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ExportResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "429": {
+            "$ref": "#/components/responses/RateLimited"
+          }
+        },
+        "x-rokadm-auth": "admin",
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "opaque",
+        "description": "Token returned once by createSpace or join."
+      }
+    },
+    "schemas": {
+      "SpaceRole": {
+        "type": "string",
+        "enum": [
+          "admin",
+          "member"
+        ]
+      },
+      "DocKind": {
+        "type": "string",
+        "enum": [
+          "farms",
+          "mge-plan",
+          "council-requirements",
+          "kingdom"
+        ]
+      },
+      "SyncResource": {
+        "type": "string",
+        "enum": [
+          "food",
+          "wood",
+          "stone",
+          "gold"
+        ]
+      },
+      "SyncFarmFocus": {
+        "type": "string",
+        "enum": [
+          "general",
+          "food",
+          "wood",
+          "stone",
+          "gold"
+        ]
+      },
+      "ErrorCode": {
+        "type": "string",
+        "enum": [
+          "bad_request",
+          "validation_failed",
+          "unauthorized",
+          "forbidden",
+          "not_found",
+          "version_conflict",
+          "payload_too_large",
+          "unsupported_media_type",
+          "rate_limited",
+          "invite_invalid",
+          "limit_reached",
+          "internal"
+        ]
+      },
+      "AuditAction": {
+        "type": "string",
+        "enum": [
+          "space.create",
+          "member.join",
+          "member.remove",
+          "member.leave",
+          "invite.create",
+          "invite.revoke",
+          "doc.put",
+          "doc.delete",
+          "space.export"
+        ]
+      },
+      "EntityId": {
+        "type": "string",
+        "pattern": "^[a-z]{2}_[A-Za-z0-9_-]{16,32}$"
+      },
+      "DocId": {
+        "type": "string",
+        "pattern": "^[A-Za-z0-9_-]{1,64}$"
+      },
+      "InviteCode": {
+        "type": "string",
+        "description": "Shown once. 12 symbols from 23456789ABCDEFGHJKMNPQRSTVWXYZ, usually formatted XXXX-XXXX-XXXX.",
+        "pattern": "^[2-9A-HJKMNP-TV-Z]{4}-?[2-9A-HJKMNP-TV-Z]{4}-?[2-9A-HJKMNP-TV-Z]{4}$"
+      },
+      "SpaceInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "kingdom",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+          },
+          "kingdom": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 99999
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "MemberInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "displayName",
+          "role",
+          "joinedAt"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32
+          },
+          "role": {
+            "$ref": "#/components/schemas/SpaceRole"
+          },
+          "joinedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InviteInfo": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "expiresAt",
+          "maxUses",
+          "uses",
+          "revoked",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxUses": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          },
+          "uses": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "revoked": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "InviteWithCode": {
+        "description": "InviteInfo plus the plain code, returned only when the invite is created.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "expiresAt",
+          "maxUses",
+          "uses",
+          "revoked",
+          "createdAt",
+          "code"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "expiresAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "maxUses": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300
+          },
+          "uses": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "revoked": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "code": {
+            "$ref": "#/components/schemas/InviteCode"
+          }
+        }
+      },
+      "DocMeta": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "ownerId",
+          "version",
+          "updatedAt",
+          "updatedBy"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/DocId"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/DocKind"
+          },
+          "ownerId": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/EntityId"
+          }
+        }
+      },
+      "FarmLevels": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {
+          "cityHall": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 25
+          },
+          "tradingPost": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 25
+          },
+          "goldmine": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 25
+          },
+          "academy": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 25
+          },
+          "commanderLevel": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 60
+          }
+        },
+        "description": "Missing fields are stored as null."
+      },
+      "SyncFarm": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "role",
+          "note",
+          "levels",
+          "gatheringUntil",
+          "daily",
+          "goal",
+          "createdAt"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/DocId"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 40,
+            "description": "Trimmed; 1..40 characters after trimming; control characters and U+2028/U+2029 are rejected."
+          },
+          "role": {
+            "$ref": "#/components/schemas/SyncFarmFocus"
+          },
+          "note": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 200,
+            "description": "Trimmed; 0..200 characters after trimming; control characters and U+2028/U+2029 are rejected."
+          },
+          "levels": {
+            "$ref": "#/components/schemas/FarmLevels"
+          },
+          "gatheringUntil": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "daily": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "date",
+                  "done"
+                ],
+                "properties": {
+                  "date": {
+                    "type": "string",
+                    "format": "date",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "done": {
+                    "type": "array",
+                    "maxItems": 100,
+                    "items": {
+                      "type": "string",
+                      "minLength": 1,
+                      "maxLength": 64
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "goal": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "resource",
+                  "amount"
+                ],
+                "properties": {
+                  "resource": {
+                    "$ref": "#/components/schemas/SyncResource"
+                  },
+                  "amount": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 1000000000000000
+                  }
+                }
+              }
+            ]
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "SyncShipment": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "farmId",
+          "date",
+          "resource",
+          "gross",
+          "taxRate",
+          "net"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/DocId"
+          },
+          "farmId": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]{1,64}$",
+            "description": "Must be the id of a farm in the same document."
+          },
+          "date": {
+            "type": "string",
+            "format": "date",
+            "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+          },
+          "resource": {
+            "$ref": "#/components/schemas/SyncResource"
+          },
+          "gross": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000000000000
+          },
+          "taxRate": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMaximum": 1
+          },
+          "net": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1000000000000000,
+            "description": "Must not exceed gross."
+          },
+          "note": {
+            "type": "string",
+            "minLength": 0,
+            "maxLength": 200,
+            "description": "Trimmed; 0..200 characters after trimming; control characters and U+2028/U+2029 are rejected."
+          }
+        }
+      },
+      "FarmsDocData": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "farms",
+          "shipments"
+        ],
+        "properties": {
+          "farms": {
+            "type": "array",
+            "maxItems": 10,
+            "items": {
+              "$ref": "#/components/schemas/SyncFarm"
+            }
+          },
+          "shipments": {
+            "type": "array",
+            "maxItems": 2000,
+            "items": {
+              "$ref": "#/components/schemas/SyncShipment"
+            }
+          }
+        },
+        "description": "`data` of a `farms` document (one ko:farms:v1 store). Farm ids and shipment ids are unique."
+      },
+      "GenericDocData": {
+        "type": "object",
+        "description": "`data` of the generic kinds: any JSON object, at most 8 levels deep, strings up to 4000 characters, finite numbers, keys up to 128 characters and never __proto__, constructor or prototype. Serialized size up to 524288 bytes.",
+        "x-max-depth": 8,
+        "propertyNames": {
+          "maxLength": 128,
+          "not": {
+            "enum": [
+              "__proto__",
+              "constructor",
+              "prototype"
+            ]
+          }
+        }
+      },
+      "DocData": {
+        "description": "FarmsDocData when kind is `farms`; GenericDocData otherwise.",
+        "anyOf": [
+          {
+            "$ref": "#/components/schemas/FarmsDocData"
+          },
+          {
+            "$ref": "#/components/schemas/GenericDocData"
+          }
+        ]
+      },
+      "SyncDoc": {
+        "description": "DocMeta plus `data`.",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "kind",
+          "ownerId",
+          "version",
+          "updatedAt",
+          "updatedBy",
+          "data"
+        ],
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/DocId"
+          },
+          "kind": {
+            "$ref": "#/components/schemas/DocKind"
+          },
+          "ownerId": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "version": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updatedBy": {
+            "$ref": "#/components/schemas/EntityId"
+          },
+          "data": {
+            "$ref": "#/components/schemas/DocData"
+          }
+        }
+      },
+      "AuditEntry": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "at",
+          "actorId",
+          "action",
+          "target"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "actorId": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/EntityId"
+              }
+            ]
+          },
+          "action": {
+            "$ref": "#/components/schemas/AuditAction"
+          },
+          "target": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      },
+      "Issue": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "path",
+          "message"
+        ],
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "error",
+          "message"
+        ],
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorCode"
+          },
+          "message": {
+            "type": "string"
+          },
+          "issues": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Issue"
+            }
+          }
+        }
+      },
+      "ConflictResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "error",
+          "message",
+          "current"
+        ],
+        "properties": {
+          "error": {
+            "const": "version_conflict"
+          },
+          "message": {
+            "type": "string"
+          },
+          "current": {
+            "description": "The server's current document, or null when it no longer exists.",
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "$ref": "#/components/schemas/SyncDoc"
+              }
+            ]
+          }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "version"
+        ],
+        "properties": {
+          "status": {
+            "const": "ok"
+          },
+          "version": {
+            "const": "v1"
+          }
+        }
+      },
+      "CreateSpaceRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "displayName"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60,
+            "description": "Trimmed; 1..60 characters after trimming; control characters and U+2028/U+2029 are rejected."
+          },
+          "kingdom": {
+            "type": [
+              "integer",
+              "null"
+            ],
+            "minimum": 1,
+            "maximum": 99999
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "description": "Trimmed; 1..32 characters after trimming; control characters and U+2028/U+2029 are rejected."
+          }
+        }
+      },
+      "CreateSpaceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "space",
+          "member",
+          "token",
+          "invite"
+        ],
+        "properties": {
+          "space": {
+            "$ref": "#/components/schemas/SpaceInfo"
+          },
+          "member": {
+            "$ref": "#/components/schemas/MemberInfo"
+          },
+          "token": {
+            "type": "string",
+            "description": "Bearer token, shown once; the server keeps only an HMAC of it."
+          },
+          "invite": {
+            "$ref": "#/components/schemas/InviteWithCode"
+          }
+        }
+      },
+      "JoinRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "inviteCode",
+          "displayName"
+        ],
+        "properties": {
+          "inviteCode": {
+            "type": "string",
+            "maxLength": 40,
+            "description": "Case-insensitive; spaces and dashes are ignored. Must normalize to 12 symbols of 23456789ABCDEFGHJKMNPQRSTVWXYZ."
+          },
+          "displayName": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 32,
+            "description": "Trimmed; 1..32 characters after trimming; control characters and U+2028/U+2029 are rejected."
+          }
+        }
+      },
+      "JoinResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "space",
+          "member",
+          "token"
+        ],
+        "properties": {
+          "space": {
+            "$ref": "#/components/schemas/SpaceInfo"
+          },
+          "member": {
+            "$ref": "#/components/schemas/MemberInfo"
+          },
+          "token": {
+            "type": "string",
+            "description": "Bearer token, shown once."
+          }
+        }
+      },
+      "MeResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "space",
+          "member"
+        ],
+        "properties": {
+          "space": {
+            "$ref": "#/components/schemas/SpaceInfo"
+          },
+          "member": {
+            "$ref": "#/components/schemas/MemberInfo"
+          }
+        }
+      },
+      "MembersResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "members"
+        ],
+        "properties": {
+          "members": {
+            "type": "array",
+            "maxItems": 300,
+            "items": {
+              "$ref": "#/components/schemas/MemberInfo"
+            }
+          }
+        }
+      },
+      "CreateInviteRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [],
+        "properties": {
+          "ttlHours": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 336,
+            "default": 72
+          },
+          "maxUses": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 300,
+            "default": 50
+          }
+        }
+      },
+      "CreateInviteResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "invite"
+        ],
+        "properties": {
+          "invite": {
+            "$ref": "#/components/schemas/InviteWithCode"
+          }
+        }
+      },
+      "InvitesResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "invites"
+        ],
+        "properties": {
+          "invites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InviteInfo"
+            }
+          }
+        }
+      },
+      "DocsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "docs"
+        ],
+        "properties": {
+          "docs": {
+            "type": "array",
+            "maxItems": 500,
+            "items": {
+              "$ref": "#/components/schemas/DocMeta"
+            }
+          }
+        }
+      },
+      "PutDocRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "baseVersion",
+          "data"
+        ],
+        "properties": {
+          "baseVersion": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 9007199254740991,
+            "description": "0 to create; otherwise the version the client last saw."
+          },
+          "data": {
+            "$ref": "#/components/schemas/DocData"
+          }
+        }
+      },
+      "DocResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "doc"
+        ],
+        "properties": {
+          "doc": {
+            "$ref": "#/components/schemas/SyncDoc"
+          }
+        }
+      },
+      "AuditResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "entries"
+        ],
+        "properties": {
+          "entries": {
+            "type": "array",
+            "maxItems": 200,
+            "items": {
+              "$ref": "#/components/schemas/AuditEntry"
+            }
+          }
+        }
+      },
+      "ExportResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "format",
+          "formatVersion",
+          "exportedAt",
+          "space",
+          "members",
+          "invites",
+          "docs",
+          "audit"
+        ],
+        "properties": {
+          "format": {
+            "const": "kingdomops-space-export"
+          },
+          "formatVersion": {
+            "const": 1
+          },
+          "exportedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "space": {
+            "$ref": "#/components/schemas/SpaceInfo"
+          },
+          "members": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MemberInfo"
+            }
+          },
+          "invites": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InviteInfo"
+            }
+          },
+          "docs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SyncDoc"
+            }
+          },
+          "audit": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AuditEntry"
+            }
+          }
+        }
+      }
+    },
+    "responses": {
+      "BadRequest": {
+        "description": "`bad_request` or `validation_failed`: malformed JSON, invalid parameter or a body that fails validation (`issues` lists each problem).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Unauthorized": {
+        "description": "`unauthorized`: missing, malformed or unknown bearer token.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "`forbidden`: the token belongs to another space, the space does not exist, or the member's role is not enough.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "`not_found`: the resource does not exist.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "InviteInvalid": {
+        "description": "`invite_invalid`: the invite is unknown, expired, revoked or used up. The message is the same in every case.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "LimitReached": {
+        "description": "`limit_reached`: a space limit was reached.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "PayloadTooLarge": {
+        "description": "`payload_too_large`: the request body exceeds 540672 bytes or the document data exceeds 524288 bytes.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "UnsupportedMediaType": {
+        "description": "`unsupported_media_type`: the body is not `application/json`.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "RateLimited": {
+        "description": "`rate_limited`: too many requests; retry later.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "VersionConflict": {
+        "description": "`version_conflict`: `baseVersion`/`version` does not match the stored document.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ConflictResponse"
+            }
+          }
+        }
+      }
+    }
+  }
+}
