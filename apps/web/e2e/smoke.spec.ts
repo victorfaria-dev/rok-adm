@@ -16,7 +16,7 @@ test.describe("every MVP route", () => {
       await page.setViewportSize({ width: 360, height: 780 });
       const res = await page.goto(route);
       expect(res?.status()).toBe(200);
-      await expect(page.locator("h1")).toHaveCount(1);
+      await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       expect(overflow).toBeLessThanOrEqual(0);
       expect(errors).toEqual([]);
@@ -94,7 +94,7 @@ test("pages open offline after the first visit", async ({ page, context }) => {
   await context.setOffline(true);
   for (const route of ["/guide/", "/start/", "/guides/", "/guides/new-kingdom/", "/guides/recovery/"]) {
     await page.goto(route);
-    await expect(page.locator("h1")).toHaveCount(1);
+    await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   }
   await context.setOffline(false);
 });

@@ -71,16 +71,16 @@ test.describe("page transitions", () => {
     await expect(page.locator(".cr-svg")).toHaveAttribute("data-shape", "round");
   });
 
-  test("/start reached by a link still moves focus to the question title", async ({ page }) => {
+  test("/start reached by a link still moves focus to the next question's replies", async ({ page }) => {
     await page.goto("/");
     await page.getByRole("link", { name: "Build my guide" }).first().click();
     await page.waitForURL("**/start/");
     const title = page.getByRole("heading", { level: 1 });
     await expect(page.locator("astro-island").first()).not.toHaveAttribute("ssr", "");
     const before = await title.textContent();
-    await page.getByRole("radio").first().check();
+    await page.getByRole("radio").first().focus();
     await page.keyboard.press("Enter");
     await expect(title).not.toHaveText(before ?? "");
-    await expect(title).toBeFocused();
+    await expect(page.getByRole("radio").first()).toBeFocused();
   });
 });
