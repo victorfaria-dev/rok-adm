@@ -56,8 +56,8 @@
 /* The clips' backdrop drifts a few levels around brand graphite: fade the square's sides into the card. */
 .st-stage > video, .st-stage > img {
   flex: none; width: var(--st-stage); height: var(--st-stage); transform-origin: 50% 100%;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 18%, black 82%, transparent);
 }
 @media (min-width: 768px) {
   .st-stage { --st-stage: clamp(160px, 30vh, 240px); }
