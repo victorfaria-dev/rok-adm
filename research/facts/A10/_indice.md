@@ -25,3 +25,18 @@ Related routine-relevant cards in other domains: A01-0011 (queue dashboard CH8),
 ## Conflicts
 - A10-0005 supersedes the Fandom Peerless Scholar page (obsolete 2023 schedule).
 - A10-0001: Fandom 2020 task list vs official 1.1.09 change (boost tasks removed).
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A10-0001 | mecanica | baixa | parcialmente_obsoleto | C04-0004 |
+| A10-0002 | estrategia | baixa | verificado |  |
+| A10-0003 | mecanica | media | verificado |  |
+| A10-0004 | mecanica | media | verificado |  |
+| A10-0005 | evento | alta | verificado |  |
+| A10-0006 | mecanica | alta | verificado |  |
+| A10-0007 | mecanica | media | verificado |  |
+| A10-0008 | mecanica | media | verificado |  |

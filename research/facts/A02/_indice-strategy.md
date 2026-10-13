@@ -26,3 +26,15 @@ Consensus scale used: `unanime` = all sources found agree, none dissent; `majori
 
 - Current tech names and an ordered F2P research path with times (allclash order is 2019).
 - Quantitative trade-off: speedups to research vs City Hall vs hoarding for events (core of guide objective).
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A02-0500 | estrategia | media | verificado |  |
+| A02-0501 | estrategia | media | verificado |  |
+| A02-0502 | estrategia | baixa | verificado |  |
+| A02-0503 | estrategia | baixa | verificado |  |
+| A02-0504 | estrategia | baixa | verificado |  |

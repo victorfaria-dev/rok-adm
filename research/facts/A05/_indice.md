@@ -24,3 +24,18 @@ Daily chest only: VIP6 ≈ day 62, VIP8 ≈ day 179. Chest + 100 gems/day: VIP6 
 ## Conflicts
 - A05-0005 ↔ A01-0006 (VIP 7 vs VIP 6 for permanent 2nd builder; resolved in favour of VIP 6: Fandom + quiz).
 - A05-0002: Fandom production columns vs official 1.1.09 notes.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A05-0001 | mecanica | media | verificado |  |
+| A05-0002 | mecanica | baixa | parcialmente_obsoleto | C04-0004 |
+| A05-0003 | mecanica | media | verificado |  |
+| A05-0004 | mecanica | media | verificado |  |
+| A05-0005 | mecanica | baixa | contestado |  |
+| A05-0006 | mecanica | media | verificado |  |
+| A05-0007 | derivado | baixa | verificado |  |
+| A05-0008 | estrategia | media | verificado |  |

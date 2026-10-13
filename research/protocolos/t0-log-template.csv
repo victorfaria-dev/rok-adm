@@ -1,0 +1,5 @@
+date,kingdom_day,ch,vip,task,minutes,rewards,gems_in,gems_out,notes,screenshot
+2026-10-14,1,1,0,observation,,,,,"EXAMPLE ROW - delete. Version 1.1.xx, kingdom NNNN, civ China",2026-10-14_day01_version.png
+2026-10-14,1,6,0,ap-regen,60.0,,,,"EXAMPLE - ap_before=820 at 14:05 UTC; ap_after=??? at 15:05 UTC; no AP spent; civ China",2026-10-14_day01_ap-regen.png
+2026-10-14,1,8,1,daily-objectives,4.5,"100-pt chest: 100 gems, Golden Key",100,,"EXAMPLE - source=daily-objectives",2026-10-14_day01_daily-objectives.png
+2026-10-14,1,8,1,gems-eod,,,,,"EXAMPLE - gems_held=???",

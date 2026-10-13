@@ -21,3 +21,18 @@
 
 ## Conflicts
 - None open. Fandom & S04 agree on AP cost mechanics.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A09-0001 | mecanica | alta | verificado |  |
+| A09-0002 | mecanica | media | verificado |  |
+| A09-0003 | mecanica | media | verificado |  |
+| A09-0004 | mecanica | media | verificado |  |
+| A09-0005 | mecanica | media | verificado |  |
+| A09-0006 | mecanica | media | verificado |  |
+| A09-0007 | estrategia | media | verificado |  |
+| A09-0008 | mecanica | alta | verificado |  |

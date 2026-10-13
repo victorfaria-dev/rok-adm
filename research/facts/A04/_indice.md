@@ -30,3 +30,21 @@ Guaranteed: **100 gems/day** (A04-0001). Everything else unquantified: barbarian
 ## Conflicts
 - A04-0009: S04 contradicts itself on buying Books of Covenant with gems; AllClash vs majority on gems→VIP (see A05-0008).
 - A04-0004 internally inconsistent with the "2000+ gems every other day" claim of the same article.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A04-0001 | mecanica | media | verificado |  |
+| A04-0002 | mecanica | media | verificado |  |
+| A04-0003 | mecanica | media | verificado |  |
+| A04-0004 | mecanica | baixa | verificado |  |
+| A04-0005 | mecanica | media | verificado |  |
+| A04-0006 | derivado | baixa | verificado |  |
+| A04-0007 | mecanica | media | verificado |  |
+| A04-0008 | mecanica | media | verificado |  |
+| A04-0009 | estrategia | media | verificado |  |
+| A04-0010 | mecanica | media | verificado |  |
+| A04-0011 | estrategia | media | verificado |  |

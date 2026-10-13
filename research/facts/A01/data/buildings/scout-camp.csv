@@ -1,0 +1,26 @@
+Level,Requirements,Scout March Speed Bonus,Exploration Range,Number of Scouts,Cost,Time,Power,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,City Hall Lv.2,5%,5x5,1,F/W/S/G=300/300/-/-,4s,5,300,300,,,,4s,4,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+2,City Hall Lv.2,10%,5x5,1,F/W/S/G=500/500/-/-,15s,10,500,500,,,,15s,15,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+3,City Hall Lv.3,15%,'6x6',1,F/W/S/G=1.0K/1.0K/-/-,1m,16,1000,1000,,,,1m,60,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+4,City Hall Lv.4,20%,6x6,1,F/W/S/G=2.0K/2.0K/-/-,3m 30s,32,2000,2000,,,,3m 30s,210,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+5,City Hall Lv.5,25%,'7x7','2',F/W/S/G=3.8K/3.8K/-/-,14m 10s,81,3800,3800,,,,14m 10s,850,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+6,City Hall Lv.6,30%,7x7,2,F/W/S/G=6.5K/6.5K/-/-,35m,191,6500,6500,,,,35m,2100,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+7,?,35%,'8x8',2,F/W/S/G=9.8K/9.8K/-/-,1h 10m,398,9800,9800,,,,1h 10m,4200,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+8,?,40%,8x8,2,F/W/S/G=14.8K/14.8K/-/-,2h 10m,769,14800,14800,,,,2h 10m,7800,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+9,City Hall Lv.9,45%,'9x9',2,F/W/S/G=22.3K/22.3K/-/-,2h 53m,"1,274",22300,22300,,,,2h 53m,10380,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+10,?,50%,9x9,2,F/W/S/G=31.3K/31.3K/-/-,3h 58m,"1,971",31300,31300,,,,3h 58m,14280,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+11,?,60%,'10x10','3',F/W/S/G=42.5K/42.5K/-/-,5h 23m,"2,916",42500,42500,,,,5h 23m,19380,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+12,?,70%,10x10,3,F/W/S/G=52.5K/52.5K/-/-,8h 3m,"4,286",52500,52500,,,,8h 3m,28980,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+13,?,80%,'11x11',3,F/W/S/G=60.0K/60.0K/-/-,9h 56m,"5,956",60000,60000,,,,9h 56m,35760,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+14,?,90%,'12x12',3,F/W/S/G=67.5K/67.5K/-/-,12h 6m,"7,969",67500,67500,,,,12h 6m,43560,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+15,?,90%,'13x13',3,F/W/S/G=75.0K/75.0K/-/-,14h 27m,"10,350",75000,75000,,,,14h 27m,52020,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+16,?,100%,13x13,3,F/W/S/G=82.5K/82.5K/-/-,17h 26m,"13,191",82500,82500,,,,17h 26m,62760,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+17,?,100%,'14x14',3,F/W/S/G=92.5K/92.5K/-/-,1d,"17,149",92500,92500,,,,1d,86400,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+18,?,110%,14x14,3,F/W/S/G=102.5K/102.5K/-/-,1d 8h,"22,223",102500,102500,,,,1d 8h,115200,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+19,?,110%,'15x15',3,F/W/S/G=115.0K/115.0K/-/-,1d 16h,"28,423",115000,115000,,,,1d 16h,144000,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+20,?,115%,15x15,3,F/W/S/G=127.5K/127.5K/-/-,2d 2h,"36,109",127500,127500,,,,2d 2h,180000,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+21,?,115%,'16x16',3,F/W/S/G=142.5K/142.5K/-/-,2d 17h,"46,007",142500,142500,,,,2d 17h,234000,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+22,?,120%,16x16,3,F/W/S/G=157.5K/157.5K/-/-,3d 8h,"58,118",157500,157500,,,,3d 8h,288000,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+23,?,120%,'17x17',3,F/W/S/G=250.0K/250.0K/-/-,4d 9h,"74,187",250000,250000,,,,4d 9h,378000,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+24,?,120%,18x18,3,F/W/S/G=500.0K/500.0K/-/-,5d 20h,"96,279",500000,500000,,,,5d 20h,504000,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements
+25,?,125%,'20x20',3,?,?,139 023,,,,,?,?,,https://riseofkingdoms.fandom.com/wiki/Buildings/Scout_Camp/Requirements

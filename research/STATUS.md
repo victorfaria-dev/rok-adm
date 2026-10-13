@@ -13,6 +13,8 @@ Victor (direção, ideias, decisões finais)
        └─ Sub-admin ENGENHARIA (a partir da onda de especificação) → modelo de dados, arquitetura, protótipo
 ```
 
+Limitação técnica (descoberta na onda 2): subagentes **não conseguem disparar outros subagentes**. Na prática o sub-admin executa o trabalho ele mesmo e o paralelismo é feito pelo admin geral, disparando vários sub-admins/workers ao mesmo tempo.
+
 Regras: cada sub-admin recebe um objetivo e critérios de aceitação, dispara seus próprios workers, só escreve nas suas pastas e devolve um relatório curto. Só o admin geral faz commit e muda `00-PLANO.md`, `fontes.md` e schemas.
 
 Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 os sub-admins assumem.
@@ -33,7 +35,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 
 | Frente | Responsável | Escopo |
 |--------|-------------|--------|
-| Integração + verificação + lacunas + protocolo T0 + context packs de conta | Sub-admin CONTA | A01–A14, B01 |
+| Integração + verificação + lacunas + protocolo T0 + context packs de conta | Sub-admin CONTA | A01–A14, B01 — **concluída**: 134/151 verificadas, 4 erros factuais corrigidos, 7 context packs, protocolo T0 |
 | Verificação + dores de líderes + context packs de administração de reino | Sub-admin REINO | B02–B09, D-05xx |
 | Soluções conceituais por dor (hipóteses) | Brainstorm | `brainstorm/solucoes/` — **concluída**: 70 dores cobertas, 34 fichas, matriz + top 10 |
 

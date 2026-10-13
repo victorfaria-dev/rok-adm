@@ -29,3 +29,18 @@ Consensus scale used: `unanime` = all sources found agree, none dissent; `majori
 - Eve of the Crusade duration (6 vs 9 days).
 - Any 2025–2026 change to KvK1 timing or format for new kingdoms.
 - Whether 'Tides of War' exists (not found).
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| B01-0500 | evento | media | verificado |  |
+| B01-0501 | evento | media | parcialmente_obsoleto | C04-0007 |
+| B01-0502 | evento | baixa | contestado |  |
+| B01-0503 | evento | baixa | parcialmente_obsoleto | C04-0002 |
+| B01-0504 | evento | baixa | verificado |  |
+| B01-0505 | evento | baixa | organizado |  |
+| B01-0506 | estrategia | baixa | verificado |  |
+| B01-0700 | estrategia | baixa | verificado |  |

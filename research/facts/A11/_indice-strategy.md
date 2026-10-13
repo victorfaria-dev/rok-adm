@@ -40,3 +40,24 @@ Consensus scale used: `unanime` = all sources found agree, none dissent; `majori
 - Time cost (minutes) and reward amounts per event — needed for value-per-hour ranking.
 - Whether Champions of Olympia and Sunset Canyon still run in 2026 (only bulk-dated pages).
 - Official (T1) event list / calendar.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A11-0500 | estrategia | media | verificado |  |
+| A11-0501 | estrategia | media | verificado |  |
+| A11-0502 | estrategia | media | verificado |  |
+| A11-0503 | estrategia | baixa | parcialmente_obsoleto | C04-0022 |
+| A11-0504 | estrategia | media | verificado |  |
+| A11-0505 | estrategia | media | verificado |  |
+| A11-0506 | estrategia | baixa | verificado |  |
+| A11-0507 | estrategia | baixa | verificado |  |
+| A11-0508 | estrategia | baixa | verificado |  |
+| A11-0509 | estrategia | baixa | verificado |  |
+| A11-0510 | estrategia | baixa | verificado |  |
+| A11-0511 | estrategia | baixa | verificado |  |
+| A11-0512 | evento | media | verificado |  |
+| A11-0513 | evento | media | verificado |  |

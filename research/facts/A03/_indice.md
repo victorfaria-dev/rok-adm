@@ -46,3 +46,42 @@ Generated 2026-10-13 by A-economy collector/organizer. Status of all cards: orga
 - Measured gathering yield per hour/day by CH stage (needed for time-per-yield model) — only anecdotes (A03-0022).
 - Alliance resource point hourly yields and resource-center capacity/cost.
 - Precise CH-by-CH bottleneck table — only qualitative consensus (A03-0021).
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A03-0001 | mecanica | media | contestado |  |
+| A03-0002 | mecanica | media | verificado |  |
+| A03-0003 | mecanica | media | verificado |  |
+| A03-0004 | mecanica | media | verificado |  |
+| A03-0005 | mecanica | baixa | contestado |  |
+| A03-0006 | mecanica | media | verificado |  |
+| A03-0007 | mecanica | media | verificado |  |
+| A03-0008 | mecanica | media | verificado |  |
+| A03-0009 | mecanica | alta | verificado |  |
+| A03-0010 | mecanica | baixa | verificado |  |
+| A03-0011 | mecanica | media | verificado |  |
+| A03-0012 | mecanica | media | verificado |  |
+| A03-0013 | mecanica | alta | verificado |  |
+| A03-0014 | mecanica | media | verificado |  |
+| A03-0015 | mecanica | media | verificado |  |
+| A03-0016 | estrategia | media | verificado |  |
+| A03-0017 | estrategia | media | verificado |  |
+| A03-0018 | estrategia | baixa | verificado |  |
+| A03-0019 | mecanica | baixa | verificado |  |
+| A03-0020 | mecanica | baixa | verificado |  |
+| A03-0021 | estrategia | media | verificado |  |
+| A03-0022 | estrategia | baixa | parcialmente_obsoleto | 1.0.49 (2021-08-03) |
+| A03-0023 | mecanica | media | verificado |  |
+| A03-0024 | mecanica | alta | verificado |  |
+| A03-0025 | mecanica | media | contestado |  |
+| A03-0026 | mecanica | media | verificado |  |
+| A03-0027 | mecanica | media | verificado |  |
+| A03-0028 | mecanica | media | verificado |  |
+| A03-0029 | mecanica | media | verificado |  |
+| A03-0030 | regra | alta | verificado |  |
+| A03-0031 | mecanica | alta | verificado |  |
+| A03-0032 | mecanica | alta | verificado |  |

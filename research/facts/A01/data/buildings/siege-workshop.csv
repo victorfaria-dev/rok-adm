@@ -1,0 +1,26 @@
+Level,Requirements,Siege Training Capacity,Cost,Time,Power,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,City Hall Lv.4,20,F/W/S/G=400/500/-/-,10s,5,400,500,,,,10s,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+2,Barracks Lv.2 + Archery Range Lv.2 + Stable Lv.2,50,F/W/S/G=800/1.0K/-/-,1m 30s,10,800,1000,,,,1m 30s,90,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+3,Barracks Lv.3 + Archery Range Lv.3 + Stable Lv.3,100,F/W/S/G=1.5K/2.0K/-/-,4m,26,1500,2000,,,,4m,240,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+4,Barracks Lv.4 + Archery Range Lv.4 + Stable Lv.4,150,F/W/S/G=2.8K/3.8K/-/-,10m,63,2800,3800,,,,10m,600,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+5,Barracks Lv.5 + Archery Range Lv.5 + Stable Lv.5,200,F/W/S/G=5.0K/6.8K/-/-,16m 40s,126,5000,6800,,,,16m 40s,1000,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+6,Barracks Lv.6 + Archery Range Lv.6 + Stable Lv.6,250,F/W/S/G=8.5K/11.5K/5.7K/-,45m 50s,293,8500,11500,5700,,,45m 50s,2750,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+7,Barracks Lv.7 + Archery Range Lv.7 + Stable Lv.7,300,F/W/S/G=12.8K/17.3K/9.0K/-,1h 32m,600,12800,17300,9000,,,1h 32m,5520,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+8,Barracks Lv.8 + Archery Range Lv.8 + Stable Lv.8,350,F/W/S/G=19.3K/26.0K/14.4K/-,6h 7m,"1,173",19300,26000,14400,,,6h 7m,22020,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+9,Barracks Lv.9 + Archery Range Lv.9 + Stable Lv.9,400,F/W/S/G=19.3K/26.0K/14.4K/-,6h 7m,"2,258",19300,26000,14400,,,6h 7m,22020,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+10,Barracks Lv.10 + Archery Range Lv.10 + Stable Lv.10,450,F/W/S/G=43.5K/58.5K/36.9K/-,12h 13m,"4,332",43500,58500,36900,,,12h 13m,43980,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+11,Barracks Lv.11 + Archery Range Lv.11 + Stable Lv.11,500,F/W/S/G=67.5K/90.0K/57.5K/-,14h 40m,"6,931",67500,90000,57500,,,14h 40m,52800,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+12,Barracks Lv.12 + Archery Range Lv.12 + Stable Lv.12,550,F/W/S/G=102.5K/135.0K/87.5K/-,17h 36m,"10,202",102500,135000,87500,,,17h 36m,63360,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+13,Barracks Lv.13 + Archery Range Lv.13 + Stable Lv.13,600,F/W/S/G=102.5K/135.0K/87.5K/-,21h 7m,"14,355",102500,135000,87500,,,21h 7m,76020,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+14,Barracks Lv.14 + Archery Range Lv.14 + Stable Lv.14,700,F/W/S/G=232.5K/305.0K/200.0K/-,1d 1h,"19,679",232500,305000,200000,,,1d 1h,90000,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+15,Barracks Lv.15 + Archery Range Lv.15 + Stable Lv.15,800,F/W/S/G=350.0K/457.5K/300.0K/-,1d 12h,"26,573",350000,457500,300000,,,1d 12h,129600,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+16,Barracks Lv.16 + Archery Range Lv.16 + Stable Lv.16,900,F/W/S/G=525.0K/687.5K/450.0K/-,1d 12h,"35,603",525000,687500,450000,,,1d 12h,129600,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+17,Barracks Lv.17 + Archery Range Lv.17 + Stable Lv.17,"1,000",F/W/S/G=787.5K/1.0M/675.0K/-,1d 20h,"47,574",787500,1000000,675000,,,1d 20h,158400,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+18,Barracks Lv.18 + Archery Range Lv.18 + Stable Lv.18,"1,100",F/W/S/G=1.2M/1.6M/1.0M/-,2d 5h,"63,716",1200000,1600000,1000000,,,2d 5h,190800,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+19,Barracks Lv.19 + Archery Range Lv.19 + Stable Lv.19,"1,200",F/W/S/G=1.8M/2.3M/1.6M/-,3d 4h,"85,697",1800000,2300000,1600000,,,3d 4h,273600,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+20,Barracks Lv.20 + Archery Range Lv.20 + Stable Lv.20,"1,300",F/W/S/G=2.7M/3.5M/2.3M/-,3d 4h,"115,969",2700000,3500000,2300000,,,3d 4h,273600,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+21,Barracks Lv.21 + Archery Range Lv.21 + Stable Lv.21,"1,400",F/W/S/G=4.1M/5.3M/3.5M/-,3d 19h,"158,145",4100000,5300000,3500000,,,3d 19h,327600,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+22,Barracks Lv.22 + Archery Range Lv.22 + Stable Lv.22,"1,500",F/W/S/G=6.1M/7.9M/5.3M/-,4d 22h,"218,794",6100000,7900000,5300000,,,4d 22h,424800,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+23,Barracks Lv.23 + Archery Range Lv.23 + Stable Lv.23,"1,600",F/W/S/G=9.1M/11.8M/7.9M/-,6d 21h,"308,118",9100000,11800000,7900000,,,6d 21h,594000,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+24,Barracks Lv.24 + Archery Range Lv.24 + Stable Lv.24,"1,700",F/W/S/G=13.8M/17.8M/12.0M/-,10d 8h,"442,817",13800000,17800000,12000000,,,10d 8h,892800,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements
+25,Barracks Lv.25 + Archery Range Lv.25 + Stable Lv.25,"2,000",0,0,"716,764",,,,,0,0,,https://riseofkingdoms.fandom.com/wiki/Buildings/Siege_Workshop/Requirements

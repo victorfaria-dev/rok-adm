@@ -1,0 +1,26 @@
+Level,Requirements,Reinforcement Troop Capacity,Times You Can Be Helped,Cost,Time,Power,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,City Hall Lv.3,"15,000",5,F/W/S/G=500/500/-/-,7s,5,500,500,,,,7s,7,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+2,City Hall Lv.3,"20,000",6,F/W/S/G=1.0K/1.0K/-/-,35s,10,1000,1000,,,,35s,35,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+3,City Hall Lv.3,"30,000",7,F/W/S/G=2.0K/2.0K/-/-,1m 30s,21,2000,2000,,,,1m 30s,90,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+4,City Hall Lv.4,"50,000",8,F/W/S/G=3.8K/3.8K/-/-,7m,53,3800,3800,,,,7m,420,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+5,City Hall Lv.5,"75,000",9,F/W/S/G=6.8K/6.8K/-/-,15m,116,6800,6800,,,,15m,900,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+6,City Hall Lv.6,"100,000",10,F/W/S/G=11.5K/11.5K/4.4K/-,37m 30s,265,11500,11500,4400,,,37m 30s,2250,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+7,0,"125,000",11,F/W/S/G=17.3K/17.3K/7.0K/-,1h 15m,535,17300,17300,7000,,,1h 15m,4500,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+8,0,"150,000",12,F/W/S/G=26.0K/26.0K/11.2K/-,2h 30m,"1,032",26000,26000,11200,,,2h 30m,9000,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+9,0,"175,000",13,F/W/S/G=39.0K/39.0K/18.0K/-,5h,"1,962",39000,39000,18000,,,5h,18000,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+10,City HallLv.10,"200,000",14,F/W/S/G=58.5K/58.5K/28.7K/-,10h,"3,722",58500,58500,28700,,,10h,36000,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+11,City HallLv.11,"237,500",15,F/W/S/G=90.0K/90.0K/45.0K/-,12h,"5,945",90000,90000,45000,,,12h,43200,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+12,City HallLv.12,"275,000",16,F/W/S/G=135.0K/135.0K/67.5K/-,14h 24m,"8,761",135000,135000,67500,,,14h 24m,51840,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+13,City HallLv.13,"312,500",17,F/W/S/G=202.5K/202.5K/102.5K/-,17h 16m,"12,366",202500,202500,102500,,,17h 16m,62160,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+14,City HallLv.14,"350,000",18,F/W/S/G=305.0K/305.0K/155.0K/-,20h 44m,"17,036",305000,305000,155000,,,20h 44m,74640,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+15,City HallLv.15,"387,500",19,F/W/S/G=457.5K/457.5K/232.5K/-,1d 1h,"23,146",457500,457500,232500,,,1d 1h,90000,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+16,City HallLv.16,"425,000",20,F/W/S/G=687.5K/687.5K/350.0K/-,1d 6h,"31,245",687500,687500,350000,,,1d 6h,108000,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+17,City HallLv.17,"462,500",21,F/W/S/G=1.0M/1.0M/525.0K/-,1d 12h,"42,109",1000000,1000000,525000,,,1d 12h,129600,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+18,City HallLv.18,"500,000",22,F/W/S/G=1.6M/1.6M/800.0K/-,1d 18h,"56,900",1600000,1600000,800000,,,1d 18h,151200,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+19,City HallLv.19,"537,500",23,F/W/S/G=2.3M/2.3M/1.2M/-,2d 3h,"77,229",2300000,2300000,1200000,,,2d 3h,183600,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+20,City HallLv.20,"575,000",24,F/W/S/G=3.5M/3.5M/1.8M/-,2d 14h,"105,544",3500000,3500000,1800000,,,2d 14h,223200,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+21,City HallLv.21,"612,500",25,F/W/S/G=5.3M/5.3M/2.7M/-,3d 2h,"145,342",5300000,5300000,2700000,,,3d 2h,266400,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+22,City HallLv.22,"650,000",26,F/W/S/G=7.9M/7.9M/4.1M/-,4d,"202,900",7900000,7900000,4100000,,,4d,345600,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+23,City HallLv.23,"687,500",27,F/W/S/G=11.8M/11.8M/6.1M/-,5d 15h,"287,897",11800000,11800000,6100000,,,5d 15h,486000,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+24,City HallLv.24,"750,000",28,F/W/S/G=17.8M/17.8M/9.3M/-,8d 11h,"415,855",17800000,17800000,9300000,,,8d 11h,730800,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements
+25,City HallLv.25,"1,000,000",30,F/W/S/G=26.8M/26.8M/14.0M/- Master's Blueprint,0,"667,083",26800000,26800000,14000000,,Master's Blueprint,0,,https://riseofkingdoms.fandom.com/wiki/Buildings/Alliance_Center/Requirements

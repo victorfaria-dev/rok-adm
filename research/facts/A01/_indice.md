@@ -30,3 +30,21 @@ Full per-level costs/times for all 19 buildings: `research/raw/A-pilot/fandom-bu
 - A01-0001/A01-0004 ↔ A01-0009 (early unlock levels; Fandom per-building pages vs Fandom CH table vs S04).
 - A01-0006 ↔ A05-0005 (2nd builder VIP 6 vs VIP 7).
 - Independence issue: riseofkingdomsguides (S04) CH table is a copy of Fandom (shared typo "1,322,48").
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A01-0001 | mecanica | media | verificado |  |
+| A01-0002 | mecanica | media | verificado |  |
+| A01-0003 | regra | media | verificado |  |
+| A01-0004 | mecanica | media | verificado |  |
+| A01-0005 | derivado | baixa | verificado |  |
+| A01-0006 | mecanica | alta | verificado |  |
+| A01-0007 | estrategia | media | verificado |  |
+| A01-0008 | mecanica | alta | verificado |  |
+| A01-0009 | mecanica | baixa | contestado |  |
+| A01-0010 | mecanica | baixa | verificado |  |
+| A01-0011 | mecanica | alta | verificado |  |

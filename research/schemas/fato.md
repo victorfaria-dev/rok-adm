@@ -24,6 +24,8 @@ fontes:
     trecho: "citação literal curta que sustenta a afirmação"
     acessado_em: 2026-10-13
     publicado_em: 2026-01-02  # data de publicação/atualização da fonte, se visível (nem sempre confiável)
+    publicado_em_tipo: null   # revisao | publicacao | modificado | modificado_em_massa (data não confiável)
+    citacao_literal: true     # false se o trecho é paráfrase (ficha não pode ser 'verificado')
     copia_de: null            # slug da fonte original, se esta fonte copia outra (não conta como independente)
 versao_jogo: "desconhecida"  # patch/temporada a que o fato se refere, se souber
 data_fonte: 2026-10-13       # data de revisão/publicação da fonte principal
@@ -56,4 +58,7 @@ notas: ""
 - Comentários do organizador em notas brutas começam com `>>`.
 - Lacunas viram itens em `facts/<dom>/_lacunas.md` (ID `L-<dom>-NN`, impacto alto|medio|baixo, método sugerido: medição T0, fonte específica).
 - `data_referencia` (v1) migra para `data_validade`.
+- `data_validade` = última data em que uma fonte (ou T0) confirma que o fato ainda vale; não é a data de acesso.
+- Fontes T4 (Reddit, reviews) só corroboram: nunca elevam mecânica acima de `media`.
+- Guias e context packs filtram por **status E confiança** (`verificado` + `confianca >= media`); `verificado` sozinho não basta.
 - Fichas antigas com `baixo|medio|alto` são lidas como `low|medium|high` (migração na integração).

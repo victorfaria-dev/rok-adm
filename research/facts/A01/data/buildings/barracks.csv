@@ -1,0 +1,26 @@
+Level,Unlocks Building,Requirements,Training Capacity,Troop Attack Bonus,Cost,Time,Power,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,None,None,20,-,None,None,5,,,,,None,None,,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+2,Siege Workshop Lv.2,City Hall Lv.2,50,-,F/W/S/G=500/800/-/-,20s,10,500,800,,,,20s,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+3,Siege Workshop Lv.3,City Hall Lv.3,100,-,F/W/S/G=1.0K/1.5K/-/-,60s,20,1000,1500,,,,60s,60,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+4,Siege Workshop Lv.4,City Hall Lv.4,150,-,F/W/S/G=2.0K/2.8K/-/-,3m 20s,37,2000,2800,,,,3m 20s,200,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+5,Siege Workshop Lv.5,Farm Lv.5,200,-,F/W/S/G=3.8K/5.0K/-/-,16m 40s,94,3800,5000,,,,16m 40s,1000,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+6,Siege Workshop Lv.6,Farm Lv.6,250,-,F/W/S/G=6.5K/8.5K/3.4K/-,45m 50s,244,6500,8500,3400,,,45m 50s,2750,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+7,Siege Workshop Lv.7,Farm Lv.7,300,-,F/W/S/G=9.8K/12.8K/5.4K/-,1h 32m,525,9800,12800,5400,,,1h 32m,5520,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+8,Siege Workshop Lv.8,Farm Lv.8,350,-,F/W/S/G=14.8K/19.3K/8.7K/-,3h 3m,"1,059",14800,19300,8700,,,3h 3m,10980,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+9,Siege Workshop Lv.9,Farm Lv.9,400,-,F/W/S/G=22.3K/29.0K/13.9K/-,6h 7m,"2,083",22300,29000,13900,,,6h 7m,22020,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+10,Siege Workshop Lv.10,Farm Lv.10,450,0.5%,F/W/S/G=33.5K/43.5K/22.2K/-,12h 13m,"4,063",33500,43500,22200,,,12h 13m,43980,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+11,Siege Workshop Lv.11,Farm Lv.11,500,0.5%,F/W/S/G=52.5K/67.5K/35.0K/-,14h 40m,"6,520",52500,67500,35000,,,14h 40m,52800,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+12,Siege Workshop Lv.12,Farm Lv.12,550,0.5%,F/W/S/G=80.0K/102.5K/52.5K/-,17h 36m,"9,576",80000,102500,52500,,,17h 36m,63360,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+13,Siege Workshop Lv.13,Farm Lv.13,600,0.5%,F/W/S/G=120.0K/155.0K/80.0K/-,21h 7m,"13,407",120000,155000,80000,,,21h 7m,76020,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+14,Siege Workshop Lv.14,Farm Lv.14,700,0.5%,F/W/S/G=180.0K/232.5K/120.0K/-,1d 1h,"18,241",180000,232500,120000,,,1d 1h,90000,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+15,Siege Workshop Lv.15,Farm Lv.15,800,0.5%,F/W/S/G=270.0K/350.0K/180.0K/-,1d 6h,"24,400",270000,350000,180000,,,1d 6h,108000,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+16,Siege Workshop Lv.16,Farm Lv.16,900,1%,F/W/S/G=405.0K/525.0K/270.0K/-,1d 12h,"32,325",405000,525000,270000,,,1d 12h,129600,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+17,Siege Workshop Lv.17,Farm Lv.17,"1,000",1%,F/W/S/G=607.5K/787.5K/405.0K/-,1d 20h,"42,636",607500,787500,405000,,,1d 20h,158400,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+18,Siege Workshop Lv.18,Farm Lv.18,"1,100",1%,F/W/S/G=925.0K/1.2M/625.0K/-,2d 5h,"56,328",925000,1200000,625000,,,2d 5h,190800,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+19,Siege Workshop Lv.19,Farm Lv.19,"1,200",1%,F/W/S/G=1.4M/1.8M/950.0K/-,2d 15h,"74,659",1400000,1800000,950000,,,2d 15h,226800,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+20,Siege Workshop Lv.20,Farm Lv.20,"1,300",1%,F/W/S/G=2.1M/2.7M/1.4M/-,3d 4h,"99,431",2100000,2700000,1400000,,,3d 4h,273600,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+21,Siege Workshop Lv.21,Farm Lv.21,"1,400",1.5%,F/W/S/G=3.2M/4.1M/2.2M/-,3d 19h,"133,357",3200000,4100000,2200000,,,3d 19h,327600,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+22,Siege Workshop Lv.22,Farm Lv.22,"1,500",1.5%,F/W/S/G=4.7M/6.1M/3.2M/-,4d 22h,"181,631",4700000,6100000,3200000,,,4d 22h,424800,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+23,Siege Workshop Lv.23,Farm Lv.23,"1,600",1.5%,F/W/S/G=7.1M/9.1M/4.9M/-,6d 21h,"252,430",7100000,9100000,4900000,,,6d 21h,594000,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+24,Siege Workshop Lv.24,Farm Lv.24,"1,700",1.5%,F/W/S/G=10.8M/13.8M/7.5M/-,10d 8h,"359,629",10800000,13800000,7500000,,,10d 8h,892800,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements
+25,Siege Workshop Lv.25,Farm Lv.25,"2,000",2%,F/W/S/G=16.2M/20.8M/11.2M1x size = 24,34d 2h,"592,326",16200000,20800000,11200000,,size = 24 1x Master's Blueprint (glued to cost cell in wiki),34d 2h,2944800,https://riseofkingdoms.fandom.com/wiki/Buildings/Barracks/Requirements

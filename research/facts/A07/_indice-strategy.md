@@ -24,3 +24,15 @@ Consensus scale used: `unanime` = all sources found agree, none dissent; `majori
 
 - Blueprint sources and crafting time; effect of 2026 armaments/refining changes on F2P sets.
 - Material income per day for F2P (to plan epic set by KvK1).
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A07-0500 | estrategia | media | verificado |  |
+| A07-0501 | estrategia | baixa | organizado |  |
+| A07-0502 | estrategia | baixa | verificado |  |
+| A07-0503 | estrategia | baixa | verificado |  |
+| A07-0504 | estrategia | baixa | verificado |  |

@@ -14,3 +14,13 @@
 
 ## Conflicts
 - None direct; BlueStacks (2021) weighs starter commander over perks — compatible with China recommendation.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A14-0001 | mecanica | media | verificado |  |
+| A14-0002 | mecanica | alta | verificado |  |
+| A14-0003 | estrategia | media | verificado |  |

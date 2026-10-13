@@ -15,3 +15,15 @@ Generated 2026-10-13 by A-economy collector/organizer. Status of all cards: orga
 - Reddit/community consensus on low-spender purchases — reddit.com blocked; only a 2019 snippet.
 - Official VIP points per $ and Growth Fund milestone table — not found.
 - Value of first-purchase gem multiplier (returned 2026-01-01 per C04 timeline) — not researched.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A12-0001 | estrategia | media | verificado |  |
+| A12-0002 | estrategia | media | verificado |  |
+| A12-0003 | estrategia | baixa | verificado |  |
+| A12-0004 | estrategia | baixa | verificado |  |
+| A12-0005 | estrategia | media | verificado |  |

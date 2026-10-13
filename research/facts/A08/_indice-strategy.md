@@ -27,3 +27,17 @@ Consensus scale used: `unanime` = all sources found agree, none dissent; `majori
 - Quantified cost: heal vs retrain (resources, time) T4/T5.
 - Hospital capacity targets for KvK1.
 - Community (Reddit) debate on T4 vs T5 for F2P — inaccessible.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A08-0500 | estrategia | media | verificado |  |
+| A08-0501 | estrategia | baixa | verificado |  |
+| A08-0502 | estrategia | media | verificado |  |
+| A08-0503 | estrategia | media | verificado |  |
+| A08-0504 | estrategia | media | organizado |  |
+| A08-0505 | estrategia | media | verificado |  |
+| A08-0506 | estrategia | media | verificado |  |

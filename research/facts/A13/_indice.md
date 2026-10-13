@@ -23,3 +23,20 @@ Generated 2026-10-13 by A-economy collector/organizer. Status of all cards: orga
 - Farms per spending tier — no source.
 
 Farm-guide variant notes (single-resource / all-resource / pair farms): `research/raw/A-economy/_farm-variants.md`.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A13-0001 | regra | media | organizado |  |
+| A13-0002 | estrategia | media | verificado |  |
+| A13-0003 | estrategia | media | verificado |  |
+| A13-0004 | estrategia | baixa | organizado |  |
+| A13-0005 | estrategia | media | verificado |  |
+| A13-0006 | estrategia | baixa | verificado |  |
+| A13-0007 | estrategia | baixa | verificado |  |
+| A13-0008 | regra | baixa | verificado |  |
+| A13-0009 | estrategia | baixa | verificado |  |
+| A13-0010 | estrategia | media | verificado |  |

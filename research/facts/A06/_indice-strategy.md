@@ -44,3 +44,27 @@ Consensus scale used: `unanime` = all sources found agree, none dissent; `majori
 - Expertise vs sweet-spot (5-1-1-1 / 5-5-1-1) comparison for F2P with sculpture costs.
 - Free/kingdom-gated legendary acquisition routes (Minamoto, Pelagius, Kingdom-event commanders) and timing.
 - Reddit/Discord community voice (T4) — inaccessible; consensus levels are from T3 guides only.
+
+## Wave 2 status (2026-10-13)
+
+Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-wave2.md`; gaps in `_lacunas.md`. Source IDs are now slugs (`fontes.md`). Current status (this table supersedes the type/confidence/status columns above):
+
+| ID | Tipo | Conf. | Status | Invalidado por |
+|---|---|---|---|---|
+| A06-0500 | estrategia | media | verificado |  |
+| A06-0501 | estrategia | media | verificado |  |
+| A06-0502 | estrategia | media | verificado |  |
+| A06-0503 | estrategia | baixa | verificado |  |
+| A06-0504 | estrategia | media | verificado |  |
+| A06-0505 | estrategia | media | verificado |  |
+| A06-0506 | estrategia | baixa | verificado |  |
+| A06-0507 | estrategia | baixa | verificado |  |
+| A06-0508 | estrategia | baixa | verificado |  |
+| A06-0509 | estrategia | baixa | verificado |  |
+| A06-0510 | estrategia | media | verificado |  |
+| A06-0511 | estrategia | baixa | verificado |  |
+| A06-0512 | estrategia | baixa | verificado |  |
+| A06-0513 | estrategia | baixa | verificado |  |
+| A06-0514 | estrategia | baixa | verificado |  |
+| A06-0515 | estrategia | baixa | verificado |  |
+| A06-0516 | estrategia | media | verificado |  |

@@ -1,0 +1,26 @@
+Level,Unlocks,Requirements,Max Wall Durability,Cost,Time,Power,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,None,None,"15,000",None,None,5,,,,,None,None,,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+2,'Watchtower' Lv.2,None,"15,500",F/W/S/G=2.3K/2.8K/-/-,2s,15,2300,2800,,,,2s,2,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+3,City Hall Lv.4 + 'Watchtower' Lv.3,City Hall Lv.3,"16,000",F/W/S/G=4.3K/5.0K/-/-,1m 30s,37,4300,5000,,,,1m 30s,90,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+4,City Hall Lv.5 + 'Watchtower' Lv.4,City Hall Lv.4,"16,500",F/W/S/G=7.8K/9.0K/-/-,10m,94,7800,9000,,,,10m,600,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+5,City Hall Lv.6 + 'Watchtower' Lv.5,'Tavern' Lv.5,"17,000",F/W/S/G=14.0K/16.3K/-/-,30m,226,14000,16300,,,,30m,1800,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+6,City Hall Lv.7 + 'Watchtower' Lv.6,'Tavern' Lv.6,"17,500",F/W/S/G=18.0K/21.0K/25.0K/-,58m 20s,519,18000,21000,25000,,,58m 20s,3500,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+7,City Hall Lv.8 + 'Watchtower' Lv.7,'Tavern' Lv.7,"18,250",F/W/S/G=27.0K/32.0K/40.0K/-,1h 57m,"1,037",27000,32000,40000,,,1h 57m,7020,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+8,City Hall Lv.9 + 'Watchtower' Lv.8,'Tavern' Lv.8,"19,000",F/W/S/G=41.0K/47.0K/64.0K/-,3h 53m,"1,965",41000,47000,64000,,,3h 53m,13980,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+9,City Hall Lv.10 + 'Watchtower' Lv.9,'Tavern' Lv.9,"19,750",F/W/S/G=61.0K/71.0K/102.4K/-,7h 47m,"3,656",61000,71000,102400,,,7h 47m,28020,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+10,City Hall Lv.11 + 'Watchtower' Lv.10,'Tavern' Lv.10,"20,500",F/W/S/G=92.0K/106.0K/164.0K/-,15h 33m,"6,784",92000,106000,164000,,,15h 33m,55980,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+11,City Hall Lv.12 + 'Watchtower' Lv.11,'Tavern' Lv.11,"21,250",F/W/S/G=137.0K/160.0K/250.0K/-,18h 40m,"10,816",137000,160000,250000,,,18h 40m,67200,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+12,City Hall Lv.13 + 'Watchtower' Lv.12,'Tavern' Lv.12,"22,000",F/W/S/G=207.0K/240.0K/375.0K/-,22h 24m,"16,060",207000,240000,375000,,,22h 24m,80640,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+13,City Hall Lv.14 + 'Watchtower' Lv.13,'Tavern' Lv.13,"22,750",F/W/S/G=310.0K/360.0K/565.0K/-,1d 3h,"22,965",310000,360000,565000,,,1d 3h,97200,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+14,City Hall Lv.15 + 'Watchtower' Lv.14,'Tavern' Lv.14,"23,500",F/W/S/G=465.0K/540.0K/850.0K/-,1d 8h,"32,169",465000,540000,850000,,,1d 8h,115200,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+15,City Hall Lv.16 + 'Watchtower' Lv.15,'Tavern' Lv.15,"24,250",F/W/S/G=698.0K/810.0K/1.3M/-,1d 22h,"44,583",698000,810000,1300000,,,1d 22h,165600,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+16,City Hall Lv.17 + 'Watchtower' Lv.16,'Tavern' Lv.16,"25,000",F/W/S/G=1.0M/1.2M/1.9M/-,1d 22h,"61,540",1000000,1200000,1900000,,,1d 22h,165600,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+17,City Hall Lv.18 + 'Watchtower' Lv.17,'Tavern' Lv.17,"26,000",F/W/S/G=1.6M/1.8M/2.9M/-,2d 8h,"84,977",1600000,1800000,2900000,,,2d 8h,201600,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+18,City Hall Lv.19 + 'Watchtower' Lv.18,'Tavern' Lv.18,"27,000",F/W/S/G=2.4M/2.7M/4.4M/-,2d 19h,"117,860",2400000,2700000,4400000,,,2d 19h,241200,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+19,City Hall Lv.20 + 'Watchtower' Lv.19,'Tavern' Lv.19,"28,000",F/W/S/G=3.5M/4.1M/6.6M/-,3d 8h,"164,369",3500000,4100000,6600000,,,3d 8h,288000,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+20,City Hall Lv.21 + 'Watchtower' Lv.20,'Tavern' Lv.20,"29,000",F/W/S/G=5.3M/6.2M/9.9M/-,4d,"230,776",5300000,6200000,9900000,,,4d,345600,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+21,City Hall Lv.22 + 'Watchtower' Lv.21,'Tavern' Lv.21,"30,000",F/W/S/G=8.0M/9.3M/14.8M/-,4d 20h,"326,321",8000000,9300000,14800000,,,4d 20h,417600,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+22,City Hall Lv.23 + 'Watchtower' Lv.22,'Tavern' Lv.22,"31,000",F/W/S/G=12.0M/13.9M/22.2M/-,6d 6h,"466,309",12000000,13900000,22200000,,,6d 6h,540000,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+23,City Hall Lv.24 + 'Watchtower' Lv.23,'Tavern' Lv.23,"32,000",F/W/S/G=18.0M/20.9M/33.3M/-,8d 18h,"674,163",18000000,20900000,33300000,,,8d 18h,756000,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+24,City Hall Lv.25 + 'Watchtower' Lv.24,'Tavern' Lv.24,"33,000",F/W/S/G=27.0M/31.3M/50.0M/-,13d 3h,"986,224",27000000,31300000,50000000,,,13d 3h,1134000,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
+25,'Watchtower' Lv.25,'Tavern' Lv.25,"40,000",F/W/S/G=40.5M/47.1M/75.0M1x size = 24,41d 4h,"1,545,374",40500000,47100000,75000000,,size = 24 1x Master's Blueprint (glued to cost cell in wiki),41d 4h,3556800,https://riseofkingdoms.fandom.com/wiki/Buildings/Wall/Requirements
