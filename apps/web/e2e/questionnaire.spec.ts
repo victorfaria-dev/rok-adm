@@ -120,9 +120,17 @@ test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }
   await open(page);
   const field = page.getByRole("textbox", { name: QUESTIONS[stepOf("cityHall")]!.label });
   await field.fill("30");
+  // The grumble is brief (~700 ms): record it as it happens instead of racing it under load.
+  await page.evaluate(() => {
+    const w = window as unknown as { grumbled: boolean };
+    w.grumbled = false;
+    new MutationObserver(() => {
+      if (document.querySelector(".q-msg-bot[data-current] .st-avatar[data-state=grumble]")) w.grumbled = true;
+    }).observe(document.querySelector(".q-log")!, { subtree: true, childList: true, attributes: true });
+  });
   await page.getByRole("button", { name: "Next" }).click();
   await expect(page.getByText("30 is out of range. Enter a number from 1 to 25.")).toBeVisible();
-  await expect(page.locator(".q-msg-bot[data-current] .st-avatar")).toHaveAttribute("data-state", "grumble");
+  await expect.poll(() => page.evaluate(() => (window as unknown as { grumbled: boolean }).grumbled)).toBe(true);
   await expect(field).toHaveAttribute("aria-invalid", "true");
   await expect(field).toBeFocused();
   await field.press("Enter");
