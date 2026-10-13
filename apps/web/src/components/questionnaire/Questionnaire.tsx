@@ -91,7 +91,8 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   }, [state.step, state.answers]);
 
   // Focus: question heading on every step change; the field when an error appears.
-  useEffect(() => {
+  // Layout effect: focus must land before the next key event, or a fast Enter/Tab races it.
+  useLayoutEffect(() => {
     if (focusHeading.current) {
       focusHeading.current = false;
       headingRef.current?.focus();
