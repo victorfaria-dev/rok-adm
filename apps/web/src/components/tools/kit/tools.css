@@ -85,3 +85,6 @@
 .t-deferred { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
 .t-deferred ul { margin: var(--ko-space-2) 0 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
 .t-page-body { display: grid; gap: var(--ko-space-6); min-width: 0; }
+.t-checklist { display: grid; gap: var(--ko-space-3); justify-items: start; min-width: 0; }
+.t-checklist .t-check { width: 100%; }
+.t-progress { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
