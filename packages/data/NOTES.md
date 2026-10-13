@@ -51,3 +51,9 @@ Timeline rows with no C04 card are not emitted: 1.0.72, 1.0.76, 1.0.79, 1.0.80, 
 5. **`PatchEntry.date`** should be documented as an ISO date *or* a `YYYY-MM` partial date. Optionally add a **`PatchEntry.official: boolean`** (T1 notes exist), instead of encoding that in `confidence`.
 6. **`DataTable`** and **`FormulaResult<T>`** (`{value, inputs, confidence, usable, assumptions}`) are defined in this package for now (`src/dataset.ts`, `src/formulas.ts`). Move them to core if planner or core consume them.
 7. `guides/data/blocks.newkingdom.json` now exists. The pipeline only loads `blocks.f2p.json`, as asked. Generalising to `blocks.*.json` is a one-line change.
+
+## Decisão (2026-10-13): versões sem ficha C04 ficam fora do `patches.json`
+
+Aprovado pelo Victor, por recomendação do admin. As 12 versões que aparecem só na tabela de `research/context/game-state-and-patch-timeline.md` (ex.: 1.0.72, 1.1.11) não entram no dataset enquanto não tiverem ficha C04, porque sem ficha não há confiança atribuída.
+
+Gatilho para criar a ficha: quando um guia, bloco, fórmula ou funcionalidade precisar citar aquela versão (ex.: uma mudança que torna um conselho obsoleto). Nesse caso, criar a ficha C04 com fonte, rodar `pnpm build:data` e o teste de dataset atualizado.
