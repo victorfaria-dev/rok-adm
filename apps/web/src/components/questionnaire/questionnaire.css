@@ -1,0 +1,113 @@
+/* Questionnaire island (/start). Operate mode: Plex Sans for labels and options, Chakra Petch for
+   the question title and buttons, Plex Mono for numbers. Only --ko-* tokens. */
+
+.q { max-width: 640px; margin-inline: auto; display: grid; gap: var(--ko-space-4); min-width: 0; }
+
+.q-top { display: flex; align-items: center; justify-content: space-between; gap: var(--ko-space-3); }
+.q-close {
+  display: inline-flex; align-items: center; gap: var(--ko-space-2);
+  min-height: 48px; min-width: 48px; margin-left: calc(-1 * var(--ko-space-2)); padding-inline: var(--ko-space-2);
+  color: var(--ko-text-muted); text-decoration: none; font-size: var(--ko-text-sm);
+}
+.q-progress { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+
+.q-bar { height: 2px; background: var(--ko-border); overflow: hidden; }
+.q-bar span {
+  display: block; height: 100%; background: var(--ko-accent); transform-origin: left center;
+  transition: transform var(--ko-duration-base) var(--ko-ease-out);
+}
+
+/* Step change: short fade and a small lift; no lift with reduced motion. */
+.q-step {
+  display: grid; gap: var(--ko-space-4); padding-top: var(--ko-space-4);
+  transition: opacity var(--ko-duration-fast) var(--ko-ease-out), transform var(--ko-duration-fast) var(--ko-ease-out);
+}
+@starting-style {
+  .q-step { opacity: 0; transform: translateY(var(--ko-space-2)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .q-step, .q-bar span { transition: none; }
+  @starting-style { .q-step { transform: none; } }
+}
+
+.q-title {
+  font-size: var(--ko-text-2xl); line-height: var(--ko-leading-2xl);
+  outline: none; scroll-margin-top: var(--ko-space-6); overflow-wrap: anywhere;
+}
+.q-title:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 4px; }
+.q-help { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 65ch; }
+
+.q-body { display: grid; gap: var(--ko-space-4); min-width: 0; }
+
+/* Large radio options: whole row is the target (≥ 48 px). */
+.q-options { display: grid; gap: var(--ko-space-2); }
+.q-option {
+  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--ko-space-3);
+  min-height: 56px; padding: var(--ko-space-3) var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  cursor: pointer; user-select: none;
+  transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out);
+}
+.q-option:has(input:checked) { border-color: var(--ko-accent); background: var(--ko-surface-raised); }
+.q-option:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.q-option:active { background: var(--ko-surface-raised); }
+.q-option input { width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); }
+.q-option input:focus-visible { outline: none; }
+.q-option-text { display: grid; gap: var(--ko-space-1); min-width: 0; overflow-wrap: anywhere; }
+.q-option-label { font-weight: var(--ko-weight-medium); }
+.q-option-help { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+
+/* Number field: label above, hint, input, error below. */
+.q-field { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.q-label { font-weight: var(--ko-weight-semibold); }
+.q-hint { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.q-input {
+  width: 100%; min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
+  font-family: var(--ko-font-mono); font-size: 16px; font-variant-numeric: tabular-nums;
+  color: var(--ko-text); background: var(--ko-surface); caret-color: var(--ko-accent);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+.q-input[aria-invalid="true"] { border-color: var(--ko-error); }
+.q-error { color: var(--ko-error); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); font-weight: var(--ko-weight-medium); }
+.q-error[hidden] { display: none; }
+
+/* Actions stay in reach of the thumb on long lists (civilization). */
+.q-actions {
+  position: sticky; bottom: 0; z-index: 1;
+  display: flex; flex-wrap: wrap; gap: var(--ko-space-2);
+  margin-inline: calc(-1 * var(--ko-space-4)); padding: var(--ko-space-3) var(--ko-space-4) calc(var(--ko-space-3) + env(safe-area-inset-bottom, 0px));
+  background: var(--ko-background); border-top: 1px solid var(--ko-border);
+}
+.q-actions .btn { flex: 1 1 auto; }
+.q-next { order: 1; flex-basis: 40%; }
+
+/* Summary. */
+.q-review { margin: 0; display: grid; border-top: 1px solid var(--ko-border); }
+.q-review-row { display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.q-review dt { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-review dd { margin: 0; display: flex; align-items: center; justify-content: space-between; gap: var(--ko-space-3); min-width: 0; }
+.q-answer { font-weight: var(--ko-weight-medium); overflow-wrap: anywhere; min-width: 0; }
+.q-change {
+  flex: none; min-height: 48px; padding-inline: var(--ko-space-3);
+  background: transparent; border: 0; color: var(--ko-accent); cursor: pointer;
+  font: var(--ko-weight-semibold) var(--ko-text-sm)/1 var(--ko-font-body); text-decoration: underline; text-underline-offset: 3px;
+}
+.q-notes { display: grid; gap: var(--ko-space-2); padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-warning); border-radius: var(--ko-radius-md); }
+.q-notes-error { border-color: var(--ko-error); }
+.q-notes h2 { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); }
+.q-notes ul { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); }
+.q-notes li p { overflow-wrap: anywhere; font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-notes-error li { display: grid; justify-items: start; }
+.q-notes-error .q-change { padding-inline: 0; }
+
+@media (min-width: 768px) {
+  .q-title { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  .q-actions { margin-inline: 0; padding-inline: 0; }
+  .q-actions .btn { flex: 0 0 auto; }
+  .q-next { margin-left: auto; min-width: 200px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .q-option:hover { border-color: var(--ko-text-muted); }
+  .q-option:has(input:checked):hover { border-color: var(--ko-accent); }
+  .q-close:hover { color: var(--ko-text); }
+}

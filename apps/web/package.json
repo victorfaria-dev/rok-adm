@@ -12,11 +12,11 @@
     "e2e": "playwright test"
   },
   "dependencies": {
-    "@rokadm/core": "workspace:*",
     "@astrojs/preact": "4.1.3",
     "@fontsource/chakra-petch": "5.2.7",
     "@fontsource/ibm-plex-mono": "5.2.7",
     "@fontsource/ibm-plex-sans": "5.2.8",
+    "@rokadm/core": "workspace:*",
     "astro": "5.18.2",
     "preact": "10.29.8"
   },
@@ -24,8 +24,10 @@
     "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.10.2",
     "@playwright/test": "1.56.1",
-    "typescript": "5.6.3",
+    "@testing-library/preact": "3.2.4",
+    "happy-dom": "20.14.5",
     "tsx": "4.19.2",
+    "typescript": "5.6.3",
     "vitest": "2.1.8"
   }
 }

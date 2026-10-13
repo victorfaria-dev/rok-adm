@@ -1,0 +1,143 @@
+import AxeBuilder from "@axe-core/playwright";
+import { QUESTIONS } from "@rokadm/core";
+import { expect, test, type Page } from "@playwright/test";
+
+const stepOf = (id: string): number => QUESTIONS.findIndex((q) => q.id === id);
+const title = (page: Page) => page.getByRole("heading", { level: 1 });
+const WORST = { spending: "kraken", lifetimeSpendUsd: 10_000_000, minutesPerDay: 1440, sessionsPerDay: 24, kingdomDay: 5000, cityHall: 25, civilization: null };
+
+/** Seed localStorage before the island reads it. */
+async function seed(page: Page, store: object) {
+  await page.goto("/");
+  await page.evaluate((s) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: "dark", ...s })), store);
+}
+
+/** Press Tab until the focused element matches (keyboard only, no clicks). */
+async function tabTo(page: Page, selector: string) {
+  for (let i = 0; i < 25; i++) {
+    await page.keyboard.press("Tab");
+    if (await page.evaluate((sel) => document.activeElement?.matches(sel) ?? false, selector)) return;
+  }
+  throw new Error(`Tab never reached ${selector}`);
+}
+
+async function enter(page: Page, times = 1) {
+  for (let i = 0; i < times; i++) {
+    const before = await title(page).textContent();
+    await page.keyboard.press("Enter");
+    await expect(title(page)).not.toHaveText(before ?? "");
+  }
+}
+
+test("keyboard only: answer every question and land on /guide/?p=", async ({ page }) => {
+  await page.goto("/start/");
+  await expect(title(page)).toHaveText(QUESTIONS[0]!.label);
+  await expect(page.getByText("1 of 10")).toBeVisible();
+
+  await tabTo(page, "input[type=radio]");
+  await page.keyboard.press("ArrowDown"); // Low spender
+  await enter(page);
+  await expect(title(page)).toBeFocused();
+  await enter(page); // total spend: left blank = skipped
+
+  await tabTo(page, "#q-input"); // minutes per day: "Other"
+  await page.keyboard.type("45");
+  await enter(page);
+  await expect(page.getByText("4 of 10")).toBeVisible();
+  await enter(page, 4); // sessions, role, stage, kingdom day: defaults
+
+  await expect(title(page)).toHaveText(QUESTIONS[stepOf("cityHall")]!.label);
+  await tabTo(page, "#q-input");
+  await page.keyboard.press("Backspace");
+  await page.keyboard.type("12");
+  await enter(page, 3); // City Hall, civilization, returning player
+
+  await expect(title(page)).toHaveText("Check your answers");
+  await expect(title(page)).toBeFocused();
+  await page.keyboard.press("Enter");
+  await page.waitForURL(/\/guide\/\?p=/);
+  expect(new URL(page.url()).searchParams.get("p")).toBe("1.1.0.0.12.45.....0");
+  const stored = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1")!));
+  expect(stored.profileCode).toBe("1.1.0.0.12.45.....0");
+  expect(stored.draft).toBeNull();
+});
+
+test("reload resumes on the same step with the answers kept", async ({ page }) => {
+  await page.goto("/start/");
+  await page.getByRole("radio", { name: /Medium spender/ }).check();
+  await page.getByRole("button", { name: "Next" }).click();
+  await page.getByRole("button", { name: "Skip" }).click();
+  await expect(page.getByText("3 of 10")).toBeVisible();
+  await page.reload();
+  await expect(title(page)).toHaveText(QUESTIONS[2]!.label);
+  await expect(page.getByText("3 of 10")).toBeVisible();
+  await page.getByRole("button", { name: "Back" }).click();
+  await page.getByRole("button", { name: "Back" }).click();
+  await expect(page.getByRole("radio", { name: /Medium spender/ })).toBeChecked();
+});
+
+test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }) => {
+  await seed(page, { draft: { step: stepOf("cityHall"), answers: {} } });
+  await page.goto("/start/");
+  const field = page.getByRole("textbox", { name: QUESTIONS[stepOf("cityHall")]!.label });
+  await field.fill("30");
+  await page.getByRole("button", { name: "Next" }).click();
+  await expect(page.getByText("30 is out of range. Enter a number from 1 to 25.")).toBeVisible();
+  await expect(field).toHaveAttribute("aria-invalid", "true");
+  await expect(field).toBeFocused();
+  await field.press("Enter");
+  await expect(title(page)).toHaveText(QUESTIONS[stepOf("cityHall")]!.label);
+  await field.fill("25");
+  await field.press("Enter");
+  await expect(title(page)).toHaveText(QUESTIONS[stepOf("cityHall") + 1]!.label);
+});
+
+test("Close keeps the draft and returns to the previous page", async ({ page }) => {
+  await page.goto("/start/"); // direct load: referrer is empty, Close goes home
+  await page.getByRole("button", { name: "Next" }).click();
+  await page.keyboard.press("Escape");
+  await page.waitForURL((u) => u.pathname === "/");
+  await page.goto("/me/");
+  await page.locator("a[href='/start/']").first().evaluate((a: HTMLAnchorElement) => a.click());
+  await page.waitForURL(/\/start\/$/);
+  await expect(page.getByText("2 of 10")).toBeVisible();
+  await page.getByRole("link", { name: "Close" }).click();
+  await page.waitForURL(/\/me\/$/);
+});
+
+test("worst case answers fit 360 px on every step and the summary", async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 740 });
+  for (let step = 0; step <= QUESTIONS.length; step++) {
+    await seed(page, { draft: { step, answers: { ...WORST, lifetimeSpendUsd: "10,000,000" } } });
+    await page.goto("/start/");
+    await expect(title(page)).toBeVisible();
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
+    expect(overflow, `step ${step}`).toBeLessThanOrEqual(0);
+  }
+  await expect(page.getByText("10,000,000 USD")).toBeVisible();
+  await expect(page.getByText("5,000 days")).toBeVisible();
+});
+
+test.describe("accessibility", () => {
+  const cases = [
+    { name: "first question", draft: null },
+    { name: "number step with error", draft: { step: stepOf("cityHall"), answers: { cityHall: "99" } }, submit: true },
+    { name: "summary with warnings", draft: { step: QUESTIONS.length, answers: { ...WORST, spending: "f2p" } } },
+  ];
+  for (const theme of ["dark", "light"] as const) {
+    for (const c of cases) {
+      test(`axe ${theme}: ${c.name}`, async ({ page }) => {
+        await seed(page, { theme, draft: c.draft });
+        await page.goto("/start/");
+        await expect(title(page)).toBeVisible();
+        if (c.submit) {
+          await page.getByRole("button", { name: "Next" }).click();
+          await expect(page.locator("#q-error")).toBeVisible();
+        }
+        const result = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
+        const serious = result.violations.filter((v) => v.impact === "serious" || v.impact === "critical");
+        expect(serious.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
+      });
+    }
+  }
+});
