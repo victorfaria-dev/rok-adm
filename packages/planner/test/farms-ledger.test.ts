@@ -1,8 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
-  makeShipment, summarizeLedger, shippedNet, weekOf, weekRange, ledgerToCsv, csvSafeText, csvField, isIsoDate,
+  makeShipment, summarizeLedger, shippedNet, weekOf, weekRange, ledgerToCsv, isIsoDate,
   LEDGER_CSV_HEADER, type ShipmentEntry,
 } from "../src/farms-ledger";
+import { csvField, csvSafeText } from "../src/csv";
 
 const ship = (over: Partial<Parameters<typeof makeShipment>[0]> = {}) =>
   makeShipment({ id: "s1", farmId: "f1", date: "2026-10-13", resource: "food", taxRate: 0.21, gross: 1000, ...over });
