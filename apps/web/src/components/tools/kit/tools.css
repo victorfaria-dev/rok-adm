@@ -64,7 +64,7 @@
 .t-src-meta { display: block; color: var(--ko-text-muted); }
 
 /* Tables */
-.t-table { overflow-x: auto; max-width: 100%; overscroll-behavior-x: contain; }
+.t-table { overflow-x: auto; max-width: 100%; overscroll-behavior-x: contain; position: relative; }
 .t-table table { border-collapse: collapse; width: 100%; font-size: var(--ko-text-sm); }
 .t-table th, .t-table td { text-align: left; padding: var(--ko-space-2) var(--ko-space-3) var(--ko-space-2) 0; border-bottom: 1px solid var(--ko-border); vertical-align: top; }
 .t-table thead th { font-weight: var(--ko-weight-semibold); color: var(--ko-text-muted); white-space: nowrap; }
