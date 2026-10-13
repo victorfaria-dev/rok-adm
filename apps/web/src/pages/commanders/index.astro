@@ -1,7 +1,17 @@
 ---
 import Shell from "../../layouts/Shell.astro";
-import ComingNext from "../../components/ComingNext.astro";
+import Commanders from "../../components/commanders/Commanders";
 ---
-<Shell title="Commanders" description="A checklist before you invest in a commander." mode="read">
-  <ComingNext what="A checklist before you invest in a commander." when="Coming after the guide."><Fragment slot="title">Commanders</Fragment></ComingNext>
+<Shell title="Commanders" description="A checklist before you spend sculptures on a commander: shelf-life tags, Go / Wait / Avoid and why. Your answers stay in this browser." mode="operate">
+  <div class="intro">
+    <h1>Commanders</h1>
+    <p>Before you spend gold heads or sculptures, check the commander: how long it stays useful, whether it fills a role you need, and what the community says. Each reason shows its confidence and whether players disagree.</p>
+  </div>
+  <Commanders client:load />
 </Shell>
+
+<style>
+  .intro { display: grid; gap: var(--ko-space-3); margin-bottom: var(--ko-space-6); }
+  h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  p { color: var(--ko-text-muted); max-width: 65ch; }
+</style>
