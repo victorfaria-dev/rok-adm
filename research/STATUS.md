@@ -39,6 +39,13 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | Verificação + dores de líderes + context packs de administração de reino | Sub-admin REINO | B02–B09, D-05xx |
 | Soluções conceituais por dor (hipóteses) | Brainstorm | `brainstorm/solucoes/` — **concluída**: 70 dores cobertas, 34 fichas, matriz + top 10 |
 
+## Onda 3 (em execução)
+
+| Frente | Escopo | Saída |
+|--------|--------|-------|
+| Guia F2P v1 (EN) em blocos | conta, F2P, início de reino | `guides/` |
+| Migração v2 das fichas C01, C02, C04 e B01-0001..0003 | dados | `facts/C0x/`, `_migration-c-report.md` |
+
 ## Bloqueios
 
 - **rok.guide**: fora do ar na origem — o DNS do domínio falha (servidores de nome recusam a consulta, SERVFAIL via dns.google em 2026-10-13). Não é a política de rede (ambiente está em acesso completo). Possível domínio expirado/abandonado → relevante para concorrência (C01). Usar cópias em archive/buscadores quando possível.
