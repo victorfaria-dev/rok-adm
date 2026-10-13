@@ -22,6 +22,7 @@ export const SECONDARY: readonly { href: string; label: string }[] = [
   { href: "/card/", label: "Governor card" },
   { href: "/trust/", label: "Trust & privacy" },
   { href: "/brand/", label: "Brand" },
+  { href: "/kingdom/", label: "Kingdom council" },
 ];
 
 const norm = (p: string): string => (p.endsWith("/") ? p : `${p}/`);

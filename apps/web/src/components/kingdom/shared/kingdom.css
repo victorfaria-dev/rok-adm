@@ -1,0 +1,88 @@
+/* Shared council kit styles (/kingdom/**). Only --ko-* tokens. */
+
+.kg { display: grid; gap: var(--ko-space-6); min-width: 0; }
+.kg-head { display: grid; gap: var(--ko-space-2); }
+.kg-head h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+.kg-lead { color: var(--ko-text-muted); max-width: 65ch; }
+.kg-note { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 70ch; }
+.kg-badge {
+  display: inline-flex; align-items: center; justify-self: start; padding: 2px var(--ko-space-2);
+  border: 1px dashed var(--ko-text-muted); border-radius: var(--ko-radius-pill);
+  font-size: var(--ko-text-xs); color: var(--ko-text);
+}
+
+.kg-card {
+  display: grid; gap: var(--ko-space-3); min-width: 0; padding: var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  overflow-wrap: anywhere;
+}
+.kg-card h2, .kg-card h3 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); }
+.kg-grid { display: grid; gap: var(--ko-space-4); min-width: 0; }
+@media (min-width: 768px) { .kg-grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* Form fields: label above, hint, control. */
+.kg-field { display: grid; gap: var(--ko-space-1); min-width: 0; }
+.kg-field label, .kg-label { font-weight: var(--ko-weight-medium); font-size: var(--ko-text-sm); }
+.kg-hint { color: var(--ko-text-muted); font-size: var(--ko-text-xs); line-height: var(--ko-leading-xs); }
+.kg-field input, .kg-field select, .kg-field textarea {
+  min-height: 48px; width: 100%; min-width: 0; padding: var(--ko-space-2) var(--ko-space-3);
+  color: var(--ko-text); background: var(--ko-background); font: inherit;
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-sm);
+}
+.kg-field textarea { min-height: 120px; resize: vertical; line-height: var(--ko-leading-sm); }
+.kg-field input:focus-visible, .kg-field select:focus-visible, .kg-field textarea:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 1px; }
+.kg-field input[aria-invalid="true"], .kg-field textarea[aria-invalid="true"] { border-color: var(--ko-error); }
+.kg-error { color: var(--ko-error); font-size: var(--ko-text-sm); }
+.kg-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); align-items: center; }
+.kg-check { display: flex; gap: var(--ko-space-3); align-items: flex-start; min-height: 44px; }
+.kg-check input { width: 24px; height: 24px; margin-top: 2px; flex: none; accent-color: var(--ko-accent); }
+
+/* Live status line ("Saved", "Copied"). */
+.kg-status { min-height: 1.5em; color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+
+/* Sub-navigation between council tools. */
+.kg-subnav ul { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); margin: 0; padding: 0; list-style: none; }
+.kg-subnav a {
+  display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--ko-space-3);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-pill);
+  color: var(--ko-text-muted); text-decoration: none; font-size: var(--ko-text-sm);
+}
+.kg-subnav a[aria-current="page"] { color: var(--ko-text); border-color: var(--ko-accent); }
+@media (hover: hover) and (pointer: fine) { .kg-subnav a:hover { color: var(--ko-text); } }
+
+/* Privacy note box. */
+.kg-privacy {
+  display: grid; gap: var(--ko-space-2); padding: var(--ko-space-3) var(--ko-space-4);
+  border-left: 3px solid var(--ko-accent); background: var(--ko-surface); border-radius: var(--ko-radius-sm);
+  font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm);
+}
+.kg-privacy h2 { font-size: var(--ko-text-base); }
+.kg-privacy ul { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
+
+/* Numeric tables. */
+.kg-table-wrap { overflow-x: auto; max-width: 100%; }
+.kg-table { width: 100%; border-collapse: collapse; font-size: var(--ko-text-sm); }
+.kg-table th, .kg-table td { padding: var(--ko-space-2); text-align: left; border-bottom: 1px solid var(--ko-border); vertical-align: top; }
+.kg-table td.num, .kg-table th.num { text-align: right; font-family: var(--ko-font-mono); font-variant-numeric: tabular-nums; }
+
+/* Copyable output (generated text, share links). */
+.kg-output {
+  width: 100%; min-width: 0; min-height: 160px; padding: var(--ko-space-3);
+  font-family: var(--ko-font-mono); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm);
+  color: var(--ko-text); background: var(--ko-background); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-sm);
+  white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.kg-link-out { min-height: 48px; }
+
+/* Tool cards on the council hub. */
+.kg-tools { display: grid; gap: var(--ko-space-3); margin: 0; padding: 0; list-style: none; }
+@media (min-width: 768px) { .kg-tools { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.kg-tool { display: grid; gap: var(--ko-space-1); min-height: 44px; padding: var(--ko-space-4); color: var(--ko-text); text-decoration: none;
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); }
+.kg-tool strong { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); }
+.kg-tool span { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+@media (hover: hover) and (pointer: fine) { .kg-tool:hover { border-color: var(--ko-accent); } }
+
+@media print {
+  .kg-subnav, .kg-noprint { display: none !important; }
+}

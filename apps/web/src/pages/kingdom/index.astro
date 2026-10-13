@@ -1,0 +1,39 @@
+---
+import Shell from "../../layouts/Shell.astro";
+import KingdomNav from "../../components/kingdom/shared/KingdomNav.astro";
+import PrivacyNote from "../../components/kingdom/shared/PrivacyNote.astro";
+import DataControls from "../../components/kingdom/shared/DataControls";
+import "../../components/kingdom/shared/kingdom.css";
+
+const TOOLS = [
+  { href: "/kingdom/rules/", title: "Rules page", text: "Write your kingdom's rules and charter in sections, then share a view-only link or print it." },
+  { href: "/kingdom/requirements/", title: "Requirements card", text: "Define your DKP formula and KvK requirement, test it on sample accounts and publish a card." },
+  { href: "/kingdom/my/", title: "My requirements", text: "For players: open your council's card link and see your own target and progress." },
+  { href: "/kingdom/mge/", title: "MGE planner", text: "Plan who gets which MGE ranks, with a rotation rule everyone can check." },
+  { href: "/kingdom/recruit/", title: "Recruitment post", text: "Fill in your kingdom's facts and open roles; get a post ready to copy for Discord or Reddit." },
+  { href: "/kingdom/seed/", title: "Seed simulator (experimental)", text: "See how much of your top 300's power counts toward kingdom power under the 1.0.95 rule." },
+];
+---
+<Shell title="Kingdom council" description="Tools for kingdom councils: rules page, requirements card and DKP formula sandbox, players' own requirements, MGE planner, recruitment post and an experimental seed simulator. Works in your browser." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>Kingdom council kit</h1>
+      <p class="kg-lead">Tools for kings, R4s and council members: publish clear rules and requirements, plan MGE openly and recruit for the roles you need.</p>
+      <p class="kg-note" data-guardrail><strong>Planning and publishing only. No bots, no scanning, no game files. You do every in-game action yourself.</strong></p>
+    </header>
+    <KingdomNav />
+    <section aria-labelledby="tools-h" class="kg-grid">
+      <h2 id="tools-h" class="visually-hidden">Tools</h2>
+      <ul class="kg-tools">
+        {TOOLS.map((t) => <li><a class="kg-tool" href={t.href}><strong>{t.title}</strong><span>{t.text}</span></a></li>)}
+      </ul>
+      <p class="kg-note">New to running a kingdom? Read the <a href="/guides/kingdom-admin/">kingdom admin guide</a> first.</p>
+    </section>
+    <PrivacyNote thirdParty />
+    <section id="data" aria-labelledby="data-h" class="kg-grid">
+      <h2 id="data-h">Your council data</h2>
+      <p class="kg-note">Saved only in this browser. Export a file to move it to another device or hand it to another officer.</p>
+      <DataControls client:load />
+    </section>
+  </div>
+</Shell>
