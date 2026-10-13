@@ -1,6 +1,7 @@
 -- RLS and trigger checks for the migrations. Runs inside one transaction and rolls back.
 -- Local run (plain Postgres + shim.sql): see supabase/README.md, "Checking the migrations locally".
 \set ON_ERROR_STOP 1
+\o /dev/null
 begin;
 
 insert into auth.users (id, email) values
@@ -209,4 +210,5 @@ do $$ begin
 end $$;
 
 rollback;
+\o
 \echo 'rls.sql: all checks passed'
