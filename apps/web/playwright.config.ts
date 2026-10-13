@@ -1,6 +1,7 @@
 import { defineConfig, devices } from "@playwright/test";
 
-const PORT = 4321;
+// E2E_PORT lets parallel worktrees run previews side by side without hitting each other's build.
+const PORT = Number(process.env.E2E_PORT ?? 4321);
 
 export default defineConfig({
   testDir: "e2e",
