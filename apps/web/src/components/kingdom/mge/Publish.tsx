@@ -2,6 +2,8 @@ import { useEffect, useState } from "preact/hooks";
 import { mgePublicPayload, type MgeDoc, type MgePlan } from "@rokadm/planner";
 import { mgeLedgerCsv, publishMge, type PublishedLink } from "../../../lib/kingdom-mge";
 import { downloadText } from "../../../lib/kingdom-store";
+import { mgeResultsMessage } from "../../../lib/discord";
+import DiscordPost from "../../discord/DiscordPost";
 import { CheckField } from "../shared/Field";
 import CopyText from "../shared/CopyText";
 
@@ -60,6 +62,11 @@ export default function Publish({ doc, plan, today }: Props) {
       </div>
       <p class="kg-status" role="status" aria-live="polite" data-csv-status>{csvStatus}</p>
       {error && <p class="kg-error" role="alert" data-too-large>{error}</p>}
+      <DiscordPost
+        id="mge"
+        summary="Post the results to Discord"
+        message={mgeResultsMessage(mgePublicPayload(doc, includeScores, today, plan), link?.url ?? null)}
+      />
       {link && (
         <div class="kg-grid" data-published>
           <CopyText

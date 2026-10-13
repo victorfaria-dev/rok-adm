@@ -10,6 +10,8 @@ import {
 } from "../../../lib/farms-hub";
 import { Sourced } from "../shared/Sourced";
 import ConfirmAction from "../hub/ConfirmAction";
+import DiscordPost from "../../discord/DiscordPost";
+import { farmsWeekMessage } from "../../../lib/discord";
 import "../shared/farms.css";
 import "../hub/hub.css";
 import "./log.css";
@@ -349,6 +351,7 @@ export default function ShipmentLog({ clock = realClock }: Props) {
             </button>
           </div>
           <p class="fm-hint">"Shown" is the week and farm selected above. The file opens in any spreadsheet.</p>
+          <DiscordPost id="farms" summary="Post this week's summary to Discord" message={farmsWeekMessage(summary, range, names, filterFarm ? nameOf(filterFarm) : null)} />
         </section>
       )}
     </div>

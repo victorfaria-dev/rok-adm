@@ -3,6 +3,7 @@ import Shell from "../../layouts/Shell.astro";
 import KingdomNav from "../../components/kingdom/shared/KingdomNav.astro";
 import PrivacyNote from "../../components/kingdom/shared/PrivacyNote.astro";
 import DataControls from "../../components/kingdom/shared/DataControls";
+import { WebhookSettings } from "../../components/discord/DiscordPost";
 import "../../components/kingdom/shared/kingdom.css";
 
 const TOOLS = [
@@ -34,6 +35,11 @@ const TOOLS = [
       <h2 id="data-h">Your council data</h2>
       <p class="kg-note">Saved only in this browser. Export a file to move it to another device or hand it to another officer.</p>
       <DataControls client:load />
+    </section>
+    <section id="discord" aria-labelledby="discord-h" class="kg-grid">
+      <h2 id="discord-h">Discord webhook</h2>
+      <p class="kg-note">Paste your server's webhook once and the MGE planner, rules page and recruitment post (and the farm log) get a "Post to Discord" button. You always see the exact message first, and nothing is sent until you press Send.</p>
+      <div class="kg-card"><WebhookSettings client:load id="hub" /></div>
     </section>
   </div>
 </Shell>
