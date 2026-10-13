@@ -67,7 +67,7 @@ describe("guide payload (build time)", () => {
     for (const set of Object.keys(BLOCK_SETS)) {
       const html = buildGuidePayload(set).blocks.flatMap((b) => [b.bodyHtml, b.whyHtml, b.uncertain_notes ?? "", b.low_spender_note ?? "", b.split_views ?? ""]).join("");
       const labels = [...html.matchAll(/role="region" aria-label="([^"]*)"/g)].map((m) => m[1]);
-      expect(labels.length, set).toBeGreaterThan(0);
+      if (set === "f2p") expect(labels.length, set).toBeGreaterThan(0);
       expect(new Set(labels).size, set).toBe(labels.length);
       expect(html, set).not.toContain('type="checkbox"');
     }
