@@ -10,7 +10,8 @@
 
 .kr-formula { display: grid; gap: var(--ko-space-2); min-width: 0; }
 .kr-formula input { font-family: var(--ko-font-mono); }
-.kr-explain { display: grid; gap: var(--ko-space-1); padding: var(--ko-space-3); background: var(--ko-surface-raised); border-radius: var(--ko-radius-sm); }
+/* Unboxed: it sits inside a .kg-card, so a background or border would read as a card inside a card. */
+.kr-explain { display: grid; gap: var(--ko-space-1); margin: 0; padding: 0; }
 .kr-explain code, .kr-source code { font-family: var(--ko-font-mono); overflow-wrap: anywhere; }
 .kr-excluded { display: grid; gap: var(--ko-space-3); min-width: 0; padding-top: var(--ko-space-3); border-top: 1px solid var(--ko-border); }
 .kr-source { display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); }
@@ -35,6 +36,14 @@
 .kr-bands > .btn { justify-self: start; }
 .kr > .kg-card > .btn { justify-self: start; }
 .kr-issues { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
+
+/* Results / ranking tables: headers and numbers never break mid-word; tighter cells on phones (360px). */
+.kr-table th[scope="col"], .kr-table td { white-space: nowrap; }
+.kr-table abbr { text-decoration: none; }
+@media (max-width: 639px) {
+  .kr-table th, .kr-table td { padding-inline: var(--ko-space-1); }
+  .kr-table th[scope="row"] { overflow-wrap: normal; }
+}
 
 .kr-summary { font-weight: var(--ko-weight-semibold); }
 .kr-caption { text-align: left; padding-bottom: var(--ko-space-2); font-weight: var(--ko-weight-semibold); font-size: var(--ko-text-sm); }

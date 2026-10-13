@@ -46,6 +46,7 @@ describe("new card and form round trip", () => {
     const f = cardToForm(newCard());
     f.bands = [{ ...emptyBand("0"), max: "20m", pct: "250" }, { ...emptyBand("10m"), pct: "300" }];
     expect(formToCard(f).bandIssues[0]!.message).toMatch(/overlaps/);
+    expect(formToCard(f).errors).toEqual({ "band-1-min": "Band 2 overlaps band 1: start it at or above where band 1 ends." });
     f.bands = [{ ...emptyBand("x"), pct: "" }];
     const r = formToCard(f);
     expect(r.errors["band-0-min"]).toMatch(/whole number/);

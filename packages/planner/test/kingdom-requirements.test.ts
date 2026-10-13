@@ -28,13 +28,23 @@ describe("bands", () => {
     expect(validateBands([])[0]!.message).toMatch(/at least one/);
     const many = Array.from({ length: REQ_MAX_BANDS + 1 }, (_, i) => ({ minPower: i * 10, maxPower: i * 10 + 10, percent: 100 }));
     expect(validateBands(many).some((x) => x.index === -1)).toBe(true);
-    expect(validateBands([{ minPower: 0, maxPower: 30, percent: 1 }, { minPower: 20, maxPower: null, percent: 1 }])[0]).toMatchObject({ index: 1, message: expect.stringMatching(/overlaps band 1/) });
+    expect(validateBands([{ minPower: 0, maxPower: 30, percent: 1 }, { minPower: 20, maxPower: null, percent: 1 }])[0]).toMatchObject({ index: 1, field: "min", message: expect.stringMatching(/overlaps band 1/) });
     expect(validateBands([{ minPower: 50, maxPower: 60, percent: 1 }, { minPower: 0, maxPower: 10, percent: 1 }])[0]!.message).toMatch(/sort/);
     expect(validateBands([{ minPower: 0, maxPower: null, percent: 1 }, { minPower: 10, maxPower: null, percent: 1 }]).map((x) => x.message).join(" ")).toMatch(/only the last band/);
     expect(validateBands([{ minPower: 0, maxPower: null, percent: 0 }])[0]!.message).toMatch(/percent/);
     expect(validateBands([{ minPower: 0, maxPower: null, percent: 20_000 }])[0]!.message).toMatch(/percent/);
     expect(validateBands([{ minPower: 10, maxPower: 10, percent: 1 }])[0]!.message).toMatch(/upper limit/);
     expect(validateBands([{ minPower: -1, maxPower: null, percent: 1 }])[0]!.message).toMatch(/lowest power/);
+  });
+
+  it("each band issue names the field at fault; list-level issues have none", () => {
+    expect(validateBands([])[0]).toEqual({ index: -1, message: "Add at least one power band." });
+    const fields = (b: PowerBand[]) => validateBands(b).map((x) => `${x.index}:${x.field}`);
+    expect(fields([{ minPower: -1, maxPower: null, percent: 1 }])).toEqual(["0:min"]);
+    expect(fields([{ minPower: 10, maxPower: 5, percent: 1 }])).toEqual(["0:max"]);
+    expect(fields([{ minPower: 0, maxPower: null, percent: 1 }, { minPower: 10, maxPower: null, percent: 1 }])).toEqual(["0:max", "1:min"]);
+    expect(fields([{ minPower: 0, maxPower: null, percent: 0 }])).toEqual(["0:pct"]);
+    expect(fields([{ minPower: 50, maxPower: 60, percent: 1 }, { minPower: 0, maxPower: 10, percent: 1 }])).toEqual(["1:min"]);
   });
 
   it("normaliseBands drops bad ones, sorts and removes overlaps", () => {

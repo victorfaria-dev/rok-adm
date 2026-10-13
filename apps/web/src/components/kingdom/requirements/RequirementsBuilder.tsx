@@ -227,9 +227,10 @@ export default function RequirementsBuilder(): JSX.Element {
                 {form.bands.length > 1 && <button type="button" class="btn btn-secondary" aria-label={`Remove band ${i + 1}`} onClick={() => removeBand(i)}>Remove band</button>}
               </fieldset>
             ))}
-            {check.bandIssues.length > 0 && (
+            {/* Issues about one band show under that band's field; only list-wide ones are listed here. */}
+            {check.bandIssues.some((x) => x.index < 0 || !x.field) && (
               <ul class="kr-issues" data-band-issues>
-                {check.bandIssues.map((x, i) => <li key={i} class="kg-error">{x.message}</li>)}
+                {check.bandIssues.filter((x) => x.index < 0 || !x.field).map((x, i) => <li key={i} class="kg-error">{x.message}</li>)}
               </ul>
             )}
             {form.bands.length < MAX_BANDS && <button type="button" class="btn btn-secondary" onClick={addBand}>Add band</button>}
@@ -296,7 +297,7 @@ export default function RequirementsBuilder(): JSX.Element {
           <div class="kg-table-wrap" role="region" aria-labelledby="kr-results-cap" tabIndex={0}>
             <table class="kg-table kr-table" data-results>
               <caption id="kr-results-cap" class="kr-caption">Sample results</caption>
-              <thead><tr><th scope="col">Account</th><th scope="col" class="num">DKP</th><th scope="col" class="num">Target</th><th scope="col" class="num">%</th><th scope="col">Result</th></tr></thead>
+              <thead><tr><th scope="col">Account</th><th scope="col" class="num">DKP</th><th scope="col" class="num">Target</th><th scope="col" class="num"><abbr title="Percent of target">%</abbr></th><th scope="col">Result</th></tr></thead>
               <tbody>
                 {results.map(({ s, r }) => (
                   <tr key={s.id} data-result={s.id}>

@@ -184,6 +184,8 @@ const num = (x: unknown): number | null => (typeof x === "number" && Number.isFi
 export interface BandIssue {
   /** Index of the band at fault, or -1 for the list as a whole. */
   index: number;
+  /** Input at fault (band issues only), so the editor can mark that field. */
+  field?: "min" | "max" | "pct";
   message: string;
 }
 
@@ -194,19 +196,19 @@ export function validateBands(bands: readonly PowerBand[]): BandIssue[] {
   if (bands.length > REQ_MAX_BANDS) out.push({ index: -1, message: `Use at most ${REQ_MAX_BANDS} power bands.` });
   bands.forEach((b, i) => {
     const n = i + 1;
-    if (num(b.minPower) === null) out.push({ index: i, message: `Band ${n}: the lowest power must be 0 or more.` });
+    if (num(b.minPower) === null) out.push({ index: i, field: "min", message: `Band ${n}: the lowest power must be 0 or more.` });
     if (b.maxPower === null) {
-      if (i !== bands.length - 1) out.push({ index: i, message: `Band ${n}: only the last band can have no upper limit.` });
+      if (i !== bands.length - 1) out.push({ index: i, field: "max", message: `Band ${n}: only the last band can have no upper limit.` });
     } else if (num(b.maxPower) === null || b.maxPower <= b.minPower) {
-      out.push({ index: i, message: `Band ${n}: the upper limit must be more than the lowest power.` });
+      out.push({ index: i, field: "max", message: `Band ${n}: the upper limit must be more than the lowest power.` });
     }
     if (!(typeof b.percent === "number" && Number.isFinite(b.percent) && b.percent > 0 && b.percent <= REQ_MAX_PERCENT)) {
-      out.push({ index: i, message: `Band ${n}: the percent must be more than 0 and at most ${REQ_MAX_PERCENT.toLocaleString("en-US")}.` });
+      out.push({ index: i, field: "pct", message: `Band ${n}: the percent must be more than 0 and at most ${REQ_MAX_PERCENT.toLocaleString("en-US")}.` });
     }
     if (i > 0) {
       const prev = bands[i - 1]!;
-      if (b.minPower < prev.minPower) out.push({ index: i, message: `Band ${n}: sort bands from low to high power.` });
-      else if (prev.maxPower === null || b.minPower < prev.maxPower) out.push({ index: i, message: `Band ${n} overlaps band ${i}: start it at or above where band ${i} ends.` });
+      if (b.minPower < prev.minPower) out.push({ index: i, field: "min", message: `Band ${n}: sort bands from low to high power.` });
+      else if (prev.maxPower === null || b.minPower < prev.maxPower) out.push({ index: i, field: "min", message: `Band ${n} overlaps band ${i}: start it at or above where band ${i} ends.` });
     }
   });
   return out;

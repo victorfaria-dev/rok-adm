@@ -167,7 +167,7 @@ export function cardToForm(c: RequirementsCard): CardForm {
 
 export interface FormCheck {
   card: RequirementsCard;
-  /** Field errors keyed by input id suffix, e.g. "fixed", "band-0-min", "sample-<id>-t4". */
+  /** Field errors keyed by input id suffix, e.g. "fixed", "band-0-min", "group-0-pct", "sample-<id>-t4". Band issues tied to a field appear here too. */
   errors: Record<string, string>;
   bandIssues: BandIssue[];
 }
@@ -190,6 +190,12 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
     });
     if (Object.keys(errors).length === 0) bandIssues = validateBands(bands);
     if (f.bands.length === 0) bandIssues = validateBands([]);
+    // Tie each band issue to the input at fault (aria-invalid + its own message under the field).
+    for (const x of bandIssues) {
+      if (x.index < 0 || !x.field) continue;
+      const k = `band-${x.index}-${x.field}`;
+      if (!errors[k]) errors[k] = x.message;
+    }
   }
   const groups: RequirementGroup[] = [];
   const groupRows = f.groups.slice(0, REQ_MAX_GROUPS);

@@ -28,6 +28,24 @@ test.describe("requirements card (F-34)", () => {
     await expect(page.locator("[data-not-comparable]")).toContainText("not comparable across kingdoms");
     await expect(page.locator("[data-results] tbody tr")).toHaveCount(3);
     await expect(page.locator("[data-summary]")).toContainText("of 3 sample accounts");
+    // Results table fits 360px: no header or number wraps, no scroll inside the table wrapper.
+    const table = await page.evaluate(() => {
+      const wrap = document.querySelector("[data-results]")!.parentElement!;
+      const wrapped = [...document.querySelectorAll<HTMLElement>("[data-results] th[scope=col], [data-results] td")].filter((c) => {
+        const r = document.createRange();
+        r.selectNodeContents(c);
+        return r.getBoundingClientRect().height > parseFloat(getComputedStyle(c).lineHeight) * 1.5;
+      }).map((c) => c.textContent);
+      return { overflow: wrap.scrollWidth - wrap.clientWidth, wrapped };
+    });
+    expect(table).toEqual({ overflow: 0, wrapped: [] });
+    await expect(page.locator("[data-results] thead abbr")).toHaveAttribute("title", "Percent of target");
+    // The formula explanation is an unboxed block inside the card (no card-in-card).
+    const box = await page.locator('[data-explain="kr-formula"]').evaluate((el) => {
+      const s = getComputedStyle(el);
+      return { bg: s.backgroundColor, border: s.borderTopWidth, radius: s.borderTopLeftRadius, padding: s.paddingTop };
+    });
+    expect(box).toEqual({ bg: "rgba(0, 0, 0, 0)", border: "0px", radius: "0px", padding: "0px" });
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
     expect(errors).toEqual([]);
@@ -42,6 +60,13 @@ test.describe("requirements card (F-34)", () => {
     await expect(f).toHaveAttribute("aria-describedby", /kr-formula-error/);
     await expect(page.locator("[data-summary]")).toContainText("Formula error");
     await expect(page.locator("[data-source]")).toContainText("set by your council");
+    await f.fill("-".repeat(33) + "t4");
+    await expect(page.locator("#kr-formula-error")).toHaveText("This formula is nested too deeply at character 33 (at most 32 levels). Simplify it.");
+    await f.fill("t4 * 1000000000000000000000");
+    await expect(page.locator("#kr-formula-error")).toContainText("is too large");
+    await f.fill("t4 * 0.0000001");
+    await expect(page.locator('[data-explain="kr-formula"]')).toContainText("Each T4 kill = 0.0000001 points.");
+    await expect(page.locator('[data-explain="kr-formula"] code')).toHaveText("t4 * 0.0000001");
     await f.fill("max(t4, deads)");
     await expect(f).not.toHaveAttribute("aria-invalid", "true");
     await expect(page.locator('[data-explain="kr-formula"]')).toContainText("not always worth the same");
@@ -57,8 +82,25 @@ test.describe("requirements card (F-34)", () => {
     await expect(page.locator("#kr-band-1-min")).toHaveValue("20m");
     await page.locator("#kr-band-1-min").fill("10m");
     await page.locator("#kr-band-1-pct").fill("400");
-    await expect(page.locator("[data-band-issues]")).toContainText("Band 2 overlaps band 1");
-    await page.locator("#kr-band-1-min").fill("20m");
+    // The overlap is tied to the offending input, not only listed.
+    const min = page.locator("#kr-band-1-min");
+    await expect(min).toHaveAttribute("aria-invalid", "true");
+    await expect(min).toHaveAttribute("aria-describedby", /kr-band-1-min-error/);
+    await expect(page.locator("#kr-band-1-min-error")).toHaveText("Band 2 overlaps band 1: start it at or above where band 1 ends.");
+    await expect(page.locator("#kr-band-0-min")).not.toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#kr-band-1-pct")).not.toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("[data-band-issues]")).toHaveCount(0);
+    await expect(page.locator("[data-summary]")).toHaveText("Fix the requirement to see who passes.");
+    await min.fill("20m");
+    await expect(min).not.toHaveAttribute("aria-invalid", "true");
+    // An open upper limit on a middle band marks that band's "Up to power" field.
+    await page.locator("#kr-band-0-max").fill("");
+    await expect(page.locator("#kr-band-0-max")).toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#kr-band-0-max-error")).toHaveText("Band 1: only the last band can have no upper limit.");
+    await page.locator("#kr-band-0-max").fill("20m");
+    await expect(page.locator("#kr-band-0-max")).not.toHaveAttribute("aria-invalid", "true");
+    // Removing the second band leaves a valid single band: nothing listed.
+    await page.getByRole("button", { name: "Remove band 2" }).click();
     await expect(page.locator("[data-band-issues]")).toHaveCount(0);
     await page.getByLabel("Second formula").fill("deads");
     await expect(page.locator("[data-compare] tbody tr")).toHaveCount(3);
