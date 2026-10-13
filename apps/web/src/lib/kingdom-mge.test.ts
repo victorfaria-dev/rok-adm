@@ -41,6 +41,15 @@ describe("addCandidatesFromText", () => {
     expect(r.doc.candidates.map((c) => [c.id, c.name, c.score])).toEqual([["x", "Alpha", 5], ["y", "Echo", 2], ["c1", "Bravo", 4_200_000], ["c2", "Charlie", null]]);
   });
 
+  it("\"Dave 80\" and tab rows update Dave instead of adding \"Dave 80\" (Q2 P2-2)", () => {
+    const d0 = { ...emptyMgeDoc("p"), candidates: [{ id: "x", name: "Dave", score: 1, tags: [] }] };
+    const r = addCandidatesFromText(d0, "dave 80\nAnna\t1.5m\nName\tDKP", ids);
+    expect(r.updated).toEqual(["Dave"]);
+    expect(r.doc.candidates.map((c) => [c.name, c.score])).toEqual([["Dave", 80], ["Anna", 1_500_000]]);
+    expect(r.errors).toHaveLength(1);
+    expect(r.errors[0]!.line).toBe(3);
+  });
+
   it("stops at the candidate limit", () => {
     const r = addCandidatesFromText(emptyMgeDoc("p"), Array.from({ length: 305 }, (_, i) => `G${i}`).join("\n"), ids);
     expect(r.added).toBe(300);

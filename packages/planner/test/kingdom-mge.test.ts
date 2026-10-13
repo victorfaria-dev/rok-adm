@@ -224,10 +224,28 @@ describe("pasted candidate list", () => {
 
   it("parses rows and reports bad lines with their number", () => {
     const r = parseCandidateLines("Alpha, 4,200,000\n\nBravo\n, 5\nCharlie, lots\n" + "L".repeat(41) + ", 1");
-    expect(r.rows).toEqual([{ name: "Alpha", score: 4_200_000 }, { name: "Bravo", score: null }, { name: "Charlie, lots", score: null }]);
-    expect(r.errors.map((e) => e.line)).toEqual([4, 6]);
+    expect(r.rows).toEqual([{ name: "Alpha", score: 4_200_000 }, { name: "Bravo", score: null }]);
+    expect(r.errors.map((e) => e.line)).toEqual([4, 5, 6]);
+    expect(r.errors[1]!.message).toMatch(/not a score/);
     const bad = parseCandidateLines("Delta, 1.5");
     expect(bad.errors[0]!.message).toMatch(/not a number/);
+  });
+});
+
+describe("pasted list shapes (Q2 P2-2)", () => {
+  it("reads trailing numbers, tabs (spreadsheet rows), semicolons and shorthand", () => {
+    const r = parseCandidateLines("Dave 80\nAnna\t1.5m\n1\tFay\t80\t3\nCid; 300k\nEd, 4.2m\nGus 1.5m\nBob, 1,200,000\nSolo");
+    expect(r.errors).toEqual([]);
+    expect(r.rows).toEqual([
+      { name: "Dave", score: 80 }, { name: "Anna", score: 1_500_000 }, { name: "Fay", score: 80 }, { name: "Cid", score: 300_000 },
+      { name: "Ed", score: 4_200_000 }, { name: "Gus", score: 1_500_000 }, { name: "Bob", score: 1_200_000 }, { name: "Solo", score: null },
+    ]);
+  });
+
+  it("reports lines it cannot read instead of creating odd governors", () => {
+    const r = parseCandidateLines("Name\tDKP\nAna; lots\nBo, -5\n\t\t");
+    expect(r.rows).toEqual([]);
+    expect(r.errors.map((e) => e.line)).toEqual([1, 2, 3]);
   });
 });
 

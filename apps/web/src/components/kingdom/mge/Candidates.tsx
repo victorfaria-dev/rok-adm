@@ -115,7 +115,7 @@ export default function Candidates({ doc, plan, onChange }: Props) {
             value={paste}
             onValue={setPaste}
             rows={6}
-            hint="Name, score — the score is optional. Names already listed get the new score."
+            hint={"Name and score on each line: \"Dave, 4.2m\", \"Dave; 4.2m\", \"Dave 4.2m\" or a pasted spreadsheet row. The score is optional. Names already listed (any case) get the new score."}
             error={pasteErrors.length ? `${pasteErrors.length} line${pasteErrors.length === 1 ? "" : "s"} could not be read.` : undefined}
           />
           {pasteErrors.length > 0 && (
