@@ -1,0 +1,10 @@
+/* /tools/zeroed/ (F-13). Tokens only. */
+.z-steps { margin: 0; padding-left: var(--ko-space-6); display: grid; gap: var(--ko-space-4); }
+.z-steps li { display: grid; gap: var(--ko-space-1); min-width: 0; }
+.z-steps h3 { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); }
+.z-steps p, .z-list p { max-width: 70ch; overflow-wrap: anywhere; }
+.z-list { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-3); }
+.z-list li { display: grid; gap: var(--ko-space-1); }
+.z-gap { padding: var(--ko-space-4); border: 1px dashed var(--ko-border); border-radius: var(--ko-radius-md); display: grid; gap: var(--ko-space-2); }
+.z-link { display: inline-flex; align-items: center; min-height: 44px; }
+.z-section { display: grid; gap: var(--ko-space-3); min-width: 0; }

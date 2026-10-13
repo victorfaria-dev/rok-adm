@@ -1,0 +1,53 @@
+---
+// F-32 Play It Safe FAQ + F-82 Support Ticket Builder. FAQ and checklist come from tools-data/safety.json.
+import Shell from "../../../layouts/Shell.astro";
+import TicketBuilder from "../../../components/tools/safety/TicketBuilder";
+import { Checklist } from "../../../components/tools/kit/Checklist";
+import { Cite } from "../../../components/tools/kit/Cite";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import safety from "../../../../../../packages/planner/tools-data/safety.json";
+import "../../../components/tools/kit/tools.css";
+import "../../../components/tools/safety/safety.css";
+
+const faq = safety.faq.map((f) => ({ ...f, community: "community" in f && f.community === true, cite: cite(f.facts) }));
+const checks = safety.checklist.map((c) => ({ id: c.id, text: c.text, ...("detail" in c && c.detail ? { detail: c.detail } : {}), cite: cite(c.facts) }));
+const ids = [...safety.faq.flatMap((f) => f.facts), ...safety.checklist.flatMap((c) => c.facts)];
+---
+<Shell title="Play it safe" description="What gets Rise of Kingdoms accounts banned or muted under the Terms of Service, an account safety checklist, and a support ticket builder for recovery, appeals and reports." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Play it safe</h1>
+      <p class="t-lead">What the rules say about bots, account sharing and selling, how to keep your account yours, and a ready-to-paste ticket for the game's own support.</p>
+      <DataStamp />
+    </header>
+
+    <section class="s-faq" aria-labelledby="s-faq-h">
+      <h2 id="s-faq-h">What gets accounts banned or muted</h2>
+      {faq.map((f) => (
+        <article id={`faq-${f.id}`} aria-labelledby={`faq-${f.id}-q`}>
+          <h3 id={`faq-${f.id}-q`}>{f.q}</h3>
+          <p>{f.a}</p>
+          {f.community
+            ? <p class="s-community"><strong>Reported by the community.</strong> No fact card yet.</p>
+            : <Cite cite={f.cite} />}
+        </article>
+      ))}
+    </section>
+
+    <Checklist client:load listId="safety-account" title="Account safety checklist" items={checks} />
+
+    <section class="t-page-body" aria-labelledby="s-ticket-h">
+      <h2 id="s-ticket-h">Support ticket builder</h2>
+      <p class="t-lead">Fill in what support needs and copy the text. Nothing you type here is saved or sent by KingdomOps: close the page and it is gone.</p>
+      <div class="s-where">
+        <p>Where to send it: only the game's own support. In the game, open <strong>Settings</strong> and choose the support or contact option, then paste the text and attach your screenshots there.</p>
+        <p>Never put your password in a ticket, and never send it to anyone who says they are support.</p>
+      </div>
+      <TicketBuilder client:load />
+    </section>
+
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

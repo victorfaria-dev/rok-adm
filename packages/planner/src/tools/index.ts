@@ -6,3 +6,6 @@ export * from "./speedups";
 export * from "./buildings";
 export * from "./healing";
 export * from "./ap";
+export * from "./glossary";
+export * from "./changes";
+export * from "./ticket";
