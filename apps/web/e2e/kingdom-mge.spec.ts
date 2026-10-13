@@ -75,18 +75,19 @@ test.describe("MGE planner", () => {
     await seed(page, [PLAN]);
     await gotoHydrated(page, "/kingdom/mge/");
     await expect(page.locator("[data-plans]")).toContainText("K1234 MGE");
-    // Manual placement first, then score rank among applicants; Delta did not apply.
+    // Manual placement first, then score rank among applicants not placed by hand; Delta did not apply.
+    const rest = "among applicants not placed by hand";
     expect(await ledgerRows(page, "2026-10-01")).toEqual([
-      ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", "score rank 1 (4,200,000)"], ["3", "Bravo", "score rank 2 (3,000,000)"],
+      ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest} (4,200,000)`], ["3", "Bravo", `score rank 2 ${rest} (3,000,000)`],
     ]);
-    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 (4,200,000)"], ["2", "Bravo", "score rank 2 (3,000,000)"], ["3", "Not filled", ""]]);
+    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 among applicants (4,200,000)"], ["2", "Bravo", "score rank 2 among applicants (3,000,000)"], ["3", "Not filled", ""]]);
     await expect(page.locator("[data-plan-warnings]")).toContainText("Delta has no score");
 
     await page.getByRole("button", { name: "Create public link" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
     await expect(page.locator("[data-view]")).toContainText("Scores are not included in this link.");
     await expect(page.locator("[data-view]")).not.toContainText("4,200,000");
-    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", "score rank 1"], ["3", "Bravo", "score rank 2"]]);
+    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest}`], ["3", "Bravo", `score rank 2 ${rest}`]]);
 
     await gotoHydrated(page, "/kingdom/mge/");
     await page.getByLabel("Include scores in the public link").check();

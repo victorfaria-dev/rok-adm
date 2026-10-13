@@ -345,6 +345,17 @@ function plural(n: number, one: string, many = `${one}s`): string {
 }
 
 /**
+ * Who a score rank is counted among, written out so the ledger is exact: "" when every listed
+ * governor competes, else " among applicants", " among governors not placed by hand" or both.
+ */
+export function scoreRankScope(applicationsRequired: boolean, someoneManual: boolean): string {
+  if (applicationsRequired && someoneManual) return " among applicants not placed by hand";
+  if (applicationsRequired) return " among applicants";
+  if (someoneManual) return " among governors not placed by hand";
+  return "";
+}
+
+/**
  * Deterministic ledger for every event, in date order. Locked events keep their stored result
  * (history) and still count toward rotation. Ties break by name, then id.
  */
@@ -432,7 +443,12 @@ export function planMge(doc: MgeDoc): MgePlan {
         }
       } else if (doc.policy === "score") {
         const ranked = pool.filter((c) => c.score !== null).sort((a, b) => (b.score! !== a.score! ? b.score! - a.score! : byNameThenId(a, b)));
-        ranked.forEach((c, i) => queue.push({ c, reason: `score rank ${i + 1} (${formatInt(c.score!)})`, publicReason: `score rank ${i + 1}`, score: c.score }));
+        // The rank is among the pool only (applicants, minus governors placed by hand): say so.
+        const among = scoreRankScope(doc.applicationsRequired, taken.size > 0);
+        ranked.forEach((c, i) => {
+          const rank = `score rank ${i + 1}${among}`;
+          queue.push({ c, reason: `${rank} (${formatInt(c.score!)})`, publicReason: rank, score: c.score });
+        });
       }
 
       let qi = 0;

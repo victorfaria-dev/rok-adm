@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   MGE_LIMITS, MGE_SOURCES, describeMgeRules, emptyMgeDoc, isDay, mgePublicPayload, orderedEvents, parseCandidateLines, parseMgeDoc, parseMgePublic,
-  planMge, removeCandidate, setEventLocked, splitNameAndNumber,
+  planMge, removeCandidate, scoreRankScope, setEventLocked, splitNameAndNumber,
   type MgeCandidate, type MgeDoc, type MgeEvent,
 } from "../src/kingdom-mge";
 
@@ -64,6 +64,19 @@ describe("score policy", () => {
     expect(p.events[0]!.assignments[2]!.publicReason).toBe("score rank 3");
     expect(p.warnings.filter((w) => w.code === "no_score").map((w) => w.candidateId)).toEqual(["z"]);
     expect(planMge({ ...d, candidates: [cand("x", "X", 4_200_000)] }).events[0]!.assignments[0]!.reason).toBe("score rank 1 (4,200,000)");
+  });
+
+  it("says exactly who the rank is counted among (applicants, governors not placed by hand)", () => {
+    const over = [{ slot: 1, candidateId: "a", reason: "Rally lead" }];
+    const reasons = (d: MgeDoc) => planMge(d).events[0]!.assignments.map((a) => [a.name, a.reason, a.publicReason]);
+    const d = doc({ policy: "score", slotsPerEvent: 2, candidates: FIVE, events: [ev("e1", "2026-10-01", { overrides: over })] });
+    // Alpha (top score) is placed by hand, so Bravo is first among the rest, not first overall.
+    expect(reasons(d)).toEqual([["Alpha", "manual: Rally lead", "manual: Rally lead"], ["Bravo", "score rank 1 among governors not placed by hand (400)", "score rank 1 among governors not placed by hand"]]);
+    const apps = { ...d, applicationsRequired: true, events: [ev("e1", "2026-10-01", { applicants: ["c", "e"] })] };
+    expect(reasons(apps)[0]).toEqual(["Charlie", "score rank 1 among applicants (300)", "score rank 1 among applicants"]);
+    const both = { ...apps, events: [ev("e1", "2026-10-01", { applicants: ["c", "e"], overrides: over })] };
+    expect(reasons(both)[1]).toEqual(["Charlie", "score rank 1 among applicants not placed by hand (300)", "score rank 1 among applicants not placed by hand"]);
+    expect(scoreRankScope(false, false)).toBe("");
   });
 
   it("score policy has no cooldown: the same top scores win every event", () => {
