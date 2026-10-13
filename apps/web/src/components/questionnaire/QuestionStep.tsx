@@ -88,7 +88,7 @@ export function QuestionStep({ question: q, value, error, onAnswer, onSend, inpu
       <div class="q-body">
         <Options name={name} options={q.options as ReadonlyArray<QuestionOption<unknown>>} value={value} invalid={!!error} onAnswer={onAnswer} onSend={onSend} />
         {q.id === "kingdomStage" && (
-          <p class="q-note" data-stage-note>KvK2 and later are not researched yet; for those the guide shows KvK1 content, labelled.</p>
+          <p class="q-note" data-stage-note>From KvK2 on, the guide uses the late-game plan; sections it does not cover yet show KvK1 steps, labelled.</p>
         )}
         <ErrorText error={error} />
       </div>

@@ -90,9 +90,9 @@ const ROLE_OPTIONS: ReadonlyArray<QuestionOption<Role>> = [
 const STAGE_OPTIONS: ReadonlyArray<QuestionOption<KingdomStage>> = [
   { value: "pre_kvk", label: "Before the first KvK", help: "A new kingdom. The guide covers the early phases and the kingdom start." },
   { value: "kvk1", label: "KvK 1 (Season 1)", help: "The guide adds the KvK 1 sections." },
-  { value: "kvk2", label: "KvK 2", help: "Not researched yet: the guide shows KvK 1 content, labelled." },
-  { value: "kvk3", label: "KvK 3", help: "Not researched yet: the guide shows KvK 1 content, labelled." },
-  { value: "soc", label: "Season of Conquest (SoC)", help: "Not researched yet: the guide shows KvK 1 content, labelled." },
+  { value: "kvk2", label: "KvK 2", help: "Uses the late-game plan; sections without steps for this stage show KvK 1 steps, labelled." },
+  { value: "kvk3", label: "KvK 3", help: "Uses the late-game plan; sections without steps for this stage show KvK 1 steps, labelled." },
+  { value: "soc", label: "Season of Conquest (SoC)", help: "Uses the late-game plan; sections without steps for this stage show KvK 1 steps, labelled." },
 ];
 
 const titleCase = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);

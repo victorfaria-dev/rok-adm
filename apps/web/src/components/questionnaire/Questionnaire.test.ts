@@ -58,9 +58,9 @@ describe("questionnaire island: keyboard", () => {
     other.remove();
   });
 
-  it("the kingdom stage step notes that KvK2+ falls back to KvK1 content", () => {
+  it("the kingdom stage step notes how KvK2+ is covered", () => {
     setup({ draft: { step: stepOf("kingdomStage"), answers: {} } });
-    expect(screen.getByText(/KvK2 and later are not researched yet/)).toBeTruthy();
+    expect(screen.getByText(/From KvK2 on, the guide uses the late-game plan/)).toBeTruthy();
   });
 
   it("Enter on a radio option commits the picked option", () => {
