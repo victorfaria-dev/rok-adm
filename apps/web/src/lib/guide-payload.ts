@@ -57,6 +57,14 @@ function escapeAttr(s: string): string {
   return s.replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;");
 }
 
+/** "VIP by KvK1" sentence; one statement when both routes reach the same level. */
+export function vipByKvk1Text(chestOnly: number, withGems: number): string {
+  if (chestOnly === withGems) {
+    return `VIP ${chestOnly} either way: the daily chest alone and putting every guaranteed gem into VIP reach the same level`;
+  }
+  return `VIP ${chestOnly} with the daily chest only, VIP ${withGems} if every guaranteed gem goes to VIP`;
+}
+
 export function patchBadge(b: GuideBlock): PatchBadge {
   const ref = b.patch_ref?.trim() ?? "";
   const m = /\d+\.\d+\.\d+/.exec(ref);
@@ -134,7 +142,7 @@ export function buildBudgetPayload(): BudgetPayload {
       { label: "Power", value: `${k.power.value.minMillions}M to ${k.power.value.maxMillions}M`, ...lean(k.power) },
       {
         label: `VIP by day ${startDay}`,
-        value: `VIP ${highestBy(chest)} with the daily chest only, VIP ${highestBy(gems)} if every guaranteed gem goes to VIP`,
+        value: vipByKvk1Text(highestBy(chest), highestBy(gems)),
         facts: vipFacts,
         confidence: gems.confidence,
         derived: true,

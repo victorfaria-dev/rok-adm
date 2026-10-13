@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
 import type { GuideBlock } from "@rokadm/core";
-import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildGuidePayload, patchBadge, renderMarkdown } from "./guide-payload";
+import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildGuidePayload, patchBadge, renderMarkdown, vipByKvk1Text } from "./guide-payload";
 
 const GUIDES = join(__dirname, "../../../../guides/data");
 const files = readdirSync(GUIDES).filter((f) => /^blocks\..+\.json$/.test(f) && f !== "blocks.schema.json");
@@ -71,6 +71,15 @@ describe("guide payload (build time)", () => {
       expect(new Set(labels).size, set).toBe(labels.length);
       expect(html, set).not.toContain('type="checkbox"');
     }
+  });
+
+  it("VIP by KvK1: one sentence when both routes reach the same level", () => {
+    expect(vipByKvk1Text(7, 7)).toMatch(/^VIP 7 either way/);
+    expect(vipByKvk1Text(7, 7).match(/VIP \d+/g)).toHaveLength(1);
+    expect(vipByKvk1Text(6, 8)).toBe("VIP 6 with the daily chest only, VIP 8 if every guaranteed gem goes to VIP");
+    const row = buildBudgetPayload().targets.find((t) => t.label.startsWith("VIP by day"))!;
+    const levels = row.value.match(/VIP (\d+)/g)!;
+    expect(new Set(levels).size).toBe(levels.length);
   });
 
   it("parses the patch reference into a version and a note", () => {
