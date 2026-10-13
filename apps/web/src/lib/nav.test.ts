@@ -7,12 +7,12 @@ import { profileFromCode, profileSummary } from "./profile";
 import { defaultProfile, encodeProfile } from "@rokadm/core";
 
 describe("nav (UX stage 1)", () => {
-  it("player tabs: City Hall · Guides · Tools · Me", () => {
-    expect(PLAYER_NAV.map((d) => d.label)).toEqual(["City Hall", "Guides", "Tools", "Me"]);
+  it("player tabs: City Hall · Tools · Me", () => {
+    expect(PLAYER_NAV.map((d) => d.label)).toEqual(["City Hall", "Tools", "Me"]);
   });
 
-  it("leader tabs: Kingdom · Members · Events · Guides · Me (at most 5, each with an icon)", () => {
-    expect(LEADER_NAV.map((d) => d.label)).toEqual(["Kingdom", "Members", "Events", "Guides", "Me"]);
+  it("leader tabs: Kingdom · Members · Events · Me (at most 5, each with an icon)", () => {
+    expect(LEADER_NAV.map((d) => d.label)).toEqual(["Kingdom", "Members", "Events", "Me"]);
     for (const nav of [PLAYER_NAV, LEADER_NAV]) {
       expect(nav.length).toBeLessThanOrEqual(5);
       for (const d of nav) expect(d.icon).toBeTruthy();
@@ -26,20 +26,21 @@ describe("nav (UX stage 1)", () => {
     expect(isActive("/me/", "/")).toBe(false);
   });
 
-  it("files every guide page under Guides, whatever its URL", () => {
+  it("Guides is not a tab: every guide page (and the commander guide) sits under Me, where the Guides row is", () => {
     for (const nav of [PLAYER_NAV, LEADER_NAV]) {
-      for (const p of ["/guides/", "/guide/", "/guides/farms/food/", "/glossary/", "/changes/", "/tools/safety/", "/tools/zeroed/"]) {
-        expect(activeTab(nav, p), p).toBe("/guides/");
+      expect(nav.map((d) => d.href)).not.toContain("/guides/");
+      for (const p of ["/guides/", "/guide/", "/guides/farms/food/", "/commanders/", "/glossary/", "/changes/", "/tools/safety/", "/tools/zeroed/"]) {
+        expect(activeTab(nav, p), p).toBe("/me/");
       }
     }
   });
 
-  it("player: City Hall owns /routine/ and its full list; Tools owns farms and commanders; Me owns the share card", () => {
+  it("player: City Hall owns /routine/, its full list and My commanders; Tools owns farms; Me owns the share card", () => {
     expect(activeTab(PLAYER_NAV, "/city-hall/today/")).toBe("/city-hall/");
+    expect(activeTab(PLAYER_NAV, "/city-hall/commanders/")).toBe("/city-hall/");
     expect(activeTab(PLAYER_NAV, "/routine/")).toBe("/city-hall/");
     expect(activeTab(PLAYER_NAV, "/tools/pack-value/")).toBe("/tools/");
     expect(activeTab(PLAYER_NAV, "/farms/log/")).toBe("/tools/");
-    expect(activeTab(PLAYER_NAV, "/commanders/")).toBe("/tools/");
     expect(activeTab(PLAYER_NAV, "/card/")).toBe("/me/");
     expect(activeTab(PLAYER_NAV, "/crest/")).toBe("/me/");
     expect(activeTab(PLAYER_NAV, "/")).toBeNull();

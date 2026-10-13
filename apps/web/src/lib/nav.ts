@@ -3,7 +3,7 @@
 // ROLE_BOOT_SCRIPT in lib/role.ts) shows one of them. Labels are English and live here only.
 import type { PlayingAs } from "./store";
 
-export type IconName = "cityhall" | "guide" | "tools" | "you" | "kingdom" | "members" | "events";
+export type IconName = "cityhall" | "tools" | "you" | "kingdom" | "members" | "events";
 
 export interface NavItem {
   href: string;
@@ -15,24 +15,25 @@ export interface NavItem {
   match: readonly string[];
 }
 
-/** Paths every role files under Guides (guide content, wherever its URL lives). */
-const GUIDE_PATHS = ["/guides/", "/guide/", "/glossary/", "/changes/", "/tools/safety/", "/tools/zeroed/"];
+/**
+ * Guide content, wherever its URL lives. Guides are public and are not a tab: they open from a row
+ * on Me (and from the landing page and links), so these paths mark the Me tab.
+ */
+export const GUIDE_PATHS: readonly string[] = ["/guides/", "/guide/", "/commanders/", "/glossary/", "/changes/", "/tools/safety/", "/tools/zeroed/"];
 
-/** Player: City Hall · Guides · Tools · Me. */
+/** Player: City Hall · Tools · Me. */
 export const PLAYER_NAV: readonly NavItem[] = [
   { href: "/city-hall/", label: "City Hall", short: "City Hall", icon: "cityhall", match: ["/city-hall/", "/routine/"] },
-  { href: "/guides/", label: "Guides", short: "Guides", icon: "guide", match: GUIDE_PATHS },
-  { href: "/tools/", label: "Tools", short: "Tools", icon: "tools", match: ["/tools/", "/farms/", "/commanders/"] },
-  { href: "/me/", label: "Me", short: "Me", icon: "you", match: ["/me/", "/start/", "/card/", "/crest/"] },
+  { href: "/tools/", label: "Tools", short: "Tools", icon: "tools", match: ["/tools/", "/farms/"] },
+  { href: "/me/", label: "Me", short: "Me", icon: "you", match: ["/me/", "/start/", "/card/", "/crest/", ...GUIDE_PATHS] },
 ];
 
-/** Leader: Kingdom · Members · Events · Guides · Me. */
+/** Leader: Kingdom · Members · Events · Me. */
 export const LEADER_NAV: readonly NavItem[] = [
   { href: "/kingdom/", label: "Kingdom", short: "Kingdom", icon: "kingdom", match: ["/kingdom/", "/crest/"] },
   { href: "/kingdom/requirements/", label: "Members", short: "Members", icon: "members", match: ["/kingdom/requirements/", "/kingdom/recruit/", "/kingdom/my/"] },
   { href: "/kingdom/mge/", label: "Events", short: "Events", icon: "events", match: ["/kingdom/mge/", "/tools/kvk/"] },
-  { href: "/guides/", label: "Guides", short: "Guides", icon: "guide", match: GUIDE_PATHS },
-  { href: "/me/", label: "Me", short: "Me", icon: "you", match: ["/me/", "/start/", "/card/"] },
+  { href: "/me/", label: "Me", short: "Me", icon: "you", match: ["/me/", "/start/", "/card/", ...GUIDE_PATHS] },
 ];
 
 export const NAVS: Readonly<Record<PlayingAs, readonly NavItem[]>> = { player: PLAYER_NAV, leader: LEADER_NAV };

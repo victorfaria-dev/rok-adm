@@ -37,6 +37,14 @@ export const HUB_GROUPS: readonly HubGroup[] = [
     title: "Plan my account",
     items: [fromPage("f2p", "always"), fromPage("first30"), fromPage("low"), fromPage("latestage")],
   },
+  {
+    id: "commanders",
+    title: "Commanders",
+    items: [{
+      href: "/commanders/", title: "Commander guide",
+      summary: "Which commanders are worth your sculptures: shelf life and Go / Wait / Avoid, with the reasons.", tag: "always",
+    }],
+  },
   { id: "new-kingdom", title: "Starting in a new kingdom", items: [fromPage("newkingdom")] },
   {
     id: "back",

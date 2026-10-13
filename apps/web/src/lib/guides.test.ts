@@ -28,12 +28,13 @@ describe("guide directory", () => {
     for (const g of STATIC_GUIDES) expect(g.href).toBe(`/guides/${g.slug}/`);
   });
 
-  it("links the Guides hub from both tab sets, not a single guide", () => {
+  it("guides are not a tab (they open from a row on Me); the hub is the one entry, not a single guide", () => {
     for (const nav of [PLAYER_NAV, LEADER_NAV]) {
-      const g = nav.find((d) => d.label === "Guides");
-      expect(g?.href).toBe("/guides/");
+      expect(nav.map((d) => d.href)).not.toContain("/guides/");
       expect(nav.map((d) => d.href)).not.toContain("/guides/new-kingdom/");
     }
+    const me = readFileSync(join(__dirname, "../components/me/Me.tsx"), "utf8");
+    expect(me).toMatch(/LinkRow href="\/guides\/"/);
   });
 });
 
@@ -42,7 +43,7 @@ describe("guides hub (UX stage 1)", () => {
 
   it("lists every guide page once, plus the safety FAQ, zeroed plan and what changed", () => {
     for (const g of GUIDE_PAGES) expect(hrefs.filter((h) => h === g.href), g.href).toHaveLength(1);
-    for (const h of ["/tools/safety/", "/tools/zeroed/", "/changes/"]) expect(hrefs).toContain(h);
+    for (const h of ["/tools/safety/", "/tools/zeroed/", "/changes/", "/commanders/"]) expect(hrefs).toContain(h);
     expect(new Set(hrefs).size).toBe(hrefs.length);
   });
 
