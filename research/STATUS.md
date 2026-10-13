@@ -48,16 +48,16 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | Mapas de processo + árvore de funcionalidades | Sub-admin PRODUTO | `produto/` — **concluída**: 5 áreas, 20 épicos, 59 funcionalidades, MVP + R1–R3 |
 | Migração v2 das fichas C01, C02, C04 e B01-0001..0003 | dados | **concluída** — 87 fichas, validador 0 erros (B02–B09 pendentes com o sub-admin REINO) |
 
-## Construção do MVP sem identidade visual (em execução)
+## Construção do MVP sem identidade visual (lógica concluída)
 
 Stack: `docs/adr/0001-stack-mvp.md` (TypeScript, monorepo pnpm, Vitest, CI no GitHub Actions).
 
 | Frente | Pacote/pasta | Funcionalidades |
 |--------|--------------|-----------------|
-| Pipeline de dados + biblioteca de regras e fórmulas | `packages/data` | F-50 v0 |
-| Motor de blocos + questionário | `packages/core` | F-51, F-01 (lógica) |
-| Rotina por tempo, reality check, checklist de comandante | `packages/planner` | F-15, F-14, F-20 |
-| Conteúdo: guia de reino novo, privacidade, kit de divulgação | `guides/data`, `content/` | F-12, F-56, F-57 |
+| Pipeline de dados + biblioteca de regras e fórmulas | `packages/data` | F-50 v0 — **concluída** (282 fatos, 25 patches, 23 tabelas, 37 testes) |
+| Motor de blocos + questionário | `packages/core` | F-51, F-01 — **concluída** (36 testes) |
+| Rotina por tempo, reality check, checklist de comandante | `packages/planner` | F-15, F-14, F-20 — **concluída** (39 testes; minutos pendentes de T0) |
+| Conteúdo: guia de reino novo, privacidade, kit de divulgação | `guides/data`, `content/` | F-12, F-56, F-57 — **concluída** (14 blocos) |
 
 Aguardando identidade visual: App Shell (F-52) e telas.
 
