@@ -32,6 +32,11 @@
   .st-avatar[data-state="talking"] .st-mouth { animation: st-talk var(--ko-duration-fast) var(--ko-ease-in-out) 4; }
   .st-avatar[data-state="grumble"] .st-figure { animation: st-shake var(--ko-duration-instant) linear 4 alternate; transform-origin: 32px 60px; }
 }
+/* Video mascot (SunTzuMascot.tsx, when clips are configured): a card on the clip's own opaque
+   background; the frame fills it. */
+.st-card { border-radius: var(--ko-radius-md); background: var(--ko-surface-raised); }
+.st-card video, .st-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
 @keyframes st-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
 @keyframes st-blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
 @keyframes st-shake { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
