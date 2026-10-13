@@ -392,6 +392,16 @@
       "gameVersion": "desconhecida"
     },
     {
+      "id": "A05-0600",
+      "title": "VIP Special Privileges: one-time paid pack per VIP level, $0.99 (VIP 0-3) to $99.99; VIP 0-9 packs carry Minamoto sculptures (10 to 270)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
       "id": "A06-0500",
       "title": "F2P: concentrate on one complete march instead of spreading sculptures",
       "confidence": "media",
@@ -710,6 +720,236 @@
       "validUntil": "2026-10-02",
       "invalidatedBy": null,
       "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A11-0600",
+      "title": "Official recharge-type events: Gem Rush (21+ day kingdoms, before Season 2), Road to Greatness / Epic Glory (Season 2+ counterparts), Recharge Rewards (recharge daily)",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-05-13",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.94"
+    },
+    {
+      "id": "A11-0601",
+      "title": "Daily recharge event: buy 2,500 gems per day (packs force ~3,000-3,600); 7-day window, rewards over 5 days; ~30 gold heads total (T3/T4)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-02-15",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A11-0602",
+      "title": "Pass purchases (30-day Gem Supply, material supply, daily offers) count toward recharge-event thresholds (T4 consensus)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "unanime",
+      "validUntil": "2026-04-30",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0001",
+      "title": "Growth Fund: $15 one-time, ~81,000 gems, full value needs CH24",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "unanime",
+      "validUntil": "2026-03-21",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0002",
+      "title": "Supply Depot (30-day gem supply): ~$10, ~19,500 gems",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-18",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0005",
+      "title": "Low-spender spending discipline",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-18",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0601",
+      "title": "30-day Gem Supply: ~2,200 gems on purchase + 650/day for 30 days (~21,700 total); 19,500 counts only the daily part",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-04-30",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0602",
+      "title": "30-day Gem Supply price: $9.99 (one 2026 player) / ~$10 (guides); one-time 50%-off version ~$5 / 5 EUR",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-09-11",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0603",
+      "title": "30-day Gem Supply must be claimed daily; unclaimed days are forfeited (single seller source)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-18",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0605",
+      "title": "Growth Fund: the City Hall 25 milestone pays 40,000 gems (about half of the ~81,000 total) (T4)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-04-08",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0606",
+      "title": "Growth Fund bought late still pays past City Hall milestones (majority) vs. early milestones are lost (Packsify)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-05-27",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0607",
+      "title": "Growth Fund price varies: US$14.99 / 17.99 EUR / '$15' in guides; store shows '2000%' value; one player lists '4600 gems + 75h speedups + 11.8M resources' (T4)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0608",
+      "title": "Super-value bundle ladder (Call of the Ancients, King’s Coronation, etc.): $5/$10/$20/$50/$100 tiers give 1,050/2,200/4,600/12,000/25,000 gems and 525/1,000/2,000/4,000 VIP, then 6,000 (rkg 2022) or 5,000 (LootBar 2026) VIP at $100",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0609",
+      "title": "Lucerne Scrolls paid tier (Divine Inheritance): about $5 (US$5.99 / 5 EUR in posts), more ($20) to unlock everything; free tier = Ancestor’s Legacy",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0610",
+      "title": "Daily Special Offer (official): three daily offers with chosen-commander sculptures, from kingdom day 43; an extra advanced bundle after buying all three",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-11-13",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.98"
+    },
+    {
+      "id": "A12-0611",
+      "title": "Daily Special Offer cost/contents: about $3 per day for all three (~$90/month); ~1,200 gems/day per players and LootBar (weak)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0612",
+      "title": "7-day (weekly) Material Supply: ~$5 / $4.99; gems per pack conflict (1,000 vs ~1,050 vs ~700) plus materials",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0613",
+      "title": "Writer of History pop-up: $5 when a new legendary commander is acquired; ~1,050 gems, 525 VIP and 10 sculptures of that commander",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0614",
+      "title": "'Low spender' means anything from ~$20/month (gem supply + Lucerne) to $100-200/month in the community",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0615",
+      "title": "Low-spender purchase order (community): Growth Fund > 30-day Gem Supply > Lucerne Scrolls > Writer of History / dailies",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0616",
+      "title": "Shop list prices in gems (Fandom, rev. 2023): 60-min speedup 120, 24-h 1,500, 7-day 10,000; VIP point items cost 1 gem per point",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2023-10-12",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0617",
+      "title": "Community 'gem value per dollar' table (2022): items valued at the cheapest in-game gem price (sculpture 800, 1-h speedup 25), not the game's advertised value",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "fonte_unica",
+      "validUntil": "2022-03-04",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0618",
+      "title": "Value-per-dollar method for the Low planner: raw gems (and VIP) per USD is defensible; item valuation only as a labelled range",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
     },
     {
       "id": "A13-0001",

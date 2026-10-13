@@ -65,3 +65,13 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A11-0513 | evento | media | verificado |  |
 | A11-0514 | evento | alta | organizado |  |
 | A11-0515 | evento | alta | organizado |  |
+
+## Onda J (J3 — recharge events, 2026-10-13)
+
+| ID | Tipo | Conf. | Status | Title |
+|---|---|---|---|---|
+| A11-0600 | evento | alta | verificado | Official recharge-type events: Gem Rush, Road to Greatness, Recharge Rewards |
+| A11-0601 | evento | baixa | verificado | Daily recharge: 2,500 gems/day; 7-day window; ~30 gold heads (T3/T4) |
+| A11-0602 | estrategia | baixa | verificado | Passes count toward recharge thresholds (T4 consensus) |
+
+New gaps L-A11-07, L-A11-08.

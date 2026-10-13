@@ -6,3 +6,4 @@ export * from "./farms";
 export * from "./effective-profile";
 export * from "./kingdom";
 export * from "./csv";
+export * from "./low-spender";

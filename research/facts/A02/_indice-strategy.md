@@ -38,3 +38,11 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A02-0502 | estrategia | baixa | verificado |  |
 | A02-0503 | estrategia | baixa | verificado |  |
 | A02-0504 | estrategia | baixa | verificado |  |
+
+## Onda J (J2, 2026-10-13) — late stages
+
+| ID | Title | Type | Consensus | Confidence | Conflicts |
+|---|---|---|---|---|---|
+| [A02-0600](A02-0600.md) | T5 research gate: Medical Corps 10 + line defence tech 10 + Academy 25; 100 days raw (MC Lv1–10 ≈ 461 d) | mecanica | n/a | media | — |
+| [A02-0601](A02-0601.md) | Crystal technology: SoC-only tree paid with Crystals | mecanica | n/a | alta | — |
+| [A02-0602](A02-0602.md) | Crystal tech priorities for F2P/low | estrategia | majoritario | baixa | — |

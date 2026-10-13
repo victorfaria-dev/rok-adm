@@ -1,0 +1,17 @@
+# J1 — Sources and access log (late-stage commanders & equipment, 2026-10-13)
+
+| Slug | URL | Tier | Date seen | Result |
+|---|---|---|---|---|
+| `src:lilith-forum` | API list `https://forum-global.lilithgame.com/api/v2/posts?account_id=10000000&limit=100&offset=N` (N=0..800) | T1 | 832 posts, 2020 → 2026-06-23 | Worked. Full content in list `content`. Keyword search done offline (Season 2/3/SoC + commander/equipment, Swap, Gathering of Heroes, Iconic, armament, Museum, Relic, Sovereign Key). Excerpts: `official-forum-excerpts.md`. Comments endpoint `/api/v2/comments?post_id=<id>` exists (T4), not used. |
+| `src:allclash` | https://www.allclash.com/best-commanders-tier-list-in-rise-of-kingdoms-with-talents/ | T3 | pub 2026-09-10, mod 2026-09-15 | Worked (curl). Uses "Invest Prio" tags: High / Niche ("No priority if you're F2P or low-spender") / None ("Don't invest Universal Sculptures") / "Before SoC/KvK4 ONLY". Some entry text is old ("in 2024 anymore", "early months in 2025"). Commander names are in headings that were not visible in the stripped text for most entries; only names in the body text were used. |
+| `src:topuplive` | https://www.topuplive.com/news/rise-of-kingdoms-commanders-tier-list.html | T3, seller (CoI) | pub 2026-08-14, mod 2026-08-18 | Worked (curl). "KvK Stage Priorities" table: KvK1–2 Richard I/Charles Martel/Cao Cao; KvK3 Alexander/Saladin; SoC Sun Tzu Prime/Zhuge Liang/Scipio Prime. That table is stale-ish (no 2025–26 commanders). |
+| `src:rkg` | https://riseofkingdomsguides.com/kvk-kingdom-vs-kingdom-guide-tips-for-all-seasons-in-rise-of-kingdoms/ ; https://riseofkingdomsguides.com/?p=12266 (Iconic Crystals) ; https://riseofkingdomsguides.com/rise-of-kingdoms-equipment-guide/ | T3 | published 2022-01/04 (modified 2026-01-02 = mass re-save) | Worked (curl). Old content; used only for the Iconic season grouping/priority and epic-before-legendary. |
+| `src:reddit` | Arctic Shift API (see `reddit-t4.md`) | T4 | 2025-02 → 2026-10 | Partially worked; rate-limited on most searches. |
+| `src:nedese` | https://www.nedese.com/en/rise-of-kingdoms/rise-of-kingdoms-commander-list-2026-which-tier-which-commander | T3 | 2026-08-24 / 09-16 | Fetched, not cited (tier list without F2P/stage advice in a quotable form). |
+| Fandom | api.php parse: State_Forum, Formation, Armament, Equipment, Iconic_Equipment, Season_of_Conquest, Commander_Sculpture, Expertise | T2 | — | Pages missing (missingtitle); Commanders/Lost_Kingdom exist but stale (see context pack). Not cited. |
+| topuplist.com "Commander Swap 2026" | (WebSearch only) | T3 seller | 2026 | Rumoured "full commander conversion ~12,000 gems". Unconfirmed, seller, not fetched or cited. |
+
+## What was not found (→ gaps)
+- Official per-season commander pool lists (L-A06-06); King's Trials details (L-A06-07); current swap timing and free tickets (L-A06-08); Gathering of Heroes tiers/costs and Legendary Chest odds (L-A06-09); Museum income (L-A06-10).
+- Whether the 2021 SoC-only equipment list still applies (L-A07-04); Iconic season scaling and crystal totals (L-A07-05); State Forum unlock condition (L-A07-06); SoC shop prices (L-A07-07).
+- No 2025–26 T3 guide with an F2P pairs-by-role table for KvK2/KvK3/SoC was found (L-A06-01 remains open). Commander names in current meta (Qin Shi Huang, Bai Qi, Liu Che, Zhuge Liang, King Arthur, Achilles...) appear only in T4 threads and allclash entries; they were kept in `notas` and not turned into pair cards.
