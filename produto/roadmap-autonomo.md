@@ -46,6 +46,13 @@ O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` d
 ## Congelamento de funcionalidades (2026-10-13, decisão do Victor)
 Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco do Sun Tzu no chat; guia visual com linha do tempo e calendário). Depois disso começa a fase de experiência do usuário: definir as 3 tarefas principais, teste de usabilidade com o Victor no preview e reorganização da navegação a partir dos resultados. O loop autônomo foi parado.
 
+### Direção de arquitetura de informação (Victor, 2026-10-13)
+- O site serve jogadores comuns e líderes de reino como papéis distintos, com sistemas distintos.
+- Todo conteúdo de guia fica numa única aba.
+- Uma aba dedicada só ao acompanhamento da evolução da prefeitura (City Hall).
+- Conteúdo solto que puder virar função (ferramenta, filtro, widget) deve ser comprimido.
+- Skill `ui-ux-pro-max` (em `.claude/skills/`) é usada como checklist e referência de padrões; não substitui os tokens `--ko-*`.
+
 ## Pendências para o próximo ciclo de correções
 - ~~`/tools/migration/`: começa com valores de exemplo e mostra "Eligible" antes de o usuário digitar nada (onda D).~~ Corrigido na onda G (G9).
 - Tabelas A01 com linhas corrompidas (ex.: Farm nível 25 = 2 de comida); as calculadoras excluem e avisam; precisa reextrair da fonte (onda D).
