@@ -91,7 +91,7 @@ test.describe("More menu (phone)", () => {
     await button.click();
     await expect(button).toHaveAttribute("aria-expanded", "true");
     await expect(panel).toBeVisible();
-    await expect(panel.getByRole("link")).toHaveText(["All guides", "Farms", "Governor card", "Trust & privacy", "Brand"]);
+    await expect(panel.getByRole("link")).toHaveText(["All guides", "Farms", "Governor card", "Trust & privacy", "Brand", "Alliance crest"]);
 
     await page.keyboard.press("Tab");
     await expect(panel.getByRole("link", { name: "All guides" })).toBeFocused();
