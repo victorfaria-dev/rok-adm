@@ -1,7 +1,8 @@
 // Scroll timeline of the guide (wave VG). Static HTML that works without JS: each step is a <details> node
-// (title + confidence; open: gist, sources, fact ids, "Read more" to the full block below). With JS,
+// (title + confidence; open: gist, sources, fact-card count, "Read more" to the full block below). With JS,
 // lib/guide-timeline-dom.ts adds arrow-key navigation, the scroll highlight and the reveal.
 import type { Here, Timeline as TimelineData, TimelineLane, TimelineNode } from "../../lib/guide-timeline";
+import { useState } from "preact/hooks";
 import { Confidence } from "./Confidence";
 
 interface Props {
@@ -10,15 +11,18 @@ interface Props {
   title?: string;
   /** Prefix for ids, so two timelines never clash. */
   idPrefix?: string;
+  /** Build a step's summary card only when it is opened (the island, to keep its render short). Off for static HTML. */
+  lazyCards?: boolean;
 }
 
 const MAX_SITES = 3;
 
-function Node({ n }: { n: TimelineNode }) {
+function Node({ n, lazy }: { n: TimelineNode; lazy: boolean }) {
+  const [open, setOpen] = useState(false);
   const sites = n.sources.slice(0, MAX_SITES).join(", ") + (n.sources.length > MAX_SITES ? ` +${n.sources.length - MAX_SITES}` : "");
   return (
     <li class="tl-node" data-node={n.id} data-conf={n.confidence} data-done={n.done ? "" : undefined}>
-      <details>
+      <details onToggle={lazy ? (e) => setOpen((e.currentTarget as HTMLDetailsElement).open) : undefined}>
         <summary>
           <span class="tl-dot" aria-hidden="true" />
           <span class="tl-node-title">{n.title}</span>
@@ -28,41 +32,44 @@ function Node({ n }: { n: TimelineNode }) {
             <Confidence level={n.confidence} short />
           </span>
         </summary>
+        {(!lazy || open) && (
         <div class="tl-card">
           {n.gist && <p class="tl-gist">{n.gist}</p>}
           <p class="tl-meta">
-            <Confidence level={n.confidence} />
-            <span> · Sources: {sites || "none listed"}</span>
-            {n.cards.length > 0 && (
-              <span class="tl-cards"> · <span class="visually-hidden">Fact cards: </span><span class="mono">{n.cards.join(", ")}</span></span>
-            )}
+            <span>Sources: {sites || "none listed"}</span>
+            {n.cards.length > 0 && <span class="tl-cards"> · {n.cards.length} fact {n.cards.length === 1 ? "card" : "cards"}</span>}
           </p>
           <a class="tl-more" href={`#b-${n.id}`} data-read-more={n.id}>
             Read more<span class="visually-hidden">: {n.title}</span>
           </a>
         </div>
+        )}
       </details>
     </li>
   );
 }
 
-function Nodes({ lane }: { lane: TimelineLane }) {
+function Nodes({ lane, lazy }: { lane: TimelineLane; lazy: boolean }) {
+  const [open, setOpen] = useState(false);
   const list = (
     <ol class="tl-nodes">
-      {lane.nodes.map((n) => <Node key={n.id} n={n} />)}
+      {lane.nodes.map((n) => <Node key={n.id} n={n} lazy={lazy} />)}
     </ol>
   );
-  if (!lane.nodes.every((n) => n.done)) return list;
-  // A phase the profile has (probably) finished folds away; one tap shows its steps again.
+  // Folded: a phase the profile has (probably) finished, and the undated "any day" steps (daily routine,
+  // events, habits: they have no place on the road). One tap shows them; the island builds them on open.
+  const done = lane.nodes.every((n) => n.done);
+  if (!done && lane.id !== "any") return list;
+  const n = lane.nodes.length;
   return (
-    <details class="tl-lane-done">
-      <summary>Show {lane.nodes.length} {lane.nodes.length === 1 ? "step" : "steps"} (probably done)</summary>
-      {list}
+    <details class="tl-fold" data-fold={done ? "done" : "any"} onToggle={lazy ? (e) => setOpen((e.currentTarget as HTMLDetailsElement).open) : undefined}>
+      <summary>Show {n} {n === 1 ? "step" : "steps"} {done ? "(probably done)" : "for any day"}</summary>
+      {(!lazy || open) && list}
     </details>
   );
 }
 
-export function Timeline({ timeline, here = null, title = "Your road to KvK1", idPrefix = "tl" }: Props) {
+export function Timeline({ timeline, here = null, title = "Your road to KvK1", idPrefix = "tl", lazyCards = false }: Props) {
   const hid = `${idPrefix}-h`;
   return (
     <section class="tl" data-timeline aria-labelledby={hid}>
@@ -83,7 +90,7 @@ export function Timeline({ timeline, here = null, title = "Your road to KvK1", i
                   </span>
                 )}
               </div>
-              <Nodes lane={lane} />
+              <Nodes lane={lane} lazy={lazyCards} />
             </li>
           );
         })}

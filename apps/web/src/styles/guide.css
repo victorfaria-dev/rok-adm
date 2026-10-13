@@ -235,7 +235,7 @@ h4.g-block-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-fo
 
 /* ---------------------------------------------------------------------------
    Visual guide (wave VG): progress tower, kingdom calendar, scroll timeline. */
-.gv { display: grid; gap: var(--ko-space-6); min-width: 0; }
+.gv { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--ko-space-6); min-width: 0; }
 .gv-top { display: grid; gap: var(--ko-space-6); min-width: 0; }
 @media (min-width: 768px) {
   .gv-top { grid-template-columns: minmax(200px, 15rem) minmax(0, 1fr); align-items: start; }
@@ -311,7 +311,9 @@ h4.g-block-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-fo
 .tl-hint { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
 .tl-lanes { position: relative; margin: 0; padding: 0; list-style: none; }
 .tl-lanes::before { content: ""; position: absolute; left: 11px; top: 10px; bottom: 10px; width: 2px; background: var(--ko-control-border); }
-.tl-lane { position: relative; padding: 0 0 var(--ko-space-5) 36px; min-width: 0; }
+.tl-lane { position: relative; padding: 0 6px var(--ko-space-5) 36px; min-width: 0; }
+/* Lanes below the fold skip rendering until near the viewport (like the sections, Q2 P2-10). */
+.tl-lane:not(:first-child) { content-visibility: auto; contain-intrinsic-block-size: auto 360px; }
 /* Undated lanes (before you start, any day): a dashed stretch of rail. */
 .tl-lane:not([data-dated])::before {
   content: ""; position: absolute; left: 11px; top: 0; bottom: 0; width: 2px;
@@ -365,18 +367,18 @@ h4.g-block-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-fo
 .tl-meta { font-size: var(--ko-text-xs); color: var(--ko-text-muted); overflow-wrap: anywhere; }
 .tl-meta .g-conf { font-size: inherit; }
 .tl-more { justify-self: start; display: inline-flex; align-items: center; min-height: 44px; font-weight: var(--ko-weight-semibold); }
-.tl-lane-done > summary {
+.tl-fold > summary {
   cursor: pointer; min-height: 44px; display: flex; align-items: center; margin-top: var(--ko-space-1);
   font-size: var(--ko-text-sm); color: var(--ko-text-muted); list-style: none;
 }
-.tl-lane-done > summary::-webkit-details-marker { display: none; }
-.tl-lane-done > summary::before { content: "+"; margin-inline-end: var(--ko-space-2); font-family: var(--ko-font-mono); color: var(--ko-accent); }
-.tl-lane-done[open] > summary::before { content: "\2212"; }
+.tl-fold > summary::-webkit-details-marker { display: none; }
+.tl-fold > summary::before { content: "+"; margin-inline-end: var(--ko-space-2); font-family: var(--ko-font-mono); color: var(--ko-accent); }
+.tl-fold[open] > summary::before { content: "\2212"; }
 @media (prefers-reduced-motion: no-preference) {
   .tl-lane-mark, .tl-lane-title { transition: background-color var(--ko-duration-base) var(--ko-ease-out), border-color var(--ko-duration-base) var(--ko-ease-out), color var(--ko-duration-base) var(--ko-ease-out); }
   .tl[data-reveal] .tl-node {
     clip-path: inset(-8px -8px -8px -40px);
     transition: transform var(--ko-duration-slow) var(--ko-ease-out), clip-path var(--ko-duration-slow) var(--ko-ease-out);
   }
-  .tl[data-reveal] .tl-node:not([data-shown]) { transform: translateX(-12px); clip-path: inset(-8px 100% -8px -40px); }
+  .tl[data-reveal] .tl-node[data-wait] { transform: translateX(-12px); clip-path: inset(-8px 100% -8px -40px); }
 }

@@ -12,14 +12,21 @@ import { Tower } from "./Tower";
 interface Props {
   view: GuideView;
   badges: Record<string, CardBadge>;
-  /** Kingdom calendar; omitted on the static guides. */
+  /** Kingdom calendar (with the tower); omitted on the static guides. */
   calendar?: readonly CalendarMilestone[];
   /** Profile for "you are here"; null on the default and static guides. */
   profile?: AccountProfile | null;
   title?: string;
+  /** Build timeline cards and folded lanes on open (the island). */
+  lazyCards?: boolean;
+  /**
+   * How much to render: 1 the tower, 2 also the calendar, 3 also the timeline (the island adds one part per
+   * idle period so no task builds all of it). Default 3.
+   */
+  parts?: 1 | 2 | 3;
 }
 
-export function GuideVisual({ view, badges, calendar, profile = null, title }: Props) {
+export function GuideVisual({ view, badges, calendar, profile = null, title, lazyCards = false, parts = 3 }: Props) {
   const timeline = buildTimeline(view, badges);
   const here = profile ? hereFor(profile) : null;
   return (
@@ -27,10 +34,12 @@ export function GuideVisual({ view, badges, calendar, profile = null, title }: P
       {calendar && (
         <div class="gv-top">
           <Tower floors={towerFloors(timeline, here)} here={here} />
-          <Calendar milestones={calendar} blocks={viewBlocks(view)} here={here} />
+          {parts >= 2 && <Calendar milestones={calendar} blocks={viewBlocks(view)} here={here} />}
         </div>
       )}
-      {timeline.show && <Timeline timeline={timeline} here={here} title={title} />}
+      {parts >= 3 && timeline.show && <Timeline timeline={timeline} here={here} title={title} lazyCards={lazyCards} />}
+      {/* The island renders the timeline when this comes near the viewport. */}
+      {parts === 2 && timeline.show && <div class="tl-sentinel" data-tl-sentinel aria-hidden="true" />}
     </div>
   );
 }

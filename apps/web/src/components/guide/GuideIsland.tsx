@@ -23,7 +23,7 @@ import {
 import { guidePage, guidesForYou } from "../../lib/guides";
 import { GuideBody, GuideMeta, GuidesForYou, renderSteps } from "./GuideBody";
 import { GuideVisual } from "./GuideVisual";
-import { enhanceGuideTimeline, goToBlock, NEED_BLOCK } from "../../lib/guide-timeline-dom";
+import { enhanceTimelines, goToBlock, listenReadMore, NEED_BLOCK } from "../../lib/guide-timeline-dom";
 import { enhanceGuideTower } from "../../lib/guide-tower-dom";
 
 interface Props {
@@ -100,6 +100,8 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   /** Block a "Read more" asked for before the progressive render reached it (wave VG). */
   const [pendingBlock, setPendingBlock] = useState<string | null>(null);
   const root = useRef<HTMLDivElement>(null);
+  /** Visual overview of the personal guide: 0 none yet, 1 tower, 2 also the calendar, 3 also the timeline. */
+  const [visualStage, setVisualStage] = useState(0);
 
   useEffect(() => {
     setMounted(true);
@@ -136,6 +138,30 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const view = selection?.view ?? null;
   const empty = view !== null && view.meta.shownBlocks === 0 && view.alreadyDone.length === 0;
   const totalSteps = view ? renderSteps(view) : 0;
+  // Wave VG: the tower, then the calendar, join in idle periods of their own (never in the same task as a
+  // batch of steps); the timeline is built when its place comes near the viewport (or at once without
+  // IntersectionObserver). All memoised, so the later progressive steps never re-render them.
+  useEffect(() => {
+    if (!view || visualStage >= 3) return;
+    if (visualStage < 2) return afterIdle(() => setVisualStage((n) => n + 1));
+    const sentinel = root.current?.querySelector("[data-tl-sentinel]");
+    if (!sentinel || typeof IntersectionObserver !== "function") {
+      setVisualStage(3);
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) setVisualStage(3);
+    }, { rootMargin: "300px 0px" });
+    io.observe(sentinel);
+    return () => io.disconnect();
+  }, [view !== null, visualStage]);
+  const visual = useMemo(
+    () =>
+      view && data && choice && visualStage > 0 ? (
+        <GuideVisual view={view} badges={data.guide.badges} calendar={data.calendar} profile={choice.profile} parts={visualStage as 1 | 2 | 3} lazyCards />
+      ) : null,
+    [view, data, choice, visualStage],
+  );
 
   // Render the personal guide in steps so no single task builds the whole ~40k px page. A link to a
   // section (#s-...) renders everything at once so the browser can scroll to it.
@@ -143,26 +169,36 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     if (!view || shownSteps > totalSteps) return;
     if (location.hash.length > 1) {
       setShownSteps(totalSteps + 1);
+      setVisualStage(3);
       return;
     }
     return afterIdle(() => setShownSteps((n) => n + STEP));
   }, [view !== null, shownSteps, totalSteps]);
 
   // Timeline and tower (wave VG): enhance whichever guide is on screen (the static default or the personal one).
+  // Enhancement is incremental (only parts not enhanced yet), so the visual arriving in steps never resets
+  // the parts already on screen; everything is undone when the guide itself changes.
+  const undoVisual = useRef<Array<() => void>>([]);
   useEffect(() => {
     const el = root.current;
     if (!el) return;
-    const undo = [enhanceGuideTimeline(el), enhanceGuideTower(el)];
     const need = (e: Event) => {
       setShownSteps(Number.POSITIVE_INFINITY);
+      setVisualStage(3);
       setPendingBlock((e as CustomEvent<{ id: string }>).detail.id);
     };
     el.addEventListener(NEED_BLOCK, need);
+    const stopLinks = listenReadMore(el);
     return () => {
       el.removeEventListener(NEED_BLOCK, need);
-      for (const u of undo) u();
+      stopLinks();
+      for (const u of undoVisual.current.splice(0)) u();
     };
   }, [view, mounted]);
+  useEffect(() => {
+    const el = root.current;
+    if (el) undoVisual.current.push(enhanceTimelines(el), enhanceGuideTower(el));
+  }, [view, mounted, visual]);
 
   useEffect(() => {
     if (pendingBlock && goToBlock(pendingBlock)) setPendingBlock(null);
@@ -259,7 +295,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
           )}
           <GuideMeta view={view} label={`For ${profileSummary(choice.profile)}`} />
           <GuidesForYou links={links} />
-          <GuideVisual view={view} badges={data!.guide.badges} calendar={data!.calendar} profile={choice.profile} />
+          {visual}
           {empty && (
             <aside class="g-notice" data-guide-empty aria-labelledby="g-empty-h">
               <p id="g-empty-h" class="g-notice-title">No researched steps fit this profile yet</p>

@@ -54,13 +54,13 @@ export const NEED_BLOCK = "ko:guide-need-block";
 
 function enhanceTimeline(root: HTMLElement): () => void {
   root.dataset.enhanced = "";
-  const STEP = ".tl-node > details > summary, .tl-lane-done > summary";
+  const STEP = ".tl-node > details > summary, .tl-fold > summary";
   // Steps inside a folded "probably done" phase are skipped until it is opened.
   const summaries = () => [...root.querySelectorAll<HTMLElement>(STEP)].filter((s) => s.getClientRects().length > 0);
   const onKey = (e: KeyboardEvent) => {
     const t = e.target as HTMLElement;
     if (e.key === "Escape") {
-      const d = t.closest<HTMLDetailsElement>(".tl-node > details, .tl-lane-done");
+      const d = t.closest<HTMLDetailsElement>(".tl-node > details, .tl-fold");
       if (d?.open) {
         d.open = false;
         d.querySelector<HTMLElement>("summary")?.focus();
@@ -100,7 +100,10 @@ function enhanceTimeline(root: HTMLElement): () => void {
     // Reveal: steps slide in as they enter the viewport. Off under reduced motion: everything stays visible.
     if (!reducedMotion()) {
       const nodes = [...root.querySelectorAll<HTMLElement>(".tl-node:not([data-shown])")];
-      const show = (el: Element) => el.setAttribute("data-shown", "");
+      const show = (el: Element) => {
+        el.setAttribute("data-shown", "");
+        el.removeAttribute("data-wait");
+      };
       const reveal = new IntersectionObserver(
         (entries) => {
           for (const e of entries) {
@@ -111,13 +114,20 @@ function enhanceTimeline(root: HTMLElement): () => void {
         },
         { rootMargin: "0px 0px -8% 0px" },
       );
-      for (const n of nodes) reveal.observe(n);
+      for (const n of nodes) {
+        n.setAttribute("data-wait", "");
+        reveal.observe(n);
+      }
       observers.push(reveal);
       root.setAttribute("data-reveal", "");
     }
   }
   // A step that gets focus is shown at once (keyboard users never land on a hidden step).
-  const onFocus = (e: FocusEvent) => (e.target as Element).closest(".tl-node")?.setAttribute("data-shown", "");
+  const onFocus = (e: FocusEvent) => {
+    const n = (e.target as Element).closest(".tl-node");
+    n?.setAttribute("data-shown", "");
+    n?.removeAttribute("data-wait");
+  };
   root.addEventListener("focusin", onFocus);
 
   return () => {
@@ -139,13 +149,24 @@ function onReadMore(e: MouseEvent): void {
   if (!goToBlock(id)) a.dispatchEvent(new CustomEvent(NEED_BLOCK, { bubbles: true, detail: { id } }));
 }
 
-/** Enhance every timeline under `scope` (once each). Returns a cleanup for all of them. */
-export function enhanceGuideTimeline(scope: ParentNode = document): () => void {
+/** Enhance every timeline under `scope` not enhanced yet. Returns a cleanup for those. */
+export function enhanceTimelines(scope: ParentNode): () => void {
   const cleanups = [...scope.querySelectorAll<HTMLElement>("[data-timeline]:not([data-enhanced])")].map(enhanceTimeline);
-  const host = scope instanceof Document ? scope.body : (scope as HTMLElement);
-  host.addEventListener("click", onReadMore);
   return () => {
-    host.removeEventListener("click", onReadMore);
     for (const c of cleanups) c();
+  };
+}
+
+/** "Read more" / calendar step links under `host` (one delegated listener). */
+export function listenReadMore(host: HTMLElement): () => void {
+  host.addEventListener("click", onReadMore);
+  return () => host.removeEventListener("click", onReadMore);
+}
+
+/** Both of the above, for a whole page or a container. */
+export function enhanceGuideTimeline(scope: ParentNode = document): () => void {
+  const undo = [enhanceTimelines(scope), listenReadMore(scope instanceof Document ? scope.body : (scope as HTMLElement))];
+  return () => {
+    for (const u of undo) u();
   };
 }

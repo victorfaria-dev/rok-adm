@@ -46,7 +46,7 @@ describe("Timeline", () => {
     expect(b.querySelector("summary")!.textContent).toContain("CH 8–12");
     expect(b.querySelector(".tl-gist")!.textContent).toBe("Gist of b.");
     expect(b.querySelector(".tl-meta")!.textContent).toContain("Sources: fandom, rkg");
-    expect(b.querySelector(".tl-meta")!.textContent).toContain("A01-0001");
+    expect(b.querySelector(".tl-meta")!.textContent).toContain("1 fact card");
     expect(b.querySelector("a.tl-more")!.getAttribute("href")).toBe("#b-b");
     expect(container.querySelector('[data-lane="day15-40"] [data-you-are-here]')!.textContent).toContain("Kingdom day 20");
   });
@@ -57,7 +57,7 @@ describe("Timeline", () => {
     v.alreadyDone = [item(block("a", "day0-3"))];
     const { container } = mount(v);
     const lane = container.querySelector('[data-lane="day0-3"]')!;
-    expect(lane.querySelector("details.tl-lane-done > summary")!.textContent).toBe("Show 1 step (probably done)");
+    expect(lane.querySelector("details.tl-fold > summary")!.textContent).toBe("Show 1 step (probably done)");
     expect(lane.querySelector('[data-node="a"]')!.hasAttribute("data-done")).toBe(true);
   });
 
