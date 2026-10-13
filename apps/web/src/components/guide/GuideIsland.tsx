@@ -5,9 +5,20 @@ import type { ComponentChildren } from "preact";
 import { useEffect, useState } from "preact/hooks";
 import { readStore, writeStore } from "../../lib/store";
 import { profileSummary } from "../../lib/profile";
-import type { GuideData } from "../../lib/guide-types";
-import { chooseProfile, FALLBACK_STAGE, selectGuideWithFallback, shareUrl, STAGE_NAMES, type ProfileChoice } from "../../lib/guide-view";
-import { GuideBody, GuideMeta } from "./GuideBody";
+import { deltaSetsFor } from "@rokadm/core";
+import type { GuideData, GuidePayload } from "../../lib/guide-types";
+import {
+  chooseProfile,
+  deltaUrl,
+  FALLBACK_STAGE,
+  selectGuideWithFallback,
+  shareUrl,
+  STAGE_NAMES,
+  withDeltas,
+  type ProfileChoice,
+} from "../../lib/guide-view";
+import { guidesForYou } from "../../lib/guides";
+import { GuideBody, GuideMeta, GuidesForYou } from "./GuideBody";
 
 interface Props {
   dataUrl: string;
@@ -64,13 +75,16 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     setChoice(c);
     if (c.source === "default") return;
     setStatus("loading");
-    fetch(dataUrl)
-      .then((r) => {
+    const get = <T,>(url: string) =>
+      fetch(url).then((r) => {
         if (!r.ok) throw new Error(String(r.status));
-        return r.json() as Promise<GuideData>;
-      })
-      .then((d) => {
-        setData(d);
+        return r.json() as Promise<T>;
+      });
+    // Low and higher profiles: the profile delta sets are merged over the F2P guide (core's selectGuide).
+    const deltas = deltaSetsFor(c.profile.spending).map((d) => get<GuidePayload>(deltaUrl(d.id)));
+    Promise.all([get<GuideData>(dataUrl), Promise.all(deltas)])
+      .then(([d, ds]) => {
+        setData({ ...d, guide: withDeltas(d.guide, ds) });
         setStatus("ready");
       })
       .catch(() => setStatus("failed"));
@@ -79,6 +93,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const summary = choice && choice.source !== "default" ? profileSummary(choice.profile) : null;
   const personal = choice !== null && choice.source !== "default" && data !== null && status === "ready";
   const selection = personal ? selectGuideWithFallback(data.guide, choice.profile) : null;
+  const links = personal ? guidesForYou(choice.profile) : [];
   const view = selection?.view ?? null;
   const empty = view !== null && view.meta.shownBlocks === 0 && view.alreadyDone.length === 0;
 
@@ -160,6 +175,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
             </aside>
           )}
           <GuideMeta view={view} label={`For ${profileSummary(choice.profile)}`} />
+          <GuidesForYou links={links} />
           {empty && (
             <aside class="g-notice" data-guide-empty aria-labelledby="g-empty-h">
               <p id="g-empty-h" class="g-notice-title">No researched steps fit this profile yet</p>

@@ -3,7 +3,8 @@
 // readable without JS). The island re-filters it for ?p= or the saved profile.
 import Shell from "../../layouts/Shell.astro";
 import GuideIsland from "../../components/guide/GuideIsland";
-import { GuideBody, GuideMeta } from "../../components/guide/GuideBody";
+import { GuideBody, GuideMeta, GuidesForYou } from "../../components/guide/GuideBody";
+import { defaultGuideLinks } from "../../lib/guides";
 import { buildGuideData } from "../../lib/guide-payload";
 import { selectGuide } from "../../lib/guide-view";
 import { profileSummary } from "../../lib/profile";
@@ -24,6 +25,7 @@ const view = selectGuide(data.guide, defaultProfile());
           <a class="btn btn-primary" href="/start/">Build my guide</a>
         </aside>
         <GuideMeta view={view} label={`Default guide for ${profileSummary(defaultProfile())}`} />
+        <GuidesForYou links={defaultGuideLinks()} title="Other guides" />
         <GuideBody view={view} badges={data.guide.badges} budget={data.budget} />
       </div>
     </GuideIsland>
