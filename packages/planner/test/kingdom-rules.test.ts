@@ -324,3 +324,11 @@ describe("language versions", () => {
     expect(await decodeShare(code, "rules", parseRulesDoc)).toEqual({ ok: true, data: multi() });
   });
 });
+
+describe("language codes must name a real language", () => {
+  it("accepts known codes and rejects well-formed unknown ones", async () => {
+    const { isLangCode } = await import("../src/kingdom-rules");
+    for (const c of ["es", "pt-BR", "zh-Hans", "vi", "ar"]) expect(isLangCode(c), c).toBe(true);
+    for (const c of ["xx", "qq", "zz-ZZ", "e", "english"]) expect(isLangCode(c), c).toBe(false);
+  });
+});

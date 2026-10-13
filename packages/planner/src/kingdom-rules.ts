@@ -123,11 +123,23 @@ function parseSection(x: unknown, i: number, seen: Set<string>): RulesSection | 
 // Language versions (F-84 on demand): written by the council, never machine translated.
 
 /** Simple BCP-47 shape check for a lang attribute: "es", "pt-BR", "zh-Hant", "sr-Latn-RS". */
+/** true when the browser/Node knows a display name for this primary language subtag. */
+function knownLanguage(primary: string): boolean {
+  try {
+    const names = new Intl.DisplayNames(["en"], { type: "language", fallback: "none" });
+    return names.of(primary.toLowerCase()) !== undefined;
+  } catch {
+    return true; // No Intl.DisplayNames: keep the shape check only.
+  }
+}
+
 const LANG_CODE = /^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$/i;
 
 /** true for a code that can go in a lang attribute (empty is not a code). */
 export function isLangCode(x: unknown): x is string {
-  return typeof x === "string" && x.length <= RULES_LIMITS.langCode && LANG_CODE.test(x);
+  if (typeof x !== "string" || x.length > RULES_LIMITS.langCode || !LANG_CODE.test(x)) return false;
+  // Well-formed is not enough: an unknown primary language ("xx") is an invalid lang attribute.
+  return knownLanguage(x.split("-")[0]!);
 }
 
 /** Trimmed code when it is valid, else "". */
