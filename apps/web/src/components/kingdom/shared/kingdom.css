@@ -1,6 +1,9 @@
 /* Shared council kit styles (/kingdom/**). Only --ko-* tokens. */
 
 .kg { display: grid; gap: var(--ko-space-6); min-width: 0; }
+/* Council text is typed by people (long names, no spaces): wrap anywhere rather than scroll sideways. */
+.kg, .kq-view { overflow-wrap: anywhere; }
+.kg :is(h1, h2, h3, h4, p, li, label, legend, summary, dt, dd, td, th, button) { overflow-wrap: anywhere; min-width: 0; }
 .kg-head { display: grid; gap: var(--ko-space-2); }
 .kg-head h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
 .kg-lead { color: var(--ko-text-muted); max-width: 65ch; }
