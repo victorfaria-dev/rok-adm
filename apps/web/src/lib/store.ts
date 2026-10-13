@@ -21,6 +21,17 @@ export interface RoutinePrefs {
   includeEvents?: boolean;
 }
 
+/** One saved account (e.g. main and farms); the active one is mirrored in profileCode. */
+export interface SavedProfile {
+  id: string;
+  name: string;
+  /** encodeProfile() code. */
+  code: string;
+  /** F-72 hand-picked profile for this account, or null. */
+  override: SpendingProfile | null;
+}
+export const MAX_SAVED_PROFILES = 10;
+
 /** F-20 checklist answers per commander id: question id → option id. */
 export type CommanderAnswersMap = Record<string, Record<string, string>>;
 
@@ -36,6 +47,8 @@ export interface StoreV1 {
   profileOverride: SpendingProfile | null;
   routinePrefs: RoutinePrefs | null;
   commanders: CommanderAnswersMap;
+  /** Accounts saved on /me to switch between; profileCode stays the active one. */
+  savedProfiles: SavedProfile[];
 }
 
 export const STORE_KEY = "ko:v1";
@@ -43,7 +56,7 @@ export const STORE_KEY = "ko:v1";
 export function defaultStore(): StoreV1 {
   return {
     v: 1, profileCode: null, draft: null, routine: null, theme: "dark",
-    profileOverride: null, routinePrefs: null, commanders: {},
+    profileOverride: null, routinePrefs: null, commanders: {}, savedProfiles: [],
   };
 }
 
@@ -84,6 +97,17 @@ export function parseStore(raw: string | null | undefined): StoreV1 {
       const clean: Record<string, string> = {};
       for (const [q, a] of Object.entries(answers)) if (typeof a === "string") clean[q] = a;
       s.commanders[id] = clean;
+    }
+  }
+  if (Array.isArray(data.savedProfiles)) {
+    const ids = new Set<string>();
+    for (const x of data.savedProfiles) {
+      if (s.savedProfiles.length >= MAX_SAVED_PROFILES) break;
+      if (!isRecord(x) || typeof x.id !== "string" || !x.id || ids.has(x.id)) continue;
+      if (typeof x.name !== "string" || !x.name.trim() || typeof x.code !== "string" || !x.code) continue;
+      ids.add(x.id);
+      const o = SPENDING_PROFILES.includes(x.override as SpendingProfile) ? (x.override as SpendingProfile) : null;
+      s.savedProfiles.push({ id: x.id, name: x.name.trim().slice(0, 40), code: x.code, override: o });
     }
   }
   return s;

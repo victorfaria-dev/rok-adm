@@ -89,6 +89,8 @@ test("export downloads a JSON file that import accepts", async ({ page }) => {
 test("import restores a valid file and rejects an invalid one", async ({ page }) => {
   await seed(page, { profileCode: CODE });
   await page.goto("/me/");
+  // The profile renders only after the island has hydrated and read the store: no lost change events.
+  await expect(page.getByRole("button", { name: "Edit answers" })).toBeVisible();
   const input = page.locator("input[type=file]");
 
   await input.setInputFiles({ name: "bad.json", mimeType: "application/json", buffer: Buffer.from("{\"hello\":1}") });
@@ -129,6 +131,41 @@ test("delete: cancel keeps data, confirm removes it", async ({ page }) => {
   await expect(page.getByRole("link", { name: "Build my guide" })).toBeVisible();
 });
 
+test("accounts: save main and farm, switch, remove", async ({ page }) => {
+  await seed(page, { profileCode: RICH });
+  await page.goto("/me/");
+  const name = page.getByLabel("Save the current profile as");
+  await page.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(page.locator("#me-acc-error")).toContainText("Give this account a name");
+  await name.fill("Main");
+  await page.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(page.locator(".me-account")).toHaveCount(1);
+  await expect(page.locator(".me-account").getByText("In use")).toBeVisible();
+
+  // Make the farm the current profile (as /start would), then save it too.
+  await page.evaluate((code) => {
+    const s = JSON.parse(localStorage.getItem("ko:v1")!);
+    localStorage.setItem("ko:v1", JSON.stringify({ ...s, profileCode: code }));
+  }, CODE);
+  await page.reload();
+  await name.fill("Farm 1");
+  await page.getByRole("button", { name: "Save", exact: true }).click();
+  await expect(page.locator(".me-account")).toHaveCount(2);
+
+  await page.getByRole("button", { name: "Use Main" }).click();
+  await expect(page.getByText('Now using "Main".')).toBeVisible();
+  expect((await stored(page)).profileCode).toBe(RICH);
+  await page.reload();
+  await expect(page.getByRole("button", { name: "Use Farm 1" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Use Main" })).toHaveCount(0);
+
+  await page.getByRole("button", { name: "Remove Farm 1" }).click();
+  await expect(page.locator(".me-account")).toHaveCount(1);
+  const s = await stored(page);
+  expect(s.savedProfiles.map((p: { name: string }) => p.name)).toEqual(["Main"]);
+  expect(s.profileCode).toBe(RICH);
+});
+
 test("360 px: no sideways scroll with the worst-case profile and confirmation open", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 740 });
   await seed(page, { profileCode: "1.5.4.4.25.1440.24.5000.10000000.byzantium.1", profileOverride: "kraken" });
@@ -144,6 +181,10 @@ test.describe("accessibility", () => {
     for (const c of [
       { name: "empty", store: {} },
       { name: "profile", store: { profileCode: RICH } },
+      {
+        name: "saved accounts",
+        store: { profileCode: RICH, savedProfiles: [{ id: "m", name: "Main", code: RICH, override: null }, { id: "f", name: "Farm 1", code: CODE, override: null }] },
+      },
       { name: "delete confirmation", store: { profileCode: RICH }, confirm: true },
     ]) {
       test(`axe ${theme}: ${c.name}`, async ({ page }) => {

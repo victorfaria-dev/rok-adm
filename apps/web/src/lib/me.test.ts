@@ -1,7 +1,14 @@
 import { QUESTIONS, decodeProfile, type AccountProfile } from "@rokadm/core";
 import { EFFECTIVE_PROFILE_RULE } from "@rokadm/planner";
 import { describe, expect, it } from "vitest";
+import { MAX_SAVED_PROFILES } from "./store";
 import {
+  NAME_MAX,
+  activeAccountId,
+  newAccountId,
+  removeAccount,
+  saveAccount,
+  useAccountPatch,
   OVERRIDE_CHOICES,
   RULE_BODY,
   THEME_CHOICES,
@@ -107,5 +114,37 @@ describe("theme and export", () => {
   it("names the export file with the local date", () => {
     expect(exportFileName(new Date(2026, 0, 5, 23, 59))).toBe("kingdomops-2026-01-05.json");
     expect(exportFileName(new Date(2026, 9, 13, 0, 1))).toBe("kingdomops-2026-10-13.json");
+  });
+});
+
+describe("saved accounts", () => {
+  const A = "1.0.0.0.12.30.....0";
+  const B = "1.0.1.0.8.15.....0";
+
+  it("saves, replaces by name and validates", () => {
+    let r = saveAccount([], "  Main  ", A, null, "id1");
+    expect(r).toEqual({ ok: true, list: [{ id: "id1", name: "Main", code: A, override: null }] });
+    if (!r.ok) throw new Error();
+    r = saveAccount(r.list, "main", B, "low", "id2");
+    expect(r.ok && r.list).toEqual([{ id: "id1", name: "main", code: B, override: "low" }]);
+    expect(saveAccount([], " ", A, null, "x")).toMatchObject({ ok: false, error: expect.stringMatching(/name/) });
+    expect(saveAccount([], "x".repeat(NAME_MAX + 1), A, null, "x")).toMatchObject({ ok: false });
+  });
+
+  it("caps the list", () => {
+    const full = Array.from({ length: MAX_SAVED_PROFILES }, (_, i) => ({ id: `i${i}`, name: `F${i}`, code: A, override: null }));
+    expect(saveAccount(full, "New", A, null, "n")).toMatchObject({ ok: false, error: expect.stringMatching(/Remove one/) });
+  });
+
+  it("finds the active account, removes and switches", () => {
+    const list = [
+      { id: "m", name: "Main", code: A, override: "whale" as const },
+      { id: "f", name: "Farm", code: B, override: null },
+    ];
+    expect(activeAccountId(list, B, null)).toBe("f");
+    expect(activeAccountId(list, A, null)).toBeNull();
+    expect(removeAccount(list, "m").map((p) => p.id)).toEqual(["f"]);
+    expect(useAccountPatch(list[0]!)).toEqual({ profileCode: A, profileOverride: "whale", draft: null });
+    expect(newAccountId(new Date(0), () => 0.5)).toMatch(/^[0-9a-z]+$/);
   });
 });

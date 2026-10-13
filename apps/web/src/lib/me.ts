@@ -10,7 +10,7 @@ import {
 } from "@rokadm/core";
 import { EFFECTIVE_PROFILE_RULE, effectiveProfile, type EffectiveProfile } from "@rokadm/planner";
 import { answerText } from "./questionnaire-flow";
-import { THEME_PREFS, type ThemePref } from "./store";
+import { MAX_SAVED_PROFILES, THEME_PREFS, type SavedProfile, type ThemePref } from "./store";
 
 export interface AnswerRow {
   id: string;
@@ -109,3 +109,49 @@ export function exportFileName(d: Date): string {
 
 export const DELETED_MESSAGE = "All KingdomOps data was deleted from this browser.";
 export const IMPORTED_MESSAGE = "Imported. Your saved state was replaced with the file's contents.";
+
+// ---------------------------------------------------------------------------
+// Saved accounts (main + farms): the active one is profileCode/profileOverride.
+
+export const NAME_MAX = 30;
+
+export type SaveResult = { ok: true; list: SavedProfile[] } | { ok: false; error: string };
+
+/** Save the current profile under a name; the same name replaces that entry (case-insensitive). */
+export function saveAccount(
+  list: readonly SavedProfile[],
+  name: string,
+  code: string,
+  override: SpendingProfile | null,
+  id: string,
+): SaveResult {
+  const clean = name.trim().replace(/\s+/g, " ");
+  if (!clean) return { ok: false, error: "Give this account a name, for example Main or Farm 1." };
+  if (clean.length > NAME_MAX) return { ok: false, error: `Use at most ${NAME_MAX} characters.` };
+  const same = list.findIndex((p) => p.name.toLowerCase() === clean.toLowerCase());
+  if (same >= 0) {
+    const next = [...list];
+    next[same] = { ...next[same]!, name: clean, code, override };
+    return { ok: true, list: next };
+  }
+  if (list.length >= MAX_SAVED_PROFILES) {
+    return { ok: false, error: `You can save up to ${MAX_SAVED_PROFILES} accounts. Remove one first.` };
+  }
+  return { ok: true, list: [...list, { id, name: clean, code, override }] };
+}
+
+export const removeAccount = (list: readonly SavedProfile[], id: string): SavedProfile[] => list.filter((p) => p.id !== id);
+
+/** The saved account that is in use now, if any. */
+export function activeAccountId(list: readonly SavedProfile[], code: string | null, override: SpendingProfile | null): string | null {
+  return list.find((p) => p.code === code && p.override === override)?.id ?? null;
+}
+
+/** Store patch that makes a saved account the active one (stale questionnaire draft cleared). */
+export function useAccountPatch(p: SavedProfile): { profileCode: string; profileOverride: SpendingProfile | null; draft: null } {
+  return { profileCode: p.code, profileOverride: p.override, draft: null };
+}
+
+export function newAccountId(now: Date, random: () => number = Math.random): string {
+  return `${now.getTime().toString(36)}${Math.floor(random() * 1e6).toString(36)}`;
+}

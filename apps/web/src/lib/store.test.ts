@@ -68,4 +68,22 @@ describe("store", () => {
     const s = { ...defaultStore(), profileOverride: "low" as const, routinePrefs: { minutes: 15, breakMode: false, includeWeekly: true, includeEvents: false }, commanders: { cyrus: { purpose: "gatherer" } } };
     expect(importStore(exportStore(s))).toEqual(s);
   });
+
+  it("parses saved profiles tolerantly", () => {
+    const s = parseStore(JSON.stringify({
+      v: 1,
+      savedProfiles: [
+        { id: "a", name: " Main ", code: "1.0.0.0.12.30.....0", override: "low" },
+        { id: "a", name: "dup", code: "x" },
+        { id: "b", name: "", code: "x" },
+        { id: "c", name: "Farm", code: "1.0.1.0.8.15.....0", override: "gold" },
+        7,
+      ],
+    }));
+    expect(s.savedProfiles).toEqual([
+      { id: "a", name: "Main", code: "1.0.0.0.12.30.....0", override: "low" },
+      { id: "c", name: "Farm", code: "1.0.1.0.8.15.....0", override: null },
+    ]);
+    expect(parseStore(JSON.stringify({ v: 1, savedProfiles: "no" })).savedProfiles).toEqual([]);
+  });
 });

@@ -24,6 +24,7 @@ import {
   parseOverride,
   profileRows,
 } from "../../lib/me";
+import { Accounts } from "./Accounts";
 import "./me.css";
 
 interface Props {
@@ -216,6 +217,17 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
           </div>
         )}
       </section>
+
+      {store && (
+        <Accounts
+          store={store}
+          now={now}
+          onChange={(next, switched) => {
+            if (switched) syncProfileChips(next.profileCode);
+            setStore(next);
+          }}
+        />
+      )}
 
       {store && profile && eff && (
         <section class="me-section" aria-labelledby="me-eff-h">
