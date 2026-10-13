@@ -1,0 +1,23 @@
+/* Recruitment post generator (/kingdom/recruit/). Only --ko-* tokens. */
+
+.kt { display: grid; gap: var(--ko-space-8); min-width: 0; }
+.kt-form { display: grid; gap: var(--ko-space-6); min-width: 0; }
+.kt-group { display: grid; gap: var(--ko-space-4); min-width: 0; margin: 0; padding: 0; border: 0; }
+.kt-group > legend, .kt-out h2 {
+  font-family: var(--ko-font-display); font-weight: var(--ko-weight-bold);
+  font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); padding: 0; margin-bottom: var(--ko-space-2);
+}
+
+/* Drafts and roles: rows divided by rules, not nested cards. */
+.kt-list, .kt-roles { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-top: 1px solid var(--ko-border); }
+.kt-list > li, .kt-role { display: grid; gap: var(--ko-space-3); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.kt-list-title { font-weight: var(--ko-weight-semibold); overflow-wrap: anywhere; }
+.kt-list-meta { color: var(--ko-text-muted); font-size: var(--ko-text-xs); }
+@media (min-width: 768px) {
+  .kt-role { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr) minmax(0, 3fr); align-items: end; }
+  .kt-role > .kg-actions { grid-column: 1 / -1; }
+}
+
+.kt-out { display: grid; gap: var(--ko-space-4); min-width: 0; padding-top: var(--ko-space-6); border-top: 1px solid var(--ko-border); }
+.kt-out .kg-output { min-height: 320px; }
+.kt-count { font-family: var(--ko-font-mono); font-size: var(--ko-text-sm); color: var(--ko-text-muted); font-variant-numeric: tabular-nums; }

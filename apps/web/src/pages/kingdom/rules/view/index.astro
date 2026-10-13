@@ -1,0 +1,12 @@
+---
+import Shell from "../../../../layouts/Shell.astro";
+import RulesViewPage from "../../../../components/kingdom/rules/RulesViewPage";
+import "../../../../components/kingdom/shared/kingdom.css";
+import "../../../../components/kingdom/rules/rules.css";
+---
+<Shell title="Kingdom rules" description="A kingdom's rules, shared by its council as a view-only link. Read or print them in your browser." mode="read">
+  <div class="kq-view">
+    <RulesViewPage client:load />
+    <noscript><p class="kg-error">This page needs JavaScript to read the rules inside the link. Turn it on, or ask your council for a printed copy.</p></noscript>
+  </div>
+</Shell>

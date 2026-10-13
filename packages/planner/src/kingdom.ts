@@ -3,3 +3,5 @@ export * from "./kingdom-common";
 export * from "./kingdom-codec";
 export * from "./kingdom-formula";
 export * from "./kingdom-requirements";
+export * from "./kingdom-rules";
+export * from "./kingdom-recruit";
