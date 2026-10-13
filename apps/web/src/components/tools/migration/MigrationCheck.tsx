@@ -43,7 +43,7 @@ export function missingAnswers(v: Answers): (keyof Answers)[] {
 
 /** F-31: eligible / not eligible + every reason, and passport pages, for the current rules. */
 export default function MigrationCheck({ rules, cites }: MigrationCheckProps) {
-  const { values: v, set, shared, shareUrl } = useToolInputs("migration", MIGRATION_DEFAULTS);
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs("migration", MIGRATION_DEFAULTS);
   const [officerMsg, setOfficerMsg] = useState("");
   const route = (ROUTES.some((r) => r.id === v.route) ? v.route : "same-soc") as MigrationRoute;
   const res = checkMigration({
@@ -138,7 +138,7 @@ export default function MigrationCheck({ rules, cites }: MigrationCheckProps) {
         </ul>
       </section>
 
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
       <div class="t-share">
         <p class="t-note">Migration officer? Send applicants a link that opens this checker with your kingdom's fields filled in.</p>
         <button type="button" class="btn btn-secondary" onClick={() => void copyOfficer()}>Copy applicant link (kingdom fields only)</button>

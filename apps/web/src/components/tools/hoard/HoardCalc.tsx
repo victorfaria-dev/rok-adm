@@ -34,7 +34,7 @@ const tKey = (k: Key) => `target_${k}`;
 export default function HoardCalc({ goals, cites }: HoardCalcProps) {
   const defaults: Record<string, number | string> = { goal: goals[0]!.id };
   for (const it of ITEMS) { defaults[it.key] = 0; defaults[tKey(it.key)] = 0; }
-  const { values: v, set, shared, shareUrl } = useToolInputs("hoard", defaults, [...INVENTORY]);
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs("hoard", defaults, [...INVENTORY]);
   const goal = goals.find((g) => g.id === v.goal) ?? goals[0]!;
   const items = ITEMS.filter((it) => (goal.save as readonly string[]).includes(it.kind));
   const num = (k: string): number => (typeof v[k] === "number" ? (v[k] as number) : 0);
@@ -56,7 +56,7 @@ export default function HoardCalc({ goals, cites }: HoardCalcProps) {
         <p class="t-note">This goal also asks for resources saved as items: count those in game.</p>
       ) : null}
       {items.length ? (
-        <Results title="Saved vs target">
+        <Results title="Your hoard result">
           {items.map((it) => {
             const g = reserveGap(num(it.key), num(tKey(it.key)));
             return (
@@ -67,7 +67,7 @@ export default function HoardCalc({ goals, cites }: HoardCalcProps) {
           })}
         </Results>
       ) : null}
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
   );
 }

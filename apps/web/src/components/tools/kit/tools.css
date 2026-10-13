@@ -52,7 +52,9 @@
 
 /* Share */
 .t-share { display: grid; gap: var(--ko-space-2); justify-items: start; }
-.t-shared { font-size: var(--ko-text-sm); }
+.t-shared { font-size: var(--ko-text-sm); display: grid; gap: var(--ko-space-2); padding: var(--ko-space-3); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); }
+.t-shared p { margin: 0; }
+.t-shared-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
 .t-status { font-size: var(--ko-text-sm); color: var(--ko-text-muted); min-height: 1lh; overflow-wrap: anywhere; }
 
 /* Sources */

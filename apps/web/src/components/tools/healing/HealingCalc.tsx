@@ -15,7 +15,7 @@ const NO = "No card covers this";
 
 /** F-22: hospital capacity, what dies beyond it, and the cost and time of healing one full hospital wave. */
 export default function HealingCalc({ capacities, cites }: HealingCalcProps) {
-  const { values: v, set, shared, shareUrl } = useToolInputs(
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs(
     "healing",
     { hospitalLevel: 10, hospitals: 1, wounded: 0, healFood: 0, healWood: 0, healStone: 0, healGold: 0, healSeconds: 0, speedupHealingMin: 0 },
     ["speedupHealingMin"],
@@ -73,7 +73,7 @@ export default function HealingCalc({ capacities, cites }: HealingCalcProps) {
         <p>T5 heals cost much more resources and time than T4. Without a steady economy, fight with T4 and keep a T4 reserve.</p>
         <CiteTag cite={cites.t5} />
       </aside>
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
   );
 }

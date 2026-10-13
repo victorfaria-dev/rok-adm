@@ -17,7 +17,7 @@ const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
 
 /** F-81: barbarian attacks per chain, AP after the daily claim, and the gem price of buying AP. */
 export default function ApCalc({ cap, dailyClaim, barbarian, insightMax, pack, cites }: ApCalcProps) {
-  const { values: v, set, shared, shareUrl } = useToolInputs("ap", {
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs("ap", {
     currentAp: 1000, insight: 0, capBonus: 0, purchasesToday: 0, packsToBuy: 1, regenPerHour: 0,
   });
   const insight = Math.min(insightMax, v.insight);
@@ -61,7 +61,7 @@ export default function ApCalc({ cap, dailyClaim, barbarian, insightMax, pack, c
         <ResultRow testId="ap-regen" label={`Time to refill to the ${fmt(fullCap)} cap`} cite={cites.cap} pending={["AP regained per hour"]}
           value={hours === null ? <span class="t-prompt">Enter the AP you regain per hour</span> : formatDuration(hours * 3600)} />
       </Results>
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
   );
 }
