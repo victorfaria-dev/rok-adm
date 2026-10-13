@@ -1,12 +1,12 @@
 {
-  "builtAt": "2026-10-13T07:05:08.550Z",
+  "builtAt": "2026-10-13T09:36:23.847Z",
   "counts": {
     "blocks": 43,
-    "facts": 282,
+    "facts": 288,
     "factsByDomain": {
       "A01": 11,
       "A02": 5,
-      "A03": 32,
+      "A03": 36,
       "A04": 11,
       "A05": 8,
       "A06": 17,
@@ -14,7 +14,7 @@
       "A08": 7,
       "A09": 8,
       "A10": 8,
-      "A11": 14,
+      "A11": 16,
       "A12": 5,
       "A13": 10,
       "A14": 3,
@@ -36,9 +36,9 @@
     "tables": 23,
     "usableFacts": 110
   },
-  "datasetVersion": "520992189f7208e4",
-  "gitCommit": "b0d9c5ca9160d1f6d7865e9c4a10182087f85452",
-  "inputs": 307,
+  "datasetVersion": "3ea3bfd414493634",
+  "gitCommit": "ae95849e567f9fa4b6680a61649d8d9dd3a50690",
+  "inputs": 313,
   "latestKnownPatch": {
     "confidence": "baixa",
     "date": "2026-09-22",

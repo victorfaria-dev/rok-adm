@@ -33,7 +33,7 @@
     ],
     "hours_min_per_day": null,
     "id": "ov-budget-reality-check",
-    "low_spender_note": "Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs every guide ranks first [A12-0001, A12-0002]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [A12-0005]. Prices are from seller sites; confirm in your store (L-A12-01).",
+    "low_spender_note": "Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs guides rank first and second [A12-0001, A12-0002]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [A12-0005]. Prices are from seller sites; confirm in your store (L-A12-01).",
     "order": 10,
     "patch_cards": [],
     "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)",
@@ -831,11 +831,12 @@
     ],
     "gaps": [
       "L-A05-01",
-      "L-A04-01"
+      "L-A04-01",
+      "L-A12-02"
     ],
     "hours_min_per_day": null,
     "id": "d15-vip6-milestone",
-    "low_spender_note": "The 30-day gem supply (~650 gems/day vs the F2P 100/day) is what makes VIP 10 reachable before or around KvK1 for a low spender [A12-0002, A04-0001].",
+    "low_spender_note": "The 30-day gem supply (~650 gems/day vs the F2P 100/day) moves VIP milestones earlier for a low spender [A12-0002, A04-0001]; no card gives a VIP 10 date (L-A12-02).",
     "order": 170,
     "patch_cards": [],
     "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)",
@@ -1178,7 +1179,7 @@
     ],
     "hours_min_per_day": null,
     "id": "d41-vip10-reality",
-    "low_spender_note": "With the Growth Fund and the 30-day supply, VIP 10 becomes a pre-KvK1 or early-KvK1 target; reaching it earlier is the main payoff of low spending [A12-0001, A12-0002, A12-0005].",
+    "low_spender_note": "With the Growth Fund and the 30-day supply, VIP 10 comes earlier than on F2P income; no card gives a date, and the Growth Fund pays in full only as CH milestones are reached [A12-0001, A12-0002, A12-0005].",
     "order": 240,
     "patch_cards": [],
     "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)",

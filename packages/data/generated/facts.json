@@ -2422,6 +2422,215 @@
     "values": []
   },
   {
+    "confidence": "baixa",
+    "domain": "A03",
+    "id": "A03-0033",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": null,
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "Activates a Shield that can protect your city for 3 days.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Items/Peace_Shield"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "30-Day Peace Shield 45,000 3-Day Peace Shield 2,500 24-Hour Peace Sheild 1,000 12-Hour Peace Shield 700 8-Hour Peace Shield 500",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "You can buy a peace shield from a vip store with gems or in an alliance shop with individual alliance credits.",
+        "url": "https://riseofkingdomsguides.com/helpie_faq/how-do-i-activate-a-peace-shield-for-my-city/"
+      }
+    ],
+    "stages": [
+      "todos"
+    ],
+    "statement": "Peace Shield items protect the city for a fixed time. The Fandom item page lists 8-Hour, 24-Hour, 3-Day and 30-Day Peace Shields; the Fandom Shop page (gem shop) also lists a 12-Hour shield and prices them at 500 (8h), 700 (12h), 1,000 (24h), 2,500 (3d) and 45,000 (30d) gems. Other listed sources: Mysterious Merchant (8h, 24h); a T3 FAQ says shields can be bought from the VIP store with gems or from the Alliance Shop with individual alliance credits. Prices are old wiki data (8h/24h/3d/30d since 2018, 12h row added 2022-09-14) with no recent confirmation.",
+    "status": "organizado",
+    "table": null,
+    "title": "Peace Shield items: durations (8h/12h/24h/3d/30d) and Shop gem prices",
+    "validUntil": "2023-10-12",
+    "values": [
+      {
+        "key": "8-Hour Peace Shield (Shop)",
+        "unit": "gems",
+        "value": "500"
+      },
+      {
+        "key": "12-Hour Peace Shield (Shop)",
+        "unit": "gems",
+        "value": "700"
+      },
+      {
+        "key": "24-Hour Peace Shield (Shop)",
+        "unit": "gems",
+        "value": "1000"
+      },
+      {
+        "key": "3-Day Peace Shield (Shop)",
+        "unit": "gems",
+        "value": "2500"
+      },
+      {
+        "key": "30-Day Peace Shield (Shop)",
+        "unit": "gems",
+        "value": "45000"
+      }
+    ]
+  },
+  {
+    "confidence": "baixa",
+    "domain": "A03",
+    "id": "A03-0034",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": null,
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "Protects your city against any attack.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Items/Peace_Shield"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "item prevents scouts from being dispatched against the city altogether.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Scouting"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:bluestacks",
+        "quote": "which protects you from spy and attack attempts",
+        "url": "https://www.bluestacks.com/blog/game-guides/rise-of-kingdoms/rok-free-to-play-guide-en.html"
+      }
+    ],
+    "stages": [
+      "todos"
+    ],
+    "statement": "An active Peace Shield protects the city against attacks and also prevents enemy scouts from being dispatched against the city. What ends a shield early (own attacks, scouting, rallies, gathering) is NOT documented in any registered source — see notas and the gap.",
+    "status": "organizado",
+    "table": null,
+    "title": "What an active Peace Shield blocks (attacks and scouting of the city)",
+    "validUntil": "2021-03-02",
+    "values": []
+  },
+  {
+    "confidence": "baixa",
+    "domain": "A03",
+    "id": "A03-0035",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": null,
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "Initially, the game starts with a peace shield. You should not lose this shield within the first couple of days by being aggressive against other players.",
+        "url": "https://riseofkingdomsguides.com/rise-of-kingdoms-beginners-guide/"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:bluestacks",
+        "quote": "most war games like Rise of Kingdoms start you off with a peace shield that can last anywhere from 24 hours to a few days",
+        "url": "https://www.bluestacks.com/blog/game-guides/rise-of-kingdoms/rok-free-to-play-guide-en.html"
+      }
+    ],
+    "stages": [
+      "pre_kvk"
+    ],
+    "statement": "A new city starts the game with a peace shield, and guides warn that being aggressive towards other players in the first days loses it. Its duration and whether it ends at a City Hall level are not stated by any source found (one 2020–2021 T3 says only that such starting shields in war games last '24 hours to a few days').",
+    "status": "organizado",
+    "table": null,
+    "title": "New cities start with a Peace Shield (duration and end rule unknown)",
+    "validUntil": "2022-01-17",
+    "values": []
+  },
+  {
+    "confidence": "media",
+    "domain": "A03",
+    "id": "A03-0036",
+    "invalidatedBy": null,
+    "kind": "regra",
+    "patch": "1.0.48",
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "A city with an active Peace Shield will be forced to randomly teleport to their initial province",
+        "url": "https://forum-global.lilithgame.com/rok/post/1090898/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "we have decided to enable Shield for cities in the case of an extended update in the future.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1429487/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "A shielded Flag cannot be attacked for the duration of the shield.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1634559/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Governors will no longer be able to attack cities within the territories of other alliances.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US"
+      }
+    ],
+    "stages": [
+      "todos"
+    ],
+    "statement": "Official notes that affect shields or city protection: (1) 1.0.48 (2021-07) added the King Skill 'Exile' — a city with an active Peace Shield is forced to randomly teleport to its initial province; an unshielded target takes 5% more damage for 30 minutes. (2) Jan 2023 developer feedback: Lilith decided to give cities a Shield in case of an extended update in the future. (3) 1.0.80 (2024-03) added Alliance Flag shields — a shielded Flag cannot be attacked (flags, not cities). (4) 1.1.03 (2026-01-20): upon entering Season of Conquest, territory protection applies in the Home Kingdom; governors can no longer attack cities inside other alliances' territories. No official note found that changes Peace Shield items, durations or prices.",
+    "status": "organizado",
+    "table": null,
+    "title": "Official changes touching city shields/protection (1.0.48 Exile, 2023 update shields, 1.0.80 flag shields, 1.1.03 SoC territory protection)",
+    "validUntil": "2026-01-20",
+    "values": [
+      {
+        "key": "Exile (King Skill) vs shielded city",
+        "unit": null,
+        "value": "random teleport to initial province"
+      },
+      {
+        "key": "Exile vs unshielded city",
+        "unit": "min",
+        "value": "+5% damage taken for 30"
+      }
+    ]
+  },
+  {
     "confidence": "media",
     "domain": "A04",
     "id": "A04-0001",
@@ -6984,6 +7193,104 @@
     "table": null,
     "title": "Events confirmed as current in 2026 sources",
     "validUntil": "2026-10-02",
+    "values": []
+  },
+  {
+    "confidence": "alta",
+    "domain": "A11",
+    "id": "A11-0514",
+    "invalidatedBy": null,
+    "kind": "evento",
+    "patch": null,
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Added the four commanders to the Season 2 Commander Trial, Returnee Shop, and Returnee Wheel events.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2030530/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "*Only applies if you trigger the Returnee event series after the first Wheel of Fortune to include the four commanders has occurred.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2030530/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Adjusted the rules of the Commander Trial event for returning players.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1835007/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rokhandbook",
+        "quote": "Lilith runs comeback offers for accounts that have been away, and they can be substantial — returnee shops have included legendary commander sculptures among other progression items.",
+        "url": "https://riseofkingdomshandbook.com/guides/riseofkingdoms-returning-player-guide"
+      }
+    ],
+    "stages": [
+      "todos"
+    ],
+    "statement": "Rise of Kingdoms has a Returnee event series for returning players, triggered per governor. Official patch notes name three parts: a Commander Trial event for returning players (rules adjusted in 1.0.88), a Returnee Shop and a Returnee Wheel; from 1.0.94 (2025-05-13) the Season 2 versions include Takeda Shingen, Cyrus the Great, Cheok Jun-gyeong and Bertrand du Guesclin, but only for governors who trigger the series after the first Wheel of Fortune containing them. Contents depend on the kingdom's season. Eligibility (days offline), duration and full reward tables are not published in any source found.",
+    "status": "organizado",
+    "table": null,
+    "title": "Returnee event series for returning governors (Returnee Shop, Returnee Wheel, Commander Trial)",
+    "validUntil": "2025-05-13",
+    "values": []
+  },
+  {
+    "confidence": "alta",
+    "domain": "A11",
+    "id": "A11-0515",
+    "invalidatedBy": null,
+    "kind": "evento",
+    "patch": "1.0.86",
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Grand Reunion: Bring back old friends to fight by your side!",
+        "url": "https://forum-global.lilithgame.com/rok/post/1782979/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "*See the Event Calendar for a detailed schedule. Event rewards and timeframes may vary depending on your kingdom's current season.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1896244/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Grand Reunion: Bring back old friends and set out on a new adventure!",
+        "url": "https://forum-global.lilithgame.com/rok/post/2056756/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "3) Grand Reunion: Bring back old friends to fight by your side!",
+        "url": "https://forum-global.lilithgame.com/rok/post/2124406/?lang=en_US"
+      }
+    ],
+    "stages": [
+      "todos"
+    ],
+    "statement": "Grand Reunion ('Bring back old friends to fight by your side!') is an official limited event that appeared in festival/anniversary event series in 1.0.86 (2024 Anniversary, 2024-09-18), 1.0.90 (Maya series, 2025-01-07), 1.0.95 (Qin Ascendancy, 2025-06-12) and 1.0.99 (Anniversary, 2025-09-09). Patch notes give no rules, rewards or definition of an 'old friend'; schedule is per the in-game Event Calendar and may vary by kingdom season.",
+    "status": "organizado",
+    "table": null,
+    "title": "Grand Reunion: recurring festival event to bring back old friends",
+    "validUntil": "2025-09-09",
     "values": []
   },
   {
@@ -14041,7 +14348,7 @@
     "stages": [
       "todos"
     ],
-    "statement": "Official patch notes refer to a new kingdom's stages as Preparation Season, Season 1, Season 2 ('Distant Journey'), Season 3 ('Light and Darkness', with King of All Britain piloting in 2026) and then Season of Conquest (rotating stories, first-run story Heroic Anthem). Story registration for SoC needs City Hall 25; after a SoC season ends, registration for the next can begin immediately.",
+    "statement": "Official patch notes refer to a new kingdom's stages as Preparation Season, Season 1, Season 2 ('Distant Journey'), Season 3 ('Light and Darkness', with King of All Britain piloting in 2026) and then Season of Conquest (rotating stories, first-run story Heroic Anthem). Story registration for SoC needs City Hall 25; after a SoC season ends, registration for the next can begin immediately. Since 1.0.78 the Preparation Season starts with 3 provinces instead of 6.",
     "status": "bruto",
     "table": null,
     "title": "Kingdom lifecycle: Preparation Season → Season 1 → Season 2 → Season 3 → Season of Conquest",
@@ -14051,6 +14358,11 @@
         "key": "CH_para_registro_SoC",
         "unit": null,
         "value": "25"
+      },
+      {
+        "key": "provincias_iniciais_preparation_season",
+        "unit": "provincias",
+        "value": "3 (antes 6)"
       }
     ]
   }
