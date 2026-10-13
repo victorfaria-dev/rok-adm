@@ -122,7 +122,9 @@ export function guidesForYou(profile: AccountProfile, situation: GuideSituation 
     .filter((g) => g.set.kind === "guide")
     .map((g) => {
       const page = guidePage(g.set.id);
-      return { set: page.set, href: page.href, title: page.title, reason: g.reason };
+      // Late game (KvK2+): core lists it right after the reported situations; on /guide/ it is also the main plan.
+      const reason = g.set.id === "latestage" ? `${g.reason} Its steps are the main plan on this page; read them on their own here.` : g.reason;
+      return { set: page.set, href: page.href, title: page.title, reason };
     });
   if (profile.role === "farm") {
     const page = guidePage("farms");

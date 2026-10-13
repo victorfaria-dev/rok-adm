@@ -4,10 +4,15 @@ import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { defaultProfile, encodeProfile, mergeBlockSets, selectBlocks, type AccountProfile, type GuideBlock } from "@rokadm/core";
+import type { GuidePayload, PayloadBlock } from "../src/lib/guide-types";
+import { selectGuideWithFallback } from "../src/lib/guide-view";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const blocks = JSON.parse(readFileSync(join(here, "../../../guides/data/blocks.f2p.json"), "utf8")) as GuideBlock[];
 const lowBlocks = JSON.parse(readFileSync(join(here, "../../../guides/data/blocks.low.json"), "utf8")) as GuideBlock[];
+const lateBlocks = JSON.parse(readFileSync(join(here, "../../../guides/data/blocks.latestage.json"), "utf8")) as GuideBlock[];
+/** Raw blocks in the payload shape selectGuideWithFallback reads (it only looks at the block fields). */
+const asPayload = (b: GuideBlock[]): GuidePayload => ({ v: 1, set: "x", blocks: b as PayloadBlock[], badges: {} });
 /** What the personal guide selects from: the F2P base plus the Low delta for Low and higher (core's selectGuide). */
 const blocksFor = (p: AccountProfile): GuideBlock[] => (p.spending === "f2p" ? blocks : mergeBlockSets(blocks, lowBlocks));
 const make = (p: Partial<AccountProfile>): AccountProfile => ({ ...defaultProfile(), ...p });
@@ -116,17 +121,41 @@ test("share falls back to copying the link and confirms inline", async ({ page, 
   expect(copied).toMatch(new RegExp(`/guide/\\?p=${VALID.replace(/\./g, "\\.")}$`));
 });
 
-test("KvK2+ profile: the guide falls back to KvK1 content, clearly labelled", async ({ page }) => {
-  const kvk2 = make({ spending: "f2p", kingdomStage: "kvk2", cityHall: 12 });
+test("KvK2+ profile: the late-game plan is the main content; KvK1 only labels the sections still without late steps", async ({ page }) => {
+  const kvk2 = make({ spending: "f2p", kingdomStage: "kvk2", cityHall: 25, minutesPerDay: 120 });
   await page.goto(`/guide/?p=${encodeProfile(kvk2)}`);
+  await expect(personal(page)).toBeVisible();
+  await expect(page.locator("[data-guide-late]")).toContainText("Your plan for KvK2");
+  await expect(page.locator("[data-guide-late] a")).toHaveAttribute("href", "/guides/late-game/");
+  await expect(page.locator("[data-guide-fallback]")).toHaveCount(0);
+  const sel = selectGuideWithFallback(asPayload(blocks), kvk2, asPayload(lateBlocks));
+  expect(sel.lateStage).toBe(true);
+  expect(sel.fallbackSections.length).toBeGreaterThan(0);
+  const articles = personal(page).locator("article[data-block-id]");
+  await expect(articles).toHaveCount(sel.view.meta.shownBlocks + sel.view.alreadyDone.length);
+  await expect(personal(page).locator('article[data-block-id="ls-t5-is-a-research-project"]')).toHaveCount(1);
+  await expect(personal(page).locator('article[data-block-id="daily-15min"]')).toHaveCount(1);
+  await expect(personal(page).locator('article[data-block-id^="d4-"]')).toHaveCount(0);
+  // The KvK1 notice sits only in the sections that still lack late-stage steps.
+  const marked = personal(page).locator("[data-section-fallback]");
+  await expect(marked).toHaveCount(sel.fallbackSections.length);
+  await expect(marked.first()).toContainText("Closest available: KvK1 content");
+  for (const id of sel.fallbackSections) await expect(personal(page).locator(`#s-${id} [data-section-fallback]`)).toHaveCount(1);
+  await expect(personal(page).locator("#s-plan [data-section-fallback]")).toHaveCount(0);
+  const first = personal(page).locator("[data-guides-for-you] li").first();
+  await expect(first).toHaveAttribute("data-guide-link", "latestage");
+});
+
+test("KvK2+ profile: if the late-game guide fails to load, the whole guide falls back to KvK1, labelled", async ({ page }) => {
+  await page.route("**/data/guide-latestage.json", (r) => r.abort());
+  const soc = make({ spending: "f2p", kingdomStage: "soc", cityHall: 12 });
+  await page.goto(`/guide/?p=${encodeProfile(soc)}`);
   await expect(personal(page)).toBeVisible();
   const notice = page.locator("[data-guide-fallback]");
   await expect(notice).toContainText("Closest available: KvK1 content");
-  await expect(notice).toContainText("not researched yet");
-  const expected = selectBlocks(blocks, { ...kvk2, kingdomStage: "kvk1" });
-  expect(expected.meta.shownBlocks).toBeGreaterThan(0);
+  const expected = selectBlocks(blocks, { ...soc, kingdomStage: "kvk1" });
   await expect(personal(page).locator("article[data-block-id]")).toHaveCount(expected.meta.shownBlocks + expected.alreadyDone.length);
-  await expect(personal(page).locator(".g-meta")).toContainText(`${expected.meta.shownBlocks} of`);
+  await expect(page.locator("[data-guide-late]")).toHaveCount(0);
 });
 
 test("a link to your own saved profile says 'Your profile' with no save button", async ({ page }) => {
@@ -156,6 +185,10 @@ test.describe("accessibility", () => {
       await page.locator("#already-done > details > summary").click();
     }],
     ["invalid link", "/guide/?p=garbage", async (page) => { await expect(page.getByRole("alert")).toBeVisible(); }],
+    ["personal guide (KvK3), late-game plan", `/guide/?p=${encodeProfile(make({ spending: "f2p", kingdomStage: "kvk3", cityHall: 25 }))}`, async (page) => {
+      await expect(page.locator("[data-guide-late]")).toBeVisible();
+      await expect(page.locator("[data-section-fallback]").first()).toBeAttached();
+    }],
     ["new kingdom guide", "/guides/new-kingdom/", async () => {}],
   ];
   for (const theme of ["dark", "light"] as const) {

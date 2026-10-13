@@ -5,19 +5,20 @@ import type { ComponentChildren } from "preact";
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { readStore, writeStore } from "../../lib/store";
 import { profileSummary } from "../../lib/profile";
-import { deltaSetsFor } from "@rokadm/core";
+import { deltaSetsFor, isLateStage } from "@rokadm/core";
 import type { GuideData, GuidePayload } from "../../lib/guide-types";
 import {
   chooseProfile,
   deltaUrl,
   FALLBACK_STAGE,
+  LATE_SET,
   selectGuideWithFallback,
   shareUrl,
   STAGE_NAMES,
   withDeltas,
   type ProfileChoice,
 } from "../../lib/guide-view";
-import { guidesForYou } from "../../lib/guides";
+import { guidePage, guidesForYou } from "../../lib/guides";
 import { GuideBody, GuideMeta, GuidesForYou, renderSteps } from "./GuideBody";
 
 interface Props {
@@ -26,6 +27,8 @@ interface Props {
 }
 
 type Status = "idle" | "loading" | "ready" | "failed";
+
+const latePage = guidePage("latestage");
 
 /** Steps (blocks) of the personal guide in the first pass, then per idle period. */
 const FIRST_STEPS = 6;
@@ -80,6 +83,8 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const [mounted, setMounted] = useState(false);
   const [choice, setChoice] = useState<ProfileChoice | null>(null);
   const [data, setData] = useState<GuideData | null>(null);
+  /** Late-game guide (KvK2, KvK3, SoC profiles); null when not needed or it failed to load. */
+  const [late, setLate] = useState<GuidePayload | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [live, setLive] = useState("");
   const [manualUrl, setManualUrl] = useState<string | null>(null);
@@ -99,9 +104,12 @@ export default function GuideIsland({ dataUrl, children }: Props) {
       });
     // Low and higher profiles: the profile delta sets are merged over the F2P guide (core's selectGuide).
     const deltas = deltaSetsFor(c.profile.spending).map((d) => get<GuidePayload>(deltaUrl(d.id)));
-    Promise.all([get<GuideData>(dataUrl), Promise.all(deltas)])
-      .then(([d, ds]) => {
+    // KvK2, KvK3 and SoC: the late-game guide is the main plan. If it fails, the guide falls back to KvK1 as a whole.
+    const lateGuide = isLateStage(c.profile.kingdomStage) ? get<GuidePayload>(deltaUrl(LATE_SET)).catch(() => null) : Promise.resolve(null);
+    Promise.all([get<GuideData>(dataUrl), Promise.all(deltas), lateGuide])
+      .then(([d, ds, l]) => {
         setData({ ...d, guide: withDeltas(d.guide, ds) });
+        setLate(l);
         setStatus("ready");
       })
       .catch(() => setStatus("failed"));
@@ -110,7 +118,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const summary = choice && choice.source !== "default" ? profileSummary(choice.profile) : null;
   const personal = choice !== null && choice.source !== "default" && data !== null && status === "ready";
   // Memoised so the progressive render keeps the same block objects and skips re-rendering them.
-  const selection = useMemo(() => (personal && data && choice ? selectGuideWithFallback(data.guide, choice.profile) : null), [personal, data, choice]);
+  const selection = useMemo(() => (personal && data && choice ? selectGuideWithFallback(data.guide, choice.profile, late) : null), [personal, data, choice, late]);
   const links = personal ? guidesForYou(choice.profile) : [];
   const view = selection?.view ?? null;
   const empty = view !== null && view.meta.shownBlocks === 0 && view.alreadyDone.length === 0;
@@ -194,13 +202,25 @@ export default function GuideIsland({ dataUrl, children }: Props) {
 
       {view && choice ? (
         <div class="g-personal" data-guide="personal">
-          {selection?.fallbackFrom && (
+          {selection?.lateStage && (
+            <aside class="g-notice" data-guide-late aria-labelledby="g-late-h">
+              <p id="g-late-h" class="g-notice-title">Your plan for {STAGE_NAMES[choice.profile.kingdomStage]}</p>
+              <p>
+                Your kingdom is past KvK1, so the main plan below is the <a href={latePage.href}>late game guide</a> for KvK2, KvK3
+                and Season of Conquest, plus the daily routine.
+                {selection.fallbackSections.length > 0 && (
+                  <> Sections marked “Closest available: KvK1 content” have no late-game steps yet.</>
+                )}
+              </p>
+            </aside>
+          )}
+          {selection?.fallbackFrom && !selection.lateStage && (
             <aside class="g-notice" data-guide-fallback aria-labelledby="g-fallback-h">
               <p id="g-fallback-h" class="g-notice-title">Closest available: {STAGE_NAMES[FALLBACK_STAGE]} content</p>
               <p>
-                Your kingdom is at {STAGE_NAMES[selection.fallbackFrom]}. Guide steps for KvK2 and later are not researched yet,
-                so this page shows the steps written for {STAGE_NAMES[FALLBACK_STAGE]}, the closest stage we have. Some may not fit
-                your kingdom; check them against what your kingdom is doing now.
+                Your kingdom is at {STAGE_NAMES[selection.fallbackFrom]}. The late game guide could not be loaded, so this page
+                shows the steps written for {STAGE_NAMES[FALLBACK_STAGE]}, the closest stage we have. Some may not fit your kingdom;
+                check them against what your kingdom is doing now, or reload to try again.
               </p>
             </aside>
           )}

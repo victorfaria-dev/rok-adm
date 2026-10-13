@@ -77,12 +77,19 @@ export function GuideBody({ view, badges, budget, profileTags = true, idPrefix =
       {view.sections.map((s) => {
         const hid = `${idPrefix}-${s.id}-h`;
         if (left <= 0) return null;
+        const fallback = s.fallback ? (
+          <p class="g-section-fallback" data-section-fallback>
+            <strong>Closest available: KvK1 content.</strong> No step in this section is written for your kingdom's stage
+            yet, so it shows the steps written for KvK1. Check them against what your kingdom is doing now.
+          </p>
+        ) : null;
         if (s.id === "plan") {
           const phases = PLAN_PHASES.map((ph) => ({ ph, items: take(withFolded(s.blocks.filter((b) => b.block.phase === ph))) })).filter((x) => x.items.length > 0);
           const other = take(withFolded(s.blocks.filter((b) => !PLAN_PHASES.includes(b.block.phase))));
           return (
             <section class="g-section" id={`${idPrefix}-${s.id}`} aria-labelledby={hid} key={s.id}>
               <h2 id={hid}>{sectionTitle(s.title)}</h2>
+              {fallback}
               {phases.map(({ ph, items }) => (
                 <div class="g-phase" key={ph}>
                   <h3 class="g-phase-title">{PHASE_TITLES[ph] ?? ph}</h3>
@@ -96,6 +103,7 @@ export function GuideBody({ view, badges, budget, profileTags = true, idPrefix =
         return (
           <section class="g-section" id={`${idPrefix}-${s.id}`} aria-labelledby={hid} key={s.id}>
             <h2 id={hid}>{sectionTitle(s.title)}</h2>
+            {fallback}
             {take(withFolded(s.blocks)).map((b) => blk(b, 3))}
           </section>
         );

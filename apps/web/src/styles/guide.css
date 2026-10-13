@@ -60,6 +60,12 @@
 .g-notice-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-font-display); }
 .g-notice p:not(.g-notice-title) { color: var(--ko-text-muted); }
 .g-loading { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+/* Stage-aware guide: one section still shows KvK1 steps. */
+.g-section-fallback {
+  padding: var(--ko-space-3); border-inline-start: 3px solid var(--ko-warning);
+  font-size: var(--ko-text-sm); color: var(--ko-text-muted); overflow-wrap: anywhere;
+}
+.g-section-fallback strong { color: var(--ko-text); }
 
 /* Section index: collapsible, at the top. */
 .g-toc details { border-block: 1px solid var(--ko-border); }
