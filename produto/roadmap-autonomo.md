@@ -39,6 +39,7 @@ Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre on
 | D | session_01PfcmoBAphnvyuxaEFxSUdC | `claude/kingdomops-wave-d` (integrada) |
 | E | session_01QbeBBwUnFmrJ7mFDqYj6P7 | `claude/kingdomops-wave-e` (integrada) |
 | F | session_01MoSezpwQFqMWcdJEH5aXi3 | `claude/kingdomops-wave-f` (integrada) |
+| J (pesquisa fim de jogo + low spender) | session_01W8Ban1K2K8Ncivz5B3w2e8 | `claude/kingdomops-wave-j` |
 
 O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` depois de `pnpm check`, build e e2e.
 
