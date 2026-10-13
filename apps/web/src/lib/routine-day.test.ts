@@ -1,21 +1,34 @@
 import { describe, expect, it } from "vitest";
-import { countDone, doneToday, localDateKey, localWeekday, setDone } from "./routine-day";
+import { countDone, doneToday, gameDateKey, gameWeekday, resetLocalTime, setDone } from "./routine-day";
 
-// Local-time constructors: the tests hold in any time zone.
-const at = (y: number, m: number, d: number, h = 12, min = 0): Date => new Date(y, m - 1, d, h, min);
+// UTC constructors: the game day is the UTC day (A10-0001), so tests hold in any time zone.
+const at = (y: number, m: number, d: number, h = 12, min = 0): Date => new Date(Date.UTC(y, m - 1, d, h, min));
 
-describe("localDateKey", () => {
-  it("uses the local calendar day, zero-padded", () => {
-    expect(localDateKey(at(2026, 1, 5))).toBe("2026-01-05");
-    expect(localDateKey(at(2026, 12, 31, 23, 59))).toBe("2026-12-31");
-    expect(localDateKey(at(2027, 1, 1, 0, 0))).toBe("2027-01-01");
+describe("gameDateKey", () => {
+  it("uses the UTC calendar day, zero-padded", () => {
+    expect(gameDateKey(at(2026, 1, 5))).toBe("2026-01-05");
+    expect(gameDateKey(at(2026, 12, 31, 23, 59))).toBe("2026-12-31");
+    expect(gameDateKey(at(2027, 1, 1, 0, 0))).toBe("2027-01-01");
+  });
+  it("rolls over at 00:00 UTC, not local midnight", () => {
+    // 21:30 on Oct 13 in Brazil (UTC-3) is already Oct 14 in the game.
+    expect(gameDateKey(new Date("2026-10-13T21:30:00-03:00"))).toBe("2026-10-14");
   });
 });
 
-describe("localWeekday", () => {
-  it("is 0 on Sunday and 1 on Monday (local)", () => {
-    expect(localWeekday(at(2026, 10, 11))).toBe(0);
-    expect(localWeekday(at(2026, 10, 12, 0, 1))).toBe(1);
+describe("gameWeekday", () => {
+  it("is 0 on Sunday and 1 on Monday (UTC)", () => {
+    expect(gameWeekday(at(2026, 10, 11))).toBe(0);
+    expect(gameWeekday(at(2026, 10, 12, 0, 1))).toBe(1);
+  });
+});
+
+describe("resetLocalTime", () => {
+  it("formats the next 00:00 UTC in local time", () => {
+    const now = at(2026, 10, 13, 15);
+    const reset = new Date(Date.UTC(2026, 9, 14));
+    const expected = `${String(reset.getHours()).padStart(2, "0")}:${String(reset.getMinutes()).padStart(2, "0")}`;
+    expect(resetLocalTime(now)).toBe(expected);
   });
 });
 

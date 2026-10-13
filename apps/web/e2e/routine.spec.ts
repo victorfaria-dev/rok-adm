@@ -19,12 +19,12 @@ async function open(page: Page) {
 }
 
 const stored = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1") ?? "{}"));
-/** Local YYYY-MM-DD in the browser, `offset` days from today. */
+/** Game day (UTC, A10-0001) as YYYY-MM-DD in the browser, `offset` days from today. */
 const localDay = (page: Page, offset = 0) =>
   page.evaluate((o) => {
     const d = new Date();
-    d.setDate(d.getDate() + o);
-    return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+    d.setUTCDate(d.getUTCDate() + o);
+    return d.toISOString().slice(0, 10);
   }, offset);
 
 test("renders the plan for a saved profile", async ({ page }) => {

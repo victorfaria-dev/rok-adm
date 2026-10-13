@@ -16,6 +16,9 @@ export interface RoutinePrefs {
   minutes: number | null;
   /** Break Mode: minimal routine for busy days. */
   breakMode: boolean;
+  /** "Also plan for" toggles on /routine; missing = off. */
+  includeWeekly?: boolean;
+  includeEvents?: boolean;
 }
 
 /** F-20 checklist answers per commander id: question id → option id. */
@@ -72,6 +75,8 @@ export function parseStore(raw: string | null | undefined): StoreV1 {
       minutes: typeof m === "number" && Number.isFinite(m) && m > 0 && m <= 1440 ? m : null,
       breakMode: rp.breakMode === true,
     };
+    if (typeof rp.includeWeekly === "boolean") s.routinePrefs.includeWeekly = rp.includeWeekly;
+    if (typeof rp.includeEvents === "boolean") s.routinePrefs.includeEvents = rp.includeEvents;
   }
   if (isRecord(data.commanders)) {
     for (const [id, answers] of Object.entries(data.commanders)) {

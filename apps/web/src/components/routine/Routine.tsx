@@ -15,7 +15,7 @@ import {
   type SkippedTask,
 } from "@rokadm/planner";
 import { profileFromCode } from "../../lib/profile";
-import { countDone, doneToday, localWeekday, setDone } from "../../lib/routine-day";
+import { countDone, doneToday, gameWeekday, resetLocalTime, setDone } from "../../lib/routine-day";
 import { readStore, writeStore, type RoutinePrefs, type StoreV1 } from "../../lib/store";
 import { CalendarExport } from "./CalendarExport";
 import "./routine.css";
@@ -121,8 +121,6 @@ function Checklist({ tasks, done, onToggle, label }: { tasks: readonly PlannedTa
 export default function Routine({ now = () => new Date() }: Props) {
   const [ready, setReady] = useState(false);
   const [store, setStore] = useState<StoreV1 | null>(null);
-  const [weekly, setWeekly] = useState(false);
-  const [events, setEvents] = useState(false);
 
   useLayoutEffect(() => {
     setStore(readStore());
@@ -135,13 +133,15 @@ export default function Routine({ now = () => new Date() }: Props) {
   const eff = effectiveProfile(base, override);
   const profile = withEffectiveSpending(base, override);
   const prefs: RoutinePrefs = store?.routinePrefs ?? { minutes: null, breakMode: false };
+  const weekly = prefs.includeWeekly === true;
+  const events = prefs.includeEvents === true;
   const choice = choiceOf(prefs);
   const budget = choice === "usual" ? base.minutesPerDay : choice;
   const today = ready ? now() : null;
   const done = today ? doneToday(store?.routine ?? null, today) : [];
 
   const plan = planRoutine(ROUTINE_TASKS, profile, budget, {
-    weekday: today ? localWeekday(today) : null,
+    weekday: today ? gameWeekday(today) : null,
     includeWeekly: weekly,
     includeEvents: events,
   });
@@ -178,6 +178,9 @@ export default function Routine({ now = () => new Date() }: Props) {
           Planned for:{" "}
           {saved ? <a href="/me/">{forText}</a> : <span>default answers ({forText})</span>}
         </p>
+        {today && (
+          <p class="rt-help">Checks clear at the game's daily reset, 00:00 UTC ({resetLocalTime(today)} your time).</p>
+        )}
       </div>
 
       {ready && !saved && (
@@ -217,14 +220,14 @@ export default function Routine({ now = () => new Date() }: Props) {
           <fieldset class="rt-extra">
             <legend>Also plan for</legend>
             <label class="rt-check">
-              <input type="checkbox" checked={weekly} onChange={(e) => setWeekly((e.currentTarget as HTMLInputElement).checked)} />
+              <input type="checkbox" checked={weekly} onChange={(e) => savePrefs({ includeWeekly: (e.currentTarget as HTMLInputElement).checked })} />
               <span>
                 Weekly tasks, on their day
                 <span class="rt-help">{WEEKLY_TASKS.map((t) => `${t.title}${ROUTINE_META[t.id]?.cadence ? `: ${ROUTINE_META[t.id]!.cadence}` : ""}`).join(". ")}.</span>
               </span>
             </label>
             <label class="rt-check">
-              <input type="checkbox" checked={events} onChange={(e) => setEvents((e.currentTarget as HTMLInputElement).checked)} />
+              <input type="checkbox" checked={events} onChange={(e) => savePrefs({ includeEvents: (e.currentTarget as HTMLInputElement).checked })} />
               <span>
                 An event is running
                 <span class="rt-help">Check the in-game calendar; events are not on a fixed schedule.</span>

@@ -65,7 +65,7 @@ describe("store", () => {
   });
 
   it("export then import keeps wave B fields", () => {
-    const s = { ...defaultStore(), profileOverride: "low" as const, routinePrefs: { minutes: 15, breakMode: false }, commanders: { cyrus: { purpose: "gatherer" } } };
+    const s = { ...defaultStore(), profileOverride: "low" as const, routinePrefs: { minutes: 15, breakMode: false, includeWeekly: true, includeEvents: false }, commanders: { cyrus: { purpose: "gatherer" } } };
     expect(importStore(exportStore(s))).toEqual(s);
   });
 });
