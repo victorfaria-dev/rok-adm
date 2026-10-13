@@ -72,6 +72,19 @@ describe("ShipmentLog", () => {
     expect(readFarms().shipments[0]).toMatchObject({ gross: 100, net: 79, taxRate: 0.21 });
   });
 
+  it("accepts 1.5m like every other number field and refuses negatives (Q2 P2-3)", () => {
+    seed([farm("b", "Beta", null)]);
+    setup();
+    fireEvent.input(field("Trading Post tax (%)"), { target: { value: "20" } });
+    fireEvent.input(field("Amount"), { target: { value: "-1.5m" } });
+    fireEvent.click(screen.getByRole("button", { name: "Add shipment" }));
+    expect(readFarms().shipments).toHaveLength(0);
+    expect(screen.getByText(/above 0, e.g. 500000, 500k or 1.5m/)).toBeTruthy();
+    fireEvent.input(field("Amount"), { target: { value: "1.5m" } });
+    fireEvent.click(screen.getByRole("button", { name: "Add shipment" }));
+    expect(readFarms().shipments[0]).toMatchObject({ gross: 1_500_000, net: 1_200_000 });
+  });
+
   it("gold shows the pending warning", () => {
     seed([farm("a", "Alpha", 5)]);
     setup();

@@ -2,7 +2,7 @@ import { useState } from "preact/hooks";
 import { FARM_DAILY_TASKS, RESOURCES, dailyState, goalProgress, shippedNet, toggleDaily, type Resource, type ShipmentEntry } from "@rokadm/planner";
 import type { Farm, FarmPatch } from "../../../lib/farms-store";
 import {
-  FOCUS_LABEL, RESOURCE_LABEL, fmtNumber, formatDuration, formatLocalTime, levelsSummary, parseWhole,
+  FOCUS_LABEL, RESOURCE_LABEL, fmtNumber, formatDuration, formatLocalTime, levelsSummary, parseResourceAmount,
   timeInputValue, untilAtLocalTime, untilInHours,
 } from "../../../lib/farms-hub";
 import { Sourced } from "../shared/Sourced";
@@ -44,9 +44,9 @@ export default function FarmCard({ farm, now, today, shipments, clock, onUpdate,
 
   const saveGoal = (e: Event): void => {
     e.preventDefault();
-    const n = parseWhole(goalAmt);
+    const n = parseResourceAmount(goalAmt);
     if (n === null || Number.isNaN(n) || n <= 0) {
-      setGoalErr("Enter the amount the main should receive today as a whole number above 0, e.g. 500000.");
+      setGoalErr("Enter the amount the main should receive today above 0, e.g. 500000, 500k or 1.5m.");
       document.getElementById(`${pre}-goal-amt`)?.focus();
       return;
     }

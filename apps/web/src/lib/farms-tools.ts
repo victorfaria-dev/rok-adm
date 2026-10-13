@@ -1,8 +1,8 @@
 // UI helpers for the farm tools (/farms/choose/, /farms/build/, /farms/trading-post/).
 // Pure: parsing what the player types, formatting numbers, and the saved-profile prefill.
-// Only types come from @rokadm/planner / @rokadm/core here.
+// From @rokadm/planner: types plus the shared number parser (readQuantity, no fact data).
 import type { SpendingProfile } from "@rokadm/core";
-import type { Resource } from "@rokadm/planner";
+import { QUANTITY_ERROR_TEXT, readQuantity, type Resource } from "@rokadm/planner";
 import { profileFromCode } from "./profile";
 
 /** Parse result: null = the field is empty; otherwise a value or a how-to-fix error. */
@@ -11,31 +11,15 @@ export type Parsed<T> = null | { ok: true; value: T } | { ok: false; error: stri
 /** Largest amount the tools accept (keeps every result finite and readable). */
 export const MAX_AMOUNT = 1e15;
 
-const SUFFIX: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9 };
-const AMOUNT_HELP = "Enter a number like 1,500,000, 1.5m or 300k.";
-
 /**
  * Parse an amount the way players write it: "1500000", "1,500,000", "1.5m", "300k", "2B".
- * Commas must be en-US thousands groups ("1,500,000"); the result must be a whole number >= 0.
+ * Same parser as every other number field (readQuantity in @rokadm/planner); whole numbers >= 0.
  */
 export function parseAmount(text: string): Parsed<number> {
-  const s = text.trim().replace(/\s+/g, "").toLowerCase();
-  if (s === "") return null;
-  if (s.startsWith("-")) return { ok: false, error: "Enter 0 or more." };
-  const m = /^(\d+(?:,\d{3})*|\d*)(?:\.(\d+))?([kmb])?$/.exec(s);
-  if (!m || (m[1] === "" && m[2] === undefined)) return { ok: false, error: AMOUNT_HELP };
-  const whole = m[1]!;
-  if (whole.includes(",") && !/^\d{1,3}(,\d{3})+$/.test(whole)) return { ok: false, error: AMOUNT_HELP };
-  const base = Number(`${whole.replace(/,/g, "") || "0"}.${m[2] ?? "0"}`);
-  const value = base * (m[3] ? SUFFIX[m[3]]! : 1);
-  if (!Number.isFinite(value)) return { ok: false, error: AMOUNT_HELP };
-  // Float-safe: 1.1m must give 1,100,000, not 1,100,000.0000000002.
-  const rounded = Math.round(value);
-  if (Math.abs(value - rounded) > 1e-6 * Math.max(1, Math.abs(value))) {
-    return { ok: false, error: "Use a whole number of resources." };
-  }
-  if (rounded > MAX_AMOUNT) return { ok: false, error: "That number is too large." };
-  return { ok: true, value: rounded };
+  const r = readQuantity(text, { max: MAX_AMOUNT });
+  if (r.ok) return { ok: true, value: r.value };
+  if (r.error === "empty") return null;
+  return { ok: false, error: r.error === "fraction" ? "Use a whole number of resources." : QUANTITY_ERROR_TEXT[r.error] };
 }
 
 /** Whole number in [min, max] ("1,000" style commas not accepted: levels and counts are small). */

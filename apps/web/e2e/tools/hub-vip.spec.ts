@@ -38,6 +38,12 @@ test("VIP calculator: invalid input shows an error and keeps the last result", a
   await expect(page.getByText("Use 0 or more.")).toBeVisible();
   await expect(page.getByLabel("Your VIP points now")).toHaveAttribute("aria-invalid", "true");
   await expect(page.getByTestId("vip-needed").locator(".t-value")).toHaveText("1,200");
+  // Q2 P2-4: scientific notation is refused too, and 1.5k shorthand works.
+  await page.getByLabel("Your VIP points now").fill("1e3");
+  await expect(page.getByText(/Enter a whole number, like 1500/)).toBeVisible();
+  await expect(page.getByTestId("vip-needed").locator(".t-value")).toHaveText("1,200");
+  await page.getByLabel("Your VIP points now").fill("1k");
+  await expect(page.getByTestId("vip-needed").locator(".t-value")).toHaveText("200");
 });
 
 test("VIP calculator: a share link fills the inputs without saving them", async ({ page }) => {

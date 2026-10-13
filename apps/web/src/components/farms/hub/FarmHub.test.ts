@@ -145,7 +145,7 @@ describe("FarmHub: gathering and checklist", () => {
     setup();
     fireEvent.input(input("Amount received"), { target: { value: "abc" } });
     fireEvent.click(screen.getByRole("button", { name: /Save goal/ }));
-    expect(screen.getByRole("alert").textContent).toMatch(/whole number above 0/);
+    expect(screen.getByRole("alert").textContent).toMatch(/above 0, e.g. 500000, 500k or 1.5m/);
     fireEvent.change(screen.getByLabelText("Resource"), { target: { value: "wood" } });
     fireEvent.input(input("Amount received"), { target: { value: "1,000,000" } });
     fireEvent.click(screen.getByRole("button", { name: /Save goal/ }));
