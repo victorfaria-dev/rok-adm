@@ -150,3 +150,13 @@ Fichas B02–B09 migradas para slugs em 2026-10-13 (PL01–PL13).
 - `src:heaven-guardian` declara copiar um guia-fonte; tabelas de Trading Post ≈ `src:rkg`.
 - `src:rkg-lyceum` (texto oficial do quiz) **é** independente de `src:fandom`, mas pode estar desatualizado.
 - `src:youtube-summary` é derivado de `src:youtube` e não é literal.
+
+## Onda J
+
+### J1
+
+Late-stage commanders and equipment (KvK2, KvK3, SoC). Raw notes: `raw/J1-late-commanders-equipment/`.
+
+| Slug | Fonte | Tier | Data vista | Acesso | Notas |
+|---|---|---|---|---|---|
+| `src:topuplive` | TopUpLive blog (topuplive.com/news): "Rise of Kingdoms Commanders Tier List 2026" | T3 (vendedor de recarga: **conflito de interesse**) | pub 2026-08-14, mod 2026-08-18 | curl (UA padrão) | Mantém conteúdo antigo com data nova (ex.: recomenda Alexander/Saladin para KvK3). Versões em outros idiomas trazem listas diferentes. Não é independente de outras lojas (lootbar/topuplist) em formato, mas o texto não é cópia literal das que foram verificadas. |

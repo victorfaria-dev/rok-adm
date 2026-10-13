@@ -68,3 +68,23 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A06-0514 | estrategia | baixa | verificado |  |
 | A06-0515 | estrategia | baixa | verificado |  |
 | A06-0516 | estrategia | media | verificado |  |
+
+
+## Onda J (J1 — late-stage KvK2/KvK3/SoC, 2026-10-13)
+
+Collected by worker J1. Status of all cards: `organizado`. Raw notes: `research/raw/J1-late-commanders-equipment/`. Official forum (T1) used for mechanics; strategy is T3/T4 (max media).
+
+| ID | Title | Type | Consensus | Confidence | Stages |
+|---|---|---|---|---|---|
+| [A06-0600](A06-0600.md) | Commander pools are season-gated: Season 3 Mightiest Governor/Wheel of Fortune include all commanders | mecanica | n/a | alta | kvk2, kvk3, soc |
+| [A06-0601](A06-0601.md) | King Arthur: free via King's Trials only after the kingdom completes Season 2 | mecanica | n/a | alta | kvk3, soc |
+| [A06-0602](A06-0602.md) | Legendary Commander Swap rules: 2 swaps, each commander once, ticket cost by skill-level gap | mecanica | n/a | alta | kvk2, kvk3 |
+| [A06-0603](A06-0603.md) | When the Commander Swap / Gathering of Heroes window opens: around the Season 2 → Season 3 transition | mecanica | n/a | media | kvk2, kvk3 |
+| [A06-0604](A06-0604.md) | Gathering of Heroes: quest points recruit unowned legendaries (incl. SoC commanders), tiered since 1.1.02 | mecanica | n/a | alta | kvk2, kvk3 |
+| [A06-0605](A06-0605.md) | F2P/low: pour gold sculptures into one commander you will finish, knowing it can be swapped at S2→S3 | estrategia | majoritario | media | kvk1, kvk2, kvk3 |
+| [A06-0606](A06-0606.md) | Shelf life: older legendaries are 'before SoC only' investments; don't expect KvK1 favorites to carry SoC | estrategia | majoritario | media | kvk1, kvk2, kvk3, soc |
+| [A06-0607](A06-0607.md) | Yi Seong-Gye stays useful into SoC (new archer pairings, Museum relic), unlike most early legendaries | estrategia | majoritario | media | kvk1, kvk2, kvk3, soc |
+| [A06-0608](A06-0608.md) | Museum relics extend older commanders' value — relic bonuses work in SoC; some relics purchasable in Season 3 | mecanica | n/a | alta | kvk3, soc |
+| [A06-0609](A06-0609.md) | SoC changes legendary acquisition: Legendary Chest with Sovereign Keys; SoC daily chest gives a Sovereign Key | mecanica | n/a | alta | soc |
+| [A06-0610](A06-0610.md) | How far a pure F2P gets in SoC: divided (1 expertised + a few 5511 vs one maxed commander per KvK cycle) | estrategia | dividido | baixa | soc |
+| [A06-0611](A06-0611.md) | Why advice goes stale: new commander generations every ~7 months (stated) and design intent to keep old ones relevant | mecanica | n/a | media | kvk2, kvk3, soc |
