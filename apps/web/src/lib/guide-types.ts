@@ -33,6 +33,8 @@ export interface PayloadBlock extends GuideBlock {
   bodyHtml: string;
   whyHtml: string;
   patch: PatchBadge;
+  /** One or two plain-text lines from the body (timeline summary, wave VG). Optional: older payloads lack it. */
+  gist?: string;
 }
 
 export interface GuidePayload {
@@ -105,6 +107,31 @@ export interface BudgetPayload {
 export interface GuideData {
   guide: GuidePayload;
   budget: BudgetPayload;
+  /** Kingdom-day calendar (wave VG): milestones from dated fact cards only. */
+  calendar: CalendarMilestone[];
+}
+
+// ---------------------------------------------------------------------------
+// Kingdom-day calendar (wave VG), built at build from dated fact cards (src/lib/guide-calendar.ts).
+
+export interface CalendarMilestone {
+  id: string;
+  title: string;
+  /** Kingdom days [from, to]; null = pending (no dated, sourced card yet). */
+  day: [number, number] | null;
+  /** The card gives the day as "about" / "~". */
+  approx: boolean;
+  kind: "kvk" | "event" | "checkpoint";
+  /** Fact cards the date comes from (or, when pending, the card that names the gap). */
+  facts: string[];
+  confidence: Confidence;
+  /** Card badge label, e.g. "Disputed", "Unverified", "Verified on patch 1.1.09 · …". */
+  label: string;
+  /** Source slugs of the cards. */
+  sources: string[];
+  /** Research gaps that would date a pending milestone (e.g. L-B01-01). */
+  gaps: string[];
+  note: string | null;
 }
 
 // ---------------------------------------------------------------------------
