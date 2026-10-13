@@ -44,9 +44,35 @@ test.describe("gem value table", () => {
   });
 });
 
+async function fillEligible(page: Page): Promise<void> {
+  await page.getByLabel("City Hall level").fill("16");
+  await page.getByLabel("Displayed power (millions)").fill("10");
+  await page.getByLabel("Are you in an alliance?").selectOption("no");
+  await page.getByLabel("Are all your troops home?").selectOption("yes");
+  await page.getByLabel("Are your resources within storehouse protection?").selectOption("yes");
+  await page.getByLabel("Is a migration cooldown active?").selectOption("no");
+  await page.getByLabel("Character age (days)").fill("100");
+  await page.getByLabel("Target kingdom age (days)").fill("100");
+}
+
 test.describe("migration checker", () => {
-  test("defaults are eligible; each failing rule is listed with its card and patch", async ({ page }) => {
+  test("starts empty and neutral: no verdict before the user answers", async ({ page }) => {
     await fresh(page, "/tools/migration/");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Not checked yet");
+    await expect(page.getByTestId("mig-verdict")).toContainText("Answer 8 more questions");
+    await expect(page.getByLabel("City Hall level")).toHaveValue("");
+    await expect(page.getByTestId("mig-pages").locator(".t-value")).toHaveText("Enter your power");
+    await expect(page.locator('[data-check="ch"]')).toHaveAttribute("data-ok", "unknown");
+    await expect(page.locator('[data-check="ch"]')).toContainText("Not checked");
+    await page.getByLabel("City Hall level").fill("12");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Not eligible");
+    await page.getByLabel("City Hall level").fill("");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Not checked yet");
+  });
+
+  test("all answers passing are eligible; each failing rule is listed with its card and patch", async ({ page }) => {
+    await fresh(page, "/tools/migration/");
+    await fillEligible(page);
     await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Eligible");
     await page.getByLabel("City Hall level").fill("15");
     await page.getByLabel("Are you in an alliance?").selectOption("yes");
@@ -112,7 +138,7 @@ test.describe("migration checker", () => {
     await expect(page.getByLabel("Route", { exact: true })).toHaveValue("cross-s2");
     await expect(page.getByLabel("Target kingdom age (days)")).toHaveValue("200");
     await expect(page.getByLabel("Target kingdom power cap (millions, optional)")).toHaveValue("40");
-    await expect(page.getByLabel("City Hall level")).toHaveValue("16");
+    await expect(page.getByLabel("City Hall level")).toHaveValue("");
     await expect(page.locator('[data-check="cap"]')).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("ko:tools:v1"))).toBeNull();
   });
