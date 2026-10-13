@@ -28,3 +28,13 @@ Merge na main; publicar/hospedar; serviços pagos, chaves ou contas; qualquer co
 | I | 3D e motion: brasão 3D (F-61, experimental, Three.js sob demanda), torre de progresso (F-62, experimental), transições de tela | `apps/web` | planejada |
 
 Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre ondas. Itens que dependem de T0 (minutos por tarefa, ouro do Trading Post, upload de avatar) entram com o valor marcado como pendente, nunca inventado.
+
+## Coordenadores em execução (sessões na nuvem)
+
+| Onda | Sessão | Branch de saída |
+|---|---|---|
+| B | session_01M5YPP7uFGAY7w1pGsEdGsb | `claude/kingdomops-wave-b` |
+| C | session_018RZ5TxUuNcbZxB98xLoRnN | `claude/kingdomops-wave-c` |
+| H | session_01Lyh5XwMC41fqS3unC6F1GY | `claude/kingdomops-wave-h` |
+
+O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` depois de `pnpm check`, build e e2e.
