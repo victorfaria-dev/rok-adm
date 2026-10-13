@@ -68,8 +68,10 @@ KingdomOps v1.0: kit do Victor em `design/brand/`; tokens gerados em `design/tok
 | Tela | Status |
 |---|---|
 | 1. App Shell + Home | **concluída**: abas no celular, trilho no tablet/desktop, tema Dark/Light/System sem flash, chip de perfil, offline (service worker), JS ≤ 5 KB gz por rota; 15 testes unitários + 63 testes Playwright (axe nos dois temas) |
-| 2. Questionário (`/start`) | próxima |
-| 3. Meu guia + Budget Reality Check (`/guide`) | depois da 2 |
+| 2. Questionário (`/start`) | **concluída** |
+| 3. Meu guia + Budget Reality Check (`/guide`), guia de reino novo | **concluída** |
+| Cartão de governador 3D (`/card`), sting do logo, `/brand` | **concluída** |
+| Ondas B, C, H | em construção por coordenadores (ver `produto/roadmap-autonomo.md`) |
 
 ## Bloqueios
 
