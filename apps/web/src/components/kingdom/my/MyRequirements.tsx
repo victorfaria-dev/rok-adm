@@ -2,7 +2,7 @@
 // see your target and progress. Also works without a link (pick a preset or type a formula).
 import {
   FORMULA_PRESETS, MEASURED_AS, SHARE_ERROR_TEXT, VAR_NOUN, decodeShare, defaultRequirementsCard, evaluatePlayer, explainFormula,
-  formatFormula, formatInt, listText, parseFormula, parseRequirementsCard, presetById, shareFromHash, stageLabel, targetFor, usedVariables,
+  formatFormula, formatInt, parseFormula, parseRequirementsCard, presetById, shareFromHash, stageLabel, targetFor, usedVariables,
   type FormulaVar, type FormulaVars, type PowerBand, type RequirementsCard,
 } from "@rokadm/planner";
 import type { JSX } from "preact";
@@ -215,7 +215,7 @@ export default function MyRequirements(): JSX.Element {
           </div>
         )}
         {ways.length > 0 && (
-          <p data-ways>To close the gap you'd need about {listText(ways.map((w) => `${formatInt(w.unitsNeeded)} more ${w.unitsNeeded === 1 ? VAR_NOUN[w.variable].one : VAR_NOUN[w.variable].many}`), "or")} (each on its own; a mix also works).</p>
+          <p data-ways>To close the gap you'd need about {ways.map((w) => `${formatInt(w.unitsNeeded)} more ${w.unitsNeeded === 1 ? VAR_NOUN[w.variable].one : VAR_NOUN[w.variable].many}`).join(" or ")} (each on its own; a mix also works).</p>
         )}
         {card.presetId === "k2779-kvk2" && presetById("k2779-kvk2")?.ruleNote && <p class="kg-hint">{presetById("k2779-kvk2")!.ruleNote}</p>}
         <div class="kg-actions">
