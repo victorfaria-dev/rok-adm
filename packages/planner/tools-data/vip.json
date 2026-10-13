@@ -1,0 +1,53 @@
+{
+  "_about": "Inputs of the Gem → VIP calculator (/tools/vip/). VIP thresholds come from the A05-vip-levels table (A05-0001) at build time.",
+  "gemToVip": {
+    "value": 1,
+    "unit": "VIP points per gem",
+    "facts": [
+      "A05-0004"
+    ],
+    "evidence": {
+      "A05-0004": "1 gem = 1 VIP point"
+    }
+  },
+  "chestStart": {
+    "value": 40,
+    "unit": "VIP points on day 1 of a streak",
+    "facts": [
+      "A05-0003"
+    ],
+    "evidence": {
+      "A05-0003": "starting at 40 and increasing by 20"
+    }
+  },
+  "chestIncrement": {
+    "value": 20,
+    "unit": "VIP points more per consecutive day",
+    "facts": [
+      "A05-0003"
+    ],
+    "evidence": {
+      "A05-0003": "increasing by 20 up to a maximum of 200 per day"
+    }
+  },
+  "chestCap": {
+    "value": 200,
+    "unit": "VIP points per day at most",
+    "facts": [
+      "A05-0003"
+    ],
+    "evidence": {
+      "A05-0003": "up to a maximum of 200 per day"
+    }
+  },
+  "dailyGems": {
+    "value": 100,
+    "unit": "guaranteed gems per day (Daily Objectives chest)",
+    "facts": [
+      "A04-0001"
+    ],
+    "evidence": {
+      "A04-0001": "contains 100 gems"
+    }
+  }
+}
