@@ -1,0 +1,18 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../../../components/farms/shared/FarmsNav.astro";
+import BuildPathTool from "../../../components/farms/tools/BuildPathTool";
+import "../../../components/farms/shared/farms.css";
+import "../../../components/farms/tools/tools.css";
+---
+<Shell title="Build path" description="Check a farm's City Hall, Trading Post, Goldmine, Academy and gathering commander against the CH11, CH17 and CH22 farm targets, with sources for every step." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Build path</h1>
+      <p class="fm-lead">Enter a farm's levels to see which targets it already meets and what to build next, from City Hall 11 up to City Hall 22.</p>
+      <p class="ft-guardrail" data-guardrail>Planning and bookkeeping only. You do every in-game action yourself.</p>
+    </header>
+    <FarmsNav />
+    <BuildPathTool client:load />
+  </div>
+</Shell>

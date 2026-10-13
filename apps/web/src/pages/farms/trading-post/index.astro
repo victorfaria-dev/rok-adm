@@ -1,0 +1,18 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../../../components/farms/shared/FarmsNav.astro";
+import TradingPostCalc from "../../../components/farms/tools/TradingPostCalc";
+import "../../../components/farms/shared/farms.css";
+import "../../../components/farms/tools/tools.css";
+---
+<Shell title="Trading Post calculator" description="How much a farm must send through the Trading Post so your main receives what it needs: tax, trips, march rounds and what the Storehouse lets you ship." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Trading Post calculator</h1>
+      <p class="fm-lead">Type what your main needs. We work out how much the farm must send after tax, how many trips that takes and whether the farm has enough above its Storehouse protection.</p>
+      <p class="ft-guardrail" data-guardrail>Planning and bookkeeping only. You do every in-game action yourself.</p>
+    </header>
+    <FarmsNav />
+    <TradingPostCalc client:load />
+  </div>
+</Shell>
