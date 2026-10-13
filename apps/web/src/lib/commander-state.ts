@@ -1,0 +1,159 @@
+// F-20 /commanders: pure helpers between the stored answers (StoreV1.commanders) and the planner.
+// The planner throws on unknown question/option ids, so everything read from storage or the
+// shelf-life table goes through sanitizeAnswers() before evaluateCommanderDecision().
+import { QUESTIONS, type Confidence, type KingdomStage } from "@rokadm/core";
+import {
+  COMMANDER_CHECKLIST,
+  COMMANDER_SHELF_LIFE,
+  evaluateCommanderDecision,
+  suggestAnswers,
+  type CommanderChecklist,
+  type CommanderDecision,
+  type CommanderReason,
+  type CommanderShelfLife,
+  type Verdict,
+} from "@rokadm/planner";
+
+/** Answers as stored: question id → option id. */
+export type Answers = Record<string, string>;
+export type AnswersMap = Record<string, Answers>;
+
+/** Entry for commanders that are not in the shelf-life table. */
+export const OTHER_ID = "other";
+export const OTHER_NAME = "Another commander";
+
+export interface CommanderChoice { id: string; name: string }
+
+/** Picker entries: table commanders A to Z, then "Another commander". */
+export const COMMANDER_CHOICES: readonly CommanderChoice[] = [
+  ...[...COMMANDER_SHELF_LIFE].map((c) => ({ id: c.id, name: c.name })).sort((a, b) => a.name.localeCompare(b.name, "en")),
+  { id: OTHER_ID, name: OTHER_NAME },
+];
+
+export function isCommanderId(id: unknown): id is string {
+  return typeof id === "string" && COMMANDER_CHOICES.some((c) => c.id === id);
+}
+
+export function commanderName(id: string): string {
+  return COMMANDER_CHOICES.find((c) => c.id === id)?.name ?? id;
+}
+
+/** "#sun-tzu" → "sun-tzu"; anything that is not a known commander → null. */
+export function commanderFromHash(hash: string): string | null {
+  let id = hash.startsWith("#") ? hash.slice(1) : hash;
+  try {
+    id = decodeURIComponent(id);
+  } catch {
+    return null;
+  }
+  return isCommanderId(id) ? id : null;
+}
+
+const isRecord = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
+
+/** Keeps only answers whose question and option exist in the checklist. Never throws. */
+export function sanitizeAnswers(raw: unknown, checklist: CommanderChecklist = COMMANDER_CHECKLIST): Answers {
+  const out: Answers = {};
+  if (!isRecord(raw)) return out;
+  for (const q of checklist.questions) {
+    const a = raw[q.id];
+    if (typeof a === "string" && q.options.some((o) => o.id === a)) out[q.id] = a;
+  }
+  return out;
+}
+
+export interface Prefilled {
+  /** Suggestions from the shelf-life table, overridden by the player's own answers. */
+  answers: Answers;
+  /** Question ids whose answer is a suggestion the player has not confirmed or changed. */
+  suggested: string[];
+}
+
+/** Player's own answers win over the table's suggestions (planner suggestAnswers). */
+export function prefill(id: string, ownRaw: unknown): Prefilled {
+  const own = sanitizeAnswers(ownRaw);
+  const answers = sanitizeAnswers(suggestAnswers(id, own));
+  const suggested = Object.keys(answers).filter((q) => !(q in own));
+  return { answers, suggested };
+}
+
+export function decide(id: string, ownRaw: unknown): CommanderDecision {
+  return evaluateCommanderDecision(prefill(id, ownRaw).answers);
+}
+
+/** Map with one answer set for a commander; unknown question/option leaves the map as is. */
+export function setAnswer(map: AnswersMap, id: string, question: string, option: string): AnswersMap {
+  const q = COMMANDER_CHECKLIST.questions.find((x) => x.id === question);
+  if (!q || !q.options.some((o) => o.id === option)) return map;
+  return { ...map, [id]: { ...sanitizeAnswers(map[id]), [question]: option } };
+}
+
+/** The player accepts every suggestion shown for the commander as their own answer. */
+export function confirmSuggestions(map: AnswersMap, id: string): AnswersMap {
+  const { answers } = prefill(id, map[id]);
+  if (Object.keys(answers).length === 0) return map;
+  return { ...map, [id]: answers };
+}
+
+export function clearCommander(map: AnswersMap, id: string): AnswersMap {
+  const { [id]: _gone, ...rest } = map;
+  return rest;
+}
+
+export interface SavedCheck {
+  id: string;
+  name: string;
+  answered: number;
+  verdict: Verdict;
+}
+
+/** Commanders with at least one valid saved answer, A to Z ("Another commander" last). */
+export function savedChecks(map: unknown): SavedCheck[] {
+  if (!isRecord(map)) return [];
+  return COMMANDER_CHOICES.flatMap((c) => {
+    const own = sanitizeAnswers(map[c.id]);
+    const answered = Object.keys(own).length;
+    return answered > 0 ? [{ id: c.id, name: c.name, answered, verdict: decide(c.id, own).verdict }] : [];
+  });
+}
+
+// ---------------------------------------------------------------------------
+// Text shown to the player
+
+export const SHELF_LIFE_TEXT: Record<CommanderShelfLife["shelfLife"], string> = {
+  long_term: "Useful long term: past KvK1 and into Season of Conquest",
+  kvk1_only: "Useful until KvK1: loses value later",
+  no_priority: "No priority for F2P",
+  unknown: "Shelf-life unknown",
+};
+
+const STAGE_OPTIONS = QUESTIONS.find((q) => q.id === "kingdomStage")?.options ?? [];
+
+/** Stage label from the questionnaire (same words everywhere). */
+export function stageLabel(stage: KingdomStage): string {
+  return STAGE_OPTIONS.find((o) => o.value === stage)?.label ?? stage;
+}
+
+export const VERDICT_TEXT: Record<Verdict, { word: string; summary: string }> = {
+  go: { word: "Go", summary: "Your answers support this investment. Read the reasons before you spend." },
+  wait: { word: "Wait", summary: "Hold your sculptures for now. The reasons below say what would change this." },
+  avoid: { word: "Avoid", summary: "Your answers match a choice F2P guides warn against." },
+};
+
+export const CONFIDENCE_TEXT: Record<Confidence, string> = {
+  high: "High confidence",
+  medium: "Medium confidence",
+  low: "Low confidence",
+  pending: "Pending",
+};
+
+export const EFFECT_TEXT: Record<CommanderReason["effect"], string> = {
+  avoid: "Against",
+  wait: "Wait",
+  unanswered: "Missing answer",
+  go: "For",
+  info: "Note",
+};
+
+export { getShelfLife, SHELF_LIFE_AS_OF, COMMANDER_CHECKLIST } from "@rokadm/planner";
+export type { CommanderDecision, CommanderReason, CommanderShelfLife, Verdict } from "@rokadm/planner";
