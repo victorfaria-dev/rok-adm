@@ -1,7 +1,7 @@
 ---
 import Shell from "../../layouts/Shell.astro";
-import ComingNext from "../../components/ComingNext.astro";
+import Me from "../../components/me/Me";
 ---
-<Shell title="You" description="Your profile, theme and data: export, import or delete." mode="read">
-  <ComingNext what="Your profile, theme and data: export, import or delete." when="Coming after the guide."><Fragment slot="title">You</Fragment></ComingNext>
+<Shell title="You" description="Your profile, theme and data: export, import or delete. Everything stays in this browser." mode="operate">
+  <Me client:load />
 </Shell>
