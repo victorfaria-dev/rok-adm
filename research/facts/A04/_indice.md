@@ -53,9 +53,9 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 
 | ID | Tipo | Conf. | Status | Título |
 |---|---|---|---|---|
-| [A04-0600](A04-0600.md) | estrategia | media | organizado | Gems after VIP 10: books vs VIP 12/14; WoF/shops last |
-| [A04-0601](A04-0601.md) | derivado | baixa | organizado | Gem price of Castle 25 / blueprints if bought |
-| [A04-0602](A04-0602.md) | estrategia | baixa | organizado | Universal speedups: research vs KvK healing (divided) |
-| [A04-0603](A04-0603.md) | estrategia | media | organizado | Heal in small batches with alliance help |
-| [A04-0604](A04-0604.md) | estrategia | media | organizado | Pre-KvK stockpile practice (numbers single-source) |
-| [A04-0605](A04-0605.md) | mecanica | alta | organizado | 2021 daily cap on assistance/plunder was cancelled |
+| [A04-0600](A04-0600.md) | estrategia | baixa | verificado | Gems after VIP 10: books vs VIP 12/14; shops only with spare gems |
+| [A04-0601](A04-0601.md) | derivado | baixa | verificado | Gem price of Castle 25 / blueprints if bought |
+| [A04-0602](A04-0602.md) | estrategia | baixa | verificado | Universal speedups: research vs KvK healing (divided) |
+| [A04-0603](A04-0603.md) | estrategia | media | verificado | Heal in small batches with alliance help |
+| [A04-0604](A04-0604.md) | estrategia | media | verificado | Pre-KvK stockpile practice (numbers single-source) |
+| [A04-0605](A04-0605.md) | mecanica | alta | verificado | 2021 daily cap on assistance/plunder was cancelled |
