@@ -220,8 +220,3 @@ export function applyDetails(p: AccountProfile, form: Partial<Record<QuestionId,
   }
   return { ok: true, profile: v.profile, code: encodeProfile(v.profile) };
 }
-
-/** Saved accounts after the active profile's code changed: the active entry follows it. */
-export function followActive(list: readonly SavedProfile[], oldCode: string | null, override: SpendingProfile | null, newCode: string): SavedProfile[] {
-  return list.map((x) => (x.code === oldCode && x.override === override ? { ...x, code: newCode } : x));
-}

@@ -1,5 +1,6 @@
 import type { Ref } from "preact";
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
+import { withActiveCode } from "../../lib/accounts";
 import { setPlayingAs } from "../../lib/role";
 import { readStore, writeStore } from "../../lib/store";
 import {
@@ -161,7 +162,7 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
     const out = finish(stateRef.current.answers);
     if (out.ok) {
       finished.current = true;
-      writeStore({ profileCode: out.code, draft: null });
+      writeStore({ ...withActiveCode(readStore(), out.code), draft: null });
       setPlayingAs(out.playingAs);
       navigate(homeUrl(out.playingAs));
       return;

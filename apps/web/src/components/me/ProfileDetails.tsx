@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import type { QuestionId, QuestionOption } from "@rokadm/core";
-import { DETAIL_QUESTIONS, applyDetails, detailValue, followActive } from "../../lib/me";
+import { DETAIL_QUESTIONS, applyDetails, detailValue } from "../../lib/me";
+import { withActiveCode } from "../../lib/accounts";
 import { profileFromCode } from "../../lib/profile";
-import { writeStore, type StoreV1 } from "../../lib/store";
+import { readStore, writeStore, type StoreV1 } from "../../lib/store";
 
 // Every user-facing string of this section, in one place (i18n later).
 const S = {
@@ -55,8 +56,7 @@ export function ProfileDetails({ store, onChange }: Props) {
     setErrors({});
     shownCode.current = r.code;
     const next = writeStore({
-      profileCode: r.code,
-      savedProfiles: followActive(store.savedProfiles, store.profileCode, store.profileOverride, r.code),
+      ...withActiveCode(readStore(), r.code),
     });
     onChange(next);
     setStatus(S.saved);

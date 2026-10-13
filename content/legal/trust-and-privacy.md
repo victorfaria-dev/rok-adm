@@ -15,14 +15,14 @@
 
 ### MVP (now)
 
-Everything below lives in your browser's storage on this device. Only you can see it, unless you export a file or share a link yourself. The **You** page (`/me/`) has **Back up everything** (one file with every row marked "yes" below) and **Delete all data** (removes every row below, the Discord webhook included, and can also remove the offline copy).
+Everything below lives in your browser's storage on this device. Only you can see it, unless you export a file or share a link yourself. The **Me** page (`/me/`) has **Back up everything** (one file with every row marked "yes" below) and **Delete all data** (removes every row below, the Discord webhook included, and can also remove the offline copy).
 
-#### Profile & answers, saved accounts, routine ticks, commander checks and theme
+#### Profile & answers, accounts, routine ticks, commander checks, playing as and theme
 
-- **What is in it:** Your questionnaire answers (spending, role, minutes per day, kingdom stage, City Hall level, civilization), any unfinished questionnaire, accounts you saved (main, farms), today's routine ticks and routine settings, your commander checklist answers, your theme
+- **What is in it:** Your questionnaire answers (spending, role, minutes per day, kingdom stage, City Hall level, civilization), any unfinished questionnaire, your accounts (main, farms, alts), each with its own today's routine ticks and commander checklist answers, routine settings, whether you use the site as a player or a leader, your theme
 - **In "Back up everything":** Yes
-- **Other ways to export:** You page: **Export profile file**
-- **How to delete it:** **Delete all data** on the You page (routine ticks also reset each day; a saved account can be removed on its own)
+- **Other ways to export:** Me page: **Export profile file**
+- **How to delete it:** **Delete all data** on the Me page (routine ticks also reset each day; a saved account can be removed on its own)
 
 #### Governor card
 

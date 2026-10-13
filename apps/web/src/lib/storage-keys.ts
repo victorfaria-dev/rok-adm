@@ -17,7 +17,7 @@ export interface StorageKeyInfo {
 }
 
 export const STORAGE_KEYS: readonly StorageKeyInfo[] = [
-  { key: "ko:v1", area: "local", name: "Profile & answers, playing as (player or leader), saved accounts, routine ticks, commander checks and theme", backup: true },
+  { key: "ko:v1", area: "local", name: "Profile & answers, accounts, routine ticks, commander checks, playing as and theme", backup: true },
   { key: "ko:card:v1", area: "local", name: "Governor card", backup: true },
   { key: "ko:crest:v1", area: "local", name: "Alliance crest", backup: true },
   { key: "ko:tools:v1", area: "local", name: "Tool inputs (calculators, shared inventory, checklists)", backup: true },
