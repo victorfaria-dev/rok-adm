@@ -21,6 +21,9 @@
 .q-log { display: grid; gap: var(--ko-space-3); padding-top: var(--ko-space-2); min-width: 0; }
 .q-msg { display: flex; align-items: flex-start; gap: var(--ko-space-2); min-width: 0; }
 .q-msg-bot { scroll-margin-top: var(--ko-space-4); }
+/* The current question: Sun Tzu's stage on top, the bubble below at full width. */
+.q-msg-bot[data-current] { flex-direction: column; align-items: stretch; }
+.q-msg-bot[data-current] .q-bubble { max-width: none; }
 .q-bubble {
   position: relative; display: grid; gap: var(--ko-space-1); min-width: 0; max-width: 65ch;
   padding: var(--ko-space-2) var(--ko-space-3);
@@ -154,9 +157,10 @@
 .q-notes-error li { display: grid; justify-items: start; }
 .q-notes-error .q-change { padding-inline: 0; }
 
-/* Wider screens: replies line up under Sun Tzu's bubble (48 px avatar + gap). */
-@media (min-width: 480px) {
-  .q-reply .q-body { padding-left: calc(48px + var(--ko-space-2)); }
+/* Phones: the stage may be stuck on top as a 72 px strip; keep a focused heading clear of it. */
+@media (max-width: 767.98px) {
+  .q-title { scroll-margin-top: calc(72px + var(--ko-space-4)); }
+  .q-option, .q-input { scroll-margin-top: calc(72px + var(--ko-space-2)); }
 }
 @media (min-width: 768px) {
   .q-title { font-size: var(--ko-text-2xl); line-height: var(--ko-leading-2xl); }

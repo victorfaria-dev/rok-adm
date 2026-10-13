@@ -47,13 +47,16 @@ const TYPING_CLEAR_MS = 1600;
 /** How long Sun Tzu grumbles after an empty or invalid answer (the error text stays). */
 const GRUMBLE_MS = 700;
 
-/** One Sun Tzu message. The current question carries the page heading; older ones are plain text. */
-function BotMessage(props: { current: boolean; typing: boolean; grumble?: number; lead?: string; title?: string; help?: string; headingRef?: Ref<HTMLParagraphElement> }) {
-  const { current, typing, grumble = 0, lead, title, help, headingRef } = props;
-  const mood: MascotState | undefined = !current ? undefined : grumble > 0 ? "grumble" : typing ? "talking" : "idle";
+/**
+ * One Sun Tzu message. The current question carries the page heading and Sun Tzu's stage above it
+ * (the one animated mascot on the page); older ones are plain text with a small still poster.
+ */
+function BotMessage(props: { current: boolean; typing: boolean; grumble?: number; calm?: MascotState; lead?: string; title?: string; help?: string; headingRef?: Ref<HTMLParagraphElement> }) {
+  const { current, typing, grumble = 0, calm = "idle", lead, title, help, headingRef } = props;
+  const mood: MascotState | undefined = !current ? undefined : grumble > 0 ? "grumble" : typing ? "talking" : calm;
   return (
     <div class="q-msg q-msg-bot" data-current={current ? "" : undefined} data-typing={typing ? "" : undefined}>
-      <Mascot size={current ? 48 : 32} state={mood} pulse={current ? grumble : undefined} />
+      {current ? <Mascot stage state={mood} pulse={grumble} /> : <Mascot size={32} />}
       <div class="q-bubble">
         <p class={current ? "q-who" : "q-who visually-hidden"}>{MASCOT_NAME}</p>
         <span class="q-typing" aria-hidden="true"><span /><span /><span /></span>
@@ -287,12 +290,13 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
           </div>,
         ])}
         {q ? (
-          <BotMessage key={`bot-${state.step}`} current typing={typing} grumble={grumble} lead={LEADS[q.id]} title={q.label} help={q.help} headingRef={headingRef} />
+          <BotMessage key={`bot-${state.step}`} current typing={typing} grumble={grumble} calm={state.step === 0 ? "greet" : "idle"} lead={LEADS[q.id]} title={q.label} help={q.help} headingRef={headingRef} />
         ) : (
           <BotMessage
             key="bot-summary"
             current
             typing={typing}
+            calm={outcome?.ok ? "approve" : "idle"}
             lead={SUMMARY_LEAD}
             title="Check your answers"
             help="Your answers stay in this browser. You can change them any time from the You page."

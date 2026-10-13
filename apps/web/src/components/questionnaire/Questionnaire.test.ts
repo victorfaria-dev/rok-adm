@@ -120,6 +120,17 @@ describe("questionnaire island: chat", () => {
     for (const a of avatars) expect(a.getAttribute("aria-hidden")).toBe("true");
   });
 
+  it("one stage, above the current question; history shows still posters", () => {
+    setup();
+    enter();
+    const stages = document.querySelectorAll(".st-stage");
+    expect(stages).toHaveLength(1);
+    const current = document.querySelector(".q-msg-bot[data-current]")!;
+    expect(current.firstElementChild).toBe(stages[0]);
+    expect(stages[0]!.compareDocumentPosition(current.querySelector(".q-bubble")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    for (const old of document.querySelectorAll(".q-msg-bot:not([data-current]) .st-avatar")) expect(old.hasAttribute("data-state")).toBe(false);
+  });
+
   it("a tap on a quick reply answers and moves on in one go", () => {
     setup();
     const radio = screen.getByRole("radio", { name: /Medium spender/ });

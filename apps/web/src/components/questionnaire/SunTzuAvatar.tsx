@@ -1,12 +1,17 @@
 import "./sun-tzu.css";
 
-export type MascotState = "idle" | "talking" | "grumble";
+/**
+ * "idle", "talking" and "grumble" are used today; "greet", "approve" and "victory" are wired for
+ * future clips (each falls back to the idle clip, and to idle motion in the SVG).
+ */
+export type MascotState = "idle" | "talking" | "grumble" | "greet" | "approve" | "victory";
 
 /** Props every Sun Tzu mascot renderer takes (2D SVG now, 3D render frames later). */
 export interface MascotProps {
   /**
    * "idle": slow bob and blink; "talking": mouth moves for a moment; "grumble": comic frown and a
-   * short head shake (empty or invalid answer); omitted: still.
+   * short head shake (empty or invalid answer); "greet" / "approve" / "victory": idle until their
+   * clips exist; omitted: still.
    */
   state?: MascotState;
   /** Rendered size in px (square). */

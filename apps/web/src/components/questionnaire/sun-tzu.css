@@ -42,6 +42,41 @@
 .st-card { border-radius: var(--ko-radius-md); background: var(--ko-graphite); }
 .st-card video, .st-card img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
+/* Stage (the current question): the one animated Sun Tzu on the page. A full-width chamfered card
+   on the clips' graphite with the square clip centred; its height is fixed here so the box is
+   reserved before the poster or video loads (no layout shift). 160 px on phones (480 device px at
+   3x: the 480 px clip), up to 240 px on wider screens. */
+.st-stage {
+  --st-stage: 160px;
+  display: flex; justify-content: center; align-items: flex-end;
+  width: 100%; height: var(--st-stage);
+  border-radius: 0;
+  clip-path: polygon(var(--ko-chamfer-md) 0, 100% 0, 100% calc(100% - var(--ko-chamfer-md)), calc(100% - var(--ko-chamfer-md)) 100%, 0 100%, 0 var(--ko-chamfer-md));
+}
+/* The clips' backdrop drifts a few levels around brand graphite: fade the square's sides into the card. */
+.st-stage > video, .st-stage > img {
+  flex: none; width: var(--st-stage); height: var(--st-stage); transform-origin: 50% 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 18%, #000 82%, transparent);
+}
+@media (min-width: 768px) {
+  .st-stage { --st-stage: clamp(160px, 30vh, 240px); }
+}
+/* Phones: once scrolled, the stage sticks to the top as a 72 px strip. Only its top part slides
+   under the viewport edge (sticky with a negative top) and the clip scales down into the strip
+   (transform), so nothing else on the page moves. */
+@media (max-width: 767.98px) {
+  .st-stage { position: sticky; top: calc(72px - var(--st-stage)); z-index: 2; }
+  .st-stage > video, .st-stage > img { transition: scale var(--ko-duration-base) var(--ko-ease-out); }
+  .st-stage[data-compact] > video, .st-stage[data-compact] > img { scale: .45; } /* 72 / 160 */
+}
+@media (prefers-reduced-motion: no-preference) {
+  /* Grumble on the stage: the clip shakes, not the whole wide card. */
+  .st-stage.st-card[data-state="grumble"] { animation: none; }
+  .st-stage[data-state="grumble"] > video, .st-stage[data-state="grumble"] > img { animation: st-shake var(--ko-duration-instant) linear 4 alternate; }
+  .st-stage[data-state="grumble"][data-pulse="odd"] > video, .st-stage[data-state="grumble"][data-pulse="odd"] > img { animation-name: st-shake-2; }
+}
+
 @keyframes st-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-1px); } }
 @keyframes st-blink { 0%, 93%, 100% { transform: scaleY(1); } 96% { transform: scaleY(.1); } }
 @keyframes st-shake { from { transform: rotate(-4deg); } to { transform: rotate(4deg); } }
