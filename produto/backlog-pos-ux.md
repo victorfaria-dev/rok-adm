@@ -11,7 +11,8 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 - Pedido: e-mail, Google e, se possível, conta Lilith.
 - Conta Lilith: sem login público conhecido para terceiros; pedir credenciais do jogo é proibido (ToS e segurança). Fora.
 - Proposta: opcional para jogador (sincronizar), obrigatório para modo líder; serviço gerenciado com plano gratuito (ex.: Supabase), conta criada pelo Victor; política de privacidade LGPD.
-- Pendente: aprovação do modelo e do serviço.
+- Decidido (Victor, 2026-10-13): serviço = Supabase (e-mail + Google). Conta criada pelo Victor quando a etapa chegar; chaves só em variáveis de ambiente (Netlify / ambiente da sessão), nunca no chat nem no repositório.
+- Pendente: modelo opcional-para-jogador / obrigatório-para-líder.
 
 ## Perfil público / comunidade
 - Pedido: perfil público com foto, banner, conquistas, biografia.
