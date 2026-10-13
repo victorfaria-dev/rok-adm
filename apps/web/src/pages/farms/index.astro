@@ -1,9 +1,17 @@
 ---
 import Shell from "../../layouts/Shell.astro";
+import FarmsNav from "../../components/farms/shared/FarmsNav.astro";
+import FarmHub from "../../components/farms/hub/FarmHub";
+import "../../components/farms/shared/farms.css";
 ---
-<Shell title="Farms" description="Plan and track your own farm accounts: which farm to build, the build path, Trading Post math, daily checklist and shipment log." mode="operate">
-  <section>
-    <h1>Farms</h1>
-    <p>The farm hub is being built. Planning and bookkeeping only: you do every in-game action yourself.</p>
-  </section>
+<Shell title="Farms" description="Plan and track your own farm accounts: which farm to visit next, a daily checklist, daily goals and a shipment log. Stays in this browser." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Farms</h1>
+      <p class="fm-lead">Keep track of your farm accounts: when each one's marches come back, what is left on today's checklist, and how much the main received.</p>
+      <p class="fm-note" data-guardrail><strong>Planning and bookkeeping only. You do every in-game action yourself.</strong></p>
+    </header>
+    <FarmsNav />
+    <FarmHub client:load />
+  </div>
 </Shell>
