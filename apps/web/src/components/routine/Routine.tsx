@@ -188,7 +188,7 @@ export default function Routine({ now = () => new Date() }: Props) {
 
       {ready && !saved && (
         <div class="rt-banner">
-          <p>This plan uses default answers. Answer 10 questions so it fits your account.</p>
+          <p>This plan uses default answers. Answer 5 quick questions so it fits your account.</p>
           <a class="btn btn-primary" href="/start/">Set up your profile</a>
         </div>
       )}

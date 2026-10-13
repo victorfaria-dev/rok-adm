@@ -1,10 +1,10 @@
-import type { Question, QuestionOption } from "@rokadm/core";
+import type { QuestionOption } from "@rokadm/core";
 import type { Ref } from "preact";
 import { useRef } from "preact/hooks";
-import { rangeText } from "../../lib/questionnaire-flow";
+import { rangeText, type FlowQuestion } from "../../lib/questionnaire-flow";
 
 interface Props {
-  question: Question;
+  question: FlowQuestion;
   value: unknown;
   error: string | null;
   /** Select an answer (keyboard arrows, typing): stays on this step. */

@@ -1,5 +1,4 @@
-import { QUESTIONS } from "@rokadm/core";
-import { answerText, type Answers, type Outcome } from "../../lib/questionnaire-flow";
+import { STEPS, answerText, type Answers, type Outcome } from "../../lib/questionnaire-flow";
 
 interface Props {
   answers: Answers;
@@ -33,7 +32,7 @@ export function Summary({ answers, outcome, onEdit }: Props) {
         </section>
       )}
       <dl class="q-review">
-        {QUESTIONS.map((q, i) => {
+        {STEPS.map((q, i) => {
           const v = answers[q.id];
           const shown = v === undefined ? q.default : v;
           return (

@@ -1,12 +1,12 @@
-import { QUESTIONS } from "@rokadm/core";
 import { describe, expect, it } from "vitest";
+import { STEPS } from "./questionnaire-flow";
 import { GREETING, LEADS, SUMMARY_LEAD } from "./sun-tzu";
 
 describe("Sun Tzu lines", () => {
   const all = [GREETING, SUMMARY_LEAD, ...Object.values(LEADS)];
 
-  it("have a lead for every question, and nothing else", () => {
-    expect(Object.keys(LEADS).sort()).toEqual(QUESTIONS.map((q) => q.id).sort());
+  it("have a lead for every onboarding step, and nothing else", () => {
+    expect(Object.keys(LEADS).sort()).toEqual(STEPS.map((q) => q.id).sort());
   });
 
   it("stay short, plain and deterministic", () => {
@@ -17,7 +17,8 @@ describe("Sun Tzu lines", () => {
     }
   });
 
-  it("the greeting counts the real number of questions", () => {
-    expect(GREETING).toContain(`${QUESTIONS.length} quick questions`);
+  it("the greeting counts the real number of questions (at most 5)", () => {
+    expect(GREETING).toContain(`${STEPS.length} quick questions`);
+    expect(STEPS.length).toBeLessThanOrEqual(5);
   });
 });

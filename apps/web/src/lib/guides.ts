@@ -22,7 +22,7 @@ export const GUIDE_PAGES: readonly GuidePage[] = [
     href: "/guide/",
     title: "Your guide",
     summary: "The step-by-step plan from day 0 to KvK1, with a budget reality check.",
-    audience: "Every account. It filters to your spending, play time and City Hall once you answer 10 questions.",
+    audience: "Every account. It filters to your spending, play time and City Hall once you answer 5 quick questions.",
   },
   {
     set: "latestage",
