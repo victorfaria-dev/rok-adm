@@ -76,6 +76,8 @@ Colunas: **Tier** · **Última atualização vista** (da fonte, não do acesso) 
 | `src:ajackof` | A Jack Of — missões do Monumento | T2/T3 | sem data | curl | — | — | SA30 | Tabela sem data; confirmar com T0. |
 | `src:nedese` | nedese.com — lista de comandantes 2026 | T3 | 2026-09-16 | curl | — | — | C04-S03 | |
 | `src:rokhandbook` | RoK Handbook | T3 | 2026-08-18 | curl | — | — | CS06 | |
+| `src:k2779-rules` | Site de regras do Reino 2779 (DKP, imigração, exílio) | T3 (regra primária de um reino) | sem data (era KvK2) | https://sites.google.com/view/jlateam/kingdom-rules/dkp (curl) | — | — | PL04 (pains-leaders) | Mesmo template de `src:k2708-rules` (frase de exílio idêntica) → **não independente** dele. |
+| `src:k2708-rules` | Site de regras do Reino 2708 (sistema de DKP) | T3 (regra primária de um reino) | sem data (era KvK1) | https://sites.google.com/view/rok-2708/dkp-system (curl) | mesmo template de `src:k2779-rules` | — | PL05 (pains-leaders) | Contar com `src:k2779-rules` como uma norma só. |
 
 ### Voz do jogador (T4)
 
@@ -130,9 +132,16 @@ Os IDs `SAxx` **colidem** entre a coleta de estratégia (A02, A06, A07, A08, A11
 | SA01–SA38 | **A-strategy** (A02, A06, A07, A08, A11, B01) | por site: riseofkingdomsguides → `src:rkg`; BlueStacks → `src:bluestacks`; Packsify → `src:packsify`; AllClash → `src:allclash`; Heaven-Guardian → `src:heaven-guardian`; LootBar → `src:lootbar`; OneChilledGamer → `src:onechilledgamer`; LDShop → `src:ldshop`; youtubesummary → `src:youtube-summary`; A Jack Of → `src:ajackof`; Theria → `src:theriagames`; Boostroom → `src:boostroom` |
 | CS01–CS48 | competitors | ver tabela de ferramentas e oficiais |
 | C04-S01…S06 | patches | `src:ldshop`, `src:allclash`, `src:nedese`, `src:lootbar`, `src:heaven-guardian`, `src:change-org` |
-| PL01 | pains-leaders (B01-0001..0003) | `src:reddit` |
+| PL01 | pains-leaders (B01–B09) | `src:reddit` |
+| PL02 | pains-leaders | `src:lilith-forum` |
+| PL03 | pains-leaders | `src:github` (READMEs de rok-scan-stats, RokTracker, roka, RoK-Title-Bot etc.) |
+| PL04, PL05 | pains-leaders | `src:k2779-rules`, `src:k2708-rules` |
+| PL06, PL07, PL08, PL09 | pains-leaders | `src:roksteward`, `src:rokstats-online`, `src:codexhelper`, `src:auctioneer-bot` |
+| PL10 | pains-leaders | `src:lootbar` |
+| PL11, PL12 | pains-leaders | `src:heaven-guardian` |
+| PL13 | pains-leaders | `src:rkg` |
 
-Fichas C01/C02/C04 e B02–B09 ainda usam IDs antigos (fora do escopo do sub-admin CONTA); migrar na próxima integração.
+Fichas B02–B09 migradas para slugs em 2026-10-13 (PL01–PL13).
 
 ## Independência (para a regra "T2 confirmado por 2 fontes independentes")
 
