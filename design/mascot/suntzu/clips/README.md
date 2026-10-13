@@ -10,4 +10,6 @@ Gerados pelo Victor com o Veo 3 (imagem para vídeo, a partir da referência que
 
 Processamento (ffmpeg): recorte quadrado 720×720 centrado no personagem (x=216), sem áudio, loop por crossfade de 0,6 s (fim → início), H.264 CRF 26/27, `+faststart`; poster = primeiro quadro (WebP).
 
-Regras de uso: MP4 mudo, `muted playsinline loop`, `preload="metadata"`, poster, `aria-hidden` (o texto da bolha carrega o sentido), só o poster com `prefers-reduced-motion`, pausar fora da tela.
+Regras de uso: MP4 mudo, `muted playsinline loop`, `preload="metadata"`, poster, `aria-hidden` (o texto da bolha carrega o sentido), só o poster com `prefers-reduced-motion`, pausar fora da tela e com a aba oculta.
+
+Onde aparece (decisão QC-4): no "palco" acima da pergunta atual do `/start` (160 px no celular, até 240 px no desktop), o único `<video>` da página; as bolhas antigas usam só `idle-poster.webp`. Clipe 720 só quando o palco passa de 480 px de dispositivo. Clipes futuros (grumble, greet, approve, victory) entram em `apps/web/src/components/questionnaire/mascot-clips.ts`; greet/approve/victory com `once: true` (tocam uma vez e voltam ao idle). Fundo do clipe: grafite próximo de (28,29,34); as laterais do quadrado são esfumadas no card.
