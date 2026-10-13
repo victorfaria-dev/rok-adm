@@ -5,7 +5,8 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 ## Idiomas
 - Pedido: pacote de traduções para o público global.
 - Proposta: escolher línguas pelo público de RoK (não pelas mais faladas no mundo); infraestrutura i18n + interface na etapa 1; guias só depois da compressão de conteúdo; glossário com os termos oficiais do jogo por idioma.
-- Pendente: lista de idiomas (pesquisar ou definida pelo Victor).
+- Pesquisa: `research/idiomas-publico-rok.md`.
+- Decidido (Victor, 2026-10-13): foco em Américas e Europa primeiro; Ásia (KO, JA, ZH, VI) depois. Proposta de conjunto inicial: EN, PT-BR, ES, FR, DE (+ RU como 6º, a confirmar). Todos são idiomas oficiais do cliente do jogo.
 
 ## Login
 - Pedido: e-mail, Google e, se possível, conta Lilith.
