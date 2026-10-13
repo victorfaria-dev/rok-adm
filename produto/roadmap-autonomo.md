@@ -43,6 +43,9 @@ Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre on
 
 O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` depois de `pnpm check`, build e e2e.
 
+## Descongelamento (Victor, 2026-10-13, noite)
+Trabalho em paralelo liberado para o backlog aprovado (login, perfil público, camadas, comandantes, idiomas), respeitando dependências: só fica parado o que depende de outra trilha estar pronta.
+
 ## Congelamento de funcionalidades (2026-10-13, decisão do Victor)
 Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco do Sun Tzu no chat; guia visual com linha do tempo e calendário). Depois disso começa a fase de experiência do usuário: definir as 3 tarefas principais, teste de usabilidade com o Victor no preview e reorganização da navegação a partir dos resultados. O loop autônomo foi parado.
 
