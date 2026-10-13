@@ -5,6 +5,7 @@ import { kingdomStorage, type StorageLike, type StoredDoc } from "../../../lib/k
 import ConfirmAction from "../shared/ConfirmAction";
 import Candidates from "./Candidates";
 import Events from "./Events";
+import ExportCsv from "./ExportCsv";
 import Publish from "./Publish";
 import Settings from "./Settings";
 import "./mge.css";
@@ -114,6 +115,7 @@ export default function MgePlanner({ clock = realClock }: Props) {
           <Candidates key={`c-${doc.id}`} doc={doc} plan={plan} onChange={commit} />
           <Events key={`e-${doc.id}`} doc={doc} plan={plan} today={today} onChange={commit} />
           <Publish doc={doc} plan={plan} today={today} />
+          <ExportCsv key={`x-${doc.id}`} doc={doc} plan={plan} today={today} />
         </>
       )}
     </div>
