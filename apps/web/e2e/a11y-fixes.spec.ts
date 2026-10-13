@@ -98,5 +98,6 @@ test("the guide's task list renders as list items with a done/undone marker", as
 test("home counts the researched fact cards from the data", async ({ page }) => {
   const facts = JSON.parse(readFileSync(join(here, "../../../packages/data/generated/facts.json"), "utf8")) as unknown[];
   await page.goto("/");
-  await expect(page.getByText(`${facts.length} researched fact cards`)).toBeVisible();
+  const row = page.locator(".facts dl > div").filter({ hasText: "researched fact cards" });
+  await expect(row.locator("dt")).toHaveText(String(facts.length));
 });
