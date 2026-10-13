@@ -24,8 +24,11 @@
     "@astrojs/check": "0.9.10",
     "@axe-core/playwright": "4.10.2",
     "@playwright/test": "1.56.1",
+    "@rokadm/data": "workspace:*",
+    "@rokadm/planner": "workspace:*",
     "@testing-library/preact": "3.2.4",
     "happy-dom": "20.14.5",
+    "marked": "18.0.14",
     "tsx": "4.19.2",
     "typescript": "5.6.3",
     "vitest": "2.1.8"

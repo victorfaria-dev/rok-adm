@@ -1,7 +1,31 @@
 ---
+// Screen 3 (plan §4): the default F2P guide is rendered here at build (indexable,
+// readable without JS). The island re-filters it for ?p= or the saved profile.
 import Shell from "../../layouts/Shell.astro";
-import ComingNext from "../../components/ComingNext.astro";
+import GuideIsland from "../../components/guide/GuideIsland";
+import { GuideBody, GuideMeta } from "../../components/guide/GuideBody";
+import { buildGuideData } from "../../lib/guide-payload";
+import { selectGuide } from "../../lib/guide-view";
+import { profileSummary } from "../../lib/profile";
+import { defaultProfile } from "@rokadm/core";
+import "../../styles/guide.css";
+
+const data = buildGuideData();
+const view = selectGuide(data.guide, defaultProfile());
 ---
-<Shell title="Your guide" description="Your step-by-step plan, filtered for your profile, with sources and patch checks." mode="read">
-  <ComingNext what="Your step-by-step plan, filtered for your profile, with sources and patch checks." when="Building now: screen 3 of the first release."><Fragment slot="title">Your guide</Fragment></ComingNext>
+<Shell title="Your guide" description="A step-by-step F2P plan to KvK1 with sources, patch checks and a budget reality check. Personalize it for your spending, play time and City Hall." mode="read">
+  <div class="g-page">
+    <h1>Your guide</h1>
+    <GuideIsland client:load dataUrl="/data/guide.json">
+      <div data-guide="default">
+        <aside class="g-banner" aria-labelledby="g-banner-h">
+          <p id="g-banner-h" class="g-banner-title">Personalize in 2 minutes</p>
+          <p>This is the default guide for a new F2P account. Answer 10 questions and it filters to your spending, play time and City Hall.</p>
+          <a class="btn btn-primary" href="/start/">Build my guide</a>
+        </aside>
+        <GuideMeta view={view} label={`Default guide for ${profileSummary(defaultProfile())}`} />
+        <GuideBody view={view} badges={data.guide.badges} budget={data.budget} />
+      </div>
+    </GuideIsland>
+  </div>
 </Shell>

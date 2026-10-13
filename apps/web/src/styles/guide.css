@@ -1,0 +1,164 @@
+/* Guide pages (/guide/, /guides/new-kingdom/). Read mode: text ≤ 72ch (Shell),
+   blocks are separated by rules, never boxed, so nothing is a card inside a card. */
+
+.g-page { display: grid; gap: var(--ko-space-4); }
+.g-page h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+.g-page :where(a) { color: var(--ko-accent); text-underline-offset: 3px; }
+.g-intro, .g-meta { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.g-island, [data-guide] { display: grid; gap: var(--ko-space-4); min-width: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  html:has(.g-page) { scroll-behavior: smooth; }
+}
+
+/* Anchors land below the fixed top bar on phones and tablets. */
+.g-section, .g-block, #budget, #already-done {
+  scroll-margin-top: calc(56px + env(safe-area-inset-top, 0px) + var(--ko-space-4));
+}
+@media (min-width: 1024px) {
+  .g-section, .g-block, #budget, #already-done { scroll-margin-top: var(--ko-space-6); }
+}
+
+/* Personalize banner: the one boxed element (a brand moment, chamfered). */
+.g-banner {
+  display: grid; gap: var(--ko-space-3); justify-items: start;
+  padding: var(--ko-space-5);
+  background: var(--ko-surface); box-shadow: inset 0 0 0 1px var(--ko-border);
+  clip-path: polygon(var(--ko-chamfer-md) 0, 100% 0, 100% calc(100% - var(--ko-chamfer-md)), calc(100% - var(--ko-chamfer-md)) 100%, 0 100%, 0 var(--ko-chamfer-md));
+}
+.g-banner-title { font: var(--ko-weight-bold) var(--ko-text-xl)/1.2 var(--ko-font-display); }
+.g-banner p:not(.g-banner-title) { color: var(--ko-text-muted); }
+.g-banner .btn, .g-bar .btn { color: var(--ko-on-accent); text-decoration: none; }
+.g-bar .btn-secondary { color: var(--ko-text); }
+
+/* Profile bar, errors, status. */
+.g-bar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-3); }
+.g-bar-who { flex: 1 1 100%; font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+.g-bar-who .mono { color: var(--ko-text); }
+.g-bar-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); }
+.g-live { flex: 1 1 100%; min-height: 1.5em; color: var(--ko-success); font-size: var(--ko-text-sm); }
+.g-live:empty { min-height: 0; }
+.g-manual { flex: 1 1 100%; display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); }
+.g-manual input {
+  min-height: 48px; padding-inline: var(--ko-space-3); min-width: 0;
+  background: var(--ko-surface); color: var(--ko-text); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  font-family: var(--ko-font-mono);
+}
+.g-error {
+  display: grid; gap: var(--ko-space-2); justify-items: start;
+  padding: var(--ko-space-4); border: 1px solid var(--ko-error); border-radius: var(--ko-radius-md);
+  color: var(--ko-text);
+}
+.g-error p::before { content: "Error: "; font-weight: var(--ko-weight-semibold); color: var(--ko-error); }
+.g-error a { min-height: 44px; display: inline-flex; align-items: center; }
+.g-loading { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+
+/* Section index: collapsible, at the top. */
+.g-toc details { border-block: 1px solid var(--ko-border); }
+.g-toc summary {
+  min-height: 48px; display: flex; align-items: center; cursor: pointer;
+  font: var(--ko-weight-semibold) var(--ko-text-sm)/1 var(--ko-font-display); letter-spacing: .08em; text-transform: uppercase;
+}
+.g-toc ol { margin: 0; padding: 0 0 var(--ko-space-3) var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
+.g-toc a { display: inline-flex; align-items: center; min-height: 40px; color: var(--ko-text); }
+
+/* Sections and phases. */
+.g-body { display: grid; min-width: 0; }
+.g-section { margin-top: var(--ko-space-10); min-width: 0; }
+.g-section h2 {
+  font-size: var(--ko-text-xl); line-height: 1.25; letter-spacing: .04em; text-transform: uppercase;
+  margin-bottom: var(--ko-space-2);
+}
+.g-phase { margin-top: var(--ko-space-6); }
+.g-phase-title { font-size: var(--ko-text-lg); color: var(--ko-text-muted); }
+
+/* Blocks: separated by a rule, not boxed. */
+.g-block { display: grid; gap: var(--ko-space-3); padding-block: var(--ko-space-6); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.g-block-title { font-size: var(--ko-text-xl); line-height: 1.25; }
+h4.g-block-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-font-display); margin: 0; text-wrap: balance; }
+
+.g-tags { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-2) var(--ko-space-3); }
+.g-tag {
+  display: inline-flex; align-items: center; min-height: 24px; padding-inline: var(--ko-space-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-sm);
+  font: var(--ko-weight-semibold) var(--ko-text-xs)/1 var(--ko-font-display); letter-spacing: .06em; text-transform: uppercase;
+  color: var(--ko-text-muted); margin-inline-start: var(--ko-space-1);
+}
+.g-tags .g-tag { margin-inline-start: 0; }
+.g-tag-rec { border-color: var(--ko-accent); color: var(--ko-accent); }
+.g-tag-up { border-color: var(--ko-info); color: var(--ko-info); }
+
+.g-conf { display: inline-flex; align-items: center; gap: var(--ko-space-2); font-size: var(--ko-text-sm); }
+.g-conf-mark { width: 8px; height: 8px; border-radius: var(--ko-radius-pill); background: currentColor; flex: none; }
+.g-conf-high { color: var(--ko-confidence-high); }
+.g-conf-medium { color: var(--ko-confidence-medium); }
+.g-conf-low { color: var(--ko-confidence-low); }
+.g-conf-pending { color: var(--ko-confidence-pending); }
+
+.g-prose { min-width: 0; overflow-wrap: anywhere; }
+.g-prose > * + * { margin-top: var(--ko-space-3); }
+.g-prose p { margin: 0; }
+.g-prose ul, .g-prose ol { margin-block: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
+.g-prose strong { font-weight: var(--ko-weight-semibold); }
+.g-prose code, .ko-ref { font-family: var(--ko-font-mono); font-size: .9em; font-variant-numeric: tabular-nums; }
+.ko-ref { color: var(--ko-text-muted); }
+
+.g-note { display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.g-note-label { font: var(--ko-weight-semibold) var(--ko-text-xs)/1.2 var(--ko-font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); }
+.g-note-uncertain .g-note-label { color: var(--ko-confidence-low); }
+.g-gaps { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+
+.g-block-foot { display: grid; gap: var(--ko-space-2); padding-top: var(--ko-space-3); border-top: 1px dashed var(--ko-border); font-size: var(--ko-text-xs); }
+.g-patch { color: var(--ko-text-muted); }
+.g-patch > .mono:first-child { color: var(--ko-text); }
+.g-sources summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.g-sources ul { margin: 0; padding-left: var(--ko-space-4); display: grid; gap: var(--ko-space-2); }
+.g-src-meta { color: var(--ko-text-muted); }
+.g-src-meta .g-conf { font-size: inherit; }
+
+/* Already done? */
+.g-done details > summary { cursor: pointer; display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); list-style: none; }
+.g-done details > summary::-webkit-details-marker { display: none; }
+.g-done details > summary h2 { margin: 0; display: flex; align-items: center; gap: var(--ko-space-2); }
+.g-done details > summary h2::before { content: "+"; font-family: var(--ko-font-mono); color: var(--ko-accent); }
+.g-done details[open] > summary h2::before { content: "\2212"; }
+.g-done-count { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+
+/* Tables (block Markdown and budget). Scroll inside, never the page. */
+.ko-table { overflow-x: auto; max-width: 100%; overscroll-behavior-x: contain; }
+.ko-table table { border-collapse: collapse; width: 100%; font-size: var(--ko-text-sm); }
+.ko-table th, .ko-table td { text-align: left; padding: var(--ko-space-2) var(--ko-space-3) var(--ko-space-2) 0; border-bottom: 1px solid var(--ko-border); vertical-align: top; }
+.ko-table thead th { font-weight: var(--ko-weight-semibold); color: var(--ko-text-muted); white-space: nowrap; }
+.ko-table td.mono, .ko-table th.mono, .ko-table .mono { white-space: nowrap; }
+
+/* Budget reality check. */
+.g-budget { display: grid; gap: var(--ko-space-4); }
+.g-budget h3 { font-size: var(--ko-text-lg); line-height: 1.3; }
+.g-sub { display: grid; gap: var(--ko-space-3); margin-top: var(--ko-space-4); min-width: 0; }
+.g-lede { color: var(--ko-text-muted); }
+.g-small { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+.g-callout { padding: var(--ko-space-4); border: 1px solid var(--ko-warning); border-radius: var(--ko-radius-md); }
+.g-here { font-weight: var(--ko-weight-medium); }
+.g-kv { margin: 0; display: grid; }
+.g-kv > div { display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); }
+.g-kv dt { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+.g-kv dd { margin: 0; display: grid; gap: var(--ko-space-1); }
+.g-kv-value { font-weight: var(--ko-weight-semibold); }
+.g-kv-meta { font-size: var(--ko-text-xs); color: var(--ko-text-muted); }
+.g-kv-meta .g-conf { font-size: inherit; }
+.g-kv-note { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+.g-facts .mono { font-size: var(--ko-text-xs); }
+.g-list { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); }
+.g-by { color: var(--ko-success); font-size: var(--ko-text-xs); white-space: nowrap; }
+.g-row-you th, .g-row-you td { background: var(--ko-surface-raised); }
+.g-you { font-family: var(--ko-font-display); font-size: var(--ko-text-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--ko-accent); }
+.g-assume summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: var(--ko-weight-medium); }
+
+@media (min-width: 768px) {
+  .g-kv > div { grid-template-columns: 12rem 1fr; gap: var(--ko-space-4); }
+  .g-bar-who { flex: 1 1 auto; }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .g-toc a:hover, .g-sources summary:hover, .g-assume summary:hover { color: var(--ko-accent); }
+}
