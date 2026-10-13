@@ -79,6 +79,34 @@ export function gauge(current: number, target: number): Gauge {
   return { current, target, ratio, reached: current >= target };
 }
 
+export type AlertKind = "setup" | "mustdo" | "warning" | "late" | "data";
+export interface CityAlert { kind: AlertKind; text: string; href?: string; link?: string }
+
+/** Alerts under the status gauges: built only from what the planner and the core already report. */
+export function cityAlerts(o: {
+  hasProfile: boolean;
+  mustDoMissing: number;
+  budgetMinutes: number;
+  warnings: readonly string[];
+  kingdomDay: number | null;
+  kvk1Day: number;
+  unreadableNext: boolean;
+}): CityAlert[] {
+  const out: CityAlert[] = [];
+  if (!o.hasProfile) out.push({ kind: "setup", text: "These are default answers. Answer 5 quick questions so the plan fits your account.", href: "/start/", link: "Start" });
+  if (o.mustDoMissing > 0) {
+    out.push({
+      kind: "mustdo",
+      text: `${o.mustDoMissing} must-do ${o.mustDoMissing === 1 ? "task does" : "tasks do"} not fit in ${o.budgetMinutes} min today.`,
+      href: "/city-hall/today/", link: "Pick more time",
+    });
+  }
+  for (const w of o.warnings) out.push({ kind: "warning", text: w });
+  if (o.kingdomDay !== null && o.kingdomDay > o.kvk1Day) out.push({ kind: "late", text: "Your kingdom is past KvK1: the KvK1 targets below are behind you.", href: "/guides/late-game/", link: "Late game guide" });
+  if (o.unreadableNext) out.push({ kind: "data", text: "The source table row for your next City Hall is garbled: check its cost in game." });
+  return out;
+}
+
 export interface StageTool {
   href: string;
   title: string;
@@ -92,19 +120,18 @@ const T = {
   vip: { href: "/tools/vip/", title: "Gems to VIP", why: "Days and gems to your next VIP level." },
   kvk: { href: "/tools/kvk/", title: "KvK readiness", why: "A checklist before your kingdom's first KvK." },
   healing: { href: "/tools/healing/", title: "Healing planner", why: "What one full hospital costs to heal." },
-  commanders: { href: "/commanders/", title: "Commanders", why: "Check a pick before you spend sculptures." },
   migration: { href: "/tools/migration/", title: "Migration checker", why: "Can you move, and what is missing." },
 } satisfies Record<string, StageTool>;
 
 /**
- * The tools that matter at this stage (at most 4): growth tools before KvK, fight tools after;
- * spenders get Pack value first.
+ * The tools that matter at this stage (at most 3): growth tools before KvK, fight tools after;
+ * spenders get Pack value first. "My commanders" is its own tile on the City Hall sheet.
  */
 export function stageTools(p: AccountProfile): StageTool[] {
   const early = p.kingdomStage === "pre_kvk";
   const list: StageTool[] = early
-    ? [T.buildings, T.speedups, p.cityHall >= 16 ? T.kvk : T.vip, T.commanders]
-    : [T.healing, T.commanders, T.speedups, T.migration];
+    ? [T.buildings, T.speedups, p.cityHall >= 16 ? T.kvk : T.vip]
+    : [T.healing, T.speedups, T.migration];
   if (p.spending !== "f2p") list.unshift(T.pack);
-  return list.slice(0, 4);
+  return list.slice(0, 3);
 }

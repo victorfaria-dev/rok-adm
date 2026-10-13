@@ -33,14 +33,14 @@ describe("City Hall tab helpers", () => {
     expect(gauge(25, 21).reached).toBe(true);
   });
 
-  it("stage tools: growth before KvK, fights after, Pack value first for spenders, at most 4", () => {
+  it("stage tools: growth before KvK, fights after, Pack value first for spenders, at most 3", () => {
     const early = stageTools(make({ kingdomStage: "pre_kvk", cityHall: 10 })).map((t) => t.href);
-    expect(early).toEqual(["/tools/buildings/", "/tools/speedups/", "/tools/vip/", "/commanders/"]);
+    expect(early).toEqual(["/tools/buildings/", "/tools/speedups/", "/tools/vip/"]);
     expect(stageTools(make({ kingdomStage: "pre_kvk", cityHall: 18 })).map((t) => t.href)).toContain("/tools/kvk/");
     const late = stageTools(make({ kingdomStage: "kvk2" })).map((t) => t.href);
     expect(late[0]).toBe("/tools/healing/");
     const low = stageTools(make({ spending: "low" }));
     expect(low[0]!.href).toBe("/tools/pack-value/");
-    expect(low).toHaveLength(4);
+    expect(low).toHaveLength(3);
   });
 });
