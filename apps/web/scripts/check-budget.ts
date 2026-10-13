@@ -116,6 +116,30 @@ for (const f of statSync(dataDir, { throwIfNoEntry: false })?.isDirectory() ? re
   rows.push(`${ok ? "ok  " : "FAIL"} ${`/data/${f}`.padEnd(24)} ${(bytes / 1024).toFixed(1).padStart(6)} KB gz (limit ${DATA_LIMIT / 1024} KB, data)`);
 }
 
+// F-54 screenshot reader assets (/ocr/, copied by astro.config.mjs): downloaded only after "Read the
+// screenshot", never precached. The worker script is JS, so it gets the lazy-chunk cap; the full download
+// (worker + the largest WebAssembly core + the English model) is capped too, so it stays phone-sized.
+const OCR_DIR = join(DIST, "ocr");
+const OCR_DOWNLOAD_LIMIT = 4.5 * 1024 * 1024;
+if (statSync(OCR_DIR, { throwIfNoEntry: false })?.isDirectory()) {
+  const size = (f: string): number => {
+    const b = readFileSync(join(OCR_DIR, f));
+    return f.endsWith(".gz") ? b.length : gz(b);
+  };
+  const files = readdirSync(OCR_DIR).sort();
+  const worker = files.includes("worker.min.js") ? size("worker.min.js") : Infinity;
+  const cores = files.filter((f) => /^tesseract-core-.*\.wasm\.js$/.test(f));
+  const core = Math.max(0, ...cores.map(size));
+  const model = files.includes("eng.traineddata.gz") ? size("eng.traineddata.gz") : Infinity;
+  const total = worker + core + model;
+  const sw = readFileSync(join(DIST, "sw.js"), "utf8");
+  const workerOk = worker <= LAZY_LIMIT, totalOk = total <= OCR_DOWNLOAD_LIMIT && cores.length > 0, notPrecached = !sw.includes("/ocr/");
+  failed ||= !(workerOk && totalOk && notPrecached);
+  if (!notPrecached) console.error("FAIL /ocr/: OCR assets must not be in the service worker precache");
+  rows.push(`${workerOk ? "ok  " : "FAIL"} ${"ocr worker.min.js".padEnd(24)} ${(worker / 1024).toFixed(1).padStart(6)} KB gz (limit ${LAZY_LIMIT / 1024} KB, on demand from /tools/screenshot/)`);
+  rows.push(`${totalOk ? "ok  " : "FAIL"} ${"ocr download".padEnd(24)} ${(total / 1024).toFixed(1).padStart(6)} KB gz (limit ${OCR_DOWNLOAD_LIMIT / 1024} KB: worker + core + English model, after a click)`);
+}
+
 console.log(rows.join("\n"));
 if (failed) {
   console.error("JS budget check failed.");
