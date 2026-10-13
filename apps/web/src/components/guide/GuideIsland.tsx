@@ -2,7 +2,7 @@
 // (rendered at build). After mount, it picks the profile (?p= over the saved one),
 // fetches the lean /data/guide.json and re-filters with selectBlocks.
 import type { ComponentChildren } from "preact";
-import { useEffect, useMemo, useState } from "preact/hooks";
+import { useEffect, useMemo, useRef, useState } from "preact/hooks";
 import { readStore, writeStore } from "../../lib/store";
 import { profileSummary } from "../../lib/profile";
 import { deltaSetsFor, isLateStage } from "@rokadm/core";
@@ -22,6 +22,9 @@ import {
 } from "../../lib/guide-view";
 import { guidePage, guidesForYou } from "../../lib/guides";
 import { GuideBody, GuideMeta, GuidesForYou, renderSteps } from "./GuideBody";
+import { GuideVisual } from "./GuideVisual";
+import { enhanceGuideTimeline, goToBlock, NEED_BLOCK } from "../../lib/guide-timeline-dom";
+import { enhanceGuideTower } from "../../lib/guide-tower-dom";
 
 interface Props {
   dataUrl: string;
@@ -94,6 +97,9 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const [manualUrl, setManualUrl] = useState<string | null>(null);
   /** Steps (blocks) of the personal guide rendered so far (Q2 P2-10: the rest follow in idle periods). */
   const [shownSteps, setShownSteps] = useState(FIRST_STEPS);
+  /** Block a "Read more" asked for before the progressive render reached it (wave VG). */
+  const [pendingBlock, setPendingBlock] = useState<string | null>(null);
+  const root = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -142,6 +148,26 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     return afterIdle(() => setShownSteps((n) => n + STEP));
   }, [view !== null, shownSteps, totalSteps]);
 
+  // Timeline and tower (wave VG): enhance whichever guide is on screen (the static default or the personal one).
+  useEffect(() => {
+    const el = root.current;
+    if (!el) return;
+    const undo = [enhanceGuideTimeline(el), enhanceGuideTower(el)];
+    const need = (e: Event) => {
+      setShownSteps(Number.POSITIVE_INFINITY);
+      setPendingBlock((e as CustomEvent<{ id: string }>).detail.id);
+    };
+    el.addEventListener(NEED_BLOCK, need);
+    return () => {
+      el.removeEventListener(NEED_BLOCK, need);
+      for (const u of undo) u();
+    };
+  }, [view, mounted]);
+
+  useEffect(() => {
+    if (pendingBlock && goToBlock(pendingBlock)) setPendingBlock(null);
+  }, [pendingBlock, shownSteps]);
+
   async function onShare() {
     const url = shareUrl(location.origin, choice?.code ?? null);
     setManualUrl(null);
@@ -172,7 +198,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   }
 
   return (
-    <div class="g-island">
+    <div class="g-island" ref={root}>
       {choice?.error && (
         <div class="g-error" role="alert">
           <p>{choice.error}</p>
@@ -233,6 +259,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
           )}
           <GuideMeta view={view} label={`For ${profileSummary(choice.profile)}`} />
           <GuidesForYou links={links} />
+          <GuideVisual view={view} badges={data!.guide.badges} calendar={data!.calendar} profile={choice.profile} />
           {empty && (
             <aside class="g-notice" data-guide-empty aria-labelledby="g-empty-h">
               <p id="g-empty-h" class="g-notice-title">No researched steps fit this profile yet</p>

@@ -30,7 +30,7 @@ export const STORAGE_KEYS: readonly StorageKeyInfo[] = [
 ];
 
 /** "ko:" strings that are DOM event names, not storage keys. */
-export const KO_EVENT_NAMES: readonly string[] = ["ko:card-png", "ko:crest-export"];
+export const KO_EVENT_NAMES: readonly string[] = ["ko:card-png", "ko:crest-export", "ko:guide-need-block"];
 
 /** The service worker's Cache Storage names start with this (astro.config.mjs: `ko-<version>`). */
 export const OFFLINE_CACHE_PREFIX = "ko-";

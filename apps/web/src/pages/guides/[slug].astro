@@ -8,6 +8,9 @@ import { buildGuidePayload } from "../../lib/guide-payload";
 import { fullGuide } from "../../lib/guide-view";
 import { STATIC_GUIDES, type GuidePage } from "../../lib/guides";
 import { guideSetById, type GuideSetId } from "@rokadm/core";
+import { GuideVisual } from "../../components/guide/GuideVisual";
+import TimelineScript from "../../components/guide/TimelineScript.astro";
+import { buildTimeline } from "../../lib/guide-timeline";
 import "../../styles/guide.css";
 
 export function getStaticPaths() {
@@ -18,6 +21,7 @@ const { page } = Astro.props as { page: GuidePage };
 const set = page.set as GuideSetId;
 const payload = buildGuidePayload(set);
 const view = fullGuide(payload, guideSetById(set).sectionTitles);
+const hasTimeline = buildTimeline(view, payload.badges).show;
 const forWho = page.audience.replace(/\.$/, "");
 ---
 <Shell title={page.title} description={`${page.summary} ${page.audience}`} mode="read">
@@ -40,6 +44,8 @@ const forWho = page.audience.replace(/\.$/, "");
     ) : (
       <p class="g-intro">{page.summary} Use it alongside <a href="/guide/">your guide</a>; other guides are on <a href="/guides/">all guides</a>.</p>
     )}
+    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Timeline" />}
     <GuideBody view={view} badges={payload.badges} profileTags={false} />
+    {hasTimeline && <TimelineScript />}
   </div>
 </Shell>
