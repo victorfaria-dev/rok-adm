@@ -31,7 +31,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 
 ## Bloqueios
 
-- **rok.guide**: negado pela política de rede do ambiente (502 no CONNECT). Liberável pelo Victor nas configurações do ambiente.
+- **rok.guide**: fora do ar na origem — o DNS do domínio falha (servidores de nome recusam a consulta, SERVFAIL via dns.google em 2026-10-13). Não é a política de rede (ambiente está em acesso completo). Possível domínio expirado/abandonado → relevante para concorrência (C01). Usar cópias em archive/buscadores quando possível.
 - **Reddit, Fandom wiki**: respondem 403 (bloqueio do próprio site a bots) — impacta a coleta de dores. Alternativas: espelhos/buscadores, YouTube, reviews de loja.
 - **Site oficial Lilith**: inacessível na W2.
 
