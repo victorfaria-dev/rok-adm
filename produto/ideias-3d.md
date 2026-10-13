@@ -31,7 +31,22 @@ Fora: gráficos de dados em 3D (pioram a leitura), retratos 3D de comandantes (a
 - Spline apenas para protótipos visuais/landing (exporta cena, mas gera dependência e peso).
 - Modelos em glTF/GLB comprimidos (Draco/Meshopt).
 
-## Raridade do cartão de perfil (F-60) — proposta v1 (2026-10-13)
+## Raridade do cartão de perfil (F-60) — v2 simplificada (2026-10-13)
+
+Decisão: a v1 (vários marcos + metas por perfil de gasto) foi considerada complexa demais pelo Victor. A v2 usa **um único número: o nível da Prefeitura (City Hall)**.
+
+| Raridade | City Hall | Significado no jogo | Base na pesquisa |
+|----------|-----------|---------------------|------------------|
+| Common | 1–16 | construindo a conta | — |
+| Rare | 17–21 | pronto para o primeiro KvK | KvK1 exige CH17 (`context/early-kingdom-timeline-and-events.md`) |
+| Epic | 22–24 | fim de jogo | farms param em CH22 (A13); faixa intermediária |
+| Legendary | 25 | Prefeitura máxima, pronto para Season of Conquest | SoC exige CH25 (C04) |
+
+Prova: 1 print da Prefeitura dá o selo **Verified**; sem print, "Self-reported". Contas F2P recebem a marca **F2P Achiever**. Visual de cada nível igual à v1.
+
+Trade-off aceito: a raridade mede progresso, não habilidade; quem gasta chega antes, mas todos podem chegar ao Legendary.
+
+### Proposta v1 (substituída)
 
 Visual: cada nível adiciona uma camada (Common fosco/ferro → Rare moldura prateada → Epic foil violeta + moldura animada + brilhos → Legendary foil arco-íris + moldura de ouro animada + varredura de luz + aura). Prévia: `prototipos/cartao-perfil-raridades.png`.
 

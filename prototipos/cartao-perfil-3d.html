@@ -197,7 +197,7 @@
           <div class="stat"><b id="vKP">96.2M</b><span>Kill points</span></div>
           <div class="stat"><b id="vVIP">8</b><span>VIP</span></div>
         </div>
-        <div class="foot"><span id="vRarity">Epic · CH22 milestone</span><span>Self-reported</span></div>
+        <div class="foot"><span id="vRarity">Epic · City Hall 22</span><span id="vProof">✓ Verified</span></div>
       </section>
 
       <section class="face back" aria-label="Card back">
@@ -225,22 +225,22 @@
       <div class="glare" aria-hidden="true"></div>
     </div>
   </div>
-  <p class="hint">Switch the rarity below to compare finishes.</p>
+  <p class="hint">Change the City Hall level below and the card upgrades on its own.</p>
 
   <section class="reqs" aria-labelledby="reqTitle">
-    <h2 id="reqTitle">How rarity is earned (proposal)</h2>
+    <h2 id="reqTitle">How rarity is earned</h2>
     <div class="tbl">
       <table>
-        <thead><tr><th>Rarity</th><th>Account milestones</th><th>Proof</th></tr></thead>
+        <thead><tr><th>Rarity</th><th>City Hall</th><th>What it means in the game</th></tr></thead>
         <tbody>
-          <tr><td>Common</td><td>Profile created</td><td>None</td></tr>
-          <tr><td>Rare</td><td>City Hall 22 or higher, T4 troops unlocked, 1 commander expertised</td><td>Self-reported</td></tr>
-          <tr><td>Epic</td><td>City Hall 25, T5 troops unlocked, 3 commanders expertised, took part in a full KvK</td><td>Screenshots checked by the hub</td></tr>
-          <tr><td>Legendary</td><td>Epic milestones, plus 2 full KvK seasons and a kill or dead target for the account's spending profile</td><td>Screenshots checked by the hub</td></tr>
+          <tr><td>Common</td><td>1–16</td><td>Building up</td></tr>
+          <tr><td>Rare</td><td>17–21</td><td>Ready for the first KvK</td></tr>
+          <tr><td>Epic</td><td>22–24</td><td>Late game, last push to the top</td></tr>
+          <tr><td>Legendary</td><td>25</td><td>Maxed City Hall, ready for Season of Conquest</td></tr>
         </tbody>
       </table>
     </div>
-    <p>Rarity never measures money. Targets scale with the spending profile, and an F2P account that reaches a tier also earns the F2P Achiever mark.</p>
+    <p>One number decides it: your City Hall level. Send one screenshot of your City Hall and the card gets the Verified seal. F2P accounts also get the F2P Achiever mark.</p>
   </section>
 
   <form class="editor" id="editor" autocomplete="off">
@@ -258,8 +258,8 @@
       <label for="iRole">Role
         <select id="iRole"><option>Fighter</option><option>Rally lead</option><option>Garrison</option><option>Farmer</option><option>Leader</option></select>
       </label>
-      <label for="iRarity">Preview rarity
-        <select id="iRarity"><option value="common">Common</option><option value="rare">Rare</option><option value="epic" selected>Epic</option><option value="legendary">Legendary</option></select>
+      <label for="iVerified">Screenshot verified
+        <select id="iVerified"><option value="no">Not yet</option><option value="yes" selected>Yes</option></select>
       </label>
       <label for="iCH">City Hall<input id="iCH" type="number" min="1" max="25" value="22"></label>
     </div>
@@ -328,10 +328,12 @@
     $('vRole').querySelector('span').textContent = $('iRole').value;
     const ch = Math.min(Math.max(parseInt($('iCH').value, 10) || 1, 1), 25);
     $('vCH').textContent = ch;
-    card.dataset.rarity = $('iRarity').value;
+    const rar = ch >= 25 ? 'legendary' : ch >= 22 ? 'epic' : ch >= 17 ? 'rare' : 'common';
+    card.dataset.rarity = rar;
     card.dataset.f2p = String($('iSpend').value === 'F2P');
-    $('vRarBadge').textContent = rarityLabel[$('iRarity').value].toUpperCase();
-    $('vRarity').textContent = rarityLabel[$('iRarity').value] + ' · preview';
+    $('vRarBadge').textContent = rarityLabel[rar].toUpperCase();
+    $('vRarity').textContent = rarityLabel[rar] + ' · City Hall ' + ch;
+    $('vProof').textContent = $('iVerified').value === 'yes' ? '✓ Verified' : 'Self-reported';
   }
   $('editor').addEventListener('input', render);
   $('editor').addEventListener('submit', e => e.preventDefault());
