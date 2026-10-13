@@ -22,6 +22,7 @@ export function VerdictPanel({ name, decision }: Props) {
       <p>{v.summary}</p>
       <p class="cmd-meta">
         Overall: <span class={`cmd-conf cmd-conf-${decision.confidence}`}>{CONFIDENCE_TEXT[decision.confidence]}</span>
+        {decision.confidence === "pending" && <span>until the required questions are answered</span>}
         {decision.hasSplitViews && <span class="cmd-pill cmd-pill-split">Community divided</span>}
       </p>
 

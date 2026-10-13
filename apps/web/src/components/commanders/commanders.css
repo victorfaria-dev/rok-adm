@@ -115,10 +115,9 @@
   .cmd-dl div { grid-template-columns: 9rem 1fr; }
 }
 
-/* Wide screens: checklist left, verdict stays in view on the right. DOM order = reading order. */
+/* Wide screens: checklist left, verdict on the right next to the first questions. DOM order = reading order. */
 @media (min-width: 1100px) {
   .cmd-work { grid-template-columns: minmax(0, 1fr) minmax(0, 22rem); align-items: start; }
-  .cmd-verdict { position: sticky; top: var(--ko-space-6); max-height: calc(100dvh - 2 * var(--ko-space-6)); overflow-y: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
