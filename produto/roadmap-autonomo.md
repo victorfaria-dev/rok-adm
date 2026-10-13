@@ -35,7 +35,7 @@ Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre on
 |---|---|---|
 | B | session_01M5YPP7uFGAY7w1pGsEdGsb | `claude/kingdomops-wave-b` (integrada) |
 | C | session_018RZ5TxUuNcbZxB98xLoRnN | `claude/kingdomops-wave-c` (integrada) |
-| H | session_01Lyh5XwMC41fqS3unC6F1GY | `claude/kingdomops-wave-h` (entregue; falta renderizar no site) |
+| H | session_01Lyh5XwMC41fqS3unC6F1GY | `claude/kingdomops-wave-h` (integrada; guias em /guides/) |
 | D | session_01PfcmoBAphnvyuxaEFxSUdC | `claude/kingdomops-wave-d` |
 | E | session_01QbeBBwUnFmrJ7mFDqYj6P7 | `claude/kingdomops-wave-e` |
 | F | session_01MoSezpwQFqMWcdJEH5aXi3 | `claude/kingdomops-wave-f` |
