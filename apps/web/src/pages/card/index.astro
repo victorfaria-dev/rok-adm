@@ -1,10 +1,12 @@
 ---
 // F-60 Governor card: Experience mode (one brand moment), Operate for the form below it.
 import Shell from "../../layouts/Shell.astro";
+import ShareCardNav from "../../components/ShareCardNav.astro";
 import GovernorCard from "../../components/GovernorCard.tsx";
 import { RARITIES, RARITY_LABELS, RARITY_MEANING, RARITY_RANGES } from "../../lib/rarity";
 ---
 <Shell title="Governor card" description="Your collectible governor card: rarity by City Hall, alliance colors and a PNG avatar you can download." mode="operate">
+  <ShareCardNav />
   <section class="intro">
     <h1>Governor card</h1>
     <p class="sub">One number sets the rarity: your City Hall. Tilt it, make it yours, download the PNG as your avatar.</p>

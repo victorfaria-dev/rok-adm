@@ -1,9 +1,13 @@
 ---
 // F-61 Alliance crest (experimental): 2D SVG editor always; the 3D view loads Three.js only after "View in 3D".
 import Shell from "../../layouts/Shell.astro";
+import ShareCardNav from "../../components/ShareCardNav.astro";
+import KingdomNav from "../../components/kingdom/shared/KingdomNav.astro";
 import CrestBuilder from "../../components/crest/CrestBuilder.tsx";
 ---
 <Shell title="Alliance crest" description="Build an original alliance crest: shield, alliance colour, tag and emblem. Download it as PNG or SVG, or turn it in 3D." mode="operate">
+  <ShareCardNav />
+  <KingdomNav section="kingdom" leaderOnly />
   <section class="intro">
     <p class="exp"><span class="pill">Experimental</span> We are testing whether alliances want this. It may change or go away.</p>
     <h1>Alliance crest</h1>

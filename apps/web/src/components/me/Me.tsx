@@ -25,6 +25,10 @@ import {
   profileRows,
 } from "../../lib/me";
 import { Accounts } from "./Accounts";
+import { ProfileDetails } from "./ProfileDetails";
+import { ONBOARDING_IDS } from "../../lib/questionnaire-flow";
+import { ROLE_LABEL, setPlayingAs } from "../../lib/role";
+import { PLAYING_AS } from "../../lib/store";
 import { USER_DATA_KEYS, clearAllKeys, clearOfflineCache } from "../../lib/storage-keys";
 import "./me.css";
 
@@ -88,7 +92,22 @@ function syncProfileChips(code: string | null): void {
   }
 }
 
-/** You page island: profile summary, F-72 effective profile, theme and local data. */
+// User-facing strings added in UX stage 1 (role switch, short onboarding, share card), in one place.
+const S = {
+  title: "Me",
+  lead: "Your profile, how you use KingdomOps, theme and data. Everything here is stored only in this browser: no account, no server.",
+  playingH: "Playing as",
+  playingNote: "Player shows City Hall, Guides, Tools and Me. Leader shows Kingdom, Members, Events, Guides and Me. Your tabs switch at once.",
+  empty: "No profile yet. Answer 5 quick questions and KingdomOps sets up your City Hall, daily routine and guide.",
+  start: "Start",
+  editAnswers: "Edit answers",
+  shareH: "Share card",
+  shareLead: "Your governor card and alliance crest, made for KingdomOps: download them as images for Discord or your avatar.",
+  card: "Governor card",
+  crest: "Alliance crest",
+} as const;
+
+/** Me page island: role switch, profile summary, optional details, F-72 effective profile, share card, theme and local data. */
 export default function Me({ navigate = defaultNavigate, download = defaultDownload, now = () => new Date() }: Props) {
   // Server render has no storage: profile area shows a placeholder until the store is read.
   const [store, setStore] = useState<StoreV1 | null>(null);
@@ -168,6 +187,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     applyTheme(next.theme);
     syncThemePickers(next.theme);
     syncProfileChips(next.profileCode);
+    document.documentElement.setAttribute("data-role", next.playingAs);
     setConfirming(false);
     setStore(next);
     say(skipped > 0 ? `${IMPORTED_MESSAGE} ${skippedMessage(skipped)}` : IMPORTED_MESSAGE);
@@ -189,6 +209,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     applyTheme("dark");
     syncThemePickers("dark");
     syncProfileChips(null);
+    document.documentElement.setAttribute("data-role", "player");
     const fresh = readStore();
     focusAfter.current = "delete";
     setConfirming(false);
@@ -203,9 +224,24 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
   return (
     <div class="me">
       <header class="me-head">
-        <h1>You</h1>
-        <p class="me-lead">Your profile, theme and data. Everything here is stored only in this browser: no account, no server.</p>
+        <h1>{S.title}</h1>
+        <p class="me-lead">{S.lead}</p>
       </header>
+
+      <section class="me-section" aria-labelledby="me-role-h" data-playing-as>
+        <h2 id="me-role-h">{S.playingH}</h2>
+        <fieldset class="me-choices me-choices-row">
+          <legend class="visually-hidden">{S.playingH}</legend>
+          {PLAYING_AS.map((r) => (
+            <label class="me-choice" key={r}>
+              <input type="radio" name="me-role" value={r} checked={(store?.playingAs ?? "player") === r}
+                onChange={() => { setPlayingAs(r); setStore(readStore()); }} />
+              <span>{ROLE_LABEL[r]}</span>
+            </label>
+          ))}
+        </fieldset>
+        <p class="me-note">{S.playingNote}</p>
+      </section>
 
       <section class="me-section" aria-labelledby="me-profile-h">
         <h2 id="me-profile-h">Profile</h2>
@@ -214,7 +250,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
         ) : profile ? (
           <>
             <dl class="me-answers">
-              {profileRows(profile).map((r) => (
+              {profileRows(profile, ONBOARDING_IDS).map((r) => (
                 <div class="me-row" key={r.id}>
                   <dt>{r.label}</dt>
                   <dd class={r.numeric ? "mono" : undefined}>{r.value}</dd>
@@ -222,16 +258,18 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
               ))}
             </dl>
             <div class="me-actions">
-              <button type="button" class="btn btn-secondary" onClick={editAnswers}>Edit answers</button>
+              <button type="button" class="btn btn-secondary" onClick={editAnswers}>{S.editAnswers}</button>
             </div>
           </>
         ) : (
           <div class="me-empty">
-            <p>No profile yet. Answer ten questions about your account and KingdomOps builds your guide and daily routine.</p>
-            <a class="btn btn-primary" href="/start/">Build my guide</a>
+            <p>{S.empty}</p>
+            <a class="btn btn-primary" href="/start/">{S.start}</a>
           </div>
         )}
       </section>
+
+      {store && profile && <ProfileDetails store={store} onChange={setStore} />}
 
       {store && (
         <Accounts
@@ -275,6 +313,15 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
           <p class="me-note">Your spending answers stay on this device. KingdomOps never sends them anywhere.</p>
         </section>
       )}
+
+      <section class="me-section" aria-labelledby="me-share-h" data-share-card>
+        <h2 id="me-share-h">{S.shareH}</h2>
+        <p class="me-note">{S.shareLead}</p>
+        <ul class="me-links">
+          <li><a href="/card/">{S.card}</a></li>
+          <li><a href="/crest/">{S.crest}</a></li>
+        </ul>
+      </section>
 
       <section class="me-section" aria-labelledby="me-theme-h">
         <h2 id="me-theme-h">Theme</h2>

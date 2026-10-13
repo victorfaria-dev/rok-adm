@@ -1,15 +1,19 @@
-// Pure helpers for the You page (/me): human-readable profile answers, F-72 effective
+// Pure helpers for the Me page (/me): human-readable profile answers, F-72 effective
 // profile rows, theme and export file name. No DOM and no storage: the island owns side effects.
 import {
   PROFILE_NAMES,
   QUESTIONS,
   SPENDING_PROFILES,
+  encodeProfile,
+  getQuestion,
+  validateAnswers,
   type AccountProfile,
   type Question,
+  type QuestionId,
   type SpendingProfile,
 } from "@rokadm/core";
 import { EFFECTIVE_PROFILE_RULE, effectiveProfile, type EffectiveProfile } from "@rokadm/planner";
-import { answerText } from "./questionnaire-flow";
+import { OPTIONAL_IDS, answerText, parseStep } from "./questionnaire-flow";
 import { MAX_SAVED_PROFILES, THEME_PREFS, type SavedProfile, type ThemePref } from "./store";
 
 export interface AnswerRow {
@@ -28,9 +32,9 @@ export function profileAnswerText(q: Question, value: unknown): string {
   return answerText(q, value);
 }
 
-/** Every saved answer, in questionnaire order, in human words. */
-export function profileRows(p: AccountProfile): AnswerRow[] {
-  return QUESTIONS.map((q) => {
+/** Saved answers in human words: every answer by default, or the given questions in order. */
+export function profileRows(p: AccountProfile, ids: readonly QuestionId[] = QUESTIONS.map((q) => q.id)): AnswerRow[] {
+  return ids.map(getQuestion).map((q) => {
     const v = (p as unknown as Record<string, unknown>)[q.id];
     return { id: q.id, label: q.label, value: profileAnswerText(q, v), numeric: q.type === "number" && v !== null };
   });
@@ -169,4 +173,55 @@ export function useAccountPatch(p: SavedProfile): { profileCode: string; profile
 
 export function newAccountId(now: Date, random: () => number = Math.random): string {
   return `${now.getTime().toString(36)}${Math.floor(random() * 1e6).toString(36)}`;
+}
+
+// ---------------------------------------------------------------------------
+// Optional answers ("More about your account"): never asked during onboarding, edited here.
+
+export const DETAIL_QUESTIONS: readonly Question[] = OPTIONAL_IDS.map(getQuestion);
+
+/** Form value of one optional answer: "" for an empty number / not chosen. */
+export function detailValue(p: AccountProfile, id: QuestionId): string {
+  const v = (p as unknown as Record<string, unknown>)[id];
+  if (v === null || v === undefined) return "";
+  return typeof v === "boolean" ? (v ? "yes" : "no") : String(v);
+}
+
+/** Form text → answer value for parseStep (selects carry strings; "" means none). */
+function rawAnswer(q: Question, text: string): unknown {
+  if (q.type === "boolean") return text === "yes" ? true : text === "no" ? false : null;
+  if (q.type === "choice") return text === "" ? null : text;
+  return text;
+}
+
+export type DetailsResult =
+  | { ok: true; profile: AccountProfile; code: string }
+  | { ok: false; errors: Partial<Record<QuestionId, string>> };
+
+/**
+ * Apply the optional answers from the form onto the saved profile. Each field gets the same how-to-fix
+ * message as the questionnaire; cross-field rules (kingdom day vs stage) are checked with the core.
+ */
+export function applyDetails(p: AccountProfile, form: Partial<Record<QuestionId, string>>): DetailsResult {
+  const next: Record<string, unknown> = { ...(p as unknown as Record<string, unknown>) };
+  const errors: Partial<Record<QuestionId, string>> = {};
+  for (const q of DETAIL_QUESTIONS) {
+    const text = form[q.id];
+    if (text === undefined) continue;
+    const r = parseStep(q, rawAnswer(q, text.trim()));
+    if ("error" in r) errors[q.id] = r.error;
+    else next[q.id] = r.value;
+  }
+  if (Object.keys(errors).length) return { ok: false, errors };
+  const v = validateAnswers(next);
+  if ("errors" in v) {
+    for (const e of v.errors) if (e.field !== "_") errors[e.field] = e.message;
+    return { ok: false, errors: Object.keys(errors).length ? errors : { [DETAIL_QUESTIONS[0]!.id]: v.errors[0]!.message } };
+  }
+  return { ok: true, profile: v.profile, code: encodeProfile(v.profile) };
+}
+
+/** Saved accounts after the active profile's code changed: the active entry follows it. */
+export function followActive(list: readonly SavedProfile[], oldCode: string | null, override: SpendingProfile | null, newCode: string): SavedProfile[] {
+  return list.map((x) => (x.code === oldCode && x.override === override ? { ...x, code: newCode } : x));
 }

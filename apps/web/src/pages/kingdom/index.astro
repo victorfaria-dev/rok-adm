@@ -1,4 +1,6 @@
 ---
+// Kingdom tab, Overview (UX stage 1): the leader's home. One in-section nav (no card grid, no
+// More menu); the guardrail, privacy and council data live here once, not on every sub-page.
 import Shell from "../../layouts/Shell.astro";
 import KingdomNav from "../../components/kingdom/shared/KingdomNav.astro";
 import PrivacyNote from "../../components/kingdom/shared/PrivacyNote.astro";
@@ -6,40 +8,59 @@ import DataControls from "../../components/kingdom/shared/DataControls";
 import { WebhookSettings } from "../../components/discord/DiscordPost";
 import "../../components/kingdom/shared/kingdom.css";
 
-const TOOLS = [
-  { href: "/kingdom/rules/", title: "Rules page", text: "Write your kingdom's rules and charter in sections, then share a view-only link or print it." },
-  { href: "/kingdom/requirements/", title: "Requirements card", text: "Define your DKP formula and KvK requirement, test it on sample accounts and publish a card." },
-  { href: "/kingdom/my/", title: "My requirements", text: "For players: open your council's card link and see your own target and progress." },
-  { href: "/kingdom/mge/", title: "MGE planner", text: "Plan who gets which MGE ranks, with a rotation rule everyone can check." },
-  { href: "/kingdom/recruit/", title: "Recruitment post", text: "Fill in your kingdom's facts and open roles; get a post ready to copy for Discord or Reddit." },
-  { href: "/kingdom/seed/", title: "Seed simulator (experimental)", text: "See how much of your top 300's power counts toward kingdom power under the 1.0.95 rule." },
-];
+// Every user-facing string on this page, in one place (i18n later).
+const S = {
+  title: "Kingdom",
+  description: "For kings, R4s and council members: rules page, alliance crest, member requirements and recruiting, MGE and KvK planning. Works in your browser.",
+  h1: "Your kingdom",
+  lead: "For kings, R4s and council members. Publish clear rules, set what you ask of members, recruit for the roles you need and plan events openly.",
+  guardrail: "Planning and publishing only. No bots, no scanning, no game files. You do every in-game action yourself.",
+  whereH: "Where things are",
+  where: [
+    { tab: "Kingdom", text: "Rules page, alliance crest and the experimental seed simulator." },
+    { tab: "Members", text: "Requirements card with your DKP formula, recruitment post, and the page players use to see their own target." },
+    { tab: "Events", text: "MGE planner with a rule everyone can check, and the KvK planner." },
+  ],
+  adminGuide: "New to running a kingdom? Read the",
+  adminGuideLink: "kingdom admin guide",
+  dataH: "Your council data",
+  dataNote: "Saved only in this browser. Export a file to move it to another device or hand it to another officer.",
+  discordH: "Discord webhook",
+  discordNote: "Paste your server's webhook once and the MGE planner, rules page and recruitment post (and the farm log) get a \"Post to Discord\" button. You always see the exact message first, and nothing is sent until you press Send.",
+};
 ---
-<Shell title="Kingdom council" description="Tools for kingdom councils: rules page, requirements card and DKP formula sandbox, players' own requirements, MGE planner, recruitment post and an experimental seed simulator. Works in your browser." mode="operate">
+<Shell title={S.title} description={S.description} mode="operate">
   <div class="kg">
     <header class="kg-head">
-      <h1>Kingdom council kit</h1>
-      <p class="kg-lead">Tools for kings, R4s and council members: publish clear rules and requirements, plan MGE openly and recruit for the roles you need.</p>
-      <p class="kg-note" data-guardrail><strong>Planning and publishing only. No bots, no scanning, no game files. You do every in-game action yourself.</strong></p>
+      <h1>{S.h1}</h1>
+      <p class="kg-lead">{S.lead}</p>
+      <p class="kg-note" data-guardrail><strong>{S.guardrail}</strong></p>
     </header>
-    <KingdomNav />
-    <section aria-labelledby="tools-h" class="kg-grid">
-      <h2 id="tools-h" class="visually-hidden">Tools</h2>
-      <ul class="kg-tools">
-        {TOOLS.map((t) => <li><a class="kg-tool" href={t.href}><strong>{t.title}</strong><span>{t.text}</span></a></li>)}
-      </ul>
-      <p class="kg-note">New to running a kingdom? Read the <a href="/guides/kingdom-admin/">kingdom admin guide</a> first.</p>
+    <KingdomNav section="kingdom" />
+    <section aria-labelledby="where-h" class="kg-grid">
+      <h2 id="where-h">{S.whereH}</h2>
+      <dl class="kg-where">
+        {S.where.map((w) => <div><dt>{w.tab}</dt><dd>{w.text}</dd></div>)}
+      </dl>
+      <p class="kg-note">{S.adminGuide} <a href="/guides/kingdom-admin/">{S.adminGuideLink}</a>.</p>
     </section>
-    <PrivacyNote thirdParty />
+    <div id="privacy"><PrivacyNote thirdParty /></div>
     <section id="data" aria-labelledby="data-h" class="kg-grid">
-      <h2 id="data-h">Your council data</h2>
-      <p class="kg-note">Saved only in this browser. Export a file to move it to another device or hand it to another officer.</p>
+      <h2 id="data-h">{S.dataH}</h2>
+      <p class="kg-note">{S.dataNote}</p>
       <DataControls client:load />
     </section>
     <section id="discord" aria-labelledby="discord-h" class="kg-grid">
-      <h2 id="discord-h">Discord webhook</h2>
-      <p class="kg-note">Paste your server's webhook once and the MGE planner, rules page and recruitment post (and the farm log) get a "Post to Discord" button. You always see the exact message first, and nothing is sent until you press Send.</p>
+      <h2 id="discord-h">{S.discordH}</h2>
+      <p class="kg-note">{S.discordNote}</p>
       <div class="kg-card"><WebhookSettings client:load id="hub" /></div>
     </section>
   </div>
 </Shell>
+
+<style>
+  .kg-where { margin: 0; display: grid; gap: var(--ko-space-3); }
+  .kg-where div { display: grid; gap: var(--ko-space-1); padding-left: var(--ko-space-3); border-left: 2px solid var(--ko-accent); }
+  .kg-where dt { font: var(--ko-weight-semibold) var(--ko-text-md)/1.3 var(--ko-font-display); }
+  .kg-where dd { margin: 0; color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+</style>

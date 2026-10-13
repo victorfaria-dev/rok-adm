@@ -132,3 +132,24 @@
 .me-delete-list { margin: var(--ko-space-2) 0; padding-inline-start: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
 .me-check { display: flex; align-items: flex-start; gap: var(--ko-space-2); margin-block: var(--ko-space-3); min-height: 44px; }
 .me-check input { flex: none; width: 20px; height: 20px; margin: 2px 0 0; accent-color: var(--ko-accent); }
+
+/* Optional details (UX stage 1). */
+.me-details { display: grid; gap: var(--ko-space-5); }
+.me-field { display: grid; gap: var(--ko-space-1); min-width: 0; }
+.me-field label { font-weight: var(--ko-weight-semibold); }
+.me-field .me-input, .me-select { width: 100%; max-width: 360px; }
+.me-select {
+  min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3); font: inherit; font-size: 16px;
+  color: var(--ko-text); background: var(--ko-surface);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+}
+.me-select[aria-invalid="true"] { border-color: var(--ko-error); }
+.me-select:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+
+/* Share card links. */
+.me-links { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
+.me-links a {
+  display: inline-flex; align-items: center; min-height: 48px; padding-inline: var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); color: var(--ko-text); text-decoration: none;
+}
+@media (hover: hover) and (pointer: fine) { .me-links a:hover { border-color: var(--ko-accent); } }

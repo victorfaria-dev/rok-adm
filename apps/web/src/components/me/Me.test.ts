@@ -28,10 +28,10 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe("You island: profile", () => {
-  it("one h1; no profile shows the empty state with Build my guide", () => {
+  it("one h1 (Me); no profile shows the empty state with Start", () => {
     setup();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole("link", { name: "Build my guide" }).getAttribute("href")).toBe("/start/");
+    expect(screen.getByRole("link", { name: "Start" }).getAttribute("href")).toBe("/start/");
     expect(screen.queryByRole("button", { name: "Edit answers" })).toBeNull();
     expect(screen.queryByRole("radio", { name: "Automatic (recommended)" })).toBeNull();
   });
@@ -68,6 +68,45 @@ describe("You island: effective profile (F-72)", () => {
     expect(screen.getByText("Whale (set by hand)")).toBeTruthy();
     fireEvent.click(screen.getByRole("radio", { name: "Automatic (recommended)" }));
     expect(readStore().profileOverride).toBeNull();
+  });
+});
+
+describe("Me island: playing as, details, share card (UX stage 1)", () => {
+  it("the role switch saves the choice and swaps the tabs at once", () => {
+    setup({ profileCode: CODE });
+    expect((screen.getByRole("radio", { name: "Player" }) as HTMLInputElement).checked).toBe(true);
+    fireEvent.click(screen.getByRole("radio", { name: "Leader" }));
+    expect(readStore().playingAs).toBe("leader");
+    expect(document.documentElement.getAttribute("data-role")).toBe("leader");
+    fireEvent.click(screen.getByRole("radio", { name: "Player" }));
+    expect(readStore().playingAs).toBe("player");
+  });
+
+  it("shows only the 5 onboarding answers above; optional details are edited below", () => {
+    setup({ profileCode: CODE });
+    expect(screen.getByText("How much do you spend on Rise of Kingdoms per month?")).toBeTruthy();
+    const kd = screen.getByLabelText("How many days old is your kingdom?") as HTMLInputElement;
+    expect(kd.value).toBe("");
+    fireEvent.input(kd, { target: { value: "45" } });
+    fireEvent.change(screen.getByLabelText("Which civilization do you play?"), { target: { value: "china" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save details" }));
+    expect(screen.getByText("Saved.")).toBeTruthy();
+    const saved = readStore().profileCode!;
+    expect(saved).toBe("1.0.1.0.12.30..45..china.0");
+  });
+
+  it("a detail that breaks a core rule shows a how-to-fix error and saves nothing", () => {
+    setup({ profileCode: "1.0.0.1.12.30.....0" }); // KvK 1
+    fireEvent.input(screen.getByLabelText("How many days old is your kingdom?"), { target: { value: "3" } });
+    fireEvent.click(screen.getByRole("button", { name: "Save details" }));
+    expect(screen.getByText(/cannot be past pre-KvK/)).toBeTruthy();
+    expect(readStore().profileCode).toBe("1.0.0.1.12.30.....0");
+  });
+
+  it("Share card links the governor card and the alliance crest", () => {
+    setup();
+    expect(screen.getByRole("link", { name: "Governor card" }).getAttribute("href")).toBe("/card/");
+    expect(screen.getByRole("link", { name: "Alliance crest" }).getAttribute("href")).toBe("/crest/");
   });
 });
 
@@ -165,7 +204,7 @@ describe("You island: delete", () => {
     expect(localStorage.getItem(STORE_KEY)).toBeNull();
     expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
     expect(screen.getByText(DELETED_MESSAGE)).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Build my guide" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Start" })).toBeTruthy();
     expect((screen.getByRole("radio", { name: "Dark" }) as HTMLInputElement).checked).toBe(true);
   });
 });
