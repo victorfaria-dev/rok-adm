@@ -21,6 +21,12 @@ importers:
         specifier: 2.1.8
         version: 2.1.8(@types/node@22.10.2)(happy-dom@20.14.5)
 
+  apps/api:
+    dependencies:
+      '@rokadm/core':
+        specifier: workspace:*
+        version: link:../../packages/core
+
   apps/web:
     dependencies:
       '@astrojs/preact':
