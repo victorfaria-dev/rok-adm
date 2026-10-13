@@ -1,0 +1,8 @@
+---
+import Shell from "../../layouts/Shell.astro";
+import Login from "../../components/auth/Login";
+---
+<Shell title="Sign in" description="Sign in to KingdomOps with your e-mail or Google. No game login: KingdomOps never asks for your Rise of Kingdoms password." mode="operate">
+  <Login client:load />
+  <noscript><p>Signing in needs JavaScript. The guides work without it.</p></noscript>
+</Shell>

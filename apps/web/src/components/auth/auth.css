@@ -1,0 +1,41 @@
+/* Sign-in, callback, upload offer and account panel. Only --ko-* tokens. "Layers" depth: the page
+   section is level 1 (surface + shadow-1), the interactive panel is level 2 (raised + shadow-2). */
+
+.au { max-width: 520px; margin-inline: auto; display: grid; gap: var(--ko-space-5); min-width: 0; }
+.au h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+.au h2 { font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl); }
+.au-lead { color: var(--ko-text-muted); }
+
+.au-panel, .au-offer {
+  display: grid; gap: var(--ko-space-4); padding: var(--ko-space-5);
+  background: var(--ko-surface-2, var(--ko-surface-raised)); box-shadow: var(--ko-shadow-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); min-width: 0;
+}
+.au-form { display: grid; gap: var(--ko-space-3); }
+.au-field { display: grid; gap: var(--ko-space-1); font-weight: var(--ko-weight-semibold); }
+.au-field input {
+  min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
+  background: var(--ko-background); color: var(--ko-text);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md); font-weight: var(--ko-weight-regular);
+}
+.au-field input[aria-invalid="true"] { border-color: var(--ko-error); }
+.au-google { width: 100%; }
+.au-or { display: flex; align-items: center; gap: var(--ko-space-3); color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.au-or::before, .au-or::after { content: ""; flex: 1; height: 1px; background: var(--ko-border); }
+
+.au-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
+.au-error { color: var(--ko-error); font-weight: var(--ko-weight-medium); }
+.au-ok { color: var(--ko-success); font-weight: var(--ko-weight-medium); }
+.au-note { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+
+.au-notes { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.au-summary { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); overflow-wrap: anywhere; }
+
+.au-account {
+  display: grid; gap: var(--ko-space-3); padding: var(--ko-space-4);
+  background: var(--ko-surface-1, var(--ko-surface)); box-shadow: var(--ko-shadow-1);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); overflow-wrap: anywhere;
+}
+
+.au-skeleton { gap: var(--ko-space-3); }
+.au-skeleton span { display: block; height: var(--ko-space-12); background: var(--ko-surface); border-radius: var(--ko-radius-md); }

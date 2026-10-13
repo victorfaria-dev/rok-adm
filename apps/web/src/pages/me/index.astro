@@ -2,8 +2,10 @@
 import Shell from "../../layouts/Shell.astro";
 import Me from "../../components/me/Me";
 import BackupAll from "../../components/me/BackupAll";
+import AccountPanel from "../../components/auth/AccountPanel";
 ---
 <Shell title="You" description="Your profile, theme and data: export, import or delete. Back up everything KingdomOps keeps in this browser in one file. Everything stays in this browser." mode="operate">
+  <AccountPanel client:idle />
   <Me client:load />
   <BackupAll client:load />
 </Shell>
