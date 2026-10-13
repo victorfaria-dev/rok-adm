@@ -92,6 +92,8 @@ const vb = `${K_VIEWBOX.x} ${K_VIEWBOX.y} ${K_VIEWBOX.w} ${K_VIEWBOX.h}`;
     position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
     background: radial-gradient(ellipse at center, transparent 45%, rgb(0 0 0 / .35)), var(--ko-background);
   }
+  /* Without JS the splash must stay out of the way (display: grid above would beat [hidden]). */
+  .splash[hidden] { display: none; }
   .splash svg { width: min(40vw, 168px); height: auto; }
   .demo { display: grid; place-items: center; padding: var(--ko-space-8); background: var(--ko-surface); border: 1px solid var(--ko-border); }
   .demo svg { width: min(50%, 160px); height: auto; }
