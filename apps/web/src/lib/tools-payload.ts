@@ -84,6 +84,10 @@ export interface LevelRow {
   extra: string | null;
   /** Selected extra numeric columns (e.g. hospital capacity), parsed from "7,500" style text. */
   stats: Record<string, number | null>;
+  /** "Requirements" cell as printed (e.g. "City Hall Lv.6"); null when absent or "None". */
+  requirements: string | null;
+  /** The cost cell is garbled in the source (merged wiki cells, "?", or no cost and no time above level 1). */
+  garbled: boolean;
 }
 
 export interface LevelTable {
@@ -111,9 +115,18 @@ export function levelTable(name: string, statCols: readonly string[] = []): Leve
     if (level === null) continue;
     const extra = typeof r.extra_cost === "string" && r.extra_cost !== "None" ? r.extra_cost : null;
     const seconds = n(r.time_seconds) ?? (typeof r.time_raw === "string" ? parseDuration(r.time_raw) : null);
+    const food = n(r.food), wood = n(r.wood), stone = n(r.stone), gold = n(r.gold);
+    const costCell = typeof r.Cost === "string" ? r.Cost : typeof r.Resources === "string" ? r.Resources : "";
+    // "…1x size = 24" is a wiki template fragment glued to some level-25 cells; anything else with a
+    // second "=" or a "?" is a merged/unknown cell whose numbers cannot be trusted.
+    const cleanCost = costCell.replace(/(1x )?size = 24.*$/, "");
+    const garbled = /=.*=|\?/.test(cleanCost)
+      || (level > 1 && food === null && wood === null && stone === null && gold === null && seconds === null);
+    const req = typeof r.Requirements === "string" && r.Requirements !== "None" && r.Requirements !== "-" ? r.Requirements : null;
     rows.push({
-      level, food: n(r.food), wood: n(r.wood), stone: n(r.stone), gold: n(r.gold), seconds, extra,
+      level, food, wood, stone, gold, seconds, extra,
       stats: Object.fromEntries(statCols.map((c) => [c, n(r[c])])),
+      requirements: req, garbled,
     });
   }
   rows.sort((a, b) => a.level - b.level);

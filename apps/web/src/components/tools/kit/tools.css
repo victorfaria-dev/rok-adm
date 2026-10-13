@@ -88,3 +88,10 @@
 .t-checklist { display: grid; gap: var(--ko-space-3); justify-items: start; min-width: 0; }
 .t-checklist .t-check { width: 100%; }
 .t-progress { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+
+/* Calculators: speedups, buildings, healing, action points */
+.t-sp-grid { grid-column: 1 / -1; display: grid; gap: var(--ko-space-3); grid-template-columns: repeat(2, minmax(0, 1fr)); min-width: 0; }
+@media (min-width: 640px) { .t-sp-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.t-sp-job { display: grid; gap: var(--ko-space-3); min-width: 0; }
+.t-prompt { font-family: var(--ko-font-body); font-size: var(--ko-text-md); color: var(--ko-text); }
+.t-callout { display: grid; gap: var(--ko-space-2); padding: var(--ko-space-4); border: 1px solid var(--ko-border); border-left-width: 4px; border-radius: var(--ko-radius-md); font-size: var(--ko-text-sm); }
