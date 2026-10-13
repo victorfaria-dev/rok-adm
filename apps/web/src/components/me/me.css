@@ -121,3 +121,9 @@
 }
 .me-input[aria-invalid="true"] { border-color: var(--ko-error); }
 .me-input:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+
+/* Back up everything (wave G). */
+.me-backup { margin-top: var(--ko-space-8); }
+.me-diff { display: block; color: var(--ko-text-muted); font-size: var(--ko-text-sm); font-weight: var(--ko-weight-regular); }
+.me-confirm h3 { outline: none; }
+.me-confirm h3:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 4px; }
