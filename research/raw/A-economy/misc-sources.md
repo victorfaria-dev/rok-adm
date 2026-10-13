@@ -44,3 +44,15 @@ URL: https://www.reddit.com/r/RiseofKingdoms/comments/b3vxwr/free_to_play_f2p_gu
 - Quantified daily time cost of running a farm: none.
 - Kingdom-level farm rules (farm alliances, farm migration before KvK): no source beyond heaven-guardian's general etiquette.
 - Current Reddit threads (reddit.com JSON/HTML blocked; only 2019 snippet).
+
+## SA10 — Boostroom blog, "Rise of Kingdoms farming guide: best ways to farm resources, gems and speedups" (2026-09-02) [WF]; boosting-service seller
+URL: https://boostroom.com/blog/rise-of-kingdoms-farming-guide-best-ways-to-farm-resources-gems-and-speedups
+- "A farm account is a secondary city designed primarily to produce and gather resources for your main account."
+- "If your next upgrade requires massive amounts of Stone, gather Stone."
+- Stone: "waiting until you are completely empty before gathering it is inefficient."
+- "Gold nodes are also generally more limited than basic Food and Wood farming opportunities."
+- "You do not need a complicated schedule."
+- Commanders per resource: Food — Wak Chanil Ajaw, Gaius Marius; Wood — Constance, Joan of Arc, Wak Chanil Ajaw; Stone — Cleopatra VII; Gold — Seondeok.
+
+## Wiki tech + civ pages (S02) used for farm variants — see _farm-variants.md
+- Technology/Sickle, Handaxe, Handcart, Placer Mining, Scythe, Whipsaw, Stone Saw, Shaft Mining, Cutting & Polishing; Civilizations (rev 2025-12-04).
