@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-labelledby="title">
+  <title id="title">Concept D — Iron Visor</title>
+  <path transform="translate(0 12)" fill="#000" fill-rule="evenodd" d="M116 52 L128 16 L140 52 A64 64 0 0 1 192 112 V128 L176 188 L128 216 L80 188 L64 128 V112 A64 64 0 0 1 116 52 Z M80 132 H176 V150 H137 V196 H119 V150 H80 Z"/>
+</svg>

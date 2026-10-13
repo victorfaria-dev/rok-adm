@@ -20,3 +20,14 @@ Processo: skill `logo-design` (kaankiziltug/logo-design-skill), modo Design, tri
 Riscos: A — torre com gráfico pode lembrar marcas de dados; B — o check é comum em apps de tarefa; C — mais detalhe, mais fraco a 16 px.
 
 Nomes: nenhuma busca de marca registrada foi feita. Antes de adotar, fazer busca em bases de marcas e de domínios.
+
+## Rodada 2 — direção "gamer" (2026-10-13)
+
+Feedback do Victor: rodada 1 institucional demais; quer algo mais gamer.
+Ajuste no brief: adjetivos passam a incluir **competitivo, ousado, energético**; formas angulares, tipografia pesada em itálico, linguagem de insígnia/esports, mantendo simplicidade a 16 px.
+
+| | Nome candidato | Marca | Ideia | Risco |
+|---|---|---|---|---|
+| A | Warpath | Iron Visor | Elmo de comandante, todo em ângulos: você dá as ordens. | Elmos são comuns em logos de esports (Spartan/knight). |
+| B | Ascent | Rank-Up Shield | Escudo de batalha com chevrons de "subir de rank": a conta evoluindo. | Escudo + chevron é linguagem conhecida; o diferencial vem da cor e do nome. |
+| C | Crownbit | Pixel Crown | Coroa em 8-bit: o jogo de reino jogado como gamer. | Pode ler como muralha de castelo; estética retrô não combina com o visual do jogo. |

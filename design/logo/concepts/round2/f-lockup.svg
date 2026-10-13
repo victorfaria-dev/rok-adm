@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 256" width="960" height="256" role="img" aria-labelledby="title">
+  <title id="title">CROWNBIT lockup (exploration: live text)</title>
+  <g>  <path fill="#000" d="M32 64 H48 V80 H32 Z M112 64 H144 V80 H112 Z M208 64 H224 V80 H208 Z M32 80 H64 V96 H32 Z M96 80 H160 V96 H96 Z M192 80 H224 V96 H192 Z M32 96 H224 V112 H32 Z M32 112 H224 V128 H32 Z M32 128 H80 V144 H32 Z M96 128 H160 V144 H96 Z M176 128 H224 V144 H176 Z M32 144 H224 V160 H32 Z M32 176 H224 V192 H32 Z"/></g>
+  <text x="280" y="166" font-family="Inter Display" font-weight="900" font-style="italic" font-size="112" letter-spacing="4" fill="#000">CROWNBIT</text>
+</svg>
