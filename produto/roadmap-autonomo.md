@@ -18,7 +18,7 @@ Merge na main; publicar/hospedar; serviços pagos, chaves ou contas; qualquer co
 | Onda | Escopo (IDs da árvore) | Sistemas | Status |
 |---|---|---|---|
 | A | F-01 questionário; F-02 + F-14 guia personalizado; F-12 guia de reino novo; F-60/F-10 cartão 3D; sting do logo | `apps/web` | em construção |
-| B | F-15 rotina + Break Mode; F-20 checklist de comandante; `/me` (perfil, tema, exportar/importar/apagar); F-72 perfil efetivo; F-86 v0 (ICS gerado no aparelho) | `apps/web`, `packages/planner` | planejada |
+| B | F-15 rotina + Break Mode; F-20 checklist de comandante; `/me` (perfil, tema, exportar/importar/apagar); F-72 perfil efetivo; F-86 v0 (ICS gerado no aparelho) | `apps/web`, `packages/planner` | pronta no ramo `claude/kingdomops-wave-b` (aguarda integração): /routine, /commanders, /me, perfil efetivo e .ics; check, build (orçamento ok) e e2e verdes; decisões B1–B8 |
 | C | Farms: F-65 escolha de variante, F-66 caminho de montagem, F-67 calculadora do Trading Post, F-68 metas diárias + checklist, F-69 registro de envios; guias de farm por recurso e geral (pares só como hipótese rotulada) | `apps/web/farms`, `packages/planner`, `guides/data` | planejada |
 | D | Kit de calculadoras (F-81) e trilha R1 do jogador: F-21, F-22, F-31, F-28, F-88 glossário, F-13, F-32 + F-82, F-11, F-18, F-25, F-26 | `apps/web/tools`, `packages/data` | planejada |
 | E | Kit do conselho: F-33 página de regras, F-34 card de requisitos + sandbox de fórmula, F-30 meus requisitos, F-35 MGE (v0 local), F-42 gerador de post de recrutamento, F-39 simulador de seed; guia de administração de reino | `apps/web/kingdom` | planejada |
