@@ -122,6 +122,28 @@ for t in THEMES:
 
 alliance = {name: solve_fill(h, s, lo, hi) for name, h, s in ALLIANCE}
 
+
+def solve_away(base: str, bgs: list[str], target: float, theme: str) -> str:
+    """Keep base's hue/saturation, move lightness away from the theme background
+    (lighter on dark, darker on light) until contrast against every bg >= target."""
+    hh, ll, ss = colorsys.rgb_to_hls(*hex_to_rgb(base))
+    steps = [i / 1000 for i in range(1001)]
+    order = [l for l in steps if l >= ll] if theme == "dark" else [l for l in reversed(steps) if l <= ll]
+    for l in order:
+        c = rgb_to_hex(colorsys.hls_to_rgb(hh, l, ss))
+        if min(contrast(c, b) for b in bgs) >= target:
+            return c
+    raise ValueError(f"no solution near {base} in {theme}")
+
+
+for t in THEMES:
+    # Form-control borders (inputs, radio rows): >= 3:1 on every surface (WCAG 1.4.11).
+    # `border` stays the kit's quiet color for decorative dividers.
+    colors[t]["control-border"] = solve_away(kit[t]["border"], surfaces(t), UI_AA, t)
+    # Focus ring: the kit's focus equals the accent in light (invisible on primary buttons),
+    # so it is solved for >= 3:1 against every surface AND the accent button fill.
+    colors[t]["focus"] = solve_away(kit[t]["focus"], surfaces(t) + [kit[t]["accent"]], UI_AA, t)
+
 FONTS = {
     "display": "'Chakra Petch', 'Segoe UI', system-ui, sans-serif",
     "body": "'IBM Plex Sans', 'Segoe UI', system-ui, sans-serif",
@@ -236,7 +258,10 @@ def report() -> tuple[str, int]:
             for bn, bv in bgs.items():
                 add(t, k, tc[k], bn, bv, TEXT_AA)
         add(t, "on-accent", tc["on-accent"], "accent", tc["accent"], TEXT_AA)
-        add(t, "focus", tc["focus"], "background", tc["background"], UI_AA)
+        for bn, bv in {**bgs, "accent": tc["accent"]}.items():
+            add(t, "focus", tc["focus"], bn, bv, UI_AA)
+        for bn, bv in bgs.items():
+            add(t, "control-border", tc["control-border"], bn, bv, UI_AA)
         for k, v in alliance.items():
             for bn, bv in bgs.items():
                 add(t, f"alliance-{k} (border)", v, bn, bv, UI_AA)
