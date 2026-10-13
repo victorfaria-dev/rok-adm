@@ -65,7 +65,7 @@ const gold = new THREE.MeshStandardMaterial({ color: 0xd4a640, metalness: 1, rou
 const silver = new THREE.MeshStandardMaterial({ color: 0xdfe3ea, metalness: 1, roughness: 0.22 });
 const fieldMat = new THREE.MeshStandardMaterial({ color: COLORS[0], metalness: 0.3, roughness: 0.5 });
 
-const crest = new THREE.Group(); scene.add(crest);
+const crest = new THREE.Group(); crest.position.y = 0.35; scene.add(crest);
 const rim = new THREE.Mesh(ext(shield(1.45), 0.22, 0.07), gold); rim.position.z = -0.22; crest.add(rim);
 const field = new THREE.Mesh(ext(shield(1.28), 0.1, 0.03), fieldMat); field.position.z = 0.02; crest.add(field);
 
@@ -109,14 +109,14 @@ const key = new THREE.DirectionalLight(0xffffff, 2); key.position.set(3, 4, 5); 
 const back = new THREE.DirectionalLight(0x9ec5ff, 1.2); back.position.set(-4, 2, -3); scene.add(back);
 
 const controls = new OrbitControls(camera, canvas);
-controls.enableDamping = true; controls.enablePan = false; controls.minDistance = 5; controls.maxDistance = 12;
+controls.enableDamping = true; controls.enablePan = false; 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 controls.autoRotate = !reduce; controls.autoRotateSpeed = 1.5;
 
 // Exporta avatar quadrado 1024x1024 (área segura a confirmar no jogo — T0-A1)
 document.getElementById('png').onclick = () => {
   const prev = [canvas.clientWidth, canvas.clientHeight];
-  renderer.setSize(1024, 1024, false); camera.aspect = 1; camera.updateProjectionMatrix();
+  renderer.setSize(1024, 1024, false); camera.aspect = 1; camera.updateProjectionMatrix(); camera.position.setLength(10);
   renderer.render(scene, camera);
   const a = document.createElement('a'); a.download = 'alliance-crest.png'; a.href = canvas.toDataURL('image/png'); a.click();
   resize();
@@ -125,11 +125,16 @@ document.getElementById('png').onclick = () => {
 function resize() {
   const w = canvas.clientWidth, h = canvas.clientHeight;
   renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  // Enquadra o brasão inteiro (≈3,4 × 5,2 unidades) com margem para a barra de controles
+  const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const dist = Math.max(2.9 / t, 1.9 / (t * camera.aspect)) * 1.15;
+  camera.position.setLength(Math.min(Math.max(dist, 6), 14));
+  controls.minDistance = dist * 0.7; controls.maxDistance = dist * 1.6;
 }
 addEventListener('resize', resize); resize();
 const clock = new THREE.Clock();
 renderer.setAnimationLoop(() => {
-  if (!reduce) crest.position.y = Math.sin(clock.getElapsedTime() * 1.2) * 0.06;
+  if (!reduce) crest.position.y = 0.35 + Math.sin(clock.getElapsedTime() * 1.2) * 0.06;
   controls.update(); renderer.render(scene, camera);
 });
 </script>
