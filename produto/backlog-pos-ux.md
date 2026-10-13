@@ -12,7 +12,12 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 - Conta Lilith: sem login público conhecido para terceiros; pedir credenciais do jogo é proibido (ToS e segurança). Fora.
 - Proposta: opcional para jogador (sincronizar), obrigatório para modo líder; serviço gerenciado com plano gratuito (ex.: Supabase), conta criada pelo Victor; política de privacidade LGPD.
 - Decidido (Victor, 2026-10-13): serviço = Supabase (e-mail + Google). Conta criada pelo Victor quando a etapa chegar; chaves só em variáveis de ambiente (Netlify / ambiente da sessão), nunca no chat nem no repositório.
-- Pendente: modelo opcional-para-jogador / obrigatório-para-líder.
+- Decidido (Victor, 2026-10-13): login obrigatório para jogador e líder. Impacto: o app deixa de ser local-first sem conta; dados locais existentes precisam migrar para a conta no primeiro login; links de compartilhamento e modo offline precisam ser revistos.
+- Pendente: guias públicos sem login (descoberta pelo Google) ou também atrás do login.
+
+## Landing page
+- Decidido (Victor, 2026-10-13): página pública de apresentação do sistema antes do login.
+- Proposta: o que é, para quem (jogador / líder), 3 exemplos reais do que resolve, prova de confiança (fontes, sem bots, conforme os termos da Lilith), botão de entrar. Sun Tzu como apresentador.
 
 ## Perfil público / comunidade
 - Pedido: perfil público com foto, banner, conquistas, biografia.
