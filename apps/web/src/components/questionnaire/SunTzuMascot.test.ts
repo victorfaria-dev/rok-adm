@@ -44,9 +44,15 @@ describe("Sun Tzu mascot", () => {
     expect(clipSrc(MASCOT_CLIPS, "talking", true)).toBe("/mascot/talk-720.mp4");
     expect(clipSrc(MASCOT_CLIPS, "grumble", false)).toBe("/mascot/grumble-480.mp4");
     expect(clipSrc(MASCOT_CLIPS, "approve", true)).toBe("/mascot/approve-720.mp4");
-    expect(MASCOT_CLIPS.grumble?.once && MASCOT_CLIPS.approve?.once).toBe(true);
-    // No clip yet: idle plays.
-    for (const s of ["greet", "victory"] as const) expect(clipSrc(MASCOT_CLIPS, s, false)).toBe("/mascot/idle-480.mp4");
+    expect(clipSrc(MASCOT_CLIPS, "greet", false)).toBe("/mascot/greet-480.mp4");
+    expect(clipSrc(MASCOT_CLIPS, "victory", false)).toBe("/mascot/victory-480.mp4");
+    // Every state but idle and talking is a one-shot with its own first frame.
+    for (const s of ["grumble", "approve", "greet", "victory"] as const) {
+      expect(MASCOT_CLIPS[s]?.once).toBe(true);
+      expect(MASCOT_CLIPS[s]?.poster).toBe(`/mascot/${s}-poster.webp`);
+    }
+    // A state without a clip plays idle.
+    expect(clipSrc({ poster: "/p.webp", idle: { sd: "/i.mp4" } }, "victory", false)).toBe("/i.mp4");
     expect(clipSrc(MASCOT_CLIPS, undefined, false)).toBeNull();
   });
 

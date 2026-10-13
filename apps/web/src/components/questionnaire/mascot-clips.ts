@@ -39,5 +39,8 @@ export const MASCOT_CLIPS: MascotClips = {
   grumble: { sd: "/mascot/grumble-480.mp4", hd: "/mascot/grumble-720.mp4", poster: "/mascot/grumble-poster.webp", once: true },
   // Accepted answer (1.75 s, once): plays while the next bubble types, never delays it.
   approve: { sd: "/mascot/approve-480.mp4", hd: "/mascot/approve-720.mp4", poster: "/mascot/approve-poster.webp", once: true },
-  // Not recorded yet (they play idle until then): greet: { ..., once: true }, victory: { ..., once: true },
+  // First question (1 of 10), once.
+  greet: { sd: "/mascot/greet-480.mp4", hd: "/mascot/greet-720.mp4", poster: "/mascot/greet-poster.webp", once: true },
+  // The review ("Check your answers"), once.
+  victory: { sd: "/mascot/victory-480.mp4", hd: "/mascot/victory-720.mp4", poster: "/mascot/victory-poster.webp", once: true },
 };

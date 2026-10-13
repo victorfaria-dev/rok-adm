@@ -302,7 +302,8 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
             key="bot-summary"
             current
             typing={typing}
-            arrival={arrival}
+            arrival="victory"
+            calm="victory"
             lead={SUMMARY_LEAD}
             title="Check your answers"
             help="Your answers stay in this browser. You can change them any time from the You page."

@@ -223,6 +223,7 @@ describe("questionnaire island: summary", () => {
       },
     });
     expect(title().textContent).toBe("Check your answers");
+    expect(document.querySelector(".st-stage")!.getAttribute("data-state")).toBe("victory");
     expect(screen.getByText(/You spent about \$10000000/)).toBeTruthy();
     expect(screen.getByText("10,000,000 USD")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "See my guide" }));
