@@ -52,7 +52,7 @@
       "L-B01-02",
       "L-A02-03"
     ],
-    "low_spender_note": "Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs every guide ranks first [A12-0001, A12-0002]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [A12-0005]. Prices are from seller sites; confirm in your store (L-A12-01).",
+    "low_spender_note": "Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs guides rank first and second [A12-0001, A12-0002]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [A12-0005]. Prices are from seller sites; confirm in your store (L-A12-01).",
     "as_of": "2026-10-13",
     "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
   },
@@ -851,9 +851,10 @@
     "uncertain_notes": "Derived F2P timeline (A05-0007, baixa): VIP 6 about day 41 with 100 gems/day + daily claim; earlier with alliance gifts and event gems. Cumulative reading of thresholds pending T0 (L-A05-01).",
     "gaps": [
       "L-A05-01",
-      "L-A04-01"
+      "L-A04-01",
+      "L-A12-02"
     ],
-    "low_spender_note": "The 30-day gem supply (~650 gems/day vs the F2P 100/day) is what makes VIP 10 reachable before or around KvK1 for a low spender [A12-0002, A04-0001].",
+    "low_spender_note": "The 30-day gem supply (~650 gems/day vs the F2P 100/day) moves VIP milestones earlier for a low spender [A12-0002, A04-0001]; no card gives a VIP 10 date (L-A12-02).",
     "as_of": "2026-10-13",
     "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
   },
@@ -1197,7 +1198,7 @@
       "L-A04-01",
       "L-A05-03"
     ],
-    "low_spender_note": "With the Growth Fund and the 30-day supply, VIP 10 becomes a pre-KvK1 or early-KvK1 target; reaching it earlier is the main payoff of low spending [A12-0001, A12-0002, A12-0005].",
+    "low_spender_note": "With the Growth Fund and the 30-day supply, VIP 10 comes earlier than on F2P income; no card gives a date, and the Growth Fund pays in full only as CH milestones are reached [A12-0001, A12-0002, A12-0005].",
     "as_of": "2026-10-13",
     "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
   },
@@ -1351,8 +1352,7 @@
     "section": "daily",
     "order": 280,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "perfil": [
       "todos"
@@ -1406,8 +1406,7 @@
     "section": "daily",
     "order": 290,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "perfil": [
       "todos"
@@ -1456,8 +1455,7 @@
     "section": "daily",
     "order": 300,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "perfil": [
       "todos"
@@ -1504,8 +1502,7 @@
     "section": "daily",
     "order": 310,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "perfil": [
       "todos"
@@ -1550,8 +1547,7 @@
     "section": "daily",
     "order": 320,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "perfil": [
       "todos"
@@ -1868,7 +1864,7 @@
   {
     "id": "farm-brief",
     "title": "Farm accounts (brief; full guide to come)",
-    "phase": "day15-40",
+    "phase": "anytime",
     "section": "farms",
     "order": 390,
     "stage": [

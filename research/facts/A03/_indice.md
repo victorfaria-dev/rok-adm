@@ -36,6 +36,10 @@ Generated 2026-10-13 by A-economy collector/organizer. Status of all cards: orga
 | [A03-0030](A03-0030.md) | Storehouse-protected resources cannot be transported | regra | alta | [] |
 | [A03-0031](A03-0031.md) | Resource point levels rise as the kingdom develops | mecanica | alta | [] |
 | [A03-0032](A03-0032.md) | Nature's Gift alliance tech: spawns resource points (home) / gathering speed (Lost Kingdom) | mecanica | alta | [] |
+| [A03-0033](A03-0033.md) | Peace Shield items: durations (8h/12h/24h/3d/30d) and Shop gem prices | mecanica | baixa | [] |
+| [A03-0034](A03-0034.md) | What an active Peace Shield blocks (attacks and scouting of the city) | mecanica | baixa | [] |
+| [A03-0035](A03-0035.md) | New cities start with a Peace Shield (duration and end rule unknown) | mecanica | baixa | [] |
+| [A03-0036](A03-0036.md) | Official changes touching city shields/protection (Exile, update shields, flag shields, SoC territory protection) | regra | media | [] |
 
 ## Gaps
 - Resource amount per node level (L1–L6/8) and base gathering speed per resource — not found in any accessible source (rok.guide DNS failure, wiki has no page).
@@ -85,3 +89,7 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A03-0030 | regra | alta | verificado |  |
 | A03-0031 | mecanica | alta | verificado |  |
 | A03-0032 | mecanica | alta | verificado |  |
+| A03-0033 | mecanica | baixa | organizado |  |
+| A03-0034 | mecanica | baixa | organizado |  |
+| A03-0035 | mecanica | baixa | organizado |  |
+| A03-0036 | regra | media | organizado |  |

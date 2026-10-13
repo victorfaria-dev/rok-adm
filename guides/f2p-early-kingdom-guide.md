@@ -52,7 +52,7 @@
 >
 > **Pending in-game measurement (T0):** L-A04-01, L-A05-01, L-B01-02, L-A02-03
 
-> **Low spender note:** Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs every guide ranks first [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md)]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [[A12-0005](../research/facts/A12/A12-0005.md)]. Prices are from seller sites; confirm in your store (L-A12-01).
+> **Low spender note:** Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs guides rank first and second [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md)]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [[A12-0005](../research/facts/A12/A12-0005.md)]. Prices are from seller sites; confirm in your store (L-A12-01).
 
 ### Current patch state: what older guides get wrong
 
@@ -332,9 +332,9 @@ Written against official notes up to **1.1.09 (2026-06-30)**; 1.1.10–1.1.12 ar
 
 > **Uncertain:** Derived F2P timeline ([A05-0007](../research/facts/A05/A05-0007.md), baixa): VIP 6 about day 41 with 100 gems/day + daily claim; earlier with alliance gifts and event gems. Cumulative reading of thresholds pending T0 (L-A05-01).
 >
-> **Pending in-game measurement (T0):** L-A05-01, L-A04-01
+> **Pending in-game measurement (T0):** L-A05-01, L-A04-01, L-A12-02
 
-> **Low spender note:** The 30-day gem supply (~650 gems/day vs the F2P 100/day) is what makes VIP 10 reachable before or around KvK1 for a low spender [[A12-0002](../research/facts/A12/A12-0002.md), [A04-0001](../research/facts/A04/A04-0001.md)].
+> **Low spender note:** The 30-day gem supply (~650 gems/day vs the F2P 100/day) moves VIP milestones earlier for a low spender [[A12-0002](../research/facts/A12/A12-0002.md), [A04-0001](../research/facts/A04/A04-0001.md)]; no card gives a VIP 10 date (L-A12-02).
 
 #### Commander Decision Checklist (before spending gold sculptures)
 
@@ -460,7 +460,7 @@ Shelf-life note: since 2025 there are respec tools (Legendary Commander Swap, ar
 >
 > **Pending in-game measurement (T0):** L-A04-01, L-A05-03
 
-> **Low spender note:** With the Growth Fund and the 30-day supply, VIP 10 becomes a pre-KvK1 or early-KvK1 target; reaching it earlier is the main payoff of low spending [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md), [A12-0005](../research/facts/A12/A12-0005.md)].
+> **Low spender note:** With the Growth Fund and the 30-day supply, VIP 10 comes earlier than on F2P income; no card gives a date, and the Growth Fund pays in full only as CH milestones are reached [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md), [A12-0005](../research/facts/A12/A12-0005.md)].
 
 ### Pre-KvK1 and KvK1 (about day 85–100+)
 
@@ -915,7 +915,7 @@ These gaps weaken specific parts of this guide; the T0 protocol (`research/proto
 | [A13-0001](../research/facts/A13/A13-0001.md) | Accounts per kingdom via Character Management | organizado | media | n/a | no | `farm-brief` |
 | [A13-0002](../research/facts/A13/A13-0002.md) | Farm City Hall targets by march queues | verificado | media | majoritario | yes | `farm-brief` |
 | [A13-0003](../research/facts/A13/A13-0003.md) | Farm Trading Post level targets | verificado | media | majoritario | yes | `farm-brief` |
-| [A13-0005](../research/facts/A13/A13-0005.md) | Farm risks: raids, kill events, zeroing | verificado | media | majoritario | yes | `d0-day1-survival`, `farm-brief`, `daily-break-mode`, `mistakes-economy`, `recovery-zeroed` |
+| [A13-0005](../research/facts/A13/A13-0005.md) | Farm risks: raids, kill events, zeroing | verificado | media | majoritario | yes | `d0-day1-survival`, `daily-break-mode`, `farm-brief`, `mistakes-economy`, `recovery-zeroed` |
 | [A13-0010](../research/facts/A13/A13-0010.md) | Purpose of farms for main growth (F2P) | verificado | media | majoritario | yes | `farm-brief` |
 | [A14-0001](../research/facts/A14/A14-0001.md) | Civilization bonuses, starting commanders and special units (15 civilizations) — table | verificado | media | n/a | yes | `d0-civilization` |
 | [A14-0002](../research/facts/A14/A14-0002.md) | Changing civilization: free item at CH10; otherwise 10,000 gems (Shop) or 2M individual cr | verificado | alta | n/a | yes | `ov-patch-state`, `d0-civilization`, `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17` |
@@ -980,6 +980,7 @@ These gaps weaken specific parts of this guide; the T0 protocol (`research/proto
 | L-A11-02 | Reward tables and time cost per event (value per hour) | alto | `ev-more-than-gems`, `ev-lohar-ap`, `ev-priorities` |
 | L-A11-03 | Wheel of Fortune pricing in the home kingdom (gems vs Spin Tickets) | medio | `d15-commander-checklist`, `ev-wheel-of-fortune` |
 | L-A11-04 | Current MGE format (commander-specific rewards, ranking caps, kingdom rules) | medio | `ev-mge` |
+| L-A12-02 | Official VIP points per $ and Growth Fund milestone table | medio | `d15-vip6-milestone` |
 | L-A13-01 | Minutes per farm per day and yield/day by farm CH | alto | `farm-brief` |
 | L-A13-02 | Official policy on farms/multiple accounts | medio | `farm-brief` |
 | L-A13-03 | Resource-pair farms — no source; only derived reasoning | medio | `farm-brief` |
