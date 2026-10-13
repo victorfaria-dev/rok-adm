@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { cleanLine, cleanText, formatCompact, formatInt, parseQuantity } from "../src/kingdom-common";
+import { cleanLine, cleanText, formatCompact, formatInt, parseQuantity, readQuantity } from "../src/kingdom-common";
 
 describe("parseQuantity", () => {
   it.each([
@@ -9,6 +9,23 @@ describe("parseQuantity", () => {
 
   it.each(["", "abc", "-5", "1.5", "1,50,000", "1e6", "NaN", "12,34", "1.5x", "99999999999999999999", "999999999999b", "99,999,999,999,999,999"])("rejects %j", (t) => {
     expect(parseQuantity(t)).toBeNull();
+  });
+});
+
+describe("readQuantity (shared number parser, Q2 P2-3)", () => {
+  it("reports why a value was refused", () => {
+    expect(readQuantity("")).toEqual({ ok: false, error: "empty" });
+    expect(readQuantity("-1.5m")).toEqual({ ok: false, error: "negative" });
+    expect(readQuantity("1e3")).toEqual({ ok: false, error: "format" });
+    expect(readQuantity("1.5")).toEqual({ ok: false, error: "fraction" });
+    expect(readQuantity("2m", { max: 1_000_000 })).toEqual({ ok: false, error: "too_large" });
+  });
+
+  it("reads shorthand, groups and decimals when asked", () => {
+    expect(readQuantity("1.1m")).toEqual({ ok: true, value: 1_100_000 });
+    expect(readQuantity(".5k")).toEqual({ ok: true, value: 500 });
+    expect(readQuantity("1,500k")).toEqual({ ok: true, value: 1_500_000 });
+    expect(readQuantity("12.5", { decimals: true })).toEqual({ ok: true, value: 12.5 });
   });
 });
 

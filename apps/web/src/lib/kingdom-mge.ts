@@ -1,7 +1,7 @@
 // Web glue for the MGE planner (F-35): saved plans in ko:kingdom:v1 (kind "mge"), pasted
 // candidate lists and the public ledger link. Logic lives in @rokadm/planner (kingdom-mge.ts).
 import {
-  MGE_LIMITS, decodeShare, encodeShare, mgeGovernorsCsv, mgeLedgerCsv, mgePublicPayload, newDocId, parseCandidateLines, parseMgeDoc, parseMgePublic, shareFromHash,
+  MGE_LIMITS, cleanLine, decodeShare, encodeShare, mgeGovernorsCsv, mgeLedgerCsv, mgePublicPayload, newDocId, parseCandidateLines, parseMgeDoc, parseMgePublic, parseMgeScore, readCsvTable, shareFromHash,
   type DecodeResult, type LineError, type MgeDoc, type MgePlan, type MgePublic,
 } from "@rokadm/planner";
 import { downloadText, getDoc, listDocs, removeDoc, saveDoc, type StorageLike, type StoredDoc } from "./kingdom-store";
@@ -50,6 +50,42 @@ export interface AddCandidatesResult {
  */
 export function addCandidatesFromText(doc: MgeDoc, text: string, makeId: () => string = newDocId): AddCandidatesResult {
   const { rows, errors } = parseCandidateLines(text);
+  return mergeCandidates(doc, rows, errors, makeId);
+}
+
+/** Header spellings accepted when importing governors from a spreadsheet. */
+export const MGE_CSV_COLUMNS = {
+  name: ["name", "governor", "governor name", "player"],
+  score: ["score", "dkp", "points"],
+} as const;
+
+/**
+ * Add candidates from a CSV file with a header row (column "name" or "governor", optional "score"
+ * or "dkp"); same merge rules as pasting. Throws with a user-facing message when the file cannot be read.
+ */
+export function addCandidatesFromCsv(doc: MgeDoc, text: string, makeId: () => string = newDocId): AddCandidatesResult {
+  const t = readCsvTable(text, MGE_CSV_COLUMNS, ["name"]);
+  if (!t.ok) throw new Error(t.error);
+  const rows: Array<{ name: string; score: number | null }> = [];
+  const errors: LineError[] = [];
+  for (const { line, values } of t.records) {
+    const raw = `${values.name}${values.score ? `, ${values.score}` : ""}`;
+    const name = cleanLine(values.name, MGE_LIMITS.name + 1);
+    if (!name) { errors.push({ line, text: raw, message: "No name on this row." }); continue; }
+    if (name.length > MGE_LIMITS.name) { errors.push({ line, text: raw, message: `Name is longer than ${MGE_LIMITS.name} characters.` }); continue; }
+    let score: number | null = null;
+    if (values.score) {
+      const r = parseMgeScore(values.score);
+      if (!r.ok) { errors.push({ line, text: raw, message: r.tooBig ? r.message : "The score is not a number (use 4200000, 4,200,000 or 4.2m)." }); continue; }
+      score = r.score;
+    }
+    rows.push({ name, score });
+  }
+  return mergeCandidates(doc, rows, errors, makeId);
+}
+
+/** Merge parsed rows into the list. A name already listed (any case) is not added again. */
+function mergeCandidates(doc: MgeDoc, rows: ReadonlyArray<{ name: string; score: number | null }>, errors: LineError[], makeId: () => string): AddCandidatesResult {
   const seen = new Set(doc.candidates.map((c) => c.name.toLowerCase()));
   const candidates = [...doc.candidates];
   const duplicates: string[] = [];

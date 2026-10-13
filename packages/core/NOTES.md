@@ -18,3 +18,9 @@
 - `AccountProfile.returningPlayer` is collected but no block field uses it yet. F-51 lists a "retornante" tag, so blocks may need a `returning: boolean | null` field later.
 - `lifetimeSpendUsd` only produces a warning for now (`profileWarnings`). It could map to an "effective profile" once research/perfis.md defines the thresholds.
 - Blocks carry no card metadata, so `renderGuideMarkdown` skips the Python guide's "Sources and confidence" appendix. It would need the F-50 `Fact[]` as input.
+
+## Guide sets (wave H, `src/guideSets.ts`)
+
+- `GUIDE_SETS` registers every `guides/data/blocks.*.json` file (a test fails if a file is added without registering it). Kinds: `base` (F2P), `profile-delta` (`blocks.low.json`, merged into the base guide for Low and above, as guides/README.md says), `guide` (standalone: new kingdom, first 30 days, returning, recovery, kingdom admin).
+- `guidesForProfile(profile, { zeroed })` lists the guides to offer, most specific first, base guide last: recovery only when `zeroed` is passed (the questionnaire does not ask it); returning when `returningPlayer`; kingdom admin for role `lider`; new kingdom for `pre_kvk` and kingdom day ≤ 14 (or unknown); first 30 days for non-returning players with CH ≤ 16 (`FIRST30_MAX_CITY_HALL`, a proxy, since the profile has no account age).
+- `selectGuide(id, loaded, profile)` = `selectBlocks` over `blocksForGuide` with the set's chapter titles (`sectionTitles`, new `SelectOptions` field). Loading the JSON stays with the caller (no I/O in core).

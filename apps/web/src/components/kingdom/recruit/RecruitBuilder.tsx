@@ -9,6 +9,8 @@ import { CheckField, SelectField, TextAreaField, TextField } from "../shared/Fie
 import { kingdomStorage, removeDoc, type StorageLike } from "../../../lib/kingdom-store";
 import { charCount, draftInput, listRecruit, overLimitText, recruitTitle, saveRecruit, titleCutText, type RecruitListItem } from "../../../lib/kingdom-recruit";
 import { formatDay } from "../../../lib/kingdom-rules";
+import { recruitMessage } from "../../../lib/discord";
+import DiscordPost from "../../discord/DiscordPost";
 
 const FORMATS: ReadonlyArray<{ value: RecruitFormat; label: string }> = [
   { value: "discord", label: "Discord" },
@@ -51,6 +53,7 @@ export default function RecruitBuilder() {
   const set = <K extends keyof RecruitInput>(k: K, v: RecruitInput[K]) => setInput((i) => ({ ...i, [k]: v }));
   const errors = recruitErrors(input);
   const post = useMemo(() => recruitPost(input, format), [input, format]);
+  const discordBody = useMemo(() => (recruitIsEmpty(input) ? "" : recruitPost(input, "discord").body), [input]);
 
   function setRole(idx: number, patch: Partial<RecruitRole>) {
     setInput((i) => ({ ...i, roles: i.roles.map((r, j) => (j === idx ? { ...r, ...patch } : r)) }));
@@ -216,6 +219,7 @@ export default function RecruitBuilder() {
         <CopyText id="kt-body-out" label={post.title !== undefined ? "Post body" : "Post"} text={post.body} copyLabel={post.title !== undefined ? "Copy body" : "Copy post"} />
         <p class="kt-count" data-char-count>{post.title !== undefined ? "Body: " : ""}{charCount(post.chars, post.limit)}</p>
         <div aria-live="polite">{overText && <p class="kg-error" data-over-limit>{overText}</p>}</div>
+        <DiscordPost id="recruit" summary="Post to Discord (Discord format)" message={recruitMessage(discordBody)} />
         <p class="kg-note" data-chat-warning><strong>Post on Discord, Reddit or your own channels. Never paste links in in-game chat:</strong> players report mutes and account flags for sharing outside links there. Use the in-game Recruitment Plaza for in-game ads.</p>
       </section>
     </div>

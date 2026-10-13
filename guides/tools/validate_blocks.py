@@ -151,7 +151,10 @@ PROFILE_DELTAS = {"low", "medium", "high", "whale", "kraken"}
 
 
 def default_paths():
+    # guides/data/staging/: block sets written by research waves and not yet rendered
+    # by the web app (the director moves them up to guides/data when registering them).
     paths = sorted(p for p in glob.glob(os.path.join(DATA, "blocks.*.json"))
+                   + glob.glob(os.path.join(DATA, "staging", "blocks.*.json"))
                    if not p.endswith("blocks.schema.json"))
     return paths or [os.path.join(DATA, "blocks.f2p.json")]
 

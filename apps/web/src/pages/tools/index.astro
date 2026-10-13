@@ -1,0 +1,38 @@
+---
+import Shell from "../../layouts/Shell.astro";
+import DataStamp from "../../components/tools/kit/DataStamp.astro";
+import { GROUPS, TOOLS } from "../../lib/tools-catalog";
+import "../../components/tools/kit/tools.css";
+
+// List only tools whose page exists in this build (pages land one by one).
+const built = new Set(
+  Object.keys(import.meta.glob("/src/pages/**/index.astro")).map((k) => k.replace(/^\/src\/pages/, "").replace(/index\.astro$/, "")),
+);
+const live = TOOLS.filter((t) => built.has(t.href));
+---
+<Shell title="Tools" description="Calculators and checklists for Rise of Kingdoms players: VIP, gems, speedups, building costs, healing, Action Points, migration and KvK readiness. Every number cites its source." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Tools</h1>
+      <p class="t-lead">Calculators and checklists. Every number shows the fact card it comes from and how sure we are. What you type stays on this device.</p>
+      <DataStamp />
+    </header>
+    {GROUPS.filter((g) => live.some((t) => t.group === g.id)).map((g) => (
+      <section aria-labelledby={`g-${g.id}`} class="t-page-body">
+        <h2 id={`g-${g.id}`}>{g.title}</h2>
+        <ul class="t-hub">
+          {live.filter((t) => t.group === g.id).map((t) => (
+            <li><a href={t.href}><strong>{t.title}</strong><span>{t.blurb}</span></a></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <section class="t-deferred" aria-labelledby="t-deferred-h">
+      <h2 id="t-deferred-h">Not here yet</h2>
+      <ul>
+        <li>Research costs and troop training costs: no research or troop table in our data yet.</li>
+        <li>First 30 days path and milestone benchmark: they wait on in-game measurements.</li>
+      </ul>
+    </section>
+  </div>
+</Shell>

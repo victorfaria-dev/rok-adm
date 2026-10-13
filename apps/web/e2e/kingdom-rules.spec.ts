@@ -215,6 +215,16 @@ test.describe("rules view page", () => {
     expect(errors).toEqual([]);
   });
 
+  test("a real link with one character changed says damaged instead of showing altered rules (Q2 P3)", async ({ page }) => {
+    const link = await viewLink(page);
+    expect(link.length).toBeLessThan(2000);
+    const i = link.indexOf("#d=") + 3 + 40;
+    const tampered = link.slice(0, i) + (link[i] === "A" ? "B" : "A") + link.slice(i + 1);
+    await gotoHydrated(page, tampered);
+    await expect(page.locator("h1")).toHaveText("This rules link cannot be opened");
+    await expect(page.getByRole("alert")).toContainText("This link is damaged");
+  });
+
   for (const theme of ["dark", "light"] as const) {
     test(`axe view ${theme} (rules and error)`, async ({ page }) => {
       const link = await viewLink(page);

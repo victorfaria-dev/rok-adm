@@ -1,0 +1,120 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import GemsCalc from "../../../components/tools/gems/GemsCalc";
+import RuleList from "../../../components/tools/hoard/RuleList.astro";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { Cite } from "../../../components/tools/kit/Cite";
+import { cite } from "../../../lib/tools-payload";
+import { getTable } from "@rokadm/data";
+import { isPlainItemName, shopView, type ShopRow } from "@rokadm/planner/tools";
+import gems from "../../../../../../packages/planner/tools-data/gems.json";
+import "../../../components/tools/kit/tools.css";
+
+const shopT = getTable("A04-vip-shop");
+const isNum = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x);
+const gemRows: ShopRow[] = shopT.rows
+  .filter((r) => r.currency === "gems" && isPlainItemName(r.item) && isNum(r.price) && isNum(r.vip_required) && isNum(r.qty_per_week))
+  .map((r) => ({ item: String(r.item), price: Number(r.price), vip: Number(r.vip_required), qty: Number(r.qty_per_week) }));
+const markupRows = shopT.rows.filter((r) => !isPlainItemName(r.item)).length;
+const shop = shopView(gemRows);
+const universal = shop.filter((r) => /^Universal Speedup/.test(r.item) && r.gemsPerMinute !== null);
+const cheapest = universal.reduce((a, b) => (b.gemsPerMinute! < a.gemsPerMinute! ? b : a));
+const dearest = universal.reduce((a, b) => (b.gemsPerMinute! > a.gemsPerMinute! ? b : a));
+
+const chT = getTable("A01-city-hall-rewards");
+const chGems = chT.rows
+  .map((r) => ({ level: Number(r.ch_level), gems: Number(r.gems), items: String(r.items ?? "") }))
+  .filter((r) => Number.isFinite(r.level) && Number.isFinite(r.gems) && r.gems > 0);
+const chTotal = chGems.reduce((s, r) => s + r.gems, 0);
+
+const c = {
+  vip: cite(gems.gemToVip.facts),
+  ap: cite(gems.apStartPrice.facts),
+  shop: cite(shopT.factIds),
+  ch: cite(chT.factIds),
+  wheel: cite(gems.wheelTenSpins.facts),
+};
+const fmt = (n: number, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const ap = { start: gems.apStartPrice.value, step: gems.apStep.value, perPurchase: gems.apPerPurchase.value };
+const props = { ap, shop, chGems: chGems.map(({ level, gems: g }) => ({ level, gems: g })), cites: { ap: c.ap, shop: c.shop, ch: c.ch } };
+const ids = [
+  ...gems.gemToVip.facts, ...gems.apStartPrice.facts, ...shopT.factIds, ...chT.factIds, ...gems.wheelTenSpins.facts,
+  ...gems.guidance.flatMap((g) => g.facts),
+];
+---
+<Shell title="Gem value table" description="What each gem use buys in Rise of Kingdoms: VIP points, Action Points, VIP Shop items and City Hall reward gems. Every number cites its fact card." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Gem value table</h1>
+      <p class="t-lead">What each gem use buys, side by side, so you can stop wasting gems. Values you type stay on this device.</p>
+      <DataStamp />
+    </header>
+
+    <section class="t-section" aria-labelledby="sum-h">
+      <h2 id="sum-h">What gems buy</h2>
+      <div class="t-table" role="region" aria-label="What gems buy, table" tabindex="0">
+        <table data-testid="gems-summary">
+          <thead><tr><th scope="col">Use</th><th scope="col">What you get</th><th scope="col">Source</th></tr></thead>
+          <tbody>
+            <tr data-row="vip">
+              <td><a href="/tools/vip/">VIP points</a></td>
+              <td><span class="mono">{gems.gemToVip.value}</span> VIP point per gem</td>
+              <td><Cite cite={c.vip} /></td>
+            </tr>
+            <tr data-row="ap">
+              <td>Action Points</td>
+              <td><span class="mono">{fmt(ap.start)}</span> gems for <span class="mono">{fmt(ap.perPurchase)}</span> AP on the first buy of the day ({fmt(ap.start / ap.perPurchase, 2)} gems per AP), then <span class="mono">{fmt(ap.step)}</span> gems more each time</td>
+              <td><Cite cite={c.ap} /></td>
+            </tr>
+            <tr data-row="speedups">
+              <td>Universal speedups (VIP Shop)</td>
+              <td>From <span class="mono">{fmt(dearest.gemsPerMinute!, 2)}</span> gems per minute ({dearest.item}, VIP {dearest.vip}) down to <span class="mono">{fmt(cheapest.gemsPerMinute!, 2)}</span> ({cheapest.item}, VIP {cheapest.vip}). Derived: price ÷ minutes.</td>
+              <td><Cite cite={c.shop} /></td>
+            </tr>
+            <tr data-row="ch">
+              <td>City Hall upgrades (income)</td>
+              <td><span class="mono">{fmt(chTotal)}</span> one-time gems in total, at City Hall {chGems.map((r) => r.level).join(", ")}</td>
+              <td><Cite cite={c.ch} /></td>
+            </tr>
+            <tr data-row="wheel">
+              <td>Wheel of Fortune</td>
+              <td>About <span class="mono">{fmt(gems.wheelTenSpins.value)}</span> gems for the first 10 spins under the old gem pricing. Spins now need Spin Tickets, so this is out of date.</td>
+              <td><Cite cite={c.wheel} /></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <GemsCalc client:load {...props} />
+
+    <section class="t-section" aria-labelledby="ch-h">
+      <h2 id="ch-h">City Hall reward gems</h2>
+      <div class="t-table" role="region" aria-label="City Hall reward gems, table" tabindex="0">
+        <table data-testid="gems-ch">
+          <caption>One-time rewards that include gems <Cite cite={c.ch} /></caption>
+          <thead><tr><th scope="col">City Hall</th><th scope="col">Gems</th><th scope="col">Also</th></tr></thead>
+          <tbody>
+            {chGems.map((r) => <tr><td class="mono">{r.level}</td><td class="mono">{fmt(r.gems)}</td><td>{r.items}</td></tr>)}
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="t-section" aria-labelledby="prio-h">
+      <h2 id="prio-h">Where to spend first</h2>
+      <RuleList rules={gems.guidance} testId="gems-guidance" />
+    </section>
+
+    <section class="t-deferred" aria-labelledby="t-deferred-h">
+      <h2 id="t-deferred-h">Not here yet</h2>
+      <ul>
+        <li>Wheel of Fortune guarantees (which reward is certain after how many spins) and Spin Ticket prices: needs cost data.</li>
+        <li>A gem value for keys and sculptures: there is no defensible gem-to-item rate yet.</li>
+        <li>{markupRows} VIP Shop rows could not be read from the source table and are left out.</li>
+      </ul>
+    </section>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

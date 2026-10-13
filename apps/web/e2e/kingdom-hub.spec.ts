@@ -44,6 +44,9 @@ test.describe("council kit hub", () => {
 
   test("rejects a file that is not a council export", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/");
+    // Q2 P2-6: the file input has its own accessible name and is not hidden from assistive tech.
+    await expect(page.locator("[data-import]")).toHaveAccessibleName("Import council data from a .json file");
+    await expect(page.locator("[data-import]")).not.toHaveAttribute("aria-hidden", "true");
     await page.locator("[data-import]").setInputFiles({ name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"app":"other"}') });
     await expect(page.getByRole("alert")).toContainText("not a KingdomOps council export");
   });

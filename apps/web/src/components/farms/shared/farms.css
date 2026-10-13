@@ -22,7 +22,7 @@
 .fm-field input, .fm-field select, .fm-field textarea {
   min-height: 48px; width: 100%; min-width: 0; padding: var(--ko-space-2) var(--ko-space-3);
   color: var(--ko-text); background: var(--ko-background);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-sm);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-sm);
 }
 .fm-field input:focus-visible, .fm-field select:focus-visible, .fm-field textarea:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 1px; }
 .fm-error { color: var(--ko-error); font-size: var(--ko-text-sm); }

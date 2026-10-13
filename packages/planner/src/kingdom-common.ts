@@ -26,27 +26,58 @@ export const isIsoTime = (x: unknown): x is string => typeof x === "string" && x
 
 const SUFFIX: Record<string, number> = { k: 1e3, m: 1e6, b: 1e9 };
 
+export type QuantityError = "empty" | "negative" | "format" | "fraction" | "too_large";
+export type QuantityResult = { ok: true; value: number } | { ok: false; error: QuantityError };
+
+export interface QuantityOptions {
+  /** Largest value accepted (default: largest safe integer). */
+  max?: number;
+  /** Accept a result with decimals ("12.5"); default false = whole numbers only. */
+  decimals?: boolean;
+}
+
 /**
- * Parse a game quantity typed by a person: "1,500,000", "1 500 000", "1.5m", "300k", "2.4B", "1500000".
- * Returns null for anything else (negative, fractions without a suffix, badly grouped commas, NaN).
+ * The one number parser for what players type (Q2 P2-3: farms log, tools, council inputs):
+ * "1500000", "1,500,000", "1 500 000", "1.5m", "300k", "2.4B", ".5m". Commas must be en-US thousands
+ * groups. No negatives, no scientific notation ("1e6"), no NaN. Spaces and "_" are ignored.
+ */
+export function readQuantity(text: string, opts: QuantityOptions = {}): QuantityResult {
+  const s = text.trim().toLowerCase().replace(/[\s_]/g, "");
+  if (!s) return { ok: false, error: "empty" };
+  if (/^-/.test(s)) return { ok: false, error: "negative" };
+  const m = /^(\d{1,3}(?:,\d{3})+|\d*)(?:\.(\d+))?([kmb])?$/.exec(s);
+  if (!m || (m[1] === "" && m[2] === undefined)) return { ok: false, error: "format" };
+  const base = Number(`${m[1]!.replace(/,/g, "") || "0"}.${m[2] ?? "0"}`);
+  const value = base * (m[3] ? SUFFIX[m[3]]! : 1);
+  if (!Number.isFinite(value)) return { ok: false, error: "too_large" };
+  const max = opts.max ?? Number.MAX_SAFE_INTEGER;
+  if (opts.decimals) {
+    const v = Math.round(value * 1e6) / 1e6;
+    return v > max ? { ok: false, error: "too_large" } : { ok: true, value: v };
+  }
+  // Float-safe: 1.1m must give 1,100,000, not 1,100,000.0000000002.
+  const rounded = Math.round(value);
+  if (Math.abs(value - rounded) > 1e-6 * Math.max(1, Math.abs(value))) return { ok: false, error: "fraction" };
+  if (rounded > max || !Number.isSafeInteger(rounded)) return { ok: false, error: "too_large" };
+  return { ok: true, value: rounded };
+}
+
+/** Plain-language fix for each QuantityError (UI copy). */
+export const QUANTITY_ERROR_TEXT: Readonly<Record<QuantityError, string>> = {
+  empty: "Enter a number.",
+  negative: "Enter 0 or more.",
+  format: "Enter a number like 1,500,000, 1.5m or 300k.",
+  fraction: "Use a whole number.",
+  too_large: "That number is too large.",
+};
+
+/**
+ * Parse a game quantity typed by a person (see readQuantity): whole number, or null for anything
+ * else (empty, negative, fractions, badly grouped commas, scientific notation, NaN).
  */
 export function parseQuantity(text: string): number | null {
-  const s = text.trim().toLowerCase().replace(/[\s_]/g, "");
-  if (!s) return null;
-  const m = /^(\d+(?:\.\d+)?)([kmb])$/.exec(s);
-  if (m) {
-    const v = Math.round(Number(m[1]) * SUFFIX[m[2]!]!);
-    return Number.isSafeInteger(v) ? v : null;
-  }
-  if (/^\d{1,3}(,\d{3})+$/.test(s)) {
-    const v = Number(s.replace(/,/g, ""));
-    return Number.isSafeInteger(v) ? v : null;
-  }
-  if (/^\d+$/.test(s)) {
-    const v = Number(s);
-    return Number.isSafeInteger(v) ? v : null;
-  }
-  return null;
+  const r = readQuantity(text);
+  return r.ok ? r.value : null;
 }
 
 /** "12,345,678" (en-US grouping, rounded to an integer). */

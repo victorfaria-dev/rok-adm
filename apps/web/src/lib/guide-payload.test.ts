@@ -2,9 +2,11 @@ import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
-import type { GuideBlock } from "@rokadm/core";
-import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildGuidePayload, patchBadge, renderMarkdown } from "./guide-payload";
+import { defaultProfile, type AccountProfile, type GuideBlock } from "@rokadm/core";
+import { lowSpenderTargets } from "@rokadm/planner";
+import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildLowBudgetPayload, buildGuidePayload, patchBadge, renderMarkdown, vipByKvk1Text } from "./guide-payload";
 
+const make = (p: Partial<AccountProfile>): AccountProfile => ({ ...defaultProfile(), ...p });
 const GUIDES = join(__dirname, "../../../../guides/data");
 const files = readdirSync(GUIDES).filter((f) => /^blocks\..+\.json$/.test(f) && f !== "blocks.schema.json");
 
@@ -48,9 +50,38 @@ describe("guide payload (build time)", () => {
     expect(JSON.stringify(budget)).not.toContain("invalidatedBy");
   });
 
-  it("labels task-list checkboxes", () => {
-    const html = renderMarkdown("- [ ] one\n- [x] two");
-    expect(html.match(/<input [^>]*type="checkbox"[^>]*>/g)?.every((i) => i.includes("aria-label="))).toBe(true);
+  it("renders task lists as plain list items, without fake checkboxes", () => {
+    for (const src of ["- [ ] one\n- [x] two", "- [ ] one\n\n- [x] two\n"]) {
+      const html = renderMarkdown(src);
+      expect(html).not.toContain("<input");
+      expect(html.match(/<li class="ko-task[^"]*">/g)).toHaveLength(2);
+      expect(html).toContain('<li class="ko-task ko-task-done">');
+      expect(html).toContain('<span class="visually-hidden">Done: </span>');
+    }
+  });
+
+  it("names each table region after its block, uniquely across the guide", () => {
+    const one = renderMarkdown("| a | b |\n|---|---|\n| 1 | 2 |", "Daily 15 minutes");
+    expect(one).toContain('aria-label="Daily 15 minutes, table (scrolls sideways)"');
+    const two = renderMarkdown("| a |\n|---|\n| 1 |\n\ntext\n\n| b |\n|---|\n| 2 |", "X");
+    expect(two).toContain('aria-label="X, table 1 (scrolls sideways)"');
+    expect(two).toContain('aria-label="X, table 2 (scrolls sideways)"');
+    for (const set of Object.keys(BLOCK_SETS)) {
+      const html = buildGuidePayload(set).blocks.flatMap((b) => [b.bodyHtml, b.whyHtml, b.uncertain_notes ?? "", b.low_spender_note ?? "", b.split_views ?? ""]).join("");
+      const labels = [...html.matchAll(/role="region" aria-label="([^"]*)"/g)].map((m) => m[1]);
+      if (set === "f2p") expect(labels.length, set).toBeGreaterThan(0);
+      expect(new Set(labels).size, set).toBe(labels.length);
+      expect(html, set).not.toContain('type="checkbox"');
+    }
+  });
+
+  it("VIP by KvK1: one sentence when both routes reach the same level", () => {
+    expect(vipByKvk1Text(7, 7)).toMatch(/^VIP 7 either way/);
+    expect(vipByKvk1Text(7, 7).match(/VIP \d+/g)).toHaveLength(1);
+    expect(vipByKvk1Text(6, 8)).toBe("VIP 6 with the daily chest only, VIP 8 if every guaranteed gem goes to VIP");
+    const row = buildBudgetPayload().targets.find((t) => t.label.startsWith("VIP by day"))!;
+    const levels = row.value.match(/VIP (\d+)/g)!;
+    expect(new Set(levels).size).toBe(levels.length);
   });
 
   it("parses the patch reference into a version and a note", () => {
@@ -73,5 +104,51 @@ describe("guide payload (build time)", () => {
     expect(b.unchanged.length).toBeGreaterThan(0);
     for (const u of b.unchanged) expect(u.text).not.toMatch(/https?:|buy now|\$/i);
     expect(b.researched).toEqual(["f2p"]);
+  });
+});
+
+describe("Low spender targets payload (wave J)", () => {
+  const low = buildLowBudgetPayload();
+  const text = JSON.stringify(low);
+  const t = lowSpenderTargets(make({ spending: "low" }));
+
+  it("is its own lean file: ≤ 15 KB gzip, no fact-dataset markers", () => {
+    expect(gzipSync(text).length).toBeLessThanOrEqual(15 * 1024);
+    for (const marker of ["invalidatedBy", "accessedAt"]) expect(text).not.toContain(marker);
+  });
+
+  it("carries the planner's pass-only and low-full tiers with the same numbers", () => {
+    expect(low.tiers.map((x) => x.id)).toEqual(["pass-only", "low-full"]);
+    for (const tier of t.tiers) {
+      const row = low.tiers.find((x) => x.id === tier.id)!;
+      expect(row.monthlyUsd.value).toBe(tier.monthlyUsd.value);
+      expect(row.monthlyGems.value).toBe(tier.monthlyGems.value);
+      expect(row.oneTimeUsd.value).toBe(tier.oneTimeUsd.value);
+      expect(row.lines.map((l) => l.purchaseId)).toEqual(tier.lines.map((l) => l.purchase.id));
+    }
+  });
+
+  it("every purchase row has a price, confidence and fact ids; ratios cite the A12-0618 method", () => {
+    expect(low.priceWarning).toMatch(/region/);
+    for (const p of low.purchases) {
+      expect(p.priceUsd.value, p.id).toBeGreaterThan(0);
+      expect(p.facts.length, p.id).toBeGreaterThan(0);
+      expect(["high", "medium", "low", "pending"]).toContain(p.confidence);
+      for (const r of [p.gemsPerUsd, p.vipPerUsd]) if (r) expect(r.facts, p.id).toContain("A12-0618");
+    }
+    expect(low.purchases.find((p) => p.id === "gem-supply-30d")!.gemsPerUsd!.value).toBe(1952);
+    expect(low.valueMethod.facts).toContain("A12-0618");
+  });
+
+  it("lists the daily-offers ceiling apart from the tiers, and a VIP timeline with the supply", () => {
+    expect(low.outsideTiers).toContain("daily-special-offers");
+    for (const tier of low.tiers) expect(tier.lines.map((l) => l.purchaseId)).not.toContain("daily-special-offers");
+    expect(low.vip.rows.length).toBeGreaterThan(10);
+    expect(low.vip.facts).toContain("A12-0601");
+  });
+
+  it("does not change the F2P reality check: Low is still not a researched profile there", () => {
+    expect(buildBudgetPayload().researched).toEqual(["f2p"]);
+    expect(text).not.toContain("byDay");
   });
 });

@@ -1,0 +1,144 @@
+{
+  "_about": "Play It Safe FAQ and account checklist of /tools/safety/ (F-32). Written from a compliance angle: what the rules say and what to do instead, never how to avoid detection. An entry with \"community\": true has no fact card and is shown as reported by the community.",
+  "faq": [
+    {
+      "id": "bots",
+      "q": "Are bots, scripts and auto-clickers allowed?",
+      "a": "No. The Terms of Service forbid cheats, bots, mods and any third-party software that gives an advantage or interferes with the game, and they forbid playing by automated means. Since patch 1.1.07 the game lowers your Conduct Score when it detects scripts or cheats, with penalties below set thresholds.",
+      "facts": ["C02-0002", "C02-0004", "C04-0006"],
+      "evidence": {
+        "C02-0002": "Users may not use cheats, exploits, hacks, bots, mods or third-party software designed to gain an advantage",
+        "C02-0004": "access the Services by automated means including bots, robots and spiders",
+        "C04-0006": "players using third-party tools such as scripts or cheats lose Conduct Score"
+      }
+    },
+    {
+      "id": "auto-hunt",
+      "q": "Is there an allowed way to hunt barbarians automatically?",
+      "a": "Yes: the game's own auto-peacekeeping sends your troops after barbarians, with batch and group attacks. Use it instead of any outside tool.",
+      "facts": ["A09-0008"],
+      "evidence": {
+        "A09-0008": "The game has a built-in auto-peacekeeping feature that sends troops to fight barbarians automatically"
+      }
+    },
+    {
+      "id": "ban-history",
+      "q": "Does Lilith actually ban for this?",
+      "a": "Yes. Lilith published numbered anti-botting reports listing accounts banned for good, naming auto-clickers and third-party payments, and the rules let it suspend or close an account at its own discretion.",
+      "facts": ["C02-0012", "C02-0011"],
+      "evidence": {
+        "C02-0012": "listing permanently banned accounts, targeting botting tools such as auto-clickers and third-party payments",
+        "C02-0011": "Lilith may suspend or terminate an account if it suspects or determines, in its own discretion, a ToS violation"
+      }
+    },
+    {
+      "id": "emulator",
+      "q": "Is playing on an emulator or the PC client OK?",
+      "a": "A 2026 community guide says emulators and the PC client are fine, and that automation and modified clients are what get accounts banned. This is a community reading, not an official statement.",
+      "facts": ["C02-0014"],
+      "evidence": {
+        "C02-0014": "playing on emulators or the PC client is fine, while third-party automation and modified clients are what get accounts banned"
+      }
+    },
+    {
+      "id": "sharing",
+      "q": "Can a friend, a pilot or an account sitter play my account?",
+      "a": "No. Sharing an account, including giving out your username and password so someone else can log in, is against the Terms of Service, and that covers paid pilots for MGE or KvK. Keep your login to yourself.",
+      "facts": ["C02-0005"],
+      "evidence": {
+        "C02-0005": "Account sharing, including sharing username and password for others to log in, is prohibited"
+      }
+    },
+    {
+      "id": "selling",
+      "q": "Can I buy or sell an account, gems or items?",
+      "a": "No. Under the Terms you don't own your account or its virtual items, and you may not sell or transfer them for money. Third-party payments also appear in Lilith's ban reports.",
+      "facts": ["C02-0010", "C02-0012"],
+      "evidence": {
+        "C02-0010": "may not sell or transfer virtual items or currency or redeem them for anything of monetary value",
+        "C02-0012": "third-party payments"
+      }
+    },
+    {
+      "id": "tools",
+      "q": "What about third-party tools that read the game?",
+      "a": "The Terms forbid tools that pull game content other than Lilith's own software or a normal browser, and forbid reverse engineering the client. KingdomOps never reads the game: you type your own numbers.",
+      "facts": ["C02-0003", "C02-0006"],
+      "evidence": {
+        "C02-0003": "Users may not access, search or download Lilith Content from the Services using any engine, software, tool or mechanism",
+        "C02-0006": "Users may not decipher, decompile, disassemble or reverse engineer the software"
+      }
+    },
+    {
+      "id": "credentials",
+      "q": "A bot or website asks for my game login. Should I give it?",
+      "a": "No. The Terms forbid asking other players for their login details, so no legitimate service needs them. KingdomOps never asks for your login.",
+      "facts": ["C02-0004"],
+      "evidence": {
+        "C02-0004": "Users may not solicit other members' login credentials"
+      }
+    },
+    {
+      "id": "discord-links",
+      "q": "Can I paste a Discord link in game chat?",
+      "a": "Don't. Players report being muted or banned for posting or asking for Discord links and other third-party information in game chat, so share links outside the game and never ask anyone to paste one.",
+      "facts": [],
+      "community": true
+    },
+    {
+      "id": "farms",
+      "q": "Are farm accounts allowed?",
+      "a": "Fan guides say a second city made with the in-game Character Management is a normal feature, usually two per kingdom. The same guides say to avoid bots, macros and automated gathering on any account; we found no official text on farms.",
+      "facts": ["C02-0017", "A13-0008"],
+      "evidence": {
+        "C02-0017": "create additional characters via Settings > Character Management",
+        "A13-0008": "while bots, macros, automated gathering and modified clients should be avoided"
+      }
+    },
+    {
+      "id": "appeal",
+      "q": "I was banned or muted by mistake. What now?",
+      "a": "Contact official support from inside the game with your governor ID, the time it started and the exact notice. The Terms say a terminated account cannot be reinstated, so appeal early and stay factual.",
+      "facts": ["C02-0011"],
+      "evidence": {
+        "C02-0011": "terminated accounts cannot be reinstated"
+      }
+    }
+  ],
+  "checklist": [
+    {
+      "id": "bind",
+      "text": "Bind your account to a login you control.",
+      "detail": "The game offers account binding (it even pays gems for binding to Facebook). Use an email or login only you can open.",
+      "facts": ["A04-0005"],
+      "evidence": { "A04-0005": "binding the account to Facebook" }
+    },
+    {
+      "id": "password",
+      "text": "Never share your password or let anyone else log in.",
+      "detail": "That includes friends, alliance officers, pilots and account sitters.",
+      "facts": ["C02-0005"],
+      "evidence": { "C02-0005": "users must not disclose their password or let any third party use their account" }
+    },
+    {
+      "id": "no-login-elsewhere",
+      "text": "Don't type your game login into bots, websites or tools.",
+      "detail": "No legitimate service needs it.",
+      "facts": ["C02-0004"],
+      "evidence": { "C02-0004": "Users may not solicit other members' login credentials" }
+    },
+    {
+      "id": "official-client",
+      "text": "Play only on the official client, with no scripts, auto-clickers or mods.",
+      "detail": "Use the built-in auto-peacekeeping for barbarians.",
+      "facts": ["C02-0002", "C04-0006", "A09-0008"],
+      "evidence": { "C02-0002": "Users may not use cheats, exploits, hacks, bots, mods" }
+    },
+    {
+      "id": "no-trading",
+      "text": "Don't buy or sell accounts, gems or items outside the game.",
+      "facts": ["C02-0010"],
+      "evidence": { "C02-0010": "Users have no ownership interest in their Lilith Account" }
+    }
+  ]
+}

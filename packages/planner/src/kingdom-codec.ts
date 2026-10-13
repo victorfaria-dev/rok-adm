@@ -91,6 +91,16 @@ async function pipe(bytes: Uint8Array, stream: CompressionStream | Decompression
   return out;
 }
 
+/** FNV-1a 32-bit over UTF-16 code units, 8 hex digits: catches edited links, not an authenticity check. */
+export function shareChecksum(text: string): string {
+  let h = 0x811c9dc5;
+  for (let i = 0; i < text.length; i++) {
+    h ^= text.charCodeAt(i);
+    h = Math.imul(h, 0x01000193) >>> 0;
+  }
+  return h.toString(16).padStart(8, "0");
+}
+
 // ---------------------------------------------------------------------------
 // Public API
 
@@ -112,7 +122,7 @@ export interface EncodeOptions {
  * Throws ShareTooLargeError when decodeShare would refuse the result, so no dead link is ever handed out.
  */
 export async function encodeShare(kind: string, data: unknown, opts: EncodeOptions = {}): Promise<string> {
-  const json = new TextEncoder().encode(JSON.stringify({ k: kind, d: data }));
+  const json = new TextEncoder().encode(JSON.stringify({ k: kind, d: data, h: shareChecksum(JSON.stringify(data)) }));
   if (json.length > MAX_SHARE_BYTES) throw new ShareTooLargeError(Math.ceil((json.length * 4) / 3));
   let out = `${SHARE_VERSION}j${toBase64Url(json)}`;
   if (opts.compress !== false && hasStreams()) {
@@ -158,8 +168,12 @@ export async function decodeShare<T>(text: string | null | undefined, kind: stri
     return { ok: false, error: "bad_json" };
   }
   if (typeof env !== "object" || env === null || Array.isArray(env)) return { ok: false, error: "bad_json" };
-  const e = env as { k?: unknown; d?: unknown };
+  const e = env as { k?: unknown; d?: unknown; h?: unknown };
+  // Envelopes only ever hold k, d and h: any other key is a damaged "h" (which would skip the checksum).
+  if (Object.keys(e).some((key) => key !== "k" && key !== "d" && key !== "h")) return { ok: false, error: "bad_json" };
   if (e.k !== kind) return { ok: false, error: "wrong_kind" };
+  // Links made since Q2 carry a checksum of the document: a changed character that still decodes is "damaged".
+  if (e.h !== undefined && e.h !== shareChecksum(JSON.stringify(e.d) ?? "")) return { ok: false, error: "bad_json" };
   const data = parse(e.d);
   return data === null ? { ok: false, error: "bad_json" } : { ok: true, data };
 }

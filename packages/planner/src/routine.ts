@@ -102,7 +102,7 @@ export interface PlanOptions {
   includeWeekly?: boolean;
   /** Include event tasks. Default false. */
   includeEvents?: boolean;
-  /** 0 = Sunday … 6 = Saturday (UTC). Unknown → weekday-only tasks are kept. */
+  /** Game weekday: 0 = Sunday … 6 = Saturday in UTC (daily reset 00:00 UTC, A10-0001). Unknown → weekday-only tasks are kept. */
   weekday?: number | null;
   /** VIP level (not in AccountProfile yet — see NOTES.md). Unknown → VIP-gated tasks kept with a note. */
   vipLevel?: number | null;
@@ -149,7 +149,7 @@ function eligibility(t: RoutineTask, profile: AccountProfile, opts: PlanOptions,
   }
   if (!matches(t.profiles, "todos", profile.spending)) return { reason: "not_for_profile", detail: `Not relevant for ${profile.spending}.` };
   if (!matches(t.roles, "todas", profile.role)) return { reason: "not_for_role", detail: `Not relevant for role ${profile.role}.` };
-  if (t.frequency === "weekly" && !opts.includeWeekly) return { reason: "not_today", detail: "Weekly task (enable includeWeekly on its day)." };
+  if (t.frequency === "weekly" && !opts.includeWeekly) return { reason: "not_today", detail: "Weekly task: plan it on its day." };
   if (t.frequency === "event" && !opts.includeEvents) return { reason: "not_today", detail: "Only while an event is active." };
   const m = meta[t.id];
   if (m?.weekdaysOnly && opts.weekday != null && (opts.weekday === 0 || opts.weekday === 6)) {

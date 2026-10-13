@@ -1,0 +1,34 @@
+---
+// /guides/: every guide, with what it is and who it is for. Static, no JS.
+import Shell from "../../layouts/Shell.astro";
+import { BLOCK_SETS, patchBadge } from "../../lib/guide-payload";
+import { GUIDE_PAGES } from "../../lib/guides";
+import "../../styles/guide.css";
+
+const rows = GUIDE_PAGES.map((g) => {
+  const blocks = BLOCK_SETS[g.set] ?? [];
+  const versions = blocks.map((b) => patchBadge(b).version).filter((v) => v !== "unknown");
+  const asOf = blocks.map((b) => b.as_of).sort().at(-1) ?? null;
+  return { ...g, steps: blocks.length, patch: versions[0] ?? null, asOf };
+});
+---
+<Shell title="All guides" description="Every KingdomOps guide in one list: the early-kingdom plan, late game, new kingdom, first 30 days, low spender, returning, recovery, kingdom administration and farms." mode="read">
+  <div class="g-page">
+    <h1>All guides</h1>
+    <p class="g-intro">Each guide cites its sources and says how sure it is. Not sure where to start? <a href="/start/">Answer 10 questions</a> and your guide links the ones that fit you.</p>
+    <ul class="gi-list">
+      {rows.map((g) => (
+        <li class="gi-item" data-guide-entry={g.set}>
+          <h2><a href={g.href}>{g.title}</a></h2>
+          <p class="gi-summary">{g.summary}</p>
+          <p class="gi-for"><strong>For:</strong> {g.audience}</p>
+          <p class="gi-meta">
+            <span class="mono">{g.steps}</span> steps
+            {g.patch && <>, checked against patch <span class="mono">{g.patch}</span></>}
+            {g.asOf && <> on <span class="mono">{g.asOf}</span></>}.
+          </p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</Shell>

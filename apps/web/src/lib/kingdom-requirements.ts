@@ -2,8 +2,8 @@
 // and the device store (ko:kingdom:v1, kinds "requirements" and "my-requirements").
 import {
   FORMULA_PRESETS, FORMULA_VARS, REQ_GROUP_MAX_PERCENT, REQ_MAX_BANDS, REQ_MAX_GROUPS, REQ_MAX_NUMBER, REQ_MAX_PERCENT, REQ_MAX_SAMPLES,
-  cardSharePayload, defaultRequirementsCard, encodeShare, excludedDeadsIssue, isRecord, newDocId, parseQuantity, parseRequirementsCard,
-  validateBands, validateGroups,
+  cardSharePayload, defaultRequirementsCard, encodeShare, evaluatePlayer, excludedDeadsIssue, isRecord, newDocId, parseQuantity, parseRequirementsCard,
+  readCsvTable, toCsv, validateBands, validateGroups,
   type BandIssue, type FormulaVar, type FormulaVars, type PowerBand, type ReqStage, type RequirementGroup, type RequirementsCard, type SampleAccount,
 } from "@rokadm/planner";
 import { listDocs, removeDoc, saveDoc, type StorageLike } from "./kingdom-store";
@@ -327,3 +327,67 @@ export function latestMine(st: StorageLike | null): MyRequirementsDoc | null {
 
 export const MAX_BANDS = REQ_MAX_BANDS;
 export const MAX_GROUPS = REQ_MAX_GROUPS;
+
+// ---------------------------------------------------------------------------
+// Sandbox roster as CSV (stays on this device; never in the published link)
+
+/** Roster columns: name, then every formula variable (power first). */
+export const ROSTER_VARS: readonly FormulaVar[] = ["power", ...FORMULA_VARS.filter((v) => v !== "power")];
+
+/** The sample accounts with their stats and the card's verdict, one row each. */
+export function rosterToCsv(card: Pick<RequirementsCard, "formula" | "requirement" | "sampleAccounts">): string {
+  const header = ["name", ...ROSTER_VARS, "dkp", "target", "percent_of_target", "result"];
+  const rows = card.sampleAccounts.map((s) => {
+    const r = evaluatePlayer(card, s.stats);
+    const verdict = r.ok ? [r.dkp, r.target, r.percentOfTarget === null ? null : Math.floor(r.percentOfTarget), r.met === null ? "no band" : r.met ? "pass" : "below"] : [null, null, null, "formula error"];
+    return [s.name, ...ROSTER_VARS.map((v) => s.stats[v] ?? null), ...verdict];
+  });
+  return toCsv(header, rows);
+}
+
+const ROSTER_COLUMNS = {
+  name: ["name", "governor", "account", "player"],
+  power: ["power"], t1: ["t1", "t1 kills"], t2: ["t2", "t2 kills"], t3: ["t3", "t3 kills"], t4: ["t4", "t4 kills"], t5: ["t5", "t5 kills"],
+  deads: ["deads", "dead", "dead troops"], kp: ["kp", "kill points", "killpoints"],
+} as const;
+
+export interface RosterImport {
+  samples: SampleRow[];
+  added: number;
+  updated: number;
+  /** Rows left out because the sandbox holds REQ_MAX_SAMPLES accounts. */
+  overLimit: number;
+  errors: Array<{ line: number; message: string }>;
+}
+
+/**
+ * Merge a roster CSV into the sandbox rows: same name (any case) updates the values it carries,
+ * new names are added up to REQ_MAX_SAMPLES. Values stay text and are checked like typed ones.
+ * Throws with a user-facing message when the file has no "name" column or cannot be read.
+ */
+export function rosterFromCsv(current: readonly SampleRow[], text: string, makeId: () => string = newDocId): RosterImport {
+  const t = readCsvTable(text, ROSTER_COLUMNS, ["name"]);
+  if (!t.ok) throw new Error(t.error);
+  const samples = current.map((s) => ({ ...s, values: { ...s.values } }));
+  const errors: RosterImport["errors"] = [];
+  let added = 0, updated = 0, overLimit = 0;
+  for (const { line, values } of t.records) {
+    const name = values.name.replace(/\s+/g, " ").trim();
+    if (!name) { errors.push({ line, message: "No name on this row." }); continue; }
+    if (name.length > 40) { errors.push({ line, message: "Name is longer than 40 characters." }); continue; }
+    const bad = ROSTER_VARS.filter((v) => values[v] && errorOf(parseQty(values[v])));
+    if (bad.length) { errors.push({ line, message: `Not a number: ${bad.join(", ")}.` }); continue; }
+    const i = samples.findIndex((s) => s.name.toLowerCase() === name.toLowerCase());
+    if (i >= 0) {
+      for (const v of ROSTER_VARS) if (values[v]) samples[i]!.values[v] = values[v];
+      updated++;
+    } else if (samples.length >= REQ_MAX_SAMPLES) overLimit++;
+    else {
+      const row: SampleRow = { id: makeId(), name, values: statsToValues({}) };
+      for (const v of ROSTER_VARS) if (values[v]) row.values[v] = values[v];
+      samples.push(row);
+      added++;
+    }
+  }
+  return { samples, added, updated, overLimit, errors };
+}

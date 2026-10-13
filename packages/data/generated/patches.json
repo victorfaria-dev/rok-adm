@@ -1,6 +1,15 @@
 [
   {
     "confidence": "alta",
+    "date": "2021-04",
+    "factIds": [
+      "C04-0621"
+    ],
+    "summary": "Hall of Heroes troops return at the end of the Season of Conquest even if the governor is offline; separate siege healing zone outside hospital capacity (added in wave J).",
+    "version": "1.0.45"
+  },
+  {
+    "confidence": "alta",
     "date": "2023-03",
     "factIds": [
       "C04-0017"
@@ -21,9 +30,10 @@
     "confidence": "alta",
     "date": "2023-12",
     "factIds": [
-      "C04-0027"
+      "C04-0027",
+      "C04-0620"
     ],
-    "summary": "Iconic equipment awakening (5 tiers, Season 1+). City theme transmog. Hall of Fame.",
+    "summary": "Iconic equipment awakening (5 tiers, Season 1+). City theme transmog. Hall of Fame. King of the Nile seasonal strategies capped per season (C04-0620, wave J).",
     "version": "1.0.77"
   },
   {
@@ -154,7 +164,8 @@
     "date": "2025-12-18",
     "factIds": [
       "C04-0018",
-      "C04-0032"
+      "C04-0032",
+      "C04-0640"
     ],
     "summary": "Daily AP claim can exceed cap. Army Groups for all SoC alliances. Swap/Gathering of Heroes tuned (Season 3 Light and Darkness). RoK Toolkit roster import. First-purchase gem multiplier returns (2026-01-01).",
     "version": "1.1.02"

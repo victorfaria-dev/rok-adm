@@ -5,11 +5,13 @@ import {
 } from "@rokadm/planner";
 import { FARM_NOTE_MAX, addShipment, defaultFarmsStore, newId, readFarms, removeShipment, type Farm, type FarmsStoreV1 } from "../../../lib/farms-store";
 import {
-  RESOURCE_LABEL, addDays, downloadText, farmsStorage, fmtNumber, localDay, longDay, parseTaxPercent, parseWhole, shortDay, taxPercentText,
+  RESOURCE_LABEL, addDays, downloadText, farmsStorage, fmtNumber, localDay, longDay, parseTaxPercent, parseResourceAmount, shortDay, taxPercentText,
   type StorageLike,
 } from "../../../lib/farms-hub";
 import { Sourced } from "../shared/Sourced";
 import ConfirmAction from "../hub/ConfirmAction";
+import DiscordPost from "../../discord/DiscordPost";
+import { farmsWeekMessage } from "../../../lib/discord";
 import "../shared/farms.css";
 import "../hub/hub.css";
 import "./log.css";
@@ -97,7 +99,7 @@ export default function ShipmentLog({ clock = realClock }: Props) {
   const nameOf = (id: string): string => names[id] ?? "Deleted farm";
 
   // Live preview of the math.
-  const amt = parseWhole(amount);
+  const amt = parseResourceAmount(amount);
   const tax = parseTaxPercent(taxText);
   let preview: { gross: number; net: number } | null = null;
   if (amt !== null && !Number.isNaN(amt) && amt > 0 && tax.ok) {
@@ -114,7 +116,7 @@ export default function ShipmentLog({ clock = realClock }: Props) {
     const errs: Partial<Record<Field, string>> = {};
     if (!farm) errs.farm = "Pick the farm that sent it.";
     if (!isIsoDate(date)) errs.date = "Enter the date the farm sent it.";
-    if (amt === null || Number.isNaN(amt) || amt <= 0) errs.amount = "Enter the amount as a whole number above 0, e.g. 500000.";
+    if (amt === null || Number.isNaN(amt) || amt <= 0) errs.amount = "Enter the amount above 0, e.g. 500000, 500k or 1.5m.";
     if (!tax.ok) errs.tax = tax.error;
     if (note.trim().length > FARM_NOTE_MAX) errs.note = `Use at most ${FARM_NOTE_MAX} characters (now ${note.trim().length}).`;
     let entry: ShipmentEntry | null = null;
@@ -349,6 +351,7 @@ export default function ShipmentLog({ clock = realClock }: Props) {
             </button>
           </div>
           <p class="fm-hint">"Shown" is the week and farm selected above. The file opens in any spreadsheet.</p>
+          <DiscordPost id="farms" summary="Post this week's summary to Discord" message={farmsWeekMessage(summary, range, names, filterFarm ? nameOf(filterFarm) : null)} />
         </section>
       )}
     </div>

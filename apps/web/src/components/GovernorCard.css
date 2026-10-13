@@ -63,6 +63,7 @@
 }
 .gc-tagline { justify-content: center; }
 .gc-tag { font: var(--ko-weight-bold) var(--ko-text-sm)/1 var(--ko-font-mono); padding: 6px 8px; color: var(--ko-alliance-ink); background: var(--ally); }
+.gc-crest { width: 22px; height: auto; flex: none; }
 .gc-notag { font-size: var(--ko-text-xs); opacity: .6; }
 .gc-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ko-space-2); margin: 0; align-self: end; }
 .gc-stats div { background: rgb(0 0 0 / .32); border: 1px solid rgb(255 255 255 / .12); padding: var(--ko-space-2) var(--ko-space-3); display: grid; gap: 2px; }
@@ -149,7 +150,7 @@
 .gc-field label, .gc-colors legend { font-size: var(--ko-text-sm); color: var(--ko-text); }
 .gc-field input {
   min-height: 48px; padding-inline: var(--ko-space-3); color: var(--ko-text); background: var(--ko-surface);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); caret-color: var(--ko-accent); width: 100%; max-width: 360px;
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md); caret-color: var(--ko-accent); width: 100%; max-width: 360px;
 }
 .gc-field input[aria-invalid="true"] { border-color: var(--ko-error); }
 .gc-help { font-size: var(--ko-text-xs); line-height: var(--ko-leading-xs); color: var(--ko-text-muted); }

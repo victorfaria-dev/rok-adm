@@ -1,7 +1,10 @@
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
-const ROUTES = ["/", "/start/", "/guide/", "/guides/new-kingdom/", "/routine/", "/commanders/", "/me/", "/trust/"];
+const ROUTES = [
+  "/", "/start/", "/guide/", "/guides/", "/guides/new-kingdom/", "/guides/first-30-days/", "/guides/low-spender/",
+  "/guides/returning/", "/guides/recovery/", "/guides/kingdom-admin/", "/guides/late-game/", "/routine/", "/commanders/", "/me/", "/trust/",
+];
 const DESTS = [["/guide/", "Guide"], ["/routine/", "Routine"], ["/commanders/", "Commanders"], ["/me/", "You"]] as const;
 
 test.describe("every MVP route", () => {
@@ -89,7 +92,7 @@ test("pages open offline after the first visit", async ({ page, context }) => {
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.reload(); // let the worker control the page
   await context.setOffline(true);
-  for (const route of ["/guide/", "/start/", "/guides/new-kingdom/"]) {
+  for (const route of ["/guide/", "/start/", "/guides/", "/guides/new-kingdom/", "/guides/recovery/"]) {
     await page.goto(route);
     await expect(page.locator("h1")).toHaveCount(1);
   }
@@ -100,6 +103,7 @@ test.describe("accessibility", () => {
   for (const theme of ["dark", "light"] as const) {
     for (const route of ROUTES) {
       test(`axe ${theme} ${route}`, async ({ page }) => {
+        if (route.startsWith("/guide")) test.slow(); // the full guide is ~40k px tall; axe needs more than 30 s under load
         await page.goto("/");
         await page.evaluate((t) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: t })), theme);
         await page.goto(route);

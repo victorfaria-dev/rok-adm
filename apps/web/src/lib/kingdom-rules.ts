@@ -1,6 +1,6 @@
 // Web glue for the rules page (F-33): rules documents in ko:kingdom:v1 (kind "rules") and the
 // view-only share link. The document model and its parser live in @rokadm/planner (kingdom-rules).
-import { ORIGINAL_KEY, encodeShare, newDocId, parseRulesDoc, rulesDisplayTitle, rulesWithOnly, type RulesDoc } from "@rokadm/planner";
+import { ORIGINAL_KEY, compactRulesShare, encodeShare, newDocId, parseRulesDoc, rulesDisplayTitle, rulesWithOnly, type RulesDoc } from "@rokadm/planner";
 import { listDocs, saveDoc, type StorageLike } from "./kingdom-store";
 import { shareUrl } from "./kingdom-share";
 
@@ -47,7 +47,8 @@ export function saveRulesCopy(doc: RulesDoc, st: StorageLike | null, now: Date =
  */
 export async function rulesShareLink(doc: RulesDoc, origin?: string, only?: string | null): Promise<string> {
   const data = only === undefined ? doc : rulesWithOnly(doc, only);
-  return shareUrl(RULES_VIEW_PATH, await encodeShare(RULES_KIND, data), origin);
+  // Compact form: template sections by reference, only edited lines inline (fits a Discord message).
+  return shareUrl(RULES_VIEW_PATH, await encodeShare(RULES_KIND, compactRulesShare(data)), origin);
 }
 
 /** The version a "lang=" hash param asks for: a translation by code or id, the original by its code or "original". */

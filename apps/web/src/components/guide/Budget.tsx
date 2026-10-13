@@ -1,11 +1,14 @@
 import { PROFILE_NAMES, type AccountProfile } from "@rokadm/core";
-import type { BudgetPayload } from "../../lib/guide-types";
-import { budgetView } from "../../lib/guide-view";
+import type { BudgetPayload, LowBudgetPayload } from "../../lib/guide-types";
+import { budgetView, showsLowTargets } from "../../lib/guide-view";
 import { Confidence, FactIds } from "./Confidence";
+import { LowTargets } from "./LowTargets";
 
 interface Props {
   budget: BudgetPayload;
   profile: AccountProfile;
+  /** Low spender targets (wave J); rendered for the Low profile only. */
+  low?: LowBudgetPayload | null;
 }
 
 const n = (x: number) => x.toLocaleString("en-US");
@@ -45,8 +48,9 @@ function SourcedList({ rows }: { rows: Row[] }) {
 }
 
 /** F-14 Budget Reality Check (#budget). Every number comes precomputed from @rokadm/planner. */
-export function Budget({ budget: b, profile }: Props) {
+export function Budget({ budget: b, profile, low = null }: Props) {
   const v = budgetView(b, profile);
+  const lowTargets = low && showsLowTargets(profile) ? low : null;
   const name = PROFILE_NAMES[profile.spending];
   const kvk = b.kvk1Day.value;
   const baseline = v.researched ? "" : " (F2P baseline)";
@@ -59,12 +63,19 @@ export function Budget({ budget: b, profile }: Props) {
         <span class="mono">{kvk}</span>. Only guaranteed income is counted, so day counts are upper bounds.
       </p>
 
-      {!v.researched && (
-        <p class="g-callout">
+      {lowTargets && <LowTargets low={lowTargets} profile={profile} kvk1Day={kvk} />}
+
+      {!v.researched && (lowTargets ? (
+        <p class="g-callout" data-f2p-baseline>
+          KvK1 targets for {name} (City Hall, power, VIP by KvK1 with purchases) are not researched yet. Everything below this
+          point is the F2P baseline: what any account reaches without spending. It is not a {name} estimate.
+        </p>
+      ) : (
+        <p class="g-callout" data-f2p-baseline>
           Targets for {name} are not researched yet, so nothing here is estimated for {name}. The numbers below are the
           F2P baseline: what any account reaches without spending.
         </p>
-      )}
+      ))}
 
       {v.showUnchanged && (
         <div class="g-sub" id="budget-unchanged">

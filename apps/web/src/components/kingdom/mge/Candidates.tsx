@@ -3,7 +3,8 @@ import {
   MGE_LIMITS, formatInt, newDocId, readCandidateInput, removeCandidate,
   type LineError, type MgeCandidateErrors, type MgeDoc, type MgePlan,
 } from "@rokadm/planner";
-import { addCandidatesFromText } from "../../../lib/kingdom-mge";
+import { addCandidatesFromCsv, addCandidatesFromText, type AddCandidatesResult } from "../../../lib/kingdom-mge";
+import CsvImport from "../shared/CsvImport";
 import ConfirmAction from "../shared/ConfirmAction";
 import { TextAreaField, TextField } from "../shared/Field";
 import CandidateEditor from "./CandidateEditor";
@@ -62,8 +63,7 @@ export default function Candidates({ doc, plan, onChange }: Props) {
     setTags("");
   }
 
-  function addPasted() {
-    const r = addCandidatesFromText(doc, paste);
+  function report(r: AddCandidatesResult) {
     setPasteErrors(r.errors);
     const parts = [`Added ${r.added} governor${r.added === 1 ? "" : "s"}.`];
     if (r.updated.length) parts.push(`Updated the score of ${r.updated.length}.`);
@@ -72,7 +72,21 @@ export default function Candidates({ doc, plan, onChange }: Props) {
     if (r.errors.length) parts.push(`${r.errors.length} line${r.errors.length === 1 ? "" : "s"} could not be read (see below).`);
     setStatus(parts.join(" "));
     if (r.added || r.updated.length) onChange(r.doc);
+  }
+
+  function addPasted() {
+    const r = addCandidatesFromText(doc, paste);
+    report(r);
     if (!r.errors.length) setPaste("");
+  }
+
+  function addCsv(text: string) {
+    try {
+      report(addCandidatesFromCsv(doc, text));
+    } catch (e) {
+      setPasteErrors([]);
+      setStatus(e instanceof Error ? e.message : "This file could not be read.");
+    }
   }
 
   return (
@@ -95,7 +109,7 @@ export default function Candidates({ doc, plan, onChange }: Props) {
             value={paste}
             onValue={setPaste}
             rows={6}
-            hint="Name, score — the score is optional. Names already listed get the new score."
+            hint={"Name and score on each line: \"Dave, 4.2m\", \"Dave; 4.2m\", \"Dave 4.2m\" or a pasted spreadsheet row. The score is optional. Names already listed (any case) get the new score."}
             error={pasteErrors.length ? `${pasteErrors.length} line${pasteErrors.length === 1 ? "" : "s"} could not be read.` : undefined}
           />
           {pasteErrors.length > 0 && (
@@ -104,7 +118,11 @@ export default function Candidates({ doc, plan, onChange }: Props) {
               {pasteErrors.length > 20 && <li>…and {pasteErrors.length - 20} more.</li>}
             </ul>
           )}
-          <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={addPasted} disabled={!paste.trim()}>Add from list</button></div>
+          <div class="kg-actions">
+            <button type="button" class="btn btn-primary" onClick={addPasted} disabled={!paste.trim()}>Add from list</button>
+            <CsvImport label="Import CSV" describedBy="kx-csv-hint" testId="mge" onText={addCsv} onError={(m) => { setPasteErrors([]); setStatus(m); }} />
+          </div>
+          <p class="kg-hint" id="kx-csv-hint">CSV from a spreadsheet: a first row with "name" (or "governor") and, optionally, "score" (or "dkp").</p>
         </div>
       </div>
       <p class="kg-status" role="status" aria-live="polite" data-cand-status>{status}</p>

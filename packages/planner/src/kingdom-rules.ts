@@ -336,8 +336,11 @@ export function pickVersion(doc: RulesDoc, preferred: readonly string[]): string
  * Tolerant parse of untrusted rules data (storage, share links, imports): every field is cut to its
  * limit or replaced by its default, bad sections are dropped. Null only when it is not an object.
  */
-export function parseRulesDoc(x: unknown): RulesDoc | null {
-  if (!isRecord(x)) return null;
+export function parseRulesDoc(input: unknown): RulesDoc | null {
+  if (!isRecord(input)) return null;
+  // Share links made since Q2 carry the compact form (template references + diffs); older links the full doc.
+  const x = Object.hasOwn(input, "c") ? expandRulesShare(input) : input;
+  if (!x) return null;
   const seen = new Set<string>();
   const sections: RulesSection[] = [];
   if (Array.isArray(x.sections)) {
@@ -588,11 +591,13 @@ export function sectionFromTemplate(key: string, id: string): RulesSection | nul
   return t ? { id, heading: t.heading, body: t.body } : null;
 }
 
+export const CHARTER_INTRO = "This charter is agreed by the council of [kingdom]. It explains how the kingdom is run and what every member can expect.";
+
 /** A new charter: starter sections plus an intro prompt; the council fills in the [brackets]. */
 export function newCharterDoc(id: string, now: Date = new Date(), sectionId: (i: number) => string = (i) => `s${i + 1}`): RulesDoc {
   const doc = emptyRulesDoc(id, now);
   doc.title = "Kingdom charter";
-  doc.intro = "This charter is agreed by the council of [kingdom]. It explains how the kingdom is run and what every member can expect.";
+  doc.intro = CHARTER_INTRO;
   doc.sections = CHARTER_STARTER_KEYS.map((k, i) => sectionFromTemplate(k, sectionId(i))!);
   return doc;
 }
@@ -639,4 +644,110 @@ function versionText(doc: RulesDoc, v: ResolvedRules, labelled: boolean): string
   }
   if (doc.lastReviewed) out.push("", `Last reviewed: ${doc.lastReviewed}`);
   return out.join("\n") + "\n";
+}
+
+// ---------------------------------------------------------------------------
+// Compact share form (Q2 P2-1). A charter built from templates was ~2,700 characters as a link, over
+// Discord's 2,000 per message before any edit. Links now name template sections as "key@version"
+// and carry only the lines that differ. Template text is versioned: never edit a published version,
+// add the old text to RULES_TEMPLATE_HISTORY and bump RULES_TEMPLATE_VERSION, so old links still
+// expand to what their author saw. Links without "c" (older ones) are read as full documents.
+
+/** Version of the current RULES_TEMPLATES text, as referenced by share links. */
+export const RULES_TEMPLATE_VERSION = 1;
+/** Template text of earlier versions, "key@version" → section (empty while only version 1 exists). */
+export const RULES_TEMPLATE_HISTORY: Readonly<Record<string, { heading: string; body: string }>> = {};
+/** Compact form version (the "c" field). */
+export const RULES_COMPACT_VERSION = 1;
+
+function templateByRef(ref: string): { heading: string; body: string } | null {
+  if (Object.hasOwn(RULES_TEMPLATE_HISTORY, ref)) return RULES_TEMPLATE_HISTORY[ref]!;
+  const m = /^([a-z0-9-]{1,40})@(\d{1,4})$/.exec(ref);
+  if (!m || Number(m[2]) !== RULES_TEMPLATE_VERSION) return null;
+  const t = RULES_TEMPLATES.find((x) => x.key === m[1]);
+  return t ? { heading: t.heading, body: t.body } : null;
+}
+
+/** Body as edits of a template body: a number keeps template line n, a string is a new line. */
+type LineOps = Array<number | string>;
+
+function diffLines(base: string, body: string): LineOps {
+  const from = base.split("\n");
+  const index = new Map<string, number>();
+  from.forEach((l, i) => { if (!index.has(l)) index.set(l, i); });
+  return body.split("\n").map((l) => index.get(l) ?? l);
+}
+
+function applyLines(base: string, ops: unknown): string | null {
+  if (!Array.isArray(ops) || ops.length > 400) return null;
+  const from = base.split("\n");
+  const out: string[] = [];
+  for (const op of ops) {
+    if (typeof op === "string") out.push(op);
+    else if (typeof op === "number" && Number.isInteger(op) && op >= 0 && op < from.length) out.push(from[op]!);
+    else return null;
+  }
+  return out.join("\n");
+}
+
+/** The share payload for a rules document: template sections by reference, only changed lines inline. */
+export function compactRulesShare(doc: RulesDoc): Record<string, unknown> {
+  const sections = doc.sections.map((s) => {
+    let best: { ref: string; t: RulesTemplate; kept: number } | null = null;
+    for (const t of RULES_TEMPLATES) {
+      const ops = diffLines(t.body, s.body);
+      const kept = ops.filter((o) => typeof o === "number").length;
+      if (kept > 0 && (!best || kept > best.kept)) best = { ref: `${t.key}@${RULES_TEMPLATE_VERSION}`, t, kept };
+    }
+    if (!best) return { i: s.id, h: s.heading, b: s.body };
+    const out: Record<string, unknown> = { i: s.id, f: best.ref };
+    if (s.heading !== best.t.heading) out.h = s.heading;
+    if (s.body !== best.t.body) out.b = diffLines(best.t.body, s.body);
+    return out;
+  });
+  const out: Record<string, unknown> = { c: RULES_COMPACT_VERSION, id: doc.id, u: doc.updatedAt, s: sections };
+  if (doc.kingdom) out.k = doc.kingdom;
+  if (doc.title) out.t = doc.title;
+  if (doc.languageNote !== DEFAULT_LANGUAGE_NOTE) out.l = doc.languageNote;
+  if (doc.intro) out.n = doc.intro === CHARTER_INTRO ? 0 : doc.intro;
+  if (doc.charter.agreedOn) out.a = doc.charter.agreedOn;
+  if (doc.charter.signers.length) out.g = doc.charter.signers;
+  if (doc.lastReviewed) out.r = doc.lastReviewed;
+  // Language versions: council-written text, never template text, so they travel as written.
+  if (doc.originalLabel) out.ol = doc.originalLabel;
+  if (doc.originalLang) out.og = doc.originalLang;
+  if (doc.translations.length) out.x = doc.translations;
+  return out;
+}
+
+/** Expand a compact share payload to the full document shape (still untrusted: parseRulesDoc cleans it). */
+export function expandRulesShare(x: Record<string, unknown>): Record<string, unknown> | null {
+  if (x.c !== RULES_COMPACT_VERSION || !Array.isArray(x.s) || x.s.length > RULES_LIMITS.sections) return null;
+  const sections: Array<{ id: unknown; heading: unknown; body: unknown }> = [];
+  for (const s of x.s) {
+    if (!isRecord(s)) return null;
+    if (s.f === undefined) {
+      sections.push({ id: s.i, heading: s.h, body: s.b });
+      continue;
+    }
+    const t = typeof s.f === "string" ? templateByRef(s.f) : null;
+    if (!t) return null;
+    const body = s.b === undefined ? t.body : applyLines(t.body, s.b);
+    if (body === null) return null;
+    sections.push({ id: s.i, heading: s.h === undefined ? t.heading : s.h, body });
+  }
+  return {
+    id: x.id,
+    updatedAt: x.u,
+    kingdom: x.k,
+    title: x.t,
+    languageNote: x.l === undefined ? DEFAULT_LANGUAGE_NOTE : x.l,
+    intro: x.n === 0 ? CHARTER_INTRO : x.n,
+    sections,
+    charter: { agreedOn: x.a, signers: x.g },
+    lastReviewed: x.r,
+    originalLabel: x.ol,
+    originalLang: x.og,
+    translations: x.x,
+  };
 }

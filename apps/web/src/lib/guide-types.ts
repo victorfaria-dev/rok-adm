@@ -106,3 +106,64 @@ export interface GuideData {
   guide: GuidePayload;
   budget: BudgetPayload;
 }
+
+// ---------------------------------------------------------------------------
+// Low spender targets (wave J, @rokadm/planner lowSpenderTargets), precomputed at build into
+// /data/guide-low-budget.json. Fetched only for the Low profile; never mixed with the F2P numbers.
+
+export interface LowValue {
+  value: number;
+  facts: string[];
+  confidence: Confidence;
+  /** Computed by the planner from card values (sums, per-dollar ratios), not stated by a card. */
+  derived: boolean;
+  gaps: string[];
+}
+
+export interface LowPurchaseRow {
+  id: string;
+  label: string;
+  kind: "one-time" | "recurring" | "per-edition" | "per-trigger";
+  periodDays: number | null;
+  items: string;
+  note: string;
+  /** List price in USD (players, sellers, guides). Always shown with the regional price warning. */
+  priceUsd: LowValue;
+  gems: LowValue | null;
+  vipPoints: LowValue | null;
+  /** Raw gems per USD (A12-0618 method: items are never priced). */
+  gemsPerUsd: LowValue | null;
+  vipPerUsd: LowValue | null;
+  confidence: Confidence;
+  facts: string[];
+}
+
+export interface LowTierRow {
+  id: "pass-only" | "low-full";
+  label: string;
+  note: string;
+  lines: Array<{ purchaseId: string; timesPerMonth: number; assumed: boolean }>;
+  monthlyUsd: LowValue;
+  monthlyGems: LowValue;
+  monthlyVipPoints: LowValue;
+  oneTimeUsd: LowValue;
+  oneTimeGems: LowValue;
+  withinLowRange: boolean;
+}
+
+export interface LowBudgetPayload {
+  v: 1;
+  asOf: string;
+  message: string;
+  priceWarning: string;
+  rangeUsdPerMonth: { min: number; max: number; note: string };
+  purchases: LowPurchaseRow[];
+  tiers: LowTierRow[];
+  /** Purchases in no tier (e.g. Daily Special Offers, the ceiling), listed apart. */
+  outsideTiers: string[];
+  growthFund: { ch25Gems: LowValue; note: string };
+  vip: { label: string; rows: Array<{ vip: number; threshold: number; day: number | null }>; facts: string[]; confidence: Confidence; gaps: string[]; note: string };
+  recharge: { text: string; facts: string[]; confidence: Confidence; gaps: string[] };
+  valueMethod: { text: string; facts: string[]; confidence: Confidence };
+  confidence: Confidence;
+}

@@ -1,0 +1,11 @@
+---
+// F-81 (b): every tool shows which data it runs on.
+import { dataStamp } from "../../../lib/tools-payload";
+const s = dataStamp();
+---
+<p class="t-stamp">
+  Data: latest official patch <span class="mono">{s.official?.version ?? "unknown"}</span>
+  {s.official ? <>({s.official.date})</> : null}
+  {s.latest && s.latest.version !== s.official?.version ? <>, reported live <span class="mono">{s.latest.version}</span> (low confidence)</> : null}
+  · dataset <span class="mono">{s.datasetVersion}</span>. Cards confirmed before the official patch show <strong>Re-verify</strong>.
+</p>

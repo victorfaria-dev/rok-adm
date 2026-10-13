@@ -55,6 +55,9 @@ export function QuestionStep({ question: q, value, error, onAnswer, inputRef }: 
             <Option key={i} name={name} index={i} option={o} checked={value === o.value} onPick={() => onAnswer(o.value)} />
           ))}
         </div>
+        {q.id === "kingdomStage" && (
+          <p class="q-note" data-stage-note>KvK2 and later are not researched yet; for those the guide shows KvK1 content, labelled.</p>
+        )}
         <ErrorText error={error} />
       </div>
     );

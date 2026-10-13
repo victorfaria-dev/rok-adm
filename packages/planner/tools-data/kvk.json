@@ -1,0 +1,176 @@
+{
+  "_about": "KvK readiness checklist and season explainer (/tools/kvk/, F-26). Items with \"facts\": [] have no card and show \"No consensus\".",
+  "groups": [
+    {
+      "id": "city-hall",
+      "title": "City Hall",
+      "items": [
+        {
+          "id": "ch17",
+          "text": "City Hall 17 to enter the Lost Kingdom.",
+          "detail": "One older guide only; confirm in your kingdom before KvK.",
+          "facts": ["B01-0503"],
+          "evidence": { "B01-0503": "Entering the Lost Kingdom requires City Hall 17" }
+        }
+      ]
+    },
+    {
+      "id": "troops",
+      "title": "Troops",
+      "items": [
+        {
+          "id": "t4",
+          "text": "Fight your first KvK with T4; treat T5 as a long-term goal.",
+          "facts": ["A08-0500"],
+          "evidence": { "A08-0500": "For KvK1 the working tier is T4" }
+        },
+        {
+          "id": "t4-reserve",
+          "text": "If you have T5, keep a T4 reserve: T5 heals cost much more.",
+          "facts": ["A08-0505"],
+          "evidence": { "A08-0505": "accounts without steady economy should keep fighting with T4 and maintain a T4 reserve" }
+        },
+        {
+          "id": "marches",
+          "text": "Field about 3 complete marches, not 5 weak ones.",
+          "facts": ["A08-0504"],
+          "evidence": { "A08-0504": "~3 best marches or one complete march are more useful and cheaper to heal" }
+        }
+      ]
+    },
+    {
+      "id": "hospital",
+      "title": "Hospital",
+      "items": [
+        {
+          "id": "hospital-size",
+          "text": "Keep hospital capacity high and clear it before every fight.",
+          "detail": "Wounded troops beyond capacity die. Use the healing planner for your numbers.",
+          "facts": ["A08-0502"],
+          "evidence": { "A08-0502": "Wounded troops beyond hospital capacity die" }
+        },
+        {
+          "id": "severe",
+          "text": "Know that attacking cities and objectives can kill severely wounded troops outright.",
+          "facts": ["A08-0502"],
+          "evidence": { "A08-0502": "some actions (attacking cities/objectives) always kill severely wounded" }
+        }
+      ]
+    },
+    {
+      "id": "stock",
+      "title": "Speedups and resources",
+      "items": [
+        {
+          "id": "hoard",
+          "text": "Arrive with saved speedups, resource items and AP recovery items for KvK healing and scored events.",
+          "facts": ["A11-0501"],
+          "evidence": { "A11-0501": "save speedups, resources (as items), AP potions for scoring events and KvK healing" }
+        },
+        {
+          "id": "heal-speedups",
+          "text": "Keep healing speedups apart from your other speedups.",
+          "facts": ["A08-0502"],
+          "evidence": { "A08-0502": "keep capacity and heal-speedups" }
+        },
+        {
+          "id": "eve-ap",
+          "text": "Save AP recovery items for Eve of the Crusade (pre-KvK).",
+          "facts": ["A09-0007"],
+          "evidence": { "A09-0007": "especially the pre-KvK Eve of the Crusade" }
+        }
+      ]
+    },
+    {
+      "id": "commanders",
+      "title": "Commanders",
+      "items": [
+        {
+          "id": "pairs",
+          "text": "Decide which commander pairs lead your marches and level those, not many.",
+          "facts": []
+        },
+        {
+          "id": "troop-type",
+          "text": "Build toward one troop type that matches your best commanders.",
+          "facts": ["A08-0506"],
+          "evidence": { "A08-0506": "Pick one troop type matching your best commanders" }
+        }
+      ]
+    },
+    {
+      "id": "alliance",
+      "title": "Alliance and behaviour",
+      "items": [
+        {
+          "id": "requirements",
+          "text": "Read your kingdom's KvK requirements before it starts (often a target as a % of your power).",
+          "detail": "Results are compared after KvK, and some kingdoms then publish a migration list.",
+          "facts": ["B08-0002", "B06-0005"],
+          "evidence": {
+            "B08-0002": "Requirements are commonly a DKP (or dead+kill) target proportional to power",
+            "B06-0005": "After KvK, leadership publishes who must leave"
+          }
+        },
+        {
+          "id": "behaviour",
+          "text": "Don't engage first: stay behind, retreat early, fill strong rallies and reinforce.",
+          "facts": ["A08-0503"],
+          "evidence": { "A08-0503": "should not engage first, should stay behind lanes, retreat early, fill strong rallies and reinforce rather than trade alone" }
+        },
+        {
+          "id": "fight-times",
+          "text": "Know your alliance's fight times and how it calls rallies.",
+          "facts": []
+        }
+      ]
+    }
+  ],
+  "explainer": [
+    {
+      "id": "stages",
+      "text": "A kingdom goes from a Preparation Season to Season 1 (your first KvK), Season 2, Season 3 and then the Season of Conquest, which repeats.",
+      "facts": ["B01-0500", "C04-0007"],
+      "patch": "guides 2019–2026",
+      "evidence": { "B01-0500": "KvK1 begins around kingdom day 100" }
+    },
+    {
+      "id": "timing",
+      "text": "The pre-KvK event, Eve of the Crusade, starts around kingdom day 85–95, and KvK1 around day 100.",
+      "facts": ["B01-0500"],
+      "patch": "guides 2019–2026",
+      "evidence": { "B01-0500": "Pre-KvK (Eve of the Crusade) starts around day 85–95 and KvK1 begins around kingdom day 100" }
+    },
+    {
+      "id": "overlap",
+      "text": "The Lost Kingdom is the shared KvK map. Recent reports say Eve of the Crusade now opens together with it.",
+      "facts": ["B01-0503", "C04-0002"],
+      "patch": "1.1.12 (third-party summary)",
+      "evidence": {
+        "B01-0503": "the first ~6 days of pre-KvK now overlap the opening of the Lost Kingdom in Season 1 too",
+        "C04-0002": "makes Eve of the Crusade open together with the Lost Kingdom"
+      }
+    },
+    {
+      "id": "season3",
+      "text": "Season 3 is moving from the Light and Darkness story to King of All Britain.",
+      "facts": ["C04-0007"],
+      "patch": "1.1.07 pioneer, 1.1.12 summary",
+      "evidence": { "C04-0007": "In 1.1.07 (May 2026) select Season 3 kingdoms started a pioneer of the 'King of All Britain' story in Season 3" }
+    },
+    {
+      "id": "after",
+      "text": "After each KvK, results are compared with the kingdom's requirements; low contributors may be asked to migrate.",
+      "facts": ["B06-0005"],
+      "patch": "kingdom rules, 2026",
+      "evidence": { "B06-0005": "After KvK, leadership publishes who must leave" }
+    },
+    {
+      "id": "immigration",
+      "text": "Between seasons, migration follows age limits that were tightened in March 2026.",
+      "facts": ["B06-0003"],
+      "patch": "1.1.06",
+      "evidence": { "B06-0003": "Official 1.1.06 (2026-03-24)" }
+    }
+  ]
+}

@@ -1,5 +1,9 @@
 ---
 import Shell from "../layouts/Shell.astro";
+import { facts } from "@rokadm/data";
+
+// Counted at build from the generated fact cards, so the number never goes stale.
+const factCount = facts.length;
 
 const tools = [
   { href: "/guide/", name: "Guide", text: "Step-by-step plan for your spending, play time and kingdom age. Every step shows its source and the patch it was checked on." },
@@ -34,7 +38,7 @@ const tools = [
   <section class="facts" aria-labelledby="facts-h">
     <h2 id="facts-h">How we keep it honest</h2>
     <dl>
-      <div><dt class="mono">282</dt><dd>researched fact cards behind the guides, each with sources</dd></div>
+      <div><dt class="mono">{factCount}</dt><dd>researched fact cards behind the guides, each with sources</dd></div>
       <div><dt class="mono">patch</dt><dd>every step says which game version it was checked on</dd></div>
       <div><dt class="mono">0</dt><dd>logins, bots or game files. Your answers stay in this browser.</dd></div>
     </dl>

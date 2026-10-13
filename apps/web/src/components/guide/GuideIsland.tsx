@@ -2,12 +2,26 @@
 // (rendered at build). After mount, it picks the profile (?p= over the saved one),
 // fetches the lean /data/guide.json and re-filters with selectBlocks.
 import type { ComponentChildren } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { readStore, writeStore } from "../../lib/store";
 import { profileSummary } from "../../lib/profile";
-import type { GuideData } from "../../lib/guide-types";
-import { chooseProfile, selectGuide, shareUrl, type ProfileChoice } from "../../lib/guide-view";
-import { GuideBody, GuideMeta } from "./GuideBody";
+import { deltaSetsFor, isLateStage } from "@rokadm/core";
+import type { GuideData, GuidePayload, LowBudgetPayload } from "../../lib/guide-types";
+import {
+  chooseProfile,
+  deltaUrl,
+  FALLBACK_STAGE,
+  LATE_SET,
+  LOW_BUDGET_URL,
+  selectGuideWithFallback,
+  showsLowTargets,
+  shareUrl,
+  STAGE_NAMES,
+  withDeltas,
+  type ProfileChoice,
+} from "../../lib/guide-view";
+import { guidePage, guidesForYou } from "../../lib/guides";
+import { GuideBody, GuideMeta, GuidesForYou, renderSteps } from "./GuideBody";
 
 interface Props {
   dataUrl: string;
@@ -15,6 +29,23 @@ interface Props {
 }
 
 type Status = "idle" | "loading" | "ready" | "failed";
+
+const latePage = guidePage("latestage");
+
+/** Steps (blocks) of the personal guide in the first pass, then per idle period. */
+const FIRST_STEPS = 6;
+const STEP = 6;
+
+/** Run `fn` when the browser is idle (or soon, where requestIdleCallback is missing). Returns a cancel. */
+function afterIdle(fn: () => void): () => void {
+  const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void };
+  if (typeof w.requestIdleCallback === "function") {
+    const id = w.requestIdleCallback(fn, { timeout: 500 });
+    return () => w.cancelIdleCallback?.(id);
+  }
+  const id = setTimeout(fn, 16);
+  return () => clearTimeout(id);
+}
 
 async function copyText(text: string): Promise<boolean> {
   try {
@@ -54,9 +85,15 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const [mounted, setMounted] = useState(false);
   const [choice, setChoice] = useState<ProfileChoice | null>(null);
   const [data, setData] = useState<GuideData | null>(null);
+  /** Late-game guide (KvK2, KvK3, SoC profiles); null when not needed or it failed to load. */
+  const [late, setLate] = useState<GuidePayload | null>(null);
+  /** Low spender targets (Low profile only); null when not needed or it failed to load. */
+  const [lowBudget, setLowBudget] = useState<LowBudgetPayload | null>(null);
   const [status, setStatus] = useState<Status>("idle");
   const [live, setLive] = useState("");
   const [manualUrl, setManualUrl] = useState<string | null>(null);
+  /** Steps (blocks) of the personal guide rendered so far (Q2 P2-10: the rest follow in idle periods). */
+  const [shownSteps, setShownSteps] = useState(FIRST_STEPS);
 
   useEffect(() => {
     setMounted(true);
@@ -64,13 +101,22 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     setChoice(c);
     if (c.source === "default") return;
     setStatus("loading");
-    fetch(dataUrl)
-      .then((r) => {
+    const get = <T,>(url: string) =>
+      fetch(url).then((r) => {
         if (!r.ok) throw new Error(String(r.status));
-        return r.json() as Promise<GuideData>;
-      })
-      .then((d) => {
-        setData(d);
+        return r.json() as Promise<T>;
+      });
+    // Low and higher profiles: the profile delta sets are merged over the F2P guide (core's selectGuide).
+    const deltas = deltaSetsFor(c.profile.spending).map((d) => get<GuidePayload>(deltaUrl(d.id)));
+    // KvK2, KvK3 and SoC: the late-game guide is the main plan. If it fails, the guide falls back to KvK1 as a whole.
+    const lateGuide = isLateStage(c.profile.kingdomStage) ? get<GuidePayload>(deltaUrl(LATE_SET)).catch(() => null) : Promise.resolve(null);
+    // Low: its own purchase targets for the budget. If they fail, the budget shows the labelled F2P baseline only.
+    const lowTargets = showsLowTargets(c.profile) ? get<LowBudgetPayload>(LOW_BUDGET_URL).catch(() => null) : Promise.resolve(null);
+    Promise.all([get<GuideData>(dataUrl), Promise.all(deltas), lateGuide, lowTargets])
+      .then(([d, ds, l, lb]) => {
+        setData({ ...d, guide: withDeltas(d.guide, ds) });
+        setLate(l);
+        setLowBudget(lb);
         setStatus("ready");
       })
       .catch(() => setStatus("failed"));
@@ -78,7 +124,23 @@ export default function GuideIsland({ dataUrl, children }: Props) {
 
   const summary = choice && choice.source !== "default" ? profileSummary(choice.profile) : null;
   const personal = choice !== null && choice.source !== "default" && data !== null && status === "ready";
-  const view = personal ? selectGuide(data.guide, choice.profile) : null;
+  // Memoised so the progressive render keeps the same block objects and skips re-rendering them.
+  const selection = useMemo(() => (personal && data && choice ? selectGuideWithFallback(data.guide, choice.profile, late) : null), [personal, data, choice, late]);
+  const links = personal ? guidesForYou(choice.profile) : [];
+  const view = selection?.view ?? null;
+  const empty = view !== null && view.meta.shownBlocks === 0 && view.alreadyDone.length === 0;
+  const totalSteps = view ? renderSteps(view) : 0;
+
+  // Render the personal guide in steps so no single task builds the whole ~40k px page. A link to a
+  // section (#s-...) renders everything at once so the browser can scroll to it.
+  useEffect(() => {
+    if (!view || shownSteps > totalSteps) return;
+    if (location.hash.length > 1) {
+      setShownSteps(totalSteps + 1);
+      return;
+    }
+    return afterIdle(() => setShownSteps((n) => n + STEP));
+  }, [view !== null, shownSteps, totalSteps]);
 
   async function onShare() {
     const url = shareUrl(location.origin, choice?.code ?? null);
@@ -147,8 +209,41 @@ export default function GuideIsland({ dataUrl, children }: Props) {
 
       {view && choice ? (
         <div class="g-personal" data-guide="personal">
+          {selection?.lateStage && (
+            <aside class="g-notice" data-guide-late aria-labelledby="g-late-h">
+              <p id="g-late-h" class="g-notice-title">Your plan for {STAGE_NAMES[choice.profile.kingdomStage]}</p>
+              <p>
+                Your kingdom is past KvK1, so the main plan below is the <a href={latePage.href}>late game guide</a> for KvK2, KvK3
+                and Season of Conquest, plus the daily routine.
+                {selection.fallbackSections.length > 0 && (
+                  <> Sections marked “Closest available: KvK1 content” have no late-game steps yet.</>
+                )}
+              </p>
+            </aside>
+          )}
+          {selection?.fallbackFrom && !selection.lateStage && (
+            <aside class="g-notice" data-guide-fallback aria-labelledby="g-fallback-h">
+              <p id="g-fallback-h" class="g-notice-title">Closest available: {STAGE_NAMES[FALLBACK_STAGE]} content</p>
+              <p>
+                Your kingdom is at {STAGE_NAMES[selection.fallbackFrom]}. The late game guide could not be loaded, so this page
+                shows the steps written for {STAGE_NAMES[FALLBACK_STAGE]}, the closest stage we have. Some may not fit your kingdom;
+                check them against what your kingdom is doing now, or reload to try again.
+              </p>
+            </aside>
+          )}
           <GuideMeta view={view} label={`For ${profileSummary(choice.profile)}`} />
-          <GuideBody view={view} badges={data!.guide.badges} budget={data!.budget} />
+          <GuidesForYou links={links} />
+          {empty && (
+            <aside class="g-notice" data-guide-empty aria-labelledby="g-empty-h">
+              <p id="g-empty-h" class="g-notice-title">No researched steps fit this profile yet</p>
+              <p>
+                None of the guide steps we have researched apply to this profile. That is a gap in our research, not something
+                you did wrong. You can <a href="/start/">check your answers</a>; the <a href="/guides/new-kingdom/">new kingdom guide</a> is
+                also worth a look.
+              </p>
+            </aside>
+          )}
+          <GuideBody view={view} badges={data!.guide.badges} budget={data!.budget} lowBudget={lowBudget} limit={shownSteps} />
         </div>
       ) : (
         children
