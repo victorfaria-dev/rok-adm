@@ -1,0 +1,21 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
+import PrivacyNote from "../../../components/kingdom/shared/PrivacyNote.astro";
+import RecruitBuilder from "../../../components/kingdom/recruit/RecruitBuilder";
+import "../../../components/kingdom/shared/kingdom.css";
+import "../../../components/kingdom/recruit/recruit.css";
+---
+<Shell title="Recruitment post" description="Fill in your kingdom's stage, requirements, what you offer and the roles you need; get a recruitment post ready to copy for Discord, Reddit or plain text." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>Recruitment post</h1>
+      <p class="kg-lead">Say who you need and what you offer, once. Get a post for Discord, Reddit or anywhere else, with nothing added that you did not write.</p>
+      <p class="kg-note" data-guardrail><strong>Planning and publishing only. You post it yourself, on your own channels.</strong></p>
+    </header>
+    <KingdomNav />
+    <RecruitBuilder client:load />
+    <p class="kg-note">Link your <a href="/kingdom/rules/">rules page</a> and <a href="/kingdom/requirements/">requirements card</a> in the same channel so recruits know what to expect. More on running intake in the <a href="/guides/kingdom-admin/">kingdom admin guide</a>.</p>
+    <PrivacyNote thirdParty />
+  </div>
+</Shell>
