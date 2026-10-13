@@ -1,4 +1,5 @@
-import { expect, test, type Page } from "@playwright/test";
+import { readFile } from "node:fs/promises";
+import { expect, test, type Download, type Page } from "@playwright/test";
 import { expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const cand = (id: string, name: string, score: number | null) => ({ id, name, score, tags: [] });
@@ -180,6 +181,46 @@ test.describe("MGE planner", () => {
     await page.getByRole("button", { name: "Save" }).click();
     await expect(page.locator("[data-cand-status]")).toContainText("Another governor is also named alpha");
     await expect(page.locator("[data-plan-warnings]")).toContainText('share the name "Alpha"');
+    expect(errors).toEqual([]);
+  });
+
+  test("CSV downloads: ledger (scores off by default, then on) and governors, UTF-8 with BOM, no network", async ({ page }) => {
+    const errors = trackErrors(page);
+    await seed(page, [PLAN]);
+    await gotoHydrated(page, "/kingdom/mge/");
+    const requests: string[] = [];
+    page.on("request", (r) => { if (!r.url().startsWith("blob:") && !r.url().startsWith("data:")) requests.push(r.url()); });
+    const get = async (name: string): Promise<{ file: string; bytes: Buffer }> => {
+      const [dl] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name }).click()]) as [Download, unknown];
+      return { file: dl.suggestedFilename(), bytes: await readFile((await dl.path())!) };
+    };
+
+    const ledger = await get("Download ledger CSV");
+    expect(ledger.file).toMatch(/^kingdomops-mge-ledger-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
+    expect([...ledger.bytes.subarray(0, 3)]).toEqual([0xef, 0xbb, 0xbf]);
+    const text = ledger.bytes.toString("utf8").slice(1);
+    const rest = "among applicants not placed by hand";
+    expect(text.split("\r\n")).toEqual([
+      "date,commander,slot,governor,reason,locked",
+      "2026-10-01,Cao Cao,1,Echo,manual: Garrison lead for Kingsland,no",
+      `2026-10-01,Cao Cao,2,Alpha,score rank 1 ${rest},no`,
+      `2026-10-01,Cao Cao,3,Bravo,score rank 2 ${rest},no`,
+      "2026-10-15,,1,Alpha,score rank 1 among applicants,no",
+      "2026-10-15,,2,Bravo,score rank 2 among applicants,no",
+      "2026-10-15,,3,,not filled,no",
+      "",
+    ]);
+    await expect(page.locator("[data-csv-status]")).toContainText("is ready: check your downloads.");
+
+    await page.getByLabel("Include scores in the ledger CSV").check();
+    const scored = (await get("Download ledger CSV")).bytes.toString("utf8");
+    expect(scored).toContain("date,commander,slot,governor,reason,locked,score\r\n");
+    expect(scored).toContain(`2026-10-01,Cao Cao,2,Alpha,"score rank 1 ${rest} (4,200,000)",no,4200000\r\n`);
+
+    const gov = await get("Download governors CSV");
+    expect(gov.file).toMatch(/^kingdomops-mge-governors-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
+    expect(gov.bytes.toString("utf8")).toBe("\uFEFFname,score,tags\r\nAlpha,4200000,\r\nBravo,3000000,\r\nCharlie,2000000,\r\nDelta,,\r\nEcho,1000000,\r\n");
+    expect(requests).toEqual([]);
     expect(errors).toEqual([]);
   });
 

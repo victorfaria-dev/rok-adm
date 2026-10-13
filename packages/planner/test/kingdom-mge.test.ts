@@ -5,7 +5,9 @@ import {
   MGE_LIMITS, MGE_SOURCES, describeMgeRules, emptyMgeDoc, isDay, mgePublicPayload, orderedEvents, parseCandidateLines, parseMgeDoc, parseMgePublic,
   parseMgeScore, parseMgeTagsText, planMge, readCandidateInput, removeCandidate, scoreRankScope, setEventLocked, splitNameAndNumber, updateCandidate,
   type MgeCandidate, type MgeDoc, type MgeEvent,
+  MGE_CSV_BOM, MGE_GOVERNORS_CSV_HEADER, MGE_LEDGER_CSV_HEADER, mgeCsvField, mgeCsvSafeText, mgeGovernorsCsv, mgeLedgerCsv,
 } from "../src/kingdom-mge";
+import { csvField, csvSafeText } from "../src/farms-ledger";
 
 const cand = (id: string, name: string, score: number | null = null, tags: string[] = []): MgeCandidate => ({ id, name, score, tags });
 const ev = (id: string, date: string, over: Partial<MgeEvent> = {}): MgeEvent => ({ id, date, commander: "", applicants: [], overrides: [], locked: false, result: null, ...over });
@@ -386,5 +388,94 @@ describe("updateCandidate (inline edit)", () => {
     if (!bad.ok) expect(bad.errors.score).toMatch(/too large/);
     const gone = updateCandidate(base(), "zzz", { name: "X", score: "", tags: "" });
     expect(gone.ok).toBe(false);
+  });
+});
+
+describe("CSV export", () => {
+  /** Minimal RFC 4180 reader for the tests: BOM stripped, CRLF rows, quoted cells. */
+  function readCsv(text: string): string[][] {
+    expect(text.startsWith(MGE_CSV_BOM)).toBe(true);
+    expect(text.endsWith("\r\n")).toBe(true);
+    const body = text.slice(1);
+    const rows: string[][] = [];
+    let row: string[] = [], cell = "", q = false;
+    for (let i = 0; i < body.length; i++) {
+      const ch = body[i]!;
+      if (q) {
+        if (ch === '"' && body[i + 1] === '"') { cell += '"'; i++; } else if (ch === '"') q = false; else cell += ch;
+      } else if (ch === '"') q = true;
+      else if (ch === ",") { row.push(cell); cell = ""; }
+      else if (ch === "\r" && body[i + 1] === "\n") { row.push(cell); rows.push(row); row = []; cell = ""; i++; }
+      else cell += ch;
+    }
+    return rows;
+  }
+
+  it("uses the same safety rules as the farms ledger CSV (pinned)", () => {
+    const samples = ["plain", "=SUM(A1)", "+1", "-1", "@cmd", "\tTab", "\rCR", "a,b", 'say "hi"', "line\nbreak", "ação 名前 🛡", "", " =lead"];
+    for (const x of samples) {
+      expect(mgeCsvSafeText(x), x).toBe(csvSafeText(x));
+      expect(mgeCsvField(x), x).toBe(csvField(x));
+    }
+  });
+
+  it("quotes commas, quotes and newlines; guards formulas; keeps unicode", () => {
+    expect(mgeCsvField("a,b")).toBe('"a,b"');
+    expect(mgeCsvField('He said "go"')).toBe('"He said ""go"""');
+    expect(mgeCsvField("two\nlines")).toBe('"two\nlines"');
+    expect(mgeCsvField("cr\rhere")).toBe('"cr\rhere"');
+    for (const f of ["=1+1", "+cmd", "-2", "@SUM", "\tx", "\rx"]) expect(mgeCsvSafeText(f)).toBe(`'${f}`);
+    expect(mgeCsvSafeText("Ålpha 王")).toBe("Ålpha 王");
+  });
+
+  const d = doc({
+    policy: "score", slotsPerEvent: 3, title: "K1",
+    candidates: [cand("a", "=HYPERLINK(\"x\")", 500, ["rally lead", "garrison lead"]), cand("b", "Bravo, Jr", 400), cand("c", "Ünïcödé 名前", null)],
+    events: [
+      ev("e2", "2026-10-15", { commander: '"Cao" Cao' }),
+      ev("e1", "2026-10-01", { commander: "+Ramesses", overrides: [{ slot: 1, candidateId: "b", reason: "Garrison, Kingsland" }] }),
+    ],
+  });
+
+  it("ledger CSV: oldest event first, one row per slot, scores left out by default", () => {
+    const csv = mgeLedgerCsv(planMge(d), false);
+    const rows = readCsv(csv);
+    expect(rows[0]).toEqual([...MGE_LEDGER_CSV_HEADER]);
+    expect(rows.slice(1)).toEqual([
+      ["2026-10-01", "'+Ramesses", "1", "Bravo, Jr", "manual: Garrison, Kingsland", "no"],
+      ["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "score rank 1 among governors not placed by hand", "no"],
+      ["2026-10-01", "'+Ramesses", "3", "", "not filled", "no"],
+      ["2026-10-15", '"Cao" Cao', "1", "'=HYPERLINK(\"x\")", "score rank 1", "no"],
+      ["2026-10-15", '"Cao" Cao', "2", "Bravo, Jr", "score rank 2", "no"],
+      ["2026-10-15", '"Cao" Cao', "3", "", "not filled", "no"],
+    ]);
+    expect(csv).not.toContain("500");
+    expect(csv).not.toContain("400");
+  });
+
+  it("ledger CSV: score column and scored reasons only when asked; locked events say yes", () => {
+    const locked = setEventLocked(d, "e1", true);
+    const rows = readCsv(mgeLedgerCsv(planMge(locked), true));
+    expect(rows[0]).toEqual([...MGE_LEDGER_CSV_HEADER, "score"]);
+    expect(rows[1]).toEqual(["2026-10-01", "'+Ramesses", "1", "Bravo, Jr", "manual: Garrison, Kingsland", "yes", ""]);
+    expect(rows[2]).toEqual(["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "score rank 1 among governors not placed by hand (500)", "yes", "500"]);
+    expect(rows[4]![5]).toBe("no");
+    expect(rows[4]![6]).toBe("500");
+  });
+
+  it("governors CSV: name, score, tags in list order, unicode kept", () => {
+    const csv = mgeGovernorsCsv(d);
+    expect(readCsv(csv)).toEqual([
+      [...MGE_GOVERNORS_CSV_HEADER],
+      ["'=HYPERLINK(\"x\")", "500", "rally lead; garrison lead"],
+      ["Bravo, Jr", "400", ""],
+      ["Ünïcödé 名前", "", ""],
+    ]);
+    expect(csv.split("\r\n")[2]).toBe('"Bravo, Jr",400,');
+  });
+
+  it("an empty plan gives a header-only file", () => {
+    expect(mgeLedgerCsv(planMge(doc()), false)).toBe(`${MGE_CSV_BOM}${MGE_LEDGER_CSV_HEADER.join(",")}\r\n`);
+    expect(mgeGovernorsCsv(doc())).toBe(`${MGE_CSV_BOM}name,score,tags\r\n`);
   });
 });

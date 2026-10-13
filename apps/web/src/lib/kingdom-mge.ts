@@ -1,10 +1,10 @@
 // Web glue for the MGE planner (F-35): saved plans in ko:kingdom:v1 (kind "mge"), pasted
 // candidate lists and the public ledger link. Logic lives in @rokadm/planner (kingdom-mge.ts).
 import {
-  MGE_LIMITS, decodeShare, encodeShare, mgePublicPayload, newDocId, parseCandidateLines, parseMgeDoc, parseMgePublic, shareFromHash,
+  MGE_LIMITS, decodeShare, encodeShare, mgeGovernorsCsv, mgeLedgerCsv, mgePublicPayload, newDocId, parseCandidateLines, parseMgeDoc, parseMgePublic, shareFromHash,
   type DecodeResult, type LineError, type MgeDoc, type MgePlan, type MgePublic,
 } from "@rokadm/planner";
-import { getDoc, listDocs, removeDoc, saveDoc, type StorageLike, type StoredDoc } from "./kingdom-store";
+import { downloadText, getDoc, listDocs, removeDoc, saveDoc, type StorageLike, type StoredDoc } from "./kingdom-store";
 import { linkLengthHint, shareUrl } from "./kingdom-share";
 
 export const MGE_KIND = "mge";
@@ -104,4 +104,23 @@ export async function publishMge(doc: MgeDoc, plan: MgePlan, includeScores: bool
 /** Read a ledger from a location hash (#d=...). Never throws. */
 export function readMgeLink(hash: string): Promise<DecodeResult<MgePublic>> {
   return decodeShare(shareFromHash(hash), MGE_KIND, parseMgePublic);
+}
+
+export type MgeCsvKind = "ledger" | "governors";
+
+/** "kingdomops-mge-ledger-k1234-kvk3-2026-10-13.csv": plan title as an ASCII slug, then the day. */
+export function mgeCsvFilename(kind: MgeCsvKind, title: string, today: string): string {
+  const slug = title.normalize("NFKD").replace(/\p{M}+/gu, "").replace(/[^A-Za-z0-9]+/g, "-").replace(/^-+|-+$/g, "").toLowerCase().slice(0, 40).replace(/-+$/, "");
+  return `kingdomops-mge-${kind}${slug ? `-${slug}` : ""}-${today}.csv`;
+}
+
+/** Build a CSV (UTF-8 with BOM) and hand it to the browser as a download (Blob, no network). */
+export function downloadMgeCsv(
+  kind: MgeCsvKind, doc: MgeDoc, plan: MgePlan, includeScores: boolean, today: string,
+  save: (filename: string, text: string, type: string) => void = downloadText,
+): { filename: string; text: string } {
+  const text = kind === "ledger" ? mgeLedgerCsv(plan, includeScores) : mgeGovernorsCsv(doc);
+  const filename = mgeCsvFilename(kind, doc.title, today);
+  save(filename, text, "text/csv;charset=utf-8");
+  return { filename, text };
 }

@@ -687,3 +687,63 @@ export function describeMgeRules(p: Pick<MgeDoc, "policy" | "slotsPerEvent" | "c
   parts.push(p.applicationsRequired ? "Only governors who applied for an event can get a slot in it." : "Every listed governor is considered; no application needed.");
   return parts.join(" ");
 }
+
+// ---------------------------------------------------------------------------
+// CSV export (RFC 4180, CRLF, UTF-8 with BOM) with a guard against spreadsheet formula injection.
+// Same rules as farms-ledger.ts (csvSafeText/csvField), copied rather than imported so this module
+// stays free of farm data; a unit test pins the two to the same output.
+
+/** Byte-order mark so spreadsheet apps open the file as UTF-8 (names with accents, CJK, emoji). */
+export const MGE_CSV_BOM = "\uFEFF";
+export const MGE_LEDGER_CSV_HEADER = ["date", "commander", "slot", "governor", "reason", "locked"] as const;
+export const MGE_GOVERNORS_CSV_HEADER = ["name", "score", "tags"] as const;
+
+/** Text cells starting with = + - @ TAB or CR get a leading ' so spreadsheets do not run them. */
+export function mgeCsvSafeText(s: string): string {
+  return /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
+}
+
+/** Quote a cell when it holds a comma, a quote or a line break; quotes are doubled. */
+export function mgeCsvField(s: string): string {
+  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+}
+
+const csvText = (s: string): string => mgeCsvField(mgeCsvSafeText(s));
+const csvDoc = (rows: string[][]): string => MGE_CSV_BOM + rows.map((r) => r.join(",")).join("\r\n") + "\r\n";
+
+/**
+ * Ledger CSV, oldest event first, one row per slot (unfilled slots included, governor empty).
+ * Scores (a "score" column, and the score inside score-policy reasons) only when `includeScores`.
+ */
+export function mgeLedgerCsv(plan: MgePlan, includeScores: boolean): string {
+  const header: string[] = [...MGE_LEDGER_CSV_HEADER];
+  if (includeScores) header.push("score");
+  const rows: string[][] = [header];
+  const events = [...plan.events].map((e, i) => ({ e, i })).sort((a, b) => (a.e.date < b.e.date ? -1 : a.e.date > b.e.date ? 1 : a.i - b.i));
+  for (const { e } of events) {
+    const slots: Array<{ slot: number; a: MgeAssignment | null }> = [
+      ...e.assignments.map((a) => ({ slot: a.slot, a })),
+      ...e.unfilled.map((slot) => ({ slot, a: null })),
+    ].sort((x, y) => x.slot - y.slot);
+    for (const { slot, a } of slots) {
+      const row = [
+        csvText(e.date),
+        csvText(e.commander),
+        String(slot),
+        csvText(a ? a.name : ""),
+        csvText(a ? (includeScores ? a.reason : a.publicReason) : "not filled"),
+        e.locked ? "yes" : "no",
+      ];
+      if (includeScores) row.push(a && a.score !== null ? String(a.score) : "");
+      rows.push(row);
+    }
+  }
+  return csvDoc(rows);
+}
+
+/** Governors CSV in list order: name, score (empty when not entered), tags joined with "; ". */
+export function mgeGovernorsCsv(doc: Pick<MgeDoc, "candidates">): string {
+  const rows: string[][] = [[...MGE_GOVERNORS_CSV_HEADER]];
+  for (const c of doc.candidates) rows.push([csvText(c.name), c.score === null ? "" : String(c.score), csvText(c.tags.join("; "))]);
+  return csvDoc(rows);
+}
