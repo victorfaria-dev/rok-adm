@@ -93,6 +93,29 @@ test("share falls back to copying the link and confirms inline", async ({ page, 
   expect(copied).toMatch(new RegExp(`/guide/\\?p=${VALID.replace(/\./g, "\\.")}$`));
 });
 
+test("KvK2+ profile: the guide falls back to KvK1 content, clearly labelled", async ({ page }) => {
+  const kvk2 = make({ spending: "f2p", kingdomStage: "kvk2", cityHall: 12 });
+  await page.goto(`/guide/?p=${encodeProfile(kvk2)}`);
+  await expect(personal(page)).toBeVisible();
+  const notice = page.locator("[data-guide-fallback]");
+  await expect(notice).toContainText("Closest available: KvK1 content");
+  await expect(notice).toContainText("not researched yet");
+  const expected = selectBlocks(blocks, { ...kvk2, kingdomStage: "kvk1" });
+  expect(expected.meta.shownBlocks).toBeGreaterThan(0);
+  await expect(personal(page).locator("article[data-block-id]")).toHaveCount(expected.meta.shownBlocks + expected.alreadyDone.length);
+  await expect(personal(page).locator(".g-meta")).toContainText(`${expected.meta.shownBlocks} of`);
+});
+
+test("a link to your own saved profile says 'Your profile' with no save button", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate((code) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, profileCode: code })), VALID);
+  await page.goto(`/guide/?p=${VALID}`);
+  await expect(personal(page)).toBeVisible();
+  await expect(page.getByText("Your profile:")).toBeVisible();
+  await expect(page.getByText("Shared profile:")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Use this profile" })).toHaveCount(0);
+});
+
 test("no sideways scroll at 360px on the personal guide", async ({ page }) => {
   await page.setViewportSize({ width: 360, height: 780 });
   await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}`);

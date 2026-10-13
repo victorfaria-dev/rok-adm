@@ -6,7 +6,7 @@ import { useEffect, useState } from "preact/hooks";
 import { readStore, writeStore } from "../../lib/store";
 import { profileSummary } from "../../lib/profile";
 import type { GuideData } from "../../lib/guide-types";
-import { chooseProfile, selectGuide, shareUrl, type ProfileChoice } from "../../lib/guide-view";
+import { chooseProfile, FALLBACK_STAGE, selectGuideWithFallback, shareUrl, STAGE_NAMES, type ProfileChoice } from "../../lib/guide-view";
 import { GuideBody, GuideMeta } from "./GuideBody";
 
 interface Props {
@@ -78,7 +78,9 @@ export default function GuideIsland({ dataUrl, children }: Props) {
 
   const summary = choice && choice.source !== "default" ? profileSummary(choice.profile) : null;
   const personal = choice !== null && choice.source !== "default" && data !== null && status === "ready";
-  const view = personal ? selectGuide(data.guide, choice.profile) : null;
+  const selection = personal ? selectGuideWithFallback(data.guide, choice.profile) : null;
+  const view = selection?.view ?? null;
+  const empty = view !== null && view.meta.shownBlocks === 0 && view.alreadyDone.length === 0;
 
   async function onShare() {
     const url = shareUrl(location.origin, choice?.code ?? null);
@@ -147,7 +149,27 @@ export default function GuideIsland({ dataUrl, children }: Props) {
 
       {view && choice ? (
         <div class="g-personal" data-guide="personal">
+          {selection?.fallbackFrom && (
+            <aside class="g-notice" data-guide-fallback aria-labelledby="g-fallback-h">
+              <p id="g-fallback-h" class="g-notice-title">Closest available: {STAGE_NAMES[FALLBACK_STAGE]} content</p>
+              <p>
+                Your kingdom is at {STAGE_NAMES[selection.fallbackFrom]}. Guide steps for KvK2 and later are not researched yet,
+                so this page shows the steps written for {STAGE_NAMES[FALLBACK_STAGE]}, the closest stage we have. Some may not fit
+                your kingdom; check them against what your kingdom is doing now.
+              </p>
+            </aside>
+          )}
           <GuideMeta view={view} label={`For ${profileSummary(choice.profile)}`} />
+          {empty && (
+            <aside class="g-notice" data-guide-empty aria-labelledby="g-empty-h">
+              <p id="g-empty-h" class="g-notice-title">No researched steps fit this profile yet</p>
+              <p>
+                None of the guide steps we have researched apply to this profile. That is a gap in our research, not something
+                you did wrong. You can <a href="/start/">check your answers</a>; the <a href="/guides/new-kingdom/">new kingdom guide</a> is
+                also worth a look.
+              </p>
+            </aside>
+          )}
           <GuideBody view={view} badges={data!.guide.badges} budget={data!.budget} />
         </div>
       ) : (

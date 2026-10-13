@@ -38,6 +38,7 @@
 .q-help { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 65ch; }
 
 .q-body { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.q-note { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 65ch; }
 
 /* Large radio options: whole row is the target (≥ 48 px). */
 .q-options { display: grid; gap: var(--ko-space-2); }
