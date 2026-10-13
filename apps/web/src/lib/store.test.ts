@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { defaultStore, exportStore, importStore, parseStore, readStore, STORE_KEY, writeStore } from "./store";
+import { defaultStore, exportStore, importStore, importStoreReport, parseStore, readStore, STORE_KEY, writeStore } from "./store";
 
 function memory(): Storage {
   const m = new Map<string, string>();
@@ -85,5 +85,24 @@ describe("store", () => {
       { id: "c", name: "Farm", code: "1.0.1.0.8.15.....0", override: null },
     ]);
     expect(parseStore(JSON.stringify({ v: 1, savedProfiles: "no" })).savedProfiles).toEqual([]);
+  });
+});
+
+describe("saved accounts with a damaged code (Q2 P2-5)", () => {
+  const GOOD = "1.0.1.0.12.30.....0";
+  it("drops accounts whose profile code does not decode and counts them", () => {
+    const file = JSON.stringify({
+      app: "kingdomops", v: 1, theme: "dark",
+      savedProfiles: [
+        { id: "a", name: "Main", code: GOOD, override: null },
+        { id: "b", name: "Broken", code: "not-a-code", override: null },
+        { id: "c", name: "Future", code: "9.9.9", override: null },
+      ],
+    });
+    const r = importStoreReport(file);
+    expect(r.store.savedProfiles.map((p) => p.name)).toEqual(["Main"]);
+    expect(r.skippedProfiles).toBe(2);
+    expect(importStore(file).savedProfiles).toHaveLength(1);
+    expect(parseStore(JSON.stringify({ v: 1, savedProfiles: [{ id: "b", name: "B", code: "x", override: null }] })).savedProfiles).toEqual([]);
   });
 });

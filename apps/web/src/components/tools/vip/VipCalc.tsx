@@ -18,7 +18,7 @@ const days = (d: number | null) => (d === null ? "More than 10 years" : d === 0 
 /** F-21 (part): VIP points and gems to a target VIP, and days with the daily chest. */
 export default function VipCalc({ levels, rule, perGem, dailyGems, cites }: VipCalcProps) {
   const maxVip = Math.max(...levels.map((l) => l.vip));
-  const { values: v, set, shared, shareUrl } = useToolInputs(
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs(
     "vip",
     { vipPoints: 0, targetVip: Math.min(6, maxVip), streakDay: 1, gemsPerDay: dailyGems },
     ["vipPoints"],
@@ -53,7 +53,7 @@ export default function VipCalc({ levels, rule, perGem, dailyGems, cites }: VipC
         <ResultRow testId="vip-days-gems" label={`Days with the chest plus ${fmt(v.gemsPerDay)} gems a day`} value={days(plan.daysWithGems.value)}
           cite={merge(cites.thresholds, cites.chest, cites.gems, cites.dailyGems)} notes={plan.daysWithGems.assumptions} />
       </Results>
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
   );
 }

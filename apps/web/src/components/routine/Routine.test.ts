@@ -71,8 +71,12 @@ describe("routine island", () => {
     fireEvent.click(screen.getByRole("switch", { name: /Break Mode/ }));
     expect(readStore().routinePrefs?.breakMode).toBe(true);
     const bm = breakMode(ROUTINE_TASKS, { profile: withEffectiveSpending(PROFILE) });
-    expect(taskBoxes()).toHaveLength(bm.daily.length);
-    expect(screen.getByText("Before you step away")).toBeTruthy();
+    // Q2 P2-9: streak + loss-prevention tasks (queues incl. healing, gatherers), and the Planned line stays.
+    expect(taskBoxes()).toHaveLength(bm.daily.length + bm.beforePause.length);
+    expect(taskBoxes().map((b) => b.id.replace("rt-task-", ""))).toEqual(expect.arrayContaining(["vip-claim", "queues", "gathering"]));
+    expect(screen.getByText(/does not cover shields or resource protection/)).toBeTruthy();
+    const mins = Math.round((bm.dailyMinutes + bm.beforePauseMinutes) * 10) / 10;
+    expect(screen.getByText(/^Planned:/).textContent).toMatch(new RegExp(`^Planned: ${mins} of \\d+(\\.\\d)? min \\(Break Mode\\)\\.$`));
     expect(screen.getByText(/Safe to drop while paused/)).toBeTruthy();
     expect(screen.queryByRole("radio")).toBeNull();
   });

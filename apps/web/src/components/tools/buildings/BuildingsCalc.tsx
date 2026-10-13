@@ -17,7 +17,7 @@ const levels = (xs: number[]) => xs.join(", ");
 /** F-81: resources, items and raw time from one level to another, any building. */
 export default function BuildingsCalc({ tables }: BuildingsCalcProps) {
   const first = tables[0]!;
-  const { values: v, set, shared, shareUrl } = useToolInputs("buildings", { building: first.id, from: 9, to: 10, bonusPct: 0 });
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs("buildings", { building: first.id, from: 9, to: 10, bonusPct: 0 });
   const table = tables.find((t) => t.id === v.building) ?? first;
   const max = table.rows.reduce((m, r) => Math.max(m, r.level), 0);
   const from = Math.min(Math.max(0, Math.floor(v.from)), max);
@@ -70,7 +70,7 @@ export default function BuildingsCalc({ tables }: BuildingsCalcProps) {
         </Results>
         </>
       )}
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
   );
 }

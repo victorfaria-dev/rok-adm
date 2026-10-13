@@ -7,6 +7,10 @@ import { FARMS_KEY, parseFarmsStore } from "./farms-store";
 import { KINGDOM_KEY, parseKingdomStore } from "./kingdom-store";
 import { STORE_KEY, parseStore } from "./store";
 import { TOOLS_KEY, parseToolsStore } from "./tools-store";
+import { STORAGE_KEYS } from "./storage-keys";
+
+/** The manifest name of a key (lib/storage-keys.ts), so backup, delete and /trust/ use the same words. */
+const nameOf = (key: string): string => STORAGE_KEYS.find((k) => k.key === key)?.name ?? key;
 
 export const BACKUP_APP = "kingdomops-backup";
 export const BACKUP_VERSION = 1;
@@ -37,42 +41,42 @@ const guard = (p: (raw: string) => unknown) => (raw: string): unknown | null => 
 
 export const BACKUP_SECTIONS: readonly Section[] = [
   {
-    key: STORE_KEY, label: "Profile, routine, commanders and theme", parse: guard(parseStore),
+    key: STORE_KEY, label: nameOf(STORE_KEY), parse: guard(parseStore),
     describe: (v) => {
       const s = v as ReturnType<typeof parseStore>;
       return [s.profileCode ? "profile" : "no profile", n(s.savedProfiles.length, "saved account"), n(Object.keys(s.commanders).length, "commander checklist"), `${s.theme} theme`].join(", ");
     },
   },
   {
-    key: CARD_KEY, label: "Governor card", parse: guard(parseCard),
+    key: CARD_KEY, label: nameOf(CARD_KEY), parse: guard(parseCard),
     describe: (v) => {
       const c = v as ReturnType<typeof parseCard>;
       return c.name ? `${c.name}${c.tag ? ` [${c.tag}]` : ""}` : "no name yet";
     },
   },
   {
-    key: CREST_KEY, label: "Alliance crest", parse: (raw) => parseCrest(raw),
+    key: CREST_KEY, label: nameOf(CREST_KEY), parse: (raw) => parseCrest(raw),
     describe: (v) => {
       const c = v as NonNullable<ReturnType<typeof parseCrest>>;
       return `${c.shape} shield, ${c.emblem}${c.tag ? `, [${c.tag}]` : ""}`;
     },
   },
   {
-    key: TOOLS_KEY, label: "Calculators", parse: guard(parseToolsStore),
+    key: TOOLS_KEY, label: nameOf(TOOLS_KEY), parse: guard(parseToolsStore),
     describe: (v) => {
       const t = v as ReturnType<typeof parseToolsStore>;
       return [n(Object.keys(t.inputs).length, "calculator"), n(Object.keys(t.inventory).length, "inventory value"), n(Object.keys(t.checks).length, "checklist")].join(", ");
     },
   },
   {
-    key: FARMS_KEY, label: "Farms and shipments", parse: guard(parseFarmsStore),
+    key: FARMS_KEY, label: nameOf(FARMS_KEY), parse: guard(parseFarmsStore),
     describe: (v) => {
       const f = v as ReturnType<typeof parseFarmsStore>;
       return `${n(f.farms.length, "farm")}, ${n(f.shipments.length, "shipment")}`;
     },
   },
   {
-    key: KINGDOM_KEY, label: "Council kit", parse: guard(parseKingdomStore),
+    key: KINGDOM_KEY, label: nameOf(KINGDOM_KEY), parse: guard(parseKingdomStore),
     describe: (v) => n((v as ReturnType<typeof parseKingdomStore>).docs.length, "document"),
   },
 ];

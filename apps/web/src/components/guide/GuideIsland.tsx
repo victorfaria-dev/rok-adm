@@ -2,7 +2,7 @@
 // (rendered at build). After mount, it picks the profile (?p= over the saved one),
 // fetches the lean /data/guide.json and re-filters with selectBlocks.
 import type { ComponentChildren } from "preact";
-import { useEffect, useState } from "preact/hooks";
+import { useEffect, useMemo, useState } from "preact/hooks";
 import { readStore, writeStore } from "../../lib/store";
 import { profileSummary } from "../../lib/profile";
 import { deltaSetsFor } from "@rokadm/core";
@@ -18,7 +18,7 @@ import {
   type ProfileChoice,
 } from "../../lib/guide-view";
 import { guidesForYou } from "../../lib/guides";
-import { GuideBody, GuideMeta, GuidesForYou } from "./GuideBody";
+import { GuideBody, GuideMeta, GuidesForYou, renderSteps } from "./GuideBody";
 
 interface Props {
   dataUrl: string;
@@ -26,6 +26,21 @@ interface Props {
 }
 
 type Status = "idle" | "loading" | "ready" | "failed";
+
+/** Steps (blocks) of the personal guide in the first pass, then per idle period. */
+const FIRST_STEPS = 6;
+const STEP = 6;
+
+/** Run `fn` when the browser is idle (or soon, where requestIdleCallback is missing). Returns a cancel. */
+function afterIdle(fn: () => void): () => void {
+  const w = window as Window & { requestIdleCallback?: (cb: () => void, o?: { timeout: number }) => number; cancelIdleCallback?: (id: number) => void };
+  if (typeof w.requestIdleCallback === "function") {
+    const id = w.requestIdleCallback(fn, { timeout: 500 });
+    return () => w.cancelIdleCallback?.(id);
+  }
+  const id = setTimeout(fn, 16);
+  return () => clearTimeout(id);
+}
 
 async function copyText(text: string): Promise<boolean> {
   try {
@@ -68,6 +83,8 @@ export default function GuideIsland({ dataUrl, children }: Props) {
   const [status, setStatus] = useState<Status>("idle");
   const [live, setLive] = useState("");
   const [manualUrl, setManualUrl] = useState<string | null>(null);
+  /** Steps (blocks) of the personal guide rendered so far (Q2 P2-10: the rest follow in idle periods). */
+  const [shownSteps, setShownSteps] = useState(FIRST_STEPS);
 
   useEffect(() => {
     setMounted(true);
@@ -92,10 +109,23 @@ export default function GuideIsland({ dataUrl, children }: Props) {
 
   const summary = choice && choice.source !== "default" ? profileSummary(choice.profile) : null;
   const personal = choice !== null && choice.source !== "default" && data !== null && status === "ready";
-  const selection = personal ? selectGuideWithFallback(data.guide, choice.profile) : null;
+  // Memoised so the progressive render keeps the same block objects and skips re-rendering them.
+  const selection = useMemo(() => (personal && data && choice ? selectGuideWithFallback(data.guide, choice.profile) : null), [personal, data, choice]);
   const links = personal ? guidesForYou(choice.profile) : [];
   const view = selection?.view ?? null;
   const empty = view !== null && view.meta.shownBlocks === 0 && view.alreadyDone.length === 0;
+  const totalSteps = view ? renderSteps(view) : 0;
+
+  // Render the personal guide in steps so no single task builds the whole ~40k px page. A link to a
+  // section (#s-...) renders everything at once so the browser can scroll to it.
+  useEffect(() => {
+    if (!view || shownSteps > totalSteps) return;
+    if (location.hash.length > 1) {
+      setShownSteps(totalSteps + 1);
+      return;
+    }
+    return afterIdle(() => setShownSteps((n) => n + STEP));
+  }, [view !== null, shownSteps, totalSteps]);
 
   async function onShare() {
     const url = shareUrl(location.origin, choice?.code ?? null);
@@ -186,7 +216,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
               </p>
             </aside>
           )}
-          <GuideBody view={view} badges={data!.guide.badges} budget={data!.budget} />
+          <GuideBody view={view} badges={data!.guide.badges} budget={data!.budget} limit={shownSteps} />
         </div>
       ) : (
         children

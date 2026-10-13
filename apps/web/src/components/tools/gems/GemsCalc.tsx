@@ -21,7 +21,7 @@ const MAX_BUYS = 20;
 /** F-21: AP price ladder, VIP Shop items by VIP level, City Hall reward gems still to come. */
 export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
   const maxVip = Math.max(...shop.map((r) => r.vip));
-  const { values: v, set, shared, shareUrl } = useToolInputs("gems", { apBuys: 3, cityHall: 15, shopVip: "all" });
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs("gems", { apBuys: 3, cityHall: 15, shopVip: "all" });
   const buys = Math.min(MAX_BUYS, Math.max(1, v.apBuys));
   const rows = ladderRows(buys, ap);
   const last = rows.at(-1)!;
@@ -67,7 +67,7 @@ export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
           <SelectField id="gems-shop-vip" label="Show items you can buy at" value={v.shopVip} options={vipOptions} onChange={(x) => set({ shopVip: x })} />
         </form>
         <p class="t-progress" aria-live="polite" data-testid="gems-shop-count">{shown.length} of {shop.length} items shown</p>
-        <div class="t-table" role="region" aria-label="VIP Shop items priced in gems" tabindex={0}>
+        <div class="t-table" role="region" aria-label="VIP Shop price table" tabindex={0}>
           <table data-testid="gems-shop">
             <caption>VIP Shop, gem prices <Cite cite={cites.shop} /></caption>
             <thead>
@@ -87,7 +87,7 @@ export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
           </table>
         </div>
       </section>
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
   );
 }

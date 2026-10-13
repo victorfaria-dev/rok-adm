@@ -1,6 +1,6 @@
 // Device-local state (ADR 0002): one versioned key in localStorage.
 // Every read is tolerant: missing, corrupted or blocked storage falls back to defaults.
-import { SPENDING_PROFILES, type SpendingProfile } from "@rokadm/core";
+import { SPENDING_PROFILES, decodeProfile, type SpendingProfile } from "@rokadm/core";
 
 export type ThemePref = "dark" | "light" | "system";
 export const THEME_PREFS: readonly ThemePref[] = ["dark", "light", "system"];
@@ -64,15 +64,33 @@ const isRecord = (x: unknown): x is Record<string, unknown> => typeof x === "obj
 
 /** Parse stored JSON; any field that is missing or malformed gets its default. */
 export function parseStore(raw: string | null | undefined): StoreV1 {
+  return parseStoreReport(raw).store;
+}
+
+/** true when an encodeProfile() code decodes to a profile. */
+const codeDecodes = (code: string): boolean => {
+  try {
+    return "profile" in decodeProfile(code);
+  } catch {
+    return false;
+  }
+};
+
+/**
+ * parseStore plus what it had to drop: saved accounts whose profile code does not decode
+ * (Q2 P2-5) are skipped, never stored, and counted so the import can say so.
+ */
+export function parseStoreReport(raw: string | null | undefined): { store: StoreV1; skippedProfiles: number } {
   const s = defaultStore();
-  if (!raw) return s;
+  let skippedProfiles = 0;
+  if (!raw) return { store: s, skippedProfiles };
   let data: unknown;
   try {
     data = JSON.parse(raw);
   } catch {
-    return s;
+    return { store: s, skippedProfiles };
   }
-  if (!isRecord(data) || data.v !== 1) return s;
+  if (!isRecord(data) || data.v !== 1) return { store: s, skippedProfiles };
   if (typeof data.profileCode === "string" && data.profileCode.length > 0) s.profileCode = data.profileCode;
   if (isRecord(data.draft)) s.draft = data.draft;
   const r = data.routine;
@@ -105,12 +123,16 @@ export function parseStore(raw: string | null | undefined): StoreV1 {
       if (s.savedProfiles.length >= MAX_SAVED_PROFILES) break;
       if (!isRecord(x) || typeof x.id !== "string" || !x.id || ids.has(x.id)) continue;
       if (typeof x.name !== "string" || !x.name.trim() || typeof x.code !== "string" || !x.code) continue;
+      if (!codeDecodes(x.code)) {
+        skippedProfiles++;
+        continue;
+      }
       ids.add(x.id);
       const o = SPENDING_PROFILES.includes(x.override as SpendingProfile) ? (x.override as SpendingProfile) : null;
       s.savedProfiles.push({ id: x.id, name: x.name.trim().slice(0, 40), code: x.code, override: o });
     }
   }
-  return s;
+  return { store: s, skippedProfiles };
 }
 
 type StorageLike = Pick<Storage, "getItem" | "setItem" | "removeItem">;
@@ -157,6 +179,11 @@ export function exportStore(s: StoreV1): string {
 
 /** Import a previously exported file. Throws with a message the user can act on. */
 export function importStore(text: string): StoreV1 {
+  return importStoreReport(text).store;
+}
+
+/** importStore plus how many saved accounts were skipped because their profile code is damaged. */
+export function importStoreReport(text: string): { store: StoreV1; skippedProfiles: number } {
   let data: unknown;
   try {
     data = JSON.parse(text);
@@ -167,5 +194,5 @@ export function importStore(text: string): StoreV1 {
     throw new Error("This file is not a KingdomOps export. Pick the .json file you exported from the You page.");
   }
   const { app: _app, ...rest } = data;
-  return parseStore(JSON.stringify(rest));
+  return parseStoreReport(JSON.stringify(rest));
 }

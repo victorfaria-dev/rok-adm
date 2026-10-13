@@ -294,32 +294,69 @@ export interface LineError {
   message: string;
 }
 
+const NUMBER_TEXT = /^\d[\d.,\s]*[kmb]?$/i;
+const looksNumeric = (t: string): boolean => NUMBER_TEXT.test(t.trim());
+
 /**
- * Split "Name, 1,200,000" / "Name<TAB>4.2m" / "Name; 300k" into name and number text. The name is
- * the shortest prefix whose remainder is a number, so a score written with thousands commas works.
- * Returns number = null when the line has no trailing number.
+ * Split one pasted line into name and score text (Q2 P2-2). Accepted shapes:
+ * - tab-separated cells (a spreadsheet row): the first cell that is not a number is the name, the
+ *   first number after it is the score ("1\tDave\t80\t3" → Dave, 80);
+ * - "Name; score";
+ * - "Name, score", where the score may have thousands commas ("Bob, 1,200,000");
+ * - "Name score" with the number last ("Dave 80", "Ann 1.5m").
+ * A separator followed by something that is not a number is reported as `problem` instead of being
+ * folded into the name, so "Charlie, lots" never becomes a governor called "Charlie, lots".
  */
-export function splitNameAndNumber(line: string): { name: string; number: string | null } {
+export function splitNameAndNumber(line: string): { name: string; number: string | null; problem?: string } {
   const s = line.trim();
-  const m = /^(.*?)\s*[,;\t]\s*([0-9][0-9.,\s]*[kmbKMB]?)\s*$/.exec(s);
-  if (m) return { name: m[1]!.trim(), number: m[2]!.trim() };
+  if (s.includes("\t")) {
+    const cells = s.split("\t").map((c) => c.trim()).filter(Boolean);
+    const at = cells.findIndex((c) => !looksNumeric(c));
+    if (at < 0) return { name: "", number: cells[0] ?? null };
+    const score = cells.slice(at + 1).find(looksNumeric) ?? null;
+    const rest = cells.slice(at + 1);
+    if (score === null && rest.length > 0) return { name: cells[at]!, number: null, problem: "The columns after the name have no score. Put the score in the second column (for example Dave<TAB>4.2m)." };
+    return { name: cells[at]!, number: score };
+  }
+  const semi = s.lastIndexOf(";");
+  if (semi >= 0) {
+    const name = s.slice(0, semi).trim(), num = s.slice(semi + 1).trim();
+    if (!num) return { name, number: null };
+    if (!looksNumeric(num)) return { name: s, number: null, problem: "The part after \";\" is not a score (use 4200000, 4,200,000 or 4.2m)." };
+    return { name, number: num };
+  }
+  const comma = /^(.*?)\s*,\s*(\d[\d.,\s]*[kmb]?)\s*$/i.exec(s);
+  if (comma && comma[1]!.trim()) return { name: comma[1]!.trim(), number: comma[2]!.trim() };
+  if (comma) return { name: "", number: comma[2]!.trim() };
+  if (s.includes(",")) {
+    const after = s.slice(s.lastIndexOf(",") + 1).trim();
+    if (after) return { name: s, number: null, problem: "The part after the last comma is not a score (use 4200000, 4,200,000 or 4.2m)." };
+    return { name: s.slice(0, s.lastIndexOf(",")).trim(), number: null };
+  }
+  const space = /^(.*\S)\s+(\d[\d.,]*[kmb]?)$/i.exec(s);
+  if (space) return { name: space[1]!, number: space[2]! };
   return { name: s, number: null };
 }
 
-/** Parse a pasted candidate list, one "Name, score" per line (score optional). */
+/**
+ * Parse a pasted candidate list, one governor per line: "Name, score", "Name; score", "Name<TAB>score"
+ * or "Name score" (score optional, 1.5m shorthand allowed). Lines that cannot be read are reported.
+ */
 export function parseCandidateLines(text: string): { rows: Array<{ name: string; score: number | null }>; errors: LineError[] } {
   const rows: Array<{ name: string; score: number | null }> = [];
   const errors: LineError[] = [];
   text.split(/\r\n?|\n/).forEach((raw, i) => {
     if (!raw.trim()) return;
-    const { name, number } = splitNameAndNumber(raw);
+    const { name, number, problem } = splitNameAndNumber(raw);
+    const text = raw.trim().replace(/\t/g, " ");
+    if (problem) return void errors.push({ line: i + 1, text, message: problem });
     const clean = cleanLine(name, MGE_LIMITS.name + 1);
-    if (!clean) return void errors.push({ line: i + 1, text: raw.trim(), message: "No name on this line." });
-    if (clean.length > MGE_LIMITS.name) return void errors.push({ line: i + 1, text: raw.trim(), message: `Name is longer than ${MGE_LIMITS.name} characters.` });
+    if (!clean) return void errors.push({ line: i + 1, text, message: "No name on this line." });
+    if (clean.length > MGE_LIMITS.name) return void errors.push({ line: i + 1, text, message: `Name is longer than ${MGE_LIMITS.name} characters.` });
     let score: number | null = null;
     if (number !== null) {
       score = parseQuantity(number);
-      if (score === null) return void errors.push({ line: i + 1, text: raw.trim(), message: "The score is not a number (use 4200000, 4,200,000 or 4.2m)." });
+      if (score === null) return void errors.push({ line: i + 1, text, message: "The score is not a number (use 4200000, 4,200,000 or 4.2m)." });
     }
     rows.push({ name: clean, score });
   });

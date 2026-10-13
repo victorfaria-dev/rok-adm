@@ -91,7 +91,7 @@ describe("You island: theme", () => {
 describe("You island: export and import", () => {
   it("exports the whole store under a dated file name", () => {
     const { download } = setup({ profileCode: CODE, theme: "light" });
-    fireEvent.click(screen.getByRole("button", { name: "Export data" }));
+    fireEvent.click(screen.getByRole("button", { name: "Export profile file" }));
     expect(download).toHaveBeenCalledTimes(1);
     const [name, text] = download.mock.calls[0]!;
     expect(name).toBe("kingdomops-2026-10-13.json");
@@ -109,6 +109,19 @@ describe("You island: export and import", () => {
     expect(readStore()).toMatchObject({ profileCode: RICH, profileOverride: null, theme: "light", commanders: {} });
     expect(document.documentElement.getAttribute("data-theme")).toBe("light");
     expect(screen.getByText("High (raised by total spend)")).toBeTruthy();
+  });
+
+  it("says how many saved accounts were skipped for a damaged code (Q2 P2-5)", async () => {
+    setup({ profileCode: CODE });
+    const file = JSON.stringify({
+      app: "kingdomops", v: 1, theme: "dark", profileCode: CODE,
+      savedProfiles: [{ id: "a", name: "Main", code: CODE, override: null }, { id: "b", name: "Bad", code: "zzz", override: null }],
+    });
+    const input = document.querySelector("input[type=file]") as HTMLInputElement;
+    Object.defineProperty(input, "files", { value: [fileWith(file)], configurable: true });
+    fireEvent.change(input);
+    await waitFor(() => expect(screen.getByText(/1 saved account in the file had a damaged profile code and was skipped/)).toBeTruthy());
+    expect(readStore().savedProfiles.map((p) => p.name)).toEqual(["Main"]);
   });
 
   it("an invalid file shows the error and changes nothing", async () => {

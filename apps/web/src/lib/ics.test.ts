@@ -61,11 +61,11 @@ describe("helpers", () => {
     expect(parseTime("24:00")).toEqual({ h: 20, m: 0 });
     expect(parseTime("nope")).toEqual({ h: 20, m: 0 });
   });
-  it("eventMinutes rounds up with a 5-minute floor", () => {
-    expect(eventMinutes(0)).toBe(5);
+  it("eventMinutes rounds up with a 1-minute floor", () => {
+    expect(eventMinutes(0)).toBe(1);
     expect(eventMinutes(4.5)).toBe(5);
     expect(eventMinutes(12.5)).toBe(13);
-    expect(eventMinutes(Number.NaN)).toBe(5);
+    expect(eventMinutes(Number.NaN)).toBe(1);
   });
   it("makeUid is deterministic with an injected random", () => {
     expect(makeUid(NOW, () => 0.5)).toBe(makeUid(NOW, () => 0.5));
@@ -103,10 +103,13 @@ describe("buildRoutineIcs", () => {
     expect(buildRoutineIcs({ ...BASE, time: "07:05" })).toContain(`DTSTART:${day}T070500`);
   });
 
-  it("titles and sizes the event from the plan (at least 5 min)", () => {
+  it("DURATION matches the listed task minutes (Q2 P3)", () => {
     expect(lines).toContain("SUMMARY:KingdomOps routine (4 min)");
-    expect(lines).toContain("DURATION:PT5M");
-    const long = unfold(buildRoutineIcs({ ...BASE, totalMinutes: 27.5 }));
+    expect(lines).toContain("DURATION:PT4M");
+    const one = unfold(buildRoutineIcs({ ...BASE, tasks: [BASE.tasks[0]!], totalMinutes: 99 }));
+    expect(one).toContain("SUMMARY:KingdomOps routine (1 min)");
+    expect(one).toContain("DURATION:PT1M");
+    const long = unfold(buildRoutineIcs({ ...BASE, tasks: [...BASE.tasks, { title: "Gather", minutes: 23.5, isEstimate: false }] }));
     expect(long).toContain("SUMMARY:KingdomOps routine (27.5 min)");
     expect(long).toContain("DURATION:PT28M");
   });

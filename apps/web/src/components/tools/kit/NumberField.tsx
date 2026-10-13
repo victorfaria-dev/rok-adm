@@ -1,4 +1,5 @@
 import { useState } from "preact/hooks";
+import { readQuantity, type QuantityError } from "@rokadm/planner";
 import { PendingTag } from "./Cite";
 
 interface Props {
@@ -22,23 +23,40 @@ interface Props {
 /** Value of an optional NumberField the user has not filled in. */
 export const EMPTY_NUMBER = -1;
 
+/** A stored or linked value as the field shows it: plain digits, never "1e+21" or "1e-7". */
+export function inputText(v: number): string {
+  if (!Number.isFinite(v)) return "";
+  return v.toLocaleString("en-US", { useGrouping: false, maximumFractionDigits: 6 });
+}
+
+/** Inline error for a value the shared parser refused. */
+export function fieldError(error: QuantityError, integer: boolean, min: number, max?: number): string {
+  switch (error) {
+    case "empty": return "Enter a number.";
+    case "negative": return `Use ${min} or more.`;
+    case "fraction": return "Enter a whole number.";
+    case "too_large": return max !== undefined ? `Use ${max} or less.` : "That number is too large.";
+    default: return integer ? "Enter a whole number, like 1500, 1,500 or 1.5k." : "Enter a number, like 12.5, 1,500 or 1.5k.";
+  }
+}
+
 /** Labelled number input: label above, help, error below (never placeholder-as-label). */
 export function NumberField({ id, label, value, onChange, min = 0, max, step, help, pending, suffix, integer = true, optional = false }: Props) {
   const [text, setText] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const shown = text ?? (optional && value < 0 ? "" : String(value));
+  const shown = text ?? (optional && value < 0 ? "" : inputText(value));
   const describedBy = [help ? `${id}-help` : null, error ? `${id}-err` : null].filter(Boolean).join(" ") || undefined;
 
   const commit = (raw: string): void => {
     setText(raw);
-    const t = raw.trim().replace(/,/g, "");
-    if (t === "") {
-      if (optional) { setError(null); onChange(EMPTY_NUMBER); return; }
-      setError("Enter a number.");
+    // One parser for every number field (Q2 P2-3/P2-4): "1,500", "1.5k", "2m"; no negatives, no "1e3".
+    const r = readQuantity(raw, { decimals: !integer });
+    if (!r.ok) {
+      if (r.error === "empty" && optional) { setError(null); onChange(EMPTY_NUMBER); return; }
+      setError(fieldError(r.error, integer, min, max));
       return;
     }
-    const v = Number(t);
-    if (!Number.isFinite(v) || (integer && !Number.isInteger(v))) { setError(integer ? "Enter a whole number." : "Enter a number."); return; }
+    const v = r.value;
     if (v < min) { setError(`Use ${min} or more.`); return; }
     if (max !== undefined && v > max) { setError(`Use ${max} or less.`); return; }
     setError(null);

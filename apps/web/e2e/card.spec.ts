@@ -51,6 +51,8 @@ test.describe("governor card", () => {
     await page.goto("/");
     await page.evaluate(saveProfile(CH22_F2P), CH22_F2P);
     await page.goto("/card/");
+    // Typing before hydration is lost when the island takes over the input.
+    await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
     const name = page.getByLabel("Governor name");
     const tag = page.getByLabel("Alliance tag");
 

@@ -35,7 +35,17 @@ export function Cite({ cite }: { cite: CiteData }) {
         </span>
       ) : null}
       <ConfidenceTag level={cite.facts.length ? cite.confidence : "pending"} />
-      {cite.stale ? <span class="t-stale">Re-verify</span> : null}
+      {cite.stale ? <StaleTag ids={cite.staleFacts ?? []} /> : null}
+    </span>
+  );
+}
+
+/** "Re-verify" with the card ids that need it, visible and in the tooltip (Q2 P3). */
+export function StaleTag({ ids }: { ids: readonly string[] }) {
+  const why = "Confirmed before the latest official patch";
+  return (
+    <span class="t-stale" data-stale-ids={ids.join(" ")} title={ids.length ? `${why}: ${ids.join(", ")}` : why}>
+      Re-verify{ids.length ? <>: <span class="mono">{ids.join(", ")}</span></> : null}
     </span>
   );
 }

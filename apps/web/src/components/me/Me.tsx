@@ -1,9 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import type { SpendingProfile } from "@rokadm/core";
 import {
-  clearStore,
   exportStore,
-  importStore,
+  importStoreReport,
   readStore,
   writeStore,
   type StoreV1,
@@ -12,8 +11,9 @@ import {
 import { applyTheme } from "../../lib/theme";
 import { profileFromCode, profileSummary } from "../../lib/profile";
 import {
-  DELETED_MESSAGE,
   IMPORTED_MESSAGE,
+  deletedMessage,
+  skippedMessage,
   OVERRIDE_CHOICES,
   RULE_BODY,
   THEME_CHOICES,
@@ -25,6 +25,7 @@ import {
   profileRows,
 } from "../../lib/me";
 import { Accounts } from "./Accounts";
+import { USER_DATA_KEYS, clearAllKeys, clearOfflineCache } from "../../lib/storage-keys";
 import "./me.css";
 
 interface Props {
@@ -51,6 +52,14 @@ const defaultDownload = (fileName: string, text: string): void => {
   a.remove();
   setTimeout(() => URL.revokeObjectURL(url), 0);
 };
+
+function storageOf(name: "localStorage" | "sessionStorage"): Storage | null {
+  try {
+    return typeof window === "undefined" ? null : window[name];
+  } catch {
+    return null;
+  }
+}
 
 /** Keep the header/rail theme pickers in step with the theme chosen here. */
 function syncThemePickers(pref: ThemePref): void {
@@ -87,6 +96,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
   const [status, setStatus] = useState<{ at: "data" | "delete"; text: string }>({ at: "data", text: "" });
   const [importError, setImportError] = useState("");
   const [confirming, setConfirming] = useState(false);
+  const [alsoOffline, setAlsoOffline] = useState(false);
   const confirmHeading = useRef<HTMLHeadingElement>(null);
   const deleteButton = useRef<HTMLButtonElement>(null);
   const focusAfter = useRef<"confirm" | "delete" | null>(null);
@@ -143,8 +153,11 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
 
   const importFile = async (file: File): Promise<void> => {
     let imported: StoreV1;
+    let skipped = 0;
     try {
-      imported = importStore(await file.text());
+      const r = importStoreReport(await file.text());
+      imported = r.store;
+      skipped = r.skippedProfiles;
     } catch (e) {
       setStatus({ at: "data", text: "" });
       setImportError(e instanceof Error ? e.message : "This file could not be read.");
@@ -157,7 +170,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     syncProfileChips(next.profileCode);
     setConfirming(false);
     setStore(next);
-    say(IMPORTED_MESSAGE);
+    say(skipped > 0 ? `${IMPORTED_MESSAGE} ${skippedMessage(skipped)}` : IMPORTED_MESSAGE);
   };
 
   const openConfirm = (): void => {
@@ -170,8 +183,9 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     setConfirming(false);
   };
 
-  const deleteAll = (): void => {
-    clearStore();
+  const deleteAll = async (): Promise<void> => {
+    const removed = clearAllKeys(storageOf("localStorage"), storageOf("sessionStorage"));
+    const offline = alsoOffline ? (await clearOfflineCache()) > 0 : null;
     applyTheme("dark");
     syncThemePickers("dark");
     syncProfileChips(null);
@@ -179,7 +193,8 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     focusAfter.current = "delete";
     setConfirming(false);
     setStore(fresh);
-    say(DELETED_MESSAGE, "delete");
+    setAlsoOffline(false);
+    say(deletedMessage(removed.length, offline), "delete");
   };
 
   const profile = store ? profileFromCode(store.profileCode) : null;
@@ -284,13 +299,14 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
       <section class="me-section" aria-labelledby="me-data-h">
         <h2 id="me-data-h">Your data</h2>
         <p>
-          The export file holds everything saved here: your profile answers (including what you spend), any questionnaire
-          draft, routine marks and settings, commander answers and your theme. Think before you share it.
+          The profile file holds only your profile answers (including what you spend), saved accounts, any questionnaire
+          draft, routine ticks and settings, commander checks and your theme. Think before you share it. Your card, crest,
+          tool inputs, farms and council documents are not in it: use <a href="#me-backup-h">Back up everything</a> for those.
         </p>
         <div class="me-actions">
-          <button type="button" class="btn btn-secondary" onClick={exportData}>Export data</button>
+          <button type="button" class="btn btn-secondary" onClick={exportData}>Export profile file</button>
           <label class="btn btn-secondary me-file">
-            Import data
+            Import profile file
             <input
               class="visually-hidden"
               type="file"
@@ -303,13 +319,13 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
             />
           </label>
         </div>
-        <p class="me-note">Importing replaces everything saved in this browser with the file's contents.</p>
+        <p class="me-note">Importing replaces your profile, saved accounts, routine, commander checks and theme with the file's contents. Nothing else changes.</p>
         <p class="me-status" role="status">{status.at === "data" ? status.text : ""}</p>
         <p class="me-error" role="alert">{importError}</p>
 
         <div class="me-danger">
           <h3>Delete local data</h3>
-          <p>Removes everything KingdomOps saved in this browser. Export first if you may want it back.</p>
+          <p>Removes everything KingdomOps saved in this browser. Back up everything first if you may want it back.</p>
           {!confirming ? (
             <button type="button" class="btn me-btn-danger-outline" ref={deleteButton} onClick={openConfirm}>
               Delete all data
@@ -328,12 +344,19 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
               }}
             >
               <h4 id="me-confirm-h" tabIndex={-1} ref={confirmHeading}>Delete everything?</h4>
-              <p id="me-confirm-text">
-                This deletes your profile answers, spending, questionnaire draft, routine marks, commander answers and theme
-                from this browser. It cannot be undone.
-              </p>
+              <div id="me-confirm-text">
+                <p>This deletes from this browser:</p>
+                <ul class="me-delete-list" data-delete-list>
+                  {USER_DATA_KEYS.map((k) => <li key={k.key}>{k.name}</li>)}
+                </ul>
+                <p>It cannot be undone.</p>
+              </div>
+              <label class="me-check">
+                <input type="checkbox" checked={alsoOffline} onChange={(e) => setAlsoOffline(e.currentTarget.checked)} />
+                <span>Also remove the offline copy of the site (pages saved for offline use; it holds nothing about you)</span>
+              </label>
               <div class="me-actions">
-                <button type="button" class="btn me-btn-danger" onClick={deleteAll}>Delete everything</button>
+                <button type="button" class="btn me-btn-danger" onClick={() => void deleteAll()}>Delete everything</button>
                 <button type="button" class="btn btn-secondary" onClick={cancelConfirm}>Cancel</button>
               </div>
             </div>

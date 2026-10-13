@@ -38,6 +38,12 @@ test("VIP calculator: invalid input shows an error and keeps the last result", a
   await expect(page.getByText("Use 0 or more.")).toBeVisible();
   await expect(page.getByLabel("Your VIP points now")).toHaveAttribute("aria-invalid", "true");
   await expect(page.getByTestId("vip-needed").locator(".t-value")).toHaveText("1,200");
+  // Q2 P2-4: scientific notation is refused too, and 1.5k shorthand works.
+  await page.getByLabel("Your VIP points now").fill("1e3");
+  await expect(page.getByText(/Enter a whole number, like 1500/)).toBeVisible();
+  await expect(page.getByTestId("vip-needed").locator(".t-value")).toHaveText("1,200");
+  await page.getByLabel("Your VIP points now").fill("1k");
+  await expect(page.getByTestId("vip-needed").locator(".t-value")).toHaveText("200");
 });
 
 test("VIP calculator: a share link fills the inputs without saving them", async ({ page }) => {
@@ -51,7 +57,7 @@ test("VIP calculator: a share link fills the inputs without saving them", async 
   await page.evaluate(() => localStorage.removeItem("ko:tools:v1"));
   await page.goto(url);
   await hydrated(page);
-  await expect(page.getByText("You opened a shared link")).toBeVisible();
+  await expect(page.getByText("Showing values from a link")).toBeVisible();
   await expect(page.getByLabel("Your VIP points now")).toHaveValue("1200");
   expect(await page.evaluate(() => localStorage.getItem("ko:tools:v1"))).toBeNull();
 });
@@ -79,24 +85,53 @@ for (const theme of ["dark", "light"] as const) {
 const link = (route: string, data: Record<string, unknown>): string =>
   `${route}?s=${Buffer.from(JSON.stringify(data)).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")}`;
 
-test("a share link overrides only its keys, and the first edit saves and drops ?s=", async ({ page }) => {
+test("a share link overrides only its keys; an edit saves only that key until the user chooses (Q2 P1-2)", async ({ page }) => {
   await page.goto("/tools/vip/");
   await hydrated(page);
   await page.getByLabel("Your VIP points now").fill("300");
   await page.getByLabel("Daily chest streak day").fill("4");
-  await page.goto(link("/tools/vip/", { targetVip: 5 }));
+  await page.goto(link("/tools/vip/", { targetVip: 5, vipPoints: 9000 }));
   await hydrated(page);
   await expect(page.getByLabel("Target VIP level")).toHaveValue("5");
+  await expect(page.getByLabel("Your VIP points now")).toHaveValue("9000");
   await expect(page.getByLabel("Daily chest streak day")).toHaveValue("4");
-  expect((await toolsStore(page)).inputs).toMatchObject({ vip: { streakDay: 4 } });
-  expect(JSON.stringify((await toolsStore(page)).inputs)).not.toContain("\"targetVip\":5");
+  await expect(page.getByText("Showing values from a link")).toBeVisible();
 
+  // Editing one field saves that field only: the saved inventory (vipPoints 300) is not replaced by the link's 9000.
   await page.getByLabel("Gems you put into VIP each day").fill("50");
+  let s = await toolsStore(page);
+  expect(s.inventory).toEqual({ vipPoints: 300 });
+  expect(s.inputs).toMatchObject({ vip: { streakDay: 4, gemsPerDay: 50 } });
+  expect(JSON.stringify(s.inputs)).not.toContain("\"targetVip\":5");
+  await expect(page).toHaveURL(/\?s=/);
+
+  // Keep mine: saved values come back (with the edited field), nothing else written, ?s= dropped.
+  await page.getByRole("button", { name: "Keep mine" }).click();
+  await expect(page.getByLabel("Your VIP points now")).toHaveValue("300");
+  await expect(page.getByLabel("Gems you put into VIP each day")).toHaveValue("50");
   await expect(page).toHaveURL(/\/tools\/vip\/$/);
+  await expect(page.locator("[data-link-choice]")).toHaveCount(0);
+  expect((await toolsStore(page)).inventory).toEqual({ vipPoints: 300 });
+
+  // Use link values: everything on screen becomes the user's own.
+  await page.goto(link("/tools/vip/", { targetVip: 5, vipPoints: 9000 }));
+  await hydrated(page);
+  await page.getByRole("button", { name: "Use link values" }).click();
+  await expect(page).toHaveURL(/\/tools\/vip\/$/);
+  s = await toolsStore(page);
+  expect(s.inventory).toEqual({ vipPoints: 9000 });
+  expect(s.inputs).toMatchObject({ vip: { targetVip: 5, streakDay: 4, gemsPerDay: 50 } });
   await page.reload();
   await hydrated(page);
   await expect(page.getByLabel("Target VIP level")).toHaveValue("5");
-  await expect(page.getByLabel("Gems you put into VIP each day")).toHaveValue("50");
+});
+
+test("axe: the link choice is accessible", async ({ page }) => {
+  await page.goto(link("/tools/vip/", { targetVip: 5 }));
+  await hydrated(page);
+  await expect(page.locator("[data-link-choice]")).toBeVisible();
+  expect(await axeViolations(page)).toEqual([]);
+  await noSidewaysScroll(page);
 });
 
 test("crafted links with impossible values fall back safely", async ({ page }) => {

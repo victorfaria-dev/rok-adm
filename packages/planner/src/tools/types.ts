@@ -9,6 +9,8 @@ export interface Cite {
   confidence: Confidence;
   /** True when a card's validity date is older than the build date ("re-verify"). */
   stale?: boolean;
+  /** Which of `facts` are stale (shown next to "Re-verify"); omitted when none. */
+  staleFacts?: string[];
 }
 
 /** A sourced input value that a calculator reads (from tools-data or a table). */
@@ -37,7 +39,8 @@ export function weakest(...cs: Confidence[]): Confidence {
 /** Merge citations: union of fact ids (sorted), weakest confidence, stale if any is. */
 export function mergeCites(...cs: Cite[]): Cite {
   const facts = [...new Set(cs.flatMap((c) => c.facts))].sort();
-  return { facts, confidence: weakest(...cs.map((c) => c.confidence)), stale: cs.some((c) => c.stale) };
+  const staleFacts = [...new Set(cs.flatMap((c) => c.staleFacts ?? (c.stale && c.facts.length === 1 ? c.facts : [])))].sort();
+  return { facts, confidence: weakest(...cs.map((c) => c.confidence)), stale: cs.some((c) => c.stale), ...(staleFacts.length ? { staleFacts } : {}) };
 }
 
 /** Finite, non-negative number or the fallback (inputs come from forms and storage). */

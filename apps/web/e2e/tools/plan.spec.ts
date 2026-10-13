@@ -134,7 +134,7 @@ test.describe("migration checker", () => {
     await page.evaluate(() => localStorage.removeItem("ko:tools:v1"));
     await page.goto(url);
     await hydrated(page);
-    await expect(page.getByText("You opened a shared link")).toBeVisible();
+    await expect(page.getByText("Showing values from a link")).toBeVisible();
     await expect(page.getByLabel("Route", { exact: true })).toHaveValue("cross-s2");
     await expect(page.getByLabel("Target kingdom age (days)")).toHaveValue("200");
     await expect(page.getByLabel("Target kingdom power cap (millions, optional)")).toHaveValue("40");

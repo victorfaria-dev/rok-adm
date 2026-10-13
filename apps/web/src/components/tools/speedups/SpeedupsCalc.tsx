@@ -45,7 +45,7 @@ const mins = (m: number) => formatDuration(m * 60);
 
 /** F-81: add up speedups by type and check them against a job's time (alliance helps included). */
 export default function SpeedupsCalc({ helps, helpPct, cites }: SpeedupsCalcProps) {
-  const { values: v, set, shared, shareUrl } = useToolInputs("speedups", defaults(), Object.values(INV_KEY));
+  const { values: v, set, shared, shareUrl, keepMine, useLink } = useToolInputs("speedups", defaults(), Object.values(INV_KEY));
 
   const countsOf = (vals: Record<string, number | string>, t: SpeedupType): SpeedupCounts =>
     Object.fromEntries(DURATIONS.map((x) => [x.min, Number(vals[countKey(t, x.min)]) || 0]));
@@ -115,7 +115,7 @@ export default function SpeedupsCalc({ helps, helpPct, cites }: SpeedupsCalcProp
           cite={mergeCites(cites.durations, cites.helps, cites.helpPct)} />
         </dl>
       </section>
-      <ShareBar shareUrl={shareUrl} shared={shared} />
+      <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
   );
 }

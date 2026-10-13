@@ -11,7 +11,7 @@ export interface IcsTask {
 
 export interface RoutineIcsInput {
   tasks: readonly IcsTask[];
-  /** Planned total minutes (event duration is this, rounded up, at least 5). */
+  /** Planned total minutes; used only when `tasks` is empty (otherwise the tasks' own minutes are summed). */
   totalMinutes: number;
   /** Local start time "HH:MM" (24 h). */
   time: string;
@@ -21,7 +21,7 @@ export interface RoutineIcsInput {
 }
 
 export const ICS_FILENAME = "kingdomops-routine.ics";
-export const ICS_MIN_DURATION = 5;
+export const ICS_MIN_DURATION = 1;
 const CRLF = "\r\n";
 const MAX_OCTETS = 75;
 
@@ -80,7 +80,7 @@ export function parseTime(time: string): { h: number; m: number } {
 
 const fmtMinutes = (n: number): string => String(Math.round(n * 10) / 10);
 
-/** Duration in whole minutes: planned total rounded up, at least 5. */
+/** Duration in whole minutes: the tasks' total rounded up (at least 1), so it matches the checklist (Q2 P3). */
 export function eventMinutes(totalMinutes: number): number {
   const n = Number.isFinite(totalMinutes) ? Math.ceil(totalMinutes) : 0;
   return Math.max(ICS_MIN_DURATION, n);
@@ -94,12 +94,19 @@ export function routineDescription(tasks: readonly IcsTask[]): string {
   return parts.join("\n\n");
 }
 
+/** Minutes the event stands for: the sum of the listed tasks (the plan total when there are none). */
+export function taskMinutes(input: Pick<RoutineIcsInput, "tasks" | "totalMinutes">): number {
+  const sum = input.tasks.length ? input.tasks.reduce((s, t) => s + (Number.isFinite(t.minutes) ? t.minutes : 0), 0) : input.totalMinutes;
+  return Number.isFinite(sum) ? Math.max(0, Math.round(sum * 10) / 10) : 0;
+}
+
 /** VCALENDAR with one VEVENT repeating daily at a floating local time (no time zone). */
 export function buildRoutineIcs(input: RoutineIcsInput): string {
   const { h, m } = parseTime(input.time);
   const n = input.now;
   const start = `${n.getFullYear()}${pad(n.getMonth() + 1)}${pad(n.getDate())}T${pad(h)}${pad(m)}00`;
-  const summary = `KingdomOps routine (${fmtMinutes(Math.max(0, input.totalMinutes))} min)`;
+  const total = taskMinutes(input);
+  const summary = `KingdomOps routine (${fmtMinutes(total)} min)`;
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",
@@ -110,7 +117,7 @@ export function buildRoutineIcs(input: RoutineIcsInput): string {
     `UID:${input.uid}`,
     `DTSTAMP:${utcStamp(n)}`,
     `DTSTART:${start}`,
-    `DURATION:PT${eventMinutes(input.totalMinutes)}M`,
+    `DURATION:PT${eventMinutes(total)}M`,
     "RRULE:FREQ=DAILY",
     `SUMMARY:${escapeText(summary)}`,
     `DESCRIPTION:${escapeText(routineDescription(input.tasks))}`,

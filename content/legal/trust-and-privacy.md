@@ -9,20 +9,70 @@
 - **We store nothing about you on our servers.** In the MVP, everything you enter stays in your own browser.
 - **We are a fan project.** We are not affiliated with, endorsed by, or sponsored by Lilith Games.
 - **We will never ask for your game login**, never automate the game, and never scan kingdoms.
-- **You can delete everything** by clearing this site's data in your browser.
+- **You can delete everything** with **Delete all data** on the You page, or by clearing this site's data in your browser.
 
 ## 1. What data we store
 
 ### MVP (now)
 
-| Data | Where it lives | Who can see it |
-|---|---|---|
-| Your questionnaire answers (spending profile, role, hours per day, kingdom stage, City Hall level, civilization) | Your browser's local storage, on your device | Only you |
-| Checklist ticks, collapsed sections, preferences | Your browser's local storage | Only you |
-| Anything else | Not collected | — |
+Everything below lives in your browser's storage on this device. Only you can see it, unless you export a file or share a link yourself. The **You** page (`/me/`) has **Back up everything** (one file with every row marked "yes" below) and **Delete all data** (removes every row below, the Discord webhook included, and can also remove the offline copy).
 
+#### Profile & answers, saved accounts, routine ticks, commander checks and theme
+
+- **What is in it:** Your questionnaire answers (spending, role, minutes per day, kingdom stage, City Hall level, civilization), any unfinished questionnaire, accounts you saved (main, farms), today's routine ticks and routine settings, your commander checklist answers, your theme
+- **In "Back up everything":** Yes
+- **Other ways to export:** You page: **Export profile file**
+- **How to delete it:** **Delete all data** on the You page (routine ticks also reset each day; a saved account can be removed on its own)
+
+#### Governor card
+
+- **What is in it:** The name, tag and colours you typed for your card
+- **In "Back up everything":** Yes
+- **Other ways to export:** Card page: save as PNG
+- **How to delete it:** no separate button; **Delete all data** on the You page removes it with everything else
+
+#### Alliance crest
+
+- **What is in it:** Shield shape, colours, emblem and tag you picked
+- **In "Back up everything":** Yes
+- **Other ways to export:** Crest page: save as SVG or PNG
+- **How to delete it:** no separate button; **Delete all data** on the You page removes it with everything else
+
+#### Tool inputs (calculators, shared inventory, checklists)
+
+- **What is in it:** Numbers you typed in the calculators, the inventory they share, and checklist ticks
+- **In "Back up everything":** Yes
+- **Other ways to export:** Each calculator: **Copy link to these inputs** (holds the inputs only)
+- **How to delete it:** no separate button; **Delete all data** on the You page removes it with everything else
+
+#### Farms & shipment log
+
+- **What is in it:** Your farm accounts (names, levels, notes) and every shipment you logged
+- **In "Back up everything":** Yes
+- **Other ways to export:** Farms page: **Export farms (JSON)**; shipment log: **Export CSV**
+- **How to delete it:** Farms page: delete a farm, or **Delete all farm data**; shipment log: delete a shipment
+
+#### Kingdom council documents (rules, requirements, MGE ledger, recruiting post, seed plans)
+
+- **What is in it:** What the council types: rules, requirement bands, the MGE ledger, recruiting posts, seed plans. **This can include other players' governor names and scores that the council types in.**
+- **In "Back up everything":** Yes
+- **Other ways to export:** Council kit page (`/kingdom/`): **Export (.json)**; each tool: share link or CSV
+- **How to delete it:** Each tool: delete a document; council kit page: **Delete all council data** (also forgets the webhook)
+
+#### Discord webhook URL
+
+- **What is in it:** The Discord webhook the council pasted to post from KingdomOps
+- **In "Back up everything":** **No** (it is a secret: anyone with it can post in that channel)
+- **Other ways to export:** None, on purpose
+- **How to delete it:** **Forget webhook** next to any Discord post button, or **Delete all council data**
+
+
+- **Discord.** Nothing is posted to Discord unless you press a post button after pasting a webhook URL. Then the post you see (for example an MGE ledger or the rules link) goes straight from your browser to Discord, and Discord's own terms and privacy policy apply to it. KingdomOps has no server in between.
+- **Screenshot reader (experimental).** When you pick a screenshot of your own profile at `/tools/screenshot/`, the text recognition (OCR) runs **on your device**. The image never leaves your browser and is not saved; only the numbers you choose to use are carried in a calculator link.
+- **Offline copy.** After your first visit, a service worker keeps a copy of the site's pages and data files in your browser so it opens offline. It holds nothing about you. Remove it with the option in **Delete all data**, or in your browser's site settings.
+- **Small flags.** A tab-only flag remembers that the logo animation already played; it disappears when you close the tab.
 - **No account, no login, no server-side database.** The guides are static pages; filtering happens in your browser.
-- **No game data leaves your device.** If you clear the site's data, or use a private window, it is gone.
+- **No game data leaves your device** unless you export a file, copy a link or post to Discord yourself. If you clear the site's data, or use a private window, it is gone.
 - **Hosting logs:** the company that hosts the static files may keep standard technical logs (IP address, time, page requested) for security. *[Legal review: name the host and its retention period before launch.]*
 - **Analytics and ads:** none in the MVP. If that changes, this page changes first and we will ask for consent where the law requires it.
 

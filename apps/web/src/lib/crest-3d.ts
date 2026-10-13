@@ -28,16 +28,6 @@ function shapeOf(points: readonly Point[]): Shape {
   return s;
 }
 
-/** True when the browser can create a WebGL context (probe on a throwaway canvas). */
-export function hasWebGL(): boolean {
-  try {
-    const c = document.createElement("canvas");
-    return !!(c.getContext("webgl2") ?? c.getContext("webgl"));
-  } catch {
-    return false;
-  }
-}
-
 export interface Crest3D {
   canvas: HTMLCanvasElement;
   setAutoRotate(on: boolean): void;
@@ -46,9 +36,54 @@ export interface Crest3D {
   dispose(): void;
 }
 
-export function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: { autoRotate: boolean; label: string; onLost: () => void }): Crest3D {
-  if (!hasWebGL()) throw new Error("WebGL is not available.");
+/** Let the browser handle input and paint between heavy steps (Q2 P2-10). */
+export function yieldToMain(): Promise<void> {
+  const s = (globalThis as { scheduler?: { yield?: () => Promise<void> } }).scheduler;
+  if (typeof s?.yield === "function") return s.yield();
+  return new Promise((resolve) => setTimeout(resolve, 0));
+}
+
+/** Resolve once the GPU has run the commands issued so far (WebGL2 fence, polled per task; max ~2 s). */
+async function gpuIdle(gl: WebGLRenderingContext | WebGL2RenderingContext, stop: () => boolean): Promise<void> {
+  if (typeof WebGL2RenderingContext === "undefined" || !(gl instanceof WebGL2RenderingContext)) return yieldToMain();
+  const sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
+  if (!sync) return yieldToMain();
+  gl.flush();
+  try {
+    for (let i = 0; i < 120 && !stop(); i++) {
+      await new Promise((r) => setTimeout(r, 16));
+      if (gl.getSyncParameter(sync, gl.SYNC_STATUS) === gl.SIGNALED) return;
+    }
+  } finally {
+    gl.deleteSync(sync);
+  }
+}
+
+export interface MountOptions {
+  autoRotate: boolean;
+  label: string;
+  onLost: () => void;
+  /** Checked between steps: true stops the mount (the caller left 3D or changed the crest). */
+  cancelled?: () => boolean;
+}
+
+/**
+ * Build the 3D view in steps, yielding to the main thread between them (WebGL context, geometry,
+ * face texture, relief, shader compile, first frame), so "View in 3D" never blocks input for long.
+ * The canvas joins the page only when the first frame is ready. Rejects when WebGL is missing.
+ */
+export async function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: MountOptions): Promise<Crest3D> {
+  const stop = () => opts.cancelled?.() === true;
+  const pending: Array<{ dispose(): void }> = [];
+  const abort = (): never => {
+    for (const o of pending) o.dispose();
+    throw new Error("cancelled");
+  };
+  await yieldToMain();
+  if (stop()) abort();
+  // Throws when the browser cannot create a WebGL context (caller shows the 2D fallback).
   const renderer = new WebGLRenderer({ antialias: true, alpha: true, preserveDrawingBuffer: true });
+  pending.push(renderer);
   renderer.outputColorSpace = SRGBColorSpace;
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
   const canvas = renderer.domElement;
@@ -56,7 +91,6 @@ export function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: { autoRota
   canvas.setAttribute("role", "img");
   canvas.setAttribute("aria-label", opts.label);
   canvas.dataset.crest3d = "";
-  host.appendChild(canvas);
 
   const scene = new Scene();
   const camera = new PerspectiveCamera(35, 1, 0.1, 50);
@@ -71,7 +105,7 @@ export function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: { autoRota
 
   const pal = crestPalette(crest);
   const owned: Array<{ dispose(): void }> = [];
-  const own = <T extends { dispose(): void }>(x: T): T => (owned.push(x), x);
+  const own = <T extends { dispose(): void }>(x: T): T => (owned.push(x), pending.push(x), x);
 
   const group = new Group();
   scene.add(group);
@@ -83,6 +117,9 @@ export function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: { autoRota
   const caps = own(new MeshStandardMaterial({ color: new Color(pal.field), metalness: 0.2, roughness: 0.55 }));
   const sides = own(new MeshStandardMaterial({ color: new Color(pal.rim), metalness: 0.75, roughness: 0.3 }));
   group.add(new Mesh(body, [caps, sides] as Material[]));
+
+  await yieldToMain();
+  if (stop()) abort();
 
   // Face: the flat crest drawn on a canvas and mapped onto the shield outline.
   const tex = document.createElement("canvas");
@@ -101,12 +138,38 @@ export function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: { autoRota
   faceMesh.position.z = DEPTH / 2 + BEVEL + 0.002;
   group.add(faceMesh);
 
+  await yieldToMain();
+  if (stop()) abort();
+
   // Emblem in relief.
   const relief = own(new ExtrudeGeometry(shapeOf(emblemPoints(crest.emblem)), { depth: RELIEF, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.012, bevelSegments: 2 }));
   const reliefMat = own(new MeshStandardMaterial({ color: new Color(pal.emblem), metalness: 0.6, roughness: 0.3 }));
   const reliefMesh = new Mesh(relief, reliefMat);
   reliefMesh.position.z = faceMesh.position.z;
   group.add(reliefMesh);
+  // A small resting angle so the relief reads even when nothing moves.
+  group.rotation.set(-0.12, 0.45, 0);
+
+  // Compile the shaders off the critical path where the browser supports it (KHR_parallel_shader_compile).
+  await yieldToMain();
+  if (stop()) abort();
+  try {
+    await renderer.compileAsync(scene, camera);
+  } catch {
+    // older drivers: the first render compiles instead
+  }
+  await yieldToMain();
+  if (stop()) abort();
+  // Warm-up frame while the canvas is still off the page, then wait (without blocking) for the GPU to
+  // finish it: shader linking and the first draw no longer stall the page's next frame.
+  renderer.initTexture(map);
+  await yieldToMain();
+  if (stop()) abort();
+  renderer.setSize(64, 64, false);
+  renderer.render(scene, camera);
+  await gpuIdle(renderer.getContext(), stop);
+  if (stop()) abort();
+  host.appendChild(canvas);
 
   let auto = opts.autoRotate;
   let drag: { x: number; y: number } | null = null;
@@ -174,8 +237,6 @@ export function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: { autoRota
   canvas.addEventListener("keydown", keys);
   canvas.addEventListener("webglcontextlost", lost);
 
-  // A small resting angle so the relief reads even when nothing moves.
-  group.rotation.set(-0.12, 0.45, 0);
   schedule();
 
   return {

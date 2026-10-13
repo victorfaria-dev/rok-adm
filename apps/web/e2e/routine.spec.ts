@@ -89,7 +89,10 @@ test("Break Mode shows the minimal set and persists", async ({ page }) => {
   await open(page);
   const sw = page.getByRole("switch", { name: /Break Mode/ });
   await sw.check();
-  await expect(page.getByRole("heading", { name: "Before you step away" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Break Mode: the minimum" })).toBeVisible();
+  await expect(page.locator("#rt-task-queues")).toBeAttached();
+  await expect(page.locator("#rt-task-gathering")).toBeAttached();
+  await expect(page.getByText(/^Planned: .* min \(Break Mode\)\.$/)).toBeVisible();
   await expect(page.getByText(/Safe to drop while paused/)).toBeVisible();
   await expect(page.getByText(/Pending research:/).first()).toBeVisible();
   await expect(page.getByRole("radio")).toHaveCount(0);
@@ -119,6 +122,15 @@ test("calendar file downloads with a daily event", async ({ page }) => {
   expect(text).toMatch(/DTSTART:\d{8}T073000\r\n/);
   expect(text).toContain("SUMMARY:KingdomOps routine (");
   await expect(page.getByText("Saved kingdomops-routine.ics", { exact: false })).toBeVisible();
+
+  // Q2 P2-9 / P3: in Break Mode the file follows the Break Mode list, and DURATION matches its minutes.
+  await page.getByRole("switch", { name: /Break Mode/ }).check();
+  const planned = Number(/Planned: ([\d.]+) of/.exec((await page.getByText(/^Planned:/).textContent()) ?? "")![1]);
+  const [second] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download calendar file" }).click()]);
+  const ics = readFileSync((await second.path())!, "utf8").replace(/\r\n /g, "");
+  expect(ics).toContain(`SUMMARY:KingdomOps routine (${planned} min)`);
+  expect(ics).toContain(`DURATION:PT${Math.max(1, Math.ceil(planned))}M`);
+  expect(ics).toContain("Refill queues");
 });
 
 test("no sideways scroll at 360 px, in both modes", async ({ page }) => {

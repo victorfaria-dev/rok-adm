@@ -22,6 +22,8 @@ export default function CrestBuilder() {
   const [tagRaw, setTagRaw] = useState("");
   const [tagError, setTagError] = useState<string | null>(null);
   const [mode, setMode] = useState<Mode>("2d");
+  /** In 3D mode while the scene is still being built in steps (the 2D crest stays on screen). */
+  const [preparing, setPreparing] = useState(false);
   const [reduce, setReduce] = useState(false);
   const [autoRotate, setAutoRotate] = useState(true);
   const [status, setStatus] = useState("");
@@ -31,6 +33,8 @@ export default function CrestBuilder() {
   const mod = useRef<typeof import("../../lib/crest-3d") | null>(null);
   const backBtn = useRef<HTMLButtonElement>(null);
   const threeBtn = useRef<HTMLButtonElement>(null);
+  const autoRef = useRef(autoRotate);
+  autoRef.current = autoRotate;
 
   useEffect(() => {
     const c = readSavedCrest();
@@ -57,25 +61,37 @@ export default function CrestBuilder() {
   const fallback = () => {
     view.current?.dispose();
     view.current = null;
+    setPreparing(false);
     setMode("2d");
     setNotice(FALLBACK);
     setTimeout(() => threeBtn.current?.focus(), 0);
   };
 
-  // Mount (or re-mount after an edit) the 3D view while in 3D mode.
+  // Mount (or re-mount after an edit) the 3D view while in 3D mode. The mount is built in steps that
+  // yield to the main thread (Q2 P2-10); the 2D crest and a "Preparing" line show until it is ready.
   useEffect(() => {
     if (mode !== "3d" || !host.current || !mod.current) return;
-    try {
-      view.current = mod.current.mountCrest3D(host.current, crest, {
+    let cancelled = false;
+    setPreparing(true);
+    mod.current
+      .mountCrest3D(host.current, crest, {
         autoRotate,
         label: `3D view: ${describeCrest(crest)} Drag or use the arrow keys to rotate.`,
         onLost: fallback,
+        cancelled: () => cancelled,
+      })
+      .then((v) => {
+        if (cancelled) return v.dispose();
+        view.current?.dispose();
+        view.current = v;
+        v.setAutoRotate(autoRef.current);
+        setPreparing(false);
+      })
+      .catch(() => {
+        if (!cancelled) fallback();
       });
-    } catch {
-      fallback();
-      return;
-    }
     return () => {
+      cancelled = true;
       view.current?.dispose();
       view.current = null;
     };
@@ -102,7 +118,6 @@ export default function CrestBuilder() {
     setMode("loading");
     try {
       mod.current ??= await import("../../lib/crest-3d");
-      if (!mod.current.hasWebGL()) throw new Error("no webgl");
       setMode("3d");
       setTimeout(() => backBtn.current?.focus(), 0);
     } catch {
@@ -110,6 +125,7 @@ export default function CrestBuilder() {
     }
   };
   const close3d = () => {
+    setPreparing(false);
     setMode("2d");
     setTimeout(() => threeBtn.current?.focus(), 0);
   };
@@ -135,15 +151,15 @@ export default function CrestBuilder() {
     <div class="cr-wrap">
       <section class="cr-stage" aria-label="Crest preview">
         <div class="cr-view" data-mode={mode}>
-          {mode !== "3d" && <CrestSvg crest={crest} class="cr-svg" label={`Alliance crest: ${desc}`} />}
-          <div ref={host} class="cr-3d" hidden={mode !== "3d"} />
+          {(mode !== "3d" || preparing) && <CrestSvg crest={crest} class="cr-svg" label={`Alliance crest: ${desc}`} />}
+          <div ref={host} class="cr-3d" hidden={mode !== "3d" || preparing} />
         </div>
         <p class="cr-desc">{desc}</p>
         <div class="cr-row">
           {mode === "3d" ? (
             <>
               <button ref={backBtn} type="button" class="btn btn-secondary" onClick={close3d}>Back to 2D</button>
-              <button type="button" class="btn btn-secondary" onClick={() => exportFile("3d")}>Download 3D PNG</button>
+              <button type="button" class="btn btn-secondary" onClick={() => exportFile("3d")} disabled={preparing}>Download 3D PNG</button>
             </>
           ) : (
             <button ref={threeBtn} type="button" class="btn btn-secondary" onClick={open3d} disabled={mode === "loading"} data-view-3d>
@@ -163,6 +179,7 @@ export default function CrestBuilder() {
             </p>
           </>
         )}
+        <p class="cr-help" role="status" data-3d-status>{mode === "loading" ? "Loading the 3D view…" : mode === "3d" && preparing ? "Preparing the 3D view…" : ""}</p>
         {notice && <p class="cr-notice" data-fallback>{notice}</p>}
         <p class="cr-help">{mode === "2d" || mode === "loading" ? "The 3D view loads only when you ask for it (about 140 KB)." : ""}</p>
       </section>

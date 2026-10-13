@@ -1,6 +1,6 @@
 // UI helpers for the Farm hub islands (/farms/ and /farms/log/): local dates, form parsing,
 // labels and file download. Only types come from @rokadm/planner.
-import type { FarmFocus, Resource } from "@rokadm/planner";
+import { readQuantity, type FarmFocus, type Resource } from "@rokadm/planner";
 import { FARM_LEVEL_RANGES, FARM_NAME_MAX, FARM_NOTE_MAX, type FarmLevelField, type FarmLevelsState } from "./farms-store";
 
 export const FOCUS_LABEL: Record<FarmFocus, string> = {
@@ -113,6 +113,15 @@ export function parseWhole(raw: string): number | null {
   if (!/^\d+$/.test(s)) return Number.NaN;
   const n = Number(s);
   return Number.isSafeInteger(n) ? n : Number.NaN;
+}
+
+/**
+ * A resource amount as players type it ("500000", "500,000", "500k", "1.5m"): the shared parser
+ * (readQuantity) used by the tools and council inputs too. null = empty, NaN = not a valid amount.
+ */
+export function parseResourceAmount(raw: string): number | null {
+  const r = readQuantity(raw);
+  return r.ok ? r.value : r.error === "empty" ? null : Number.NaN;
 }
 
 export type LevelParse = { ok: true; value: number | null } | { ok: false; error: string };
