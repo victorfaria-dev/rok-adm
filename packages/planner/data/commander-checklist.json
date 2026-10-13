@@ -179,9 +179,9 @@
     },
     {
       "id": "short-and-not-swappable",
-      "when": { "shelfLife": ["kvk1_only"], "swap": ["not_eligible"] },
+      "when": { "sculptureType": ["universal_gold"], "shelfLife": ["kvk1_only"], "swap": ["not_eligible"] },
       "effect": "wait",
-      "text": "Short shelf-life and no swap option: the investment cannot be moved later (Season 2 commanders are excluded from the swap).",
+      "text": "Gold sculptures, short shelf-life and no swap option: the investment cannot be moved later (Season 2 commanders are excluded from the swap).",
       "facts": ["C04-0023", "C04-0021"],
       "split": false
     },
