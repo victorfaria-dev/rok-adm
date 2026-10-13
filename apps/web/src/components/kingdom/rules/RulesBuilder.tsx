@@ -194,8 +194,10 @@ export default function RulesBuilder() {
     setLinkBusy(true);
     try {
       setLink(await rulesShareLink(doc));
-    } catch {
-      setError("The link could not be made in this browser.");
+    } catch (e) {
+      setError(e instanceof Error && e.name === "ShareTooLargeError"
+        ? `${e.message} Use "Download as text" or print to PDF for the full version.`
+        : "The link could not be made in this browser.");
     } finally {
       setLinkBusy(false);
     }

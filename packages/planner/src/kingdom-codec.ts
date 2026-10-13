@@ -94,23 +94,37 @@ async function pipe(bytes: Uint8Array, stream: CompressionStream | Decompression
 // ---------------------------------------------------------------------------
 // Public API
 
+/** Thrown by encodeShare when the result would be refused by decodeShare (link or document too large). */
+export class ShareTooLargeError extends Error {
+  constructor(readonly chars: number) {
+    super(`This document is too large for a link (${chars.toLocaleString("en-US")} characters; the limit is ${MAX_SHARE_CHARS.toLocaleString("en-US")}). Shorten it, or export it as a file instead.`);
+    this.name = "ShareTooLargeError";
+  }
+}
+
 export interface EncodeOptions {
   /** Skip compression (tests, or to compare sizes). */
   compress?: boolean;
 }
 
-/** Encode a document of a given kind into the text that goes after "#d=". */
+/**
+ * Encode a document of a given kind into the text that goes after "#d=".
+ * Throws ShareTooLargeError when decodeShare would refuse the result, so no dead link is ever handed out.
+ */
 export async function encodeShare(kind: string, data: unknown, opts: EncodeOptions = {}): Promise<string> {
   const json = new TextEncoder().encode(JSON.stringify({ k: kind, d: data }));
+  if (json.length > MAX_SHARE_BYTES) throw new ShareTooLargeError(Math.ceil((json.length * 4) / 3));
+  let out = `${SHARE_VERSION}j${toBase64Url(json)}`;
   if (opts.compress !== false && hasStreams()) {
     try {
       const z = await pipe(json, new CompressionStream("deflate-raw"));
-      return `${SHARE_VERSION}z${toBase64Url(z)}`;
+      out = `${SHARE_VERSION}z${toBase64Url(z)}`;
     } catch {
-      // fall through to plain JSON
+      // keep plain JSON
     }
   }
-  return `${SHARE_VERSION}j${toBase64Url(json)}`;
+  if (out.length > MAX_SHARE_CHARS) throw new ShareTooLargeError(out.length);
+  return out;
 }
 
 /**

@@ -134,8 +134,12 @@ export default function RequirementsBuilder(): JSX.Element {
       return;
     }
     setSaveError("");
-    setLink(await publishLink(check.card));
-    setStatus("Link ready. Copy it and post it where your players read announcements.");
+    try {
+      setLink(await publishLink(check.card));
+      setStatus("Link ready. Copy it and post it where your players read announcements.");
+    } catch (e) {
+      setSaveError(e instanceof Error && e.name === "ShareTooLargeError" ? `${e.message} Shorten the notes.` : "The link could not be made in this browser.");
+    }
   }
 
   const bandErr = (i: number, k: string) => check.errors[`band-${i}-${k}`];

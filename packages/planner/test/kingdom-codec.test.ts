@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  MAX_SHARE_CHARS, SHARE_ERROR_TEXT, decodeShare, encodeShare, fromBase64Url, shareFromHash, toBase64Url,
+  MAX_SHARE_CHARS, SHARE_ERROR_TEXT, ShareTooLargeError, decodeShare, encodeShare, fromBase64Url, shareFromHash, toBase64Url,
 } from "../src/kingdom-codec";
 
 const asDoc = (d: unknown): { title: string } | null =>
@@ -76,8 +76,22 @@ describe("share codec", () => {
     expect(await decodeShare(s, "rules", asDoc)).toEqual({ ok: false, error: "bad_json" });
   });
 
+  it("refuses to encode what decodeShare would refuse (no dead links)", async () => {
+    await expect(encodeShare("rules", { title: "a".repeat(300 * 1024) })).rejects.toBeInstanceOf(ShareTooLargeError);
+    // Incompressible text past the character limit.
+    const noise = Array.from({ length: 20_000 }, (_, i) => ((i * 7919) % 65521).toString(36)).join("");
+    await expect(encodeShare("rules", { title: noise })).rejects.toThrow(/too large for a link/);
+    const ok = await encodeShare("rules", { title: "a".repeat(100 * 1024) });
+    expect(ok.length).toBeLessThanOrEqual(MAX_SHARE_CHARS);
+    expect((await decodeShare(ok, "rules", asDoc)).ok).toBe(true);
+  });
+
   it("stops decompressing a payload that expands past the limit", async () => {
-    const s = await encodeShare("rules", { title: "a".repeat(300 * 1024) });
+    // Hand-built fragment (encodeShare refuses to make one).
+    const json = new TextEncoder().encode(JSON.stringify({ k: "rules", d: { title: "a".repeat(300 * 1024) } }));
+    const cs = new CompressionStream("deflate-raw");
+    const z = new Uint8Array(await new Response(new Blob([json]).stream().pipeThrough(cs)).arrayBuffer());
+    const s = `1z${toBase64Url(z)}`;
     expect(s.length).toBeLessThan(MAX_SHARE_CHARS);
     expect(await decodeShare(s, "rules", asDoc)).toEqual({ ok: false, error: "too_big" });
   });

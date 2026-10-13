@@ -15,14 +15,20 @@ export default function Publish({ doc, plan, today }: Props) {
   const [includeScores, setIncludeScores] = useState(false);
   const [link, setLink] = useState<PublishedLink | null>(null);
   const [busy, setBusy] = useState(false);
+  const [error, setError] = useState("");
 
   // Any edit makes an earlier link out of date: hide it so nobody copies a stale ledger.
   useEffect(() => setLink(null), [doc, includeScores]);
 
   async function publish() {
     setBusy(true);
+    setError("");
     try {
       setLink(await publishMge(doc, plan, includeScores, today));
+    } catch (e) {
+      setError(e instanceof Error && e.name === "ShareTooLargeError"
+        ? `${e.message} Lock and remove old events, or start a new plan for the next season.`
+        : "The link could not be made in this browser.");
     } finally {
       setBusy(false);
     }
@@ -43,6 +49,7 @@ export default function Publish({ doc, plan, today }: Props) {
         <button type="button" class="btn btn-primary" onClick={publish} disabled={busy || doc.events.length === 0}>Create public link</button>
         {doc.events.length === 0 && <p class="kg-hint">Add at least one event first.</p>}
       </div>
+      {error && <p class="kg-error" role="alert" data-too-large>{error}</p>}
       {link && (
         <div class="kg-grid" data-published>
           <CopyText
