@@ -1,10 +1,11 @@
 // Profile header: banner, then the header card (level 2) over the section (level 1). Shared by the
 // public view (/u/) and the edit page preview.
 import type { AchievementRow, ProfileRow } from "../../lib/auth/database.types";
+import { LEVEL_LABEL } from "../../lib/auth/verification";
 import "./profile.css";
 
 interface Props {
-  profile: Pick<ProfileRow, "handle" | "display_name" | "bio" | "kingdom_number">;
+  profile: Pick<ProfileRow, "handle" | "display_name" | "bio" | "kingdom_number"> & { verified_level?: ProfileRow["verified_level"] };
   avatarUrl: string | null;
   bannerUrl: string | null;
   achievements?: readonly AchievementRow[];
@@ -38,6 +39,12 @@ export function ProfileHeader({ profile, avatarUrl, bannerUrl, achievements = []
             {profile.handle && <span class="mono">@{profile.handle}</span>}
             {profile.kingdom_number !== null && <span>Kingdom <span class="mono">#{profile.kingdom_number}</span></span>}
           </p>
+          {profile.verified_level !== undefined && (
+            <span class="pf-badge pf-verified" data-kind={profile.verified_level > 1 ? "site" : "unverified"} data-verified-level={profile.verified_level}
+              title={profile.verified_level === 3 ? "A moderator saw this site's one-time code in the player's in-game Album." : profile.verified_level === 2 ? "A moderator checked the player's screenshots." : "Nothing checked yet: values are what the player typed."}>
+              {LEVEL_LABEL[profile.verified_level]}
+            </span>
+          )}
         </div>
         {profile.bio && <p class="pf-bio">{profile.bio}</p>}
         {children && <div class="pf-actions">{children}</div>}

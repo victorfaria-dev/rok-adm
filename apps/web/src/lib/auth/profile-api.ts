@@ -6,7 +6,7 @@ import { friendlyError, type ActionResult } from "./actions";
 import { IMAGE_KINDS, REPORT_DETAILS_MAX, SITE_ACHIEVEMENTS, achievementCode, validateSelfAchievement, type CleanProfile, type ImageKind } from "./profile-rules";
 import { extensionOf } from "./image";
 
-export const PROFILE_COLUMNS = "id, handle, display_name, bio, kingdom_number, avatar_path, banner_path, visibility, created_at, updated_at";
+export const PROFILE_COLUMNS = "id, handle, display_name, bio, kingdom_number, avatar_path, banner_path, visibility, verified_level, created_at, updated_at";
 export const ACHIEVEMENT_COLUMNS = "id, user_id, source, code, title, detail, verified, earned_at";
 
 export interface ProfileBundle {

@@ -23,6 +23,8 @@ import { ProfileHeader } from "./ProfileHeader";
 import "../auth/auth.css";
 import "./profile.css";
 
+export const VERIFY_PATH = "/me/verify/";
+
 interface Props {
   navigate?: (url: string) => void;
   download?: (fileName: string, text: string) => void;
@@ -122,7 +124,7 @@ function Editor({ client, userId, navigate, download, prepare }: { client: KoSup
     await reload();
   };
 
-  const preview = { handle: draft.handle.trim().toLowerCase() || null, display_name: draft.displayName.trim() || null, bio: draft.bio.trim() || null, kingdom_number: /^\d+$/.test(draft.kingdom.trim()) ? Number(draft.kingdom.trim()) : null };
+  const preview = { verified_level: profile?.verified_level ?? 1, handle: draft.handle.trim().toLowerCase() || null, display_name: draft.displayName.trim() || null, bio: draft.bio.trim() || null, kingdom_number: /^\d+$/.test(draft.kingdom.trim()) ? Number(draft.kingdom.trim()) : null };
   const err = (k: keyof ProfileDraft) => (errors[k] ? { "aria-invalid": true, "aria-describedby": `pf-err-${k}` } : {});
 
   return (
@@ -133,12 +135,13 @@ function Editor({ client, userId, navigate, download, prepare }: { client: KoSup
       </header>
 
       {offer && (
-        <UploadOffer client={client} userId={userId} plan={offer} onDone={() => { setOffer(null); void reload(); }} />
+        <UploadOffer client={client} userId={userId} plan={offer} onDone={(r) => { if (r !== "uploaded") setOffer(null); void reload(); }} />
       )}
 
       <ProfileHeader as="h2" profile={preview} achievements={achievements}
         avatarUrl={publicImageUrl(client, "avatar", profile?.avatar_path ?? null)} bannerUrl={publicImageUrl(client, "banner", profile?.banner_path ?? null)}>
         {profile?.handle && profile.visibility !== "private" && <a class="btn btn-secondary" href={profileHref(profile.handle)}>Open my profile page</a>}
+        <a class="btn btn-secondary" href={VERIFY_PATH}>Verify this account</a>
       </ProfileHeader>
 
       <section class="pf-section pf-pad" aria-labelledby="pf-images">

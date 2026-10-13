@@ -102,6 +102,34 @@
 
 .pf-skeleton span { display: block; height: var(--ko-space-24); background: var(--ko-surface); border-radius: var(--ko-radius-md); }
 
+/* Verification (/me/verify/). The code card image is fixed white/red artwork drawn on a canvas, not themed. */
+.pf-select {
+  min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3); width: 100%;
+  background: var(--ko-background); color: var(--ko-text); font-weight: var(--ko-weight-regular);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+}
+.vf-cities { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--ko-space-3); }
+.vf-city {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ko-space-3);
+  padding: var(--ko-space-4); background: var(--ko-surface-2, var(--ko-surface-raised)); box-shadow: var(--ko-shadow-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); overflow-wrap: anywhere;
+}
+.vf-card {
+  display: grid; gap: var(--ko-space-4); padding: var(--ko-space-4);
+  background: var(--ko-surface-2, var(--ko-surface-raised)); box-shadow: var(--ko-shadow-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+.vf-card-img img { display: block; width: 100%; height: auto; border-radius: var(--ko-radius-sm); -webkit-touch-callout: default; }
+.vf-steps { display: grid; gap: var(--ko-space-3); }
+.vf-code { font-size: var(--ko-text-lg); }
+.vf-checks { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--ko-space-1); color: var(--ko-error); }
+.vf-checks [data-ok] { color: var(--ko-success); }
+.pf-verified { justify-self: start; }
+
+@media (min-width: 768px) {
+  .vf-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+}
+
 @media (min-width: 640px) {
   .pf-card { margin-inline: var(--ko-space-6); grid-template-columns: auto 1fr; }
   .pf-avatar { width: 96px; height: 96px; }
