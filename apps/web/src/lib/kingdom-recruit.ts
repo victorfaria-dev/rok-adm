@@ -1,6 +1,6 @@
 // Web glue for the recruitment post generator (F-42): drafts in ko:kingdom:v1 (kind "recruit").
 // The post builder lives in @rokadm/planner (kingdom-recruit).
-import { kingdomLabel, parseRecruitDoc, type RecruitDoc, type RecruitInput } from "@rokadm/planner";
+import { REDDIT_TITLE_LIMIT, kingdomLabel, parseRecruitDoc, type RecruitDoc, type RecruitInput, type RecruitPost } from "@rokadm/planner";
 import { listDocs, saveDoc, type StorageLike } from "./kingdom-store";
 
 export const RECRUIT_KIND = "recruit";
@@ -39,6 +39,22 @@ export function saveRecruit(id: string, input: RecruitInput, st: StorageLike | n
 export function draftInput(doc: RecruitDoc): RecruitInput {
   const { id: _id, updatedAt: _u, ...input } = doc;
   return input;
+}
+
+const fmt = (n: number): string => n.toLocaleString("en-US");
+
+/** Warning when the post body is over its format's limit ("" when it fits or has no limit). */
+export function overLimitText(post: Pick<RecruitPost, "format" | "chars" | "limit" | "over">): string {
+  if (!post.over || post.limit === null) return "";
+  const by = fmt(post.chars - post.limit);
+  return post.format === "reddit"
+    ? `This post body is ${fmt(post.chars)} characters, over Reddit's ${fmt(post.limit)}-character limit by ${by}. Shorten the notes before you post.`
+    : `This post is ${fmt(post.chars)} characters, over Discord's ${fmt(post.limit)}-character limit by ${by}. Shorten the notes or split it into two messages.`;
+}
+
+/** Note when the Reddit title had to be cut to fit ("" otherwise). */
+export function titleCutText(post: Pick<RecruitPost, "titleCut">): string {
+  return post.titleCut ? `Reddit titles stop at ${fmt(REDDIT_TITLE_LIMIT)} characters, so the end was cut (…). Shorten the kingdom name or stage, or list fewer roles.` : "";
 }
 
 /** "1,234 / 2,000 characters". */

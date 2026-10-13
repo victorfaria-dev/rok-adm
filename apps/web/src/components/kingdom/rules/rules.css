@@ -17,13 +17,33 @@
 .kq-prompt { color: var(--ko-warning); font-size: var(--ko-text-xs); }
 .kq-date { max-width: 16rem; }
 
+/* Language versions: original next to its translation (stacked on phones, side by side from 768px). */
+.kq-langs { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.kq-langs .btn[aria-pressed="true"] { border-color: var(--ko-accent); color: var(--ko-text); font-weight: var(--ko-weight-semibold); }
+.kq-pair { display: grid; gap: var(--ko-space-3); min-width: 0; }
+@media (min-width: 768px) { .kq-pair { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; } }
+.kq-orig {
+  display: grid; gap: var(--ko-space-1); min-width: 0; padding: var(--ko-space-3);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-sm);
+}
+.kq-orig-label { color: var(--ko-text-muted); font-size: var(--ko-text-xs); }
+.kq-orig-text { white-space: pre-wrap; overflow-wrap: anywhere; font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.kq-orig-h { font-weight: var(--ko-weight-semibold); }
+.kq-orig-empty { color: var(--ko-text-muted); }
+.kq-untr-list { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+
 /* Rendered rules (preview and view page) */
 .kq-doc { display: grid; gap: var(--ko-space-5); min-width: 0; overflow-wrap: anywhere; }
 .kq-doc-head { display: grid; gap: var(--ko-space-2); }
 .kq-doc-head h1, .kq-doc-head h2.kq-doc-title { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
 .kq-doc-kingdom { font-family: var(--ko-font-display); font-size: var(--ko-text-lg); color: var(--ko-text-muted); }
 .kq-doc-meta { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
-.kq-section { display: grid; gap: var(--ko-space-3); }
+.kq-section, .kq-body { display: grid; gap: var(--ko-space-3); }
+.kq-body p { max-width: 70ch; }
+.kq-untr, .kq-tr-note {
+  justify-self: start; padding: var(--ko-space-1) var(--ko-space-2); font-size: var(--ko-text-xs);
+  color: var(--ko-text); border: 1px dashed var(--ko-text-muted); border-radius: var(--ko-radius-sm);
+}
 .kq-section h2, .kq-section h3 { font-size: var(--ko-text-xl); }
 .kq-section p, .kq-doc-intro p { max-width: 70ch; }
 .kq-section ul, .kq-section ol { margin: 0; padding-left: var(--ko-space-6); display: grid; gap: var(--ko-space-1); max-width: 70ch; }

@@ -16,6 +16,10 @@ export const RULES_LIMITS = {
   sections: 30,
   signers: 20,
   signer: 40,
+  /** Extra language versions written by the council (the original does not count). */
+  translations: 5,
+  langLabel: 40,
+  langCode: 35,
 } as const;
 
 export interface RulesSection {
@@ -31,6 +35,22 @@ export interface RulesCharter {
   signers: string[];
 }
 
+/**
+ * A language version of the rules written by the council (never machine translated). Sections are
+ * aligned to the original by id; a section missing here is shown in the original language.
+ */
+export interface RulesTranslation {
+  /** Stable id inside the document ("t1", or a random id from the builder). */
+  id: string;
+  /** Name of the language as its readers write it, e.g. "Español". */
+  label: string;
+  /** Optional BCP-47 code for the lang attribute ("es", "pt-BR"), or "" when unknown. */
+  lang: string;
+  title: string;
+  intro: string;
+  sections: RulesSection[];
+}
+
 export interface RulesDoc extends KingdomDocBase {
   kingdom: string;
   title: string;
@@ -40,6 +60,12 @@ export interface RulesDoc extends KingdomDocBase {
   charter: RulesCharter;
   /** Day the council last reviewed the rules (YYYY-MM-DD) or null. */
   lastReviewed: string | null;
+  /** Name of the original's language, e.g. "English" ("" = not stated). */
+  originalLabel: string;
+  /** BCP-47 code of the original ("" = not stated). */
+  originalLang: string;
+  /** 0–5 council-written translations. The original (this document) always prevails. */
+  translations: RulesTranslation[];
 }
 
 /** true for a real calendar day written as YYYY-MM-DD. */
@@ -62,6 +88,9 @@ export function emptyRulesDoc(id: string, now: Date = new Date()): RulesDoc {
     sections: [],
     charter: { agreedOn: null, signers: [] },
     lastReviewed: null,
+    originalLabel: "",
+    originalLang: "",
+    translations: [],
   };
 }
 
@@ -90,6 +119,185 @@ function parseSection(x: unknown, i: number, seen: Set<string>): RulesSection | 
   return { id, heading, body };
 }
 
+// ---------------------------------------------------------------------------
+// Language versions (F-84 on demand): written by the council, never machine translated.
+
+/** Simple BCP-47 shape check for a lang attribute: "es", "pt-BR", "zh-Hant", "sr-Latn-RS". */
+const LANG_CODE = /^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$/i;
+
+/** true for a code that can go in a lang attribute (empty is not a code). */
+export function isLangCode(x: unknown): x is string {
+  return typeof x === "string" && x.length <= RULES_LIMITS.langCode && LANG_CODE.test(x);
+}
+
+/** Trimmed code when it is valid, else "". */
+export function cleanLangCode(x: unknown): string {
+  const s = typeof x === "string" ? x.trim() : "";
+  return isLangCode(s) ? s : "";
+}
+
+function parseTranslation(x: unknown, i: number, seen: Set<string>, known: ReadonlySet<string>): RulesTranslation | null {
+  if (!isRecord(x)) return null;
+  let id = typeof x.id === "string" ? cleanLine(x.id, 64) : "";
+  if (!id || seen.has(id)) {
+    let n = i + 1;
+    while (seen.has(`t${n}`)) n++;
+    id = `t${n}`;
+  }
+  seen.add(id);
+  const sections: RulesSection[] = [];
+  const sSeen = new Set<string>();
+  if (Array.isArray(x.sections)) {
+    for (const s of x.sections) {
+      if (!isRecord(s) || typeof s.id !== "string") continue;
+      const sid = cleanLine(s.id, 64);
+      // Only sections that still exist in the original, once each.
+      if (!known.has(sid) || sSeen.has(sid)) continue;
+      sSeen.add(sid);
+      sections.push({ id: sid, heading: cleanLine(s.heading, RULES_LIMITS.heading), body: cleanText(s.body, RULES_LIMITS.body) });
+    }
+  }
+  return {
+    id,
+    label: cleanLine(x.label, RULES_LIMITS.langLabel),
+    lang: cleanLangCode(x.lang),
+    title: cleanLine(x.title, RULES_LIMITS.title),
+    intro: cleanText(x.intro, RULES_LIMITS.intro),
+    sections,
+  };
+}
+
+/** A new, empty language version. */
+export function emptyTranslation(id: string, label = "", lang = ""): RulesTranslation {
+  return { id, label: cleanLine(label, RULES_LIMITS.langLabel), lang: cleanLangCode(lang), title: "", intro: "", sections: [] };
+}
+
+/** Name to show for a translation: the council's label, else the code, else "Language N". */
+export function translationName(t: Pick<RulesTranslation, "label" | "lang">, index: number): string {
+  return t.label || t.lang || `Language ${index + 2}`;
+}
+
+/** Name to show for the original: its label, else its code, else "Original". */
+export function originalName(doc: Pick<RulesDoc, "originalLabel" | "originalLang">): string {
+  return doc.originalLabel || doc.originalLang || "Original";
+}
+
+/** Set the translation of one section (cleared when both texts are empty). */
+export function setTranslatedSection(t: RulesTranslation, sectionId: string, patch: Partial<Pick<RulesSection, "heading" | "body">>): RulesTranslation {
+  const cur = t.sections.find((s) => s.id === sectionId) ?? { id: sectionId, heading: "", body: "" };
+  const next = { ...cur, ...patch };
+  const rest = t.sections.filter((s) => s.id !== sectionId);
+  return { ...t, sections: next.heading || next.body ? [...rest, next] : rest };
+}
+
+/** Drop translated sections whose original section no longer exists. */
+export function pruneTranslations(doc: RulesDoc): RulesDoc {
+  const known = new Set(doc.sections.map((s) => s.id));
+  return { ...doc, translations: doc.translations.map((t) => ({ ...t, sections: t.sections.filter((s) => known.has(s.id)) })) };
+}
+
+/** The document with the original and at most one translation (null = original only), for a shorter link. */
+export function rulesWithOnly(doc: RulesDoc, translationId: string | null): RulesDoc {
+  return { ...doc, translations: doc.translations.filter((t) => t.id === translationId) };
+}
+
+export interface ResolvedSection {
+  id: string;
+  heading: string;
+  body: string;
+  /** true when this section is shown in the original because it is not translated yet. */
+  fallback: boolean;
+}
+
+/** One language version as a reader sees it. */
+export interface ResolvedRules {
+  /** ORIGINAL_KEY or the translation id. */
+  key: string;
+  name: string;
+  /** Lang attribute for this version's own text ("" = not stated). */
+  lang: string;
+  isOriginal: boolean;
+  title: string;
+  titleFallback: boolean;
+  intro: string;
+  introFallback: boolean;
+  sections: ResolvedSection[];
+  /** How many parts (intro and sections) are still shown in the original. */
+  untranslated: number;
+}
+
+export const ORIGINAL_KEY = "original";
+export const TRANSLATION_NOTE = "Translation by the council. If it differs, the original prevails.";
+export const UNTRANSLATED_NOTE = "Not translated yet. Shown in the original language.";
+
+/**
+ * A document as one language version reads it. A section counts as translated only when every field
+ * the original fills is filled too; otherwise the whole section is shown in the original with a
+ * note, so nobody reads a translated heading over an original-language body without being told.
+ */
+export function resolveRules(doc: RulesDoc, key: string = ORIGINAL_KEY): ResolvedRules {
+  const t = key === ORIGINAL_KEY ? undefined : doc.translations.find((x) => x.id === key);
+  const origTitle = rulesDisplayTitle(doc);
+  if (!t) {
+    return {
+      key: ORIGINAL_KEY, name: originalName(doc), lang: cleanLangCode(doc.originalLang), isOriginal: true,
+      title: origTitle, titleFallback: false, intro: doc.intro, introFallback: false,
+      sections: doc.sections.map((s) => ({ ...s, fallback: false })), untranslated: 0,
+    };
+  }
+  const byId = new Map(t.sections.map((s) => [s.id, s]));
+  let untranslated = 0;
+  const sections = doc.sections.map((s): ResolvedSection => {
+    const tr = byId.get(s.id);
+    const ok = !!tr && (!s.heading || !!tr.heading) && (!s.body || !!tr.body) && (!!tr.heading || !!tr.body);
+    if (!ok) untranslated++;
+    return ok ? { id: s.id, heading: tr!.heading, body: tr!.body, fallback: false } : { ...s, fallback: true };
+  });
+  const introFallback = !!doc.intro && !t.intro;
+  if (introFallback) untranslated++;
+  return {
+    key: t.id, name: translationName(t, doc.translations.indexOf(t)), lang: cleanLangCode(t.lang), isOriginal: false,
+    title: t.title || origTitle, titleFallback: !t.title,
+    intro: introFallback ? doc.intro : t.intro, introFallback,
+    sections, untranslated,
+  };
+}
+
+/** Every version, original first. */
+export function rulesVersions(doc: RulesDoc): ResolvedRules[] {
+  return [resolveRules(doc), ...doc.translations.map((t) => resolveRules(doc, t.id))];
+}
+
+/** Names of the versions whose own text still has [bracket] prompts. */
+export function versionsWithPrompts(doc: RulesDoc): string[] {
+  const out: string[] = [];
+  if ([doc.intro, ...doc.sections.map((s) => s.body)].some(hasPrompts)) out.push(originalName(doc));
+  doc.translations.forEach((t, i) => {
+    if ([t.title, t.intro, ...t.sections.flatMap((s) => [s.heading, s.body])].some(hasPrompts)) out.push(translationName(t, i));
+  });
+  return out;
+}
+
+/**
+ * The version that best matches the reader's languages (navigator.languages or a ?lang= choice):
+ * exact code first, then the same primary language ("pt-BR" ↔ "pt"); the original when none match.
+ */
+export function pickVersion(doc: RulesDoc, preferred: readonly string[]): string {
+  const versions = [{ key: ORIGINAL_KEY, lang: doc.originalLang }, ...doc.translations.map((t) => ({ key: t.id, lang: t.lang }))]
+    .filter((v) => v.lang)
+    .map((v) => ({ key: v.key, lang: v.lang.toLowerCase() }));
+  for (const p of preferred) {
+    const want = p.trim().toLowerCase();
+    if (!want) continue;
+    const exact = versions.find((v) => v.lang === want);
+    if (exact) return exact.key;
+    const base = want.split("-")[0];
+    const near = versions.find((v) => v.lang.split("-")[0] === base);
+    if (near) return near.key;
+  }
+  return ORIGINAL_KEY;
+}
+
 /**
  * Tolerant parse of untrusted rules data (storage, share links, imports): every field is cut to its
  * limit or replaced by its default, bad sections are dropped. Null only when it is not an object.
@@ -106,6 +314,16 @@ export function parseRulesDoc(x: unknown): RulesDoc | null {
     }
   }
   const c = isRecord(x.charter) ? x.charter : {};
+  const known = new Set(sections.map((s) => s.id));
+  const translations: RulesTranslation[] = [];
+  const tSeen = new Set<string>();
+  if (Array.isArray(x.translations)) {
+    for (const [i, t] of x.translations.entries()) {
+      if (translations.length >= RULES_LIMITS.translations) break;
+      const tr = parseTranslation(t, i, tSeen, known);
+      if (tr) translations.push(tr);
+    }
+  }
   return {
     id: typeof x.id === "string" && x.id.trim() ? cleanLine(x.id, 64) : "shared",
     updatedAt: isIsoTime(x.updatedAt) ? x.updatedAt : new Date(0).toISOString(),
@@ -116,6 +334,9 @@ export function parseRulesDoc(x: unknown): RulesDoc | null {
     sections,
     charter: { agreedOn: isCalendarDay(c.agreedOn) ? c.agreedOn : null, signers: parseSigners(c.signers) },
     lastReviewed: isCalendarDay(x.lastReviewed) ? x.lastReviewed : null,
+    originalLabel: cleanLine(x.originalLabel, RULES_LIMITS.langLabel),
+    originalLang: cleanLangCode(x.originalLang),
+    translations,
   };
 }
 
@@ -350,13 +571,30 @@ export function hasPrompts(text: string): boolean {
 // ---------------------------------------------------------------------------
 // Plain-text export (when a link is too long for chat, or for a document elsewhere).
 
-export function rulesToPlainText(doc: RulesDoc): string {
-  const out: string[] = [rulesDisplayTitle(doc)];
+/**
+ * Plain text of one version (the original by default). With `all`, the original comes first and
+ * each translation follows under a "Language:" line, so one file carries every version.
+ */
+export function rulesToPlainText(doc: RulesDoc, opts: { version?: string; all?: boolean } = {}): string {
+  const keys = opts.all ? [ORIGINAL_KEY, ...doc.translations.map((t) => t.id)] : [opts.version ?? ORIGINAL_KEY];
+  return keys.map((k) => versionText(doc, resolveRules(doc, k), keys.length > 1)).join("\n----------------------------------------\n\n");
+}
+
+function versionText(doc: RulesDoc, v: ResolvedRules, labelled: boolean): string {
+  const out: string[] = [];
+  if (labelled || !v.isOriginal) out.push(`Language: ${v.name}${v.isOriginal ? " (original)" : ""}`, "");
+  out.push(v.title);
   if (doc.kingdom && doc.title) out.push(doc.kingdom);
+  if (!v.isOriginal) out.push(TRANSLATION_NOTE);
   if (doc.languageNote) out.push(doc.languageNote);
-  if (doc.intro) out.push("", doc.intro);
-  for (const s of doc.sections) {
+  if (v.intro) {
+    out.push("");
+    if (v.introFallback) out.push(`(${UNTRANSLATED_NOTE})`);
+    out.push(v.intro);
+  }
+  for (const s of v.sections) {
     out.push("", s.heading || "Untitled section");
+    if (s.fallback) out.push(`(${UNTRANSLATED_NOTE})`);
     if (s.body) out.push(s.body);
   }
   const { agreedOn, signers } = doc.charter;

@@ -1,7 +1,7 @@
-import { decodeShare, emptyRulesDoc, parseRulesDoc, shareFromHash } from "@rokadm/planner";
+import { decodeShare, emptyRulesDoc, emptyTranslation, parseRulesDoc, shareFromHash } from "@rokadm/planner";
 import { describe, expect, it } from "vitest";
 import { getDoc, memoryStorage, saveDoc } from "./kingdom-store";
-import { docFromSearch, formatDay, listRules, rulesShareLink, saveRules, saveRulesCopy } from "./kingdom-rules";
+import { docFromSearch, formatDay, hashWithVersion, listRules, rulesShareLink, saveRules, saveRulesCopy, versionFromHash } from "./kingdom-rules";
 
 const NOW = new Date("2026-10-13T10:00:00.000Z");
 
@@ -38,6 +38,37 @@ describe("rules store glue", () => {
     expect(url.startsWith("https://x.test/kingdom/rules/view/#d=1")).toBe(true);
     const r = await decodeShare(shareFromHash(new URL(url).hash), "rules", parseRulesDoc);
     expect(r).toEqual({ ok: true, data: doc });
+  });
+
+  it("builds a full link or a shorter one with the original and one language", async () => {
+    const doc = {
+      ...emptyRulesDoc("r1", NOW), title: "Rules", originalLabel: "English", originalLang: "en",
+      translations: [emptyTranslation("es", "Español", "es"), emptyTranslation("pt", "Português", "pt-BR")],
+    };
+    const read = async (url: string) => decodeShare(shareFromHash(new URL(url).hash), "rules", parseRulesDoc);
+    expect(await read(await rulesShareLink(doc, "https://x.test"))).toEqual({ ok: true, data: doc });
+    const one = await read(await rulesShareLink(doc, "https://x.test", "pt"));
+    expect(one.ok && one.data.translations.map((t) => t.id)).toEqual(["pt"]);
+    const none = await read(await rulesShareLink(doc, "https://x.test", null));
+    expect(none.ok && none.data.translations).toEqual([]);
+  });
+
+  it("reads and writes the lang= hash param", () => {
+    const doc = {
+      ...emptyRulesDoc("r1", NOW), originalLang: "en",
+      translations: [emptyTranslation("es", "Español", "es"), emptyTranslation("t2", "Klingon")],
+    };
+    expect(versionFromHash(doc, "#d=1zAAA&lang=ES")).toBe("es");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=t2")).toBe("t2");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=en")).toBe("original");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=original")).toBe("original");
+    expect(versionFromHash(doc, "#d=1zAAA&lang=fr")).toBeNull();
+    expect(versionFromHash(doc, "#d=1zAAA&lang=%E0")).toBeNull();
+    expect(versionFromHash(doc, "#d=1zAAA")).toBeNull();
+    expect(hashWithVersion(doc, "#d=1zAAA&lang=es", "t2")).toBe("#d=1zAAA&lang=t2");
+    expect(hashWithVersion(doc, "#d=1zAAA", "es")).toBe("#d=1zAAA&lang=es");
+    expect(hashWithVersion(doc, "#d=1zAAA&lang=es", "original")).toBe("#d=1zAAA&lang=en");
+    expect(hashWithVersion({ ...doc, translations: [] }, "#d=1zAAA&lang=es", "original")).toBe("#d=1zAAA");
   });
 
   it("reads ?doc= and formats days", () => {
