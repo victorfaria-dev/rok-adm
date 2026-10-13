@@ -1,0 +1,45 @@
+{
+  "brand": {
+    "graphite": "#191B1D",
+    "bronze": "#B58B59",
+    "ivory": "#E8E3DA"
+  },
+  "dark": {
+    "background": "#101214",
+    "surface": "#191B1D",
+    "surface-raised": "#24282C",
+    "border": "#3B4248",
+    "text": "#E8E3DA",
+    "text-muted": "#A7ADB3",
+    "accent": "#B58B59",
+    "accent-hover": "#C9A476",
+    "accent-pressed": "#A77D4D",
+    "on-accent": "#101214",
+    "focus": "#C9A476"
+  },
+  "light": {
+    "background": "#F4F1EC",
+    "surface": "#FFFFFF",
+    "surface-raised": "#E8E3DA",
+    "border": "#D4CEC5",
+    "text": "#191B1D",
+    "text-muted": "#5C6268",
+    "accent": "#79582F",
+    "accent-hover": "#664824",
+    "accent-pressed": "#52391D",
+    "on-accent": "#FFFFFF",
+    "focus": "#79582F"
+  },
+  "status-dark": {
+    "success": "#75C6A4",
+    "warning": "#E0B86C",
+    "error": "#F08B8B",
+    "info": "#8CB9E1"
+  },
+  "status-light": {
+    "success": "#246C50",
+    "warning": "#795700",
+    "error": "#AF353D",
+    "info": "#285E8D"
+  }
+}

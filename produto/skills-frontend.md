@@ -1,6 +1,6 @@
 # Skills para o frontend
 
-Decisão do Victor (2026-10-13): quando a identidade visual (prompt em `prompt-identidade-visual.md`) estiver pronta, o frontend será feito com estas 3 skills:
+Decisão do Victor (2026-10-13): a identidade visual está pronta (`design/brand/`, tokens em `design/tokens/tokens.css`), o frontend será feito com estas 3 skills:
 
 | Skill | Repositório |
 |-------|-------------|

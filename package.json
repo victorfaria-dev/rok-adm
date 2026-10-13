@@ -7,7 +7,7 @@
     "build:data": "pnpm --filter @rokadm/data build",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
-    "validate": "python3 research/tools/validate_facts.py && python3 guides/tools/validate_blocks.py && pnpm --filter @rokadm/planner check:data",
+    "validate": "python3 research/tools/validate_facts.py && python3 guides/tools/validate_blocks.py && pnpm --filter @rokadm/planner check:data && python3 design/tools/build_tokens.py --check",
     "check": "pnpm typecheck && pnpm test && pnpm validate"
   },
   "devDependencies": {

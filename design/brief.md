@@ -43,3 +43,14 @@ Tradução para um master vetorial (`design/tools/build_logo.py`, saída em `des
 - **Wordmark:** candidatos OFL convertidos em path: Russo One (recomendado, mais próximo da referência) e Chakra Petch Bold.
 - **Risco:** o vermelho da marca não pode ser o mesmo vermelho de "erro/perigo" da interface; a paleta de UI vai separar os dois.
 - Busca de marca registrada para "KingdomOps" ainda não feita.
+
+## Rodada 4 — kit final do Victor (2026-10-13)
+
+Victor entregou o kit **KingdomOps v1.0** (`design/brand/`) e mandou desativar a skill `logo-design`. As rodadas 1–3 ficam só como histórico (os arquivos saíram do repositório; estão no git até o commit `1ecef62`).
+
+- Marca: K facetado em bronze + lettering angular próprio. Cores: grafite `#191B1D`, bronze `#B58B59`, marfim `#E8E3DA`. Sem vermelho na marca, então o vermelho de erro não compete com o logo.
+- Os arquivos do kit não são editados. O que falta para a interface é gerado a partir deles por `design/tools/build_tokens.py` → `design/tokens/tokens.{css,json}` e `design/contrast-report.md`.
+- Adições (decisões do admin, podem ser trocadas): Chakra Petch (títulos/rótulos), IBM Plex Sans (texto), IBM Plex Mono (IDs e números); cores de confiança, perfis de gasto, raridade e 12 cores de aliança calculadas por contraste; espaçamento de 4 px, raios pequenos + chanfro, sombras, durações e easings.
+- Ícones: `design/tools/export_icons.py` → `design/brand/export/` (favicon usa o app icon com fundo grafite, porque o K bronze some em abas claras).
+- Guia de estilo: `design/styleguide.html` (gerado por `design/tools/build_styleguide.py`).
+- Pendente: busca de marca registrada para "KingdomOps".

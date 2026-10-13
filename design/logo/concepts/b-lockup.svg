@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 256" width="960" height="256" role="img" aria-labelledby="title">
-  <title id="title">Vexil lockup (exploration: live text)</title>
-  <g transform="translate(0,0)">  <rect fill="#000" x="48" y="32" width="160" height="16" rx="8"/>
-  <path fill="#000" fill-rule="evenodd" d="M72 48 H184 V224 L128 184 L72 224 Z M90 140 L103 127 L118 142 L153 107 L166 120 L118 168 Z"/></g>
-  <text x="288" y="166" font-family="Georgia, serif" font-size="104" font-weight="600" letter-spacing="2" fill="#000">Vexil</text>
-</svg>

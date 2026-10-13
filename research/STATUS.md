@@ -59,7 +59,11 @@ Stack: `docs/adr/0001-stack-mvp.md` (TypeScript, monorepo pnpm, Vitest, CI no Gi
 | Rotina por tempo, reality check, checklist de comandante | `packages/planner` | F-15, F-14, F-20 — **concluída** (39 testes; minutos pendentes de T0) |
 | Conteúdo: guia de reino novo, privacidade, kit de divulgação | `guides/data`, `content/` | F-12, F-56, F-57 — **concluída** (14 blocos) |
 
-Aguardando identidade visual: App Shell (F-52) e telas.
+## Identidade visual (concluída)
+
+KingdomOps v1.0: kit do Victor em `design/brand/`; tokens gerados em `design/tokens/` (contraste: 0 falhas em `design/contrast-report.md`); ícones em `design/brand/export/`; guia de estilo `design/styleguide.html`. Skill `logo-design` desativada.
+
+Próximo: App Shell (F-52) e telas, com as skills de `produto/skills-frontend.md`.
 
 ## Bloqueios
 

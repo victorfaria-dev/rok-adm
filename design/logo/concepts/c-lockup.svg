@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 256" width="960" height="256" role="img" aria-labelledby="title">
-  <title id="title">Reignwise lockup (exploration: live text)</title>
-  <g>  <path fill="#000" d="M80 56 V24 L104 48 L128 24 L152 48 L176 24 V56 Z"/>
-  <rect fill="#000" x="64" y="60" width="128" height="16" rx="4"/>
-  <path fill="#000" d="M80 76 H176 L136 145 L176 214 H80 L120 145 Z"/>
-  <rect fill="#000" x="64" y="214" width="128" height="16" rx="4"/></g>
-  <text x="288" y="166" font-family="Georgia, serif" font-size="104" font-weight="600" letter-spacing="2" fill="#000">Reignwise</text>
-</svg>
