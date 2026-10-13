@@ -115,6 +115,67 @@ test("no typing dots under reduced motion", async ({ page }) => {
   await expect(page.locator(".q-msg-bot[data-current] .q-title")).toHaveCSS("opacity", "1");
 });
 
+test.describe("Sun Tzu's stage", () => {
+  test("one <video> on the page, on the stage above the current question; history is posters", async ({ page }) => {
+    await seed(page, { draft: { step: 3, answers: { spending: "low", minutesPerDay: 45 } } });
+    await open(page);
+    const video = page.locator("video");
+    await expect(video).toHaveCount(1);
+    await expect(page.locator(".q-msg-bot[data-current] > .st-stage video")).toHaveCount(1);
+    await expect(page.locator(".st-stage")).toHaveAttribute("aria-hidden", "true");
+    expect(await video.evaluate((v: HTMLVideoElement) => ({ muted: v.muted, inline: v.playsInline, preload: v.preload, poster: !!v.poster }))).toEqual({ muted: true, inline: true, preload: "metadata", poster: true });
+    // 480 px clip unless the stage covers more than 480 device px.
+    await expect(video).toHaveAttribute("src", /-480\.mp4$/);
+    // The box is reserved: the stage is laid out at its final size.
+    const box = (await page.locator(".st-stage").boundingBox())!;
+    expect(box.height).toBeGreaterThanOrEqual(140);
+    expect(box.height).toBeLessThanOrEqual(240);
+    expect(await page.locator(".q-msg-bot:not([data-current]) img").count()).toBeGreaterThan(0);
+    // Advancing keeps a single video (the talk clip plays on the new stage).
+    await page.getByRole("button", { name: "Next" }).click();
+    await expect(page.getByText("5 of 10")).toBeVisible();
+    await expect(page.locator("video")).toHaveCount(1);
+  });
+
+  test("under reduced motion the stage is the poster only", async ({ page }) => {
+    await page.emulateMedia({ reducedMotion: "reduce" });
+    await open(page);
+    await page.keyboard.press("Enter");
+    await expect(page.getByText("2 of 10")).toBeVisible();
+    await expect(page.locator("video")).toHaveCount(0);
+    await expect(page.locator(".st-stage img")).toHaveAttribute("src", /poster\.webp$/);
+  });
+
+  test("first question at 390x844: the options start above the fold, no layout shift", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.addInitScript(() => {
+      const w = window as unknown as { cls: number };
+      w.cls = 0;
+      new PerformanceObserver((list) => {
+        for (const e of list.getEntries() as unknown as { value: number; hadRecentInput: boolean }[]) if (!e.hadRecentInput) w.cls += e.value;
+      }).observe({ type: "layout-shift", buffered: true });
+    });
+    await open(page);
+    await expect(page.locator("video")).toHaveCount(1);
+    const option = (await page.locator(".q-option").first().boundingBox())!;
+    const actions = (await page.locator(".q-actions").boundingBox())!;
+    expect(option.y + option.height).toBeLessThanOrEqual(actions.y);
+    await page.waitForTimeout(500);
+    expect(await page.evaluate(() => (window as unknown as { cls: number }).cls)).toBeLessThan(0.02);
+  });
+
+  test("phones: once scrolled, the stage sticks to the top as a 72 px strip", async ({ page }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+    await open(page);
+    const stage = page.locator(".st-stage");
+    await expect(stage).not.toHaveAttribute("data-compact", "");
+    await page.evaluate(() => window.scrollTo(0, 400));
+    await expect(stage).toHaveAttribute("data-compact", "");
+    const box = (await stage.boundingBox())!;
+    expect(Math.round(box.y + box.height)).toBe(72);
+  });
+});
+
 test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }) => {
   await seed(page, { draft: { step: stepOf("cityHall"), answers: {} } });
   await open(page);
