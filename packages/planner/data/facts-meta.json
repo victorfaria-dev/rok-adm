@@ -42,12 +42,42 @@
       "gameVersion": "1.1.01"
     },
     {
+      "id": "A03-0001",
+      "title": "Resource types, unlock stages and what consumes gold",
+      "confidence": "media",
+      "status": "contestado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
       "id": "A03-0002",
       "title": "Farm and Lumber Mill production per hour and capacity by level",
       "confidence": "media",
       "status": "verificado",
       "consensus": "n/a",
       "validUntil": "2026-09-19",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0006",
+      "title": "Storehouse protection capacity by level",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2021-04-08",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0007",
+      "title": "Resource items vs raw resources (plunder safety)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-05-31",
       "invalidatedBy": null,
       "gameVersion": "desconhecida"
     },
@@ -62,6 +92,16 @@
       "gameVersion": "desconhecida"
     },
     {
+      "id": "A03-0013",
+      "title": "Enhanced Gathering boost items (+50%, 8h/24h) and how to get them",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-06-23",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.09"
+    },
+    {
       "id": "A03-0014",
       "title": "Mysterious Merchant: daily at 00:00 UTC, food/wood-priced items",
       "confidence": "media",
@@ -72,8 +112,38 @@
       "gameVersion": "desconhecida"
     },
     {
+      "id": "A03-0015",
+      "title": "Troop load per unit by tier (siege vs infantry)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-09-28",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
       "id": "A03-0016",
       "title": "Node level affects total amount, not gathering speed; pick node by availability",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0017",
+      "title": "Gathering commander setup: talents, level 37, primary only",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0021",
+      "title": "Resource bottleneck progression by CH stage",
       "confidence": "media",
       "status": "verificado",
       "consensus": "majoritario",
@@ -90,6 +160,76 @@
       "validUntil": "2026-10-02",
       "invalidatedBy": null,
       "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0024",
+      "title": "Trading Post tax rate by level",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-11",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0025",
+      "title": "Trading Post capacity per trip and unlock CH (conflicting)",
+      "confidence": "media",
+      "status": "contestado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.90+"
+    },
+    {
+      "id": "A03-0026",
+      "title": "Trading Post transfers use a march queue and travel time",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-06-05",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0027",
+      "title": "Gold CAN be sent via Trading Post (only the amount above Storehouse protection is sendable)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0028",
+      "title": "Academy gathering-speed techs per resource (timing differs)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2024-04-04",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0029",
+      "title": "Civilization gathering bonuses",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-12-04",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0030",
+      "title": "Storehouse-protected resources cannot be transported",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2021-03-04",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.44"
     },
     {
       "id": "A04-0001",
@@ -570,6 +710,96 @@
       "validUntil": "2026-10-02",
       "invalidatedBy": null,
       "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A13-0001",
+      "title": "Accounts per kingdom via Character Management",
+      "confidence": "media",
+      "status": "organizado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0002",
+      "title": "Farm City Hall targets by march queues",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0003",
+      "title": "Farm Trading Post level targets",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0004",
+      "title": "Gold and gems: gather on main, not farm",
+      "confidence": "baixa",
+      "status": "organizado",
+      "consensus": "dividido",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0005",
+      "title": "Farm risks: raids, kill events, zeroing",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0006",
+      "title": "Farm alliance placement and kingdom etiquette",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0007",
+      "title": "Farm time cost and daily routine (qualitative only)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0009",
+      "title": "Specialised farms by resource and civilization choice",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0010",
+      "title": "Purpose of farms for main growth (F2P)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
     },
     {
       "id": "A14-0001",
