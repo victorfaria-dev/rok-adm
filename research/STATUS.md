@@ -36,7 +36,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | Frente | Responsável | Escopo |
 |--------|-------------|--------|
 | Integração + verificação + lacunas + protocolo T0 + context packs de conta | Sub-admin CONTA | A01–A14, B01 — **concluída**: 134/151 verificadas, 4 erros factuais corrigidos, 7 context packs, protocolo T0 |
-| Verificação + dores de líderes + context packs de administração de reino | Sub-admin REINO | B02–B09, D-05xx |
+| Verificação + dores de líderes + context packs de administração de reino | Sub-admin REINO | B02–B09, D-05xx — **concluída**: 214 citações rechecadas (5% corrigidas), 7/38 fichas com erro corrigido, 4 context packs, roteiro de entrevistas |
 | Soluções conceituais por dor (hipóteses) | Brainstorm | `brainstorm/solucoes/` — **concluída**: 70 dores cobertas, 34 fichas, matriz + top 10 |
 
 ## Onda 3 (em execução)
