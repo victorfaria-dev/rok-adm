@@ -3,10 +3,13 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
-import { defaultProfile, encodeProfile, selectBlocks, type AccountProfile, type GuideBlock } from "@rokadm/core";
+import { defaultProfile, encodeProfile, mergeBlockSets, selectBlocks, type AccountProfile, type GuideBlock } from "@rokadm/core";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const blocks = JSON.parse(readFileSync(join(here, "../../../guides/data/blocks.f2p.json"), "utf8")) as GuideBlock[];
+const lowBlocks = JSON.parse(readFileSync(join(here, "../../../guides/data/blocks.low.json"), "utf8")) as GuideBlock[];
+/** What the personal guide selects from: the F2P base plus the Low delta for Low and higher (core's selectGuide). */
+const blocksFor = (p: AccountProfile): GuideBlock[] => (p.spending === "f2p" ? blocks : mergeBlockSets(blocks, lowBlocks));
 const make = (p: Partial<AccountProfile>): AccountProfile => ({ ...defaultProfile(), ...p });
 const F2P_CH12 = make({ spending: "f2p", cityHall: 12, minutesPerDay: 30 });
 const LOW_D20 = make({ spending: "low", kingdomDay: 20, cityHall: 12 });
@@ -65,7 +68,7 @@ test("Low profile: budget says what buying doesn't change, with no purchase link
   await expect(unchanged.getByRole("heading", { name: "What buying doesn't change" })).toBeVisible();
   await expect(page.locator("#budget a")).toHaveCount(0);
   await expect(page.locator("#budget .g-row-you")).toContainText("20");
-  const expected = selectBlocks(blocks, LOW_D20);
+  const expected = selectBlocks(blocksFor(LOW_D20), LOW_D20);
   await expect(personal(page).locator("article[data-block-id]")).toHaveCount(expected.meta.shownBlocks + expected.alreadyDone.length);
   const done = page.locator("#already-done > details");
   await expect(done).not.toHaveAttribute("open", "");
@@ -146,4 +149,43 @@ test.describe("accessibility", () => {
       });
     }
   }
+});
+
+test.describe("guides for you", () => {
+  test("a returning player sees Returning first", async ({ page }) => {
+    const back = make({ spending: "f2p", returningPlayer: true, cityHall: 20 });
+    await page.goto(`/guide/?p=${encodeProfile(back)}`);
+    const strip = personal(page).locator("[data-guides-for-you]");
+    await expect(strip.getByRole("heading", { name: "Guides for you" })).toBeVisible();
+    const first = strip.locator("li").first();
+    await expect(first).toHaveAttribute("data-guide-link", "returning");
+    await expect(first.getByRole("link")).toHaveAttribute("href", "/guides/returning/");
+    await expect(strip.getByRole("link", { name: "All guides" })).toHaveAttribute("href", "/guides/");
+  });
+
+  test("a Low profile gets the low spender steps merged in, and a link to read them alone", async ({ page }) => {
+    await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}`);
+    await expect(personal(page).locator('article[data-block-id="low-growth-fund"]')).toHaveCount(1);
+    await expect(personal(page).locator('[data-guide-link="low"] a')).toHaveAttribute("href", "/guides/low-spender/");
+  });
+
+  test("an F2P profile does not load the Low delta", async ({ page }) => {
+    const requests: string[] = [];
+    page.on("request", (r) => requests.push(new URL(r.url()).pathname));
+    await page.goto(`/guide/?p=${VALID}`);
+    await expect(personal(page)).toBeVisible();
+    expect(requests).not.toContain("/data/guide-low.json");
+    await expect(personal(page).locator('article[data-block-id^="low-"]')).toHaveCount(0);
+    await expect(personal(page).locator('[data-guide-link="low"]')).toHaveCount(0);
+  });
+
+  test.describe("without JavaScript", () => {
+    test.use({ javaScriptEnabled: false });
+    test("without a profile, the default guide lists the other guides", async ({ page }) => {
+      await page.goto("/guide/");
+      const strip = defaultGuide(page).locator("[data-guides-for-you]");
+      await expect(strip.getByRole("heading", { name: "Other guides" })).toBeVisible();
+      await expect(strip.locator("li")).toHaveCount(4);
+    });
+  });
 });
