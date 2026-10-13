@@ -1,9 +1,11 @@
 import { describe, expect, it } from "vitest";
-import { readFileSync } from "node:fs";
+import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { FARMS_DATA, RESOURCES, VARIANT_IDS, BUILD_CHECK_FIELDS } from "../src/farms-common";
+import {
+  FARMS_DATA, FARM_FACTS, RESOURCES, VARIANT_IDS, BUILD_CHECK_FIELDS, farmConfidenceOf, farmFactConfidence, farmMinConfidence,
+} from "../src/farms-common";
 import { TRADING_POST_LEVELS } from "../src/farms-trading-post";
-import { BUNDLED_FACTS } from "../src/facts";
+import { BUNDLED_FACTS, confidenceOf, factConfidence, indexFacts, minConfidence } from "../src/facts";
 import { buildData, serialize } from "../scripts/build-data";
 import { PLANNER_DATA_DIR, readCard, readFactsCsv, readGapIds } from "../scripts/research";
 
@@ -34,6 +36,39 @@ describe("farms data is in sync with research/facts", () => {
     expect(tp.levels).toEqual(JSON.parse(serialize(res.tradingPost)));
     const csv = readFactsCsv("A03/data/trading-post.csv");
     expect(TRADING_POST_LEVELS.map((l) => l.level)).toEqual(csv.map((r) => Number(r["Level"])));
+  });
+
+  it("farms-facts.json is in sync and matches facts-meta.json for every cited card", () => {
+    const res = buildData();
+    const ff = JSON.parse(readFileSync(join(PLANNER_DATA_DIR, "farms-facts.json"), "utf8"));
+    expect(ff.facts).toEqual(JSON.parse(serialize(res.farmFacts)));
+    expect(JSON.stringify(ff)).not.toContain("invalidatedBy"); // client-bundle dataset marker
+    const meta = new Map(BUNDLED_FACTS.map((f) => [f.id, f]));
+    for (const f of FARM_FACTS) {
+      expect(meta.get(f.id)?.confidence, f.id).toBe(f.confidence);
+      expect(meta.get(f.id)?.status, f.id).toBe(f.status);
+    }
+    for (const s of allSourced()) for (const id of s.facts) expect(FARM_FACTS.some((f) => f.id === id), `${s.where}: ${id}`).toBe(true);
+  });
+
+  it("farm confidence helpers behave exactly like facts.ts", () => {
+    const index = indexFacts(BUNDLED_FACTS);
+    for (const f of BUNDLED_FACTS) expect(farmFactConfidence(f), f.id).toBe(factConfidence(f));
+    expect(farmFactConfidence(undefined)).toBe(factConfidence(undefined));
+    const sets = [[], ["A03-0024"], ["A03-0024", "A03-0025"], ["A13-0004", "A03-0009"], ["NOPE-0001", "A03-0024"]];
+    for (const ids of sets) expect(farmConfidenceOf(ids, index)).toBe(confidenceOf(ids, index));
+    const cs = ["high", "medium", "low", "pending"] as const;
+    for (const a of cs) for (const b of cs) expect(farmMinConfidence(a, b)).toBe(minConfidence(a, b));
+    expect(farmMinConfidence()).toBe(minConfidence());
+  });
+
+  it("farm modules import only types from ./facts (keeps facts-meta.json out of client bundles)", () => {
+    const dir = join(PLANNER_DATA_DIR, "..", "src");
+    for (const f of readdirSync(dir).filter((n) => n.startsWith("farms"))) {
+      const src = readFileSync(join(dir, f), "utf8");
+      for (const line of src.split("\n").filter((l) => /from "\.\/facts"/.test(l))) expect(line, f).toMatch(/^import type /);
+      expect(src, f).not.toMatch(/from "\.\.\/data\/facts-meta\.json"|BUNDLED_FACTS/);
+    }
   });
 
   it("every cited fact is bundled and every gap is declared", () => {

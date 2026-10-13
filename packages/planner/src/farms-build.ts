@@ -2,10 +2,9 @@
 // commander 37, per-resource Academy techs. Steps live in data/farms.json. Pure.
 import type { Confidence } from "@rokadm/core";
 import {
-  BUILD_CHECK_FIELDS, FARMS_DATA, evidenceOf, farmIndex, isFarmFocus,
+  farmMinConfidence as minConfidence, BUILD_CHECK_FIELDS, FARMS_DATA, evidenceOf, farmIndex, isFarmFocus,
   type BuildCheckField, type BuildStageData, type FarmEvidence, type FarmFactsOption, type FarmFocus, type Resource,
 } from "./farms-common";
-import { minConfidence } from "./facts";
 import { TP_UNLOCK_NOTE, type TradingPostUnlockNote } from "./farms-trading-post";
 
 export type FarmLevels = Partial<Record<BuildCheckField, number | null>>;

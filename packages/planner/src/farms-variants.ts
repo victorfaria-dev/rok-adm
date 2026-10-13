@@ -1,9 +1,8 @@
 // F-65 Farm Variant Picker: need a farm? how many? which variant? Pure; follows the
 // evidence table in research/context/farms.md ("Farm variants: what the evidence supports").
 import type { Confidence, SpendingProfile } from "@rokadm/core";
-import { confidenceOf } from "./facts";
 import {
-  FARMS_DATA, RESOURCES, VARIANT_IDS, evidenceOf, farmIndex,
+  farmConfidenceOf as confidenceOf, FARMS_DATA, RESOURCES, VARIANT_IDS, evidenceOf, farmIndex,
   type FarmEvidence, type FarmFactsOption, type Resource, type VariantId,
 } from "./farms-common";
 

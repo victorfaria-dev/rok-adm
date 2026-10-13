@@ -1,4 +1,4 @@
-// Builds packages/planner/data/{facts-meta,vip-levels,trading-post}.json straight from research/facts
+// Builds packages/planner/data/{facts-meta,vip-levels,trading-post,farms-facts}.json straight from research/facts
 // and validates the hand-authored planner data against the fact cards:
 //   - every cited fact ID exists;
 //   - every gap ID exists in some _lacunas.md;
@@ -71,10 +71,20 @@ export interface TradingPostRow {
   facts: string[];
 }
 
+/** Slim fact row for the farm modules (no invalidatedBy/validUntil: keeps client bundles free of the dataset marker). */
+export interface FarmFactRow {
+  id: string;
+  title: string;
+  confidence: FactMetaRow["confidence"];
+  status: string;
+  consensus: string;
+}
+
 export interface BuildResult {
   factsMeta: FactMetaRow[];
   vipLevels: VipLevelRow[];
   tradingPost: TradingPostRow[];
+  farmFacts: FarmFactRow[];
   errors: string[];
 }
 
@@ -155,7 +165,18 @@ export function buildData(): BuildResult {
     errors.push("trading-post.csv: expected levels 1..25 with numeric tax and capacity");
   }
 
-  return { factsMeta: [...cards.values()].map(toMeta), vipLevels, tradingPost, errors };
+  // Facts cited by farms.json (+ the Trading Post table cards), slim, for the farm modules.
+  const farmIds = new Set<string>([...(texts[AUTHORED_FILES.indexOf("farms.json")] ?? "").matchAll(FACT_ID_RE)].map((m) => m[0]));
+  farmIds.add("A03-0024");
+  farmIds.add("A03-0025");
+  const farmFacts: FarmFactRow[] = [...farmIds].sort().flatMap((id) => {
+    const c = cards.get(id);
+    if (!c) return [];
+    const m = toMeta(c);
+    return [{ id: m.id, title: m.title, confidence: m.confidence, status: m.status, consensus: m.consensus }];
+  });
+
+  return { factsMeta: [...cards.values()].map(toMeta), vipLevels, tradingPost, farmFacts, errors };
 }
 
 export function serialize(v: unknown): string {
@@ -174,6 +195,7 @@ if (isMain) {
     ["facts-meta.json", { _generated: "by scripts/build-data.ts from research/facts — do not edit", facts: res.factsMeta }],
     ["vip-levels.json", { _generated: "by scripts/build-data.ts from research/facts/A05/data/vip-levels.csv — do not edit", levels: res.vipLevels }],
     ["trading-post.json", { _generated: "by scripts/build-data.ts from research/facts/A03/data/trading-post.csv — do not edit", levels: res.tradingPost }],
+    ["farms-facts.json", { _generated: "by scripts/build-data.ts from research/facts (cards cited by farms.json) — do not edit", facts: res.farmFacts }],
   ];
   let drift = false;
   for (const [file, data] of outputs) {

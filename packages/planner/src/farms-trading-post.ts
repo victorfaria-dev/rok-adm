@@ -1,8 +1,7 @@
 // F-67 Trading Post transfer calculator. Pure functions; no UI, no I/O.
 import type { Confidence } from "@rokadm/core";
 import tradingPostJson from "../data/trading-post.json";
-import { confidenceOf, minConfidence } from "./facts";
-import { FARMS_DATA, farmIndex, evidenceOf, isResource, type FarmFactsOption, type Resource, type TransferWarningCode } from "./farms-common";
+import { FARMS_DATA, farmIndex, evidenceOf, isResource, farmConfidenceOf as confidenceOf, farmMinConfidence as minConfidence, type FarmFactsOption, type Resource, type TransferWarningCode } from "./farms-common";
 
 export interface TradingPostLevel {
   level: number;
