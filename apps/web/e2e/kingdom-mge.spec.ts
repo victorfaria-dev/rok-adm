@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors } from "./kingdom-helpers";
+import { expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const cand = (id: string, name: string, score: number | null) => ({ id, name, score, tags: [] });
 const ev = (id: string, date: string, over: Record<string, unknown> = {}) => ({ id, date, commander: "", applicants: [], overrides: [], locked: false, result: null, ...over });
@@ -25,7 +25,7 @@ async function ledgerRows(page: Page, date: string): Promise<string[][]> {
 test.describe("MGE planner", () => {
   test("create plan → paste governors → 3 events → rotation ledger → publish → view matches", async ({ page }) => {
     const errors = trackErrors(page);
-    await page.goto("/kingdom/mge/");
+    await gotoHydrated(page, "/kingdom/mge/");
     await expect(page.locator("h1")).toHaveText("MGE planner");
     await expect(page.locator("[data-guardrail]")).toContainText("No bots");
     await expect(page.locator("[data-privacy]")).toContainText("other players' names");
@@ -58,7 +58,7 @@ test.describe("MGE planner", () => {
     const url = await page.locator("#kx-link").inputValue();
     expect(url).toMatch(/\/kingdom\/mge\/view\/#d=1[zj]/);
 
-    await page.goto(url);
+    await gotoHydrated(page, url);
     await expect(page.locator("[data-view-title]")).toHaveText("K1234 KvK3 MGE");
     await expect(page.locator("[data-view]")).toContainText("Published by the council, not by KingdomOps");
     await expect(page.locator("[data-view-rules]")).toContainText("2 slots per event, set by the council.");
@@ -73,7 +73,7 @@ test.describe("MGE planner", () => {
 
   test("score policy: scores stay out of the public link unless ticked", async ({ page }) => {
     await seed(page, [PLAN]);
-    await page.goto("/kingdom/mge/");
+    await gotoHydrated(page, "/kingdom/mge/");
     await expect(page.locator("[data-plans]")).toContainText("K1234 MGE");
     // Manual placement first, then score rank among applicants; Delta did not apply.
     expect(await ledgerRows(page, "2026-10-01")).toEqual([
@@ -88,7 +88,7 @@ test.describe("MGE planner", () => {
     await expect(page.locator("[data-view]")).not.toContainText("4,200,000");
     expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", "score rank 1"], ["3", "Bravo", "score rank 2"]]);
 
-    await page.goto("/kingdom/mge/");
+    await gotoHydrated(page, "/kingdom/mge/");
     await page.getByLabel("Include scores in the public link").check();
     await page.getByRole("button", { name: "Create public link" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
@@ -97,7 +97,7 @@ test.describe("MGE planner", () => {
 
   test("manual placement needs a reason; lock keeps history", async ({ page }) => {
     await seed(page, [PLAN]);
-    await page.goto("/kingdom/mge/");
+    await gotoHydrated(page, "/kingdom/mge/");
     const block = page.locator('[data-event="2026-10-15"]');
     await block.getByText("Place a governor by hand").click();
     await block.getByRole("button", { name: /Place in slot/ }).click();
@@ -122,16 +122,16 @@ test.describe("MGE planner", () => {
   });
 
   test("bad links show a plain error", async ({ page }) => {
-    await page.goto("/kingdom/mge/view/#d=1zNOT-A-REAL-LINK");
+    await gotoHydrated(page, "/kingdom/mge/view/#d=1zNOT-A-REAL-LINK");
     await expect(page.getByRole("alert")).toContainText("This link is damaged");
-    await page.goto("/kingdom/mge/view/");
+    await gotoHydrated(page, "/kingdom/mge/view/");
     await expect(page.getByRole("alert")).toContainText("This link has no document in it");
   });
 
   test("360px: no sideways scroll, 44px targets (filled)", async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 780 });
     await seed(page, [PLAN]);
-    await page.goto("/kingdom/mge/");
+    await gotoHydrated(page, "/kingdom/mge/");
     await expect(page.locator("[data-event]")).toHaveCount(2);
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
@@ -146,7 +146,7 @@ test.describe("MGE planner", () => {
     for (const state of ["empty", "filled"] as const) {
       test(`axe planner ${theme} ${state}`, async ({ page }) => {
         await seed(page, state === "filled" ? [PLAN] : [], theme);
-        await page.goto("/kingdom/mge/");
+        await gotoHydrated(page, "/kingdom/mge/");
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         await expect(page.locator("[data-mge]")).toBeVisible();
         if (state === "filled") await expect(page.locator("[data-event]")).toHaveCount(2);
@@ -156,12 +156,12 @@ test.describe("MGE planner", () => {
 
     test(`axe view ${theme} (ledger and error)`, async ({ page }) => {
       await seed(page, [PLAN], theme);
-      await page.goto("/kingdom/mge/");
+      await gotoHydrated(page, "/kingdom/mge/");
       await page.getByRole("button", { name: "Create public link" }).click();
       await page.goto(await page.locator("#kx-link").inputValue());
       await expect(page.locator("[data-view]")).toBeVisible();
       await expectAxeClean(page);
-      await page.goto("/kingdom/mge/view/#d=xx");
+      await gotoHydrated(page, "/kingdom/mge/view/#d=xx");
       await expect(page.getByRole("alert")).toBeVisible();
       await expectAxeClean(page);
     });

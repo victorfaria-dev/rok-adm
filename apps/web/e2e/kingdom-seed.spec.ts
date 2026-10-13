@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors } from "./kingdom-helpers";
+import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const M = 1e6;
 /** Marginal bands of B08-0008, recomputed here independently of the app code. */
@@ -14,7 +14,7 @@ const SIM = {
 test.describe("seed simulator", () => {
   test("renders experimental badge, freshness warning, assumptions and sources", async ({ page }) => {
     const errors = trackErrors(page);
-    await page.goto("/kingdom/seed/");
+    await gotoHydrated(page, "/kingdom/seed/");
     await expect(page.locator("h1")).toHaveText("Seed simulator");
     await expect(page.locator("[data-experimental].kg-badge")).toHaveText("Experimental");
     await expect(page.locator("[data-freshness]")).toContainText("Last verified for patch 1.0.95; check date passed, may be outdated.");
@@ -28,7 +28,7 @@ test.describe("seed simulator", () => {
 
   test("305 pasted powers: only the top 300 count", async ({ page }) => {
     const errors = trackErrors(page);
-    await page.goto("/kingdom/seed/");
+    await gotoHydrated(page, "/kingdom/seed/");
     const powers = Array.from({ length: 305 }, (_, i) => (i + 1) * M);
     await page.getByLabel("Governor powers, one per line").fill(powers.map((p) => `${p / M}m`).join("\n"));
     const expected = powers.slice(5).reduce((s, p) => s + counted(p), 0);
@@ -40,7 +40,7 @@ test.describe("seed simulator", () => {
   });
 
   test("band breakdown for a known input, saved locally, and what-if marks", async ({ page }) => {
-    await page.goto("/kingdom/seed/");
+    await gotoHydrated(page, "/kingdom/seed/");
     await page.getByLabel("Governor powers, one per line").fill("Alpha, 600m\nBravo, 400m\nCharlie, 200,000,000\n100000000\nnot a number");
     await expect(page.locator("[data-line-errors]")).toContainText("Line 5");
     const band = (k: string) => page.locator(`[data-band="${k}"] td`).allTextContents();
@@ -71,8 +71,12 @@ test.describe("seed simulator", () => {
   });
 
   test("quick mode: counts per band", async ({ page }) => {
-    await page.goto("/kingdom/seed/");
-    await page.getByLabel("How to enter powers").selectOption("quick");
+    await gotoHydrated(page, "/kingdom/seed/");
+    // The select is server-rendered: retry until the island has hydrated and shows the quick fields.
+    await expect(async () => {
+      await page.getByLabel("How to enter powers").selectOption("quick");
+      await expect(page.locator("#ks-q-0150M-count")).toBeVisible({ timeout: 1000 });
+    }).toPass();
     await page.locator("#ks-q-0150M-count").fill("100");
     await page.locator("#ks-q-0150M-avg").fill("100m");
     await page.locator("#ks-q-500M-count").fill("2");
@@ -84,7 +88,7 @@ test.describe("seed simulator", () => {
   test("360px: no sideways scroll, 44px targets (filled)", async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 780 });
     await seed(page, [SIM]);
-    await page.goto("/kingdom/seed/");
+    await gotoHydrated(page, "/kingdom/seed/");
     await expect(page.locator("[data-counted]")).toContainText(fmt(980 * M));
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
@@ -94,7 +98,7 @@ test.describe("seed simulator", () => {
     for (const state of ["empty", "filled"] as const) {
       test(`axe ${theme} ${state}`, async ({ page }) => {
         await seed(page, state === "filled" ? [SIM] : [], theme);
-        await page.goto("/kingdom/seed/");
+        await gotoHydrated(page, "/kingdom/seed/");
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         await expect(page.locator("[data-seed]")).toBeVisible();
         if (state === "filled") await expect(page.locator("[data-whatif-result]")).toBeVisible();

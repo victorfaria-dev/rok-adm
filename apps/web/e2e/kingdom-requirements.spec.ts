@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors } from "./kingdom-helpers";
+import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const SAVED = {
   id: "c1", kind: "requirements", title: "K1234 requirements", updatedAt: "2026-10-13T10:00:00.000Z",
@@ -32,7 +32,7 @@ test.describe("requirements card (F-34)", () => {
   });
 
   test("live formula validation, presets and rule note", async ({ page }) => {
-    await page.goto("/kingdom/requirements/");
+    await gotoHydrated(page, "/kingdom/requirements/");
     const f = page.getByLabel("Formula", { exact: true });
     await f.fill("t4 * 10 + tx");
     await expect(f).toHaveAttribute("aria-invalid", "true");
@@ -49,7 +49,7 @@ test.describe("requirements card (F-34)", () => {
   });
 
   test("bands editor validates overlap; compare shows ranking change", async ({ page }) => {
-    await page.goto("/kingdom/requirements/");
+    await gotoHydrated(page, "/kingdom/requirements/");
     await page.getByLabel("Up to power").fill("20m");
     await page.getByRole("button", { name: "Add band" }).click();
     await expect(page.locator("#kr-band-1-min")).toHaveValue("20m");
@@ -65,7 +65,7 @@ test.describe("requirements card (F-34)", () => {
   test("save, list, open and delete on this device", async ({ page }) => {
     const errors = trackErrors(page);
     await seed(page, []);
-    await page.goto("/kingdom/requirements/");
+    await gotoHydrated(page, "/kingdom/requirements/");
     await expect(page.locator("[data-saved-empty]")).toBeVisible();
     await page.getByLabel("Kingdom", { exact: true }).fill("K9999");
     await page.getByRole("button", { name: "Save on this device" }).click();
@@ -85,7 +85,7 @@ test.describe("requirements card (F-34)", () => {
   test("keyboard flow: council builds card → publish → player opens link → enters stats → progress", async ({ page }) => {
     const errors = trackErrors(page);
     await seed(page, []);
-    await page.goto("/kingdom/requirements/");
+    await gotoHydrated(page, "/kingdom/requirements/");
     await page.getByLabel("Kingdom", { exact: true }).focus();
     await page.keyboard.type("K1234");
     await page.keyboard.press("Tab"); // title
@@ -126,7 +126,7 @@ test.describe("requirements card (F-34)", () => {
     for (const state of ["empty", "filled"] as const) {
       test(`axe ${theme} ${state}`, async ({ page }) => {
         await seed(page, state === "filled" ? [SAVED] : [], theme);
-        await page.goto("/kingdom/requirements/");
+        await gotoHydrated(page, "/kingdom/requirements/");
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         if (state === "filled") {
           await page.getByRole("button", { name: "Open K1234 requirements" }).click();

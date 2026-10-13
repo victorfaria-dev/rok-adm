@@ -45,3 +45,9 @@ export async function expectTargets44(page: Page): Promise<void> {
       .map((el) => `${el.tagName.toLowerCase()} "${(el.textContent || el.getAttribute("aria-label") || "").trim().slice(0, 30)}" ${el.getBoundingClientRect().height}px`));
   expect(small).toEqual([]);
 }
+
+/** Go to a page and wait until every Preact island has hydrated (Astro drops the `ssr` attribute then). */
+export async function gotoHydrated(page: Page, url: string): Promise<void> {
+  await page.goto(url);
+  await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
+}

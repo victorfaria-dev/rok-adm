@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors } from "./kingdom-helpers";
+import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const DRAFT = {
   id: "d1", kind: "recruit", title: "Kingdom 1234 recruitment post", updatedAt: "2026-10-13T10:00:00.000Z",
@@ -28,7 +28,7 @@ test.describe("recruitment post generator", () => {
   test("form → post contains the entered roles in every format; drafts save, reopen and delete", async ({ page }) => {
     const errors = trackErrors(page);
     await page.setViewportSize({ width: 360, height: 780 });
-    await page.goto("/kingdom/recruit/");
+    await gotoHydrated(page, "/kingdom/recruit/");
     await page.getByLabel("Kingdom number or name").fill("1234");
     await page.getByLabel("Stage", { exact: true }).selectOption("kvk2");
     await page.getByLabel("Minimum power").fill("30m");
@@ -79,7 +79,7 @@ test.describe("recruitment post generator", () => {
   });
 
   test("shows an error under a power it cannot read", async ({ page }) => {
-    await page.goto("/kingdom/recruit/");
+    await gotoHydrated(page, "/kingdom/recruit/");
     await page.getByLabel("Minimum power").fill("a lot");
     await expect(page.locator("#kt-power-error")).toContainText("Write the power as a number");
     await expect(page.getByLabel("Minimum power")).toHaveAttribute("aria-invalid", "true");
@@ -87,7 +87,7 @@ test.describe("recruitment post generator", () => {
   });
 
   test("warns and reports the length when the Discord post is over 2,000 characters", async ({ page }) => {
-    await page.goto("/kingdom/recruit/");
+    await gotoHydrated(page, "/kingdom/recruit/");
     await page.getByLabel("Kingdom number or name").fill("1234");
     await page.getByLabel("Migration note").fill("m".repeat(600));
     await page.getByLabel("Other requirements").fill("r".repeat(300));
@@ -102,7 +102,7 @@ test.describe("recruitment post generator", () => {
   });
 
   test("escapes markdown typed by the council", async ({ page }) => {
-    await page.goto("/kingdom/recruit/");
+    await gotoHydrated(page, "/kingdom/recruit/");
     await page.getByLabel("Migration note").fill("# Open now\n@everyone welcome");
     await expect(page.locator("#kt-body-out")).toHaveValue(/\\# Open now\n@​everyone welcome/);
   });
@@ -111,7 +111,7 @@ test.describe("recruitment post generator", () => {
     for (const state of ["empty", "filled"] as const) {
       test(`axe ${theme} ${state}`, async ({ page }) => {
         await seed(page, state === "filled" ? [DRAFT] : [], theme);
-        await page.goto("/kingdom/recruit/");
+        await gotoHydrated(page, "/kingdom/recruit/");
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         if (state === "filled") {
           await page.getByRole("button", { name: "Open Kingdom 1234 recruitment post" }).click();

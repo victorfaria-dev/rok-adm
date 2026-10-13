@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors } from "./kingdom-helpers";
+import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const CARD = {
   id: "card-1", updatedAt: "2026-10-13T10:00:00.000Z", kingdom: "K1234", title: "", stage: "KvK2", stageOther: "",
@@ -82,12 +82,12 @@ test.describe("my requirements (F-30)", () => {
 
   test("bad links show the share error and still offer the self setup", async ({ page }) => {
     const errors = trackErrors(page);
-    await page.goto("/kingdom/my/#d=1jnot*valid");
+    await gotoHydrated(page, "/kingdom/my/#d=1jnot*valid");
     await expect(page.locator("[data-link-error]")).toHaveText("This link is damaged (some characters are missing or changed). Copy the whole link again.");
     await expect(page.locator("[data-self]")).toBeVisible();
     await page.goto(`/kingdom/my/#d=${codeFor(CARD, "rules")}`);
     await expect(page.locator("[data-link-error]")).toHaveText("This link is for a different KingdomOps tool.");
-    await page.goto("/kingdom/my/#d=");
+    await gotoHydrated(page, "/kingdom/my/#d=");
     await expect(page.locator("[data-link-error]")).toContainText("no document in it");
     expect(errors).toEqual([]);
   });
@@ -101,7 +101,7 @@ test.describe("my requirements (F-30)", () => {
     await expect(page.getByRole("status").filter({ hasText: "Saved on this device" })).toBeVisible();
     const stored = await page.evaluate((k) => JSON.parse(localStorage.getItem(k)!), KINGDOM_KEY);
     expect(stored.docs[0].kind).toBe("my-requirements");
-    await page.goto("/kingdom/my/");
+    await gotoHydrated(page, "/kingdom/my/");
     await expect(page.locator("[data-card]")).toContainText("K1234");
     await expect(page.getByLabel(/^My power/)).toHaveValue("10m");
     await expect(page.locator("#km-deads")).toHaveValue("1k");
@@ -109,7 +109,7 @@ test.describe("my requirements (F-30)", () => {
 
   test("self setup: custom formula and percent", async ({ page }) => {
     await seed(page, []);
-    await page.goto("/kingdom/my/");
+    await gotoHydrated(page, "/kingdom/my/");
     await page.getByLabel("Formula", { exact: true }).selectOption("custom");
     const f = page.getByLabel("Your kingdom's formula");
     await f.fill("t4 *");
@@ -134,7 +134,7 @@ test.describe("my requirements (F-30)", () => {
           await page.locator("#km-deads").fill("100k");
           await expect(page.getByRole("progressbar")).toBeVisible();
         } else {
-          await page.goto("/kingdom/my/");
+          await gotoHydrated(page, "/kingdom/my/");
           await expect(page.locator("[data-self]")).toBeVisible();
         }
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);

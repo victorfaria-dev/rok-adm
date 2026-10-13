@@ -1,5 +1,5 @@
 import { expect, test, type Page } from "@playwright/test";
-import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors } from "./kingdom-helpers";
+import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const RULES = {
   id: "r1",
@@ -51,7 +51,7 @@ test.describe("rules page builder", () => {
   test("build rules → share link → view page matches → print → make an editable copy", async ({ page, context }) => {
     const errors = trackErrors(page);
     await page.setViewportSize({ width: 360, height: 780 });
-    await page.goto("/kingdom/rules/");
+    await gotoHydrated(page, "/kingdom/rules/");
     await page.getByRole("button", { name: "New blank rules page" }).click();
     await expect(page.locator("[data-editor-title]")).toBeFocused();
     await expect(page).toHaveURL(/\?doc=/);
@@ -133,7 +133,7 @@ test.describe("rules page builder", () => {
   });
 
   test("new kingdom charter starts with the starter sections", async ({ page }) => {
-    await page.goto("/kingdom/rules/");
+    await gotoHydrated(page, "/kingdom/rules/");
     await page.getByRole("button", { name: "New kingdom charter" }).click();
     await expect(page.locator("[data-section]")).toHaveCount(7);
     await expect(page.getByLabel("Title", { exact: true })).toHaveValue("Kingdom charter");
@@ -143,7 +143,7 @@ test.describe("rules page builder", () => {
   test("opens, deletes a section with confirm, and deletes a saved page from the list", async ({ page }) => {
     const errors = trackErrors(page);
     await seed(page, [DOC]);
-    await page.goto("/kingdom/rules/?doc=r1");
+    await gotoHydrated(page, "/kingdom/rules/?doc=r1");
     await expect(page.locator("[data-section]")).toHaveCount(2);
     await page.getByRole("button", { name: 'Delete "MGE policy"' }).click();
     await page.getByRole("button", { name: "Yes, delete" }).click();
@@ -159,14 +159,14 @@ test.describe("rules page builder", () => {
   });
 
   test("unknown ?doc= shows a message", async ({ page }) => {
-    await page.goto("/kingdom/rules/?doc=missing");
+    await gotoHydrated(page, "/kingdom/rules/?doc=missing");
     await expect(page.getByRole("alert")).toContainText("not saved on this device");
   });
 
   test("warns when the link is too long for one Discord message", async ({ page }) => {
     const big = { ...RULES, sections: Array.from({ length: 6 }, (_, i) => ({ id: `n${i}`, heading: `Part ${i}`, body: noise(300, i + 7) })) };
     await seed(page, [{ ...DOC, data: big }]);
-    await page.goto("/kingdom/rules/?doc=r1");
+    await gotoHydrated(page, "/kingdom/rules/?doc=r1");
     await page.getByRole("button", { name: "Share view-only link" }).click();
     await expect(page.locator("[data-link-long]")).toContainText("Discord cuts messages at 2,000 characters");
   });
@@ -175,7 +175,7 @@ test.describe("rules page builder", () => {
     for (const state of ["empty", "filled"] as const) {
       test(`axe builder ${theme} ${state}`, async ({ page }) => {
         await seed(page, state === "filled" ? [DOC] : [], theme);
-        await page.goto(state === "filled" ? "/kingdom/rules/?doc=r1" : "/kingdom/rules/");
+        await gotoHydrated(page, state === "filled" ? "/kingdom/rules/?doc=r1" : "/kingdom/rules/");
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         await expect(page.locator(state === "filled" ? "[data-rules-editor]" : "[data-rules-list]")).toBeVisible();
         await expectAxeClean(page);
@@ -194,7 +194,7 @@ test.describe("rules page builder", () => {
 test.describe("rules view page", () => {
   async function viewLink(page: Page): Promise<string> {
     await seed(page, [DOC]);
-    await page.goto("/kingdom/rules/?doc=r1");
+    await gotoHydrated(page, "/kingdom/rules/?doc=r1");
     await page.getByRole("button", { name: "Share view-only link" }).click();
     return page.locator("#kq-link").inputValue();
   }
@@ -206,11 +206,11 @@ test.describe("rules view page", () => {
 
   test("a corrupted link shows the error and a way back", async ({ page }) => {
     const errors = trackErrors(page);
-    await page.goto("/kingdom/rules/view/#d=1zAB$$broken");
+    await gotoHydrated(page, "/kingdom/rules/view/#d=1zAB$$broken");
     await expect(page.locator("h1")).toHaveText("This rules link cannot be opened");
     await expect(page.getByRole("alert")).toContainText("This link is damaged");
     await expect(page.getByRole("link", { name: "Go to the rules page builder" })).toHaveAttribute("href", "/kingdom/rules/");
-    await page.goto("/kingdom/rules/view/");
+    await gotoHydrated(page, "/kingdom/rules/view/");
     await expect(page.getByRole("alert")).toContainText("This link has no document in it");
     expect(errors).toEqual([]);
   });
@@ -219,11 +219,11 @@ test.describe("rules view page", () => {
     test(`axe view ${theme} (rules and error)`, async ({ page }) => {
       const link = await viewLink(page);
       await page.evaluate((t) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: t })), theme);
-      await page.goto(link);
+      await gotoHydrated(page, link);
       await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
       await expect(page.locator("[data-rules-doc]")).toBeVisible();
       await expectAxeClean(page);
-      await page.goto("/kingdom/rules/view/#d=9xx");
+      await gotoHydrated(page, "/kingdom/rules/view/#d=9xx");
       await expect(page.locator("[data-share-error]")).toBeVisible();
       await expectAxeClean(page);
     });

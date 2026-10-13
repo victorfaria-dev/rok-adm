@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors } from "./kingdom-helpers";
+import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
 
 const DOC = { id: "r1", kind: "rules", title: "K1234 rules", updatedAt: "2026-10-13T10:00:00.000Z", data: { sections: [] } };
 
@@ -25,7 +25,7 @@ test.describe("council kit hub", () => {
   test("shows saved documents, exports, deletes all and imports back", async ({ page }) => {
     const errors = trackErrors(page);
     await seed(page, [DOC]);
-    await page.goto("/kingdom/");
+    await gotoHydrated(page, "/kingdom/");
     await expect(page.locator("[data-counts]")).toContainText("Rules pages: 1");
     const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Export (.json)" }).click()]);
     const path = await download.path();
@@ -43,7 +43,7 @@ test.describe("council kit hub", () => {
   });
 
   test("rejects a file that is not a council export", async ({ page }) => {
-    await page.goto("/kingdom/");
+    await gotoHydrated(page, "/kingdom/");
     await page.locator("[data-import]").setInputFiles({ name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"app":"other"}') });
     await expect(page.getByRole("alert")).toContainText("not a KingdomOps council export");
   });
@@ -52,7 +52,7 @@ test.describe("council kit hub", () => {
     for (const state of ["empty", "filled"] as const) {
       test(`axe ${theme} ${state}`, async ({ page }) => {
         await seed(page, state === "filled" ? [DOC] : [], theme);
-        await page.goto("/kingdom/");
+        await gotoHydrated(page, "/kingdom/");
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         await expect(page.locator("[data-controls]")).toBeVisible();
         await expectAxeClean(page);
