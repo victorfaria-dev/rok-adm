@@ -2,6 +2,7 @@
 // and validates the hand-authored planner data against the fact cards:
 //   - every cited fact ID exists;
 //   - every gap ID exists in some _lacunas.md;
+//   - commander-periods.json: known periods, unique ids, confidence no higher than its best card;
 //   - every `evidence` (or `*Evidence`) substring in budget-inputs.json, farms.json and low-spender.json is literally present in its card.
 // Usage: pnpm --filter @rokadm/planner build:data   (add --check to fail on drift without writing)
 import { readFileSync, writeFileSync } from "node:fs";
@@ -16,7 +17,40 @@ export const AUTHORED_FILES = [
   "commander-shelf-life.json",
   "farms.json",
   "low-spender.json",
+  "commander-periods.json",
 ] as const;
+
+const PERIODS = ["launch", "pre_kvk", "kvk1", "kvk2", "kvk3", "soc"];
+const CONF_RANK: Record<string, number> = { low: 1, medium: 2, high: 3, baixa: 1, media: 2, alta: 3 };
+
+/**
+ * Checks commander-periods.json: known periods, unique ids, dates, and that no commander claims more
+ * confidence than its best-supported card (a conflict caps it at low).
+ */
+export function checkCommanderPeriods(text: string, cards: ReadonlyMap<string, RawCard>): string[] {
+  const errors: string[] = [];
+  const doc = JSON.parse(text) as {
+    periods: Array<{ id: string }>;
+    commanders: Array<{ id: string; period: string; confidence: string; conflict: boolean; facts: string[]; lastConfirmed: string }>;
+  };
+  if (doc.periods.map((p) => p.id).join() !== PERIODS.join()) errors.push(`commander-periods: periods must be ${PERIODS.join(", ")} in order`);
+  const seen = new Set<string>();
+  for (const c of doc.commanders) {
+    const key = `commander-periods ${c.id}`;
+    if (seen.has(c.id)) errors.push(`${key}: duplicate id`);
+    seen.add(c.id);
+    if (!/^[a-z0-9-]+$/.test(c.id)) errors.push(`${key}: id must be kebab-case`);
+    if (!PERIODS.includes(c.period)) errors.push(`${key}: unknown period ${c.period}`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(c.lastConfirmed)) errors.push(`${key}: lastConfirmed must be YYYY-MM-DD`);
+    if (!c.facts.length) errors.push(`${key}: no facts`);
+    const best = Math.max(0, ...c.facts.map((id) => CONF_RANK[cards.get(id)?.fields["confianca"] ?? ""] ?? 0));
+    const own = CONF_RANK[c.confidence] ?? 0;
+    if (!own) errors.push(`${key}: confidence must be high, medium or low`);
+    if (own > best) errors.push(`${key}: confidence ${c.confidence} is above its best card`);
+    if (c.conflict && c.confidence !== "low") errors.push(`${key}: conflicting sources must be low confidence`);
+  }
+  return errors;
+}
 
 export interface FactMetaRow {
   id: string;
@@ -115,6 +149,8 @@ export function buildData(): BuildResult {
     if (!findCardPath(id)) { errors.push(`fact not found in research/facts: ${id}`); continue; }
     cards.set(id, readCard(id));
   }
+
+  errors.push(...checkCommanderPeriods(texts[AUTHORED_FILES.indexOf("commander-periods.json")] ?? "{}", cards));
 
   const gapIds = readGapIds();
   for (const m of all.matchAll(GAP_ID_RE)) {
