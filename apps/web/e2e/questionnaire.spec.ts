@@ -94,7 +94,9 @@ test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }
 
 test("Close keeps the draft and returns to the previous page", async ({ page }) => {
   await page.goto("/start/"); // direct load: referrer is empty, Close goes home
+  await page.waitForSelector("astro-island:not([ssr])"); // hydrated: Next and Esc are handled by the island
   await page.getByRole("button", { name: "Next" }).click();
+  await expect(page.getByText("2 of 10")).toBeVisible();
   await page.keyboard.press("Escape");
   await page.waitForURL((u) => u.pathname === "/");
   await page.goto("/me/");
