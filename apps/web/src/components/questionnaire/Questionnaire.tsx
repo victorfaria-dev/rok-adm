@@ -40,20 +40,26 @@ const defaultNavigate = (url: string): void => {
 
 /**
  * How long a new message counts as "being said": the typing dots are CSS-limited to one slow
- * duration, and the mascot plays its talk clip until this clears, then goes back to idle. Input is
- * never blocked.
+ * duration, and the mascot nods (approve, a one-shot clip that finishes on its own) or talks (after
+ * Skip) until this clears, then goes back to idle. Input is never blocked.
  */
 const TYPING_CLEAR_MS = 1600;
-/** How long Sun Tzu grumbles after an empty or invalid answer (the error text stays). */
+/**
+ * How long the grumble state lasts after an empty or invalid answer (the error text stays). The
+ * grumble clip is a one-shot and finishes on its own.
+ */
 const GRUMBLE_MS = 700;
 
-/** One Sun Tzu message. The current question carries the page heading; older ones are plain text. */
-function BotMessage(props: { current: boolean; typing: boolean; grumble?: number; lead?: string; title?: string; help?: string; headingRef?: Ref<HTMLParagraphElement> }) {
-  const { current, typing, grumble = 0, lead, title, help, headingRef } = props;
-  const mood: MascotState | undefined = !current ? undefined : grumble > 0 ? "grumble" : typing ? "talking" : "idle";
+/**
+ * One Sun Tzu message. The current question carries the page heading and Sun Tzu's stage above it
+ * (the one animated mascot on the page); older ones are plain text with a small still poster.
+ */
+function BotMessage(props: { current: boolean; typing: boolean; grumble?: number; arrival?: MascotState; calm?: MascotState; lead?: string; title?: string; help?: string; headingRef?: Ref<HTMLParagraphElement> }) {
+  const { current, typing, grumble = 0, arrival = "talking", calm = "idle", lead, title, help, headingRef } = props;
+  const mood: MascotState | undefined = !current ? undefined : grumble > 0 ? "grumble" : typing ? arrival : calm;
   return (
     <div class="q-msg q-msg-bot" data-current={current ? "" : undefined} data-typing={typing ? "" : undefined}>
-      <Mascot size={current ? 48 : 32} state={mood} pulse={current ? grumble : undefined} />
+      {current ? <Mascot stage state={mood} pulse={grumble} /> : <Mascot size={32} />}
       <div class="q-bubble">
         <p class={current ? "q-who" : "q-who visually-hidden"}>{MASCOT_NAME}</p>
         <span class="q-typing" aria-hidden="true"><span /><span /><span /></span>
@@ -96,6 +102,8 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   const [closeHref, setCloseHref] = useState("/");
   // Step whose new bot message shows the typing dots (forward moves only); -1 = none.
   const [typingStep, setTypingStep] = useState(-1);
+  // How Sun Tzu takes the new message while it types: a nod for an accepted answer, else talk (Skip).
+  const [arrival, setArrival] = useState<MascotState>("talking");
   // Grumble counter for the current step (0 = calm); bumps on every rejected answer.
   const [grumble, setGrumble] = useState(0);
   const stateRef = useRef(state);
@@ -117,6 +125,7 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
     if (n.step !== prev.step) {
       focusReply.current = true;
       setTypingStep(n.step > prev.step ? n.step : -1);
+      setArrival(f === skip ? "talking" : "approve");
       setGrumble(0);
     } else if (n.error) {
       if (n.error !== prev.error) focusInput.current = true;
@@ -287,12 +296,14 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
           </div>,
         ])}
         {q ? (
-          <BotMessage key={`bot-${state.step}`} current typing={typing} grumble={grumble} lead={LEADS[q.id]} title={q.label} help={q.help} headingRef={headingRef} />
+          <BotMessage key={`bot-${state.step}`} current typing={typing} grumble={grumble} arrival={arrival} calm={state.step === 0 ? "greet" : "idle"} lead={LEADS[q.id]} title={q.label} help={q.help} headingRef={headingRef} />
         ) : (
           <BotMessage
             key="bot-summary"
             current
             typing={typing}
+            arrival="victory"
+            calm="victory"
             lead={SUMMARY_LEAD}
             title="Check your answers"
             help="Your answers stay in this browser. You can change them any time from the You page."

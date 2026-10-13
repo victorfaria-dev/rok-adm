@@ -120,6 +120,27 @@ describe("questionnaire island: chat", () => {
     for (const a of avatars) expect(a.getAttribute("aria-hidden")).toBe("true");
   });
 
+  it("Sun Tzu nods (approve) at an accepted answer and talks after Skip, while the new bubble types", () => {
+    setup();
+    const stageState = () => document.querySelector(".st-stage")!.getAttribute("data-state");
+    expect(stageState()).toBe("greet");
+    enter();
+    expect(stageState()).toBe("approve");
+    fireEvent.click(screen.getByRole("button", { name: "Skip" }));
+    expect(stageState()).toBe("talking");
+  });
+
+  it("one stage, above the current question; history shows still posters", () => {
+    setup();
+    enter();
+    const stages = document.querySelectorAll(".st-stage");
+    expect(stages).toHaveLength(1);
+    const current = document.querySelector(".q-msg-bot[data-current]")!;
+    expect(current.firstElementChild).toBe(stages[0]);
+    expect(stages[0]!.compareDocumentPosition(current.querySelector(".q-bubble")!) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    for (const old of document.querySelectorAll(".q-msg-bot:not([data-current]) .st-avatar")) expect(old.hasAttribute("data-state")).toBe(false);
+  });
+
   it("a tap on a quick reply answers and moves on in one go", () => {
     setup();
     const radio = screen.getByRole("radio", { name: /Medium spender/ });
@@ -202,6 +223,7 @@ describe("questionnaire island: summary", () => {
       },
     });
     expect(title().textContent).toBe("Check your answers");
+    expect(document.querySelector(".st-stage")!.getAttribute("data-state")).toBe("victory");
     expect(screen.getByText(/You spent about \$10000000/)).toBeTruthy();
     expect(screen.getByText("10,000,000 USD")).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "See my guide" }));
