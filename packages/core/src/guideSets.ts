@@ -11,7 +11,7 @@ import {
   type SpendingProfile,
 } from "./types";
 
-export type GuideSetId = "f2p" | "newkingdom" | "low" | "returning" | "first30" | "recovery" | "kingdomadmin";
+export type GuideSetId = "f2p" | "newkingdom" | "low" | "returning" | "first30" | "recovery" | "kingdomadmin" | "farms";
 
 /**
  * - `base`: a full guide that profile deltas extend (the F2P guide).
@@ -125,6 +125,15 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
       mistakes: "4. Failure points",
       open: "5. Open questions and pending measurements",
     },
+  },
+  {
+    // Farm guide (wave C, /guides/farms/): its own pages route blocks by id prefix;
+    // registered here so every blocks file in guides/data is known. Never offered by guidesForProfile.
+    id: "farms",
+    file: "blocks.farms.json",
+    kind: "guide",
+    title: "Farm accounts",
+    features: ["F-03", "F-65", "F-66", "F-67", "F-71"],
   },
 ];
 

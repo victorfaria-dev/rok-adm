@@ -13,7 +13,7 @@ const make = (p: Partial<AccountProfile>): AccountProfile => ({ ...defaultProfil
 describe("guide directory", () => {
   it("has one page per guide set (deltas included) plus farms, each with a summary and an audience", () => {
     const sets = GUIDE_PAGES.map((g) => g.set).sort();
-    expect(sets).toEqual([...GUIDE_SETS.map((s) => s.id), "farms"].sort());
+    expect(sets).toEqual(GUIDE_SETS.map((s) => s.id).sort());
     for (const g of GUIDE_PAGES) {
       expect(g.summary.length, g.set).toBeGreaterThan(10);
       expect(g.audience.length, g.set).toBeGreaterThan(10);
