@@ -103,10 +103,21 @@ describe("Me island: playing as, details, share card (UX stage 1)", () => {
     expect(readStore().profileCode).toBe("1.0.0.1.12.30.....0");
   });
 
-  it("Share card links the governor card and the alliance crest", () => {
+  it("the hub rows: Guides near the top, Share card, then settings and trust rows", () => {
     setup();
-    expect(screen.getByRole("link", { name: "Governor card" }).getAttribute("href")).toBe("/card/");
-    expect(screen.getByRole("link", { name: "Alliance crest" }).getAttribute("href")).toBe("/crest/");
+    expect(screen.getByRole("link", { name: "Guides" }).getAttribute("href")).toBe("/guides/");
+    expect(screen.getByRole("link", { name: "Share card" }).getAttribute("href")).toBe("/card/");
+    expect(screen.getByRole("link", { name: "Trust & privacy" }).getAttribute("href")).toBe("/trust/");
+    const groups = [...document.querySelectorAll(".me-group")].map((g) => g.getAttribute("aria-label"));
+    expect(groups).toEqual(["You and your accounts", "Settings", "Trust and about"]);
+    expect(document.querySelector(".me-group a")?.getAttribute("href")).toBe("/guides/");
+  });
+
+  it("the header shows the active account's initials, name and role line", () => {
+    setup({ profileCode: CODE, savedProfiles: [{ id: "f1", name: "Farm One", code: CODE, override: null }], activeAccountId: "f1" });
+    expect(document.querySelector(".me-avatar")?.textContent).toBe("FO");
+    expect(screen.getByRole("heading", { level: 1 }).textContent).toContain("Farm One");
+    expect(document.querySelector(".me-hero-line")?.textContent).toBe("Player · F2P · CH 12");
   });
 });
 

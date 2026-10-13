@@ -1,9 +1,9 @@
 ---
+// Me tab (UX stage 1): profile header, "Playing as" and a grouped list hub (Guides, profile and
+// accounts, share card / appearance, data, backup / trust and about). Long text sits behind the rows.
 import Shell from "../../layouts/Shell.astro";
 import Me from "../../components/me/Me";
-import BackupAll from "../../components/me/BackupAll";
 ---
-<Shell title="Me" description="How you use KingdomOps (player or leader), your profile, share card, theme and data: export, import or delete. Back up everything KingdomOps keeps in this browser in one file. Everything stays in this browser." mode="operate">
+<Shell title="Me" description="How you use KingdomOps (player or leader), the guides, your profile and accounts, share card, appearance and data: export, import, back up or delete. Everything stays in this browser." mode="operate">
   <Me client:load />
-  <BackupAll client:load />
 </Shell>

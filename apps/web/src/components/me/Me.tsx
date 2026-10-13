@@ -26,6 +26,10 @@ import {
 } from "../../lib/me";
 import { Accounts } from "./Accounts";
 import { ProfileDetails } from "./ProfileDetails";
+import BackupAll from "./BackupAll";
+import { TileIcon, type TileIconName } from "../cityhall/TileIcon";
+import { activeAccount } from "../../lib/accounts";
+import { PROFILE_NAMES } from "@rokadm/core";
 import { ONBOARDING_IDS } from "../../lib/questionnaire-flow";
 import { ROLE_LABEL, setPlayingAs } from "../../lib/role";
 import { PLAYING_AS } from "../../lib/store";
@@ -97,15 +101,62 @@ const S = {
   title: "Me",
   lead: "Your profile, how you use KingdomOps, theme and data. Everything here is stored only in this browser: no account, no server.",
   playingH: "Playing as",
-  playingNote: "Player shows City Hall, Guides, Tools and Me. Leader shows Kingdom, Members, Events, Guides and Me. Your tabs switch at once.",
+  playingNote: "Player shows City Hall, Tools and Me. Leader shows Kingdom, Members, Events and Me. Guides stay one tap away, in the first row below.",
   empty: "No profile yet. Answer 5 quick questions and KingdomOps sets up your City Hall, daily routine and guide.",
   start: "Start",
   editAnswers: "Edit answers",
-  shareH: "Share card",
-  shareLead: "Your governor card and alliance crest, made for KingdomOps: download them as images for Discord or your avatar.",
-  card: "Governor card",
-  crest: "Alliance crest",
+  defaultName: "Governor",
+  noProfileLine: "No profile yet",
+  groupMain: "You and your accounts",
+  groupSettings: "Settings",
+  groupAbout: "Trust and about",
+  rows: {
+    guides: "Guides",
+    profile: "Profile and accounts",
+    share: "Share card",
+    theme: "Appearance",
+    data: "Your data",
+    backup: "Backup",
+    trust: "Trust & privacy",
+    about: "About KingdomOps",
+    brand: "Brand",
+  },
 } as const;
+
+/** "Main" → "MA", "Farm 1" → "F1". */
+const initials = (name: string): string => {
+  const w = name.trim().split(/\s+/).filter(Boolean);
+  return (w.length > 1 ? `${w[0]![0]}${w[1]![0]}` : (w[0] ?? "?").slice(0, 2)).toUpperCase();
+};
+
+/** One row of the grouped hub that opens in place (long text lives behind it). */
+function Row(props: { id: string; icon: TileIconName; label: string; children: preact.ComponentChildren }) {
+  return (
+    <li>
+      <details class="me-row-item" id={`me-row-${props.id}`} data-me-row={props.id}>
+        <summary class="me-item">
+          <TileIcon name={props.icon} class="me-item-icon" />
+          <span class="me-item-label">{props.label}</span>
+          <TileIcon name="chevron" class="me-item-chevron" />
+        </summary>
+        <div class="me-panel">{props.children}</div>
+      </details>
+    </li>
+  );
+}
+
+/** One row of the grouped hub that goes to another page. */
+function LinkRow(props: { href: string; icon: TileIconName; label: string }) {
+  return (
+    <li>
+      <a class="me-item" href={props.href}>
+        <TileIcon name={props.icon} class="me-item-icon" />
+        <span class="me-item-label">{props.label}</span>
+        <TileIcon name="chevron" class="me-item-chevron" />
+      </a>
+    </li>
+  );
+}
 
 /** Me page island: role switch, profile summary, optional details, F-72 effective profile, share card, theme and local data. */
 export default function Me({ navigate = defaultNavigate, download = defaultDownload, now = () => new Date() }: Props) {
@@ -134,6 +185,19 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     };
     document.addEventListener("change", onChange);
     return () => document.removeEventListener("change", onChange);
+  }, []);
+
+  // A link to something inside a closed row (e.g. #me-backup-h) opens that row.
+  useEffect(() => {
+    const open = (): void => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const el = id ? document.getElementById(id) : null;
+      const row = el?.closest("details");
+      if (row && !row.open) row.open = true;
+    };
+    open();
+    window.addEventListener("hashchange", open);
+    return () => window.removeEventListener("hashchange", open);
   }, []);
 
   // Focus moves into the confirmation when it opens and back to its trigger when it closes.
@@ -219,17 +283,23 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
   };
 
   const profile = store ? profileFromCode(store.profileCode) : null;
+  const account = store ? activeAccount(store) : null;
   const eff = profile && store ? effectiveView(profile, store.profileOverride) : null;
 
   return (
     <div class="me">
-      <header class="me-head">
-        <h1>{S.title}</h1>
-        <p class="me-lead">{S.lead}</p>
+      <header class="me-hero" data-layer="2">
+        <span class="me-avatar" aria-hidden="true">{initials(account?.name ?? S.defaultName)}</span>
+        <div class="me-hero-text">
+          <h1><span class="visually-hidden">{S.title}: </span>{account?.name ?? S.defaultName}</h1>
+          <p class="me-hero-line mono">
+            {profile ? `${ROLE_LABEL[store?.playingAs ?? "player"]} · ${PROFILE_NAMES[profile.spending]} · CH ${profile.cityHall}` : S.noProfileLine}
+          </p>
+        </div>
       </header>
 
-      <section class="me-section" aria-labelledby="me-role-h" data-playing-as>
-        <h2 id="me-role-h">{S.playingH}</h2>
+      <section class="me-section me-role" aria-labelledby="me-role-h" data-playing-as>
+        <h2 id="me-role-h" class="me-role-h">{S.playingH}</h2>
         <fieldset class="me-choices me-choices-row">
           <legend class="visually-hidden">{S.playingH}</legend>
           {PLAYING_AS.map((r) => (
@@ -243,6 +313,9 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
         <p class="me-note">{S.playingNote}</p>
       </section>
 
+      <ul class="me-group" aria-label={S.groupMain}>
+      <LinkRow href="/guides/" icon="guide" label={S.rows.guides} />
+      <Row id="profile" icon="user" label={S.rows.profile}>
       <section class="me-section" aria-labelledby="me-profile-h">
         <h2 id="me-profile-h">Profile</h2>
         {!store ? (
@@ -313,16 +386,12 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
           <p class="me-note">Your spending answers stay on this device. KingdomOps never sends them anywhere.</p>
         </section>
       )}
+      </Row>
+      <LinkRow href="/card/" icon="card" label={S.rows.share} />
+      </ul>
 
-      <section class="me-section" aria-labelledby="me-share-h" data-share-card>
-        <h2 id="me-share-h">{S.shareH}</h2>
-        <p class="me-note">{S.shareLead}</p>
-        <ul class="me-links">
-          <li><a href="/card/">{S.card}</a></li>
-          <li><a href="/crest/">{S.crest}</a></li>
-        </ul>
-      </section>
-
+      <ul class="me-group" aria-label={S.groupSettings}>
+      <Row id="theme" icon="theme" label={S.rows.theme}>
       <section class="me-section" aria-labelledby="me-theme-h">
         <h2 id="me-theme-h">Theme</h2>
         <fieldset class="me-choices me-choices-row">
@@ -342,7 +411,9 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
         </fieldset>
         <p class="me-note">System follows your device's light or dark setting.</p>
       </section>
+      </Row>
 
+      <Row id="data" icon="data" label={S.rows.data}>
       <section class="me-section" aria-labelledby="me-data-h">
         <h2 id="me-data-h">Your data</h2>
         <p>
@@ -411,6 +482,18 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
           <p class="me-status" role="status">{status.at === "delete" ? status.text : ""}</p>
         </div>
       </section>
+      </Row>
+
+      <Row id="backup" icon="backup" label={S.rows.backup}>
+        <BackupAll download={download} now={now} />
+      </Row>
+      </ul>
+
+      <ul class="me-group" aria-label={S.groupAbout}>
+        <LinkRow href="/trust/" icon="trust" label={S.rows.trust} />
+        <LinkRow href="/?about" icon="info" label={S.rows.about} />
+        <LinkRow href="/brand/" icon="flag" label={S.rows.brand} />
+      </ul>
     </div>
   );
 }
