@@ -53,6 +53,11 @@ Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco 
 - Conteúdo solto que puder virar função (ferramenta, filtro, widget) deve ser comprimido.
 - Skill `ui-ux-pro-max` (em `.claude/skills/`) é usada como checklist e referência de padrões; não substitui os tokens `--ko-*`.
 
+### Etapa UX 1 — aprovada (Victor, 2026-10-13)
+- Navegação jogador: City Hall · Guides · Tools · Me. Navegação líder: Kingdom · Members · Events · Guides · Me. Troca de papel em Me.
+- Primeiro acesso curto caindo na aba City Hall (jogador) ou Kingdom (líder); `/` vira landing page pública.
+- Brand, More e Trust saem da navegação (rodapé). URLs antigas continuam funcionando.
+
 ## Pendências para o próximo ciclo de correções
 - ~~`/tools/migration/`: começa com valores de exemplo e mostra "Eligible" antes de o usuário digitar nada (onda D).~~ Corrigido na onda G (G9).
 - Tabelas A01 com linhas corrompidas (ex.: Farm nível 25 = 2 de comida); as calculadoras excluem e avisam; precisa reextrair da fonte (onda D).

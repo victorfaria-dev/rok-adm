@@ -13,7 +13,7 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 - Proposta: opcional para jogador (sincronizar), obrigatório para modo líder; serviço gerenciado com plano gratuito (ex.: Supabase), conta criada pelo Victor; política de privacidade LGPD.
 - Decidido (Victor, 2026-10-13): serviço = Supabase (e-mail + Google). Conta criada pelo Victor quando a etapa chegar; chaves só em variáveis de ambiente (Netlify / ambiente da sessão), nunca no chat nem no repositório.
 - Decidido (Victor, 2026-10-13): login obrigatório para jogador e líder. Impacto: o app deixa de ser local-first sem conta; dados locais existentes precisam migrar para a conta no primeiro login; links de compartilhamento e modo offline precisam ser revistos.
-- Pendente: guias públicos sem login (descoberta pelo Google) ou também atrás do login.
+- Decidido (Victor, 2026-10-13): guias públicos, sem login.
 
 ## Landing page
 - Decidido (Victor, 2026-10-13): página pública de apresentação do sistema antes do login.
