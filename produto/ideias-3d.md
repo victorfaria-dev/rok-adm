@@ -30,3 +30,21 @@ Fora: gráficos de dados em 3D (pioram a leitura), retratos 3D de comandantes (a
 - React Three Fiber + drei (Three.js) para cenas (F-61, F-62, F-64).
 - Spline apenas para protótipos visuais/landing (exporta cena, mas gera dependência e peso).
 - Modelos em glTF/GLB comprimidos (Draco/Meshopt).
+
+## Raridade do cartão de perfil (F-60) — proposta v1 (2026-10-13)
+
+Visual: cada nível adiciona uma camada (Common fosco/ferro → Rare moldura prateada → Epic foil violeta + moldura animada + brilhos → Legendary foil arco-íris + moldura de ouro animada + varredura de luz + aura). Prévia: `prototipos/cartao-perfil-raridades.png`.
+
+| Raridade | Marcos da conta | Prova |
+|----------|-----------------|-------|
+| Common | Perfil criado | nenhuma |
+| Rare | CH ≥ 22, T4 liberado, 1 comandante com expertise | autodeclarado |
+| Epic | CH 25, T5 liberado, 3 comandantes com expertise, 1 KvK completo | prints verificados pelo hub |
+| Legendary | Marcos do Epic + 2 KvKs completos + meta de kills/mortes **proporcional ao perfil de gasto** | prints verificados pelo hub |
+
+Regras de design:
+- A raridade nunca mede dinheiro; metas escalam com o perfil de gasto (evita reforçar a dor D-0001 "pay-to-win").
+- Conta F2P que atinge um nível ganha a marca **F2P Achiever**.
+- Epic e Legendary exigem prova, senão viram autodeclaração inflada e perdem valor.
+
+Pendências: thresholds são proposta do admin, não vêm da pesquisa; metas de kills/mortes por perfil precisam de dados; a verificação por print depende do OCR (F-54) e do teste T0-A4.

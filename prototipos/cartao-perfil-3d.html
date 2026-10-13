@@ -56,12 +56,70 @@
     filter: saturate(1.1) brightness(.75);
   }
   .glare { mix-blend-mode: overlay; background: radial-gradient(circle at var(--mx) var(--my), rgba(255,255,255,.55), transparent 45%); }
-  .card[data-rarity="common"] .foil { opacity: 0; }
-  .card[data-rarity="rare"] .foil { opacity: .22; filter: grayscale(1) brightness(.9); }
-  .card[data-rarity="epic"] .foil { opacity: .45; }
-  .card[data-rarity="legendary"] .foil { opacity: .7; }
-  .card[data-rarity="legendary"] .face { box-shadow: 0 0 0 3px var(--gold) inset, 0 0 26px -4px var(--gold), 0 24px 50px -12px rgba(0,0,0,.65); }
+  /* ---------- Rarity tiers: each one adds a layer ---------- */
+  @property --ang { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+  .frame, .sparkle, .sweep { position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }
+  .frame { padding: 3px; background: var(--frame, #6b6f78);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor;
+            mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+  .sparkle { opacity: 0; mix-blend-mode: screen;
+    background:
+      radial-gradient(1.5px 1.5px at 18% 22%, #fff, transparent), radial-gradient(1px 1px at 72% 14%, #fff, transparent),
+      radial-gradient(2px 2px at 84% 48%, #fff, transparent), radial-gradient(1px 1px at 30% 64%, #fff, transparent),
+      radial-gradient(1.5px 1.5px at 60% 80%, #fff, transparent), radial-gradient(1px 1px at 12% 86%, #fff, transparent),
+      radial-gradient(2px 2px at 46% 38%, #fff, transparent), radial-gradient(1px 1px at 90% 90%, #fff, transparent);
+    animation: twinkle 2.6s ease-in-out infinite alternate; }
+  @keyframes twinkle { from { filter: brightness(.6); transform: translateY(0); } to { filter: brightness(1.6); transform: translateY(-3px); } }
+  .sweep { opacity: 0; background: linear-gradient(105deg, transparent 35%, rgba(255,240,200,.55) 50%, transparent 65%); background-size: 250% 100%; animation: sweep 3.6s ease-in-out infinite; mix-blend-mode: overlay; }
+  @keyframes sweep { 0% { background-position: 150% 0; } 60%, 100% { background-position: -100% 0; } }
+  .rar { padding: 4px 8px; border-radius: 999px; font: 600 10px/1 var(--f-body); letter-spacing: .1em; background: rgba(0,0,0,.45); border: 1px solid var(--rar-c, #8a8f99); color: var(--rar-c, #c9ccd2); }
 
+  /* Common: matte iron, muted color, no foil */
+  .card[data-rarity="common"] { --frame: #5f636c; --rar-c: #a7abb3; }
+  .card[data-rarity="common"] .face { background: linear-gradient(160deg, color-mix(in srgb, var(--ally) 30%, #3b3e45), #16181d 85%); box-shadow: 0 18px 36px -14px rgba(0,0,0,.6); }
+  .card[data-rarity="common"] .avatar { box-shadow: 0 0 0 4px color-mix(in srgb, var(--ally) 50%, #555), 0 0 0 7px #6b6f78; }
+  .card[data-rarity="common"] .foil, .card[data-rarity="common"] .glare { opacity: 0; }
+
+  /* Rare: polished silver frame, cool silver sheen */
+  .card[data-rarity="rare"] { --frame: linear-gradient(135deg, #f2f5fa, #8f98a8 40%, #e9edf3 60%, #7d8596); --rar-c: #dfe5ee; }
+  .card[data-rarity="rare"] .face { box-shadow: 0 0 22px -6px rgba(210,222,240,.55), 0 22px 44px -14px rgba(0,0,0,.65); }
+  .card[data-rarity="rare"] .avatar { box-shadow: 0 0 0 4px var(--ally), 0 0 0 7px #cfd6e2; }
+  .card[data-rarity="rare"] .foil { opacity: .3; filter: grayscale(1) brightness(1.1); }
+  .card[data-rarity="rare"] .sparkle { opacity: .35; }
+
+  /* Epic: violet holo foil, animated jewel frame, sparkles */
+  .card[data-rarity="epic"] { --frame: conic-gradient(from var(--ang), #b46bff, #5ec8ff, #ff6bd5, #b46bff); --rar-c: #d6a8ff; }
+  .card[data-rarity="epic"] .frame { padding: 3px; animation: spin 6s linear infinite; }
+  .card[data-rarity="epic"] .face { box-shadow: 0 0 34px -6px rgba(180,107,255,.65), 0 24px 50px -12px rgba(0,0,0,.7); }
+  .card[data-rarity="epic"] .avatar { box-shadow: 0 0 0 4px var(--ally), 0 0 0 7px #b46bff, 0 0 24px #b46bff; }
+  .card[data-rarity="epic"] .foil { opacity: .55; filter: hue-rotate(-25deg) saturate(1.3) brightness(.8); }
+  .card[data-rarity="epic"] .sparkle { opacity: .75; }
+
+  /* Legendary: full rainbow holo, molten gold frame, light sweep, aura */
+  .card[data-rarity="legendary"] { --frame: conic-gradient(from var(--ang), #fff3c4, #d6aa48, #8a5a12, #ffe08a, #d6aa48, #fff3c4); --rar-c: #ffd978; }
+  .card[data-rarity="legendary"] .frame { padding: 5px; animation: spin 4s linear infinite; }
+  .card[data-rarity="legendary"] .face { box-shadow: 0 0 0 1px #ffe08a inset, 0 0 60px -4px rgba(255,200,90,.75), 0 28px 60px -12px rgba(0,0,0,.75); }
+  .card[data-rarity="legendary"] .avatar { box-shadow: 0 0 0 4px var(--ally), 0 0 0 8px #e9bf5c, 0 0 34px #ffcf66; }
+  .card[data-rarity="legendary"] .foil { opacity: .85; filter: saturate(1.4) brightness(.85); }
+  .card[data-rarity="legendary"] .sparkle { opacity: 1; }
+  .card[data-rarity="legendary"] .sweep { opacity: 1; }
+  .card[data-rarity="legendary"] .name h2 { color: #ffe9b0; text-shadow: 0 0 14px rgba(255,200,90,.6); }
+  @keyframes spin { to { --ang: 360deg; } }
+
+  /* F2P achievement mark: same milestone reached without spending */
+  .f2p-mark { display: none; }
+  .card[data-f2p="true"]:not([data-rarity="common"]) .f2p-mark { display: inline-flex; }
+
+  .reqs { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 16px; display: grid; gap: 12px; }
+  .reqs h2 { margin: 0; font: 600 13px/1 var(--f-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .reqs .tbl { overflow-x: auto; }
+  .reqs table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 520px; }
+  .reqs th, .reqs td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  .reqs th { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: .04em; }
+  .reqs td:first-child { font-weight: 600; white-space: nowrap; }
+  .reqs p { margin: 0; color: var(--muted); font-size: 13px; max-width: 70ch; }
+
+  @media (prefers-reduced-motion: reduce) { .frame, .sparkle, .sweep { animation: none !important; } }
   .top { display: flex; justify-content: space-between; align-items: center; font: 500 11px/1 var(--f-mono); letter-spacing: .08em; text-transform: uppercase; opacity: .85; }
   .avatar { justify-self: center; width: 120px; aspect-ratio: 1; border-radius: 50%; display: grid; place-items: center;
     background: radial-gradient(circle, #1a1e27 60%, #0c0e13); box-shadow: 0 0 0 4px var(--ally), 0 0 0 7px var(--gold); transform: translateZ(30px); }
@@ -113,7 +171,7 @@
   <div class="stage">
     <div class="card" id="card" data-rarity="epic" tabindex="0" role="button" aria-label="Governor card. Press Enter to flip.">
       <section class="face front" aria-label="Card front">
-        <div class="top"><span id="vKingdom">Kingdom #3412</span><span id="vCiv">China</span></div>
+        <div class="top"><span id="vKingdom">Kingdom #3412</span><span class="rar" id="vRarBadge">EPIC</span><span id="vCiv">China</span></div>
         <div class="avatar" aria-hidden="true">
           <svg viewBox="0 0 100 120">
             <path d="M8 10 Q50 2 92 10 L92 52 C92 84 70 100 50 114 C30 100 8 84 8 52 Z" fill="var(--ally)" stroke="#d6aa48" stroke-width="5"/>
@@ -130,6 +188,7 @@
         </div>
         <div class="chips">
           <span class="chip" id="vSpend"><svg viewBox="0 0 12 12" aria-hidden="true"><rect x="1" y="4" width="10" height="7" rx="1" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M6 4v7M1 6.5h10M6 4C4 1 2 2 3.5 4M6 4c2-3 4-2 2.5 0" fill="none" stroke="currentColor" stroke-width="1.2"/></svg><span>F2P</span></span>
+          <span class="chip f2p-mark" title="Milestone reached without spending">★ F2P Achiever</span>
           <span class="chip" id="vRole"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 10 L9 3 M7 2 L10 2 L10 5 M2 8 L4 10" fill="none" stroke="currentColor" stroke-width="1.4"/></svg><span>Fighter</span></span>
         </div>
         <div class="stats">
@@ -160,10 +219,29 @@
       </section>
 
       <div class="foil" aria-hidden="true"></div>
+      <div class="sparkle" aria-hidden="true"></div>
+      <div class="sweep" aria-hidden="true"></div>
+      <div class="frame" aria-hidden="true"></div>
       <div class="glare" aria-hidden="true"></div>
     </div>
   </div>
-  <p class="hint">Rarity reflects account milestones. Common has no foil. Legendary gets the full holographic finish.</p>
+  <p class="hint">Switch the rarity below to compare finishes.</p>
+
+  <section class="reqs" aria-labelledby="reqTitle">
+    <h2 id="reqTitle">How rarity is earned (proposal)</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Rarity</th><th>Account milestones</th><th>Proof</th></tr></thead>
+        <tbody>
+          <tr><td>Common</td><td>Profile created</td><td>None</td></tr>
+          <tr><td>Rare</td><td>City Hall 22 or higher, T4 troops unlocked, 1 commander expertised</td><td>Self-reported</td></tr>
+          <tr><td>Epic</td><td>City Hall 25, T5 troops unlocked, 3 commanders expertised, took part in a full KvK</td><td>Screenshots checked by the hub</td></tr>
+          <tr><td>Legendary</td><td>Epic milestones, plus 2 full KvK seasons and a kill or dead target for the account's spending profile</td><td>Screenshots checked by the hub</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Rarity never measures money. Targets scale with the spending profile, and an F2P account that reaches a tier also earns the F2P Achiever mark.</p>
+  </section>
 
   <form class="editor" id="editor" autocomplete="off">
     <h2>Customize</h2>
@@ -180,7 +258,7 @@
       <label for="iRole">Role
         <select id="iRole"><option>Fighter</option><option>Rally lead</option><option>Garrison</option><option>Farmer</option><option>Leader</option></select>
       </label>
-      <label for="iRarity">Card rarity
+      <label for="iRarity">Preview rarity
         <select id="iRarity"><option value="common">Common</option><option value="rare">Rare</option><option value="epic" selected>Epic</option><option value="legendary">Legendary</option></select>
       </label>
       <label for="iCH">City Hall<input id="iCH" type="number" min="1" max="25" value="22"></label>
@@ -251,7 +329,9 @@
     const ch = Math.min(Math.max(parseInt($('iCH').value, 10) || 1, 1), 25);
     $('vCH').textContent = ch;
     card.dataset.rarity = $('iRarity').value;
-    $('vRarity').textContent = rarityLabel[$('iRarity').value] + ' · CH' + ch + ' milestone';
+    card.dataset.f2p = String($('iSpend').value === 'F2P');
+    $('vRarBadge').textContent = rarityLabel[$('iRarity').value].toUpperCase();
+    $('vRarity').textContent = rarityLabel[$('iRarity').value] + ' · preview';
   }
   $('editor').addEventListener('input', render);
   $('editor').addEventListener('submit', e => e.preventDefault());
