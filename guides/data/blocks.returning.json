@@ -25,9 +25,10 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "This guide is for an account that stopped playing and is coming back. Work through it in this order:\n\n1. **Find the date you stopped.** Read every \"What changed\" block from that date on (the blocks below are split by period, oldest first; each later block assumes you read the earlier ones).\n2. **Find where your kingdom is now.** Official notes name the stages Preparation Season → Season 1 → Season 2 (\"Distant Journey\") → Season 3 (\"Light and Darkness\") → Season of Conquest (SoC), and SoC story registration needs **City Hall 25** [C04-0033]. Season 3 is moving to **King of All Britain** (pioneer in 1.1.07, May 2026; described as the Season 3 story in a Sep 2026 third-party summary) [C04-0007]. A kingdom that was in Season 1 when you left may be in SoC now.\n3. **Know which version you are on.** The newest version with official English notes is **1.1.09** (deployed **2026-06-30**); 1.1.10–1.1.12 are known only from a third-party source, and 1.1.12 (2026-09-22) is most likely live [C04-0001]. Anything after 1.1.09 in this guide is marked T3.\n4. **Follow the 14-day plan** (days 1–3, 4–7, 8–14) and make the **stay / migrate / restart** decision by day 7.\n\n**Returner rewards or comeback events:** no fact card covers them. Whether the game gives a returning account a welcome-back event, what it contains and how long it lasts is **unknown** (PROPOSED-RETURNER-REWARDS). If one appears in your inbox or event list, screenshot it; do not plan around it.\n\nThe short version of this branch lives in the New Kingdom guide (*Returning player: what changed / can you move / first five actions*); this guide goes deeper.",
+    "body_md": "This guide is for an account that stopped playing and is coming back. Work through it in this order:\n\n1. **Find the date you stopped.** Read every \"What changed\" block from that date on (the blocks below are split by period, oldest first; each later block assumes you read the earlier ones).\n2. **Find where your kingdom is now.** Official notes name the stages Preparation Season → Season 1 → Season 2 (\"Distant Journey\") → Season 3 (\"Light and Darkness\") → Season of Conquest (SoC), and SoC story registration needs **City Hall 25** [C04-0033]. Season 3 is moving to **King of All Britain** (pioneer in 1.1.07, May 2026; described as the Season 3 story in a Sep 2026 third-party summary) [C04-0007]. A kingdom that was in Season 1 when you left may be in SoC now.\n3. **Know which version you are on.** The newest version with official English notes is **1.1.09** (deployed **2026-06-30**); 1.1.10–1.1.12 are known only from a third-party source, and 1.1.12 (2026-09-22) is most likely live [C04-0001]. Anything after 1.1.09 in this guide is marked T3.\n4. **Follow the 14-day plan** (days 1–3, 4–7, 8–14) and make the **stay / migrate / restart** decision by day 7.\n\n**Returner rewards or comeback events:** official patch notes (1.0.88, 1.0.94) name a **Returnee event series** that a returning governor triggers: a Commander Trial for returning players, a Returnee Shop and a Returnee Wheel, with contents that depend on your kingdom's season [A11-0514]. How long you must be away to qualify, how long it lasts and what it gives are **unknown** (L-A11-05). If it appears in your event list, screenshot it; do not plan around it.\n\nThe short version of this branch lives in the New Kingdom guide (*Returning player: what changed / can you move / first five actions*); this guide goes deeper.",
     "why_md": "Returning players ask \"what changed\" and \"should I stay, move or restart\" (pains D-0016, D-0015, D-0019; features F-28 and F-29). Most of their mistakes come from advice that was true on the day they stopped, so the stop date is the right key for everything else.",
     "cards": [
+      "A11-0514",
       "C04-0001",
       "C04-0007",
       "C04-0033"
@@ -38,9 +39,9 @@
       "C04-0033"
     ],
     "confidence": "medium",
-    "uncertain_notes": "C04-0001, C04-0007 and C04-0033 are patch-state cards (official notes, status bruto). The Season 3 = King of All Britain part of C04-0007 and versions 1.1.10–1.1.12 in C04-0001 rely on a third-party (T3) source. No card exists for returner rewards.",
+    "uncertain_notes": "C04-0001, C04-0007 and C04-0033 are patch-state cards (official notes, status bruto). The Season 3 = King of All Britain part of C04-0007 and versions 1.1.10–1.1.12 in C04-0001 rely on a third-party (T3) source. A11-0514 (Returnee event series) is organizado/alta from official notes but not yet verified; it covers only that the series exists and its three named parts.",
     "gaps": [
-      "PROPOSED-RETURNER-REWARDS",
+      "L-A11-05",
       "L-B06-03"
     ],
     "low_spender_note": null,
@@ -381,7 +382,7 @@
     "uncertain_notes": "B04-0004 (organizado/baixa) and B06-0005 (organizado/media) describe player practice, not game rules. C02-0005 quotes the ToS but is organizado. C04-0032 is a patch-state card. Whether a returning account gets special rewards on login is unknown.",
     "gaps": [
       "PROPOSED-ACCOUNT-RECOVERY",
-      "PROPOSED-RETURNER-REWARDS",
+      "L-A11-05",
       "L-A03-05",
       "L-A09-02",
       "L-A10-02"
@@ -715,14 +716,16 @@
     "civ": [],
     "consensus": "n/a",
     "split_views": null,
-    "body_md": "These parts of the returning-player guide stay empty until measured or sourced:\n- **Returner rewards / comeback events**: whether they exist, what they give, how long they last, and how long you must be away to qualify (PROPOSED-RETURNER-REWARDS).\n- **What happens to an inactive city**: shield state, whether it can be burned or relocated, and whether inactivity affects alliance rank or titles (PROPOSED-INACTIVE-ACCOUNT-STATE). Leadership transfer when an R5 is inactive (L-B04-03).\n- **Commander Swap access for older kingdoms**: whether a returner whose kingdom is past Season 2 can still use the once-per-character Swap event (PROPOSED-SWAP-ACCESS).\n- **Account binding and recovery steps** (PROPOSED-ACCOUNT-RECOVERY).\n- **Migration changes in 1.1.10–1.1.12** (L-B06-03), the passport table in game (L-B06-01), the king's immigration cap UI (L-B06-02) and Vacation Permit quotas (L-B03-03).\n- **Current commander meta** for a returner's rebuild (L-A06-01) and CH16 buff-switching cost (L-A14-01).\n- **Time per daily task** (L-A10-01) and the current Daily Objectives list after 1.1.09 (L-A10-02).",
+    "body_md": "These parts of the returning-player guide stay empty until measured or sourced:\n- **Returnee event series**: it exists [A11-0514], but what it gives, how long it lasts and how long you must be away to qualify are unknown (L-A11-05).\n- **What happens to an inactive city**: shield state, whether it can be burned or relocated, and whether inactivity affects alliance rank or titles (PROPOSED-INACTIVE-ACCOUNT-STATE). Leadership transfer when an R5 is inactive (L-B04-03).\n- **Commander Swap access for older kingdoms**: whether a returner whose kingdom is past Season 2 can still use the once-per-character Swap event (PROPOSED-SWAP-ACCESS).\n- **Account binding and recovery steps** (PROPOSED-ACCOUNT-RECOVERY).\n- **Migration changes in 1.1.10–1.1.12** (L-B06-03), the passport table in game (L-B06-01), the king's immigration cap UI (L-B06-02) and Vacation Permit quotas (L-B03-03).\n- **Current commander meta** for a returner's rebuild (L-A06-01) and CH16 buff-switching cost (L-A14-01).\n- **Time per daily task** (L-A10-01) and the current Daily Objectives list after 1.1.09 (L-A10-02).",
     "why_md": "A returner needs to know which parts of the advice are unconfirmed. Listing them also tells the research side what to measure with an account that has been away.",
-    "cards": [],
+    "cards": [
+      "A11-0514"
+    ],
     "patch_cards": [],
     "confidence": "pending",
-    "uncertain_notes": "",
+    "uncertain_notes": " A11-0514 is organizado (not yet verified).",
     "gaps": [
-      "PROPOSED-RETURNER-REWARDS",
+      "L-A11-05",
       "PROPOSED-INACTIVE-ACCOUNT-STATE",
       "PROPOSED-SWAP-ACCESS",
       "PROPOSED-ACCOUNT-RECOVERY",
