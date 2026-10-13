@@ -53,7 +53,7 @@
 /* Privacy note box. */
 .kg-privacy {
   display: grid; gap: var(--ko-space-2); padding: var(--ko-space-3) var(--ko-space-4);
-  border-left: 3px solid var(--ko-accent); background: var(--ko-surface); border-radius: var(--ko-radius-sm);
+  border: 1px solid var(--ko-border); background: var(--ko-surface); border-radius: var(--ko-radius-md);
   font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm);
 }
 .kg-privacy h2 { font-size: var(--ko-text-base); }
