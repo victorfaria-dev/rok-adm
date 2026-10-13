@@ -553,7 +553,7 @@ export function parseMgePublic(x: unknown): MgePublic | null {
     if (Array.isArray(e.slots)) {
       for (const s of e.slots) {
         if (!isRecord(s)) continue;
-        const slot = intIn(s.slot, 1, slotsPerEvent, 0);
+        const slot = intIn(s.slot, 1, MGE_LIMITS.slotsMax, 0);
         const name = cleanLine(s.name, MGE_LIMITS.name);
         if (!slot || !name || seen.has(slot)) continue;
         seen.add(slot);

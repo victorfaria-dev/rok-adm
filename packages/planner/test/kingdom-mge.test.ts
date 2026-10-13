@@ -271,3 +271,15 @@ describe("sources", () => {
     expect(MGE_LIMITS.slotsDefault).toBe(10);
   });
 });
+
+describe("locked history after lowering slots", () => {
+  it("keeps every stored slot of a locked event in the public ledger", () => {
+    const many = Array.from({ length: 20 }, (_, i) => cand(`c${i}`, `Gov ${String(i).padStart(2, "0")}`));
+    let d = doc({ slotsPerEvent: 20, candidates: many, events: [ev("e1", "2026-10-01")] });
+    d = setEventLocked(d, "e1", true);
+    d = { ...d, slotsPerEvent: 10 };
+    const pub = parseMgePublic(JSON.parse(JSON.stringify(mgePublicPayload(d, false, "2026-10-13"))));
+    expect(pub!.events[0]!.slots).toHaveLength(20);
+    expect(planMge(d).events[0]!.assignments).toHaveLength(20);
+  });
+});
