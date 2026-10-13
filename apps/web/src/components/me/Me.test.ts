@@ -91,7 +91,7 @@ describe("You island: theme", () => {
 describe("You island: export and import", () => {
   it("exports the whole store under a dated file name", () => {
     const { download } = setup({ profileCode: CODE, theme: "light" });
-    fireEvent.click(screen.getByRole("button", { name: "Export data" }));
+    fireEvent.click(screen.getByRole("button", { name: "Export profile file" }));
     expect(download).toHaveBeenCalledTimes(1);
     const [name, text] = download.mock.calls[0]!;
     expect(name).toBe("kingdomops-2026-10-13.json");

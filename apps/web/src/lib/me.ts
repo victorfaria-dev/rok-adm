@@ -107,7 +107,15 @@ export function exportFileName(d: Date): string {
   return `kingdomops-${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}.json`;
 }
 
-export const DELETED_MESSAGE = "All KingdomOps data was deleted from this browser.";
+/** What "Delete everything" reports: it clears every ko:* key (lib/storage-keys.ts), webhook included. */
+export function deletedMessage(removed: number, offlineCleared: boolean | null): string {
+  const what = removed === 0
+    ? "Nothing KingdomOps saved was left in this browser."
+    : "Everything KingdomOps saved in this browser was deleted, including the Discord webhook URL if you had one.";
+  if (offlineCleared === null) return `${what} The offline copy of the site (pages only, nothing about you) was kept.`;
+  return `${what} ${offlineCleared ? "The offline copy of the site was removed too." : "There was no offline copy of the site to remove."}`;
+}
+export const DELETED_MESSAGE = deletedMessage(1, null);
 export const IMPORTED_MESSAGE = "Imported. Your saved state was replaced with the file's contents.";
 
 // ---------------------------------------------------------------------------

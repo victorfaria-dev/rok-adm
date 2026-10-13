@@ -79,7 +79,7 @@ test("export downloads a JSON file that import accepts", async ({ page }) => {
   await page.goto("/me/");
   const [download] = await Promise.all([
     page.waitForEvent("download"),
-    page.getByRole("button", { name: "Export data" }).click(),
+    page.getByRole("button", { name: "Export profile file" }).click(),
   ]);
   expect(download.suggestedFilename()).toMatch(/^kingdomops-\d{4}-\d{2}-\d{2}\.json$/);
   const text = await readFile((await download.path())!, "utf8");
@@ -121,12 +121,26 @@ test("delete: cancel keeps data, confirm removes it", async ({ page }) => {
   await page.getByRole("button", { name: "Cancel" }).click();
   expect((await stored(page)).profileCode).toBe(CODE);
 
+  // Every other store, the webhook secret and a session flag must go too (Q2 P1-1).
+  await page.evaluate(() => {
+    for (const k of ["ko:card:v1", "ko:crest:v1", "ko:tools:v1", "ko:farms:v1", "ko:kingdom:v1", "ko:kingdom:webhook:v1"]) localStorage.setItem(k, "{\"v\":1}");
+    sessionStorage.setItem("ko:sting", "1");
+    localStorage.setItem("not-ours", "keep");
+  });
   await trigger.click();
+  await expect(page.locator("[data-delete-list]")).toContainText("Discord webhook URL");
+  await expect(page.locator("[data-delete-list]")).toContainText("Farms & shipment log");
+  await page.getByRole("checkbox", { name: /Also remove the offline copy/ }).check();
   await page.getByRole("button", { name: "Delete everything" }).click();
-  await expect(page.getByText("All KingdomOps data was deleted from this browser.")).toBeVisible();
+  await expect(page.getByText(/Everything KingdomOps saved in this browser was deleted, including the Discord webhook URL/)).toBeVisible();
   await expect(page.getByRole("link", { name: "Build my guide" })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
-  expect(await page.evaluate(() => localStorage.getItem("ko:v1"))).toBeNull();
+  const left = await page.evaluate(() => ({
+    local: Object.keys(localStorage).filter((k) => k.startsWith("ko:")),
+    session: Object.keys(sessionStorage).filter((k) => k.startsWith("ko:")),
+    other: localStorage.getItem("not-ours"),
+  }));
+  expect(left).toEqual({ local: [], session: [], other: "keep" });
   await page.reload();
   await expect(page.getByRole("link", { name: "Build my guide" })).toBeVisible();
 });
@@ -191,7 +205,7 @@ test.describe("accessibility", () => {
         await seed(page, { theme, ...c.store });
         await page.goto("/me/");
         await expect(h1(page)).toBeVisible();
-        await expect(page.getByRole("button", { name: "Export data" })).toBeVisible();
+        await expect(page.getByRole("button", { name: "Export profile file" })).toBeVisible();
         if (c.confirm) {
           await page.getByRole("button", { name: "Delete all data" }).click();
           await expect(page.getByRole("button", { name: "Delete everything" })).toBeVisible();
