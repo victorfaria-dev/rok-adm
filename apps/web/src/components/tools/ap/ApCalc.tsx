@@ -39,7 +39,7 @@ export default function ApCalc({ cap, dailyClaim, barbarian, insightMax, pack, c
         <NumberField id="ap-insight" label="Insight talent reduction" suffix="AP" value={v.insight} max={insightMax} onChange={(x) => set({ insight: x })}
           help={`0 without the talent; up to ${insightMax} AP off each attack.`} />
         <NumberField id="ap-cap-bonus" label="Extra AP cap from VIP" suffix="AP" value={v.capBonus} max={10000} pending onChange={(x) => set({ capBonus: x })}
-          help="VIP 15 adds +100; higher VIP adds more. 0 if unsure." />
+          help="Your VIP level may raise the cap (A09-0001 gives VIP 15 only). 0 if unsure." />
         <NumberField id="ap-bought" label="AP packs bought with gems today" value={v.purchasesToday} max={1000} onChange={(x) => set({ purchasesToday: x })}
           help="Resets at the daily server reset." />
         <NumberField id="ap-more" label="Packs you want to buy now" value={v.packsToBuy} max={1000} onChange={(x) => set({ packsToBuy: x })}

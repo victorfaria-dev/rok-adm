@@ -83,7 +83,7 @@ export default function MigrationCheck({ rules, cites }: MigrationCheckProps) {
           notes={[res.eligible ? "Every rule below passes." : `${res.blockers.length} rule${res.blockers.length === 1 ? "" : "s"} block${res.blockers.length === 1 ? "s" : ""} the move.`]} />
         <ResultRow testId="mig-pages" label="Passport Pages for your power" value={pages} cite={citeOf(res.passportSource.facts)}
           notes={[
-            pp.kind === "exact" ? `Known data point: ${pp.band.toM === null ? `above ${pp.band.fromM}M` : `${pp.band.fromM}–${pp.band.toM}M`}.` : "Exact table pending: only 0–10M, 50–55M and above 100M are known.",
+            pp.kind === "exact" ? `Known data point: ${pp.band.toM === null ? `above ${pp.band.fromM}M` : `${pp.band.fromM} to ${pp.band.toM}M`}.` : `Exact table pending: only ${rules.passport.bands.map((b) => (b.toM === null ? `above ${b.fromM}M` : `${b.fromM} to ${b.toM}M`)).join(", ")} are known.`,
             `Checked on: ${res.passportSource.patch}.`,
           ]} />
       </Results>

@@ -33,10 +33,10 @@ export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
     <div class="t-page-body" data-tool="gems">
       <section class="t-section" aria-labelledby="ap-h">
         <h2 id="ap-h">Action Points bought with gems</h2>
-        <p class="t-note">You can buy 500 AP with gems only when you have no AP recovery items left. The price goes up with each purchase and resets at the daily server reset.</p>
+        <p class="t-note">You can buy {fmt(ap.perPurchase)} AP with gems only when you have no AP recovery items left. The price goes up with each purchase and resets at the daily server reset.</p>
         <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Action Point purchase inputs">
           <NumberField id="gems-ap-buys" label="Purchases today" value={v.apBuys} min={1} max={MAX_BUYS} onChange={(x) => set({ apBuys: x })}
-            help={`How many times you buy 500 AP today (1 to ${MAX_BUYS}).`} />
+            help={`How many times you buy ${fmt(ap.perPurchase)} AP today (1 to ${MAX_BUYS}).`} />
           <NumberField id="gems-ch" label="Your City Hall level" value={v.cityHall} min={1} max={25} onChange={(x) => set({ cityHall: x })}
             help="For the one-time gems City Hall upgrades still give you." />
         </form>
@@ -80,7 +80,7 @@ export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
                   <td class="mono">{fmt(r.price)}</td>
                   <td class="mono">{r.vip}</td>
                   <td class="mono">{fmt(r.qty)}</td>
-                  <td class="mono">{r.gemsPerMinute === null ? "—" : fmt(r.gemsPerMinute, 2)}</td>
+                  <td class="mono">{r.gemsPerMinute === null ? "n/a" : fmt(r.gemsPerMinute, 2)}</td>
                 </tr>
               ))}
             </tbody>

@@ -75,3 +75,40 @@ for (const theme of ["dark", "light"] as const) {
     });
   }
 }
+
+const link = (route: string, data: Record<string, unknown>): string =>
+  `${route}?s=${Buffer.from(JSON.stringify(data)).toString("base64").replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "")}`;
+
+test("a share link overrides only its keys, and the first edit saves and drops ?s=", async ({ page }) => {
+  await page.goto("/tools/vip/");
+  await hydrated(page);
+  await page.getByLabel("Your VIP points now").fill("300");
+  await page.getByLabel("Daily chest streak day").fill("4");
+  await page.goto(link("/tools/vip/", { targetVip: 5 }));
+  await hydrated(page);
+  await expect(page.getByLabel("Target VIP level")).toHaveValue("5");
+  await expect(page.getByLabel("Daily chest streak day")).toHaveValue("4");
+  expect((await toolsStore(page)).inputs).toMatchObject({ vip: { streakDay: 4 } });
+  expect(JSON.stringify((await toolsStore(page)).inputs)).not.toContain("\"targetVip\":5");
+
+  await page.getByLabel("Gems you put into VIP each day").fill("50");
+  await expect(page).toHaveURL(/\/tools\/vip\/$/);
+  await page.reload();
+  await hydrated(page);
+  await expect(page.getByLabel("Target VIP level")).toHaveValue("5");
+  await expect(page.getByLabel("Gems you put into VIP each day")).toHaveValue("50");
+});
+
+test("crafted links with impossible values fall back safely", async ({ page }) => {
+  const errors: string[] = [];
+  page.on("pageerror", (e) => errors.push(e.message));
+  await page.goto(link("/tools/vip/", { targetVip: 99, vipPoints: -5, streakDay: 1e300 }));
+  await hydrated(page);
+  await page.getByLabel("Your VIP points now").fill("5000");
+  await expect(page.getByTestId("vip-needed").locator(".t-value")).not.toHaveText("");
+  await expect(page.getByLabel("Daily chest streak day")).toHaveValue("1");
+  await page.goto(link("/tools/healing/", { hospitals: -5 }));
+  await hydrated(page);
+  await expect(page.getByText("-5")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
