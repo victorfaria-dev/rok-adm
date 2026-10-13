@@ -1,0 +1,1570 @@
+[
+ {
+  "card": "C01-0001",
+  "i": 0,
+  "src": "CS07",
+  "url": "https://riseofkingdomsguides.com/",
+  "q": "Rise of Kingdoms Peerless Scholar Answers October 2026",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0001",
+  "i": 1,
+  "src": "CS09",
+  "url": "https://riseofkingdomsguides.com/rok-calculators/",
+  "q": "Here's a set of tools we have created to elevate your Rise of Kingdoms experience.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0001",
+  "i": 2,
+  "src": "CS08",
+  "url": "https://riseofkingdomsguides.com/about/",
+  "q": "This is an unofficial fan site. Rise Of Kingdoms was made by Lilith Games.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0002",
+  "i": 0,
+  "src": "CS11",
+  "url": "https://rok.guide/",
+  "q": "gateway answered 502 to CONNECT (policy denial or upstream failure)",
+  "status": "unreachable"
+ },
+ {
+  "card": "C01-0003",
+  "i": 0,
+  "src": "CS12",
+  "url": "https://www.allclash.com/category/rise-of-kingdoms/",
+  "q": "July 24, 2026 Best Commanders Tier List in Rise of Kingdoms (2026) \u2013 with Vercingetorix, Elizabeth & Yahya Ibn Khalid",
+  "status": "unreachable"
+ },
+ {
+  "card": "C01-0004",
+  "i": 0,
+  "src": "CS13",
+  "url": "https://riseofkingdoms.fandom.com/api.php?action=query&meta=siteinfo&siprop=statistics|rightsinfo&format=json",
+  "q": "\"articles\":649,\"activeusers\":2 ... \"rightsinfo\":{\"url\":\"https://www.fandom.com/licensing\",\"text\":\"CC-BY-SA\"}",
+  "cov": 1.0,
+  "frags": "1/2",
+  "status": "near"
+ },
+ {
+  "card": "C01-0005",
+  "i": 0,
+  "src": "CS14",
+  "url": "https://theriagames.com/rise-of-kingdoms-calculators-tools/",
+  "q": "This page may include affiliate links from which we may earn commissions.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0006",
+  "i": 0,
+  "src": "CS15",
+  "url": "https://www.rok-calculator.com/",
+  "q": "MGE Training Calculator - Optimize training for More Gems Events",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0006",
+  "i": 1,
+  "src": "CS15",
+  "url": "https://www.rok-calculator.com/",
+  "q": "This is a fan-made tool for the Rise of Kingdoms community. We are not affiliated with Lilith Games.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0007",
+  "i": 0,
+  "src": "CS16",
+  "url": "https://meta-rok.com/",
+  "q": "Go ad-free from $4.99 a month and support the site.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0007",
+  "i": 1,
+  "src": "CS16",
+  "url": "https://meta-rok.com/",
+  "q": "Rise of Kingdoms is a trademark of Lilith Games. MetaRoK is a fan site and is not affiliated with Lilith Games.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0008",
+  "i": 0,
+  "src": "CS17",
+  "url": "https://rokhub.xyz/",
+  "q": "Payment required DEPLOYMENT_DISABLED",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0009",
+  "i": 0,
+  "src": "CS19",
+  "url": "https://codexhelper.com/",
+  "q": "$5/ month",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C01-0009",
+  "i": 1,
+  "src": "CS20",
+  "url": "https://docs.codexhelper.com/faq/",
+  "q": "The only tier you need is the lowest ($5 USD/month), and it unlocks every Patron feature.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0010",
+  "i": 0,
+  "src": "CS21",
+  "url": "https://codexhelper.com/tools/davor_toolkit/",
+  "q": "Last Updated: August 2026 - Pincer II Update",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0010",
+  "i": 1,
+  "src": "CS21",
+  "url": "https://codexhelper.com/tools/davor_toolkit/",
+  "q": "This tool provides a mathematically driven tier list, differing from subjective rankings.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0011",
+  "i": 0,
+  "src": "CS22",
+  "url": "https://discordbotlist.com/bots/zoe-7955",
+  "q": "Zoe | RoK is used in 5,290 Discord servers.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0012",
+  "i": 0,
+  "src": "CS23",
+  "url": "https://zff.dev/juan_jm/auctioneer-bot",
+  "q": "Reads governor DKP balances from Google Sheets, independent of the underlying DKP calculation system.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C01-0013",
+  "i": 0,
+  "src": "CS24",
+  "url": "https://app.rokstats.online/pricing",
+  "q": "Managed KvK Scans & DKP (daily camp scans, no scan tokens)",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C01-0013",
+  "i": 1,
+  "src": "CS25",
+  "url": "https://app.rokstats.online/about",
+  "q": "ROKSTATS started as a personal tool to make sense of messy KvK numbers.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0014",
+  "i": 0,
+  "src": "CS30",
+  "url": "https://www.heroscroll.com/rok",
+  "q": "Download Ultra Launcher",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0014",
+  "i": 1,
+  "src": "CS30",
+  "url": "https://www.heroscroll.com/rok",
+  "q": "3,198 kingdoms tracked",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0015",
+  "i": 0,
+  "src": "CS27",
+  "url": "https://rc.botals.com/",
+  "q": "We provide a detailed scanning service for Rise of Kingdoms (RoK) that collects and analyzes key data from any kingdom.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0016",
+  "i": 0,
+  "src": "CS28",
+  "url": "https://apo-rok-data.com/",
+  "q": "All analytics are free",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0016",
+  "i": 1,
+  "src": "CS28",
+  "url": "https://apo-rok-data.com/",
+  "q": "7 KVKs \u00b7 134 kingdoms",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0017",
+  "i": 0,
+  "src": "CS29",
+  "url": "https://roksteward.com/",
+  "q": "Drag in the xlsx you exported from Rise of Kingdoms",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0017",
+  "i": 1,
+  "src": "CS29",
+  "url": "https://roksteward.com/",
+  "q": "Previews are always free \u2014 you only pay for downloads.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0018",
+  "i": 0,
+  "src": "CS31",
+  "url": "https://kingdomos.ai/",
+  "q": "Kingdom leadership will review your application.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0019",
+  "i": 0,
+  "src": "CS32",
+  "url": "https://github.com/avweigel/rok-suite",
+  "q": "they gate UI only",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0020",
+  "i": 0,
+  "src": "CS33",
+  "url": "https://rokbattles.com/docs/quick-start",
+  "q": "The desktop app watches your mailcache folder and uploads battle reports automatically while you play.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0020",
+  "i": 1,
+  "src": "CS33",
+  "url": "https://rokbattles.com/docs",
+  "q": "Android \u2014 Install Intra and configure it for ROK Battles.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0021",
+  "i": 0,
+  "src": "CS36",
+  "url": "https://github.com/Cyrexxis/RokTracker",
+  "q": "Open Source Rise of Kingdoms Stats Management Tool. Track TOP X Players of kingdom / alliance / honor leaderboard.",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C01-0021",
+  "i": 1,
+  "src": "CS37",
+  "url": "https://github.com/nikolakis1919/RokTracker",
+  "q": "No move should be made in this window until scanning is done.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0022",
+  "i": 0,
+  "src": "CS40",
+  "url": "https://docs.rokmonster.dev",
+  "q": "By analyzing screenshots we can extract various data points such as governor power, deaths, kills and more.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0022",
+  "i": 1,
+  "src": "CS35",
+  "url": "https://github.com/feels-dev/RokVision",
+  "q": "High-precision cognitive OCR API for Rise of Kingdoms screenshot data with near-perfect accuracy.",
+  "cov": 0.8,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C01-0023",
+  "i": 0,
+  "src": "CS38",
+  "url": "https://github.com/Dylan-Zheng/Rise-of-Kingdoms-Bot",
+  "q": "I don't know will your account be banned by using it!",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0024",
+  "i": 0,
+  "src": "CS41",
+  "url": "https://github.com/thesimonho/rok-talents",
+  "q": "currently best viewed on PC or laptop",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0025",
+  "i": 0,
+  "src": "CS39",
+  "url": "https://github.com/daniellwdb/roka",
+  "q": "This project is deprecated due to the game having their own system to manage titles.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0026",
+  "i": 0,
+  "src": "CS48",
+  "url": "https://everycalculators.com/rok-calculator.html",
+  "q": "Rise of Kingdoms Speedup & Time Calculator",
+  "status": "unreachable"
+ },
+ {
+  "card": "C01-0027",
+  "i": 0,
+  "src": "CS42",
+  "url": "https://github.com/thesimonho/rok-data",
+  "q": "Code used to analyze data for Rise of Kingdoms",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0027",
+  "i": 1,
+  "src": "CS35",
+  "url": "https://github.com/search?q=%22rise+of+kingdoms%22&type=repositories",
+  "q": "total_count 195 (no dataset repo among them)",
+  "cov": 0.12,
+  "frags": "0/1",
+  "status": "not_found"
+ },
+ {
+  "card": "C01-0028",
+  "i": 0,
+  "src": "CS46",
+  "url": "https://alternativeto.net/software/rokverse-rise-of-kingdoms-social-network-companion/about/",
+  "q": "first social network exclusively for Rise of Kingdoms players",
+  "status": "unreachable"
+ },
+ {
+  "card": "C01-0029",
+  "i": 0,
+  "src": "CS10",
+  "url": "https://riseofkingdomsguides.com/events/",
+  "q": "Unfortunately, there is no way to know what event will happen in the coming weeks and months.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C01-0029",
+  "i": 1,
+  "src": "CS19",
+  "url": "https://codexhelper.com/",
+  "q": "Event reminders, event tracker, and event information",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C01-0030",
+  "i": 0,
+  "src": "CS30",
+  "url": "https://www.heroscroll.com/rok",
+  "q": "our kingdom got caught in a web of tools across multiple service partners; separate solutions for titles, alliance activity, fort tracking, HoH screenshots, KvK spending. All at exorbitant cost.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0001",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "\u201cLilith\u201d, \u201cwe\u201d, \u201cus\u201d, or \u201cour\u201d refer to Lilith Technology Hong Kong Limited and its relevant affiliates",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C02-0001",
+  "i": 1,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "These Terms and any action related thereto will be governed by the laws of People\u2019s Republic of China",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C02-0001",
+  "i": 2,
+  "src": "CS02",
+  "url": "https://rok.lilith.com/",
+  "q": "Terms of Service: https://www.lilith.com/termofservice/?locale=en_US",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C02-0002",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.18 Use cheats, exploits, hacks, bots, mods or third-party software designed to gain an advantage, perceived or actual, over other Members, or modify or interfere with the Service;",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0003",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.7 Attempt to access or search our Services or Lilith Content, or download Lilith Content from our Services, through the use of any engine, software, tool, agent, device or mechanism (including spiders, robots, crawlers, data mining tools or the like)",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0004",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "Solicit Member login credentials from another Member or collect User content or otherwise access the Services by automated means including but not limited to, bots, robots, spiders;",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0005",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.21 Unsportsmanlike behavior. Account sharing, including but not limited to the sharing of username and password for others to login for you.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0005",
+  "i": 1,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "You agree not to disclose your password to any third party or to allow any third party to use your Lilith Account",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0006",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.12 Attempt to decipher, decompile, disassemble or reverse engineer any of the software used to provide our Services or Lilith Content;",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0006",
+  "i": 1,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.6 Avoid, bypass, remove, deactivate, impair, descramble or otherwise circumvent any technological measure",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0007",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.13 Collect or store any personally identifiable information from our Services, or from other users of our Services, without their express permission;",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0008",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "any Lilith Content solely for your personal and non-commercial purposes",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0008",
+  "i": 1,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.10 Use our Services or Lilith Content for any commercial purpose or the benefit of any third party or in any manner not permitted by these Terms;",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0009",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "17.1.9 Use any meta tags or other hidden text or metadata utilizing a Lilith or Lilith licensor's trademark, logo URL or product name without Lilith's express written consent;",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0009",
+  "i": 1,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "All trademarks, service marks, logos, trade names and any other proprietary designations of Lilith or our licensors used in association with the Services are trademarks or registered trademarks of Lilith or our licensors.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0010",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "YOU AGREE THAT YOU HAVE NO OWNERSHIP OR OTHER PROPERTY INTEREST IN THE LILITH ACCOUNT AT ALL",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0010",
+  "i": 1,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "12.2 You cannot sell or transfer, or attempt to sell or transfer, Virtual Items or Virtual Currency",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0011",
+  "i": 0,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "Lilith may at any time suspend or terminate your Lilith Account and refuse to provide access to our Services if Lilith suspects or determines, in its own discretion",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0011",
+  "i": 1,
+  "src": "CS01",
+  "url": "https://www.lilith.com/termofservice/?locale=en_US",
+  "q": "Terminated Lilith Accounts cannot be reinstated",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0012",
+  "i": 0,
+  "src": "CS03",
+  "url": "http://forum.lilithgame.com/viewtopic.php?t=21013",
+  "q": "the use or promotion of botting tools or third-party payment channels is prohibited by our Terms of Service and will result in a ban",
+  "status": "unreachable"
+ },
+ {
+  "card": "C02-0012",
+  "i": 1,
+  "src": "CS04",
+  "url": "http://forum.lilithgame.com/viewtopic.php?t=23645",
+  "q": "Anti-Botting Report No.8 - Lilith Games",
+  "status": "unreachable"
+ },
+ {
+  "card": "C02-0013",
+  "i": 0,
+  "src": "CS05",
+  "url": "https://www.appgamer.com/rise-of-kingdoms/strategy-guide/alliance-healing-limits",
+  "q": "in June 2020, Lilith has updated the game with some Alliance Healing Limits to limit governors to 1,000 helps per day",
+  "status": "unreachable"
+ },
+ {
+  "card": "C02-0014",
+  "i": 0,
+  "src": "CS06",
+  "url": "https://riseofkingdomshandbook.com/guides/riseofkingdoms-how-to-play-on-pc",
+  "q": "Emulators are fine; modified clients and bots are how accounts get banned.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0014",
+  "i": 1,
+  "src": "CS06",
+  "url": "https://riseofkingdomshandbook.com/guides/riseofkingdoms-how-to-play-on-pc",
+  "q": "Third-party automation is against the terms of service and detection has improved a lot.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0015",
+  "i": 0,
+  "src": "CS43",
+  "url": "https://providers.apievangelist.com/providers/lilith-games/",
+  "q": "publishes no public developer portal, API documentation, or partner API program",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0015",
+  "i": 1,
+  "src": "CS02",
+  "url": "https://rok.lilith.com/",
+  "q": "Privacy Policy: https://www.lilith.com/privacy/?locale=en_US",
+  "cov": 1.0,
+  "frags": "0/1",
+  "status": "partial"
+ },
+ {
+  "card": "C02-0016",
+  "i": 0,
+  "src": "CS29",
+  "url": "https://roksteward.com/",
+  "q": "Drag in the xlsx you exported from Rise of Kingdoms",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0017",
+  "i": 0,
+  "src": "CS47",
+  "url": "https://www.appgamer.com/rise-of-kingdoms/strategy-guide/creating-a-farm-account",
+  "q": "you are usually allowed to only open two accounts per kingdom",
+  "status": "unreachable"
+ },
+ {
+  "card": "C02-0018",
+  "i": 0,
+  "src": "CS16",
+  "url": "https://meta-rok.com/",
+  "q": "Rise of Kingdoms is a trademark of Lilith Games. MetaRoK is a fan site and is not affiliated with Lilith Games.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0018",
+  "i": 1,
+  "src": "CS08",
+  "url": "https://riseofkingdomsguides.com/about/",
+  "q": "Riseofkingdomsguides.com is not endorsed or affiliated with Lilith Games.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C02-0019",
+  "i": 0,
+  "src": "CS44",
+  "url": "https://trademarks.justia.com/883/73/rise-of-88373088.html",
+  "q": "RISE OF KINGDOMS - Trademark Details",
+  "status": "unreachable"
+ },
+ {
+  "card": "C02-0020",
+  "i": 0,
+  "src": "CS45",
+  "url": "https://www.copyright.gov/circs/circ33.pdf",
+  "q": "\u201cany idea, procedure, process, system, method of operation, concept, principle, or discovery, regardless of the form in which it is described, explained, illustrated, or embodied.\u201d",
+  "cov": 0.32,
+  "frags": "0/1",
+  "status": "not_found"
+ },
+ {
+  "card": "C02-0021",
+  "i": 0,
+  "src": "CS13",
+  "url": "https://riseofkingdoms.fandom.com/api.php?action=query&meta=siteinfo&siprop=rightsinfo&format=json",
+  "q": "\"rightsinfo\":{\"url\":\"https://www.fandom.com/licensing\",\"text\":\"CC-BY-SA\"}",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0001",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2259768/?lang=en_US",
+  "q": "We plan to update the game to version 1.1.09: A Splendid Voyage on UTC 2026/6/30 06:00.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0001",
+  "i": 1,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/halloween-guide.html",
+  "q": "Version 1.1.12, titled Dreams of Phantasma, launches on September 22",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0002",
+  "i": 0,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/halloween-guide.html",
+  "q": "The Eve of the Crusade event now opens simultaneously with the Lost Kingdom, rather than running as a separate preceding phase.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0002",
+  "i": 1,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/halloween-guide.html",
+  "q": "The Wheel of Fortune receives a meaningful change in Season 1. Each spin now consumes spin tickets, which can be obtained directly with gems or through bundles.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0002",
+  "i": 2,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/update-starry-rendezvous.html",
+  "q": "The Radiant Rivalry Event is arriving as a pioneer experience for selected new kingdoms.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0003",
+  "i": 0,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/update-starry-rendezvous.html",
+  "q": "The new Mighty Assembly story will arrive as a pioneer experience.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0003",
+  "i": 1,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/update-starry-rendezvous.html",
+  "q": "Update 1.1.10 introduces Yahya ibn Khalid, a new Legendary gathering commander.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0003",
+  "i": 2,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/update-starry-rendezvous.html",
+  "q": "After the update, troops using this formation will deal 12% more smite damage.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0004",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2259768/?lang=en_US",
+  "q": "Deceptive Troops (24 Hours) and all resource boost items for Food, Wood, Stone, and Gold (8 or 24 Hours) have been removed from the game and governor inventories.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0004",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2259768/?lang=en_US",
+  "q": "production buffs for VIP levels 0/1/2/3/4/5 have been raised to +5%/+10%/+15%/+20%/+28%/+37%; for VIP levels above 5, production buffs have been increased by 25% relative to their original values.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0004",
+  "i": 2,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2259768/?lang=en_US",
+  "q": "Daily quests that require the use of resource boost items have been removed; daily login and alliance donation quests have been added instead.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0005",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2259768/?lang=en_US",
+  "q": "you may advance Pelagius's rarity from Epic to Legendary. The first run of this event is only available in kingdoms with servers that have opened for 5 days or more; after, this event becomes regularly available starting on the 5th day for new kingdoms.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0006",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2232581/?lang=en_US",
+  "q": "Conduct Score System: Players who use third-party tools such as scripts or cheats will have their Conduct score deducted. When a player's Conduct score falls below certain thresholds, penalties will be applied accordingly.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0006",
+  "i": 1,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/update-starry-rendezvous.html",
+  "q": "A new monthly Good Conduct Reward will be added.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0007",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2179486/?lang=en_US",
+  "q": "Optimized select events in Season 3 \"Light and Darkness\"",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0007",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2232581/?lang=en_US",
+  "q": "Season 3 Story Pioneer: Select kingdoms that have entered Season 3 can experience the King of All Britain story and battle for glory before entering the Season of Conquest.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0007",
+  "i": 2,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/halloween-guide.html",
+  "q": "Season 3, which is King of All Britain, introduces similar adjustments with the Level 4 Pass becoming semi-protected and the Level 8 Pass opening.",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0008",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2219742/?lang=en_US",
+  "q": "Currently, new kingdoms are restricted from same-season immigration until the end of Season 1.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0008",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2219742/?lang=en_US",
+  "q": "When cross-season immigrating to a Season 2 kingdom, the immigrating character cannot be more than 80 days older than the target kingdom, instead of 120 days previously.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0009",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2139649/?lang=en_US",
+  "q": "During this event, you can purchase resources with Clamyks or sell resources for Gems.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0009",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2219742/?lang=en_US",
+  "q": "Kingdoms that enter the Season of Conquest can now regularly access the Oasis Bazaar via the Trading Post. Visit the Oasis Bazaar to purchase resources with Clamyks or sell resources for Gems.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0010",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2081453/?lang=en_US",
+  "q": "Dismantling Legendary equipment with a special talent now refunds 100% of the forging cost and 50% of the awakening cost.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0010",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2219742/?lang=en_US",
+  "q": "Special Talent Equipment Reset: Governors can spend Gems to reset and reassign the special talent of 1 Legendary equipment piece.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0011",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2213663/?lang=en_US",
+  "q": "Any \"reduction to skill damage taken\" effect is now \"reduction to skill/combo attack/smite damage taken.\" As part of this change, certain combo attack and smite damage talents have been enhanced.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0011",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2213663/?lang=en_US",
+  "q": "* This adjustment applies only to Season 2 and beyond.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0012",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US",
+  "q": "Attributes other than all damage increase by 0.2% each time you hone, with a maximum increase of 3.5%; if you choose to hone all damage, gain a 0.1% increase each time, with a maximum increase of 2.0%.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0013",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US",
+  "q": "The minimum number of kingdoms required to form a team has been reduced from 3 to 2. In addition, the required total number of active governors has been adjusted from 200 to 150.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0013",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US",
+  "q": "New Lost Kingdom tier: A+. After the version update, the Lost Kingdom tiers will be A, A+, S, and S+.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0013",
+  "i": 2,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US",
+  "q": "The number of starting alliance members in a coalition has been increased from 2 to 4.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0014",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US",
+  "q": "Home kingdom territory protection: Upon entering the Season of Conquest, territory protection mechanics will be applied in the Home Kingdom. Governors will no longer be able to attack cities within the territories of other alliances.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0015",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2161435/?lang=en_US",
+  "q": "governors will earn Acclaim based on the severe wounds/kills they suffer and inflict (scaled according to troop level).",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0015",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2213663/?lang=en_US",
+  "q": "Severely wounding 10,000 Lvl 1 units grants 1 Acclaim.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0016",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2161435/?lang=en_US",
+  "q": "Upgrade your City Hall to level 16 to unlock civilization buff switching on the switch civilization page.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0016",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1896244/?lang=en_US",
+  "q": "After the update, you can switch to the Maya civilization to experience its unique bonuses, architecture, and special units.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0016",
+  "i": 2,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1497163/?lang=en_US",
+  "q": "New Civilization: Greece!",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0017",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2139649/?lang=en_US",
+  "q": "An all-new Season of Conquest story: Song of Troy!",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0017",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1935973/?lang=en_US",
+  "q": "New Season of Conquest Story \"Keener Blades\" Pioneer Event Coming Soon",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0017",
+  "i": 2,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1817043/?lang=en_US",
+  "q": "An all-new Season of Conquest story: King of All Britain!",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0017",
+  "i": 3,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2179486/?lang=en_US",
+  "q": "the first-run \"Heroic Anthem\" story",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0018",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2124406/?lang=en_US",
+  "q": "Replaced Tough Skin, Mantlets, Pike Wall, and Shatterproof with Infantry Expert, Cavalry Expert, Archer Expert, and Siege Expert.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0018",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2030530/?lang=en_US",
+  "q": "You'll be able to invest your Crystals in the unit type you prefer, without needing to research unit technologies you don't use just to unlock new ones.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0019",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2081453/?lang=en_US",
+  "q": "If your City Hall is level 25 and you are in the Season of Conquest, you can form or join a Pact",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0019",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US",
+  "q": "Match time has been shortened from 4 hours to 2.5 hours",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0020",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2056756/?lang=en_US",
+  "q": "Adjusted the power threshold of Imperium Kingdoms in the Season of Conquest to 23,500,000,000.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0020",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2013999/?lang=en_US",
+  "q": "We'll still only be counting each kingdom's top 300 governors by individual power.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0021",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2030530/?lang=en_US",
+  "q": "Moved Takeda Shingen, Cyrus the Great, Cheok Jun-gyeong, and Bertrand du Guesclin to S2",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0021",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2030530/?lang=en_US",
+  "q": "His commander talents will be changed from Infantry/Versatility/Attack to Infantry/Versatility/Smite.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0022",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1963188/?lang=en_US",
+  "q": "Added Spin Tickets, which are required to spin the Wheel of Fortune.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0022",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2030530/?lang=en_US",
+  "q": "Added the Spin Ticket item to the Season 2 Wheel of Fortune.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0022",
+  "i": 2,
+  "src": "C04-S01",
+  "url": "https://www.ldshop.gg/blog/rise-of-kingdoms/halloween-guide.html",
+  "q": "Each spin now consumes spin tickets",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0023",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1896244/?lang=en_US",
+  "q": "Legendary Commander Swap Event: Select two Legendary commanders and spend Legendary Swap Tickets to swap their levels, skill levels, and star levels.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0023",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1896244/?lang=en_US",
+  "q": "You can now use \"Conversion Stone\" items to convert Legendary-quality armaments into armaments of the same type for other formations.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0023",
+  "i": 2,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1862964/?lang=en_US",
+  "q": "we plan to launch this event in new kingdoms around the end of Season 2 of the Lost Kingdom (each character can participate once)",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0024",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1817043/?lang=en_US",
+  "q": "Added a new VIP level, VIP19, as well as an even more advanced SVIP level and an SVIP Shop.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0024",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1812473/?lang=en_US",
+  "q": "The exclusive buffs we currently have planned for VIP 19 are: Unit Training Speed +5% and Troop Attack +5%.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0025",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1670239/?lang=en_US",
+  "q": "Cross-season immigration now requires putting down a deposit of 20,000 Gems",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0025",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1670239/?lang=en_US",
+  "q": "Lowered the power limit for cross-season immigration from 100,000,000 to 85,000,000.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0026",
+  "i": 0,
+  "src": "C04-S06",
+  "url": "https://www.change.org/p/stop-lillith-from-ruining-rise-of-kingdoms-bringbackjumping",
+  "q": "we will soon be suspending the distribution of Beginners Immigration items 2025/03/26 Forwards.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0026",
+  "i": 1,
+  "src": "S02",
+  "url": "https://riseofkingdoms.fandom.com/wiki/Items/Beginner's_Immigration",
+  "q": "THIS ITEM IS UNOBTAINABLE, IT GOT REMOVED FROM THE GAME, DON'T WASTE TIME TRYING TO JUMP.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0026",
+  "i": 2,
+  "src": "C04-S05",
+  "url": "https://heaven-guardian.com/rise-of-kingdoms-beginners-guide/",
+  "q": "Beginner's Immigration distribution was suspended for newly created accounts beginning March 26, 2025",
+  "status": "unreachable"
+ },
+ {
+  "card": "C04-0027",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1599092/?lang=en_US",
+  "q": "Except for the weapon Trial of the Lost Kingdom and gathering equipment, all Legendary equipment can be awakened into Iconic equipment. Iconic equipment is split into five upgradeable tiers.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0027",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1599092/?lang=en_US",
+  "q": "Your kingdom must be in Season 1 or later to access Iconic equipment and its related systems.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0028",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1868790/?lang=en_US",
+  "q": "The Hall of Heroes will now also return resources to you. At the end of the Lost Kingdom, a portion of the resources you spent on healing units in the Lost Kingdom will be returned to you.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0029",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2013999/?lang=en_US",
+  "q": "From December 2025 and May 2026, we plan on releasing 3 new formations focused on smite damage, skill damage, and combo attack damage.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0029",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2219742/?lang=en_US",
+  "q": "Added the new formation Wedge Formation II: The user's troop deals 12% more skill damage.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0029",
+  "i": 2,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1752431/?lang=en_US",
+  "q": "The user's troop deals 10% more combo attack damage.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0030",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1641313/?lang=en_US",
+  "q": "Removed the Now or Never, Barbarian Buster, Lord of War, Territory Grab, Strategic Reserves, and other such events from the Season of Conquest Lost Kingdom.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0030",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1963188/?lang=en_US",
+  "q": "The event replaces \"Enemy Elimination\" and will take place in the middle of each Season of Conquest.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0031",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2246725/?lang=en_US",
+  "q": "If more than 50% of kingdoms in the Lost Kingdom vote in favor, Rest Mode will be enabled.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0032",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2179486/?lang=en_US",
+  "q": "Daily Action Points can now be claimed as long as your current Action Points are below the cap, and your total Action Points can exceed the cap after claiming the Daily Action Points.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0032",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/2179486/?lang=en_US",
+  "q": "After the update, all alliances participating in Season of Conquest will have access to the Army Group feature.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0033",
+  "i": 0,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1868790/?lang=en_US",
+  "q": "Season 2 \"Distant Journey\" and Season 3 \"Light and Darkness\" Lost Kingdoms",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0033",
+  "i": 1,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1752431/?lang=en_US",
+  "q": "You must have a level 25 City Hall to open the story registration page.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0033",
+  "i": 2,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1896244/?lang=en_US",
+  "q": "once a kingdom finishes its current Season of Conquest, it can immediately begin story registration for the next Season of Conquest.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "C04-0033",
+  "i": 3,
+  "src": "S01",
+  "url": "https://forum-global.lilithgame.com/rok/post/1612606/?lang=en_US",
+  "q": "The number of starting provinces in the Preparation Season have been reduced from 6 to 3.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0001",
+  "i": 0,
+  "src": "PL02",
+  "url": "https://forum-global.lilithgame.com/rok/post/2013999/?lang=en_US",
+  "q": "We'll still only be counting each kingdom's top 300 governors by individual power.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0001",
+  "i": 1,
+  "src": "PL02",
+  "url": "https://forum-global.lilithgame.com/rok/post/2056756/?lang=en_US",
+  "q": "Adjusted the power threshold of Imperium Kingdoms in the Season of Conquest to 23,500,000,000.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0001",
+  "i": 2,
+  "src": "PL15",
+  "url": "https://www.heroscroll.com/rok/seeds",
+  "q": "Vacation Power is deducted from Power, as well as Vacation Kills/Deads, to more accurately present seeds.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0002",
+  "i": 0,
+  "src": "PL01",
+  "url": "https://www.reddit.com/r/RiseofKingdoms/comments/1rib4nk/",
+  "q": "Then he zeroed us until we went down to the top of B seed.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0002",
+  "i": 1,
+  "src": "PL01",
+  "url": "https://www.reddit.com/r/RiseofKingdoms/comments/1owb67g/",
+  "q": "If a kingdomm gains too much power from migrants it will move into a higher seed",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0002",
+  "i": 2,
+  "src": "PL01",
+  "url": "https://www.reddit.com/r/RiseofKingdoms/comments/1wmcsf1/",
+  "q": "We aim to recruit groups to get to high B/low A seed kd",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0003",
+  "i": 0,
+  "src": "PL02",
+  "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US",
+  "q": "The minimum number of kingdoms required to form a team has been reduced from 3 to 2.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ },
+ {
+  "card": "B01-0003",
+  "i": 1,
+  "src": "PL14",
+  "url": "https://onechilledgamer.com/rise-of-kingdoms-kvk-summary/",
+  "q": "A Kingdom can be skipped 3 times before a compulsory KvK matching is done.",
+  "cov": 1.0,
+  "frags": "1/1",
+  "status": "verbatim"
+ }
+]

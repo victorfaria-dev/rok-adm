@@ -44,7 +44,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | Frente | Escopo | Saída |
 |--------|--------|-------|
 | Guia F2P v1 (EN) em blocos | conta, F2P, início de reino | `guides/` |
-| Migração v2 das fichas C01, C02, C04 e B01-0001..0003 | dados | `facts/C0x/`, `_migration-c-report.md` |
+| Migração v2 das fichas C01, C02, C04 e B01-0001..0003 | dados | **concluída** — 87 fichas, validador 0 erros (B02–B09 pendentes com o sub-admin REINO) |
 
 ## Bloqueios
 

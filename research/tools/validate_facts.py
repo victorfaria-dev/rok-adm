@@ -32,7 +32,8 @@ REQUIRED = ["id", "dominio", "titulo", "tipo", "afirmacao", "perfil", "estagio_r
             "n_fontes_contra", "notas"]
 V2_ONLY = ["metodo", "tabela", "custo_tempo_min", "custo_tempo_origem", "funcao", "versao_minima", "invalidado_por"]
 KNOWN = set(REQUIRED + V2_ONLY + ["valores"])
-SRC_KEYS = {"id", "url", "trecho", "acessado_em", "publicado_em", "copia_de"}
+SRC_KEYS = {"id", "url", "trecho", "acessado_em", "publicado_em", "publicado_em_tipo", "citacao_literal", "copia_de"}
+PUB_TIPOS = {None, "revisao", "publicacao", "modificado", "modificado_em_massa"}
 TIER_HI = {"src:lilith-forum": "T1", "src:lilith-tos": "T1", "src:rok-official-site": "T1", "src:t0-victor": "T0",
            "src:x-riseofkingdoms": "T1", "src:lilith-forum-legacy": "T1"}
 TIER_T2 = {"src:fandom", "src:rkg-lyceum", "src:davor-toolkit", "src:justia", "src:ajackof"}
@@ -249,6 +250,12 @@ def check(path, slugs, all_ids):
         cp = s.get("copia_de")
         if cp and cp not in slugs:
             E.append(f"fonte #{j} copia_de '{cp}' not registered")
+        if s.get("publicado_em_tipo") not in PUB_TIPOS:
+            E.append(f"fonte #{j} publicado_em_tipo '{s.get('publicado_em_tipo')}' invalid")
+        if s.get("citacao_literal") not in (None, True, False):
+            E.append(f"fonte #{j} citacao_literal must be true, false or null")
+        if s.get("citacao_literal") is False and st == "verificado":
+            E.append(f"fonte #{j} citacao_literal=false but status is verificado")
         if "WebFetch" in str(s.get("trecho", "")):
             Wn.append(f"fonte #{j} trecho still marked WebFetch (not verified literally)")
         if not cp:

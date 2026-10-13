@@ -1,5 +1,7 @@
 # Recurring kingdom / alliance admin workflows
 
+> **Superseded (wave 2, 2026-10-13):** the verified and cleaned version is `research/context/kingdom-admin-workflows.md`. Corrections: W7 titles are now largely handled by the official title-reservation system (1.0.91); Alliance Notes are visible to all members; the ROK Toolkit (official) may cover parts of W1/W3. Kept as raw history.
+
 Synthesized 2026-10-13 from raw notes in this folder, fact cards B01–B09 (pains-leaders), C01/C04 cards and the context packs. "Breaks" link to pains (D-05xx). Confidence: steps marked (T1) are official mechanics; the rest is community practice (T3/T4), varies by kingdom.
 
 ## Roles (typical)
