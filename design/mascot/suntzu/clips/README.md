@@ -8,12 +8,12 @@ Gerados pelo Victor com o Veo 3 (imagem para vídeo, a partir da referência que
 | talk | `source/talk-veo.mp4` (1280×720, 10 s) | `talk-720.mp4`, `talk-480.mp4`, `talk-poster.webp` — recorte x=264; curva de cor para o fundo neutro (47) virar o grafite do idle (~28,29,34) |
 | grumble | derivado de `source/idle-veo.mp4` 3,25–5,5 s | `grumble-720/480.mp4`, `grumble-poster.webp` — tremor de cabeça amortecido + leve aproximação (ffmpeg crop animado) |
 | approve | derivado de `source/talk-veo.mp4` 7,0–8,75 s | `approve-720/480.mp4`, `approve-poster.webp` — curva de cor do talk + dois acenos (crop vertical animado) |
-| greet | derivado de `source/talk-veo.mp4` 1,0–3,5 s | `greet-720/480.mp4`, `greet-poster.webp` — afastamento de câmera (provisório até haver clipe próprio) |
-| victory | derivado de `source/talk-veo.mp4` 7,0–9,6 s | `victory-720/480.mp4`, `victory-poster.webp` — aproximação lenta (provisório) |
+| greet | `source/greet-veo31fast.mp4` (Veo 3.1 Fast via ElevenLabs, 8 s, a partir de `start-frame.png`) | `greet-720/480.mp4`, `greet-poster.webp` — recorte x=286, primeiros 6 s |
+| victory | `source/victory-veo31fast.mp4` (Veo 3.1 Fast via ElevenLabs, 8 s, a partir de `start-frame.png`) | `victory-720/480.mp4`, `victory-poster.webp` — recorte x=286 |
 | idle | `source/idle-veo.mp4` (1280×720, 10 s, 24 fps) | `idle-720.mp4`, `idle-480.mp4`, `idle-poster.webp` |
 
 Processamento (ffmpeg): recorte quadrado 720×720 centrado no personagem (x=216), sem áudio, loop por crossfade de 0,6 s (fim → início), H.264 CRF 26/27, `+faststart`; poster = primeiro quadro (WebP).
 
 Regras de uso: MP4 mudo, `muted playsinline loop`, `preload="metadata"`, poster, `aria-hidden` (o texto da bolha carrega o sentido), só o poster com `prefers-reduced-motion`, pausar fora da tela.
 
-Geração automática pelo conector da ElevenLabs testada em 2026-10-13: vídeo exige plano pago; `source/start-frame.png` é o quadro inicial para futuras gerações (imagem para vídeo).
+Geração pelo conector da ElevenLabs (plano pago do Victor, 2026-10-13): Veo 3.1 Fast, ~7.272 créditos (~US$ 1,45) por clipe de 8 s; `source/start-frame.png` é o quadro inicial para futuras gerações (imagem para vídeo).
