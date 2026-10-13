@@ -1,6 +1,9 @@
+import { readFileSync } from "node:fs";
+import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
-  DEFAULT_POWER_BASIS, REQ_MAX_BANDS, bandFor, cardSharePayload, defaultRequirementsCard, evaluatePlayer, normaliseBands,
+  DEFAULT_POWER_BASIS, EXCLUDED_DEADS_DEFAULT_LABEL, EXCLUDED_DEADS_FACT_ID, EXCLUDED_DEADS_LABEL_MAX, REQ_MAX_BANDS, bandFor, cardSharePayload,
+  countedStats, defaultExcludedDeads, defaultRequirementsCard, evaluatePlayer, excludedDeadsIssue, excludedDeadsText, normaliseBands,
   parseRequirementsCard, rankSamples, stageLabel, targetFor, validateBands, type PowerBand, type RequirementsCard,
 } from "../src/kingdom-requirements";
 import { decodeShare, encodeShare } from "../src/kingdom-codec";
@@ -168,5 +171,53 @@ describe("rankSamples", () => {
     expect(rankSamples("t4 * 10 + deads * 50", samples).map((r) => r.rank)).toEqual([3, 1, 1]);
     expect(rankSamples("t4 * 10 + deads * 10", samples).map((r) => r.rank)).toEqual([1, 2, 2]);
     expect(rankSamples("t4 +", samples).every((r) => r.rank === null && r.dkp === null)).toBe(true);
+  });
+});
+
+describe("excluded deads (K2779 rule, B08-0001)", () => {
+  const on = { enabled: true, label: EXCLUDED_DEADS_DEFAULT_LABEL };
+  it("default is off with the K2779 wording; the wording matches the fact card", () => {
+    expect(defaultRequirementsCard().excludedDeads).toEqual({ enabled: false, label: "zeroed in a 'terrible trade'" });
+    const fact = readFileSync(join(__dirname, "../../../research/facts/B08/B08-0001.md"), "utf8");
+    expect(fact).toContain("zeroed in a 'terrible trade'");
+    expect(EXCLUDED_DEADS_FACT_ID).toBe("B08-0001");
+  });
+
+  it("tolerant parse: old cards without the field stay off; bad values are fixed", () => {
+    expect(parseRequirementsCard({ formula: "deads" })!.excludedDeads).toEqual(defaultExcludedDeads());
+    expect(parseRequirementsCard({ excludedDeads: "yes" })!.excludedDeads).toEqual(defaultExcludedDeads());
+    expect(parseRequirementsCard({ excludedDeads: { enabled: "true", label: 5 } })!.excludedDeads).toEqual(defaultExcludedDeads());
+    expect(parseRequirementsCard({ excludedDeads: { enabled: true, label: "  sent to   help a farm " } })!.excludedDeads).toEqual({ enabled: true, label: "sent to help a farm" });
+    expect(parseRequirementsCard({ excludedDeads: { enabled: true, label: "x".repeat(200) } })!.excludedDeads.label).toHaveLength(EXCLUDED_DEADS_LABEL_MAX);
+  });
+
+  it("plain-language rule", () => {
+    expect(excludedDeadsText(on)).toBe("Deads on days you were zeroed in a 'terrible trade' don't count: they are taken off your deads before your DKP is worked out.");
+    expect(excludedDeadsText({ enabled: true, label: "" })).toContain("terrible trade");
+  });
+
+  it("validates excluded deads against deads", () => {
+    expect(excludedDeadsIssue(100, 0)).toBeNull();
+    expect(excludedDeadsIssue(100, 100)).toBeNull();
+    expect(excludedDeadsIssue(100, 101)).toBe("This can't be more than your deads (100).");
+    expect(excludedDeadsIssue(Number.NaN, 1)).toBe("This can't be more than your deads (0).");
+    expect(excludedDeadsIssue(100, -1)).toBe("Enter 0 or more.");
+  });
+
+  it("subtracts excluded deads before the formula only when the rule is on", () => {
+    const c = card({ requirement: { mode: "fixed", target: 10_000 }, excludedDeads: on });
+    expect(evaluatePlayer(c, { deads: 300 }, { excludedDeads: 100 })).toMatchObject({ ok: true, dkp: 10_000, met: true });
+    expect(evaluatePlayer({ ...c, excludedDeads: { ...on, enabled: false } }, { deads: 300 }, { excludedDeads: 100 })).toMatchObject({ dkp: 15_000 });
+    expect(evaluatePlayer(c, { deads: 300 })).toMatchObject({ dkp: 15_000 });
+    expect(countedStats(c, { deads: 50 }, { excludedDeads: 80 })).toEqual({ deads: 0 }); // clamped
+    expect(countedStats(c, { t4: 5 }, { excludedDeads: Number.NaN })).toEqual({ t4: 5 });
+    expect(countedStats({}, { deads: 5 }, { excludedDeads: 1 })).toEqual({ deads: 5 });
+  });
+
+  it("travels in the share payload and round-trips", async () => {
+    const c = card({ excludedDeads: { enabled: true, label: "zeroed by a bad trade" } });
+    expect(cardSharePayload(c)).toHaveProperty("excludedDeads");
+    const back = await decodeShare(await encodeShare("requirements", cardSharePayload(c)), "requirements", parseRequirementsCard);
+    expect(back.ok && back.data.excludedDeads).toEqual({ enabled: true, label: "zeroed by a bad trade" });
   });
 });

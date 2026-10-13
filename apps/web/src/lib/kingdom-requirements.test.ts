@@ -2,7 +2,7 @@ import { decodeShare, evaluatePlayer, parseRequirementsCard, shareFromHash } fro
 import { describe, expect, it } from "vitest";
 import {
   EXAMPLE_PERCENT, cardTitle, cardToForm, deleteCard, emptyBand, emptySample, formToCard, latestMine, listCards, newCard, parseMyDoc,
-  parsePct, parseQty, publishLink, saveCard, saveMine,
+  parseExcluded, parsePct, parseQty, publishLink, saveCard, saveMine,
 } from "./kingdom-requirements";
 import { listDocs, memoryStorage } from "./kingdom-store";
 
@@ -94,6 +94,37 @@ describe("store", () => {
     expect(m.myStats).toEqual({ power: "10m", t4: "1k" });
     expect(parseMyDoc({ card: "x" })).toBeNull();
     expect(parseMyDoc({ card: {}, myStats: { t4: 5, t5: "2" }, selfMade: "yes" })).toMatchObject({ myStats: { t5: "2" }, selfMade: false });
+  });
+});
+
+describe("excluded deads", () => {
+  it("form round trip keeps the rule and its label", () => {
+    const f = cardToForm(newCard());
+    expect(f.excludedOn).toBe(false);
+    expect(f.excludedLabel).toBe("zeroed in a 'terrible trade'");
+    f.excludedOn = true;
+    f.excludedLabel = "zeroed by a bad trade";
+    const c = formToCard(f).card;
+    expect(c.excludedDeads).toEqual({ enabled: true, label: "zeroed by a bad trade" });
+    expect(cardToForm(c)).toMatchObject({ excludedOn: true, excludedLabel: "zeroed by a bad trade" });
+    f.excludedLabel = "  ";
+    expect(formToCard(f).card.excludedDeads.label).toBe("zeroed in a 'terrible trade'");
+  });
+
+  it("parseExcluded: empty, bad text, more than deads", () => {
+    expect(parseExcluded("", 100)).toBeNull();
+    expect(parseExcluded("50", 100)).toEqual({ ok: true, value: 50 });
+    expect(parseExcluded("1k", 1000)).toEqual({ ok: true, value: 1000 });
+    expect(parseExcluded("x", 100)).toMatchObject({ ok: false, error: expect.stringMatching(/whole number/) });
+    expect(parseExcluded("101", 100)).toEqual({ ok: false, error: "This can't be more than your deads (100)." });
+    expect(parseExcluded("1", null)).toEqual({ ok: false, error: "This can't be more than your deads (0)." });
+  });
+
+  it("my doc keeps the excluded deads text", () => {
+    const st = memoryStorage();
+    saveMine({ card: newCard(), myStats: { deads: "300" }, selfMade: false, excludedDeads: "100" }, st);
+    expect(latestMine(st)!.excludedDeads).toBe("100");
+    expect(parseMyDoc({ card: {}, excludedDeads: 5 })!.excludedDeads).toBeUndefined();
   });
 });
 

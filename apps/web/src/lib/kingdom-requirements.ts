@@ -2,7 +2,7 @@
 // and the device store (ko:kingdom:v1, kinds "requirements" and "my-requirements").
 import {
   FORMULA_PRESETS, FORMULA_VARS, REQ_MAX_BANDS, REQ_MAX_NUMBER, REQ_MAX_PERCENT, REQ_MAX_SAMPLES, cardSharePayload, defaultRequirementsCard,
-  encodeShare, isRecord, newDocId, parseQuantity, parseRequirementsCard, validateBands,
+  encodeShare, excludedDeadsIssue, isRecord, newDocId, parseQuantity, parseRequirementsCard, validateBands,
   type BandIssue, type FormulaVar, type FormulaVars, type PowerBand, type ReqStage, type RequirementsCard, type SampleAccount,
 } from "@rokadm/planner";
 import { listDocs, removeDoc, saveDoc, type StorageLike } from "./kingdom-store";
@@ -91,6 +91,9 @@ export interface CardForm {
   mode: "percent" | "fixed";
   bands: BandRow[];
   fixed: string;
+  /** Deads on excluded days don't count (K2779 rule, B08-0001). */
+  excludedOn: boolean;
+  excludedLabel: string;
   powerBasis: string;
   notes: string;
   samples: SampleRow[];
@@ -126,6 +129,8 @@ export function cardToForm(c: RequirementsCard): CardForm {
       ? c.requirement.bands.map((b) => ({ key: rowKey(), min: qtyText(b.minPower), max: b.maxPower === null ? "" : qtyText(b.maxPower), pct: String(b.percent) }))
       : [{ key: rowKey(), min: "0", max: "", pct: String(EXAMPLE_PERCENT) }],
     fixed: c.requirement.mode === "fixed" ? qtyText(c.requirement.target) : "",
+    excludedOn: c.excludedDeads.enabled,
+    excludedLabel: c.excludedDeads.label,
     powerBasis: c.powerBasis,
     notes: c.notes,
     samples: c.sampleAccounts.map((s) => ({ id: s.id, name: s.name, values: statsToValues(s.stats) })),
@@ -184,6 +189,7 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
     formula: f.formula,
     presetId: f.presetId,
     requirement: f.mode === "fixed" ? { mode: "fixed", target: valueOf(fixed) ?? 0 } : { mode: "percent", bands },
+    excludedDeads: { enabled: f.excludedOn, label: f.excludedLabel },
     powerBasis: f.powerBasis,
     notes: f.notes,
     sampleAccounts: samples,
@@ -227,6 +233,8 @@ export interface MyRequirementsDoc {
   myStats: Partial<Record<FormulaVar, string>>;
   /** true when the player built the card themselves (no council link). */
   selfMade: boolean;
+  /** Raw text for "Deads on excluded days" (only used when the card's rule is on). */
+  excludedDeads?: string;
 }
 
 export function parseMyDoc(x: unknown): MyRequirementsDoc | null {
@@ -240,7 +248,17 @@ export function parseMyDoc(x: unknown): MyRequirementsDoc | null {
       if (typeof s === "string") myStats[v] = s.slice(0, 30);
     }
   }
-  return { card: { ...card, sampleAccounts: [], compareFormula: "" }, myStats, selfMade: x.selfMade === true };
+  const doc: MyRequirementsDoc = { card: { ...card, sampleAccounts: [], compareFormula: "" }, myStats, selfMade: x.selfMade === true };
+  if (typeof x.excludedDeads === "string") doc.excludedDeads = x.excludedDeads.slice(0, 30);
+  return doc;
+}
+
+/** "Deads on excluded days" as typed: null when empty, an error when it is not a quantity or exceeds the deads. */
+export function parseExcluded(text: string, deads: number | null): Parsed<number> {
+  const p = parseQty(text);
+  if (!p || !p.ok) return p;
+  const issue = excludedDeadsIssue(deads ?? 0, p.value);
+  return issue ? { ok: false, error: issue } : p;
 }
 
 export function saveMine(doc: MyRequirementsDoc, st: StorageLike | null): void {

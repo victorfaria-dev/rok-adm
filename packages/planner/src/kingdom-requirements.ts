@@ -42,6 +42,38 @@ export type Requirement =
   | { mode: "percent"; bands: PowerBand[] }
   | { mode: "fixed"; target: number };
 
+/**
+ * K2779 rule (B08-0001): "If you are zeroed with terrible trade, your death of that day will be counted as 0."
+ * When enabled, players enter the deads from excluded days separately and they are taken off before the formula.
+ */
+export interface ExcludedDeadsRule {
+  enabled: boolean;
+  /** Which days are excluded, completing "Deads on days you were …". */
+  label: string;
+}
+
+export const EXCLUDED_DEADS_LABEL_MAX = 80;
+/** Default wording, from the K2779 card (B08-0001). */
+export const EXCLUDED_DEADS_DEFAULT_LABEL = "zeroed in a 'terrible trade'";
+export const EXCLUDED_DEADS_FACT_ID = "B08-0001";
+
+export function defaultExcludedDeads(): ExcludedDeadsRule {
+  return { enabled: false, label: EXCLUDED_DEADS_DEFAULT_LABEL };
+}
+
+/** Plain-language rule for the card. */
+export function excludedDeadsText(rule: ExcludedDeadsRule): string {
+  return `Deads on days you were ${rule.label || EXCLUDED_DEADS_DEFAULT_LABEL} don't count: they are taken off your deads before your DKP is worked out.`;
+}
+
+/** Error text when the excluded deads are not between 0 and the player's deads, else null. */
+export function excludedDeadsIssue(deads: number, excluded: number): string | null {
+  if (!Number.isFinite(excluded) || excluded < 0) return "Enter 0 or more.";
+  const d = Number.isFinite(deads) && deads > 0 ? deads : 0;
+  if (excluded > d) return `This can't be more than your deads (${d.toLocaleString("en-US")}).`;
+  return null;
+}
+
 export interface SampleAccount {
   id: string;
   name: string;
@@ -58,6 +90,8 @@ export interface RequirementsCard extends KingdomDocBase {
   /** Preset the formula started from (informational). */
   presetId: string | null;
   requirement: Requirement;
+  /** Deads from excluded days don't count (off by default; old links have no such field). */
+  excludedDeads: ExcludedDeadsRule;
   powerBasis: string;
   notes: string;
   /** Local sandbox only: never in a share link unless asked. */
@@ -145,6 +179,7 @@ export function defaultRequirementsCard(over: Partial<RequirementsCard> = {}, no
     formula: "",
     presetId: null,
     requirement: { mode: "percent", bands: [] },
+    excludedDeads: defaultExcludedDeads(),
     powerBasis: DEFAULT_POWER_BASIS,
     notes: "",
     sampleAccounts: [],
@@ -161,6 +196,11 @@ function parseStats(x: unknown): FormulaVars {
     if (n !== null) out[v] = n;
   }
   return out;
+}
+
+function parseExcludedDeads(x: unknown): ExcludedDeadsRule {
+  if (!isRecord(x)) return defaultExcludedDeads();
+  return { enabled: x.enabled === true, label: cleanLine(x.label, EXCLUDED_DEADS_LABEL_MAX) || EXCLUDED_DEADS_DEFAULT_LABEL };
 }
 
 function parseRequirement(x: unknown): Requirement {
@@ -196,6 +236,7 @@ export function parseRequirementsCard(x: unknown): RequirementsCard | null {
     formula: cleanLine(x.formula, FORMULA_MAX_CHARS),
     presetId: typeof x.presetId === "string" && x.presetId.length <= 40 ? x.presetId : null,
     requirement: parseRequirement(x.requirement),
+    excludedDeads: parseExcludedDeads(x.excludedDeads),
     powerBasis: basis || DEFAULT_POWER_BASIS,
     notes: cleanText(x.notes, REQ_NOTES_MAX),
     sampleAccounts: samples,
@@ -264,10 +305,28 @@ export interface PlayerProgress {
 
 export type EvaluatePlayerResult = ({ ok: true } & PlayerProgress) | { ok: false; error: FormulaError };
 
-/** Score one player against the card. `stats` holds gains since the start scan plus power. Never throws. */
-export function evaluatePlayer(card: Pick<RequirementsCard, "formula" | "requirement">, stats: FormulaVars): EvaluatePlayerResult {
+export interface PlayerOptions {
+  /** Deads on excluded days; used only when the card's excludedDeads rule is on. Clamped to 0..deads. */
+  excludedDeads?: number;
+}
+
+/** Stats the formula sees: deads minus the excluded deads when the card's rule is on. */
+export function countedStats(card: Partial<Pick<RequirementsCard, "excludedDeads">>, stats: FormulaVars, opts: PlayerOptions = {}): FormulaVars {
+  const ex = opts.excludedDeads;
+  if (!card.excludedDeads?.enabled || typeof ex !== "number" || !Number.isFinite(ex) || ex <= 0) return stats;
+  const deads = typeof stats.deads === "number" && Number.isFinite(stats.deads) && stats.deads > 0 ? stats.deads : 0;
+  return { ...stats, deads: Math.max(0, deads - ex) };
+}
+
+/** Score one player against the card. `rawStats` holds gains since the start scan plus power. Never throws. */
+export function evaluatePlayer(
+  card: Pick<RequirementsCard, "formula" | "requirement"> & Partial<Pick<RequirementsCard, "excludedDeads">>,
+  rawStats: FormulaVars,
+  opts: PlayerOptions = {},
+): EvaluatePlayerResult {
   const p = parseFormula(card.formula);
   if (!p.ok) return p;
+  const stats = countedStats(card, rawStats, opts);
   const r = evaluate(p.ast, stats);
   if (!r.ok) return r;
   const dkp = r.value;

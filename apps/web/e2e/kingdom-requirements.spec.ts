@@ -62,6 +62,24 @@ test.describe("requirements card (F-34)", () => {
     await expect(page.locator("[data-compare] tbody tr")).toHaveCount(3);
   });
 
+  test("excluded deads rule: tick, edit the label, publish, player sees it", async ({ page }) => {
+    const errors = trackErrors(page);
+    await gotoHydrated(page, "/kingdom/requirements/");
+    await expect(page.getByLabel("Excluded days are days a player was…")).toHaveCount(0);
+    await expect(page.locator("#kr-excl-hint")).toContainText("B08-0001");
+    await page.getByLabel("Deads on excluded days don't count").check();
+    const label = page.getByLabel("Excluded days are days a player was…");
+    await expect(label).toHaveValue("zeroed in a 'terrible trade'");
+    await label.fill("zeroed by a bad trade");
+    await expect(page.locator("[data-excluded-preview]")).toContainText("Deads on days you were zeroed by a bad trade don't count");
+    await page.getByRole("button", { name: "Publish card" }).click();
+    const url = await page.locator("#kr-link").inputValue();
+    await page.goto(new URL(url).pathname + new URL(url).hash);
+    await expect(page.locator("[data-excluded-rule]")).toContainText("Deads on days you were zeroed by a bad trade don't count");
+    await expect(page.getByLabel("Deads on excluded days")).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
   test("save, list, open and delete on this device", async ({ page }) => {
     const errors = trackErrors(page);
     await seed(page, []);

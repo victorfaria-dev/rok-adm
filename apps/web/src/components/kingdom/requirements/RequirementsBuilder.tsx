@@ -1,7 +1,7 @@
 // F-34 requirements card builder + DKP formula sandbox (council side).
 import {
-  FORMULA_PRESETS, REQ_MAX_SAMPLES, REQ_STAGES, VAR_NOUN, WEIGHTS_NOT_COMPARABLE, evaluatePlayer, formatCompact, formatInt,
-  presetById, rankSamples, usedVariables, type FormulaVar, type RequirementsCard, type ReqStage,
+  EXCLUDED_DEADS_DEFAULT_LABEL, EXCLUDED_DEADS_FACT_ID, EXCLUDED_DEADS_LABEL_MAX, FORMULA_PRESETS, REQ_MAX_SAMPLES, REQ_STAGES, VAR_NOUN,
+  WEIGHTS_NOT_COMPARABLE, evaluatePlayer, excludedDeadsText, formatCompact, formatInt, presetById, rankSamples, usedVariables, type FormulaVar, type RequirementsCard, type ReqStage,
 } from "@rokadm/planner";
 import type { JSX } from "preact";
 import { useEffect, useMemo, useState } from "preact/hooks";
@@ -13,7 +13,7 @@ import {
 } from "../../../lib/kingdom-requirements";
 import ConfirmAction from "../shared/ConfirmAction";
 import CopyText from "../shared/CopyText";
-import { SelectField, TextAreaField, TextField } from "../shared/Field";
+import { CheckField, SelectField, TextAreaField, TextField } from "../shared/Field";
 import FormulaField, { formulaState } from "./FormulaField";
 
 const STAGE_OPTIONS = REQ_STAGES.map((s) => ({ value: s, label: s === "other" ? "Other (type it)" : s }));
@@ -172,6 +172,29 @@ export default function RequirementsBuilder(): JSX.Element {
           <p class="kr-source" data-source>Your own formula: set by your council.</p>
         )}
         <p class="kg-note" data-not-comparable>{WEIGHTS_NOT_COMPARABLE}</p>
+        <div class="kr-excluded" data-excluded-rule>
+          <CheckField
+            id="kr-excl"
+            label="Deads on excluded days don't count"
+            hint={`A published kingdom rule (K2779, fact ${EXCLUDED_DEADS_FACT_ID}): deads on a day a player was zeroed in a 'terrible trade' count as 0. Players enter those deads separately and they are taken off before the formula.`}
+            checked={form.excludedOn}
+            onValue={(v) => set("excludedOn", v)}
+          />
+          {form.excludedOn && (
+            <>
+              <TextField
+                id="kr-excl-label"
+                label="Excluded days are days a player was…"
+                hint="Finishes the sentence shown to players. Blank uses the K2779 wording."
+                value={form.excludedLabel}
+                onValue={(v) => set("excludedLabel", v)}
+                maxLength={EXCLUDED_DEADS_LABEL_MAX}
+                placeholder={EXCLUDED_DEADS_DEFAULT_LABEL}
+              />
+              <p class="kg-hint" data-excluded-preview>Players read: {excludedDeadsText(check.card.excludedDeads)}</p>
+            </>
+          )}
+        </div>
       </section>
 
       <section class="kg-card" aria-labelledby="kr-req-h">
