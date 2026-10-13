@@ -6,6 +6,7 @@ import {
 } from "three";
 import { CREST_H, CREST_W, emblemPoints, pngLayout, SHIELDS, type CrestV1, type Point } from "./crest";
 import { crestPalette, drawCrest } from "./crest-export";
+import { gpuIdle, yieldToMain } from "./three-steps";
 
 const UNIT = CREST_W / 2;
 const DEPTH = 0.16;
@@ -36,28 +37,7 @@ export interface Crest3D {
   dispose(): void;
 }
 
-/** Let the browser handle input and paint between heavy steps (Q2 P2-10). */
-export function yieldToMain(): Promise<void> {
-  const s = (globalThis as { scheduler?: { yield?: () => Promise<void> } }).scheduler;
-  if (typeof s?.yield === "function") return s.yield();
-  return new Promise((resolve) => setTimeout(resolve, 0));
-}
-
-/** Resolve once the GPU has run the commands issued so far (WebGL2 fence, polled per task; max ~2 s). */
-async function gpuIdle(gl: WebGLRenderingContext | WebGL2RenderingContext, stop: () => boolean): Promise<void> {
-  if (typeof WebGL2RenderingContext === "undefined" || !(gl instanceof WebGL2RenderingContext)) return yieldToMain();
-  const sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
-  if (!sync) return yieldToMain();
-  gl.flush();
-  try {
-    for (let i = 0; i < 120 && !stop(); i++) {
-      await new Promise((r) => setTimeout(r, 16));
-      if (gl.getSyncParameter(sync, gl.SYNC_STATUS) === gl.SIGNALED) return;
-    }
-  } finally {
-    gl.deleteSync(sync);
-  }
-}
+export { yieldToMain };
 
 export interface MountOptions {
   autoRotate: boolean;
