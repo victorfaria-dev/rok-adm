@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import type { GuideBlock } from "@rokadm/core";
+import { SECONDARY } from "../src/lib/nav";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const load = (set: string) => JSON.parse(readFileSync(join(here, `../../../guides/data/blocks.${set}.json`), "utf8")) as GuideBlock[];
@@ -91,7 +92,7 @@ test.describe("More menu (phone)", () => {
     await button.click();
     await expect(button).toHaveAttribute("aria-expanded", "true");
     await expect(panel).toBeVisible();
-    await expect(panel.getByRole("link")).toHaveText(["All guides", "Farms", "Governor card", "Trust & privacy", "Brand"]);
+    await expect(panel.getByRole("link")).toHaveText(SECONDARY.map((s) => s.label));
 
     await page.keyboard.press("Tab");
     await expect(panel.getByRole("link", { name: "All guides" })).toBeFocused();
@@ -112,7 +113,7 @@ test.describe("More menu (phone)", () => {
     await button.focus();
     await page.keyboard.press("Enter");
     await expect(button).toHaveAttribute("aria-expanded", "true");
-    for (let n = 0; n < 6; n++) await page.keyboard.press("Tab");
+    for (let n = 0; n <= SECONDARY.length; n++) await page.keyboard.press("Tab");
     await expect(button).toHaveAttribute("aria-expanded", "false");
   });
 
