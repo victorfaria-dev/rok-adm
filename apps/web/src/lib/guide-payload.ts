@@ -25,6 +25,7 @@ import lowBlocks from "../../../../guides/data/blocks.low.json";
 import newKingdomBlocks from "../../../../guides/data/blocks.newkingdom.json";
 import recoveryBlocks from "../../../../guides/data/blocks.recovery.json";
 import returningBlocks from "../../../../guides/data/blocks.returning.json";
+import { buildCalendar } from "./guide-calendar";
 import type { BudgetPayload, CardBadge, GuideData, GuidePayload, LowBudgetPayload, LowValue, PayloadBlock, PatchBadge } from "./guide-types";
 
 /** Every blocks file in guides/data, by set name. */
@@ -101,13 +102,47 @@ export function cardBadge(id: string): CardBadge {
   };
 }
 
+const GIST_MAX = 170;
+const ENTITIES: Record<string, string> = { "&amp;": "&", "&lt;": "<", "&gt;": ">", "&quot;": '"', "&#39;": "'", "&#x27;": "'" };
+
+/**
+ * One or two plain-text lines from a block body, for the timeline summary (wave VG): the first paragraph or
+ * list item (tables and nested lists skipped), without fact ids or the consensus tag, cut at a sentence end
+ * when one fits, else at a word with "…". The full text stays in the block.
+ */
+export function gistOf(bodyHtml: string): string {
+  const html = bodyHtml.replace(/<div class="ko-table"[\s\S]*?<\/table><\/div>/g, "");
+  const clean = (s: string) =>
+    s
+      .replace(/<[^>]+>/g, "")
+      .replace(/&(?:amp|lt|gt|quot|#39|#x27);/g, (e) => ENTITIES[e] ?? e)
+      .replace(/\s*\[(?:[A-C]\d{2}-\d{4}(?:,\s*)?)+\]/g, "")
+      .replace(/\s*Consensus:\s*[^.]*\.?/g, "")
+      .replace(/\s+/g, " ")
+      .trim();
+  const chunks = [...html.matchAll(/<(?:p|li)\b[^>]*>([\s\S]*?)(?=<\/p>|<\/li>|<ul>|<ol>)/g)].map((m) => clean(m[1]!)).filter((c) => c !== "");
+  // A short lead-in ("Goals", "What survives:") says nothing alone: join it with what follows.
+  let text = chunks[0] ?? clean(html);
+  for (let i = 1; i < chunks.length && (text.length < 50 || text.endsWith(":")); i++) {
+    text = /[.:;!?]$/.test(text) ? `${text} ${chunks[i]}` : `${text}: ${chunks[i]}`;
+  }
+  text = text.replace(/[;,]$/, ".");
+  if (text.length <= GIST_MAX) return text;
+  const cut = text.slice(0, GIST_MAX);
+  const end = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("; "));
+  if (end >= 60) return cut.slice(0, end + 1).replace(/;$/, ".");
+  return cut.slice(0, cut.lastIndexOf(" ")).replace(/[,:;\s—–-]+$/, "") + "…";
+}
+
 function toPayloadBlock(b: GuideBlock): PayloadBlock {
   const opt = (s: string | null, what: string) => (s && s.trim() !== "" ? renderMarkdown(s, `${b.title}, ${what}`) : null);
+  const bodyHtml = renderMarkdown(b.body_md, b.title);
   return {
     ...b,
     body_md: "",
     why_md: "",
-    bodyHtml: renderMarkdown(b.body_md, b.title),
+    bodyHtml,
+    gist: gistOf(bodyHtml),
     whyHtml: renderMarkdown(b.why_md, `${b.title}, why`),
     uncertain_notes: opt(b.uncertain_notes, "uncertain"),
     low_spender_note: opt(b.low_spender_note, "low spender note"),
@@ -265,5 +300,5 @@ export function buildLowBudgetPayload(): LowBudgetPayload {
 
 /** Everything the guide page needs, for the endpoint and the static render. */
 export function buildGuideData(): GuideData {
-  return { guide: buildGuidePayload("f2p"), budget: buildBudgetPayload() };
+  return { guide: buildGuidePayload("f2p"), budget: buildBudgetPayload(), calendar: buildCalendar() };
 }

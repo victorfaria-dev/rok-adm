@@ -4,6 +4,7 @@
 import Shell from "../../layouts/Shell.astro";
 import GuideIsland from "../../components/guide/GuideIsland";
 import { GuideBody, GuideMeta, GuidesForYou } from "../../components/guide/GuideBody";
+import { GuideVisual } from "../../components/guide/GuideVisual";
 import { defaultGuideLinks } from "../../lib/guides";
 import { buildGuideData } from "../../lib/guide-payload";
 import { selectGuide } from "../../lib/guide-view";
@@ -26,6 +27,7 @@ const view = selectGuide(data.guide, defaultProfile());
         </aside>
         <GuideMeta view={view} label={`Default guide for ${profileSummary(defaultProfile())}`} />
         <GuidesForYou links={defaultGuideLinks()} title="Other guides" />
+        <GuideVisual view={view} badges={data.guide.badges} calendar={data.calendar} />
         <GuideBody view={view} badges={data.guide.badges} budget={data.budget} />
       </div>
     </GuideIsland>

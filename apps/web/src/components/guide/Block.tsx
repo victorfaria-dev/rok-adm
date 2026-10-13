@@ -23,6 +23,12 @@ export function Block({ item, badges, level, profileTags }: Props) {
   const sites = [...new Set(cards.flatMap((c) => badges[c]?.sources ?? []))];
   const shownSites = sites.slice(0, MAX_SITES).join(", ") + (sites.length > MAX_SITES ? ` and ${sites.length - MAX_SITES} more` : "");
   const upcoming = profileTags && f.upcoming && b.ch_range !== null;
+  const extras = [
+    typeof b.split_views === "string" ? "both views" : null,
+    b.uncertain_notes ? "uncertain notes" : null,
+    b.gaps.length > 0 ? "pending measurements" : null,
+  ].filter((x): x is string => x !== null);
+  const moreLabel = `Why${extras.length > 0 ? `, ${extras.join(", ")}` : ""} and sources`;
 
   return (
     <article class="g-block" id={`b-${b.id}`} data-block-id={b.id} aria-labelledby={tid}>
@@ -34,27 +40,6 @@ export function Block({ item, badges, level, profileTags }: Props) {
       </p>
 
       <div class="g-prose" dangerouslySetInnerHTML={html(b.bodyHtml)} />
-      <div class="g-note">
-        <p class="g-note-label">Why</p>
-        <div class="g-prose" dangerouslySetInnerHTML={html(b.whyHtml)} />
-      </div>
-      {typeof b.split_views === "string" && (
-        <div class="g-note">
-          <p class="g-note-label">Both views</p>
-          <div class="g-prose" dangerouslySetInnerHTML={html(b.split_views)} />
-        </div>
-      )}
-      {b.uncertain_notes && (
-        <div class="g-note g-note-uncertain">
-          <p class="g-note-label">Uncertain</p>
-          <div class="g-prose" dangerouslySetInnerHTML={html(b.uncertain_notes)} />
-        </div>
-      )}
-      {b.gaps.length > 0 && (
-        <p class="g-gaps">
-          Waiting on an in-game measurement: <span class="mono">{b.gaps.join(", ")}</span>
-        </p>
-      )}
       {item.lowSpenderNote && (
         <div class="g-note">
           <p class="g-note-label">Low spender note</p>
@@ -67,23 +52,51 @@ export function Block({ item, badges, level, profileTags }: Props) {
           <span class="mono">{b.patch.version === "unknown" ? "Patch not recorded" : `Verified on patch ${b.patch.version}`}</span>
           <span class="g-patch-note"> · checked <span class="mono">{b.patch.asOf}</span>{b.patch.note ? ` · ${b.patch.note}` : ""}</span>
         </p>
-        <details class="g-sources">
+        {/* Wave VG: the why, the uncertain notes and the sources sit behind one disclosure; the sites stay in its label. */}
+        <details class="g-more" data-block-more>
           <summary>
-            Sources: {shownSites || "none listed"} · {cards.length} fact {cards.length === 1 ? "card" : "cards"}
+            <span class="g-more-what">{moreLabel}</span>
+            <span class="g-more-src">Sources: {shownSites || "none listed"} · {cards.length} fact {cards.length === 1 ? "card" : "cards"}</span>
           </summary>
-          <ul>
-            {cards.map((id) => {
-              const c = badges[id];
-              return (
-                <li key={id}>
-                  <span class="mono">{id}</span> {c?.title ?? ""}
-                  <span class="g-src-meta">
-                    {c ? <> · {c.label} · <Confidence level={c.confidence} short /> · {c.sources.join(", ") || "no source listed"}</> : " · not in the dataset"}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
+          <div class="g-more-body">
+            <div class="g-note">
+              <p class="g-note-label">Why</p>
+              <div class="g-prose" dangerouslySetInnerHTML={html(b.whyHtml)} />
+            </div>
+            {typeof b.split_views === "string" && (
+              <div class="g-note">
+                <p class="g-note-label">Both views</p>
+                <div class="g-prose" dangerouslySetInnerHTML={html(b.split_views)} />
+              </div>
+            )}
+            {b.uncertain_notes && (
+              <div class="g-note g-note-uncertain">
+                <p class="g-note-label">Uncertain</p>
+                <div class="g-prose" dangerouslySetInnerHTML={html(b.uncertain_notes)} />
+              </div>
+            )}
+            {b.gaps.length > 0 && (
+              <p class="g-gaps">
+                Waiting on an in-game measurement: <span class="mono">{b.gaps.join(", ")}</span>
+              </p>
+            )}
+            <div class="g-sources">
+              <p class="g-note-label">Fact cards</p>
+              <ul>
+                {cards.map((id) => {
+                  const c = badges[id];
+                  return (
+                    <li key={id}>
+                      <span class="mono">{id}</span> {c?.title ?? ""}
+                      <span class="g-src-meta">
+                        {c ? <> · {c.label} · <Confidence level={c.confidence} short /> · {c.sources.join(", ") || "no source listed"}</> : " · not in the dataset"}
+                      </span>
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+          </div>
         </details>
       </footer>
     </article>

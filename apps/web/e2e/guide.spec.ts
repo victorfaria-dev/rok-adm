@@ -212,7 +212,8 @@ test("no sideways scroll at 360px on the personal guide", async ({ page }) => {
 });
 
 test.describe("accessibility", () => {
-  test.describe.configure({ timeout: 60_000 });
+  // Wave VG: the personal guide also carries the timeline, calendar and tower; axe needs longer under load.
+  test.describe.configure({ timeout: 120_000 });
   const pages: Array<[string, string, (page: Page) => Promise<void>]> = [
     ["default guide", "/guide/", async () => {}],
     ["personal guide (Low), Already done? open", `/guide/?p=${encodeProfile(LOW_D20)}`, async (page) => {

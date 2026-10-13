@@ -1,0 +1,8 @@
+---
+// Wave VG: enhances the static timeline on /guides/* (keyboard, scroll highlight, reveal, Read more).
+// Rendered only on pages that show a timeline, so the other static guides ship no JS for it.
+---
+<script>
+  import { enhanceGuideTimeline } from "../../lib/guide-timeline-dom";
+  enhanceGuideTimeline(document);
+</script>

@@ -5,16 +5,22 @@ import Shell from "../../../layouts/Shell.astro";
 import { GuideBody, GuideMeta } from "../../../components/guide/GuideBody";
 import { buildGuidePayload } from "../../../lib/guide-payload";
 import { fullGuide } from "../../../lib/guide-view";
+import { GuideVisual } from "../../../components/guide/GuideVisual";
+import TimelineScript from "../../../components/guide/TimelineScript.astro";
+import { buildTimeline } from "../../../lib/guide-timeline";
 import "../../../styles/guide.css";
 
 const payload = buildGuidePayload("newkingdom");
 const view = fullGuide(payload);
+const hasTimeline = buildTimeline(view, payload.badges).show;
 ---
 <Shell title="New kingdom guide" description="Survive day 1 of a new kingdom and set up the first weeks, with sources and patch checks for every step." mode="read">
   <div class="g-page">
     <h1>New kingdom guide</h1>
     <GuideMeta view={view} label="For every spending profile in a kingdom that just opened" />
     <p class="g-intro">Read this first if your kingdom opened in the last few days. Then follow <a href="/guide/">your guide</a> for the rest of the road to KvK1.</p>
+    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Timeline" />}
     <GuideBody view={view} badges={payload.badges} profileTags={false} />
+    {hasTimeline && <TimelineScript />}
   </div>
 </Shell>
