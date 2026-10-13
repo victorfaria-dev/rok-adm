@@ -111,6 +111,7 @@ test("import restores a valid file and rejects an invalid one", async ({ page })
 test("delete: cancel keeps data, confirm removes it", async ({ page }) => {
   await seed(page, { profileCode: CODE, theme: "light" });
   await page.goto("/me/");
+  await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
   const trigger = page.getByRole("button", { name: "Delete all data" });
 
   await trigger.click();
