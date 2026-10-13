@@ -318,12 +318,95 @@ export function parseCandidateLines(text: string): { rows: Array<{ name: string;
     if (clean.length > MGE_LIMITS.name) return void errors.push({ line: i + 1, text: raw.trim(), message: `Name is longer than ${MGE_LIMITS.name} characters.` });
     let score: number | null = null;
     if (number !== null) {
-      score = parseQuantity(number);
-      if (score === null) return void errors.push({ line: i + 1, text: raw.trim(), message: "The score is not a number (use 4200000, 4,200,000 or 4.2m)." });
+      const r = parseMgeScore(number);
+      if (!r.ok) return void errors.push({ line: i + 1, text: raw.trim(), message: r.tooBig ? r.message : "The score is not a number (use 4200000, 4,200,000 or 4.2m)." });
+      score = r.score;
     }
     rows.push({ name: clean, score });
   });
   return { rows, errors };
+}
+
+// ---------------------------------------------------------------------------
+// Typed governor fields (add form and inline edit)
+
+export const MGE_SCORE_HELP = "Enter a whole number, for example 4200000, 4,200,000 or 4.2m.";
+
+/**
+ * A score typed by the council. Empty = no score. Anything that is not a whole number, or is above
+ * Number.MAX_SAFE_INTEGER (where JavaScript numbers stop being exact), is refused at entry.
+ */
+export function parseMgeScore(text: string): { ok: true; score: number | null } | { ok: false; tooBig: boolean; message: string } {
+  if (!text.trim()) return { ok: true, score: null };
+  const n = parseQuantity(text);
+  if (n === null) {
+    // parseQuantity refuses unsafe plain and suffixed numbers; tell those apart from typos.
+    const digits = text.replace(/[\s,_]/g, "");
+    if (/^\d{16,}$/.test(digits) || /^\d+(\.\d+)?[kmb]$/i.test(digits)) {
+      return { ok: false, tooBig: true, message: `The score is too large (at most ${formatInt(Number.MAX_SAFE_INTEGER)}).` };
+    }
+    return { ok: false, tooBig: false, message: MGE_SCORE_HELP };
+  }
+  if (!Number.isSafeInteger(n)) return { ok: false, tooBig: true, message: `The score is too large (at most ${formatInt(Number.MAX_SAFE_INTEGER)}).` };
+  return { ok: true, score: n };
+}
+
+/** Comma-separated tags, lower case, duplicates dropped. Too many or too long is an error, not a silent cut. */
+export function parseMgeTagsText(text: string): { tags: string[]; error?: string } {
+  const tags: string[] = [];
+  for (const t of text.split(",")) {
+    const s = cleanLine(t, 1000).toLowerCase();
+    if (!s) continue;
+    if (s.length > MGE_LIMITS.tag) return { tags, error: `Each tag can have at most ${MGE_LIMITS.tag} characters ("${s.slice(0, MGE_LIMITS.tag)}…").` };
+    if (!tags.includes(s)) tags.push(s);
+  }
+  if (tags.length > MGE_LIMITS.tags) return { tags: tags.slice(0, MGE_LIMITS.tags), error: `Use at most ${MGE_LIMITS.tags} tags.` };
+  return { tags };
+}
+
+export interface MgeCandidateInput {
+  name: string;
+  score: string;
+  tags: string;
+}
+
+export type MgeCandidateErrors = Partial<Record<keyof MgeCandidateInput, string>>;
+
+/** Check the three typed fields of a governor. */
+export function readCandidateInput(input: MgeCandidateInput): { ok: true; name: string; score: number | null; tags: string[] } | { ok: false; errors: MgeCandidateErrors } {
+  const errors: MgeCandidateErrors = {};
+  const name = cleanLine(input.name, MGE_LIMITS.name + 1);
+  if (!name) errors.name = "Enter the governor's name.";
+  else if (name.length > MGE_LIMITS.name) errors.name = `Use at most ${MGE_LIMITS.name} characters.`;
+  const score = parseMgeScore(input.score);
+  if (!score.ok) errors.score = score.message;
+  const tags = parseMgeTagsText(input.tags);
+  if (tags.error) errors.tags = tags.error;
+  if (errors.name || errors.score || errors.tags || !score.ok) return { ok: false, errors };
+  return { ok: true, name, score: score.score, tags: tags.tags };
+}
+
+export type UpdateCandidateResult =
+  | { ok: true; doc: MgeDoc; candidate: MgeCandidate; previousName: string; duplicate: boolean }
+  | { ok: false; errors: MgeCandidateErrors };
+
+/**
+ * Edit an existing governor's name, score and tags. The id stays, so applicants, manual placements
+ * and rotation history stay attached. Locked events keep the name stored when they were locked.
+ * Renaming to a name already listed is allowed (the plan shows the duplicate-name warning).
+ */
+export function updateCandidate(doc: MgeDoc, candidateId: string, input: MgeCandidateInput): UpdateCandidateResult {
+  const i = doc.candidates.findIndex((c) => c.id === candidateId);
+  if (i < 0) return { ok: false, errors: { name: "This governor is no longer in the plan." } };
+  const r = readCandidateInput(input);
+  if (!r.ok) return r;
+  const previousName = doc.candidates[i]!.name;
+  const candidate: MgeCandidate = { id: candidateId, name: r.name, score: r.score, tags: r.tags };
+  const candidates = [...doc.candidates];
+  candidates[i] = candidate;
+  const k = r.name.toLowerCase();
+  const duplicate = candidates.some((c) => c.id !== candidateId && c.name.toLowerCase() === k);
+  return { ok: true, doc: { ...doc, candidates }, candidate, previousName, duplicate };
 }
 
 // ---------------------------------------------------------------------------

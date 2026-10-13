@@ -122,6 +122,67 @@ test.describe("MGE planner", () => {
     await expect(page.locator('[data-event="2026-10-01"]').getByText("Locked", { exact: true })).toBeVisible();
   });
 
+  test("inline edit by keyboard: rename keeps placements and locked history; bad scores are refused", async ({ page }) => {
+    const errors = trackErrors(page);
+    await seed(page, [PLAN]);
+    await gotoHydrated(page, "/kingdom/mge/");
+    const first = page.locator('[data-event="2026-10-01"]');
+    await first.getByRole("button", { name: "Lock event" }).click();
+    await expect(first.getByText("Locked", { exact: true })).toBeVisible();
+
+    // Open the editor from the keyboard; focus lands in the name field.
+    await page.getByRole("button", { name: "Edit Echo" }).focus();
+    await page.keyboard.press("Enter");
+    const editor = page.locator('[data-editor="e"]');
+    await expect(editor.getByRole("group", { name: "Edit Echo" })).toBeVisible();
+    await expect(page.getByLabel("Name for Echo")).toBeFocused();
+
+    // Escape cancels and returns focus to the row's Edit button.
+    await page.keyboard.press("Escape");
+    await expect(editor).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Edit Echo" })).toBeFocused();
+
+    await page.keyboard.press("Enter");
+    await page.keyboard.press("Control+A");
+    await page.keyboard.type("Echo Prime");
+    await page.keyboard.press("Tab");
+    await expect(page.getByLabel("Score for Echo (optional)")).toBeFocused();
+    await page.keyboard.press("Control+A");
+    await page.keyboard.type("9,007,199,254,740,992");
+    await page.keyboard.press("Enter");
+    const scoreInput = page.getByLabel("Score for Echo (optional)");
+    await expect(scoreInput).toHaveAttribute("aria-invalid", "true");
+    await expect(page.locator("#kx-edit-e-score-error")).toContainText("too large");
+    await expect(scoreInput).toHaveAttribute("aria-describedby", /kx-edit-e-score-error/);
+    await expect(scoreInput).toBeFocused();
+
+    await page.keyboard.press("Control+A");
+    await page.keyboard.type("5m");
+    await page.keyboard.press("Tab");
+    await expect(page.getByLabel("Tags for Echo (optional)")).toBeFocused();
+    await page.keyboard.type("Garrison Lead");
+    await page.keyboard.press("Enter");
+    await expect(editor).toHaveCount(0);
+    await expect(page.locator("[data-cand-status]")).toHaveText("Saved Echo Prime (was Echo).");
+    await expect(page.getByRole("button", { name: "Edit Echo Prime" })).toBeFocused();
+    await expect(page.locator('tr[data-candidate="e"]')).toContainText("5,000,000");
+    await expect(page.locator('tr[data-candidate="e"]')).toContainText("garrison lead");
+
+    // The locked event keeps the old name; the open event uses the new one and the manual placement stays attached.
+    expect((await ledgerRows(page, "2026-10-01"))[0]).toEqual(["1", "Echo", "manual: Garrison lead for Kingsland"]);
+    await page.reload();
+    await expect(page.locator('tr[data-candidate="e"] td').first()).toHaveText("Echo Prime");
+    expect((await ledgerRows(page, "2026-10-01"))[0]![1]).toBe("Echo");
+
+    // Duplicate name: allowed, with the warning.
+    await page.getByRole("button", { name: "Edit Bravo" }).click();
+    await page.getByLabel("Name for Bravo").fill("alpha");
+    await page.getByRole("button", { name: "Save" }).click();
+    await expect(page.locator("[data-cand-status]")).toContainText("Another governor is also named alpha");
+    await expect(page.locator("[data-plan-warnings]")).toContainText('share the name "Alpha"');
+    expect(errors).toEqual([]);
+  });
+
   test("bad links show a plain error", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/mge/view/#d=1zNOT-A-REAL-LINK");
     await expect(page.getByRole("alert")).toContainText("This link is damaged");
@@ -136,6 +197,12 @@ test.describe("MGE planner", () => {
     await expect(page.locator("[data-event]")).toHaveCount(2);
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
+    // With the inline governor editor open, too.
+    await page.getByRole("button", { name: "Edit Charlie" }).click();
+    await expect(page.getByLabel("Name for Charlie")).toBeVisible();
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+    await page.getByRole("button", { name: "Cancel" }).click();
     await page.getByRole("button", { name: "Create public link" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
     await expect(page.locator("[data-view]")).toBeVisible();
@@ -154,6 +221,16 @@ test.describe("MGE planner", () => {
         await expectAxeClean(page);
       });
     }
+
+    test(`axe planner ${theme} with the governor editor open (and an error)`, async ({ page }) => {
+      await seed(page, [PLAN], theme);
+      await gotoHydrated(page, "/kingdom/mge/");
+      await page.getByRole("button", { name: "Edit Alpha" }).click();
+      await page.getByLabel("Score for Alpha (optional)").fill("lots");
+      await page.getByRole("button", { name: "Save" }).click();
+      await expect(page.locator("#kx-edit-a-score-error")).toBeVisible();
+      await expectAxeClean(page);
+    });
 
     test(`axe view ${theme} (ledger and error)`, async ({ page }) => {
       await seed(page, [PLAN], theme);

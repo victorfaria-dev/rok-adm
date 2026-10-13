@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   MGE_LIMITS, MGE_SOURCES, describeMgeRules, emptyMgeDoc, isDay, mgePublicPayload, orderedEvents, parseCandidateLines, parseMgeDoc, parseMgePublic,
-  planMge, removeCandidate, scoreRankScope, setEventLocked, splitNameAndNumber,
+  parseMgeScore, parseMgeTagsText, planMge, readCandidateInput, removeCandidate, scoreRankScope, setEventLocked, splitNameAndNumber, updateCandidate,
   type MgeCandidate, type MgeDoc, type MgeEvent,
 } from "../src/kingdom-mge";
 
@@ -294,5 +294,97 @@ describe("locked history after lowering slots", () => {
     const pub = parseMgePublic(JSON.parse(JSON.stringify(mgePublicPayload(d, false, "2026-10-13"))));
     expect(pub!.events[0]!.slots).toHaveLength(20);
     expect(planMge(d).events[0]!.assignments).toHaveLength(20);
+  });
+});
+
+describe("typed governor fields", () => {
+  it("parseMgeScore: empty is no score, safe whole numbers pass, the rest is refused", () => {
+    expect(parseMgeScore("  ")).toEqual({ ok: true, score: null });
+    expect(parseMgeScore("4,200,000")).toEqual({ ok: true, score: 4_200_000 });
+    expect(parseMgeScore("4.2m")).toEqual({ ok: true, score: 4_200_000 });
+    expect(parseMgeScore(String(Number.MAX_SAFE_INTEGER))).toEqual({ ok: true, score: Number.MAX_SAFE_INTEGER });
+    for (const big of ["9007199254740992", "9,007,199,254,740,992", "99999999999999999999", "9999999999b"]) {
+      const r = parseMgeScore(big);
+      expect(r.ok, big).toBe(false);
+      if (!r.ok) {
+        expect(r.tooBig, big).toBe(true);
+        expect(r.message).toContain("9,007,199,254,740,991");
+      }
+    }
+    for (const bad of ["lots", "-5", "1.5", "1,00"]) {
+      const r = parseMgeScore(bad);
+      expect(r.ok, bad).toBe(false);
+      if (!r.ok) expect(r.tooBig, bad).toBe(false);
+    }
+  });
+
+  it("pasted lists refuse scores above the safe limit too", () => {
+    const r = parseCandidateLines("Big, 9,007,199,254,740,992\nOk, 5");
+    expect(r.rows).toEqual([{ name: "Ok", score: 5 }]);
+    expect(r.errors[0]!.message).toMatch(/too large/);
+  });
+
+  it("parseMgeTagsText lower-cases, drops duplicates and refuses too many or too long", () => {
+    expect(parseMgeTagsText(" Rally Lead, rally lead ,, garrison lead")).toEqual({ tags: ["rally lead", "garrison lead"] });
+    expect(parseMgeTagsText("a,b,c,d,e,f").error).toMatch(/at most 5 tags/);
+    expect(parseMgeTagsText("x".repeat(25)).error).toMatch(/at most 24 characters/);
+    expect(parseMgeTagsText("")).toEqual({ tags: [] });
+  });
+
+  it("readCandidateInput reports every bad field at once", () => {
+    const r = readCandidateInput({ name: " ", score: "abc", tags: "a,b,c,d,e,f" });
+    expect(r.ok).toBe(false);
+    if (!r.ok) expect(Object.keys(r.errors).sort()).toEqual(["name", "score", "tags"]);
+    const long = readCandidateInput({ name: "N".repeat(41), score: "", tags: "" });
+    expect(!long.ok && long.errors.name).toMatch(/at most 40/);
+  });
+});
+
+describe("updateCandidate (inline edit)", () => {
+  const base = () => doc({
+    policy: "rotation", slotsPerEvent: 2, cooldownEvents: 0, candidates: FIVE,
+    events: [ev("e1", "2026-10-01", { applicants: ["a", "b"] }), ev("e2", "2026-10-15", { overrides: [{ slot: 1, candidateId: "a", reason: "Rally lead" }] })],
+  });
+
+  it("renames in place: same id, applicants and overrides stay attached", () => {
+    const r = updateCandidate(base(), "a", { name: "Alpha Prime", score: "1.5m", tags: "Rally Lead" });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.previousName).toBe("Alpha");
+    expect(r.duplicate).toBe(false);
+    expect(r.doc.candidates[0]).toEqual({ id: "a", name: "Alpha Prime", score: 1_500_000, tags: ["rally lead"] });
+    expect(r.doc.candidates).toHaveLength(5);
+    expect(r.doc.events[0]!.applicants).toEqual(["a", "b"]);
+    expect(r.doc.events[1]!.overrides[0]!.candidateId).toBe("a");
+    const p = planMge(r.doc);
+    expect(p.events[1]!.assignments[0]).toMatchObject({ candidateId: "a", name: "Alpha Prime", reason: "manual: Rally lead" });
+  });
+
+  it("never rewrites the stored names of locked events", () => {
+    const locked = setEventLocked(base(), "e1", true);
+    expect(locked.events[0]!.result!.map((a) => a.name)).toEqual(["Alpha", "Bravo"]);
+    const r = updateCandidate(locked, "a", { name: "Renamed", score: "", tags: "" });
+    expect(r.ok).toBe(true);
+    if (!r.ok) return;
+    expect(r.doc.events[0]).toBe(locked.events[0]);
+    expect(planMge(r.doc).events[0]!.assignments.map((a) => a.name)).toEqual(["Alpha", "Bravo"]);
+    // The open event follows the new name, and rotation history (by id) still counts the locked slot.
+    expect(planMge(r.doc).events[1]!.assignments[0]!.name).toBe("Renamed");
+  });
+
+  it("allows a duplicate name and keeps the plan warning", () => {
+    const r = updateCandidate(base(), "b", { name: "alpha", score: "400", tags: "" });
+    expect(r.ok && r.duplicate).toBe(true);
+    if (r.ok) expect(planMge(r.doc).warnings.map((w) => w.code)).toContain("duplicate_name");
+  });
+
+  it("clearing the score sets it to null; bad input and unknown ids change nothing", () => {
+    const r = updateCandidate(base(), "a", { name: "Alpha", score: "", tags: "" });
+    expect(r.ok && r.candidate.score).toBeNull();
+    const bad = updateCandidate(base(), "a", { name: "Alpha", score: "9007199254740992", tags: "" });
+    expect(bad.ok).toBe(false);
+    if (!bad.ok) expect(bad.errors.score).toMatch(/too large/);
+    const gone = updateCandidate(base(), "zzz", { name: "X", score: "", tags: "" });
+    expect(gone.ok).toBe(false);
   });
 });
