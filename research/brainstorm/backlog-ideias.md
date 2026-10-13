@@ -44,3 +44,17 @@ Análise do admin:
   - **Moderação:** upload de imagem e nomes exigem moderação básica (conteúdo ofensivo).
   - **Impersonação:** alguém criar a "aliança X" falsa → verificação de liderança da aliança (ex.: código colocado na descrição da aliança no jogo, conferido por print).
 - **Recursos candidatos:** editor de brasão; borda/cor de aliança no avatar; tag `[TAG]`; cartão de perfil compartilhável (imagem para Discord); página da aliança com membros e cargos (R1–R5); página do reino.
+
+## I-07 — Exportar avatar personalizado para usar no jogo (2026-10-13) — aceita (parte do M15)
+O hub gera a imagem do avatar (foto/brasão + borda na cor da aliança + logo/tag) e o jogador baixa um PNG pronto para enviar como avatar dentro do jogo.
+
+Viabilidade: o jogo **parece** permitir avatar personalizado. Uma resposta da comunidade descreve o caminho (perfil do governador → ícone azul de imagem → "+" → álbum/câmera) e um guia diz que cada jogador pode escolher a própria imagem (fontes T3/T4: appgamer.com/rise-of-kingdoms/answers/11524, riseofkingdomsguides.com/governor-profile-in-rok/). Relatos de limite de tamanho de arquivo, não confirmados.
+
+A confirmar no jogo (T0, conta nova do Victor):
+1. Existe o upload de avatar personalizado hoje? Há requisito de nível de CH/VIP ou custo?
+2. Formato aceito, tamanho máximo, recorte (quadrado/círculo) e resolução final exibida.
+3. Há revisão/moderação da imagem pela Lilith (tempo de aprovação)?
+4. Como a moldura do jogo (avatar frame) se sobrepõe à imagem → define a "área segura" onde a borda da aliança não é coberta.
+5. Frequência permitida de troca / cooldown.
+
+Requisitos de design: exportar no tamanho e recorte exatos do jogo; área segura respeitando a moldura do jogo; arquivo abaixo do limite; usar apenas arte original ou enviada pelo usuário (nada de assets da Lilith).
