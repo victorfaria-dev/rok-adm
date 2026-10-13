@@ -1,0 +1,41 @@
+/* Requirements card builder (/kingdom/requirements/) and shared formula field. Only --ko-* tokens. */
+
+.kr { display: grid; gap: var(--ko-space-5); min-width: 0; }
+.kr-fields, .kr-sample-fields, .kr-band-fields { display: grid; gap: var(--ko-space-3); min-width: 0; }
+@media (min-width: 640px) {
+  .kr-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kr-band-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .kr-sample-fields { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.kr-formula { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.kr-formula input { font-family: var(--ko-font-mono); }
+.kr-explain { display: grid; gap: var(--ko-space-1); padding: var(--ko-space-3); background: var(--ko-surface-raised); border-radius: var(--ko-radius-sm); }
+.kr-explain code, .kr-source code { font-family: var(--ko-font-mono); overflow-wrap: anywhere; }
+.kr-source { display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); }
+
+/* Groups inside a card are separated by a rule, never boxed as cards. */
+.kr-choice, .kr-band, .kr-sample {
+  display: grid; gap: var(--ko-space-3); min-width: 0; margin: 0; padding: var(--ko-space-3) 0 0;
+  border: 0; border-top: 1px solid var(--ko-border);
+}
+.kr-choice { border-top: 0; padding-top: 0; }
+.kr-choice legend, .kr-band legend, .kr-sample legend { padding: 0; margin-bottom: var(--ko-space-2); }
+.kr-band > .btn, .kr-sample > .btn { justify-self: start; }
+.kr-radio { display: flex; align-items: center; gap: var(--ko-space-3); min-height: 44px; cursor: pointer; }
+.kr-radio input { width: 24px; height: 24px; flex: none; margin: 0; accent-color: var(--ko-accent); }
+.kr-bands, .kr-samples { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.kr-bands > .btn { justify-self: start; }
+.kr > .kg-card > .btn { justify-self: start; }
+.kr-issues { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
+
+.kr-summary { font-weight: var(--ko-weight-semibold); }
+.kr-caption { text-align: left; padding-bottom: var(--ko-space-2); font-weight: var(--ko-weight-semibold); font-size: var(--ko-text-sm); }
+.kr-table td[data-met="true"] { color: var(--ko-success); font-weight: var(--ko-weight-semibold); }
+.kr-table td[data-met="false"] { color: var(--ko-warning); font-weight: var(--ko-weight-semibold); }
+.kg-table-wrap:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+
+.kr-link { display: grid; gap: var(--ko-space-2); }
+.kr-saved { display: grid; gap: var(--ko-space-3); margin: 0; padding: 0; list-style: none; }
+.kr-saved li { display: grid; gap: var(--ko-space-2); padding-top: var(--ko-space-3); border-top: 1px solid var(--ko-border); }
+.kr-saved-name { font-weight: var(--ko-weight-medium); }

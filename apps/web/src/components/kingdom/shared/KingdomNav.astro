@@ -1,0 +1,23 @@
+---
+import "./kingdom.css";
+import { isActive } from "../../../lib/nav";
+
+const LINKS = [
+  { href: "/kingdom/", label: "Council kit", exact: true },
+  { href: "/kingdom/rules/", label: "Rules page" },
+  { href: "/kingdom/requirements/", label: "Requirements" },
+  { href: "/kingdom/my/", label: "My requirements" },
+  { href: "/kingdom/mge/", label: "MGE planner" },
+  { href: "/kingdom/recruit/", label: "Recruitment post" },
+  { href: "/kingdom/seed/", label: "Seed (experimental)" },
+  { href: "/guides/kingdom-admin/", label: "Admin guide" },
+];
+const path = Astro.url.pathname;
+const norm = (p: string) => (p.endsWith("/") ? p : `${p}/`);
+const current = (l: { href: string; exact?: boolean }) => (l.exact ? norm(path) === l.href : isActive(l.href, path));
+---
+<nav class="kg-subnav kg-noprint" aria-label="Council kit">
+  <ul>
+    {LINKS.map((l) => <li><a href={l.href} aria-current={current(l) ? "page" : undefined}>{l.label}</a></li>)}
+  </ul>
+</nav>

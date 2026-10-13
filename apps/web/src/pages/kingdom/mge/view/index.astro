@@ -1,0 +1,16 @@
+---
+import Shell from "../../../../layouts/Shell.astro";
+import MgeView from "../../../../components/kingdom/mge/MgeView";
+import "../../../../components/kingdom/shared/kingdom.css";
+import "../../../../components/kingdom/mge/mge.css";
+---
+<Shell title="MGE ledger" description="A kingdom council's MGE ledger: who got which slot, when and why. View only." mode="read">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>MGE ledger</h1>
+      <p class="kg-lead">Who got which MGE slot, when and why, under the rules your council published.</p>
+    </header>
+    <MgeView client:load />
+    <p class="kg-note kg-noprint">Made with the <a href="/kingdom/mge/">KingdomOps MGE planner</a>. The ledger lives inside the link; nothing is stored on a server.</p>
+  </div>
+</Shell>

@@ -1,0 +1,169 @@
+import { expect, test, type Page } from "@playwright/test";
+import { expectAxeClean, expectNoSidewaysScroll, expectTargets44, seed, trackErrors, gotoHydrated } from "./kingdom-helpers";
+
+const cand = (id: string, name: string, score: number | null) => ({ id, name, score, tags: [] });
+const ev = (id: string, date: string, over: Record<string, unknown> = {}) => ({ id, date, commander: "", applicants: [], overrides: [], locked: false, result: null, ...over });
+
+/** A filled plan: 5 governors, 2 events, applications on, one manual placement. */
+const PLAN = {
+  id: "p1", kind: "mge", title: "K1234 MGE", updatedAt: "2026-10-13T10:00:00.000Z",
+  data: {
+    id: "p1", updatedAt: "2026-10-13T10:00:00.000Z", title: "K1234 MGE", slotsPerEvent: 3, policy: "score", cooldownEvents: 1, applicationsRequired: true,
+    candidates: [cand("a", "Alpha", 4_200_000), cand("b", "Bravo", 3_000_000), cand("c", "Charlie", 2_000_000), cand("d", "Delta", null), cand("e", "Echo", 1_000_000)],
+    events: [
+      ev("e1", "2026-10-01", { commander: "Cao Cao", applicants: ["a", "b", "c", "e"], overrides: [{ slot: 1, candidateId: "e", reason: "Garrison lead for Kingsland" }] }),
+      ev("e2", "2026-10-15", { applicants: ["a", "b"] }),
+    ],
+  },
+};
+
+async function ledgerRows(page: Page, date: string): Promise<string[][]> {
+  return page.locator(`table[data-ledger="${date}"] tbody tr`).evaluateAll((rows) =>
+    rows.map((r) => [...r.querySelectorAll("td")].slice(0, 3).map((td) => (td.textContent ?? "").trim())));
+}
+
+test.describe("MGE planner", () => {
+  test("create plan → paste governors → 3 events → rotation ledger → publish → view matches", async ({ page }) => {
+    const errors = trackErrors(page);
+    await gotoHydrated(page, "/kingdom/mge/");
+    await expect(page.locator("h1")).toHaveText("MGE planner");
+    await expect(page.locator("[data-guardrail]")).toContainText("No bots");
+    await expect(page.locator("[data-privacy]")).toContainText("other players' names");
+    await page.getByRole("button", { name: "New plan" }).click();
+
+    await page.getByLabel("Plan name").fill("K1234 KvK3 MGE");
+    await page.getByLabel("Slots per event").fill("2");
+    await expect(page.getByLabel("How slots are given")).toHaveValue("rotation");
+    await expect(page.getByLabel("Cooldown (events)")).toHaveValue("1");
+
+    await page.getByLabel("Governors, one per line").fill("Alpha, 500\nBravo, 400\nCharlie, 300\nDelta, 200\nEcho, 100");
+    await page.getByRole("button", { name: "Add from list" }).click();
+    await expect(page.locator("[data-cand-status]")).toContainText("Added 5 governors.");
+    await expect(page.locator("table[data-candidates] tbody tr")).toHaveCount(5);
+
+    for (const d of ["2026-10-01", "2026-10-15", "2026-10-29"]) {
+      await page.locator("#kx-ev-date").fill(d);
+      await page.getByRole("button", { name: "Add event" }).click();
+    }
+    await expect(page.locator("[data-event]")).toHaveCount(3);
+    await expect(page.locator("[data-summary]")).toContainText("5 governors, 3 events, rotation rule, 2 slots per event. Every slot is filled.");
+
+    const never = "rotation: longest wait since last slot (never had one)";
+    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Alpha", never], ["2", "Bravo", never]]);
+    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Charlie", never], ["2", "Delta", never]]);
+    const third = await ledgerRows(page, "2026-10-29");
+    expect(third).toEqual([["1", "Echo", never], ["2", "Alpha", "rotation: longest wait since last slot (2 events ago, on 2026-10-01)"]]);
+
+    await page.getByRole("button", { name: "Create public link" }).click();
+    const url = await page.locator("#kx-link").inputValue();
+    expect(url).toMatch(/\/kingdom\/mge\/view\/#d=1[zj]/);
+
+    await gotoHydrated(page, url);
+    await expect(page.locator("[data-view-title]")).toHaveText("K1234 KvK3 MGE");
+    await expect(page.locator("[data-view]")).toContainText("Published by the council, not by KingdomOps");
+    await expect(page.locator("[data-view-rules]")).toContainText("2 slots per event, set by the council.");
+    await expect(page.locator("[data-view-rules]")).toContainText("Cooldown: 1 event after a slot.");
+    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Alpha", never], ["2", "Bravo", never]]);
+    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Charlie", never], ["2", "Delta", never]]);
+    expect(await ledgerRows(page, "2026-10-29")).toEqual(third);
+    await expect(page.getByRole("button", { name: "Print" })).toBeVisible();
+    await expect(page.getByRole("columnheader", { name: "Score" })).toHaveCount(0);
+    expect(errors).toEqual([]);
+  });
+
+  test("score policy: scores stay out of the public link unless ticked", async ({ page }) => {
+    await seed(page, [PLAN]);
+    await gotoHydrated(page, "/kingdom/mge/");
+    await expect(page.locator("[data-plans]")).toContainText("K1234 MGE");
+    // Manual placement first, then score rank among applicants; Delta did not apply.
+    expect(await ledgerRows(page, "2026-10-01")).toEqual([
+      ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", "score rank 1 (4,200,000)"], ["3", "Bravo", "score rank 2 (3,000,000)"],
+    ]);
+    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 (4,200,000)"], ["2", "Bravo", "score rank 2 (3,000,000)"], ["3", "Not filled", ""]]);
+    await expect(page.locator("[data-plan-warnings]")).toContainText("Delta has no score");
+
+    await page.getByRole("button", { name: "Create public link" }).click();
+    await page.goto(await page.locator("#kx-link").inputValue());
+    await expect(page.locator("[data-view]")).toContainText("Scores are not included in this link.");
+    await expect(page.locator("[data-view]")).not.toContainText("4,200,000");
+    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", "score rank 1"], ["3", "Bravo", "score rank 2"]]);
+
+    await gotoHydrated(page, "/kingdom/mge/");
+    await page.getByLabel("Include scores in the public link").check();
+    await page.getByRole("button", { name: "Create public link" }).click();
+    await page.goto(await page.locator("#kx-link").inputValue());
+    await expect(page.locator('table[data-ledger="2026-10-01"]')).toContainText("4,200,000");
+  });
+
+  test("manual placement needs a reason; lock keeps history", async ({ page }) => {
+    await seed(page, [PLAN]);
+    await gotoHydrated(page, "/kingdom/mge/");
+    const block = page.locator('[data-event="2026-10-15"]');
+    await block.getByText("Place a governor by hand").click();
+    await block.getByRole("button", { name: /Place in slot/ }).click();
+    await expect(block.locator(".kg-error")).toContainText("Write why this governor gets this slot");
+    await block.getByLabel("Slot").selectOption("3");
+    await block.getByLabel("Governor", { exact: true }).selectOption({ label: "Charlie" });
+    await block.getByLabel("Reason (required)").fill("Rally lead, applied late");
+    await block.getByRole("button", { name: "Place in slot 3" }).click();
+    expect((await ledgerRows(page, "2026-10-15"))[2]).toEqual(["3", "Charlie", "manual: Rally lead, applied late"]);
+
+    const first = page.locator('[data-event="2026-10-01"]');
+    await first.getByRole("button", { name: "Lock event" }).click();
+    await expect(first.getByText("Locked", { exact: true })).toBeVisible();
+    // Raising Charlie's score (an applicant of the locked event) does not change its stored ledger.
+    await page.getByLabel("Governors, one per line").fill("Charlie, 9m");
+    await page.getByRole("button", { name: "Add from list" }).click();
+    await expect(page.locator("[data-cand-status]")).toContainText("Updated the score of 1.");
+    expect((await ledgerRows(page, "2026-10-01")).map((r) => r[1])).toEqual(["Echo", "Alpha", "Bravo"]);
+
+    await page.reload();
+    await expect(page.locator('[data-event="2026-10-01"]').getByText("Locked", { exact: true })).toBeVisible();
+  });
+
+  test("bad links show a plain error", async ({ page }) => {
+    await gotoHydrated(page, "/kingdom/mge/view/#d=1zNOT-A-REAL-LINK");
+    await expect(page.getByRole("alert")).toContainText("This link is damaged");
+    await gotoHydrated(page, "/kingdom/mge/view/");
+    await expect(page.getByRole("alert")).toContainText("This link has no document in it");
+  });
+
+  test("360px: no sideways scroll, 44px targets (filled)", async ({ page }) => {
+    await page.setViewportSize({ width: 360, height: 780 });
+    await seed(page, [PLAN]);
+    await gotoHydrated(page, "/kingdom/mge/");
+    await expect(page.locator("[data-event]")).toHaveCount(2);
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+    await page.getByRole("button", { name: "Create public link" }).click();
+    await page.goto(await page.locator("#kx-link").inputValue());
+    await expect(page.locator("[data-view]")).toBeVisible();
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+  });
+
+  for (const theme of ["dark", "light"] as const) {
+    for (const state of ["empty", "filled"] as const) {
+      test(`axe planner ${theme} ${state}`, async ({ page }) => {
+        await seed(page, state === "filled" ? [PLAN] : [], theme);
+        await gotoHydrated(page, "/kingdom/mge/");
+        await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
+        await expect(page.locator("[data-mge]")).toBeVisible();
+        if (state === "filled") await expect(page.locator("[data-event]")).toHaveCount(2);
+        await expectAxeClean(page);
+      });
+    }
+
+    test(`axe view ${theme} (ledger and error)`, async ({ page }) => {
+      await seed(page, [PLAN], theme);
+      await gotoHydrated(page, "/kingdom/mge/");
+      await page.getByRole("button", { name: "Create public link" }).click();
+      await page.goto(await page.locator("#kx-link").inputValue());
+      await expect(page.locator("[data-view]")).toBeVisible();
+      await expectAxeClean(page);
+      await gotoHydrated(page, "/kingdom/mge/view/#d=xx");
+      await expect(page.getByRole("alert")).toBeVisible();
+      await expectAxeClean(page);
+    });
+  }
+});
