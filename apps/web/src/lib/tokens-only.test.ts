@@ -25,4 +25,15 @@ describe("styles", () => {
     }
     expect(offenders).toEqual([]);
   });
+
+  it("only use smooth scrolling under prefers-reduced-motion: no-preference", () => {
+    const offenders: string[] = [];
+    for (const f of files(SRC)) {
+      const text = readFileSync(f, "utf8");
+      // Drop every no-preference block (one level of nesting), then nothing smooth may remain.
+      const rest = text.replace(/@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, "");
+      if (/scroll-behavior:\s*smooth/.test(rest)) offenders.push(f.slice(SRC.length));
+    }
+    expect(offenders).toEqual([]);
+  });
 });
