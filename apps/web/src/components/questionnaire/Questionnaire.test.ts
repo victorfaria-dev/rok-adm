@@ -32,6 +32,34 @@ describe("questionnaire island: keyboard", () => {
     expect(screen.getByText(/of 10/).textContent).toContain("2 of 10");
   });
 
+  it("first load focuses the question heading", async () => {
+    setup();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(document.activeElement).toBe(title());
+  });
+
+  it("first load on a resumed step focuses that step's heading", async () => {
+    setup({ draft: { step: stepOf("kingdomDay"), answers: {} } });
+    await new Promise((r) => setTimeout(r, 0));
+    expect(title().textContent).toBe(label(stepOf("kingdomDay")));
+    expect(document.activeElement).toBe(title());
+  });
+
+  it("first load does not steal focus the user already placed", async () => {
+    const other = document.createElement("button");
+    document.body.append(other);
+    other.focus();
+    setup();
+    await new Promise((r) => setTimeout(r, 0));
+    expect(document.activeElement).toBe(other);
+    other.remove();
+  });
+
+  it("the kingdom stage step notes that KvK2+ falls back to KvK1 content", () => {
+    setup({ draft: { step: stepOf("kingdomStage"), answers: {} } });
+    expect(screen.getByText(/KvK2 and later are not researched yet/)).toBeTruthy();
+  });
+
   it("Enter on a radio option commits the picked option", () => {
     setup();
     const radio = screen.getByRole("radio", { name: /Whale/ });
