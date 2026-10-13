@@ -44,7 +44,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | Frente | Escopo | Saída |
 |--------|--------|-------|
 | Guia F2P v1 (EN) em blocos | conta, F2P, início de reino | `guides/` — **concluída**: 43 blocos (37 média, 5 baixa, 1 pendente); lacuna nova: escudos/proteção de iniciante |
-| Correção de IDs de fonte e confiança em B02–B09 | dados | validador 0 erros |
+| Correção de IDs de fonte e confiança em B02–B09 | dados | **concluída** — 282 fichas, 0 erros, 15 avisos |
 | Mapas de processo + árvore de funcionalidades | Sub-admin PRODUTO | `produto/` |
 | Migração v2 das fichas C01, C02, C04 e B01-0001..0003 | dados | **concluída** — 87 fichas, validador 0 erros (B02–B09 pendentes com o sub-admin REINO) |
 
