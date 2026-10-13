@@ -2,7 +2,7 @@
 // and validates the hand-authored planner data against the fact cards:
 //   - every cited fact ID exists;
 //   - every gap ID exists in some _lacunas.md;
-//   - every `evidence` substring in budget-inputs.json and farms.json is literally present in its card.
+//   - every `evidence` (or `*Evidence`) substring in budget-inputs.json, farms.json and low-spender.json is literally present in its card.
 // Usage: pnpm --filter @rokadm/planner build:data   (add --check to fail on drift without writing)
 import { readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
@@ -15,6 +15,7 @@ export const AUTHORED_FILES = [
   "commander-checklist.json",
   "commander-shelf-life.json",
   "farms.json",
+  "low-spender.json",
 ] as const;
 
 export interface FactMetaRow {
@@ -93,7 +94,7 @@ function collectEvidence(v: unknown, path: string, out: Array<[string, Record<st
   if (Array.isArray(v)) { v.forEach((x, i) => collectEvidence(x, `${path}[${i}]`, out)); return; }
   if (typeof v !== "object" || v === null) return;
   for (const [k, x] of Object.entries(v as Record<string, unknown>)) {
-    if (k === "evidence" && typeof x === "object" && x !== null && !Array.isArray(x)) out.push([path, x as Record<string, string>]);
+    if ((k === "evidence" || /Evidence$/.test(k)) && typeof x === "object" && x !== null && !Array.isArray(x)) out.push([path, x as Record<string, string>]);
     else collectEvidence(x, path ? `${path}.${k}` : k, out);
   }
 }
@@ -127,10 +128,13 @@ export function buildData(): BuildResult {
   };
   const farmEvidence: Array<[string, Record<string, string>]> = [];
   collectEvidence(JSON.parse(texts[AUTHORED_FILES.indexOf("farms.json")] ?? "{}"), "farms", farmEvidence);
+  const lowEvidence: Array<[string, Record<string, string>]> = [];
+  collectEvidence(JSON.parse(texts[AUTHORED_FILES.indexOf("low-spender.json")] ?? "{}"), "low", lowEvidence);
   const evidenceSets = [
     ...Object.entries(budget.inputs).map(([k, v]) => [k, v.evidence ?? {}] as const),
     ...budget.oneTimeGems.map((g) => [g.id, g.evidence ?? {}] as const),
     ...farmEvidence,
+    ...lowEvidence,
   ];
   for (const [key, ev] of evidenceSets) {
     for (const [id, needle] of Object.entries(ev)) {
