@@ -17,7 +17,7 @@ import {
 import { compareVersions } from "../src/version";
 import { isUsable } from "../src/policy";
 
-/** Bump when the build logic changes the output shape, so the dataset version changes too. */
+/** Output format version (the pipeline code is also hashed into the dataset version). */
 export const PIPELINE_VERSION = 1;
 
 const PKG = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -120,7 +120,9 @@ export function buildDataset(): BuildResult {
   // 5. Manifest
   const hash = createHash("sha256");
   hash.update(`pipeline:${PIPELINE_VERSION}\n`);
-  for (const p of [...inputs].sort()) {
+  // Inputs = research files read above + the pipeline code that shapes the output.
+  const code = ["scripts/build.ts", "scripts/lib.ts", "src/version.ts", "src/policy.ts"].map((f) => join(PKG, f));
+  for (const p of [...inputs, ...code].sort()) {
     hash.update(`${rel(p)}\n`);
     hash.update(readFileSync(p));
     hash.update("\n");

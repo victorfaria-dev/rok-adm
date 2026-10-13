@@ -204,7 +204,8 @@ export function buildPatches(c04: Array<{ fact: Fact; raw: Record<string, unknow
   const byVersion = new Map<string, { all: Fact[]; primary: Fact[]; date: string | null }>();
   for (const { fact, raw } of c04) {
     const texts = [str(raw.versao_jogo), str(raw.versao_minima), fact.title, ...fact.values.map((v) => `${v.key} ${v.value}`)];
-    const versions = new Set(texts.flatMap((t) => extractVersions(t)));
+    // "~1.0.93" = approximate (version guessed from a date): not evidence for that patch.
+    const versions = new Set(texts.flatMap((t) => extractVersions(t?.replace(/~\s*\d+\.\d+\.\d+/g, ""))));
     for (const v of versions) {
       const e = byVersion.get(v) ?? { all: [], primary: [], date: null };
       e.all.push(fact);

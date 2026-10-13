@@ -1,0 +1,83 @@
+{
+  "_about": "Every number used by realityCheck(). `evidence` maps a fact ID to a literal substring of that card; scripts/build-data.ts fails if the substring is missing, so no number here can drift from research/facts. VIP thresholds live in vip-levels.json (generated from research/facts/A05/data/vip-levels.csv).",
+  "asOf": "2026-10-13",
+  "researchedProfiles": ["f2p"],
+  "inputs": {
+    "dailyObjectivesGems": {
+      "value": 100, "unit": "gems/day",
+      "facts": ["A04-0001"],
+      "evidence": { "A04-0001": "contains 100 gems" }
+    },
+    "vipDailyStart": {
+      "value": 40, "unit": "VIP points (day 1 of streak)",
+      "facts": ["A05-0003"],
+      "evidence": { "A05-0003": "starting at 40 and increasing by 20" }
+    },
+    "vipDailyIncrement": {
+      "value": 20, "unit": "VIP points per consecutive day",
+      "facts": ["A05-0003"],
+      "evidence": { "A05-0003": "increasing by 20 up to a maximum of 200 per day" }
+    },
+    "vipDailyCap": {
+      "value": 200, "unit": "VIP points/day",
+      "facts": ["A05-0003"],
+      "evidence": { "A05-0003": "up to a maximum of 200 per day" }
+    },
+    "gemToVip": {
+      "value": 1, "unit": "VIP points per gem",
+      "facts": ["A05-0004"],
+      "evidence": { "A05-0004": "1 gem = 1 VIP point" }
+    },
+    "dailyObjectivesSpeedupMinutes": {
+      "value": 170, "unit": "minutes/day (derived from a 2020 wiki revision)",
+      "facts": ["A04-0010", "A10-0001"],
+      "evidence": { "A04-0010": "= 170 min" },
+      "derived": true,
+      "pendingGaps": ["L-A04-04", "L-A10-02"]
+    },
+    "kvk1StartDay": {
+      "value": 100, "unit": "kingdom day (approximate)",
+      "facts": ["B01-0500"],
+      "evidence": { "B01-0500": "KvK1 begins around kingdom day 100" },
+      "pendingGaps": ["L-B01-02"]
+    },
+    "chAtKvK1F2P": {
+      "value": { "workableMin": 21, "notExpected": 25 }, "unit": "City Hall level",
+      "facts": ["B01-0700"],
+      "evidence": { "B01-0700": "CH21+ workable; CH25 not expected for F2P" }
+    },
+    "t4Day": {
+      "value": 30, "unit": "kingdom day (reported)",
+      "facts": ["B01-0700"],
+      "evidence": { "B01-0700": "~day 30" }
+    },
+    "powerAtKvK1F2P": {
+      "value": { "minMillions": 10, "maxMillions": 20 }, "unit": "power (millions)",
+      "facts": ["B01-0700"],
+      "evidence": { "B01-0700": "10–20M" }
+    },
+    "lostKingdomEntryCH": {
+      "value": 17, "unit": "City Hall level",
+      "facts": ["B01-0503"],
+      "evidence": { "B01-0503": "requires City Hall 17" },
+      "pendingGaps": ["L-B01-03"]
+    },
+    "vipTargets": {
+      "value": [6, 10], "unit": "VIP level (first, second target)",
+      "facts": ["A05-0008", "A01-0006", "A05-0006"],
+      "evidence": { "A05-0008": "first VIP 6 (permanent second builder), then VIP 10" }
+    }
+  },
+  "oneTimeGems": [
+    { "id": "ch16", "label": "City Hall 16 reward", "value": 100, "unlockCityHall": 16, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "CH16 = 7-day universal speedup + 100 gems" } },
+    { "id": "ch21", "label": "City Hall 21 reward", "value": 200, "unlockCityHall": 21, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "CH21 = 7-day universal speedup + 200 gems" } },
+    { "id": "ch25", "label": "City Hall 25 reward", "value": 500, "unlockCityHall": 25, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "+ 500 gems" } },
+    { "id": "facebook-bind", "label": "Bind account to Facebook (single T3 source)", "value": 200, "unlockCityHall": null, "facts": ["A04-0005"], "evidence": { "A04-0005": "Facebook (200)" }, "confidenceCap": "low" }
+  ],
+  "unquantifiedGemSources": {
+    "text": "Barbarian gem drops (rate unknown), gem deposits, Peerless Scholar pool, events, alliance gifts, quests: not quantified, so not counted.",
+    "facts": ["A04-0006", "A04-0002", "A04-0003", "A04-0004", "A10-0005"],
+    "gaps": ["L-A04-01", "L-A04-02", "L-A04-03", "L-A04-05", "L-A01-04"]
+  },
+  "checkpoints": [7, 14, 30, 60, 90]
+}

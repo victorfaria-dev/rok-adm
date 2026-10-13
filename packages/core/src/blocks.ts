@@ -78,6 +78,13 @@ export interface SelectOptions {
    * "fold" keeps only the highest fitting tier and nests the lower ones in it.
    */
   dailyTiers?: "all" | "fold";
+  /**
+   * Profiles that inherit the blocks of a lower profile while their own delta file
+   * does not exist. Default `{ low: "f2p" }`: the Low guide is a delta over F2P and
+   * F2P blocks carry `low_spender_note` for it (guides/README.md). Pass `{}` for a
+   * strict `perfil` match.
+   */
+  profileFallback?: Partial<Record<SpendingProfile, SpendingProfile>>;
   /** Which block ids are cumulative daily tiers. Default: ids like `daily-15min`. */
   isDailyTier?: (block: GuideBlock) => boolean;
 }
@@ -162,6 +169,7 @@ const DEFAULTS: Required<Omit<SelectOptions, "isDailyTier">> = {
   includeAlreadyDone: true,
   usePhaseByKingdomDay: true,
   dailyTiers: "all",
+  profileFallback: { low: "f2p" },
 };
 
 function resolveOptions(opts: SelectOptions | undefined): Required<Omit<SelectOptions, "isDailyTier">> {
@@ -226,14 +234,19 @@ export function explainSelection(
   const notes: string[] = [];
 
   // Spending profile
-  const spendOk = block.perfil.includes("todos") || block.perfil.includes(profile.spending);
+  const direct = block.perfil.includes("todos") || block.perfil.includes(profile.spending);
+  const fallback = o.profileFallback[profile.spending];
+  const inherited = !direct && fallback !== undefined && block.perfil.includes(fallback);
+  const spendOk = direct || inherited;
   checks.push({
     criterion: "spending",
     passed: spendOk,
     detail: spendOk
       ? block.perfil.includes("todos")
         ? "Applies to every spending profile."
-        : `Written for ${PROFILE_NAMES[profile.spending]} (${block.perfil.join(", ")}).`
+        : inherited
+          ? `Written for ${PROFILE_NAMES[fallback!]}; ${PROFILE_NAMES[profile.spending]} follows it until its own delta exists.`
+          : `Written for ${PROFILE_NAMES[profile.spending]} (${block.perfil.join(", ")}).`
       : `Only for ${block.perfil.map((p) => (p === "todos" ? "all" : PROFILE_NAMES[p])).join(", ")}; you are ${PROFILE_NAMES[profile.spending]}.`,
   });
 

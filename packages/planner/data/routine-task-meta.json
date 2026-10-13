@@ -1,0 +1,133 @@
+{
+  "_about": "Planner-side metadata for routine-tasks.json (fields not in the RoutineTask contract; see NOTES.md). `value` (1-5) is a planner judgement built from the sourced yields in valueReason, not a game number.",
+  "_estimates": {
+    "label": "ESTIMATE - pending T0",
+    "basis": "planner-estimate-v0: no source anywhere publishes minutes per task (A10-0002, gap L-A10-01). Every estimatedMinutes value is a placeholder chosen by the planner author to order tasks, to be replaced by the T0 stopwatch (research/protocolos/t0-medicao.md section 3).",
+    "gap": "L-A10-01",
+    "asOf": "2026-10-13"
+  },
+  "tasks": {
+    "vip-claim": {
+      "valueReason": "VIP points 40 -> 200/day with a streak; one missed day costs up to 720 VIP points over the next 8 days (A05-0003). Chest grows with VIP level (A05-0006).",
+      "mustDo": true,
+      "mustDoReason": "Never break the VIP streak (A05-0003).",
+      "breakRole": "streak",
+      "t0Task": "login-claims"
+    },
+    "daily-ap-claim": {
+      "valueReason": "500 AP per daily claim (T1 1.0.41, 2026 amount unverified: L-A09-02) (A09-0006).",
+      "mustDo": true,
+      "mustDoReason": "Always claim daily AP (daily-routine recommendations; A09-0006).",
+      "breakRole": null,
+      "t0Task": "login-claims"
+    },
+    "daily-objectives-100": {
+      "valueReason": "100-point chest = 100 gems (only guaranteed daily gem source) + Golden Key + 3 epic sculptures; chests give 170 min of speedups/day (derived) (A04-0001, A04-0010). Task list partly outdated since 1.1.09 (A10-0001).",
+      "mustDo": true,
+      "mustDoReason": "Only guaranteed daily gem income for F2P (A04-0001).",
+      "breakRole": null,
+      "t0Task": "daily-objectives"
+    },
+    "queues": {
+      "valueReason": "Idle builder/research/training queues lose account progress; building 10 + research 5 + training 5 Daily Objective points (A10-0001); dashboard from CH8 (A01-0011).",
+      "mustDo": true,
+      "mustDoReason": "Keep both builders working (A10-0002, consensus 'minimise logins, maximise uptime').",
+      "breakRole": "before_pause",
+      "t0Task": "queues"
+    },
+    "gathering": {
+      "valueReason": "+25% gathering speed in alliance territory (A03-0009); big nodes before logging off so marches do not return early (A03-0016); 5 Daily Objective points per resource type (A10-0001).",
+      "mustDo": false,
+      "breakRole": "before_pause",
+      "t0Task": "gathering"
+    },
+    "alliance-help": {
+      "valueReason": "20 helps = 10 Daily Objective points; each help received fills 1% of the bar (A10-0006).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "alliance-help"
+    },
+    "ap-spend": {
+      "valueReason": "AP caps at 1,500 so unspent regeneration is wasted (A09-0001); barbarians give EXP, resources, speedups (A09-0002); auto-peacekeeping exists (A09-0008).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "barbarians-manual"
+    },
+    "city-collect": {
+      "valueReason": "Farm/lumber storage = 10x hourly output, production stops after ~10 h if not collected (A03-0002).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "other"
+    },
+    "tavern-chests": {
+      "valueReason": "3 -> 10 free silver chests/day by Tavern level: tomes, speedups, rare sculptures (A10-0003).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "tavern-chests"
+    },
+    "alliance-donate": {
+      "valueReason": "New Daily Objective task since 1.1.09 (points unknown, L-A10-02) (A10-0001, C04-0004).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "alliance-donate"
+    },
+    "courier-merchant": {
+      "valueReason": "1 free refresh/24h; buy speedups with resources; 10 purchases = 10 Daily Objective points (A04-0011, A10-0001).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "courier-merchant"
+    },
+    "expedition-claim": {
+      "valueReason": "Daily claim of all 3-star missions; medals buy sculptures (1,500 per legendary); medals/day unknown (A10-0004).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "expedition"
+    },
+    "sunset-canyon": {
+      "valueReason": "Daily attempts give seasonal speedup rewards even when losing; top 5 -> Golden Key (A10-0008).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "sunset-canyon"
+    },
+    "lyceum-mock": {
+      "valueReason": "Mock exam gives Flashes of Insight only; does not affect qualification (A10-0005).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "lyceum",
+      "weekdaysOnly": true
+    },
+    "vip-shop-weekly": {
+      "valueReason": "30x 100 AP for food (VIP2) + 50x 5-min speedups for food (VIP3) = 3,000 AP + 250 min/week without gems (A04-0007, A09-0006).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "other",
+      "minVip": 2,
+      "cadence": "weekly (Monday 00:00 UTC restock)"
+    },
+    "peerless-exam": {
+      "valueReason": "Passing the Preliminary or Final splits a gem pool (size unknown, L-A04-05) (A10-0005).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "lyceum",
+      "cadence": "biweekly"
+    },
+    "events": {
+      "valueReason": "Event schedule is not fixed; plan from the in-game calendar (A11-0512); hoard AP items for Lohar / Eve of the Crusade (A09-0007).",
+      "mustDo": false,
+      "breakRole": null,
+      "t0Task": "events"
+    }
+  },
+  "breakModeNotes": [
+    {
+      "text": "Account protection while away (shield, troops, resources) has NO fact card yet; S-D-0002 Idea 2 premise P1 is unverified. Do not rely on this planner for safety while paused.",
+      "facts": [],
+      "pending": true
+    },
+    {
+      "text": "Before pausing, start the longest builds/research and send gatherers to the largest nodes so marches do not return early.",
+      "facts": ["A03-0016", "A10-0002"],
+      "pending": false
+    }
+  ]
+}

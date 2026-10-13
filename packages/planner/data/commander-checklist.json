@@ -1,0 +1,253 @@
+{
+  "_about": "F-20 Commander Decision Checklist. Declarative: questions + rules. A rule fires when every condition in `when` matches the answers. Verdict = avoid if any avoid rule fires; else wait if any wait rule fires or a required question is unanswered; else go. All advice is strategy (T3/T4), so confidence is medium at best; `split: true` marks divided or single-source community views.",
+  "asOf": "2026-10-13",
+  "audience": ["f2p"],
+  "questions": [
+    {
+      "id": "sculptureType",
+      "text": "What are you about to spend?",
+      "required": true,
+      "options": [
+        { "id": "universal_gold", "label": "Universal legendary (gold) sculptures" },
+        { "id": "commander_specific", "label": "This commander's own sculptures (e.g. Expedition medals, event)" },
+        { "id": "epic_or_xp", "label": "Epic sculptures / XP tomes only" }
+      ],
+      "facts": ["A06-0510"]
+    },
+    {
+      "id": "purpose",
+      "text": "What job will this commander do?",
+      "required": true,
+      "options": [
+        { "id": "field_main", "label": "Open-field fighting in my main march" },
+        { "id": "gatherer", "label": "Gathering" },
+        { "id": "pve_barbarians", "label": "Barbarians / PvE only" },
+        { "id": "rally_garrison", "label": "Rally or garrison lead" }
+      ],
+      "facts": ["A06-0512", "A06-0505", "A06-0506"]
+    },
+    {
+      "id": "mainMarch",
+      "text": "Is your main march (primary + secondary) complete, or is this commander part of it?",
+      "required": true,
+      "options": [
+        { "id": "part_of_main", "label": "This commander is part of my main march" },
+        { "id": "main_complete", "label": "My main march is already complete" },
+        { "id": "main_incomplete_other", "label": "My main march is not complete and this is a different commander" }
+      ],
+      "facts": ["A06-0500"]
+    },
+    {
+      "id": "roleNeed",
+      "text": "Does it fill a troop type or role your account does not cover yet?",
+      "required": true,
+      "options": [
+        { "id": "yes", "label": "Yes" },
+        { "id": "no", "label": "No, I already have a commander for this" },
+        { "id": "unsure", "label": "Not sure" }
+      ],
+      "facts": ["A06-0500"]
+    },
+    {
+      "id": "pairing",
+      "text": "Do you have a pair (primary/secondary) for it?",
+      "required": true,
+      "options": [
+        { "id": "owned", "label": "Yes, I own a pair" },
+        { "id": "free_pair", "label": "A free pair is reachable (e.g. Aethelflaed via Expedition)" },
+        { "id": "none", "label": "No pair" }
+      ],
+      "facts": ["A06-0513", "A06-0504"]
+    },
+    {
+      "id": "shelfLife",
+      "text": "How long will it stay useful (by season)?",
+      "required": true,
+      "options": [
+        { "id": "long_term", "label": "Past KvK1 / into SoC (consensus long-term pick)" },
+        { "id": "kvk1_only", "label": "Strong early / KvK1, loses value later" },
+        { "id": "no_priority", "label": "Flagged 'no priority' for F2P" },
+        { "id": "unknown", "label": "Don't know" }
+      ],
+      "facts": ["A06-0502", "A06-0503", "A06-0507", "A06-0509", "A06-0515"]
+    },
+    {
+      "id": "availability",
+      "text": "How can a F2P get its sculptures?",
+      "required": false,
+      "options": [
+        { "id": "free_route", "label": "Free route (Expedition store, starting commander, VIP 10+ chest)" },
+        { "id": "gold_only", "label": "Only with universal gold sculptures" },
+        { "id": "paid_or_wheel", "label": "Mostly Wheel of Fortune / paid offers" }
+      ],
+      "facts": ["A06-0504", "A10-0004", "A05-0006", "A11-0503"]
+    },
+    {
+      "id": "swap",
+      "text": "If this turns out wrong, can a Legendary Commander Swap move the investment?",
+      "required": false,
+      "options": [
+        { "id": "eligible", "label": "Yes, it is a swappable legendary" },
+        { "id": "not_eligible", "label": "No (epic, or excluded like the Season 2 commanders)" },
+        { "id": "unknown", "label": "Don't know" }
+      ],
+      "facts": ["C04-0023", "C04-0021"]
+    },
+    {
+      "id": "cheaperSoon",
+      "text": "Is a free or cheaper route coming soon (e.g. Legendary Pelagius event from day 5, More Than Gems)?",
+      "required": false,
+      "options": [
+        { "id": "yes", "label": "Yes" },
+        { "id": "no", "label": "No / not that I know" }
+      ],
+      "facts": ["C04-0005", "A11-0502"]
+    }
+  ],
+  "rules": [
+    {
+      "id": "gold-on-gatherer",
+      "when": { "sculptureType": ["universal_gold"], "purpose": ["gatherer", "pve_barbarians"] },
+      "effect": "avoid",
+      "text": "Never spend universal gold sculptures on gatherers or PvE-only commanders; bank them for one long-term legendary.",
+      "facts": ["A06-0510", "A06-0505"],
+      "split": false
+    },
+    {
+      "id": "concentrate",
+      "when": { "mainMarch": ["main_incomplete_other"] },
+      "effect": "wait",
+      "text": "Finish one complete march first; partially built commanders give little value.",
+      "facts": ["A06-0500"],
+      "split": false
+    },
+    {
+      "id": "duplicate-role",
+      "when": { "roleNeed": ["no", "unsure"] },
+      "effect": "wait",
+      "text": "It does not clearly fill a missing role: spreading sculptures over overlapping commanders is the common F2P regret.",
+      "facts": ["A06-0500"],
+      "split": false
+    },
+    {
+      "id": "no-pair",
+      "when": { "pairing": ["none"] },
+      "effect": "wait",
+      "text": "No pair yet. Suggested F2P KvK1 pairs differ between sources (Sun Tzu + Aethelflaed, Aethelflaed + Baibars, YSG + flexible).",
+      "facts": ["A06-0513"],
+      "split": true
+    },
+    {
+      "id": "gold-on-short-shelf-life",
+      "when": { "sculptureType": ["universal_gold"], "shelfLife": ["kvk1_only"] },
+      "effect": "wait",
+      "text": "Gold sculptures on a KvK1-only legendary (Richard I, Charles Martel, Cao Cao, Minamoto): community is divided; they lose value from SoC.",
+      "facts": ["A06-0503", "A06-0507"],
+      "split": true
+    },
+    {
+      "id": "shelf-life-unknown",
+      "when": { "shelfLife": ["unknown"] },
+      "effect": "wait",
+      "text": "Shelf-life unknown. Tier lists disagree mostly about time horizon; check a dated 2026 list first.",
+      "facts": ["A06-0509"],
+      "split": true
+    },
+    {
+      "id": "no-priority",
+      "when": { "shelfLife": ["no_priority"] },
+      "effect": "wait",
+      "text": "Flagged 'no priority' for F2P in one 2026 tier list (single source).",
+      "facts": ["A06-0515"],
+      "split": true
+    },
+    {
+      "id": "rally-garrison-gold",
+      "when": { "purpose": ["rally_garrison"], "sculptureType": ["universal_gold"] },
+      "effect": "wait",
+      "text": "Rally/garrison leads are usually spender roles; one source says F2P should favour open-field AoE commanders.",
+      "facts": ["A06-0512"],
+      "split": true
+    },
+    {
+      "id": "cheaper-soon",
+      "when": { "cheaperSoon": ["yes"] },
+      "effect": "wait",
+      "text": "A free or cheaper route is coming (e.g. Legendary Pelagius from kingdom day 5; buy VIP/sculptures during More Than Gems).",
+      "facts": ["C04-0005", "A11-0502"],
+      "split": false
+    },
+    {
+      "id": "short-and-not-swappable",
+      "when": { "shelfLife": ["kvk1_only"], "swap": ["not_eligible"] },
+      "effect": "wait",
+      "text": "Short shelf-life and no swap option: the investment cannot be moved later (Season 2 commanders are excluded from the swap).",
+      "facts": ["C04-0023", "C04-0021"],
+      "split": false
+    },
+    {
+      "id": "wheel-only",
+      "when": { "availability": ["paid_or_wheel"], "sculptureType": ["universal_gold"] },
+      "effect": "wait",
+      "text": "Mostly Wheel/paid: F2P consensus is 10 Wheel spins on a planned target only after VIP 10; Wheel gem math is outdated where Spin Tickets apply.",
+      "facts": ["A11-0503"],
+      "split": true
+    },
+    {
+      "id": "field-main",
+      "when": { "purpose": ["field_main"] },
+      "effect": "go",
+      "text": "Open-field commander for your main march: the investment F2P guides favour.",
+      "facts": ["A06-0500", "A06-0512"],
+      "split": false
+    },
+    {
+      "id": "long-term",
+      "when": { "shelfLife": ["long_term"] },
+      "effect": "go",
+      "text": "Long-term pick (YSG is the most cited F2P legendary target).",
+      "facts": ["A06-0502", "A06-0510"],
+      "split": false
+    },
+    {
+      "id": "free-route",
+      "when": { "availability": ["free_route"] },
+      "effect": "go",
+      "text": "Sculptures come from a free route (Expedition store: 1,500 medals per legendary sculpture; VIP 10+ daily chest).",
+      "facts": ["A06-0504", "A10-0004", "A05-0006"],
+      "split": false
+    },
+    {
+      "id": "epic-no-gold",
+      "when": { "sculptureType": ["epic_or_xp", "commander_specific"], "purpose": ["field_main"] },
+      "effect": "go",
+      "text": "No gold sculptures at risk (e.g. Sun Tzu, the safest early F2P investment).",
+      "facts": ["A06-0501"],
+      "split": false
+    },
+    {
+      "id": "has-pair",
+      "when": { "pairing": ["owned", "free_pair"] },
+      "effect": "go",
+      "text": "You have, or can get for free, a pair for it.",
+      "facts": ["A06-0504", "A06-0513"],
+      "split": false
+    },
+    {
+      "id": "swap-safety-net",
+      "when": { "swap": ["eligible"] },
+      "effect": "info",
+      "text": "Legendary Commander Swap (around the end of Season 2, once per character) can move levels/skills/stars later: lowers regret, not a reason by itself.",
+      "facts": ["C04-0023"],
+      "split": false
+    },
+    {
+      "id": "bank-gold",
+      "when": { "sculptureType": ["universal_gold"] },
+      "effect": "info",
+      "text": "Gold sculptures are scarce for F2P: bank them for one long-term legendary; free channels are alliance gift chests, VIP 10+ chest, Expedition medals.",
+      "facts": ["A06-0510", "A06-0516", "A05-0006"],
+      "split": false
+    }
+  ]
+}

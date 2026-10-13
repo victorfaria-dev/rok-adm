@@ -1,0 +1,184 @@
+{
+  "columns": [
+    "ch_level",
+    "resources",
+    "items",
+    "gems",
+    "source_url"
+  ],
+  "factIds": [
+    "A01-0002"
+  ],
+  "name": "A01-city-hall-rewards",
+  "rows": [
+    {
+      "ch_level": 2,
+      "gems": 0,
+      "items": "1x Universal 5m",
+      "resources": "10K food, 10K wood",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 3,
+      "gems": 0,
+      "items": "2x Universal 5m",
+      "resources": "20K food, 20K wood",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 4,
+      "gems": 0,
+      "items": "3x Universal 5m",
+      "resources": "30K food, 30K wood",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 5,
+      "gems": 0,
+      "items": "1x Universal 30m",
+      "resources": "40K food/wood/stone",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 6,
+      "gems": 0,
+      "items": "2x Universal 30m",
+      "resources": "50K food/wood/stone",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 7,
+      "gems": 0,
+      "items": "5x Universal 30m",
+      "resources": "50K food/wood/stone",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 8,
+      "gems": 0,
+      "items": "2x Universal 8h",
+      "resources": "50K food/wood/stone",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 9,
+      "gems": 0,
+      "items": "1x Universal 24h",
+      "resources": "50K food/wood/stone",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 10,
+      "gems": 0,
+      "items": "1x Civilization Change",
+      "resources": "50K food/wood/stone, 10K gold",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 11,
+      "gems": 0,
+      "items": "11x Building 10m + 11x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 12,
+      "gems": 0,
+      "items": "12x Building 10m + 12x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 13,
+      "gems": 0,
+      "items": "13x Building 10m + 13x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 14,
+      "gems": 0,
+      "items": "14x Building 10m + 14x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 15,
+      "gems": 0,
+      "items": "15x Building 10m + 15x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 16,
+      "gems": 100,
+      "items": "1x Universal 7d",
+      "resources": "100K stone, 20K gold",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 17,
+      "gems": 0,
+      "items": "17x Building 10m + 17x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 18,
+      "gems": 0,
+      "items": "18x Building 10m + 18x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 19,
+      "gems": 0,
+      "items": "19x Building 10m + 19x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 20,
+      "gems": 0,
+      "items": "20x Building 10m + 20x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 21,
+      "gems": 200,
+      "items": "1x Universal 7d",
+      "resources": "100K food/wood (gamerempire)",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 22,
+      "gems": 0,
+      "items": "22x Building 10m + 22x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 23,
+      "gems": 0,
+      "items": "23x Building 10m + 23x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 24,
+      "gems": 0,
+      "items": "24x Building 10m + 24x Training 10m",
+      "resources": "50K-150K resources",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    },
+    {
+      "ch_level": 25,
+      "gems": 500,
+      "items": "1x Master's Blueprint",
+      "resources": "200K stone, 50K gold",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/City_Hall/Rewards"
+    }
+  ],
+  "source": "facts/A01/data/city-hall-rewards.csv"
+}

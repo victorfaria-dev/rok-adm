@@ -1,0 +1,432 @@
+{
+  "columns": [
+    "item",
+    "price",
+    "currency",
+    "vip_required",
+    "discount",
+    "qty_per_week",
+    "source_url"
+  ],
+  "factIds": [
+    "A04-0007"
+  ],
+  "name": "A04-vip-shop",
+  "rows": [
+    {
+      "currency": "food",
+      "discount": "-50%",
+      "item": "Basic Action Point Recovery (100 AP)",
+      "price": 12000,
+      "qty_per_week": 30,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 2
+    },
+    {
+      "currency": "food",
+      "discount": "-30%",
+      "item": "Universal Speedup (5m)",
+      "price": 7000,
+      "qty_per_week": 50,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 3
+    },
+    {
+      "currency": "gems",
+      "discount": "-50%",
+      "item": "Lv.5 Tome of Knowledge (10,000 xp)",
+      "price": 40,
+      "qty_per_week": 50,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 3
+    },
+    {
+      "currency": "gems",
+      "discount": "-57%",
+      "item": "Universal Speedup (5m)",
+      "price": 6,
+      "qty_per_week": 500,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 3
+    },
+    {
+      "currency": "food",
+      "discount": "-50%",
+      "item": "Level 1 Material Choice Chest",
+      "price": 10000,
+      "qty_per_week": 50,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 3
+    },
+    {
+      "currency": "food",
+      "discount": "-33%",
+      "item": "Brand-new Starlight Sculpture",
+      "price": 60000,
+      "qty_per_week": 20,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 4
+    },
+    {
+      "currency": "gems",
+      "discount": "-78%",
+      "item": "500,000 Food",
+      "price": 180,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 4
+    },
+    {
+      "currency": "gems",
+      "discount": "-50%",
+      "item": "Golden Key",
+      "price": 600,
+      "qty_per_week": 20,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 4
+    },
+    {
+      "currency": null,
+      "discount": "VIP 4",
+      "item": "<!-- I don't have a good image to put up (blueprint fragment chest) -->",
+      "price": null,
+      "qty_per_week": "{{cellbgrarity|legendary}} -60%",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": "{{BuildingResources|||||240}}"
+    },
+    {
+      "currency": "wood",
+      "discount": "-33%",
+      "item": "Dazzling Starlight Sculpture",
+      "price": 400000,
+      "qty_per_week": 5,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 5
+    },
+    {
+      "currency": "gems",
+      "discount": "-78%",
+      "item": "500,000 Wood",
+      "price": 180,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 5
+    },
+    {
+      "currency": "gems",
+      "discount": "-58%",
+      "item": "Universal Speedup (60m)",
+      "price": 50,
+      "qty_per_week": 50,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 5
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Level 2 Material Choice Chest",
+      "price": 150,
+      "qty_per_week": 15,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 5
+    },
+    {
+      "currency": "food",
+      "discount": "-50%",
+      "item": "| [[File:Chest_Advanced_Bluesprint2.png|31px|link=Items/Chest Elite Bluesprint]] [[Items/Chest Advanced Bluesprint|Blueprint Fragment Choice Chest]]",
+      "price": 10000,
+      "qty_per_week": 30,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 5
+    },
+    {
+      "currency": "gems",
+      "discount": "-78%",
+      "item": "375,000 Stone",
+      "price": 180,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 6
+    },
+    {
+      "currency": "gems",
+      "discount": "-50%",
+      "item": "Targeted Teleport",
+      "price": 750,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 6
+    },
+    {
+      "currency": null,
+      "discount": "VIP 6",
+      "item": "<!-- I don't have a good image to put up (blueprint fragment chest) -->",
+      "price": null,
+      "qty_per_week": "{{cellbgrarity|legendary}} -60%",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": "{{BuildingResources|||||240}}"
+    },
+    {
+      "currency": "food",
+      "discount": "-50%",
+      "item": "| [[File:Chest_Elite_Bluesprint2.png|31px|link=Items/Chest Elite Bluesprint]] [[Items/Chest Elite Bluesprint|Blueprint Fragment Choice Chest]]",
+      "price": 20000,
+      "qty_per_week": 15,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 6
+    },
+    {
+      "currency": "gems",
+      "discount": "-78%",
+      "item": "200,000 Gold",
+      "price": 180,
+      "qty_per_week": 20,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 7
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Universal Speedup (8h)",
+      "price": 240,
+      "qty_per_week": 20,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 7
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Level 4 Material Choice Chest",
+      "price": 600,
+      "qty_per_week": 15,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 7
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "1,500,000 Food",
+      "price": 460,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 8
+    },
+    {
+      "currency": "gems",
+      "discount": "-50%",
+      "item": "Bundle of Brand-new Starlight Sculptures",
+      "price": 300,
+      "qty_per_week": 25,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 8
+    },
+    {
+      "currency": null,
+      "discount": "VIP 8",
+      "item": "<!-- I don't have a good image to put up (blueprint fragment chest) -->",
+      "price": null,
+      "qty_per_week": "{{cellbgrarity|legendary}} -60%",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": "{{BuildingResources|||||240}}"
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "1,500,000 Wood",
+      "price": 460,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 9
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Epic Commander Sculpture",
+      "price": 200,
+      "qty_per_week": 50,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 9
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "1,125,000 Stone",
+      "price": 460,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 10
+    },
+    {
+      "currency": "gems",
+      "discount": "-50%",
+      "item": "24-Hour Enhanced Defense (Advanced)",
+      "price": 750,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 10
+    },
+    {
+      "currency": null,
+      "discount": "VIP 10",
+      "item": "<!-- I don't have a good image to put up (blueprint fragment chest) -->",
+      "price": null,
+      "qty_per_week": "{{cellbgrarity|epic}} -50%",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": "{{BuildingResources|||||1500}}"
+    },
+    {
+      "currency": "gems",
+      "discount": "-40%",
+      "item": "[[File:Sovereign_Key2.png|31px|link=Items/Sovereing Key]] [[Items/Sovereing Key|Sovereing Key]]",
+      "price": 600,
+      "qty_per_week": 40,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 10
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "600,000 Gold",
+      "price": 460,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 11
+    },
+    {
+      "currency": "gems",
+      "discount": "-50%",
+      "item": "Bundle of Dazzling Starlight Sculptures",
+      "price": 2000,
+      "qty_per_week": 15,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 11
+    },
+    {
+      "currency": null,
+      "discount": "VIP 11",
+      "item": "<!-- I don't have a good image to put up (blueprint fragment chest) -->",
+      "price": null,
+      "qty_per_week": "{{cellbgrarity|epic}} -50%",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": "{{BuildingResources|||||1500}}"
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "5,000,000 Food",
+      "price": 1400,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 12
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "24-Hour Enhanced Attack (Advanced)",
+      "price": 600,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 12
+    },
+    {
+      "currency": null,
+      "discount": "VIP 12",
+      "item": "<!-- I don't have a good image to put up (blueprint fragment chest) -->",
+      "price": null,
+      "qty_per_week": "{{cellbgrarity|epic}} -50%",
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": "{{BuildingResources|||||1500}}"
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "5,000,000 Wood",
+      "price": 1400,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 13
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Legendary Commander Sculpture",
+      "price": 2000,
+      "qty_per_week": 20,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 13
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "3,750,000 Stone",
+      "price": 1400,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 14
+    },
+    {
+      "currency": "gems",
+      "discount": "-50%",
+      "item": "Advanced Army Expansion",
+      "price": 2500,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 14
+    },
+    {
+      "currency": "gems",
+      "discount": "-80%",
+      "item": "2,000,000 Gold",
+      "price": 1400,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 15
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Universal Speedup (24h)",
+      "price": 600,
+      "qty_per_week": 20,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 15
+    },
+    {
+      "currency": "gems",
+      "discount": "-90%",
+      "item": "Level 5 Reserves",
+      "price": 2000,
+      "qty_per_week": 23,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 15
+    },
+    {
+      "currency": "gems",
+      "discount": "-90%",
+      "item": "Level 6 Reserves",
+      "price": 5000,
+      "qty_per_week": 10,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 17
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Training Speedup (24h)",
+      "price": 600,
+      "qty_per_week": 20,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 18
+    },
+    {
+      "currency": "gems",
+      "discount": "-60%",
+      "item": "Level 5 Material Choice Chest",
+      "price": 2400,
+      "qty_per_week": 5,
+      "source_url": "https://riseofkingdoms.fandom.com/wiki/Buildings/Shop",
+      "vip_required": 18
+    }
+  ],
+  "source": "facts/A04/data/vip-shop.csv"
+}
