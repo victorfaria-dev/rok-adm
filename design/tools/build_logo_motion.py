@@ -65,6 +65,27 @@ def out_back(x: float, s: float = 1.6) -> float:
     return 1 + (s + 1) * (x - 1) ** 3 + s * (x - 1) ** 2
 
 
+def nonzero(d: str) -> str:
+    """Rewrite a compound path so inner contours wind against the outer one.
+
+    cairosvg ignores clip-rule, so clip paths use the nonzero rule; opposite winding keeps
+    the counters (holes in D, O, P) open during the light sweeps.
+    """
+    subs = []
+    for part in d.split("M")[1:]:
+        pts = [tuple(map(float, q.split(","))) for q in part.replace("Z", "").replace("L", " ").split()]
+        subs.append(pts)
+    def area(pts):
+        return sum(x1 * y2 - x2 * y1 for (x1, y1), (x2, y2) in zip(pts, pts[1:] + pts[:1]))
+    outer = area(subs[0])
+    out = []
+    for i, pts in enumerate(subs):
+        if i and area(pts) * outer > 0:
+            pts = pts[::-1]
+        out.append("M" + " L".join(f"{x:g},{y:g}" for x, y in pts) + " Z")
+    return " ".join(out)
+
+
 # --- one frame ----------------------------------------------------------------
 def frame(t: float, sting: bool = False) -> str:
     # K travel: centered until 1.30 s, then slides to the lockup position.
@@ -84,8 +105,8 @@ def frame(t: float, sting: bool = False) -> str:
     # Clip paths for the light sweeps (K only, then whole lockup).
     p.append('<clipPath id="ck">' + "".join(f'<path d="{d}"/>' for d in K) + '</clipPath>')
     p.append('<clipPath id="cl">' + "".join(f'<path d="{d}"/>' for d in K)
-             + "".join(f'<path transform="translate({WORD_X + x} {WORD_Y})" d="{d}"/>' for x, d in KINGDOM)
-             + "".join(f'<path transform="translate({OPS_X + x} {WORD_Y})" d="{d}"/>' for x, d in OPS) + '</clipPath>')
+             + "".join(f'<path transform="translate({WORD_X + x} {WORD_Y})" d="{nonzero(d)}"/>' for x, d in KINGDOM)
+             + "".join(f'<path transform="translate({OPS_X + x} {WORD_Y})" d="{nonzero(d)}"/>' for x, d in OPS) + '</clipPath>')
     p.append(f'</defs><rect width="{W}" height="{H}" fill="url(#v)"/>')
     p.append(f'<g transform="translate({kx + shake:.2f} {TOP_Y + shake * .5:.2f}) scale({S})">')
 
@@ -123,7 +144,7 @@ def frame(t: float, sting: bool = False) -> str:
                 continue
             gx = WORD_X + x
             p.append(f'<svg x="{gx}" y="{WORD_Y}" width="130" height="100" overflow="hidden">'
-                     f'<path d="{d}" fill="{IVORY}" transform="translate(0 {100 * (1 - e):.2f})"/></svg>')
+                     f'<path d="{d}" fill="{IVORY}" fill-rule="evenodd" transform="translate(0 {100 * (1 - e):.2f})"/></svg>')
         # Scene 5: OPS slams in with two ghost trails.
         for i, (x, d) in enumerate(OPS):
             t0 = 2.20 + i * 0.07
