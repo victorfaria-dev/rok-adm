@@ -11,6 +11,8 @@ import {
 } from "../lib/card";
 import { RARITY_LABELS } from "../lib/rarity";
 import { K_PATHS, K_VIEWBOX } from "../lib/k-icon";
+import { readSavedCrest, type CrestV1 } from "../lib/crest";
+import CrestSvg from "./CrestSvg";
 import "./GovernorCard.css";
 
 const TILT = 24; // degrees at the card's edge
@@ -28,6 +30,7 @@ export default function GovernorCard() {
   const [tagError, setTagError] = useState<string | null>(null);
   const [status, setStatus] = useState("");
   const [busy, setBusy] = useState(false);
+  const [crest, setCrest] = useState<CrestV1 | null>(null);
   const el = useRef<HTMLDivElement>(null);
   const dragging = useRef(false);
 
@@ -38,6 +41,7 @@ export default function GovernorCard() {
     setCard(c);
     setNameRaw(c.name);
     setTagRaw(c.tag);
+    setCrest(readSavedCrest());
     try {
       const mq = matchMedia(REDUCE_MQ);
       setOsReduce(mq.matches);
@@ -169,6 +173,7 @@ export default function GovernorCard() {
               </div>
               <h2 class="gc-name">{data.name}</h2>
               <p class="gc-tagline">
+                {crest && <CrestSvg crest={crest} class="gc-crest" />}
                 {data.tag ? <span class="gc-tag">[{data.tag}]</span> : <span class="gc-notag">No alliance tag</span>}
               </p>
               <dl class="gc-stats">

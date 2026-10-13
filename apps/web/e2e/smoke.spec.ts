@@ -103,6 +103,7 @@ test.describe("accessibility", () => {
   for (const theme of ["dark", "light"] as const) {
     for (const route of ROUTES) {
       test(`axe ${theme} ${route}`, async ({ page }) => {
+        if (route.startsWith("/guide")) test.slow(); // the full guide is ~40k px tall; axe needs more than 30 s under load
         await page.goto("/");
         await page.evaluate((t) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: t })), theme);
         await page.goto(route);

@@ -1,0 +1,34 @@
+---
+// F-61 Alliance crest (experimental): 2D SVG editor always; the 3D view loads Three.js only after "View in 3D".
+import Shell from "../../layouts/Shell.astro";
+import CrestBuilder from "../../components/crest/CrestBuilder.tsx";
+---
+<Shell title="Alliance crest" description="Build an original alliance crest: shield, alliance colour, tag and emblem. Download it as PNG or SVG, or turn it in 3D." mode="operate">
+  <section class="intro">
+    <p class="exp"><span class="pill">Experimental</span> We are testing whether alliances want this. It may change or go away.</p>
+    <h1>Alliance crest</h1>
+    <p class="sub">Pick a shield, your alliance colour, your tag and an emblem. It saves on this device and shows on your governor card.</p>
+  </section>
+
+  <CrestBuilder client:load />
+
+  <section class="notes" aria-labelledby="notes-h">
+    <h2 id="notes-h">About the crest</h2>
+    <p>Every shape and emblem here was drawn for KingdomOps. Nothing comes from the game's art, so you can use the PNG or SVG anywhere: Discord, a banner, your avatar.</p>
+    <p>The crest is not an official in-game alliance flag and does not change anything in the game.</p>
+  </section>
+</Shell>
+
+<style>
+  .intro { display: grid; gap: var(--ko-space-3); padding-block: var(--ko-space-2) var(--ko-space-8); }
+  h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  .sub { color: var(--ko-text-muted); max-width: 48ch; }
+  .exp { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-2); font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+  .pill {
+    font: var(--ko-weight-semibold) var(--ko-text-xs)/1 var(--ko-font-display); letter-spacing: .08em; text-transform: uppercase;
+    padding: 6px 10px; border: 1px solid var(--ko-warning); color: var(--ko-text);
+  }
+  .notes { display: grid; gap: var(--ko-space-3); margin-top: var(--ko-space-12); }
+  h2 { font-size: var(--ko-text-sm); letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); }
+  .notes p { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 72ch; }
+</style>

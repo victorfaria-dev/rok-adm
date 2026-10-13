@@ -36,6 +36,19 @@ describe("styles", () => {
     }
     expect(offenders).toEqual([]);
   });
+
+  it("only declare page transitions under prefers-reduced-motion: no-preference", () => {
+    const offenders: string[] = [];
+    let declared = false;
+    for (const f of files(SRC)) {
+      const text = readFileSync(f, "utf8");
+      declared ||= /@view-transition\b/.test(text);
+      const rest = text.replace(/@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*\{(?:[^{}]*\{[^{}]*\})*[^{}]*\}/g, "");
+      if (/@view-transition\b|::view-transition-(?:old|new|group)/.test(rest)) offenders.push(f.slice(SRC.length));
+    }
+    expect(declared).toBe(true);
+    expect(offenders).toEqual([]);
+  });
 });
 
 // WCAG 1.4.11: a control's boundary (inputs, selects, checkbox/radio option rows) needs 3:1 against

@@ -57,3 +57,14 @@ input, select, textarea { font: inherit; font-size: max(16px, 1em); }
   .btn-primary:hover::before { background: var(--ko-accent-hover); }
   .btn-secondary:hover { box-shadow: inset 0 0 0 1px var(--ko-text-muted); }
 }
+
+/* Page transitions: cross-document View Transitions (real page loads, so the service worker, theme boot script,
+   islands and focus behave exactly as without them). Only when motion is welcome; browsers without support
+   just navigate. The fixed chrome (top bar, rail, tabs) has its own names in Shell.astro so it stays put. */
+@media (prefers-reduced-motion: no-preference) {
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root) { animation: ko-page-out var(--ko-duration-fast) var(--ko-ease-out) both; }
+  ::view-transition-new(root) { animation: ko-page-in var(--ko-duration-base) var(--ko-ease-out) both; }
+}
+@keyframes ko-page-out { to { opacity: 0; } }
+@keyframes ko-page-in { from { opacity: 0; transform: translateY(8px); } }

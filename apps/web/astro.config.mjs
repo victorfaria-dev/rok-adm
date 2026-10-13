@@ -80,5 +80,6 @@ export default defineConfig({
   trailingSlash: "always",
   build: { format: "directory" },
   integrations: [preact(), brandAssets(), serviceWorker()],
-  vite: { server: { fs: { allow: [join(here, "../..")] } } },
+  // The lazy Three.js chunk for the 3D crest is ~550 KB raw (~140 KB gz); scripts/check-budget.ts caps it.
+  vite: { server: { fs: { allow: [join(here, "../..")] } }, build: { chunkSizeWarningLimit: 600 } },
 });

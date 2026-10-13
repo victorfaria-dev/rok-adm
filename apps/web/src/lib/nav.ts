@@ -22,6 +22,7 @@ export const SECONDARY: readonly { href: string; label: string }[] = [
   { href: "/farms/", label: "Farms" },
   { href: "/kingdom/", label: "Kingdom council" },
   { href: "/card/", label: "Governor card" },
+  { href: "/crest/", label: "Alliance crest" },
   { href: "/trust/", label: "Trust & privacy" },
   { href: "/brand/", label: "Brand" },
 ];

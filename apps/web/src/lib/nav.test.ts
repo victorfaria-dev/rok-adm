@@ -18,7 +18,7 @@ describe("nav", () => {
   });
 
   it("secondary pages (More menu on phones, rail on desktop) start with All guides", () => {
-    expect(SECONDARY.map((s) => s.label)).toEqual(["All guides", "Tools", "Farms", "Kingdom council", "Governor card", "Trust & privacy", "Brand"]);
+    expect(SECONDARY.map((s) => s.label)).toEqual(["All guides", "Tools", "Farms", "Kingdom council", "Governor card", "Alliance crest", "Trust & privacy", "Brand"]);
     expect(SECONDARY[0]!.href).toBe("/guides/");
     expect(isActive("/guides/", "/guides/recovery/")).toBe(true);
     expect(isActive("/guides/", "/guide/")).toBe(false);
