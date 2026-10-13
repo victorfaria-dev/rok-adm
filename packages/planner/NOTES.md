@@ -41,3 +41,9 @@
   - `removeFarm` also deletes that farm's shipments, so the ledger never has orphans;
   - the oldest shipments are dropped past 2,000;
   - the store has no planner runtime imports (types only).
+
+## Council kit (wave E: F-33, F-34, F-30, F-35, F-39, F-42)
+- Modules: `kingdom-common.ts` (doc base, `parseQuantity`, formatting), `kingdom-codec.ts` (share links: `#d=` + "1z"/"1j" + base64url of `{k, d}`), `kingdom-formula.ts` (safe evaluator, presets from B08-0001), `kingdom-requirements.ts`, `kingdom-rules.ts`, `kingdom-recruit.ts`, `kingdom-mge.ts`, `kingdom-seed.ts`; barrel `kingdom.ts`.
+- Same bundle rule as farms: only types from `./facts`; a test fails if a kingdom module imports `facts-meta.json`. Displayed fact confidence is pinned by tests that read the card files in `research/facts/`.
+- Web storage: `apps/web/src/lib/kingdom-store.ts`, key `ko:kingdom:v1`, plain documents `{id, kind, title, updatedAt, data}` ready for wave F sync.
+- Hypotheses/limits: seed what-if (Vacation Permit = removed from the counted power) is a hypothesis (L-B03-03); MGE rotation rule is ours (L-B05-02); requirement power basis is a council field (L-B08-02).
