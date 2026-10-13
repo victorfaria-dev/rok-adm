@@ -95,10 +95,9 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
     features: ["F-29", "F-28"],
     sectionTitles: {
       overview: "1. What changed while you were away",
-      plan: "2. Your 14-day catch-up plan",
-      recovery: "3. Stay, migrate or restart",
-      mistakes: "4. Mistakes returners make",
-      open: "5. Open questions and pending measurements",
+      recovery: "2. Your 14-day catch-up plan, and stay, migrate or restart",
+      mistakes: "3. Mistakes returners make",
+      open: "4. Open questions and pending measurements",
     },
   },
   {
@@ -108,10 +107,9 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
     title: "Recovering after being zeroed",
     features: ["F-13"],
     sectionTitles: {
-      overview: "1. First, don't quit today",
-      recovery: "2. Recovery plan",
-      mistakes: "3. Log-off risk checklist",
-      open: "4. Open questions and pending measurements",
+      recovery: "1. Recovery plan: first, don't quit today",
+      mistakes: "2. Log-off risk checklist",
+      open: "3. Open questions and pending measurements",
     },
   },
   {

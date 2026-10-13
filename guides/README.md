@@ -10,6 +10,11 @@ Pipeline: `research/facts/` (cards) → `guides/data/blocks.*.json` (blocks) →
 |---|---|
 | `data/blocks.f2p.json` | F2P base blocks, v1 (43 blocks). **The source of truth**: edit here. |
 | `data/blocks.newkingdom.json` | F-12 New Kingdom Start Guide + Day-1 Survival + Returning-player branch, v1 (14 blocks, ids `nk-*`). |
+| `data/blocks.low.json` | F-75 Low spender **pass-only** delta over the F2P base (same `id` overrides, new ids `low-*`). |
+| `data/blocks.first30.json` | F-11 First 30 Days Path (ids `f30-*`). |
+| `data/blocks.returning.json` | F-29 Returner Mode + F-28 "What changed since…" (ids `ret-*`). |
+| `data/blocks.recovery.json` | F-13 Zeroed Recovery Playbook + log-off risk checklist (ids `rz-*`). |
+| `data/blocks.kingdomadmin.json` | Kingdom administration guide v1 for kings and council (ids `ka-*`, role `lider`). |
 | `data/blocks.schema.json` | JSON Schema of a blocks file. |
 | `f2p-early-kingdom-guide.md` | Human-readable F2P guide, **generated** from the blocks. Don't edit by hand. |
 | `tools/validate_blocks.py` | Validator: schema plus editorial rules checked against `research/facts`. With no arguments it checks every `data/blocks.*.json` and that ids are unique across files (profile delta files excepted). Stdlib only. |
@@ -20,6 +25,8 @@ Pipeline: `research/facts/` (cards) → `guides/data/blocks.*.json` (blocks) →
 python3 guides/tools/validate_blocks.py            # must print "0 errors"
 python3 guides/tools/assemble_guide.py             # rewrites f2p-early-kingdom-guide.md
 ```
+
+Which guide is offered to which profile is decided in `packages/core/src/guideSets.ts` (registry + `guidesForProfile`); every new blocks file must be registered there.
 
 ## Block fields
 
