@@ -164,3 +164,14 @@ The first 9 columns are the minimum the admin asked for (`date, kingdom_day, CH,
 - Each answered question becomes a **T0 card** (or updates an existing card). The card cites `src:t0-victor` with the screenshot file name as `url` and a transcription as `trecho`. Confidence `alta` applies **for that version and that kingdom**.
 - The guide's time model (A10-0002 checklist with minutes) and gem model (A04-0006) are rebuilt from the log after day 8 and again after day 30.
 - Bias note: one account, one kingdom, one playstyle. T0 numbers are a sample of one. The guide shows them as "measured on a fresh F2P account (kingdom N, version X)", never as universal constants.
+
+## Adendo (2026-10-13) — itens pedidos pelo produto
+
+| # | Item | O que registrar | Bloqueia |
+|---|------|-----------------|----------|
+| T0-A1 | Upload de avatar personalizado | Existe? Requisito (CH/VIP/custo), formato, tamanho máximo, recorte, moderação/tempo de aprovação, cooldown de troca; print do avatar com a moldura do jogo por cima | F-07, F-08 |
+| T0-A2 | Código curto no anúncio/descrição da aliança | Se um código alfanumérico curto (sem URL) passa pelo filtro de chat/descrição | F-06 (verificação de liderança) |
+| T0-A3 | ROK Toolkit (ferramenta oficial) | Prints de todas as telas: o que mostra, se exporta dados | F-37/F-38 (DKP), ingestão de dados |
+| T0-A4 | OCR dos próprios prints | Prints das telas de perfil/estatísticas em resolução nativa (para testar OCR) | F-19 Data Intake |
+| T0-A5 | Escudos / proteção de iniciante | Duração da proteção inicial, custos e durações de escudos | blocos de segurança do guia F2P |
+| T0-A6 | Skin Hidden Lotus | Como se obtém (evento de início? condição?) | conteúdo de identidade/restart |
