@@ -16,6 +16,7 @@ import {
   type Sourced,
 } from "@rokadm/planner";
 import f2pBlocks from "../../../../guides/data/blocks.f2p.json";
+import farmsBlocks from "../../../../guides/data/blocks.farms.json";
 import newKingdomBlocks from "../../../../guides/data/blocks.newkingdom.json";
 import type { BudgetPayload, CardBadge, GuideData, GuidePayload, PayloadBlock, PatchBadge } from "./guide-types";
 
@@ -23,6 +24,7 @@ import type { BudgetPayload, CardBadge, GuideData, GuidePayload, PayloadBlock, P
 export const BLOCK_SETS: Record<string, readonly GuideBlock[]> = {
   f2p: f2pBlocks as unknown as GuideBlock[],
   newkingdom: newKingdomBlocks as unknown as GuideBlock[],
+  farms: farmsBlocks as unknown as GuideBlock[],
 };
 
 const md = new Marked({ gfm: true, breaks: false });
