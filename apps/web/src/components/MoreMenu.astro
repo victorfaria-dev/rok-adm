@@ -1,0 +1,81 @@
+---
+// Phone/tablet entry point for the SECONDARY pages (the desktop rail lists them;
+// the 4-tab bar stays as is). Disclosure pattern: a button with aria-expanded that
+// shows a list of links right after it, Esc closes and returns focus to the button.
+import Icon from "./Icon.astro";
+import { SECONDARY, isActive } from "../lib/nav";
+const path = Astro.url.pathname;
+---
+<div class="more" data-more>
+  <button type="button" class="more-btn" aria-expanded="false" aria-controls="more-panel" aria-label="More" data-more-button>
+    <Icon name="more" />
+  </button>
+  <nav id="more-panel" class="more-panel" aria-label="More" hidden data-more-panel>
+    <ul>
+      {SECONDARY.map((s) => (
+        <li><a href={s.href} aria-current={isActive(s.href, path) ? "page" : undefined}>{s.label}</a></li>
+      ))}
+    </ul>
+  </nav>
+</div>
+
+<style>
+  .more { position: relative; }
+  .more-btn {
+    display: inline-flex; align-items: center; justify-content: center; min-width: 48px; min-height: 48px;
+    padding: 0; border: 0; background: transparent; color: var(--ko-text-muted); cursor: pointer;
+  }
+  .more-btn[aria-expanded="true"] { color: var(--ko-text); }
+  .more-btn:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: -2px; }
+  .more-panel {
+    position: absolute; z-index: 20; top: calc(100% + var(--ko-space-1)); right: 0;
+    width: min(18rem, calc(100vw - 2 * var(--ko-space-4)));
+    padding: var(--ko-space-1); background: var(--ko-surface-raised);
+    border: 1px solid var(--ko-control-border); box-shadow: var(--ko-shadow-3);
+    transform-origin: top right;
+  }
+  .more-panel ul { list-style: none; margin: 0; padding: 0; display: grid; }
+  .more-panel a {
+    display: flex; align-items: center; min-height: 48px; padding-inline: var(--ko-space-3);
+    color: var(--ko-text); text-decoration: none; font-size: var(--ko-text-sm);
+  }
+  .more-panel a[aria-current="page"] { color: var(--ko-accent); font-weight: var(--ko-weight-semibold); }
+  .more-panel a:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: -2px; }
+  @media (prefers-reduced-motion: no-preference) {
+    .more-panel:not([hidden]) { animation: pop var(--ko-duration-fast) var(--ko-ease-out); }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .more-btn:hover { color: var(--ko-text); }
+    .more-panel a:hover { background: var(--ko-surface); }
+  }
+  @keyframes pop { from { opacity: 0; transform: scale(.96); } }
+</style>
+
+<script>
+  for (const root of document.querySelectorAll<HTMLElement>("[data-more]")) {
+    const button = root.querySelector<HTMLButtonElement>("[data-more-button]")!;
+    const panel = root.querySelector<HTMLElement>("[data-more-panel]")!;
+    const isOpen = () => button.getAttribute("aria-expanded") === "true";
+    const set = (open: boolean) => {
+      button.setAttribute("aria-expanded", String(open));
+      panel.hidden = !open;
+    };
+    button.addEventListener("click", () => set(!isOpen()));
+    root.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && isOpen()) {
+        e.preventDefault();
+        set(false);
+        button.focus();
+      }
+    });
+    // Close when focus leaves the menu (Tab past the last link, or into the page).
+    root.addEventListener("focusout", (e) => {
+      const next = e.relatedTarget as Node | null;
+      if (isOpen() && next && !root.contains(next)) set(false);
+    });
+    // Close when tapping outside.
+    document.addEventListener("click", (e) => {
+      if (isOpen() && !root.contains(e.target as Node)) set(false);
+    });
+  }
+</script>
