@@ -58,6 +58,7 @@ Stack: `docs/adr/0001-stack-mvp.md` (TypeScript, monorepo pnpm, Vitest, CI no Gi
 | Motor de blocos + questionário | `packages/core` | F-51, F-01 — **concluída** (36 testes) |
 | Rotina por tempo, reality check, checklist de comandante | `packages/planner` | F-15, F-14, F-20 — **concluída** (39 testes; minutos pendentes de T0) |
 | Conteúdo: guia de reino novo, privacidade, kit de divulgação | `guides/data`, `content/` | F-12, F-56, F-57 — **concluída** (14 blocos) |
+| Onda H: mais guias em blocos (EN) | `guides/data`, `packages/core` | F-75, F-11, F-29 + F-28, F-13, admin de reino — **concluída**: 61 blocos (3 alta, 48 média, 3 baixa, 7 pendentes), verificação adversarial por guia (115 achados corrigidos/relativizados); registro de guias por perfil no core com 19 testes |
 
 ## Identidade visual (concluída)
 
@@ -70,6 +71,29 @@ KingdomOps v1.0: kit do Victor em `design/brand/`; tokens gerados em `design/tok
 | 1. App Shell + Home | **concluída**: abas no celular, trilho no tablet/desktop, tema Dark/Light/System sem flash, chip de perfil, offline (service worker), JS ≤ 5 KB gz por rota; 15 testes unitários + 63 testes Playwright (axe nos dois temas) |
 | 2. Questionário (`/start`) | próxima |
 | 3. Meu guia + Budget Reality Check (`/guide`) | depois da 2 |
+
+## Lacunas da onda H (guias)
+
+Usadas nos blocos como `PROPOSED-*` (o validador só avisa). Promover a `L-*` no `_lacunas.md` do domínio quando o dono do domínio aceitar.
+
+| ID | Lacuna | Impacto | Método sugerido | Domínio | Guias |
+|---|---|---|---|---|---|
+| PROPOSED-SHIELDS | Duração, custo, fontes de escudos; proteção de iniciante; o que quebra o escudo | alto | T0 loja/tooltips; notas oficiais | A03/A08 | recuperação, 30 dias, F2P, reino novo |
+| PROPOSED-ZEROING-LOSS-SCOPE | O que um zeramento pode levar além de tropas e recursos saqueáveis (prédios, comandantes, pesquisa, equipamento, VIP) | alto | ajuda oficial/FAQ; T0 antes/depois | A08 | recuperação |
+| PROPOSED-CH-BY-KINGDOM-DAY | CH típico de um não pagante nos dias 3/7/14/21/30 do reino | alto | diário T0 em conta nova; relatos T4 | A01 | 30 dias |
+| PROPOSED-RETURNER-REWARDS | Existe evento/recompensa de retorno? conteúdo, duração, quanto tempo fora | alto | conta parada 30+ dias: prints no primeiro login; fórum oficial | A11 | retornante |
+| PROPOSED-CONDUCT-SCORE-RULES | Limites e penalidades do Conduct Score; scanners/bots de print contam? Good Conduct Reward (1.1.10) | alto | texto de regras no jogo (T0); notas/FAQ oficiais | C04/C02 | admin de reino |
+| PROPOSED-HALL-OF-HEROES-RETURN | % de recursos de cura e tropas devolvidos pelo Hall of Heroes após o Lost Kingdom | medio | notas 1.0.89/1.0.94; carta de fim de KvK (T0) | A08/B01 | recuperação |
+| PROPOSED-TELEPORT | Tipos, custos e limites de teleporte após zeramento | medio | T0 loja/tooltips | A03 | recuperação |
+| PROPOSED-SWAP-ACCESS | Retornante em reino pós-Season 2 ainda usa o Legendary Commander Swap? | medio | calendário de evento em reino SoC; notas 1.1.02+ | A06 | retornante |
+| PROPOSED-INACTIVE-ACCOUNT-STATE | O que acontece com cidade inativa (escudo, queima, realocação, cargo na aliança) | medio | ajuda no jogo; FAQ oficial | A13/B04 | retornante |
+| PROPOSED-RECHARGE-EVENT | Recompensas e frequência do evento de Recharge; passes contam? | medio | T0 print do evento (sem compra) | A12/A11 | Low |
+| PROPOSED-DO-CHEST-CONTENTS | Conteúdo dos baús de Daily Objectives (20–100 pontos) após 1.1.09 | medio | T0 dia 1: print da prévia de cada baú | A10/A04/A09 | 30 dias |
+| PROPOSED-SUPPLY-DEPOT-CLAIM | O suprimento de 30 dias precisa ser coletado diariamente? dia perdido some? | baixo | T0 tela de coleta/texto do pacote | A12 | Low |
+
+Fatos pedidos pelos autores que não existem em fichas (sem ID ainda): tabela de marcos do Growth Fund por CH (cai em L-A12-02); horas do conselho por fluxo; poderes padrão R1–R5; transferência de reinado e de R5 inativo (L-B05/L-B03-05); quantidade de Vacation Permits (L-B03-03); custo de cura vs. retreino (L-A08-01); ordem de desbloqueio do tutorial (L-A01-04); fichas C04 para 1.0.95 (Eve of the Crusade dentro do Lost Kingdom) e 1.1.11 (mudança de tempos de passe), hoje só na linha do tempo.
+
+Manutenção de fichas apontada (não alterada nesta onda): A13-0005 tem nota dizendo que C04-0014 invalida parte do conselho mas `invalidado_por: null`; B02-0001 (governador que sai da aliança fica no roster, 1.0.91) e B08-0008 (matchmaking usa poder médio e kill points, 1.0.96) têm fatos oficiais só nas `notas`; B05-0004 (Auctioneer Bot sem manutenção desde 2025-01, validade vencida); A12-0004 (tabela VIP por dólar não é citação literal); A11-0502 ("exceto abaixo de VIP 6" ambíguo); A04-0001/A09-0006 (conteúdo dos baús vem de wiki 2020); A03-0014 (Mercador, wiki 2020).
 
 ## Bloqueios
 
