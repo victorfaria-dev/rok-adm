@@ -692,7 +692,7 @@ F-43 Kingdom Directory, F-46 Leadership Weekly Cockpit, F-39 Seed Simulator, F-5
 
 ### Decisões do dono em aberto
 
-1. **Primeiro backend (pendente desde a primeira árvore):** I-06 propunha **Identidade** como o primeiro módulo com backend. Pela evidência, o primeiro backend deveria ser puxado pelo **estado compartilhado do reino** (F-35/F-36/F-37) e pelo **sync de farms**. A nova área de farms reforça isso: F-68, F-69 e F-89 ganham com sync. Identidade pessoal entrega valor antes, no cliente (F-10, F-60). F-05..F-09 continuam no backlog como decisões do dono. **Decisão continua com o Victor.**
+1. **Primeiro backend (pendente desde a primeira árvore):** I-06 propunha **Identidade** como o primeiro módulo com backend. Pela evidência, o primeiro backend deveria ser puxado pelo **estado compartilhado do reino** (F-35/F-36/F-37) e pelo **sync de farms**. A nova área de farms reforça isso: F-68, F-69 e F-89 ganham com sync. Identidade pessoal entrega valor antes, no cliente (F-10, F-60). F-05..F-09 continuam no backlog como decisões do dono. **DECIDIDO pelo Victor (2026-10-13): primeiro backend = dados compartilhados do reino + sync de farms.**
 2. **Pack Value Advisor (F-73):** o hub deve comparar valor por dólar de pacotes? Recomendação: sim, com "pular" como padrão, sem link de compra e sem medir compras geradas.
 3. **Arquivos de scanners de terceiros no F-37** (`apis-integracoes.md` §6, pergunta 2): aceitar com atestado e opt-out, ou só arquivos de exportação oficial?
 4. **Segunda língua (F-84):** escolher pelo tráfego do MVP; PT-BR é candidata pela comunidade grande e fora do corpus.
