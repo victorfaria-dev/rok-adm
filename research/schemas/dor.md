@@ -7,7 +7,7 @@ Uma dor = um problema recorrente de jogador ou líder. Diferente de "funcionalid
 id: D-0001
 titulo: "Dificuldade em saber onde gastar aceleradores"
 quem: jogador               # jogador | lider_alianca | rei_conselho | farm
-perfil: [f2p, baixo]
+perfil: [f2p, low]          # ver perfis.md
 estagio_reino: [todos]
 dominios: [A04, A10]        # taxonomia
 descricao: "Descrição do problema em 1–3 frases, nas palavras do jogador quando possível."

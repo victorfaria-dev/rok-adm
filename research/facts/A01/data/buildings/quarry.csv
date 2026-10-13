@@ -1,0 +1,26 @@
+Level,Stone/hr,Capacity,Requirements,Cost,Time,Power,ROI days,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,300,3000,City Hall Lv.6,F/W/S/G=100/100/-/-,10s,5,0.03,100,100,,,,10s,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+2,320,3200,City Hall Lv.6,F/W/S/G=300/300/-/-,1m,10,1.3,300,300,,,,1m,60,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+3,350,3500,City Hall Lv.6,F/W/S/G=500/500/-/-,2m,16,1.4,500,500,,,,2m,120,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+4,390,3900,City Hall Lv.6,F/W/S/G=1.0K/1.0K/-/-,5m,32,2.1,1000,1000,,,,5m,300,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+5,435,4350,City Hall Lv.6,F/W/S/G=2.0K/2.0K/-/-,20m,88,3.7,2000,2000,,,,20m,1200,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+6,490,4900,City HallLv.6,F/W/S/G=3.5K/3.5K/-/-,40m,198,5.3,3500,3500,,,,40m,2400,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+7,550,5500,City HallLv.7,F/W/S/G=5.3K/5.3K/-/-,1h 10m,387,7.4,5300,5300,,,,1h 10m,4200,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+8,620,6200,City HallLv.8,F/W/S/G=8.0K/8.0K/-/-,1h 27m,627,9.5,8000,8000,,,,1h 27m,5220,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+9,710,7100,City HallLv.9,F/W/S/G=12.0K/12.0K/-/-,1h 48m,934,11.1,12000,12000,,,,1h 48m,6480,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+10,825,8250,City HallLv.10,F/W/S/G=18.0K/18.0K/-/-,2h 24m,1 351,13.0,18000,18000,,,,2h 24m,8640,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+11,975,9750,City Hall Lv.11,F/W/S/G=27.5K/27.5K/-/-,3h 36m,1 979,15.3,27500,27500,,,,3h 36m,12960,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+12,1160,11 600,City Hall Lv.12,F/W/S/G=42.5K/42.5K/-/-,5h 24m,2 926,19.1,42500,42500,,,,5h 24m,19440,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+13,1390,13 900,City Hall Lv.13,F/W/S/G=65.0K/65.0K/-/-,6h 43m,4 152,23.6,65000,65000,,,,6h 43m,24180,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+14,1650,16 500,City Hall Lv.14,F/W/S/G=97.5K/97.5K/-/-,8h 6m,5 708,31.3,97500,97500,,,,8h 6m,29160,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+15,2025,20 250,City Hall Lv.15,F/W/S/G=147.5K/147.5K/-/-,9h 40m,7 690,32.8,147500,147500,,,,9h 40m,34800,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+16,2400,24 000,City Hall Lv.16,F/W/S/G=222.5K/222.5K/-/-,11h 40m,10 260,49.4,222500,222500,,,,11h 40m,42000,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+17,2775,27 750,City Hall Lv.17,F/W/S/G=335.0K/335.0K/-/-,16h 40m,14 000,74.4,335000,335000,,,,16h 40m,60000,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+18,3225,32 250,City Hall Lv.18,F/W/S/G=525.0K/525.0K/-/-,21h 40m,19 220,97.2,525000,525000,,,,21h 40m,78000,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+19,3750,37 500,City Hall Lv.19,F/W/S/G=800.0K/800.0K/-/-,1d 3h,26 260,127,800000,800000,,,,1d 3h,97200,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+20,4350,43 500,City Hall Lv.20,F/W/S/G=1.2M/1.2M/-/-,1d 9h,35 860,167,1200000,1200000,,,,1d 9h,118800,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+21,5025,50 250,City Hall Lv.21,F/W/S/G=1.8M/1.8M/-/-,1d 19h,49 300,222,1800000,1800000,,,,1d 19h,154800,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+22,5850,58 500,City Hall Lv.22,F/W/S/G=2.7M/2.7M/-/-,2d 5h,67 780,273,2700000,2700000,,,,2d 5h,190800,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+23,6750,67 500,City Hall Lv.23,F/W/S/G=4.1M/4.1M/-/-,2d 22h,94 060,380,4100000,4100000,,,,2d 22h,252000,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+24,7800,78 000,City Hall Lv.24,F/W/S/G=6.3M/6.3M/-/-,3d 21h,132 500,500,6300000,6300000,,,,3d 21h,334800,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements
+25,15 600,156 000,City Hall Lv.25,F/W/S/G=9.5M/9.5M1x size = 24,6d 6h,192 100,?,9500000,9500000,,,size = 24 1x Master's Blueprint (glued to cost cell in wiki),6d 6h,540000,https://riseofkingdoms.fandom.com/wiki/Buildings/Quarry/Requirements

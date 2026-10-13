@@ -1,0 +1,2128 @@
+[
+  {
+    "id": "ov-budget-reality-check",
+    "title": "Budget Reality Check: what a F2P can expect by KvK1",
+    "phase": "overview",
+    "section": "overview",
+    "order": 10,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**What is solid**\n- The first KvK (Season 1) starts at about **kingdom day 100**; pre-KvK (Eve of the Crusade) around day 85–95 [B01-0500].\n- **T4 is the working troop tier for a F2P in KvK1**; T5 needs CH25 and heavy investment and is a long-term goal [A08-0500]. T4 unlocks at **CH21** [A01-0001].\n- Your only *guaranteed* recurring gem income is **100 gems/day** from the 100-point Daily Objectives chest [A04-0001]. Everything else (events, barbarians, alliance gifts) is variable.\n- Your best free channel for sculptures, keys and VIP points is **an alliance with spenders** (gift chests) [A06-0516].\n\n**Realistic targets (Uncertain: player reports and derived upper bounds)**\n- Enter KvK1 at about **CH21–22 with T4**, not CH25; 10–20M power is \"realistic\" per 2026 player reports [B01-0700].\n- **VIP 6** around day 41 *at the latest* if every free gem goes to VIP; **VIP 10** is far beyond KvK1 on guaranteed income alone (≈ day 503 upper bound) [A05-0007].\n\n**Where a F2P competes, and where not**\n- Compete: MGE *milestones* (not ranking) [A11-0500]; filling strong rallies and fighting with complete marches [A08-0503].\n- Don't compete: open power rankings and repeated gem-spending events [A11-0511].",
+    "why_md": "The most common F2P pain is feeling that hours of play are erased by spenders. Most of that comes from comparing yourself with the wrong target. New kingdoms are hardest for F2P early: spenders dominate the first 60–90 days [B01-0506]. A plan built around **one complete T4 march by day ~100** is reachable. A plan built around matching whales is not, and abandoning the account out of frustration is the worst outcome.",
+    "cards": [
+      "A01-0001",
+      "A04-0001",
+      "A05-0007",
+      "A06-0516",
+      "A08-0500",
+      "A08-0503",
+      "A11-0500",
+      "A11-0511",
+      "A12-0001",
+      "A12-0002",
+      "A12-0005",
+      "B01-0500",
+      "B01-0506",
+      "B01-0700"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Targets come from B01-0700 (T4 player comments, baixa), A05-0007 (derived, baixa: assumes cumulative VIP thresholds, an unbroken streak and no other VIP sources, so real dates are earlier) and B01-0506 (baixa). A11-0511 is baixa. The F2P gem income beyond 100/day is unmeasured.",
+    "gaps": [
+      "L-A04-01",
+      "L-A05-01",
+      "L-B01-02",
+      "L-A02-03"
+    ],
+    "low_spender_note": "Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs every guide ranks first [A12-0001, A12-0002]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [A12-0005]. Prices are from seller sites; confirm in your store (L-A12-01).",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ov-patch-state",
+    "title": "Current patch state: what older guides get wrong",
+    "phase": "overview",
+    "section": "overview",
+    "order": 20,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Written against official notes up to **1.1.09 (2026-06-30)**; 1.1.10–1.1.12 are known only from a third-party source [C04-0001].\n\n| Old advice | Today | Card |\n|---|---|---|\n| \"Use Beginner's Immigration / a jumper account to restart in a fresh kingdom\" | Distribution stopped **2025-03-26** for new characters | C04-0026 |\n| \"Pop 8h/24h resource boosts daily; buy them in the shops\" | **Removed in 1.1.09**; VIP production bonuses raised instead | C04-0004 |\n| \"AP cap is 1,000; don't claim daily AP near the cap\" | Cap is **1,500**; the daily claim can push AP *above* the cap since 1.1.02 | A09-0001, C04-0032 |\n| \"Wheel of Fortune costs X gems per spin\" | Spins need **Spin Tickets** (Season 2/3/SoC official; Season 1 since 1.1.12 per T3) | C04-0022 |\n| \"Pelagius is an epic commander\" | **Legendary Pelagius** event from kingdom **day 5** (1.1.09) | C04-0005 |\n| \"Civilization perks are all-or-nothing\" | **CH16** unlocks civilization *buff switching* (1.1.01) | A14-0002 |\n| \"Bots for barbarians/gathering are low risk\" | Built-in **auto-peacekeeping** exists; scripts lose **Conduct Score** (1.1.07) | A09-0008, C04-0006 |\n| \"Sculptures/armaments are locked forever\" | Legendary Commander Swap, Armament Conversion (1.0.90) and full-refund equipment dismantle (1.0.96) exist | C04-0023, C04-0010 |\n| \"A new kingdom has 6 starting provinces\" | **3** since 1.0.78 | C04-0033 |",
+    "why_md": "Advice that ignores these changes wastes scarce resources (gems on boosts that no longer exist, gem math for a Wheel that now needs tickets) or plans around options that are gone (jumping). Every block in this guide carries the patch it was checked against.",
+    "cards": [
+      "A09-0001",
+      "A09-0008",
+      "A14-0002",
+      "C04-0001",
+      "C04-0004",
+      "C04-0005",
+      "C04-0006",
+      "C04-0010",
+      "C04-0022",
+      "C04-0023",
+      "C04-0026",
+      "C04-0032",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0001",
+      "C04-0004",
+      "C04-0005",
+      "C04-0006",
+      "C04-0010",
+      "C04-0022",
+      "C04-0023",
+      "C04-0026",
+      "C04-0032",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0001 (version) is third-party for 1.1.10–1.1.12. The Season 1 part of C04-0022 is T3 only. C04-0026 rests on an in-game mail quoted by players plus wiki/guide (no official forum post).",
+    "gaps": [
+      "L-B01-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d0-civilization",
+    "title": "Choose your civilization (China recommended)",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 30,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      1,
+      10
+    ],
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P): China** — +5% building speed, +5% AP recovery, starts with **Sun Tzu** [A14-0003, A14-0001]. Consensus: **majority**.\n- Cited alternatives: **Britain** (Boudica, +5% training) and **Spain** (+10% barbarian EXP, +20% resource production, Pelagius) [A14-0003, A14-0001].\n- Your **first civilization change is free at CH10**; otherwise it costs 10,000 gems or 2M individual alliance credits. A change does **not** replace the starting commander you already own [A14-0002].\n- From **CH16** you can switch civilization *buffs* (1.1.01) [A14-0002].\n- Around KvK, guides suggest switching to **Germany** (training, AP) or a role civilization [A14-0003].",
+    "why_md": "Building speed is the bottleneck of the whole CH21 path, and AP recovery feeds barbarians and events, so China's two perks hit the two daily levers. Sun Tzu is also the safest early F2P commander [A06-0501]. Because the change at CH10 is free, the starting pick only has to be right for CH1–CH10.",
+    "cards": [
+      "A06-0501",
+      "A14-0001",
+      "A14-0002",
+      "A14-0003",
+      "C04-0005"
+    ],
+    "patch_cards": [
+      "C04-0005"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "No source re-evaluates Spain after the day-5 Legendary Pelagius event (C04-0005); this could strengthen Spain (gap L-A14-02). The value of +5% building speed over the CH chain is not quantified (L-A14-03). The cost/cooldown of CH16 buff switching is unknown (L-A14-01).",
+    "gaps": [
+      "L-A14-01",
+      "L-A14-02",
+      "L-A14-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d0-new-kingdom-start",
+    "title": "Starting in a new kingdom in 2026",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 40,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": [
+      1,
+      10
+    ],
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **No jumping:** Beginner's Immigration is no longer given to new characters (since 2025-03-26) [C04-0026]. The kingdom you start in is, in practice, the one you will grow in until migration opens; same-season immigration is restricted for new kingdoms until the end of Season 1 on some continents (pioneer) [C04-0008].\n- A new kingdom runs in the **Preparation Season** (Kingdom Chronicles) for about 85–100 days before KvK1 [B01-0500]; since 1.0.78 it opens with **3 starting provinces**, not 6 [C04-0033].\n- **Join an active alliance with spenders in the first days** (see next block) [A06-0516].\n- Expect the **first 60–90 days** to set the kingdom's hierarchy, with spenders far ahead early [B01-0506].",
+    "why_md": "Old \"how to start\" advice assumes you can test a kingdom and jump if it looks bad. That is gone, so the first-week decisions that still matter are *alliance* and *safety*, not kingdom shopping.",
+    "cards": [
+      "A06-0516",
+      "B01-0500",
+      "B01-0506",
+      "C04-0008",
+      "C04-0026",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0026",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B01-0506 is baixa (T3). C04-0026 and C04-0033 are patch-state cards (status bruto). C04-0008's new-kingdom lock is a pioneer on select continents. Whether a F2P should start in a brand-new kingdom at all is an open disagreement (no card).",
+    "gaps": [
+      "L-B01-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d0-join-alliance",
+    "title": "Join an active, spending alliance early",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 50,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low",
+      "medium"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "unanimous",
+    "split_views": null,
+    "body_md": "- **Recommended (all profiles):** join an active alliance with spenders as soon as you can [A06-0516]. Consensus: **unanimous**.\n- What it gives you:\n  - **Gift chests** generated by spenders: sculptures, keys and VIP points [A06-0516, A05-0004].\n  - **Helps:** each help fills 1% of a construction/research/healing bar; helps per job grow with the Alliance Center level (5 at Lv1 up to 30 at Lv25) [A10-0006].\n  - **+25% gathering speed** inside alliance territory [A03-0009].\n  - Fort rallies (Books of Covenant, alliance gifts) once forts unlock [A09-0005].",
+    "why_md": "For a F2P, the alliance is the largest free income source outside the daily chest: other people's spending turns into your sculptures and VIP points, and their helps shorten every timer. An inactive alliance gives none of this.",
+    "cards": [
+      "A03-0009",
+      "A05-0004",
+      "A06-0516",
+      "A09-0005",
+      "A10-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [
+      "L-A05-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d0-first-gems-vip",
+    "title": "First gems go to VIP (target VIP 6), never break the streak",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 60,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "Majority (5 sources): free gems → VIP 6, then VIP 10 [A05-0008]. Minority (AllClash, 2020): reach VIP through daily play and don't spend gems on it [A05-0008, A04-0009]. This guide follows the majority.",
+    "body_md": "- **Claim the daily VIP points every day.** The claim starts at 40 and grows by +20 per consecutive day to 200/day; missing one day resets it to 40 [A05-0003].\n- **Recommended (F2P): put free gems into VIP until VIP 6** (permanent 2nd builder), then save toward VIP 10 [A05-0008, A04-0009]. Gems convert to VIP points 1:1 [A05-0004]. Consensus: **majority**.\n- Until VIP 6, keep the second builder running with **Builder Recruitment** items (2 days each, stackable) [A01-0006].\n- **Don't** finish timers with gems or buy AP with gems [A04-0009, A04-0008].",
+    "why_md": "The second builder doubles construction throughput for the rest of the account's life, and construction is the KvK1 bottleneck (CH21 for T4). Gems spent on instant-finishes are gone; gems spent on VIP become permanent buffs and, at VIP 10, a daily legendary sculpture [A05-0006].",
+    "cards": [
+      "A01-0006",
+      "A04-0008",
+      "A04-0009",
+      "A05-0003",
+      "A05-0004",
+      "A05-0006",
+      "A05-0008",
+      "A12-0001"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "VIP thresholds are read as cumulative totals (T4 arithmetic supports it; confirm on day 1, L-A05-01).",
+    "gaps": [
+      "L-A05-01",
+      "L-A04-01"
+    ],
+    "low_spender_note": "Buy the Growth Fund as early as possible: its ~81,000 gems accrue as City Hall levels are reached, so buying early loses nothing [A12-0001]. Those gems follow the same VIP-first plan.",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d0-build-order",
+    "title": "Build order: City Hall and its prerequisites only",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 70,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      1,
+      25
+    ],
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** spend builder time, resources and speedups on **City Hall and the buildings it requires**; keep both builders busy; defer non-prerequisite buildings (extra resource buildings, Watchtower) [A01-0007]. Consensus: **majority**.\n- The rules: no building can exceed City Hall [A01-0003]; CH N (N≥3) needs **Wall N−1 plus one rotating building at N−1** [A01-0001]; Wall N (N≥5) needs Tavern N, which needs Quarry N; military buildings need their resource building; Trading Post N needs Goldmine N [A01-0004].\n- Milestones worth knowing [A01-0001, A03-0023]:\n\n| CH | Unlock |\n|---|---|\n| 5 | 2nd march |\n| 8 | queue dashboard (1.1.01), Tier 2 [A01-0011] |\n| 10 | free Civilization Change reward [A01-0002], Lyceum |\n| 11 | 3rd march |\n| 16 | Tier 3, Blacksmith |\n| 17 | 4th march |\n| 21 | **Tier 4** |\n| 22 | 5th march |\n\n- Resources come mainly from **gathering** on the map, not city buildings [A01-0007].",
+    "why_md": "Every unlock that matters for KvK1 (marches, T3, T4) is gated by City Hall, and the prerequisite chain is long: the minimum raw build time to CH21 is about 163 builder-days with no buffs [A01-0005]. Any building outside the chain delays that.",
+    "cards": [
+      "A01-0001",
+      "A01-0002",
+      "A01-0003",
+      "A01-0004",
+      "A01-0005",
+      "A01-0007",
+      "A01-0009",
+      "A01-0011",
+      "A03-0023"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A01-0005 is a derived organizer estimate (baixa), useful for scale only; real time depends on buffs and speedups (L-A01-03). Early unlock levels are contested (A01-0009): Academy at CH4 or CH6, first Quarry at CH4 or CH6, Trading Post at CH10 or CH12 (CH12 probable). Storehouse and Hospital may deserve attention even when not on the chain (A01-0007 notes).",
+    "gaps": [
+      "L-A01-01",
+      "L-A01-02",
+      "L-A01-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d0-day1-survival",
+    "title": "Day-1 safety: protect what you hold",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 80,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Keep resources as **unopened resource items** until you need them: items cannot be plundered and have no storage limit; gems cannot be plundered at all [A03-0007].\n- Raw resources above your **Storehouse protection** can be plundered; keep exposed stock low, especially during kill events [A03-0006, A13-0005].\n- Keep **hospital capacity** ahead of your army: wounded troops beyond capacity die [A08-0502].\n- **No third-party scripts.** Use the built-in auto-peacekeeping instead [A09-0008].",
+    "why_md": "New players are attacked mostly for what is lying around. Converting what you keep into unplunderable form costs nothing and removes the reward for hitting you.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A08-0502",
+      "A09-0008",
+      "A13-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Shield durations, beginner protection and their costs are not covered by any fact card yet (proposed gap PROPOSED-SHIELDS). Storehouse protection values below L25 differ between sources (A03-0006; L-A03-05).",
+    "gaps": [
+      "L-A03-05",
+      "PROPOSED-SHIELDS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d0-ap-discipline",
+    "title": "AP discipline from day 1",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 90,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **AP cap is 1,500**; regenerating AP above the cap is wasted, so spend it [A09-0001, A09-0007].\n- Spend regenerating AP on **barbarians** early (commander EXP, resources, Daily Objective tasks) [A09-0007]. A barbarian costs 50 AP, minus 2 per consecutive hit without returning (minimum 40) [A09-0002]. At opening only Lv1–6 barbarians exist; higher levels unlock over the following days [A09-0004].\n- **Save AP potions/items** for Lohar's Trial / Arms Training and for Eve of the Crusade [A11-0505, A09-0007]. Consensus: **majority**.\n- Claim the **daily AP** every day, even near the cap (it can exceed the cap since 1.1.02) [A09-0006, C04-0032].",
+    "why_md": "Regenerating AP is free and disappears at the cap; AP items keep. Spending the free stream daily and banking the items for events that pay more per AP is the cheapest gain in the game.",
+    "cards": [
+      "A09-0001",
+      "A09-0002",
+      "A09-0004",
+      "A09-0006",
+      "A09-0007",
+      "A11-0505",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Base AP regeneration per hour is unknown (L-A09-01). The daily claim amount is 500 per the official 1.0.41 notes (2020); the 2026 amount is unconfirmed (L-A09-02).",
+    "gaps": [
+      "L-A09-01",
+      "L-A09-02",
+      "L-A09-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d4-ch8-ch12-checkpoints",
+    "title": "CH8–CH12 checkpoints",
+    "phase": "day4-14",
+    "section": "plan",
+    "order": 100,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      8,
+      12
+    ],
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **CH8:** queue dashboard — refill construction, training, research, healing and scouting from one screen [A01-0011]. Reward: 2× 8h universal speedups [A01-0002].\n- **CH9:** reward 1× 24h universal speedup; 3rd hospital [A01-0002, A01-0008].\n- **CH10:** **free Civilization Change** (keep it unless you plan to switch) [A14-0002]; Lyceum of Wisdom (Peerless Scholar) [A10-0005]; gold enters the economy (needed for Academy tech after Academy 10 and T3+ troops) [A03-0021].\n- **CH11:** 3rd march [A03-0023].\n- **CH12:** Trading Post (probable) — see Uncertain.",
+    "why_md": "These are the first levels where the game hands out big free speedups and new daily income (Lyceum gem pool). Knowing them helps you keep speedups for the long timers that start right after.",
+    "cards": [
+      "A01-0002",
+      "A01-0008",
+      "A01-0009",
+      "A01-0011",
+      "A03-0021",
+      "A03-0023",
+      "A03-0025",
+      "A10-0005",
+      "A14-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Trading Post unlock CH10 vs CH12 is contested (A03-0025, A01-0009); CH12 is probable. Raw CH upgrade times come from the Fandom developer dataset (L-A01-02).",
+    "gaps": [
+      "L-A01-01",
+      "L-A03-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d4-research-economy",
+    "title": "Academy: economy and speed techs first",
+    "phase": "day4-14",
+    "section": "plan",
+    "order": 110,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      4,
+      16
+    ],
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** research **speed and economy techs first** — Writing, Masonry, Engineering, Mathematics — before military [A02-0500]. Consensus: **majority** (minor disagreement on which of the first two goes first).\n- Keep the research queue busy at every login [A10-0002].",
+    "why_md": "Building and research speed compound: every later timer on the CH21 / T4 path gets shorter. Military techs are useless until the troops they improve are unlocked.",
+    "cards": [
+      "A01-0009",
+      "A02-0500",
+      "A10-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Tech names may have changed since the 2019–2026 sources; no ordered research path with times exists yet (L-A02-01). The Academy unlocks at CH4 or CH6 (contested, A01-0009). A10-0002 is a single commercial checklist (baixa).",
+    "gaps": [
+      "L-A02-01",
+      "L-A01-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d4-early-commanders",
+    "title": "Early commanders: Sun Tzu + one barbarian farmer",
+    "phase": "day4-14",
+    "section": "plan",
+    "order": 120,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Concentrate:** finish one complete march before starting others [A06-0500]. Consensus: **unanimous**.\n- **Recommended (F2P): Sun Tzu** as your early primary — epic, needs no gold sculptures, still used in KvK1 [A06-0501]. Consensus: **majority**.\n- Level **only one** of Boudica or Lohar for barbarians/PvE, and never put universal (gold) sculptures into them [A06-0505]. Consensus: **majority**.\n- Level a **gathering commander** early: only the primary's talents apply; level 37 unlocks Superior Tools (~25% gathering speed) [A03-0017].",
+    "why_md": "Sculptures are the scarcest F2P resource and skill levels are front-loaded, so one finished commander beats three half-built ones. Epic commanders level from cheap epic sculptures (3 per day from the daily chest [A04-0001]).",
+    "cards": [
+      "A03-0017",
+      "A04-0001",
+      "A06-0500",
+      "A06-0501",
+      "A06-0505",
+      "A06-0506",
+      "A06-0509"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Sun Tzu's long-term value is disputed: one 2026 tier list rates nearly all epics F/C overall (A06-0509, divided; it is a horizon disagreement). \"Gatherer to 37 first, Centurion easiest\" is A06-0506 (baixa). A Sun Tzu intro post appeared on the official forum on 2026-02-04 (game-state pack); whether the epic Sun Tzu changed is not checked.",
+    "gaps": [
+      "L-A06-01",
+      "L-A06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d4-pelagius-day5",
+    "title": "Legendary Pelagius event (day 5): decide before you spend",
+    "phase": "day4-14",
+    "section": "plan",
+    "order": 130,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "\"Early-server monster\" (AllClash) vs B-tier for KvK1 (LootBar) [A06-0508].",
+    "body_md": "- Since 1.1.09 a **Legendary Pelagius** upgrade event runs from **kingdom day 5** [C04-0005].\n- Opinions are **split**: \"early-server monster\" vs KvK1 B-tier [A06-0508].\n- **Recommended (F2P):** treat it as a decision, not an automatic buy. Apply the Commander Decision Checklist (day 15–40 block) before spending anything scarce on it.",
+    "why_md": "It is the first legendary offered to every new kingdom, so it will compete for the same scarce resources as your long-term legendary. There is no current F2P cost/benefit analysis for it.",
+    "cards": [
+      "A06-0508",
+      "C04-0005"
+    ],
+    "patch_cards": [
+      "C04-0005"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "A06-0508 is baixa/divided. The event's costs and rewards are not captured (screenshot on day 5, T0 protocol).",
+    "gaps": [
+      "L-A06-02",
+      "L-A14-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d4-gathering-setup",
+    "title": "Gathering setup that does not need babysitting",
+    "phase": "day4-14",
+    "section": "plan",
+    "order": 140,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas",
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Gather **inside alliance territory** (+25% speed) [A03-0009].\n- When online, use nearby nodes; **before logging off, send marches to large nodes** so they don't come back early. Node level changes the amount, not the speed [A03-0016].\n- **Enhanced Gathering** items (+50% for 8h/24h) still exist and can be bought with resources at the Mysterious Merchant [A03-0013]. *Production* boost items were removed in 1.1.09 [C04-0004].\n- March count grows with CH: 2 at CH5, 3 at CH11, 4 at CH17, 5 at CH22 [A03-0023].",
+    "why_md": "Resources for the CH path come from gathering [A01-0007]. Long marches sent at logoff turn offline hours into resources at zero extra minutes, which is the core of a low-time routine.",
+    "cards": [
+      "A01-0007",
+      "A03-0009",
+      "A03-0013",
+      "A03-0016",
+      "A03-0023",
+      "C04-0004"
+    ],
+    "patch_cards": [
+      "C04-0004"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [
+      "L-A03-01",
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d15-ch10-ch17",
+    "title": "CH10 → CH17: T3, Blacksmith, 4th march",
+    "phase": "day15-40",
+    "section": "plan",
+    "order": 150,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      10,
+      17
+    ],
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **CH16:** Tier 3 troops and the Blacksmith; reward **7-day universal speedup + 100 gems**; civilization buff switching [A01-0001, A01-0002, A14-0002].\n- **CH17:** 4th march [A03-0023].\n- Raw (unbuffed) City Hall upgrade times: CH10 22h, CH16 4d, CH17 4d 20h [A01-0001]. The whole prerequisite set grows much faster than City Hall itself [A01-0005].\n- Resource pressure shifts: **stone** joins around CH6 (Wall chain), **gold** from CH10 for research and T3+ troops [A03-0021].",
+    "why_md": "CH16–CH17 is where the plan stops being cheap: each level needs several multi-day prerequisites, and gold starts to bind. Stockpiling gold through gathering before CH16 avoids stalls.",
+    "cards": [
+      "A01-0001",
+      "A01-0002",
+      "A01-0005",
+      "A03-0021",
+      "A03-0023",
+      "A14-0002",
+      "B01-0503"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A01-0005 (derived, baixa): about 70 raw builder-days to CH17, before buffs. Real times need the T0 buff chart (L-A01-03). A Lost Kingdom entry requirement of CH17 is single-source (B01-0503, see pre-KvK).",
+    "gaps": [
+      "L-A01-02",
+      "L-A01-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d15-research-military",
+    "title": "Research: T3 → T4 (skip siege) → shared combat techs",
+    "phase": "day15-40",
+    "section": "plan",
+    "order": 160,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      10,
+      21
+    ],
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** after the economy techs, unlock **T3**, then **T4 for infantry, cavalry and archers (skip T4 siege)**, then the shared combat techs (Combat Tactics, Defensive Formation, Herbal Medicine), then one troop branch; T5 last [A02-0501]. Consensus: **majority**.\n- Pick **one troop type** that matches your best commanders; infantry or cavalry are preferred for a first T5 [A08-0506].",
+    "why_md": "T4 research must be ready when CH21 lands, or the CH21 rush is wasted. Siege T4 adds little for a F2P field fighter, and splitting research across troop types delays every branch.",
+    "cards": [
+      "A02-0501",
+      "A02-0504",
+      "A08-0506"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Research is slow: one guide says Combat Tactics 10 takes about 100 days for an average player (A02-0504, single source, baixa). Time to T4 is unmeasured (L-A02-03).",
+    "gaps": [
+      "L-A02-01",
+      "L-A02-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d15-vip6-milestone",
+    "title": "VIP 6 milestone, then switch to saving",
+    "phase": "day15-40",
+    "section": "plan",
+    "order": 170,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- At **VIP 6** (11,500 cumulative VIP points) the 2nd builder becomes permanent; Builder Recruitment items then convert into 60-minute building speedups [A05-0001, A01-0006].\n- **After VIP 6**, stop buying VIP directly and **save gems for More Than Gems** (see Events) [A11-0502, A11-0504]. Next target: **VIP 10** (150,000 cumulative), which adds 1 legendary sculpture per day [A05-0001, A05-0006].",
+    "why_md": "Below VIP 6, the builder is worth more than any event bonus. Above it, the same gems buy VIP *and* event milestone rewards if spent during More Than Gems.",
+    "cards": [
+      "A01-0006",
+      "A04-0001",
+      "A05-0001",
+      "A05-0006",
+      "A05-0007",
+      "A11-0502",
+      "A11-0504",
+      "A12-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Derived F2P timeline (A05-0007, baixa): VIP 6 about day 41 with 100 gems/day + daily claim; earlier with alliance gifts and event gems. Cumulative reading of thresholds pending T0 (L-A05-01).",
+    "gaps": [
+      "L-A05-01",
+      "L-A04-01"
+    ],
+    "low_spender_note": "The 30-day gem supply (~650 gems/day vs the F2P 100/day) is what makes VIP 10 reachable before or around KvK1 for a low spender [A12-0002, A04-0001].",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d15-commander-checklist",
+    "title": "Commander Decision Checklist (before spending gold sculptures)",
+    "phase": "day15-40",
+    "section": "plan",
+    "order": 180,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "YSG timing: consensus long-term target, but some 2026 players say a pure F2P should skip him for KvK1 (low spenders can) [A06-0502]. Mid-tier legendaries: divided [A06-0503].",
+    "body_md": "**Rule:** bank universal (gold) sculptures for **one long-term legendary**; never spend them on gatherers or temporary picks [A06-0510]. Consensus: **majority**. Yi Seong-Gye (YSG) is the most cited target [A06-0502].\n\n**Before spending, answer:**\n1. **Is it your troop type?** You should be researching one type [A08-0506].\n2. **Does it complete a march?** Partial commanders give little value [A06-0500].\n3. **Will it still matter after KvK1?** Mid-tier legendaries (Richard I, Charles Martel, Cao Cao) are strong in KvK1 but lose value later — split opinion [A06-0503].\n4. **Is a better-timed option coming?** YSG is reported on the Wheel of Fortune around day 94 [A06-0502]; the Wheel needs Spin Tickets in Season 2+ [C04-0022].\n5. **Is it a free legendary you can grow instead?** Aethelflaed comes from the Expedition store (1,500 medals per sculpture) [A06-0504, A10-0004].\n\nVerdict: **invest** (yes to 1, 2, 3), **wait** (no to 4), **avoid** (no to 1 or 3).\n\nShelf-life note: since 2025 there are respec tools (Legendary Commander Swap, around the end of Season 2) [C04-0023], so a wrong pick is costly but no longer permanent.",
+    "why_md": "Gold sculptures arrive very slowly for a F2P (VIP 10 is far away), and commander regret is one of the most common F2P pains. A fixed checklist turns a tier-list argument into five yes/no questions you can answer yourself.",
+    "cards": [
+      "A06-0500",
+      "A06-0502",
+      "A06-0503",
+      "A06-0504",
+      "A06-0510",
+      "A08-0506",
+      "A10-0004",
+      "C04-0022",
+      "C04-0023"
+    ],
+    "patch_cards": [
+      "C04-0022",
+      "C04-0023"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "A06-0503 is baixa/divided. The checklist is a guide construction (S-D-0008) built on these cards, not a source consensus. YSG Wheel timing (day ~94) is single T3. Sculpture income per week is unmeasured (L-A06-03).",
+    "gaps": [
+      "L-A06-01",
+      "L-A06-02",
+      "L-A06-03",
+      "L-A11-03"
+    ],
+    "low_spender_note": "Low spenders can realistically aim at YSG for KvK1 [A06-0502]; the rest of the checklist is unchanged.",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d15-expedition-aethelflaed",
+    "title": "Expedition medals → Aethelflaed",
+    "phase": "day15-40",
+    "section": "plan",
+    "order": 190,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Claim the daily Expedition chest from 3-star missions and use the free daily Medal Shop refresh [A10-0004].\n- **Recommended (F2P):** spend medals on **Aethelflaed**, the main free legendary (1,500 medals per legendary sculpture) [A06-0504, A10-0004]. Consensus: **majority**.\n- Sun Tzu + Aethelflaed is the most cited F2P KvK1 pair [A06-0501].",
+    "why_md": "Aethelflaed is the one legendary a F2P can grow without gold sculptures or spending, and the medals accrue from a short daily claim.",
+    "cards": [
+      "A06-0501",
+      "A06-0504",
+      "A10-0004"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Medal income per day is unknown (L-A10-04).",
+    "gaps": [
+      "L-A10-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d15-equipment",
+    "title": "Equipment: cheap sets now, epic for KvK1",
+    "phase": "day15-40",
+    "section": "plan",
+    "order": 200,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      16,
+      25
+    ],
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** craft cheap green/blue pieces (Windswept, Vanguard) early and move all main commanders to **epic** before any legendary crafting [A07-0500]. Consensus: **majority**.\n- The Blacksmith unlocks at CH16 [A01-0001].",
+    "why_md": "Early pieces are replaced quickly; epic is the realistic KvK1 baseline. A legendary piece adds little over epic per piece (one source) and costs materials you will want later.",
+    "cards": [
+      "A01-0001",
+      "A07-0500",
+      "A07-0501",
+      "A07-0504",
+      "C04-0010"
+    ],
+    "patch_cards": [
+      "C04-0010"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Hoarding legendary materials (A07-0501, organizado, baixa) and \"legendary over epic adds ~2% per piece\" (A07-0504, single source, baixa) are uncertain. Since 1.0.96 special-talent equipment dismantles refund 100% of forging (C04-0010).",
+    "gaps": [
+      "L-A07-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d41-ch21-t4",
+    "title": "CH21 for T4: the main pre-KvK goal",
+    "phase": "day41-90",
+    "section": "plan",
+    "order": 210,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": [
+      17,
+      22
+    ],
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P): target CH21** — it unlocks **Tier 4**, the KvK1 working tier [A01-0001, A08-0500]. Reward: 7-day universal speedup + 200 gems [A01-0002].\n- CH22 adds the 5th march [A03-0023]; CH25 is **not** expected by KvK1 for a F2P [B01-0700].\n- Raw City Hall times: CH21 11d, CH22 17d 3h [A01-0001].",
+    "why_md": "T4 is the difference between filling rallies usefully and being fodder. Everything earlier in this guide (two builders, economy techs, hoarded speedups) exists to land CH21 and T4 research before KvK1.",
+    "cards": [
+      "A01-0001",
+      "A01-0002",
+      "A01-0005",
+      "A03-0023",
+      "A08-0500",
+      "B01-0700"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Timing conflict: 2026 player reports say T4 comes \"around day 30\" (B01-0700, baixa), while the derived raw build budget to CH21 is about 163 builder-days (A01-0005, baixa), i.e. well over 80 days with two builders before buffs and speedups. Both are weak; the T0 diary must settle the real CH21 date (L-A02-03, L-A01-03).",
+    "gaps": [
+      "L-A01-03",
+      "L-A02-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d41-hospital",
+    "title": "Hospital capacity before KvK1",
+    "phase": "day41-90",
+    "section": "plan",
+    "order": 220,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "unanimous",
+    "split_views": null,
+    "body_md": "- Wounded troops beyond hospital capacity **die**; some actions (attacking cities/objectives) always kill severely wounded. Keep hospitals large and empty before fights [A08-0502]. Consensus: **unanimous**.\n- Capacity per hospital (unbuffed): 7,500 at Lv1, 29,000 at Lv15, 75,000 at Lv25; CH4/CH9/CH15 unlock the 2nd/3rd/4th hospital [A01-0008].\n- T5 heals cost much more than T4; without a strong economy, fight with T4 [A08-0505].",
+    "why_md": "For a F2P, dead troops are the most expensive loss in the game (a full retrain); healing is far cheaper. Hospital level is also a CH prerequisite at several levels, so it is rarely wasted.",
+    "cards": [
+      "A01-0008",
+      "A08-0502",
+      "A08-0505",
+      "C04-0028"
+    ],
+    "patch_cards": [
+      "C04-0028"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Heal vs retrain cost is not quantified (L-A08-01); no hospital target for KvK1 yet (L-A08-02). The Hall of Heroes returns part of KvK healing resources since 1.0.89 (C04-0028), percentage unknown.",
+    "gaps": [
+      "L-A08-01",
+      "L-A08-02",
+      "L-A08-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d41-speedups-spend-vs-hoard",
+    "title": "Speedups: spend or hoard? (split debate)",
+    "phase": "day41-90",
+    "section": "plan",
+    "order": 230,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "Majority: hoard for events/KvK [A11-0501]. Minority: speedups into City Hall [A11-0501 dissent]. One source: universal speedups only on research [A02-0503].",
+    "body_md": "**Free speedup income:** about **170 min/day** from Daily Objectives chests (derived from a 2020 wiki revision), plus CH rewards (8h, 24h, 7-day universals), barbarians, the VIP Shop (food-priced 5-min speedups), Expedition, alliance and merchant [A04-0010, A01-0002, A04-0007].\n\n**The debate**\n- **Hoard (majority):** keep speedups, resource items and AP items for scored events and KvK healing [A11-0501].\n- **Spend:** pour them into City Hall (older minority view) or **only into research** (one source) [A02-0503, A11-0501].\n\n**Recommended (F2P): hoard by default, with one exception.** Use speedups on the CH21 / T4-research path when a timer would otherwise make you miss **T4 before KvK1**; keep the rest for scored events (more reward per minute spent) and KvK healing.",
+    "why_md": "The tension is real: the guide's goal is strength by KvK1, which argues for spending, while event rewards and KvK healing argue for hoarding. Hoarded speedups keep their full value until used; a late CH21 cannot be fixed later. There is no quantitative model yet, so the exception rule is a judgment, not a calculation.",
+    "cards": [
+      "A01-0002",
+      "A02-0503",
+      "A04-0007",
+      "A04-0010",
+      "A10-0001",
+      "A11-0501"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A02-0503 is baixa/divided. The 170 min/day figure (A04-0010) is derived and the 1.1.09 Daily Objectives change may have altered it (A10-0001, partially obsolete). The exception rule is this guide's synthesis, not a sourced consensus.",
+    "gaps": [
+      "L-A02-02",
+      "L-A04-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d41-vip10-reality",
+    "title": "VIP 10 is a long game for a pure F2P",
+    "phase": "day41-90",
+    "section": "plan",
+    "order": 240,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- VIP 10 needs **150,000 cumulative** VIP points [A05-0001].\n- On guaranteed income only (daily claim + 100 gems/day), the derived estimate is about **day 503** [A05-0007] — an upper bound, since alliance gifts and event gems shorten it.\n- Keep buying VIP only **during More Than Gems** [A11-0502].",
+    "why_md": "Many F2P plans assume VIP 10 (daily legendary sculpture) arrives early. On guaranteed income it does not, so plan your commander path around Sun Tzu, Aethelflaed and banked gold sculptures for KvK1.",
+    "cards": [
+      "A05-0001",
+      "A05-0007",
+      "A11-0502",
+      "A12-0001",
+      "A12-0002",
+      "A12-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A05-0007 is derived (baixa); real F2P gem and VIP income is unmeasured (L-A04-01, L-A05-03).",
+    "gaps": [
+      "L-A04-01",
+      "L-A05-03"
+    ],
+    "low_spender_note": "With the Growth Fund and the 30-day supply, VIP 10 becomes a pre-KvK1 or early-KvK1 target; reaching it earlier is the main payoff of low spending [A12-0001, A12-0002, A12-0005].",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "pk-eve-of-crusade",
+    "title": "Eve of the Crusade: cash in the hoard",
+    "phase": "pre-kvk1",
+    "section": "plan",
+    "order": 250,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** spend the saved **AP items on marauders** during Eve of the Crusade (speedups, gems, credits) [A09-0007]. Auto-peacekeeping can also attack marauders since 1.1.02 [A09-0008].\n- Since 1.1.12 (T3), Eve of the Crusade opens **together with the Lost Kingdom** in Season 1 [B01-0503, C04-0002].",
+    "why_md": "This is the event the AP-item hoard was built for: its rewards (speedups and gems) feed directly into KvK1 healing and the last CH/T4 timers.",
+    "cards": [
+      "A09-0007",
+      "A09-0008",
+      "B01-0503",
+      "C04-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B01-0503 is partially obsolete/baixa: the Lost Kingdom entry requirement (CH17) is single T3, and the Season 1 overlap comes from a T3 patch summary (C04-0002, baixa) plus one player report.",
+    "gaps": [
+      "L-B01-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "pk-kvk1-readiness",
+    "title": "KvK1 readiness checklist",
+    "phase": "pre-kvk1",
+    "section": "plan",
+    "order": 260,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- [ ] **CH21 reached and T4 researched** for your one troop type [A01-0001, A02-0501, A08-0506].\n- [ ] **One complete march** (e.g. Sun Tzu + Aethelflaed) on epic gear [A06-0500, A06-0501, A07-0500].\n- [ ] **Hospitals** upgraded and empty [A08-0502].\n- [ ] **Speedups** (especially healing-usable ones) and **resource items** banked [A11-0501, A03-0007].\n- [ ] Civilization: consider the planned switch (Germany or a role civilization) [A14-0003].",
+    "why_md": "KvK1 is where the 100 days of preparation are scored. A short checklist catches the cheap misses (full hospital, no speedups) that cost more troops than any commander choice.",
+    "cards": [
+      "A01-0001",
+      "A02-0501",
+      "A03-0007",
+      "A06-0500",
+      "A06-0501",
+      "A07-0500",
+      "A08-0502",
+      "A08-0506",
+      "A11-0501",
+      "A14-0003",
+      "B01-0502"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "KvK1 duration is contested (B01-0502: 60 days per a 2024 T3 source vs \"all KvKs last 50 days\" per a 2026 player).",
+    "gaps": [
+      "L-B01-02",
+      "L-A08-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "pk-kvk1-behaviour",
+    "title": "How a F2P fights in KvK1",
+    "phase": "pre-kvk1",
+    "section": "plan",
+    "order": 270,
+    "stage": [
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "lutador",
+      "rally",
+      "guarnicao"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** don't lead, stay behind, retreat early, **fill strong rallies** and reinforce instead of trading alone [A08-0503]. Consensus: **majority**.\n- Run **fewer, complete marches** rather than every march slot with weak ones [A08-0504].\n- Protect hospital capacity throughout [A08-0502].",
+    "why_md": "A F2P's T4 march trades badly against spenders' T5 in the open, but adds real value inside a rally or garrison. Fewer, better marches are also cheaper to heal.",
+    "cards": [
+      "A06-0512",
+      "A06-0513",
+      "A08-0502",
+      "A08-0503",
+      "A08-0504"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A08-0504 is organizado (quote not literal). F2P pairs for KvK1 differ by source (A06-0513, divided): Sun Tzu + Aethelflaed; Aethelflaed + Baibars; YSG + flexible; Alexander + YSG. Field AoE over rally/garrison commanders is single-source (A06-0512).",
+    "gaps": [
+      "L-A06-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "daily-15min",
+    "title": "Daily routine — 15 minutes",
+    "phase": "daily",
+    "section": "daily",
+    "order": 280,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": 0.25,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Do these every day, in this order. **Time cost per task: Pending in-game measurement (T0), gap L-A10-01.**\n\n| # | Task | Why it is in the 15-minute tier | Cards |\n|---|---|---|---|\n| 1 | Claim **VIP points + VIP chest** | Breaking the streak resets 200/day to 40 | A05-0003, A05-0006 |\n| 2 | Claim **daily AP** | Free AP; can exceed the cap | A09-0006, C04-0032 |\n| 3 | **Refill all queues** (2 builders, research, training, healing) — from the CH8 dashboard | Idle queues are lost progress | A01-0011, A01-0006 |\n| 4 | **Alliance help** (help all) | 20 helps = 10 Daily Objective points | A10-0006 |\n| 5 | Start **auto-peacekeeping** on barbarians with regenerating AP | Uses AP that would cap | A09-0008, A09-0007 |\n| 6 | Send **gatherers to large nodes** in alliance territory before logging off | Offline hours become resources | A03-0016, A03-0009 |\n\n**Skip today if short on time:** Sunset Canyon, Lyceum mock exam, manual barbarians, merchant browsing.",
+    "why_md": "The highest-value daily actions are claims (free, streak-based) and keeping timers running. Everything here either protects a streak or keeps the account producing while you are offline.",
+    "cards": [
+      "A01-0006",
+      "A01-0011",
+      "A03-0009",
+      "A03-0016",
+      "A05-0003",
+      "A05-0006",
+      "A09-0006",
+      "A09-0007",
+      "A09-0008",
+      "A10-0006",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "No source publishes minutes per task; time costs are pending the T0 stopwatch (L-A10-01). The ordering is this guide's judgment from sourced value per completion, not a measured value per minute.",
+    "gaps": [
+      "L-A10-01",
+      "L-A09-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "daily-30min",
+    "title": "Daily routine — 30 minutes (adds Daily Objectives)",
+    "phase": "daily",
+    "section": "daily",
+    "order": 290,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": 0.5,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Everything in the 15-minute tier, plus. **Time cost: Pending T0 (L-A10-01).**\n\n| Task | Value | Cards |\n|---|---|---|\n| Finish **Daily Objectives to 100 points** | 100 gems, Golden Key, 3 epic sculptures; chests on the way give speedups (~170 min/day derived) and 100 AP | A04-0001, A04-0010 |\n| Open free **Tavern silver chests** (3/day at Tavern 1–4, up to 10 at Tavern 25) | sculptures, speedups, tomes | A10-0003 |\n| **Courier Station / Mysterious Merchant**: free refresh, buy with resources (10 purchases also count for Daily Objectives) | discounted speedups | A04-0011, A03-0014 |\n| **Expedition**: claim the 3-star chest, free medal refresh | medals for Aethelflaed | A10-0004 |",
+    "why_md": "The 100-point chest is the only guaranteed gem income a F2P has [A04-0001]; it is worth the extra minutes on any day you have them.",
+    "cards": [
+      "A03-0014",
+      "A04-0001",
+      "A04-0010",
+      "A04-0011",
+      "A10-0001",
+      "A10-0003",
+      "A10-0004"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "No source publishes minutes per task; time costs are pending the T0 stopwatch (L-A10-01). The ordering is this guide's judgment from sourced value per completion, not a measured value per minute. The Daily Objectives task list changed in 1.1.09 (boost tasks replaced by login and alliance-donation tasks); A10-0001 is partially obsolete and the 170 min/day speedup figure is derived.",
+    "gaps": [
+      "L-A10-01",
+      "L-A10-02",
+      "L-A04-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "daily-60min",
+    "title": "Daily routine — 60 minutes (adds PvE and modes)",
+    "phase": "daily",
+    "section": "daily",
+    "order": 300,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": 1.0,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Everything in the 30-minute tier, plus. **Time cost: Pending T0 (L-A10-01).**\n\n| Task | Value | Cards |\n|---|---|---|\n| **Manual barbarians** in chains (−2 AP per consecutive hit, min 40) and **fort rallies** once forts unlock | EXP, speedups, Books of Covenant (~50% per tier), alliance gifts | A09-0002, A09-0005 |\n| **Sunset Canyon** attempts | daily/season rewards; top 5 daily → Golden Key | A10-0008 |\n| **Peerless Scholar** mock exam (Mon–Fri, CH10+) | Flashes of Insight; biweekly exams split a gem pool | A10-0005 |\n| Active **event** tasks (see Events) | per event | A11-0512 |",
+    "why_md": "These add value but either have no quantified yield per minute yet or depend on unlocks. They are the first things to cut when time is short.",
+    "cards": [
+      "A09-0002",
+      "A09-0005",
+      "A10-0005",
+      "A10-0008",
+      "A11-0512"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "No source publishes minutes per task; time costs are pending the T0 stopwatch (L-A10-01). The ordering is this guide's judgment from sourced value per completion, not a measured value per minute.",
+    "gaps": [
+      "L-A10-01",
+      "L-A10-03",
+      "L-A09-03",
+      "L-A04-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "daily-weekly",
+    "title": "Weekly and fortnightly tasks",
+    "phase": "daily",
+    "section": "daily",
+    "order": 310,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": 0.25,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **VIP Shop (Monday 00:00 UTC):** buy the **food-priced** rows — 30× 100 AP for 12,000 food each (VIP 2) and 50× 5-min universal speedups for 7,000 food each (VIP 3) [A04-0007].\n- **Peerless Scholar** preliminary and final every two weeks (gem pool) [A10-0005].\n- Check the **event calendar** a few days ahead [A11-0512].",
+    "why_md": "The food-priced VIP Shop rows cost no gems and add about 3,000 AP and 250 minutes of speedups per week; if all free AP sources are claimed, the derived weekly total is about 7,200 AP [A09-0006].",
+    "cards": [
+      "A04-0007",
+      "A09-0006",
+      "A10-0005",
+      "A11-0512"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "The 7,200 AP/week figure is derived (A09-0006 method) and excludes natural regeneration (L-A09-01). Time cost pending T0 (L-A10-01).",
+    "gaps": [
+      "L-A09-01",
+      "L-A10-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "daily-break-mode",
+    "title": "Light days and Break Mode",
+    "phase": "daily",
+    "section": "daily",
+    "order": 320,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": 0.0,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "On days you can't play properly, do only:\n1. **Claim VIP points** — a missed day costs up to 720 VIP points over the next 8 days (derived) [A05-0003].\n2. **Refill queues with long timers** and send gatherers to large nodes [A01-0011, A03-0016].\n3. Before a longer break: keep raw resources at or below Storehouse protection and the rest as **unopened items** [A03-0006, A03-0007, A13-0005].",
+    "why_md": "Burnout is a top reason players quit. A two-minute floor keeps the streaks and the account safe, so a bad week does not become a reason to stop.",
+    "cards": [
+      "A01-0011",
+      "A03-0006",
+      "A03-0007",
+      "A03-0016",
+      "A05-0003",
+      "A13-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Shield use for multi-day breaks is not covered by any card (PROPOSED-SHIELDS). The 720-point figure is derived from A05-0003.",
+    "gaps": [
+      "PROPOSED-SHIELDS",
+      "L-A10-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ev-calendar-rule",
+    "title": "Events: plan from the in-game calendar",
+    "phase": "event",
+    "section": "events",
+    "order": 330,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "unanimous",
+    "split_views": null,
+    "body_md": "- Events **do not follow a fixed schedule**; the in-game calendar shows a few days ahead, and kingdoms differ by age and Monument progress [A11-0512]. Consensus: **unanimous**.\n- What is known for a new kingdom:\n\n| Event | Timing | Confidence | Cards |\n|---|---|---|---|\n| Legendary Pelagius | from day 5 (official) | high (patch note) | C04-0005 |\n| More Than Gems | ~monthly, 2 days, kingdoms older than ~21 days | medium | A11-0502 |\n| Peerless Scholar | weekdays + biweekly exams | high | A10-0005 |\n| Pioneer / Road to Revival | ~day 20–23 | Uncertain (single T3) | A11-0510 |\n| First Wheel of Fortune | ~day 24; YSG ~day 94 | Uncertain (single T3) | A11-0503 |\n| Ark of Osiris | ~every two weeks | Uncertain (T3) | A11-0508 |\n| Sunset Canyon | daily attempts, 7-day seasons | Uncertain (T3) | A11-0507 |\n\n- Live in 2026 per official notes: Sunset Canyon, Champions of Olympia, Arms Training with Lohar [A11-0513].",
+    "why_md": "Any fixed day-by-day event plan would be wrong for most kingdoms. Hoarding rules (what to keep for which kind of event) work without dates; the calendar tells you when.",
+    "cards": [
+      "A10-0005",
+      "A11-0502",
+      "A11-0503",
+      "A11-0507",
+      "A11-0508",
+      "A11-0510",
+      "A11-0512",
+      "A11-0513",
+      "C04-0005"
+    ],
+    "patch_cards": [
+      "C04-0005"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "A11-0510, A11-0503 (partially obsolete), A11-0508 and A11-0507 are baixa. First-occurrence days are a T0 target.",
+    "gaps": [
+      "L-A11-01",
+      "L-B01-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ev-more-than-gems",
+    "title": "More Than Gems: the window to spend gems",
+    "phase": "event",
+    "section": "events",
+    "order": 340,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P, from VIP 6 on):** save gems and spend them on VIP points **during More Than Gems** [A11-0502, A11-0504]. Consensus: **majority**.\n- Reported structure: a **2-day** event with daily gem-spend milestones; reported tiers 7,000 gems/day → 5 universal legendary sculptures and 25,000/day → 13; about **monthly**, only in kingdoms older than ~21 days [A11-0502].",
+    "why_md": "The same gems buy VIP points either way; during MTG they also pay milestone rewards, including gold sculptures, which a F2P otherwise barely sees before VIP 10.",
+    "cards": [
+      "A11-0502",
+      "A11-0504",
+      "A12-0002",
+      "A12-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Tier amounts are T3/T4 reports to confirm in game; the cadence was resolved from T3 + T4 (A11-0502 notes).",
+    "gaps": [
+      "L-A11-01",
+      "L-A11-02"
+    ],
+    "low_spender_note": "Low spenders should hold purchased gems (Supply Depot, Growth Fund payouts) for MTG as well and time any top-up around the Recharge event [A12-0005, A12-0002].",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ev-lohar-ap",
+    "title": "Lohar's Trial / Arms Training: where AP potions go",
+    "phase": "event",
+    "section": "events",
+    "order": 350,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** save your AP potions for **Lohar's Trial / Arms Training** and spend them there [A11-0505, A09-0007]. Consensus: **majority**.\n- Arms Training with Lohar is confirmed live in 2026 [A11-0513].",
+    "why_md": "It is one of the few events where a F2P's AP turns into gems and high-value rewards at a better rate than ordinary barbarians.",
+    "cards": [
+      "A09-0007",
+      "A11-0505",
+      "A11-0513"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "First occurrence day and reward tables are not captured (L-A11-01, L-A11-02).",
+    "gaps": [
+      "L-A11-01",
+      "L-A11-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ev-mge",
+    "title": "Mightiest Governor (MGE): milestones, not ranking",
+    "phase": "event",
+    "section": "events",
+    "order": 360,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (F2P):** take MGE **milestone** rewards; don't chase the ranking — or follow your kingdom's MGE rules [A11-0500]. Consensus: **majority**.",
+    "why_md": "Ranking rewards go to spenders in a new kingdom; milestones are reachable and cost only what you would use anyway. Many kingdoms also assign MGE ranks, and breaking those rules has social costs.",
+    "cards": [
+      "A11-0500"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Current MGE format is not captured (L-A11-04, L-B05-01).",
+    "gaps": [
+      "L-A11-04",
+      "L-B05-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ev-wheel-of-fortune",
+    "title": "Wheel of Fortune: planned target only",
+    "phase": "event",
+    "section": "events",
+    "order": 370,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas",
+      "lutador"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- F2P consensus: spin only for a **planned target**, usually stopping at **10 spins**, ideally after VIP 10 [A11-0503].\n- Spins now need **Spin Tickets** in Season 2/3/SoC (official) and, per a third-party summary, in Season 1 since 1.1.12 [C04-0022]. Older gem-per-spin math is wrong where tickets apply.",
+    "why_md": "The Wheel is the main early route to a featured legendary (YSG is reported around day 94 [A06-0502]), but unplanned spins are the classic F2P gem sink.",
+    "cards": [
+      "A06-0502",
+      "A11-0503",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0022"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "A11-0503 is partially obsolete/baixa (its gem cost predates Spin Tickets). Home-kingdom pricing is unknown (L-A11-03).",
+    "gaps": [
+      "L-A11-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ev-priorities",
+    "title": "Which events to prioritise and which to skip",
+    "phase": "event",
+    "section": "events",
+    "order": 380,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [
+      "f2p"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "Ark of Osiris: valuable for sculptures vs not competitive for F2P [A11-0508].",
+    "body_md": "- **Prioritise:** guaranteed-milestone and alliance PvE events — Lohar's Trial, Karuak Ceremony, Golden Kingdom, Ceroli Crisis, Alliance Mobilization, Shadow Legion [A11-0506].\n- **Skip:** Race Against Time, repeated gem-spending events, open power rankings [A11-0511].\n- **Split:** Ark of Osiris — good sculpture source vs \"F2P cannot compete\" [A11-0508]. Champions of Olympia is called the most F2P-friendly mode by one source [A11-0509]. Pioneer / Road to Revival: buy the four gold keys first (one source) [A11-0510].",
+    "why_md": "Events with guaranteed milestones pay F2P effort; events ranked on spending or raw power do not.",
+    "cards": [
+      "A11-0506",
+      "A11-0508",
+      "A11-0509",
+      "A11-0510",
+      "A11-0511"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "All five cards (A11-0506, A11-0511, A11-0508, A11-0509, A11-0510) are baixa. Reward tables per event are a gap.",
+    "gaps": [
+      "L-A11-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "farm-brief",
+    "title": "Farm accounts (brief; full guide to come)",
+    "phase": "day15-40",
+    "section": "farms",
+    "order": 390,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Purpose:** a farm gathers resources and ships them to the main through the Trading Post (taxed); side uses include MGE points, Books of Covenant and KvK support [A13-0010]. Consensus: **majority**.\n- **Targets:** CH11 (3 marches) to start, CH17 (4) as the practical minimum, CH22 (5) as a strong target [A13-0002]; Trading Post ≥ 15 on the farm [A13-0003].\n- **Tax** falls from 35% (Trading Post L1) to 21% (L15), 10% (L24) and 8% (L25) [A03-0024].\n- Only resources **above Storehouse protection** can be shipped [A03-0030]; gold can be sent [A03-0027]; each transfer uses a march and travel time [A03-0026].\n- Ship surplus regularly; don't keep big raw piles on a low-CH farm during kill events [A13-0005].\n- **No scripts on farms** (Conduct Score) [C04-0006].\n\nThe dedicated farm guide (single-resource, general and resource-pair variants) is planned as F-03.",
+    "why_md": "Farms are the most common way a F2P main gets extra resources without spending, but they cost daily minutes that are not yet measured, so they belong after the main routine is under control.",
+    "cards": [
+      "A03-0024",
+      "A03-0026",
+      "A03-0027",
+      "A03-0030",
+      "A13-0001",
+      "A13-0002",
+      "A13-0003",
+      "A13-0005",
+      "A13-0010",
+      "C04-0006"
+    ],
+    "patch_cards": [
+      "C04-0006"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Two cities per kingdom via Character Management (A13-0001, organizado). Farm minutes and yield per day are unknown. Resource-pair farms have no source (hypothesis only). Official farm policy is unconfirmed.",
+    "gaps": [
+      "L-A13-01",
+      "L-A13-02",
+      "L-A13-03",
+      "L-A03-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "mistakes-economy",
+    "title": "Mistakes that cost F2P the most",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 400,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "f2p"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Breaking the VIP streak** (back to 40/day) [A05-0003].\n2. **Sitting at the AP cap** (1,500) instead of spending regenerating AP [A09-0001, A09-0007].\n3. **Finishing timers with gems** or **buying AP with gems** [A04-0009, A04-0008].\n4. **Spreading sculptures** over several commanders [A06-0500]; **gold sculptures on gatherers or temporary picks** [A06-0510].\n5. **Letting hospitals overflow** (overflow dies) [A08-0502].\n6. **Leading fights** as a F2P instead of filling rallies [A08-0503].\n7. **Keeping raw resources above Storehouse protection** when items would be safe [A03-0007, A13-0005].\n8. **Building outside the CH chain** before CH21 [A01-0007].",
+    "why_md": "Each of these wastes something a F2P cannot buy back: a streak, free AP, gems, sculptures or troops.",
+    "cards": [
+      "A01-0007",
+      "A03-0007",
+      "A04-0008",
+      "A04-0009",
+      "A05-0003",
+      "A06-0500",
+      "A06-0510",
+      "A08-0502",
+      "A08-0503",
+      "A09-0001",
+      "A09-0007",
+      "A13-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "mistakes-outdated-advice",
+    "title": "Mistake: following outdated advice",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 410,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Check the date and patch of any guide. Common outdated items [C04-0004, C04-0026, C04-0022, C04-0024, C04-0006]:\n- resource boosts (removed in 1.1.09);\n- jumper accounts / Beginner's Immigration (gone since 2025-03-26);\n- gem-per-spin Wheel of Fortune math (Spin Tickets);\n- \"VIP caps at 18\" (VIP19 and SVIP since 1.0.87);\n- bots for barbarians/gathering (Conduct Score since 1.1.07).",
+    "why_md": "Many top search results are years old or show auto-bumped dates. Following them wastes resources on things that no longer exist.",
+    "cards": [
+      "C04-0004",
+      "C04-0006",
+      "C04-0022",
+      "C04-0024",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0006",
+      "C04-0022",
+      "C04-0024",
+      "C04-0026"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0026 rests on an in-game mail quoted by players plus wiki/guide.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "recovery-zeroed",
+    "title": "If you got zeroed",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 420,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**What survives** [A03-0007, A08-0502]:\n- Resource **items** and **gems** cannot be plundered.\n- Troops are wounded into hospitals up to capacity; beyond capacity they die, and some actions always kill severely wounded.\n\n**What to do now**\n1. **Heal before retraining** — healing is far cheaper than retraining (direction agreed by sources; amounts not quantified) [A08-0502].\n2. **Stop the bleeding:** keep raw resources at or below Storehouse protection, the rest as items [A03-0006, A03-0007, A13-0005].\n3. **Restart vs continue:** a fresh account can no longer jump to a new kingdom with Beginner's Immigration [C04-0026]; immigration rules were tightened in 2026 [C04-0008]. Continuing is usually the only realistic F2P option.\n4. Re-check the readiness checklist and rebuild **one** complete march first [A06-0500].",
+    "why_md": "Being zeroed is a top reason players quit. Knowing what was *not* lost, and what to rebuild first, turns a disaster into a delay.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A06-0500",
+      "A08-0502",
+      "A13-0005",
+      "C04-0008",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0026"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "Severe-wound/death rules lack official text (L-A08-03); heal vs retrain cost is not quantified (L-A08-01). Shield rules are not researched (PROPOSED-SHIELDS). C04-0008 is a patch-state card (immigration limits, pioneer parts).",
+    "gaps": [
+      "L-A08-01",
+      "L-A08-03",
+      "PROPOSED-SHIELDS",
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "open-pending-measurements",
+    "title": "Open questions / pending in-game measurements (T0)",
+    "phase": "anytime",
+    "section": "open",
+    "order": 430,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 1,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "These gaps weaken specific parts of this guide; the T0 protocol (`research/protocolos/t0-medicao.md`) is designed to close them.\n\n| Gap | What it would change | Blocks affected |\n|---|---|---|\n| L-A10-01 minutes per task | Time costs and the 15/30/60 ordering | daily-* |\n| L-A04-01 real F2P gem income | VIP 6 / VIP 10 dates, MTG budget | ov-budget-reality-check, d15-vip6-milestone |\n| L-A01-03 buffed build times | Real CH17/CH21 dates | d0-build-order, d41-ch21-t4 |\n| L-A02-03 time to T4 | Resolves \"T4 ~day 30\" vs ~163 raw builder-days | d41-ch21-t4 |\n| L-A02-02 speedup allocation model | Turns the spend-vs-hoard split into a rule | d41-speedups-spend-vs-hoard |\n| L-A04-04 speedup income/day | Speedup budget for CH21 | d41-speedups-spend-vs-hoard |\n| L-A09-01 AP regeneration | Barbarians/day | d0-ap-discipline |\n| L-A10-02 Daily Objectives after 1.1.09 | Cheapest path to 100 points | daily-30min |\n| L-A11-01 event first-occurrence days | Event calendar | ev-calendar-rule |\n| L-A06-03 sculpture income | Commander plan | d15-commander-checklist |\n| L-A01-01 early unlock levels | Academy / Quarry / Trading Post CH | d0-build-order |\n| L-B01-03 Lost Kingdom entry, Eve timing | Pre-KvK plan | pk-eve-of-crusade |\n| PROPOSED-SHIELDS shield and beginner protection | Safety and Break Mode advice | d0-day1-survival, recovery-zeroed |",
+    "why_md": "Saying what we don't know is part of the guide's value: you can see which advice is solid and which is waiting for measurement.",
+    "cards": [],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "",
+    "gaps": [
+      "L-A10-01",
+      "L-A04-01",
+      "L-A01-03",
+      "L-A02-03",
+      "L-A02-02",
+      "L-A04-04",
+      "L-A09-01",
+      "L-A10-02",
+      "L-A11-01",
+      "L-A06-03",
+      "L-A01-01",
+      "L-B01-03",
+      "PROPOSED-SHIELDS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  }
+]

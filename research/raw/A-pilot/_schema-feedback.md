@@ -1,0 +1,21 @@
+# Schema / process feedback from the A-pilot (collector + organizer), 2026-10-13
+
+## Schema (`schemas/fato.md`)
+1. **No way to mark derived facts.** Several of the most useful cards are organizer arithmetic over sourced data (A01-0005 build-day totals, A05-0007 VIP timelines, A04-0006 gem income, A04-0010 speedup minutes). Today they must pretend to be `mecanica`/`estrategia`. Proposal: add `tipo: derivado` (or a boolean `derivado: true`) plus a required `metodo:` field (formula/script + input card IDs). Confidence of a derived card = min(confidence of inputs).
+2. **`consenso` for strategies with n=1 or n=2.** Allowed values (unanime/majoritario/dividido/minoritario) say nothing about sample size; "unanime" with one source is misleading. Proposal: add `n_fontes_pro` / `n_fontes_contra` (or `consenso: fonte_unica`).
+3. **Tables don't fit `valores`.** A 25-row × 7-column table (CH requirements) was put in the Markdown body; `valores` only carries highlights. Proposal: allow `tabela:` pointing to a CSV/TSV file in `facts/<dom>/data/` (machine-readable for the future planner) and keep the body for humans.
+4. **Source independence is not captured.** Rule "T2 confirmed by 2 independent sources" cannot be applied without knowing that S04 copies S02 (shared typo "1,322,48"). Proposal: per-source field `independente_de: [S02]` in `fontes.md`, or per-citation `derivada_de:`.
+5. **Patch-sensitivity / obsolescence.** Need a field like `invalidado_por:` (C04 card or patch version) and `versao_minima:`. Example: Fandom VIP production columns valid only before 1.1.09; Peerless Scholar page obsolete since 1.0.79. Today this lives in free-text `notas`.
+6. **Partial obsolescence.** A card can be half-valid (A10-0001 task list: boost tasks removed, rest probably fine). `status` is card-level only. Proposal: allow `status: parcialmente_obsoleto` or split rules (one card per row).
+7. **`data_referencia` ambiguity.** For wiki data, is it the page revision date, the patch date, or access date? Proposal: two fields `data_fonte` (revision/publication) and `data_validade` (last date known true).
+8. **Gaps as first-class objects.** Gaps (AP regen rate, minutes per task, gem-drop rates) drive the next research round but live in `notas` and `_indice.md`. Proposal: `facts/<dom>/_lacunas.md` with ID, impact on guide (alto/medio/baixo) and suggested method (T0 measurement, specific source).
+9. **Minutes per task (A10) were never found in any source.** The plan's model needs time cost per activity; the schema could have optional `custo_tempo_min` with `origem: medido|fonte|estimado`. Strongly recommend a T0 measurement protocol (stopwatch on a real account for 3 days at CH8–CH16) — guides do not publish this.
+10. **Lyceum quiz answers** are official in-game text transcribed by a fan site: neither clean T1 nor T2. Suggest a tier note "T2-oficial-transcrito" or treat as T2 explicitly in `fontes.md`.
+
+## Process
+11. **Source IDs collide across parallel agents.** I used provisional `SP01–SP05`; orchestrator must renumber. Proposal: pre-allocate ID ranges per agent (e.g. A-pilot S100–S149) or use slugs (`src:gamerempire`).
+12. **Fact ID ranges.** Other agents wrote into `facts/A02…A13` (some use 0500+ ranges). Pre-allocating ranges per agent per domain avoids clashes when two agents touch the same domain (e.g. A03 vs A05 for VIP production).
+13. **Access workarounds should be documented centrally:** Fandom HTML is 402/403 but the MediaWiki API works; Lilith forum JSON API works; reddit and rok.guide are blocked; WebFetch's summarizer refuses verbatim tables → use curl + local HTML parsing. Put this in `fontes.md` "como acessar" column.
+14. **"Modified" dates lie.** riseofkingdomsguides bulk-bumped every post to 2026-01-02; staleness must be checked against patch notes, not page dates. Add to collector contract: "cross-check every number against C04 patch timeline".
+15. **Collector and organizer in one agent** worked fine for a pilot but blurs the raw/organized boundary; the raw notes here contain both quotes and organizer comments ("CONFLICTS with…"). Suggest a convention: comments in raw notes prefixed `>>`.
+16. **Some cards here may overlap with other agents' A03 cards** (VIP production after 1.1.09; gathering bonuses) — orchestrator should dedupe A10-0007 vs A03 and A05-0002 vs A03/C04-0004.

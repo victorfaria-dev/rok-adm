@@ -1,0 +1,1361 @@
+[
+ {
+  "id": "A01-0001",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0002",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0003",
+  "tipo": "regra",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0004",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0005",
+  "tipo": "derivado",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0006",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0007",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0008",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0009",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "contestado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0010",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A01-0011",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A02-0500",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A02-0501",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A02-0502",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A02-0503",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A02-0504",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0001",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "contestado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0002",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0003",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0004",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0005",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "contestado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0006",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0007",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0008",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0009",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0010",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0011",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0012",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0013",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0014",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0015",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0016",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0017",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0018",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0019",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0020",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0021",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0022",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "parcialmente_obsoleto",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": "1.0.49 (2021-08-03)"
+ },
+ {
+  "id": "A03-0023",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0024",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0025",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "contestado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0026",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0027",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0028",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0029",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0030",
+  "tipo": "regra",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0031",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A03-0032",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0001",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0002",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0003",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0004",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0005",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0006",
+  "tipo": "derivado",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0007",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0008",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0009",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0010",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A04-0011",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A05-0001",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A05-0002",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "parcialmente_obsoleto",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": "C04-0004"
+ },
+ {
+  "id": "A05-0003",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A05-0004",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A05-0005",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "contestado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 2,
+  "invalidado_por": null
+ },
+ {
+  "id": "A05-0006",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A05-0007",
+  "tipo": "derivado",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A05-0008",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 5,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0500",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 5,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0501",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 5,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0502",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0503",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 2,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0504",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0505",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0506",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0507",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0508",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0509",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 2,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0510",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0511",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0512",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0513",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0514",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0515",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A06-0516",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A07-0500",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A07-0501",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "organizado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A07-0502",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A07-0503",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A07-0504",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A08-0500",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A08-0501",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A08-0502",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A08-0503",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A08-0504",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "organizado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A08-0505",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A08-0506",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0001",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0002",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0003",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0004",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0005",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0006",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0007",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A09-0008",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A10-0001",
+  "tipo": "mecanica",
+  "confianca": "baixa",
+  "status": "parcialmente_obsoleto",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": "C04-0004"
+ },
+ {
+  "id": "A10-0002",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A10-0003",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A10-0004",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A10-0005",
+  "tipo": "evento",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A10-0006",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A10-0007",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A10-0008",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0500",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0501",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0502",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0503",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "parcialmente_obsoleto",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": "C04-0022"
+ },
+ {
+  "id": "A11-0504",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0505",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0506",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0507",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0508",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0509",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0510",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0511",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0512",
+  "tipo": "evento",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A11-0513",
+  "tipo": "evento",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A12-0001",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A12-0002",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A12-0003",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A12-0004",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A12-0005",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0001",
+  "tipo": "regra",
+  "confianca": "media",
+  "status": "organizado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0002",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0003",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0004",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "organizado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0005",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0006",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0007",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0008",
+  "tipo": "regra",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0009",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "A13-0010",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A14-0001",
+  "tipo": "mecanica",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A14-0002",
+  "tipo": "mecanica",
+  "confianca": "alta",
+  "status": "verificado",
+  "n_fontes_pro": 4,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "A14-0003",
+  "tipo": "estrategia",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "B01-0500",
+  "tipo": "evento",
+  "confianca": "media",
+  "status": "verificado",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "B01-0501",
+  "tipo": "evento",
+  "confianca": "media",
+  "status": "parcialmente_obsoleto",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": "C04-0007"
+ },
+ {
+  "id": "B01-0502",
+  "tipo": "evento",
+  "confianca": "baixa",
+  "status": "contestado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 1,
+  "invalidado_por": null
+ },
+ {
+  "id": "B01-0503",
+  "tipo": "evento",
+  "confianca": "baixa",
+  "status": "parcialmente_obsoleto",
+  "n_fontes_pro": 3,
+  "n_fontes_contra": 0,
+  "invalidado_por": "C04-0002"
+ },
+ {
+  "id": "B01-0504",
+  "tipo": "evento",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 1,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "B01-0505",
+  "tipo": "evento",
+  "confianca": "baixa",
+  "status": "organizado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ },
+ {
+  "id": "B01-0506",
+  "tipo": "estrategia",
+  "confianca": "baixa",
+  "status": "verificado",
+  "n_fontes_pro": 2,
+  "n_fontes_contra": 0,
+  "invalidado_por": null
+ }
+]

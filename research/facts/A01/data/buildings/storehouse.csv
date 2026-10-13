@@ -1,0 +1,26 @@
+Level,Requirements,Protection Capacity,Cost,Time,Power,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,None,F/W/S/G=300.0K/300.0K/225.0K/150.0K,None,None,5,,,,,None,None,,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+2,City Hall Lv.2,F/W/S/G=320.0K/320.0K/225.0K/160.0K,F/W/S/G=500/500/-/-,18s,10,500,500,,,,18s,18,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+3,City Hall Lv.3,F/W/S/G=350.0K/350.0K/262.5K/175.0K,F/W/S/G=1.0K/1.0K/-/-,1m 20s,17,1000,1000,,,,1m 20s,80,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+4,City Hall Lv.4,F/W/S/G=380.0K/380.0K/285.0K/190.0K,F/W/S/G=2.0K/2.0K/-/-,6m 40s,41,2000,2000,,,,6m 40s,400,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+5,City Hall Lv.5,F/W/S/G=410.0K/410.0K/307.5K/205.0K,F/W/S/G=3.8K/3.8K/-/-,15m,92,3800,3800,,,,15m,900,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+6,City Hall Lv.6,F/W/S/G=450.0K/450.0K/337.5K/225.0K,F/W/S/G=6.5K/6.5K/3.8K/-,30m,201,6500,6500,3800,,,30m,1800,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+7,City Hall Lv.7,F/W/S/G=500.0K/500.0K/375.0K/250.0K,F/W/S/G=9.8K/9.8K/6.0K/-,1h,402,9800,9800,6000,,,1h,3600,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+8,City Hall Lv.8,F/W/S/G=550.0K/550.0K/412.5K/275.0K,F/W/S/G=14.8K/14.8K/9.6K/-,2h,778,14800,14800,9600,,,2h,7200,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+9,City Hall Lv.9,F/W/S/G=600.0K/600.0K/450.0K/300.0K,F/W/S/G=22.3K/22.3K/15.4K/-,4h,"1,489",22300,22300,15400,,,4h,14400,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+10,City Hall Lv.10,F/W/S/G=650.0K/650.0K/487.5K/325.0K,F/W/S/G=33.5K/33.5K/24.6K/-,8h,"2,848",33500,33500,24600,,,8h,28800,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+11,City Hall Lv.11,F/W/S/G=700.0K/7600.0K/525.0K/350.0K,F/W/S/G=52.5K/52.5K/37.5K/-,9h 36m,"4,552",52500,52500,37500,,,9h 36m,34560,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+12,City Hall Lv. 12,F/W/S/G=750.0K/750.0K/562.5K/375.0K,F/W/S/G=80.0K/80.0K/57.5K/-,11h 31m,"6,703",80000,80000,57500,,,11h 31m,41460,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+13,City Hall Lv. 13,F/W/S/G=800.0K/800.0K/600.0K/400.0K,F/W/S/G=120.0K/120.0K/87.5K/-,13h 49m,"9,436",120000,120000,87500,,,13h 49m,49740,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+14,City Hall Lv. 14,F/W/S/G=850.0K/850.0K/637.5K/425.0K,F/W/S/G=180.0K/180.0K/132.5K/-,16h 35m,"12,942",180000,180000,132500,,,16h 35m,59700,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+15,City Hall Lv. 15,F/W/S/G=900.0K/900.0K/675.0K/450.0K,F/W/S/G=270.0K/270.0K/200.0K/-,19h 54m,"17,488",270000,270000,200000,,,19h 54m,71640,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+16,City Hall Lv. 16,F/W/S/G=1.0M/1.0M/750.0K/500.0K,F/W/S/G=405.0K/405.0K/300.0K/-,23h 53m,"23,447",405000,405000,300000,,,23h 53m,85980,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+17,City Hall Lv. 17,F/W/S/G=1.1M/1.1M/825.0K/550.0K,F/W/S/G=607.5K/607.5K/450.0K/-,1d 5h,"31,354",607500,607500,450000,,,1d 5h,104400,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+18,City Hall Lv. 18,F/W/S/G=1.2M/1.2M/900.0K/600.0K,F/W/S/G=925.0K/925.0K/675.0K/-,1d 10h,"42,032",925000,925000,675000,,,1d 10h,122400,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+19,City Hall Lv. 19,F/W/S/G=1.3M/1.3M/975.0K/650.0K,F/W/S/G=1.4M/1.4M/1.0M/-,1d 17h,"56,560",1400000,1400000,1000000,,,1d 17h,147600,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+20,City Hall Lv. 20,F/W/S/G=1.4M/1.4M/1.05M/700.0K,F/W/S/G=2.1M/2.1M/1.6M/-,2d 1h,"76,832",2100000,2100000,1600000,,,2d 1h,176400,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+21,City Hall Lv. 21,F/W/S/G=1.5M/1.5M/1.125M/750.0K,F/W/S/G=3.2M/3.2M/2.3M/-,2d 11h,"104,966",3200000,3200000,2300000,,,2d 11h,212400,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+22,City Hall Lv. 22,F/W/S/G=1.6M/1.6M/1.2M/800.0K,F/W/S/G=4.7M/4.7M/3.5M/-,3d 5h,"145,492",4700000,4700000,3500000,,,3d 5h,277200,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+23,City Hall Lv. 23,F/W/S/G=1.8M/1.8M/1.35M/900.0K,F/W/S/G=7.1M/7.1M/5.3M/-,4d 12h,"205,219",7100000,7100000,5300000,,,4d 12h,388800,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+24,City Hall Lv. 24,F/W/S/G=2.0M/2.0M/1.5M/1.0M,F/W/S/G=10.8M/10.8M/8.0M/-,6d 18h,"295,585",10800000,10800000,8000000,,,6d 18h,583200,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements
+25,City Hall Lv. 25  Hospital 25,F/W/S/G=2.5M/2.5M/2.5M/2.5M,F/W/S/G=16.2M/16.2M/12.0M/-,,"478,367",16200000,16200000,12000000,,,,,https://riseofkingdoms.fandom.com/wiki/Buildings/Storehouse/Requirements

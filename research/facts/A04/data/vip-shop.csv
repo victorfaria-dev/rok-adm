@@ -1,0 +1,47 @@
+item,price,currency,vip_required,discount,qty_per_week,source_url
+Basic Action Point Recovery (100 AP),12000,food,2,-50%,30,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Universal Speedup (5m),7000,food,3,-30%,50,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"Lv.5 Tome of Knowledge (10,000 xp)",40,gems,3,-50%,50,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Universal Speedup (5m),6,gems,3,-57%,500,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Level 1 Material Choice Chest,10000,food,3,-50%,50,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Brand-new Starlight Sculpture,60000,food,4,-33%,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"500,000 Food",180,gems,4,-78%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Golden Key,600,gems,4,-50%,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+<!-- I don't have a good image to put up (blueprint fragment chest) -->,,,{{BuildingResources|||||240}},VIP 4,{{cellbgrarity|legendary}} -60%,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Dazzling Starlight Sculpture,400000,wood,5,-33%,5,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"500,000 Wood",180,gems,5,-78%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Universal Speedup (60m),50,gems,5,-58%,50,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Level 2 Material Choice Chest,150,gems,5,-60%,15,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+| [[File:Chest_Advanced_Bluesprint2.png|31px|link=Items/Chest Elite Bluesprint]] [[Items/Chest Advanced Bluesprint|Blueprint Fragment Choice Chest]],10000,food,5,-50%,30,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"375,000 Stone",180,gems,6,-78%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Targeted Teleport,750,gems,6,-50%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+<!-- I don't have a good image to put up (blueprint fragment chest) -->,,,{{BuildingResources|||||240}},VIP 6,{{cellbgrarity|legendary}} -60%,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+| [[File:Chest_Elite_Bluesprint2.png|31px|link=Items/Chest Elite Bluesprint]] [[Items/Chest Elite Bluesprint|Blueprint Fragment Choice Chest]],20000,food,6,-50%,15,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"200,000 Gold",180,gems,7,-78%,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Universal Speedup (8h),240,gems,7,-60%,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Level 4 Material Choice Chest,600,gems,7,-60%,15,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"1,500,000 Food",460,gems,8,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Bundle of Brand-new Starlight Sculptures,300,gems,8,-50%,25,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+<!-- I don't have a good image to put up (blueprint fragment chest) -->,,,{{BuildingResources|||||240}},VIP 8,{{cellbgrarity|legendary}} -60%,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"1,500,000 Wood",460,gems,9,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Epic Commander Sculpture,200,gems,9,-60%,50,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"1,125,000 Stone",460,gems,10,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+24-Hour Enhanced Defense (Advanced),750,gems,10,-50%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+<!-- I don't have a good image to put up (blueprint fragment chest) -->,,,{{BuildingResources|||||1500}},VIP 10,{{cellbgrarity|epic}} -50%,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+[[File:Sovereign_Key2.png|31px|link=Items/Sovereing Key]] [[Items/Sovereing Key|Sovereing Key]],600,gems,10,-40%,40,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"600,000 Gold",460,gems,11,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Bundle of Dazzling Starlight Sculptures,2000,gems,11,-50%,15,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+<!-- I don't have a good image to put up (blueprint fragment chest) -->,,,{{BuildingResources|||||1500}},VIP 11,{{cellbgrarity|epic}} -50%,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"5,000,000 Food",1400,gems,12,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+24-Hour Enhanced Attack (Advanced),600,gems,12,-60%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+<!-- I don't have a good image to put up (blueprint fragment chest) -->,,,{{BuildingResources|||||1500}},VIP 12,{{cellbgrarity|epic}} -50%,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"5,000,000 Wood",1400,gems,13,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Legendary Commander Sculpture,2000,gems,13,-60%,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"3,750,000 Stone",1400,gems,14,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Advanced Army Expansion,2500,gems,14,-50%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+"2,000,000 Gold",1400,gems,15,-80%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Universal Speedup (24h),600,gems,15,-60%,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Level 5 Reserves,2000,gems,15,-90%,23,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Level 6 Reserves,5000,gems,17,-90%,10,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Training Speedup (24h),600,gems,18,-60%,20,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop
+Level 5 Material Choice Chest,2400,gems,18,-60%,5,https://riseofkingdoms.fandom.com/wiki/Buildings/Shop

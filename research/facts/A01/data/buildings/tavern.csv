@@ -1,0 +1,26 @@
+Level,Unlocks,Requirements,Free Golden Chest (Interval),Daily Free Silver Chests,Cost,Time,Power,food,wood,stone,gold,extra_cost,time_raw,time_seconds,source_url
+1,None,None,3d,3,F/W/S/G=200/200/-/-,2s,5,200,200,,,,2s,2,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+2,None,City Hall Lv.2,2d23h,3,F/W/S/G=300/300/-/-,15s,10,300,300,,,,15s,15,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+3,None,City Hall Lv.3,2d22h,3,F/W/S/G=500/500/-/-,1m,16,500,500,,,,1m,60,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+4,None,City Hall Lv.4,2d21h,3,F/W/S/G=1.0K/1.0K/-/-,3m,27,1000,1000,,,,3m,180,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+5,'Wall' Lv.5,City Hall Lv.5,2d20h,4,F/W/S/G=2.0K/2.0K/-/-,10m,59,2000,2000,,,,10m,600,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+6,'Wall' Lv.6,Quarry Lv.6,2d19h,4,F/W/S/G=2.7K/2.7K/7.0K/-,36m 40s,178,2700,2700,7000,,,36m 40s,2200,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+7,'Wall' Lv.7,Quarry Lv.7,2d18h,4,F/W/S/G=4.0K/4.0K/10.6K/-,1h 13m,401,4000,4000,10600,,,1h 13m,4380,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+8,'Wall' Lv.8,Quarry Lv.8,2d17h,5,F/W/S/G=6.0K/6.0K/16.0K/-,2h 27m,825,6000,6000,16000,,,2h 27m,8820,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+9,'Wall' Lv.9,Quarry Lv.9,2d16h,5,F/W/S/G=9.0K/9.0K/24.0K/-,4h 53m,"1,637",9000,9000,24000,,,4h 53m,17580,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+10,'Wall' Lv.10,Quarry Lv.10,2d15h,5,F/W/S/G=13.5K/13.5K/36.0K/-,9h 47m,"3,207",13500,13500,36000,,,9h 47m,35220,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+11,'Wall' Lv.11,Quarry Lv.11,2d14h,6,F/W/S/G=21.0K/21.0K/55.0K/-,11h 44m,"5,145",21000,21000,55000,,,11h 44m,42240,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+12,'Wall' Lv.12,Quarry Lv.12,2d13h,6,F/W/S/G=32.0K/32.0K/85.0K/-,14h 5m,"7,555",32000,32000,85000,,,14h 5m,50700,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+13,'Wall' Lv.13,Quarry Lv.13,2d12h,6,F/W/S/G=49.0K/49.0K/130.0K/-,16h 54m,"10,574",49000,49000,130000,,,16h 54m,60840,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+14,'Wall' Lv.14,Quarry Lv.14,2d11h,7,F/W/S/G=74.0K/74.0K/195.0K/-,20h 17m,"14,374",74000,74000,195000,,,20h 17m,73020,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+15,'Wall' Lv.15,Quarry Lv.15,2d10h,7,F/W/S/G=111.0K/111.0K/295.0K/-,1d,"19,206",111000,111000,295000,,,1d,86400,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+16,'Wall' Lv.16,Quarry Lv.16,2d9h,7,F/W/S/G=167.0K/167.0K/445.0K/-,1d 5h,"25,413",167000,167000,445000,,,1d 5h,104400,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+17,'Wall' Lv.17,Quarry Lv.17,2d8h,8,F/W/S/G=252.0K/252.0K/670.0K/-,1d 11h,"33,476",252000,252000,670000,,,1d 11h,126000,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+18,'Wall' Lv.18,Quarry Lv.18,2d7h,8,F/W/S/G=394.0K/394.0K/1.1M/-,1d 18h,"44,256",394000,394000,1100000,,,1d 18h,151200,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+19,'Wall' Lv.19,Quarry Lv.19,2d6h,8,F/W/S/G=600.0K/600.0K/1.6M/-,2d 2h,"58,720",600000,600000,1600000,,,2d 2h,180000,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+20,'Wall' Lv.20,Quarry Lv.20,2d5h,8,F/W/S/G=900.0K/900.0K/2.4M/-,2d 13h,"78,237",900000,900000,2400000,,,2d 13h,219600,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+21,'Wall' Lv.21,Quarry Lv.21,2d4h,9,F/W/S/G=1.4M/1.4M/3.6M/-,3d,"104,898",1400000,1400000,3600000,,,3d,259200,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+22,'Wall' Lv.22,Quarry Lv.22,2d3h,9,F/W/S/G=2.0M/2.0M/5.4M/-,3d 22h,"142,797",2000000,2000000,5400000,,,3d 22h,338400,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+23,'Wall' Lv.23,Quarry Lv.23,2d2h,9,F/W/S/G=3.0M/3.0M/8.1M/-,5d 12h,"198,288",3000000,3000000,8100000,,,5d 12h,475200,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+24,'Wall' Lv.24,Quarry Lv.24,2d1h,9,F/W/S/G=4.7M/4.7M/12.5M/-,8d 6h,"283,099",4700000,4700000,12500000,,,8d 6h,712800,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
+25,'Wall' Lv.25,Quarry Lv.25,2d,10,F/W/S/G=7.1M/7.1M/19.0M1x size = 24,28d 9h,"468,557",7100000,7100000,19000000,,size = 24 1x Master's Blueprint (glued to cost cell in wiki),28d 9h,2451600,https://riseofkingdoms.fandom.com/wiki/Buildings/Tavern/Requirements
