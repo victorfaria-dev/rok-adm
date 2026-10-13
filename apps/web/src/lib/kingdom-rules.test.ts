@@ -79,3 +79,20 @@ describe("rules store glue", () => {
     expect(formatDay("nope")).toBe("nope");
   });
 });
+
+describe("review fixes", () => {
+  it("lang= uses the id when two versions share a code, so the right one reopens", () => {
+    const doc = { ...emptyRulesDoc("r"), translations: [emptyTranslation("t1", "A", "es"), emptyTranslation("t2", "B", "es"), emptyTranslation("t3", "C", "fr")] };
+    const h2 = hashWithVersion(doc, "#d=1zAAA", "t2");
+    expect(h2).toBe("#d=1zAAA&lang=t2");
+    expect(versionFromHash(doc, h2)).toBe("t2");
+    expect(hashWithVersion(doc, "#d=1zAAA", "t3")).toBe("#d=1zAAA&lang=fr");
+  });
+
+  it("a translated intro disappears when the original intro is removed", async () => {
+    const { resolveRules } = await import("@rokadm/planner");
+    const t = { ...emptyTranslation("t1", "Español", "es"), intro: "Lea esto" };
+    expect(resolveRules({ ...emptyRulesDoc("r"), intro: "", translations: [t] }, "t1").intro).toBe("");
+    expect(resolveRules({ ...emptyRulesDoc("r"), intro: "Read this", translations: [t] }, "t1").intro).toBe("Lea esto");
+  });
+});

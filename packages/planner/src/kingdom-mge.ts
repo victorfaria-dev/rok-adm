@@ -341,8 +341,10 @@ export function parseMgeScore(text: string): { ok: true; score: number | null } 
   const n = parseQuantity(text);
   if (n === null) {
     // parseQuantity refuses unsafe plain and suffixed numbers; tell those apart from typos.
-    const digits = text.replace(/[\s,_]/g, "");
-    if (/^\d{16,}$/.test(digits) || /^\d+(\.\d+)?[kmb]$/i.test(digits)) {
+    // Only well-formed numbers count as "too large": "1,5m" (decimal comma) is a format error.
+    const t = text.trim().replace(/[\s_]/g, "");
+    const grouped = /^\d{1,3}(,\d{3})+$/.test(t) || /^\d+$/.test(t);
+    if ((grouped && t.replace(/,/g, "").length >= 16) || /^\d+(\.\d+)?[kmb]$/i.test(t)) {
       return { ok: false, tooBig: true, message: `The score is too large (at most ${formatInt(Number.MAX_SAFE_INTEGER)}).` };
     }
     return { ok: false, tooBig: false, message: MGE_SCORE_HELP };

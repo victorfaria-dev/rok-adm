@@ -332,3 +332,14 @@ describe("language codes must name a real language", () => {
     for (const c of ["xx", "qq", "zz-ZZ", "e", "english"]) expect(isLangCode(c), c).toBe(false);
   });
 });
+
+describe("review fixes", () => {
+  it("canonicalises 3-letter codes and refuses them as typed", async () => {
+    const { isLangCode, cleanLangCode } = await import("../src/kingdom-rules");
+    expect(isLangCode("spa")).toBe(false);
+    expect(isLangCode("eng")).toBe(false);
+    expect(cleanLangCode("spa")).toBe("es");
+    expect(cleanLangCode("pt-br")).toBe("pt-BR");
+    expect(cleanLangCode("xx")).toBe("");
+  });
+});

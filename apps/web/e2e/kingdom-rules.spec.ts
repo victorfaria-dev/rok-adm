@@ -252,7 +252,7 @@ test.describe("rules in more than one language", () => {
     const code = page.getByLabel("Language code (optional)");
     await code.fill("es_ES");
     await expect(code).toHaveAttribute("aria-invalid", "true");
-    await expect(page.locator("#kq-t-lang-error")).toContainText("short language code");
+    await expect(page.locator("#kq-t-lang-error")).toContainText("short code of a real language");
     await expect(code).toHaveAttribute("aria-describedby", /kq-t-lang-error/);
     await code.fill("es");
     await expect(page.locator("#kq-t-lang-error")).toHaveCount(0);

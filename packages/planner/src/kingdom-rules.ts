@@ -122,30 +122,48 @@ function parseSection(x: unknown, i: number, seen: Set<string>): RulesSection | 
 // ---------------------------------------------------------------------------
 // Language versions (F-84 on demand): written by the council, never machine translated.
 
-/** Simple BCP-47 shape check for a lang attribute: "es", "pt-BR", "zh-Hant", "sr-Latn-RS". */
+let displayNames: Intl.DisplayNames | null | undefined;
 /** true when the browser/Node knows a display name for this primary language subtag. */
 function knownLanguage(primary: string): boolean {
   try {
-    const names = new Intl.DisplayNames(["en"], { type: "language", fallback: "none" });
-    return names.of(primary.toLowerCase()) !== undefined;
+    displayNames ??= new Intl.DisplayNames(["en"], { type: "language", fallback: "none" });
+    return displayNames.of(primary.toLowerCase()) !== undefined;
   } catch {
+    displayNames = null;
     return true; // No Intl.DisplayNames: keep the shape check only.
   }
 }
 
+/** Canonical BCP-47 form ("spa" → "es", "pt-br" → "pt-BR"), or null when it cannot be canonicalised. */
+function canonical(code: string): string | null {
+  try {
+    return Intl.getCanonicalLocales(code)[0] ?? null;
+  } catch {
+    return null;
+  }
+}
+
+/** Simple BCP-47 shape check for a lang attribute: "es", "pt-BR", "zh-Hant", "sr-Latn-RS". */
 const LANG_CODE = /^[a-z]{2,3}(?:-[a-z0-9]{2,8})*$/i;
 
-/** true for a code that can go in a lang attribute (empty is not a code). */
+/**
+ * true for a code that can go in a lang attribute (empty is not a code): well formed, a known
+ * language, and already in its shortest form (axe rejects "spa" or "eng"; use "es", "en").
+ */
 export function isLangCode(x: unknown): x is string {
   if (typeof x !== "string" || x.length > RULES_LIMITS.langCode || !LANG_CODE.test(x)) return false;
-  // Well-formed is not enough: an unknown primary language ("xx") is an invalid lang attribute.
+  const c = canonical(x);
+  if (c && c.split("-")[0] !== x.split("-")[0]!.toLowerCase()) return false;
   return knownLanguage(x.split("-")[0]!);
 }
 
-/** Trimmed code when it is valid, else "". */
+/** Valid code in canonical form ("spa" → "es"), else "". */
 export function cleanLangCode(x: unknown): string {
   const s = typeof x === "string" ? x.trim() : "";
-  return isLangCode(s) ? s : "";
+  if (!s) return "";
+  if (isLangCode(s)) return canonical(s) ?? s;
+  const c = canonical(s);
+  return c && isLangCode(c) ? c : "";
 }
 
 function parseTranslation(x: unknown, i: number, seen: Set<string>, known: ReadonlySet<string>): RulesTranslation | null {
@@ -205,7 +223,10 @@ export function setTranslatedSection(t: RulesTranslation, sectionId: string, pat
 /** Drop translated sections whose original section no longer exists. */
 export function pruneTranslations(doc: RulesDoc): RulesDoc {
   const known = new Set(doc.sections.map((s) => s.id));
-  return { ...doc, translations: doc.translations.map((t) => ({ ...t, sections: t.sections.filter((s) => known.has(s.id)) })) };
+  return {
+    ...doc,
+    translations: doc.translations.map((t) => ({ ...t, intro: doc.intro ? t.intro : "", sections: t.sections.filter((s) => known.has(s.id)) })),
+  };
 }
 
 /** The document with the original and at most one translation (null = original only), for a shorter link. */
@@ -265,12 +286,13 @@ export function resolveRules(doc: RulesDoc, key: string = ORIGINAL_KEY): Resolve
     if (!ok) untranslated++;
     return ok ? { id: s.id, heading: tr!.heading, body: tr!.body, fallback: false } : { ...s, fallback: true };
   });
+  // No original intro means no intro in any version (a stale translated intro is ignored).
   const introFallback = !!doc.intro && !t.intro;
   if (introFallback) untranslated++;
   return {
     key: t.id, name: translationName(t, doc.translations.indexOf(t)), lang: cleanLangCode(t.lang), isOriginal: false,
     title: t.title || origTitle, titleFallback: !t.title,
-    intro: introFallback ? doc.intro : t.intro, introFallback,
+    intro: doc.intro ? (introFallback ? doc.intro : t.intro) : "", introFallback,
     sections, untranslated,
   };
 }
@@ -285,7 +307,7 @@ export function versionsWithPrompts(doc: RulesDoc): string[] {
   const out: string[] = [];
   if ([doc.intro, ...doc.sections.map((s) => s.body)].some(hasPrompts)) out.push(originalName(doc));
   doc.translations.forEach((t, i) => {
-    if ([t.title, t.intro, ...t.sections.flatMap((s) => [s.heading, s.body])].some(hasPrompts)) out.push(translationName(t, i));
+    if ([t.title, doc.intro ? t.intro : "", ...t.sections.flatMap((s) => [s.heading, s.body])].some(hasPrompts)) out.push(translationName(t, i));
   });
   return out;
 }

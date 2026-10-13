@@ -479,3 +479,17 @@ describe("CSV export", () => {
     expect(mgeGovernorsCsv(doc())).toBe(`${MGE_CSV_BOM}name,score,tags\r\n`);
   });
 });
+
+describe("score format vs size", () => {
+  it("a decimal comma is a format error, not 'too large'", async () => {
+    const { parseMgeScore } = await import("../src/kingdom-mge");
+    for (const t of ["1,5m", "4,2m", "1,234567890123456"]) {
+      const r = parseMgeScore(t);
+      expect(r.ok).toBe(false);
+      if (!r.ok) expect(r.tooBig, t).toBe(false);
+    }
+    const big = parseMgeScore("99,999,999,999,999,999");
+    expect(!big.ok && big.tooBig).toBe(true);
+    expect(parseMgeScore("1.5m")).toEqual({ ok: true, score: 1_500_000 });
+  });
+});

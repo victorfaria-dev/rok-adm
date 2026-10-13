@@ -362,6 +362,16 @@ export function groupFor(card: Partial<Pick<RequirementsCard, "groups">>, groupI
  * DKP target for this power, or null when no band covers it.
  * With a group: ceil(band target × group percent / 100).
  */
+/**
+ * ceil(value × percent / 100), ignoring floating-point noise relative to the size of the result
+ * (4,000,000,000 × 1.07% is exactly 42,800,000, not 42,800,001).
+ */
+export function ceilPercent(value: number, percent: number): number {
+  const x = (value * percent) / 100;
+  const r = Math.round(x);
+  return Math.abs(x - r) <= Math.max(1, Math.abs(x)) * 1e-12 ? r : Math.ceil(x);
+}
+
 export function targetFor(card: Pick<RequirementsCard, "requirement"> & Partial<Pick<RequirementsCard, "groups">>, power: number, groupId?: string | null): TargetInfo | null {
   const r = card.requirement;
   let base: number;
@@ -371,11 +381,11 @@ export function targetFor(card: Pick<RequirementsCard, "requirement"> & Partial<
     const p = Number.isFinite(power) && power > 0 ? power : 0;
     band = bandFor(r.bands, p);
     if (!band) return null;
-    base = Math.max(0, Math.ceil((p * band.percent) / 100 - 1e-9));
+    base = Math.max(0, ceilPercent(p, band.percent));
   }
   if (!Number.isFinite(base)) return null;
   const group = groupFor(card, groupId);
-  const target = group ? Math.max(0, Math.ceil((base * group.percent) / 100 - 1e-9)) : base;
+  const target = group ? Math.max(0, ceilPercent(base, group.percent)) : base;
   if (!Number.isFinite(target)) return null;
   return { target, baseTarget: base, ...(band ? { band } : {}), ...(group ? { group } : {}) };
 }

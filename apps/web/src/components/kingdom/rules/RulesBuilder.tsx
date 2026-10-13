@@ -235,7 +235,11 @@ export default function RulesBuilder() {
       setLinkParts(null);
       setError("");
     } catch (e) {
-      if (isTooLarge(e) && doc.translations.length > 0) {
+      // Offer "original + one language" only when the original alone would fit in a link.
+      const originalFits = isTooLarge(e) && doc.translations.length > 0
+        ? await rulesShareLink(doc, undefined, null).then(() => true, () => false)
+        : false;
+      if (originalFits && isTooLarge(e)) {
         // Every language together is too long: offer the original plus one language instead.
         setLink(null);
         setTooLarge(e.chars);

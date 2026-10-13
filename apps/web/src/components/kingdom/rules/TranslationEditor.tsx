@@ -7,7 +7,7 @@ import { TextAreaField, TextField } from "../shared/Field";
 
 const BODY_HINT = "Same markup as the original: blank line = new paragraph, \"- \" bullet, \"1. \" numbered.";
 export const LANG_CODE_HINT = "Optional, so screen readers and translators know the language: es, pt-BR, ru, uk, ar, zh-Hant…";
-export const LANG_CODE_ERROR = "Use a short language code such as es, pt-BR or zh-Hant (letters, numbers and hyphens). It is ignored until it is fixed.";
+export const LANG_CODE_ERROR = "Use the short code of a real language, such as es, pt-BR or zh-Hant (two letters where one exists: es, not spa). It is ignored until it is fixed.";
 
 export const langCodeError = (code: string): string | undefined => (code.trim() && !isLangCode(code.trim()) ? LANG_CODE_ERROR : undefined);
 

@@ -294,3 +294,14 @@ describe("excluded deads (K2779 rule, B08-0001)", () => {
     expect(back.ok && back.data.excludedDeads).toEqual({ enabled: true, label: "zeroed by a bad trade" });
   });
 });
+
+describe("ceilPercent", () => {
+  it("is exact for large targets with two-decimal percents and still rounds real fractions up", async () => {
+    const { ceilPercent } = await import("../src/kingdom-requirements");
+    expect(ceilPercent(4_000_000_000, 1.07)).toBe(42_800_000);
+    expect(ceilPercent(123_456_789_000, 1.1)).toBe(1_358_024_679);
+    expect(ceilPercent(10_000_001, 250)).toBe(25_000_003);
+    expect(ceilPercent(3, 50)).toBe(2);
+    expect(ceilPercent(0, 250)).toBe(0);
+  });
+});

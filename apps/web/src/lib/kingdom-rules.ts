@@ -72,7 +72,10 @@ export function hashWithVersion(doc: RulesDoc, hash: string, key: string): strin
   const h = hash.startsWith("#") ? hash.slice(1) : hash;
   const parts = h.split("&").filter((p) => p && !p.startsWith("lang="));
   const t = doc.translations.find((x) => x.id === key);
-  const value = key === ORIGINAL_KEY ? (doc.originalLang || ORIGINAL_KEY) : t ? (t.lang || t.id) : null;
+  // Use the language code only when it names exactly one version; otherwise the id (codes can repeat).
+  const codes = [doc.originalLang, ...doc.translations.map((x) => x.lang)].filter(Boolean).map((c) => c.toLowerCase());
+  const unique = (c: string): boolean => !!c && codes.filter((x) => x === c.toLowerCase()).length === 1;
+  const value = key === ORIGINAL_KEY ? (unique(doc.originalLang) ? doc.originalLang : ORIGINAL_KEY) : t ? (unique(t.lang) ? t.lang : t.id) : null;
   if (value && doc.translations.length > 0) parts.push(`lang=${encodeURIComponent(value)}`);
   return `#${parts.join("&")}`;
 }
