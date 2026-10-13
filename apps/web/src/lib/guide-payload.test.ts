@@ -3,7 +3,7 @@ import { join } from "node:path";
 import { gzipSync } from "node:zlib";
 import { describe, expect, it } from "vitest";
 import type { GuideBlock } from "@rokadm/core";
-import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildGuidePayload, patchBadge, renderMarkdown } from "./guide-payload";
+import { BLOCK_SETS, buildBudgetPayload, buildGuideData, buildGuidePayload, patchBadge, renderMarkdown, vipByKvk1Text } from "./guide-payload";
 
 const GUIDES = join(__dirname, "../../../../guides/data");
 const files = readdirSync(GUIDES).filter((f) => /^blocks\..+\.json$/.test(f) && f !== "blocks.schema.json");
@@ -48,9 +48,38 @@ describe("guide payload (build time)", () => {
     expect(JSON.stringify(budget)).not.toContain("invalidatedBy");
   });
 
-  it("labels task-list checkboxes", () => {
-    const html = renderMarkdown("- [ ] one\n- [x] two");
-    expect(html.match(/<input [^>]*type="checkbox"[^>]*>/g)?.every((i) => i.includes("aria-label="))).toBe(true);
+  it("renders task lists as plain list items, without fake checkboxes", () => {
+    for (const src of ["- [ ] one\n- [x] two", "- [ ] one\n\n- [x] two\n"]) {
+      const html = renderMarkdown(src);
+      expect(html).not.toContain("<input");
+      expect(html.match(/<li class="ko-task[^"]*">/g)).toHaveLength(2);
+      expect(html).toContain('<li class="ko-task ko-task-done">');
+      expect(html).toContain('<span class="visually-hidden">Done: </span>');
+    }
+  });
+
+  it("names each table region after its block, uniquely across the guide", () => {
+    const one = renderMarkdown("| a | b |\n|---|---|\n| 1 | 2 |", "Daily 15 minutes");
+    expect(one).toContain('aria-label="Daily 15 minutes, table (scrolls sideways)"');
+    const two = renderMarkdown("| a |\n|---|\n| 1 |\n\ntext\n\n| b |\n|---|\n| 2 |", "X");
+    expect(two).toContain('aria-label="X, table 1 (scrolls sideways)"');
+    expect(two).toContain('aria-label="X, table 2 (scrolls sideways)"');
+    for (const set of Object.keys(BLOCK_SETS)) {
+      const html = buildGuidePayload(set).blocks.flatMap((b) => [b.bodyHtml, b.whyHtml, b.uncertain_notes ?? "", b.low_spender_note ?? "", b.split_views ?? ""]).join("");
+      const labels = [...html.matchAll(/role="region" aria-label="([^"]*)"/g)].map((m) => m[1]);
+      expect(labels.length, set).toBeGreaterThan(0);
+      expect(new Set(labels).size, set).toBe(labels.length);
+      expect(html, set).not.toContain('type="checkbox"');
+    }
+  });
+
+  it("VIP by KvK1: one sentence when both routes reach the same level", () => {
+    expect(vipByKvk1Text(7, 7)).toMatch(/^VIP 7 either way/);
+    expect(vipByKvk1Text(7, 7).match(/VIP \d+/g)).toHaveLength(1);
+    expect(vipByKvk1Text(6, 8)).toBe("VIP 6 with the daily chest only, VIP 8 if every guaranteed gem goes to VIP");
+    const row = buildBudgetPayload().targets.find((t) => t.label.startsWith("VIP by day"))!;
+    const levels = row.value.match(/VIP (\d+)/g)!;
+    expect(new Set(levels).size).toBe(levels.length);
   });
 
   it("parses the patch reference into a version and a note", () => {

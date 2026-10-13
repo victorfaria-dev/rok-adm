@@ -42,6 +42,7 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   const ready = useRef(false);
   const focusHeading = useRef(false);
   const focusInput = useRef(false);
+  const focusOnMount = useRef(true);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   stateRef.current = state;
@@ -93,6 +94,15 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   // Focus: question heading on every step change; the field when an error appears.
   // Layout effect: focus must land before the next key event, or a fast Enter/Tab races it.
   useLayoutEffect(() => {
+    // First load: focus the heading too, once the DOM shows the resumed step, unless the user
+    // already focused something.
+    if (focusOnMount.current && ready.current && state.step === stateRef.current.step) {
+      focusOnMount.current = false;
+      const active = document.activeElement;
+      if (!active || active === document.body || active === document.documentElement) headingRef.current?.focus();
+      focusHeading.current = false;
+      return;
+    }
     if (focusHeading.current) {
       focusHeading.current = false;
       headingRef.current?.focus();

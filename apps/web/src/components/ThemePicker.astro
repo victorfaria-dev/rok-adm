@@ -36,7 +36,7 @@ const options = [
   .down .label { display: none; }
   fieldset {
     position: absolute; z-index: 20; margin: 0; padding: var(--ko-space-1);
-    min-width: 160px; display: grid; border: 1px solid var(--ko-border);
+    min-width: 160px; display: grid; border: 1px solid var(--ko-control-border);
     background: var(--ko-surface-raised); box-shadow: var(--ko-shadow-3);
     transform-origin: top right;
     animation: pop var(--ko-duration-fast) var(--ko-ease-out);
@@ -47,7 +47,19 @@ const options = [
     display: flex; align-items: center; gap: var(--ko-space-3); min-height: 44px;
     padding-inline: var(--ko-space-3); cursor: pointer; font-size: var(--ko-text-sm);
   }
-  input { accent-color: var(--ko-accent); width: 18px; height: 18px; margin: 0; }
+  /* Custom radio so its ring uses the control-border token (>= 3:1 in both themes). */
+  input {
+    appearance: none; flex: none; display: grid; place-content: center;
+    width: 18px; height: 18px; margin: 0; border-radius: 50%;
+    border: 2px solid var(--ko-control-border); background: transparent;
+  }
+  input::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ko-accent); transform: scale(0); }
+  input:checked { border-color: var(--ko-accent); }
+  input:checked::before { transform: scale(1); }
+  @media (forced-colors: active) {
+    input { border-color: CanvasText; }
+    input:checked::before { background: CanvasText; }
+  }
   @media (hover: hover) and (pointer: fine) { label:hover { background: var(--ko-surface); } }
   @keyframes pop { from { opacity: 0; transform: scale(.96); } }
 </style>
@@ -77,6 +89,13 @@ const options = [
         picker.open = false;
         picker.querySelector("summary")?.focus();
       }
+    });
+  }
+  // Close when focus moves outside (Tab past the last option, or into the page).
+  for (const picker of pickers) {
+    picker.addEventListener("focusout", (e) => {
+      const next = (e as FocusEvent).relatedTarget as Node | null;
+      if (picker.open && next && !picker.contains(next)) picker.open = false;
     });
   }
   // Close when tapping outside.

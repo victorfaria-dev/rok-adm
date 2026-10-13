@@ -39,13 +39,21 @@ input, select, textarea { font: inherit; font-size: max(16px, 1em); }
   transition: background-color var(--ko-duration-fast) var(--ko-ease-out), transform var(--ko-duration-fast) var(--ko-ease-out);
 }
 .btn:active { transform: scale(.97); }
+/* The chamfered fill lives on ::before so the clip-path never clips the focus outline. */
 .btn-primary {
-  background: var(--ko-accent); color: var(--ko-on-accent);
-  clip-path: polygon(var(--ko-chamfer-sm) 0, 100% 0, 100% calc(100% - var(--ko-chamfer-sm)), calc(100% - var(--ko-chamfer-sm)) 100%, 0 100%, 0 var(--ko-chamfer-sm));
+  position: relative; isolation: isolate;
+  background: transparent; color: var(--ko-on-accent);
 }
-.btn-primary:active { background: var(--ko-accent-pressed); }
-.btn-secondary { background: transparent; color: var(--ko-text); box-shadow: inset 0 0 0 1px var(--ko-border); }
+.btn-primary::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--ko-accent);
+  clip-path: polygon(var(--ko-chamfer-sm) 0, 100% 0, 100% calc(100% - var(--ko-chamfer-sm)), calc(100% - var(--ko-chamfer-sm)) 100%, 0 100%, 0 var(--ko-chamfer-sm));
+  transition: background-color var(--ko-duration-fast) var(--ko-ease-out);
+}
+.btn-primary:active::before { background: var(--ko-accent-pressed); }
+.btn:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 3px; }
+.btn-secondary { background: transparent; color: var(--ko-text); box-shadow: inset 0 0 0 1px var(--ko-control-border); }
 @media (hover: hover) and (pointer: fine) {
-  .btn-primary:hover { background: var(--ko-accent-hover); }
+  .btn-primary:hover::before { background: var(--ko-accent-hover); }
   .btn-secondary:hover { box-shadow: inset 0 0 0 1px var(--ko-text-muted); }
 }

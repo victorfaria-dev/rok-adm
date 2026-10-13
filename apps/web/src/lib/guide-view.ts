@@ -8,6 +8,7 @@ import {
   GUIDE_SECTIONS,
   selectBlocks,
   type AccountProfile,
+  type KingdomStage,
   type SelectedBlock,
   type StructuredGuide,
   type StructuredGuideSection,
@@ -41,7 +42,11 @@ export function chooseProfile(search: string, savedCode: string | null): Profile
   if (params.has("p")) {
     const code = (params.get("p") ?? "").trim();
     const r = decodeProfile(code);
-    if ("profile" in r) return { source: "url", profile: r.profile, code, error: null, canSave: code !== savedCode };
+    if ("profile" in r) {
+      // A link to your own saved profile (e.g. right after the questionnaire) is "Your profile".
+      if (code === savedCode) return { source: "saved", profile: r.profile, code, error: null, canSave: false };
+      return { source: "url", profile: r.profile, code, error: null, canSave: true };
+    }
     return { ...fallback, error: "This profile link is not valid, so you are seeing the default F2P guide. Ask for a new link or build your own profile." };
   }
   if (savedCode) {
@@ -70,6 +75,44 @@ export interface GuideView extends StructuredGuide {
 /** selectBlocks over payload blocks (same objects come back, so the HTML fields stay attached). */
 export function selectGuide(payload: GuidePayload, profile: AccountProfile): GuideView {
   return selectBlocks(payload.blocks, profile) as GuideView;
+}
+
+/** Stage the web layer falls back to when a later stage has no researched content yet. */
+export const FALLBACK_STAGE: KingdomStage = "kvk1";
+
+export const STAGE_NAMES: Record<KingdomStage, string> = {
+  pre_kvk: "pre-KvK",
+  kvk1: "KvK1",
+  kvk2: "KvK2",
+  kvk3: "KvK3",
+  soc: "Season of Conquest",
+};
+
+export interface GuideSelection {
+  view: GuideView;
+  /**
+   * The player's real stage when the payload has no block for it and the guide
+   * shows the closest available stage (FALLBACK_STAGE) instead; else null.
+   */
+  fallbackFrom: KingdomStage | null;
+}
+
+/** True when at least one block of the payload is written for this stage. */
+export function stageHasContent(payload: GuidePayload, stage: KingdomStage): boolean {
+  return payload.blocks.some((b) => b.stage.includes("todos") || b.stage.includes(stage));
+}
+
+/**
+ * selectGuide plus an honest fallback, done here in the web layer (core keeps its
+ * strict stage filter): KvK2, KvK3 and SoC are not researched yet, so a profile at
+ * one of those stages gets the KvK1 selection, which the UI labels as such.
+ */
+export function selectGuideWithFallback(payload: GuidePayload, profile: AccountProfile): GuideSelection {
+  const stage = profile.kingdomStage;
+  if (stage === "pre_kvk" || stage === FALLBACK_STAGE || stageHasContent(payload, stage)) {
+    return { view: selectGuide(payload, profile), fallbackFrom: null };
+  }
+  return { view: selectGuide(payload, { ...profile, kingdomStage: FALLBACK_STAGE }), fallbackFrom: stage };
 }
 
 /**

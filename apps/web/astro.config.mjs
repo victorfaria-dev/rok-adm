@@ -1,10 +1,10 @@
 // @ts-check
-import { cpSync, mkdirSync, readdirSync, statSync, writeFileSync } from "node:fs";
-import { createHash } from "node:crypto";
+import { cpSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
 import preact from "@astrojs/preact";
+import { cacheVersion } from "./src/lib/sw-version.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const brand = join(here, "../../design/brand/export");
@@ -49,8 +49,10 @@ function serviceWorker() {
           }
         };
         walk(root);
-        const urls = files.filter((f) => f !== "/sw.js").map((f) => f.replace(/index\.html$/, ""));
-        const version = createHash("sha256").update(urls.join("\n")).digest("hex").slice(0, 12);
+        const precache = files.filter((f) => f !== "/sw.js");
+        const urls = precache.map((f) => f.replace(/index\.html$/, ""));
+        // Hash contents too: a file whose bytes change under the same URL (e.g. /data/guide.json) must bust the cache.
+        const version = cacheVersion(precache.map((f, i) => ({ url: urls[i], bytes: readFileSync(join(root, f.slice(1))) })));
         const sw = `// Generated at build. Cache version ${version}.
 const CACHE = "ko-${version}";
 const PRECACHE = ${JSON.stringify(urls)};
