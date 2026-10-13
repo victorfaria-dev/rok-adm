@@ -240,7 +240,7 @@ export function resolveRules(doc: RulesDoc, key: string = ORIGINAL_KEY): Resolve
   const origTitle = rulesDisplayTitle(doc);
   if (!t) {
     return {
-      key: ORIGINAL_KEY, name: originalName(doc), lang: doc.originalLang, isOriginal: true,
+      key: ORIGINAL_KEY, name: originalName(doc), lang: cleanLangCode(doc.originalLang), isOriginal: true,
       title: origTitle, titleFallback: false, intro: doc.intro, introFallback: false,
       sections: doc.sections.map((s) => ({ ...s, fallback: false })), untranslated: 0,
     };
@@ -256,7 +256,7 @@ export function resolveRules(doc: RulesDoc, key: string = ORIGINAL_KEY): Resolve
   const introFallback = !!doc.intro && !t.intro;
   if (introFallback) untranslated++;
   return {
-    key: t.id, name: translationName(t, doc.translations.indexOf(t)), lang: t.lang, isOriginal: false,
+    key: t.id, name: translationName(t, doc.translations.indexOf(t)), lang: cleanLangCode(t.lang), isOriginal: false,
     title: t.title || origTitle, titleFallback: !t.title,
     intro: introFallback ? doc.intro : t.intro, introFallback,
     sections, untranslated,
