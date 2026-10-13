@@ -84,3 +84,8 @@ Mantidas como decisões do dono. Onde a evidência é fraca, a árvore propõe u
 | F-57 | **Share & Discovery Kit** (nunca link no chat do jogo) | Plataforma / E-P3 | — | hab. | — | S | — | MVP | backlog |
 | F-58 | **Discord Companion Bot** | Plataforma / E-P4 | M10 | 2,4 | média | M | F-53 | R3 | backlog |
 | F-59 | **Ask-with-Context Assistant** (Q&A com citações) | Plataforma / E-P4 | M12 | 4,2 | média | L | F-50 maduro, F-16; custo de LLM | R3 | backlog |
+| F-60 | **3D Profile Card** (inclinação + brilho holográfico) | Identidade | M15 | — | média | S | F-10 | MVP/R1 | backlog |
+| F-61 | **3D Alliance Crest** (brasão em relevo, exporta PNG) | Identidade | M15 | — | fraca (depende de F-06) | M | F-09, F-08 | R2 | backlog |
+| F-62 | **Progress Tower** (torre 3D da conta por nível de CH) | Conta | M1 | — | sem evidência | M | F-14 | R3 | backlog |
+| F-63 | **3D Landing Hero** (mesa de guerra original) | Plataforma | — | — | sem evidência | S–M | — | R1 opcional | backlog |
+| F-64 | **KvK Planning Map 2.5D/3D** (mapa esquemático original) | Reino | — | — | a validar com líderes | L | entrevistas | R3 | backlog |
