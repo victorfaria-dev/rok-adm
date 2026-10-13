@@ -155,3 +155,25 @@ describe("selectGuide on the wave H sets", () => {
     expect(() => blocksForGuide("low", LOADED, profile())).toThrow();
   });
 });
+
+describe("director QA notes (wave H)", () => {
+  it("returningPlayer = true selects the returning guide first, and it has blocks to show", () => {
+    const p = profile({ returningPlayer: true, cityHall: 20, kingdomStage: "kvk2" });
+    expect(offered(p)[0]).toBe("returning");
+    expect(shownIds("returning", p).length).toBeGreaterThan(0);
+    expect(offered(profile({ returningPlayer: false }))).not.toContain("returning");
+  });
+
+  it("later-stage players (KvK2, KvK3, SoC) get a non-empty base guide (stage-independent daily routine)", () => {
+    for (const kingdomStage of ["kvk2", "kvk3", "soc"] as const) {
+      const ids = shownIds("f2p", profile({ kingdomStage, cityHall: 25 }));
+      expect(ids, kingdomStage).toContain("daily-15min");
+    }
+  });
+
+  it("the farm brief stays in the guide for a farm on a later kingdom day", () => {
+    const g = selectGuide("f2p", LOADED, profile({ role: "farm", kingdomDay: 120, cityHall: 15, kingdomStage: "kvk1" }));
+    expect(flattenGuide(g).map((s) => s.block.id)).toContain("farm-brief");
+    expect(g.alreadyDone.map((s) => s.block.id)).not.toContain("farm-brief");
+  });
+});

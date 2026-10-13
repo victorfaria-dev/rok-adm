@@ -1392,8 +1392,7 @@
     "section": "daily",
     "split_views": null,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "time_cost_min": null,
     "title": "Daily routine — 15 minutes",
@@ -1442,8 +1441,7 @@
     "section": "daily",
     "split_views": null,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "time_cost_min": null,
     "title": "Daily routine — 30 minutes (adds Daily Objectives)",
@@ -1490,8 +1488,7 @@
     "section": "daily",
     "split_views": null,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "time_cost_min": null,
     "title": "Daily routine — 60 minutes (adds PvE and modes)",
@@ -1536,8 +1533,7 @@
     "section": "daily",
     "split_views": null,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "time_cost_min": null,
     "title": "Weekly and fortnightly tasks",
@@ -1584,8 +1580,7 @@
     "section": "daily",
     "split_views": null,
     "stage": [
-      "pre_kvk",
-      "kvk1"
+      "todos"
     ],
     "time_cost_min": null,
     "title": "Light days and Break Mode",
@@ -1905,7 +1900,7 @@
     "perfil": [
       "todos"
     ],
-    "phase": "day15-40",
+    "phase": "anytime",
     "priority": 2,
     "recommended_for": [
       "f2p",

@@ -36,7 +36,7 @@ describe("selectBlocks — spending profile", () => {
     const g = selectBlocks(BLOCKS, profile({ role: "lutador" }));
     const expected = forProfile("f2p").filter((b) => b.funcao.includes("todas") || b.funcao.includes("lutador"));
     // pk-kvk1-behaviour is kvk1-only; farm-brief is farm-only.
-    expect(ids(g)).toEqual(expected.filter((b) => b.stage.includes("pre_kvk")).map((b) => b.id));
+    expect(ids(g)).toEqual(expected.filter((b) => b.stage.includes("pre_kvk") || b.stage.includes("todos")).map((b) => b.id));
     expect(g.alreadyDone).toEqual([]);
   });
 
@@ -182,7 +182,10 @@ describe("selectBlocks — City Hall, time, civilization, kingdom day", () => {
   it("stage filter: kvk1-only block appears only at kvk1", () => {
     expect(ids(selectBlocks(BLOCKS, profile({ kingdomStage: "pre_kvk" })))).not.toContain("pk-kvk1-behaviour");
     expect(ids(selectBlocks(BLOCKS, profile({ kingdomStage: "kvk1" })))).toContain("pk-kvk1-behaviour");
-    expect(ids(selectBlocks(BLOCKS, profile({ kingdomStage: "soc" })))).toEqual([]);
+    // Only stage-independent blocks (the daily routine) reach later stages.
+    const soc = ids(selectBlocks(BLOCKS, profile({ kingdomStage: "soc" })));
+    expect(soc.length).toBeGreaterThan(0);
+    for (const id of soc) expect(BLOCKS.find((b) => b.id === id)!.stage).toContain("todos");
   });
 });
 

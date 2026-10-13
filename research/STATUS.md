@@ -95,6 +95,8 @@ Fichas novas desta onda (pesquisa, status `organizado`, aguardam verificador): A
 
 Fatos pedidos pelos autores que não existem em fichas (sem ID ainda): tabela de marcos do Growth Fund por CH (cai em L-A12-02); horas do conselho por fluxo; poderes padrão R1–R5; transferência de reinado e de R5 inativo (L-B05/L-B03-05); quantidade de Vacation Permits (L-B03-03); custo de cura vs. retreino (L-A08-01); ordem de desbloqueio do tutorial (L-A01-04); fichas C04 para 1.0.95 (Eve of the Crusade dentro do Lost Kingdom) e 1.1.11 (mudança de tempos de passe), hoje só na linha do tempo.
 
+Conteúdo para estágios avançados (KvK2, KvK3, SoC): o guia base só tem a rotina diária (agora `todos`); faltam blocos de progressão pós-KvK1 para jogador comum (os guias retornante, recuperação e admin de reino cobrem parte). Há poucas fichas com `estagio_reino` kvk2/kvk3/soc fora de C04 e B — lacuna de pesquisa para uma onda futura (proposta: `PROPOSED-LATE-STAGE-PROGRESSION`, domínios A01/A06/A08).
+
 Manutenção de fichas apontada (não alterada nesta onda): A13-0005 tem nota dizendo que C04-0014 invalida parte do conselho mas `invalidado_por: null`; B02-0001 (governador que sai da aliança fica no roster, 1.0.91) e B08-0008 (matchmaking usa poder médio e kill points, 1.0.96) têm fatos oficiais só nas `notas`; B05-0004 (Auctioneer Bot sem manutenção desde 2025-01, validade vencida); A12-0004 (tabela VIP por dólar não é citação literal); A11-0502 ("exceto abaixo de VIP 6" ambíguo); A04-0001/A09-0006 (conteúdo dos baús vem de wiki 2020); A03-0014 (Mercador, wiki 2020).
 
 ## Bloqueios

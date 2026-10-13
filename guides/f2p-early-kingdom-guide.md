@@ -915,7 +915,7 @@ These gaps weaken specific parts of this guide; the T0 protocol (`research/proto
 | [A13-0001](../research/facts/A13/A13-0001.md) | Accounts per kingdom via Character Management | organizado | media | n/a | no | `farm-brief` |
 | [A13-0002](../research/facts/A13/A13-0002.md) | Farm City Hall targets by march queues | verificado | media | majoritario | yes | `farm-brief` |
 | [A13-0003](../research/facts/A13/A13-0003.md) | Farm Trading Post level targets | verificado | media | majoritario | yes | `farm-brief` |
-| [A13-0005](../research/facts/A13/A13-0005.md) | Farm risks: raids, kill events, zeroing | verificado | media | majoritario | yes | `d0-day1-survival`, `farm-brief`, `daily-break-mode`, `mistakes-economy`, `recovery-zeroed` |
+| [A13-0005](../research/facts/A13/A13-0005.md) | Farm risks: raids, kill events, zeroing | verificado | media | majoritario | yes | `d0-day1-survival`, `daily-break-mode`, `farm-brief`, `mistakes-economy`, `recovery-zeroed` |
 | [A13-0010](../research/facts/A13/A13-0010.md) | Purpose of farms for main growth (F2P) | verificado | media | majoritario | yes | `farm-brief` |
 | [A14-0001](../research/facts/A14/A14-0001.md) | Civilization bonuses, starting commanders and special units (15 civilizations) — table | verificado | media | n/a | yes | `d0-civilization` |
 | [A14-0002](../research/facts/A14/A14-0002.md) | Changing civilization: free item at CH10; otherwise 10,000 gems (Shop) or 2M individual cr | verificado | alta | n/a | yes | `ov-patch-state`, `d0-civilization`, `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17` |

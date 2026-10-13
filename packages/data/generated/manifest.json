@@ -1,5 +1,5 @@
 {
-  "builtAt": "2026-10-13T09:36:23.847Z",
+  "builtAt": "2026-10-13T10:05:17.800Z",
   "counts": {
     "blocks": 43,
     "facts": 288,
@@ -36,8 +36,8 @@
     "tables": 23,
     "usableFacts": 110
   },
-  "datasetVersion": "3ea3bfd414493634",
-  "gitCommit": "ae95849e567f9fa4b6680a61649d8d9dd3a50690",
+  "datasetVersion": "a5ad70a706bcc6a9",
+  "gitCommit": "0271ba83446609b0719dd6e5e4c4b80fccd7faea",
   "inputs": 313,
   "latestKnownPatch": {
     "confidence": "baixa",
