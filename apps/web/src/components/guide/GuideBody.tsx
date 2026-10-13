@@ -123,9 +123,9 @@ export function GuidesForYou({ links, title = "Guides for you" }: { links: reado
   return (
     <nav class="g-foryou" aria-labelledby="g-foryou-h" data-guides-for-you>
       <h2 id="g-foryou-h" class="g-foryou-title">{title}</h2>
-      {links.length > 0 && (
+      {links.some((l) => !l.included) && (
         <ul>
-          {links.map((l) => (
+          {links.filter((l) => !l.included).map((l) => (
             <li key={l.set} data-guide-link={l.set}>
               <a href={l.href}>{l.title}</a>
               <span class="g-foryou-why">{l.reason}</span>
@@ -133,6 +133,13 @@ export function GuidesForYou({ links, title = "Guides for you" }: { links: reado
           ))}
         </ul>
       )}
+      {links.filter((l) => l.included).map((l) => (
+        <p key={l.set} class="g-foryou-also" data-guide-link={l.set} data-included>
+          <span>Already in your guide: </span>
+          <a href={l.href}>{l.title}</a>
+          <span class="g-foryou-why">{l.reason}</span>
+        </p>
+      ))}
       <a class="g-foryou-all" href="/guides/">All guides</a>
     </nav>
   );

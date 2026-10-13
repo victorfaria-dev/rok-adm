@@ -184,6 +184,8 @@ h4.g-block-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-fo
 .g-foryou li { display: grid; gap: 2px; min-width: 0; }
 .g-foryou li a, .g-foryou-all { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; font-weight: var(--ko-weight-medium); }
 .g-foryou-why { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); overflow-wrap: anywhere; }
+.g-foryou-also { margin: 0; display: grid; gap: 2px; min-width: 0; color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.g-foryou-also a { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; font-weight: var(--ko-weight-medium); font-size: var(--ko-text-md); }
 
 /* /guides/ index. */
 .gi-list { margin: 0; padding: 0; list-style: none; display: grid; border-top: 1px solid var(--ko-border); }

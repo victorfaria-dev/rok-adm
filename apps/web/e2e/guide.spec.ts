@@ -169,6 +169,19 @@ test.describe("guides for you", () => {
     await expect(personal(page).locator('[data-guide-link="low"] a')).toHaveAttribute("href", "/guides/low-spender/");
   });
 
+  test("a Medium farm account sees the farm guides first; the Low page is listed as already in the guide (Q2 P2-8)", async ({ page }) => {
+    const farm = make({ spending: "medium", role: "farm", returningPlayer: false, cityHall: 22, kingdomStage: "kvk1" });
+    await page.goto(`/guide/?p=${encodeProfile(farm)}`);
+    const strip = personal(page).locator("[data-guides-for-you]");
+    const first = strip.locator("li").first();
+    await expect(first).toHaveAttribute("data-guide-link", "farms");
+    await expect(first.getByRole("link")).toHaveAttribute("href", "/guides/farms/");
+    const low = strip.locator('[data-guide-link="low"]');
+    await expect(low).toHaveAttribute("data-included", "");
+    await expect(low).toContainText("Already in your guide");
+    await expect(strip.getByRole("link", { name: "Low spender guide" })).toHaveCount(0);
+  });
+
   test("an F2P profile does not load the Low delta", async ({ page }) => {
     const requests: string[] = [];
     page.on("request", (r) => requests.push(new URL(r.url()).pathname));

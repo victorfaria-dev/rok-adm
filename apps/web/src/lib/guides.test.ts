@@ -44,6 +44,21 @@ describe("guides for you", () => {
     }
   });
 
+  it("farm accounts get the farm guides; Medium+ never see 'Low spender guide' as a match (Q2 P2-8)", () => {
+    const farm = guidesForYou(make({ role: "farm", spending: "f2p", cityHall: 20 }));
+    expect(farm.find((l) => l.set === "farms")?.href).toBe("/guides/farms/");
+    expect(farm.find((l) => l.set === "farms")?.included).toBeUndefined();
+    for (const spending of ["medium", "high", "whale"] as const) {
+      const links = guidesForYou(make({ spending, cityHall: 22, returningPlayer: false, role: "lutador", kingdomStage: "kvk1" }));
+      const matches = links.filter((l) => !l.included);
+      expect(matches.map((l) => l.set), spending).not.toContain("low");
+      const low = links.find((l) => l.set === "low")!;
+      expect(low.included, spending).toBe(true);
+      expect(low.title, spending).not.toBe("Low spender guide");
+    }
+    expect(guidesForYou(make({ spending: "low" })).find((l) => l.set === "low")?.title).toBe("Low spender guide");
+  });
+
   it("puts Returning first for a returning player, Recovery first when zeroed", () => {
     const back = make({ returningPlayer: true, cityHall: 20 });
     expect(guidesForYou(back)[0]?.set).toBe("returning");

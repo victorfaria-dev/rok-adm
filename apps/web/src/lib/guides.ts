@@ -97,13 +97,17 @@ export interface GuideLink {
   title: string;
   /** Why it is offered, English. */
   reason: string;
+  /** Steps already merged into the guide on this page (shown apart, after the matches). */
+  included?: boolean;
 }
 
 /**
  * "Guides for you" on the personal guide: core's guidesForProfile without the base
  * guide (that is the page the strip sits on), most specific first (a returning
- * player sees Returning first). Low and higher profiles also get the Low spender
- * page, whose steps their guide already merges in.
+ * player sees Returning first). A farm account also gets the farm guides (Q2 P2-8).
+ * Low and higher profiles also get the Low spender page, whose steps their guide
+ * already merges in: it is marked `included` and always listed last, and for Medium
+ * and above it is labelled as steps inside their guide, never as "Low spender guide".
  */
 export function guidesForYou(profile: AccountProfile, situation: GuideSituation = {}): GuideLink[] {
   const out: GuideLink[] = guidesForProfile(profile, situation)
@@ -112,9 +116,15 @@ export function guidesForYou(profile: AccountProfile, situation: GuideSituation 
       const page = guidePage(g.set.id);
       return { set: page.set, href: page.href, title: page.title, reason: g.reason };
     });
+  if (profile.role === "farm") {
+    const page = guidePage("farms");
+    out.push({ set: "farms", href: page.href, title: page.title, reason: "You said this is a farm account: what to build and how to send resources to your main." });
+  }
   if (hasLowDelta(profile)) {
     const page = guidePage("low");
-    out.push({ set: "low", href: page.href, title: page.title, reason: "Its steps are already merged into your guide below; read them on their own here." });
+    out.push(profile.spending === "low"
+      ? { set: "low", href: page.href, title: page.title, reason: "Its steps are already merged into your guide below; read them on their own here.", included: true }
+      : { set: "low", href: page.href, title: "Pass-only steps (Low spender page)", reason: "Your guide already includes these steps, since they apply to every spender who buys the Growth Fund and gem supply. Read them on their own here.", included: true });
   }
   return out;
 }
