@@ -74,7 +74,7 @@ export default function DataControls() {
       <div class="kg-actions">
         <button type="button" class="btn btn-secondary" onClick={onExport} disabled={total === 0}>Export (.json)</button>
         <button type="button" class="btn btn-secondary" onClick={() => fileRef.current?.click()}>Import</button>
-        <input ref={fileRef} type="file" accept="application/json,.json" class="visually-hidden" tabIndex={-1} aria-hidden="true" onChange={onFile} data-import />
+        <input ref={fileRef} type="file" accept="application/json,.json" class="visually-hidden" tabIndex={-1} aria-label="Import council data from a .json file" onChange={onFile} data-import />
         {total > 0 && <ConfirmAction label="Delete all council data" question="Delete every council document (and the saved Discord webhook) on this device? Export first if you want a copy." yesLabel="Yes, delete all" onConfirm={onDelete} />}
       </div>
       {error && <p class="kg-error" role="alert">{error}</p>}
