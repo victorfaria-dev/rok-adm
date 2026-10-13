@@ -1,19 +1,19 @@
 // F-34 requirements card builder + DKP formula sandbox (council side).
 import {
-  FORMULA_PRESETS, REQ_MAX_SAMPLES, REQ_STAGES, VAR_NOUN, WEIGHTS_NOT_COMPARABLE, evaluatePlayer, formatCompact, formatInt,
-  presetById, rankSamples, usedVariables, type FormulaVar, type RequirementsCard, type ReqStage,
+  EXCLUDED_DEADS_DEFAULT_LABEL, EXCLUDED_DEADS_FACT_ID, EXCLUDED_DEADS_LABEL_MAX, FORMULA_PRESETS, REQUIREMENT_FACT_ID, REQ_GROUP_NAME_MAX, REQ_MAX_SAMPLES, REQ_STAGES, VAR_NOUN,
+  WEIGHTS_NOT_COMPARABLE, evaluatePlayer, excludedDeadsText, formatCompact, formatInt, presetById, rankSamples, usedVariables, type FormulaVar, type RequirementsCard, type ReqStage,
 } from "@rokadm/planner";
 import type { JSX } from "preact";
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { linkLengthHint } from "../../../lib/kingdom-share";
 import { kingdomStorage } from "../../../lib/kingdom-store";
 import {
-  EXAMPLE_PERCENT, MAX_BANDS, cardTitle, cardToForm, deleteCard, emptyBand, emptySample, formToCard, listCards, newCard, publishLink, saveCard,
+  EXAMPLE_PERCENT, MAX_BANDS, MAX_GROUPS, cardTitle, cardToForm, deleteCard, emptyBand, emptyGroup, emptySample, formToCard, listCards, newCard, publishLink, saveCard,
   type CardForm, type SampleRow,
 } from "../../../lib/kingdom-requirements";
 import ConfirmAction from "../shared/ConfirmAction";
 import CopyText from "../shared/CopyText";
-import { SelectField, TextAreaField, TextField } from "../shared/Field";
+import { CheckField, SelectField, TextAreaField, TextField } from "../shared/Field";
 import FormulaField, { formulaState } from "./FormulaField";
 
 const STAGE_OPTIONS = REQ_STAGES.map((s) => ({ value: s, label: s === "other" ? "Other (type it)" : s }));
@@ -74,6 +74,11 @@ export default function RequirementsBuilder(): JSX.Element {
     set("bands", [...form.bands, emptyBand(last?.max ?? "")]);
   }
   const removeBand = (i: number) => set("bands", form.bands.filter((_, j) => j !== i));
+
+  // ---- Groups
+  const setGroup = (i: number, k: "name" | "pct", v: string) => set("groups", form.groups.map((g, j) => (j === i ? { ...g, [k]: v } : g)));
+  const addGroup = () => set("groups", [...form.groups, emptyGroup(form.groups.map((g) => g.id))]);
+  const removeGroup = (i: number) => set("groups", form.groups.filter((_, j) => j !== i));
 
   // ---- Samples
   const setSample = (id: string, patch: (s: SampleRow) => SampleRow) => set("samples", form.samples.map((s) => (s.id === id ? patch(s) : s)));
@@ -172,6 +177,29 @@ export default function RequirementsBuilder(): JSX.Element {
           <p class="kr-source" data-source>Your own formula: set by your council.</p>
         )}
         <p class="kg-note" data-not-comparable>{WEIGHTS_NOT_COMPARABLE}</p>
+        <div class="kr-excluded" data-excluded-rule>
+          <CheckField
+            id="kr-excl"
+            label="Deads on excluded days don't count"
+            hint={`A published kingdom rule (K2779, fact ${EXCLUDED_DEADS_FACT_ID}): deads on a day a player was zeroed in a 'terrible trade' count as 0. Players enter those deads separately and they are taken off before the formula.`}
+            checked={form.excludedOn}
+            onValue={(v) => set("excludedOn", v)}
+          />
+          {form.excludedOn && (
+            <>
+              <TextField
+                id="kr-excl-label"
+                label="Excluded days are days a player was…"
+                hint="Finishes the sentence shown to players. Blank uses the K2779 wording."
+                value={form.excludedLabel}
+                onValue={(v) => set("excludedLabel", v)}
+                maxLength={EXCLUDED_DEADS_LABEL_MAX}
+                placeholder={EXCLUDED_DEADS_DEFAULT_LABEL}
+              />
+              <p class="kg-hint" data-excluded-preview>Players read: {excludedDeadsText(check.card.excludedDeads)}</p>
+            </>
+          )}
+        </div>
       </section>
 
       <section class="kg-card" aria-labelledby="kr-req-h">
@@ -199,9 +227,10 @@ export default function RequirementsBuilder(): JSX.Element {
                 {form.bands.length > 1 && <button type="button" class="btn btn-secondary" aria-label={`Remove band ${i + 1}`} onClick={() => removeBand(i)}>Remove band</button>}
               </fieldset>
             ))}
-            {check.bandIssues.length > 0 && (
+            {/* Issues about one band show under that band's field; only list-wide ones are listed here. */}
+            {check.bandIssues.some((x) => x.index < 0 || !x.field) && (
               <ul class="kr-issues" data-band-issues>
-                {check.bandIssues.map((x, i) => <li key={i} class="kg-error">{x.message}</li>)}
+                {check.bandIssues.filter((x) => x.index < 0 || !x.field).map((x, i) => <li key={i} class="kg-error">{x.message}</li>)}
               </ul>
             )}
             {form.bands.length < MAX_BANDS && <button type="button" class="btn btn-secondary" onClick={addBand}>Add band</button>}
@@ -209,6 +238,21 @@ export default function RequirementsBuilder(): JSX.Element {
         ) : (
           <TextField id="kr-fixed" label="DKP target" hint="Accepts 5,000,000, 5m or 500k." value={form.fixed} onValue={(v) => set("fixed", v)} error={check.errors.fixed} placeholder="e.g. 5m" />
         )}
+        <div class="kr-groups" data-groups>
+          <h3>Requirement groups (optional)</h3>
+          <p class="kg-hint" id="kr-groups-hint">Some kingdoms adjust the requirement by account age, seed or player group (fact {REQUIREMENT_FACT_ID}). No public source gives the numbers, so every group and percent here is set by your council. Players pick their group and need that percent of their normal target, rounded up.</p>
+          {form.groups.map((g, i) => (
+            <fieldset key={g.key} class="kr-group" data-group={i}>
+              <legend class="kg-label">Group {i + 1}</legend>
+              <div class="kr-group-fields">
+                <TextField id={`kr-group-${i}-name`} label="Group name" value={g.name} onValue={(v) => setGroup(i, "name", v)} error={check.errors[`group-${i}-name`]} maxLength={REQ_GROUP_NAME_MAX} placeholder="e.g. Accounts under 6 months" />
+                <TextField id={`kr-group-${i}-pct`} label="% of the normal target" value={g.pct} onValue={(v) => setGroup(i, "pct", v)} error={check.errors[`group-${i}-pct`]} inputMode="decimal" placeholder="set by your council" />
+              </div>
+              <button type="button" class="btn btn-secondary" aria-label={`Remove group ${i + 1}`} onClick={() => removeGroup(i)}>Remove group</button>
+            </fieldset>
+          ))}
+          {form.groups.length < MAX_GROUPS && <button type="button" class="btn btn-secondary" onClick={addGroup}>Add group</button>}
+        </div>
         <TextField
           id="kr-basis"
           label="Which power is the base"
@@ -253,7 +297,7 @@ export default function RequirementsBuilder(): JSX.Element {
           <div class="kg-table-wrap" role="region" aria-labelledby="kr-results-cap" tabIndex={0}>
             <table class="kg-table kr-table" data-results>
               <caption id="kr-results-cap" class="kr-caption">Sample results</caption>
-              <thead><tr><th scope="col">Account</th><th scope="col" class="num">DKP</th><th scope="col" class="num">Target</th><th scope="col" class="num">%</th><th scope="col">Result</th></tr></thead>
+              <thead><tr><th scope="col">Account</th><th scope="col" class="num">DKP</th><th scope="col" class="num">Target</th><th scope="col" class="num"><abbr title="Percent of target">%</abbr></th><th scope="col">Result</th></tr></thead>
               <tbody>
                 {results.map(({ s, r }) => (
                   <tr key={s.id} data-result={s.id}>

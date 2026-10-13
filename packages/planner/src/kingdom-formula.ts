@@ -51,7 +51,7 @@ export type FormulaNode =
   | { type: "call"; fn: FormulaFn; args: FormulaNode[]; pos: number };
 
 export type FormulaErrorCode =
-  | "empty" | "too_long" | "bad_char" | "bad_number" | "thousands" | "unknown_name" | "unknown_function"
+  | "empty" | "too_long" | "bad_char" | "bad_number" | "number_too_large" | "thousands" | "unknown_name" | "unknown_function"
   | "expected_value" | "expected_operator" | "missing_paren" | "extra_paren" | "arity" | "too_deep" | "too_many_nodes"
   | "div_zero" | "not_finite";
 
@@ -103,7 +103,11 @@ function tokenize(src: string): Tok[] {
       const text = m![0];
       const next = src[i + text.length];
       if (next === "." || (next !== undefined && /[0-9]/.test(next))) fail("bad_number", pos, `This number is not complete ${at(pos)}. Write numbers like 10 or 0.5.`);
-      out.push({ t: "num", v: Number(text), pos, text });
+      const v = Number(text);
+      if (v > Number.MAX_SAFE_INTEGER) {
+        fail("number_too_large", pos, `The number ${at(pos)} is too large. Use numbers up to ${Number.MAX_SAFE_INTEGER.toLocaleString("en-US")}.`);
+      }
+      out.push({ t: "num", v, pos, text });
       i += text.length;
       continue;
     }
@@ -145,7 +149,7 @@ class Parser {
     return n;
   }
   private enter(pos: number): void {
-    if (++this.depth > FORMULA_MAX_DEPTH) fail("too_deep", pos, `Too many nested parentheses ${at(pos)} (at most ${FORMULA_MAX_DEPTH}).`);
+    if (++this.depth > FORMULA_MAX_DEPTH) fail("too_deep", pos, `This formula is nested too deeply ${at(pos)} (at most ${FORMULA_MAX_DEPTH} levels). Simplify it.`);
   }
   private leave(): void { this.depth--; }
 
@@ -399,9 +403,28 @@ export function linearWeights(ast: FormulaNode): LinearForm | null {
   return { weights, constant: tidy(l.c) };
 }
 
-/** Plain number for explanations: 10, 0.5, 1,000. */
+/**
+ * Plain number for explanations: 10, 0.5, 1,000, 0.0000001. Never exponent notation, and a tiny
+ * non-zero weight is never shown as 0: below 1 it keeps up to 6 significant digits.
+ */
 export function formatWeight(n: number): string {
-  return Number(n.toPrecision(12)).toLocaleString("en-US", { maximumFractionDigits: 6 });
+  const x = Number(n.toPrecision(12));
+  if (x !== 0 && Math.abs(x) < 1) return x.toLocaleString("en-US", { maximumSignificantDigits: 6 });
+  return x.toLocaleString("en-US", { maximumFractionDigits: 6 });
+}
+
+/** Decimal digits without exponent notation: 1e-7 → "0.0000001", 1e21 → "1000000000000000000000". */
+export function plainNumber(n: number): string {
+  const s = String(n);
+  const m = /^(-?)(\d)(?:\.(\d+))?e([+-]\d+)$/.exec(s);
+  if (!m) return s;
+  const digits = m[2]! + (m[3] ?? "");
+  const intLen = 1 + Number(m[4]);
+  let body: string;
+  if (intLen <= 0) body = `0.${"0".repeat(-intLen)}${digits}`;
+  else if (intLen >= digits.length) body = digits + "0".repeat(intLen - digits.length);
+  else body = `${digits.slice(0, intLen)}.${digits.slice(intLen)}`;
+  return m[1] + body;
 }
 
 /** "Each T4 kill = 10 points, each T5 kill = 20 points, each dead = 50 points." or null when not linear. */
@@ -436,7 +459,7 @@ const PREC = { "+": 1, "-": 1, "*": 2, "/": 2 } as const;
 
 function fmt(n: FormulaNode, parentPrec: number, rightSide: boolean): string {
   switch (n.type) {
-    case "num": return String(n.value);
+    case "num": return plainNumber(n.value);
     case "var": return n.name;
     case "neg": {
       const inner = fmt(n.arg, 3, false);

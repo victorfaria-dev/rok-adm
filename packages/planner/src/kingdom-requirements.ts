@@ -42,6 +42,112 @@ export type Requirement =
   | { mode: "percent"; bands: PowerBand[] }
   | { mode: "fixed"; target: number };
 
+/**
+ * K2779 rule (B08-0001): "If you are zeroed with terrible trade, your death of that day will be counted as 0."
+ * When enabled, players enter the deads from excluded days separately and they are taken off before the formula.
+ */
+export interface ExcludedDeadsRule {
+  enabled: boolean;
+  /** Which days are excluded, completing "Deads on days you were …". */
+  label: string;
+}
+
+export const EXCLUDED_DEADS_LABEL_MAX = 80;
+/** Default wording, from the K2779 card (B08-0001). */
+export const EXCLUDED_DEADS_DEFAULT_LABEL = "zeroed in a 'terrible trade'";
+export const EXCLUDED_DEADS_FACT_ID = "B08-0001";
+
+export function defaultExcludedDeads(): ExcludedDeadsRule {
+  return { enabled: false, label: EXCLUDED_DEADS_DEFAULT_LABEL };
+}
+
+/** Plain-language rule for the card. */
+export function excludedDeadsText(rule: ExcludedDeadsRule): string {
+  return `Deads on days you were ${rule.label || EXCLUDED_DEADS_DEFAULT_LABEL} don't count: they are taken off your deads before your DKP is worked out.`;
+}
+
+/** Error text when the excluded deads are not between 0 and the player's deads, else null. */
+export function excludedDeadsIssue(deads: number, excluded: number): string | null {
+  if (!Number.isFinite(excluded) || excluded < 0) return "Enter 0 or more.";
+  const d = Number.isFinite(deads) && deads > 0 ? deads : 0;
+  if (excluded > d) return `This can't be more than your deads (${d.toLocaleString("en-US")}).`;
+  return null;
+}
+
+/**
+ * Requirement group (B08-0002: requirements are "sometimes adjusted by account age, seed or player group").
+ * No source gives values, so every name and percent is typed by the council. A player in the group
+ * needs `percent`% of their normal target, e.g. "Accounts under 6 months: 80%".
+ */
+export interface RequirementGroup {
+  id: string;
+  name: string;
+  /** Percent of the normal target, more than 0 and at most REQ_GROUP_MAX_PERCENT. */
+  percent: number;
+}
+
+export const REQ_MAX_GROUPS = 8;
+export const REQ_GROUP_NAME_MAX = 60;
+/** Input bound only (10× the normal target), not a game number. */
+export const REQ_GROUP_MAX_PERCENT = 1000;
+export const REQ_GROUP_ID_MAX = 16;
+
+const validGroupPercent = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x) && x > 0 && x <= REQ_GROUP_MAX_PERCENT;
+
+export interface GroupIssue {
+  index: number;
+  field: "name" | "pct";
+  message: string;
+}
+
+/** Strict validation for the editor: names filled and distinct, percents in range. */
+export function validateGroups(groups: readonly Pick<RequirementGroup, "name" | "percent">[]): GroupIssue[] {
+  const out: GroupIssue[] = [];
+  const seen = new Map<string, number>();
+  groups.forEach((g, i) => {
+    const n = i + 1;
+    const name = g.name.replace(/\s+/g, " ").trim();
+    if (!name) out.push({ index: i, field: "name", message: `Group ${n}: enter a name.` });
+    else {
+      const key = name.toLowerCase();
+      const first = seen.get(key);
+      if (first !== undefined) out.push({ index: i, field: "name", message: `Group ${n} has the same name as group ${first + 1}.` });
+      else seen.set(key, i);
+    }
+    if (!validGroupPercent(g.percent)) out.push({ index: i, field: "pct", message: `Group ${n}: the percent must be more than 0 and at most ${REQ_GROUP_MAX_PERCENT.toLocaleString("en-US")}.` });
+  });
+  return out;
+}
+
+/** Tolerant: drop groups without a name or a valid percent, keep ids unique, at most REQ_MAX_GROUPS. */
+export function normaliseGroups(x: unknown): RequirementGroup[] {
+  if (!Array.isArray(x)) return [];
+  const out: RequirementGroup[] = [];
+  const ids = new Set<string>();
+  const names = new Set<string>();
+  for (const g of x) {
+    if (out.length >= REQ_MAX_GROUPS) break;
+    if (!isRecord(g)) continue;
+    const name = cleanLine(g.name, REQ_GROUP_NAME_MAX);
+    if (!name || !validGroupPercent(g.percent) || names.has(name.toLowerCase())) continue;
+    let id = typeof g.id === "string" && /^[A-Za-z0-9_-]+$/.test(g.id) && g.id.length <= REQ_GROUP_ID_MAX ? g.id : "";
+    if (!id || ids.has(id)) {
+      let k = out.length + 1;
+      while (ids.has(`g${k}`)) k++;
+      id = `g${k}`;
+    }
+    ids.add(id);
+    names.add(name.toLowerCase());
+    out.push({ id, name, percent: g.percent });
+  }
+  return out;
+}
+
+/** "Accounts under 6 months: 80% of the normal target". */
+export function groupText(g: Pick<RequirementGroup, "name" | "percent">): string {
+  return `${g.name}: ${g.percent}% of the normal target`;
+}
+
 export interface SampleAccount {
   id: string;
   name: string;
@@ -58,6 +164,10 @@ export interface RequirementsCard extends KingdomDocBase {
   /** Preset the formula started from (informational). */
   presetId: string | null;
   requirement: Requirement;
+  /** Deads from excluded days don't count (off by default; old links have no such field). */
+  excludedDeads: ExcludedDeadsRule;
+  /** 0–8 council-defined groups that scale the target (none on old links). */
+  groups: RequirementGroup[];
   powerBasis: string;
   notes: string;
   /** Local sandbox only: never in a share link unless asked. */
@@ -74,6 +184,8 @@ const num = (x: unknown): number | null => (typeof x === "number" && Number.isFi
 export interface BandIssue {
   /** Index of the band at fault, or -1 for the list as a whole. */
   index: number;
+  /** Input at fault (band issues only), so the editor can mark that field. */
+  field?: "min" | "max" | "pct";
   message: string;
 }
 
@@ -84,19 +196,19 @@ export function validateBands(bands: readonly PowerBand[]): BandIssue[] {
   if (bands.length > REQ_MAX_BANDS) out.push({ index: -1, message: `Use at most ${REQ_MAX_BANDS} power bands.` });
   bands.forEach((b, i) => {
     const n = i + 1;
-    if (num(b.minPower) === null) out.push({ index: i, message: `Band ${n}: the lowest power must be 0 or more.` });
+    if (num(b.minPower) === null) out.push({ index: i, field: "min", message: `Band ${n}: the lowest power must be 0 or more.` });
     if (b.maxPower === null) {
-      if (i !== bands.length - 1) out.push({ index: i, message: `Band ${n}: only the last band can have no upper limit.` });
+      if (i !== bands.length - 1) out.push({ index: i, field: "max", message: `Band ${n}: only the last band can have no upper limit.` });
     } else if (num(b.maxPower) === null || b.maxPower <= b.minPower) {
-      out.push({ index: i, message: `Band ${n}: the upper limit must be more than the lowest power.` });
+      out.push({ index: i, field: "max", message: `Band ${n}: the upper limit must be more than the lowest power.` });
     }
     if (!(typeof b.percent === "number" && Number.isFinite(b.percent) && b.percent > 0 && b.percent <= REQ_MAX_PERCENT)) {
-      out.push({ index: i, message: `Band ${n}: the percent must be more than 0 and at most ${REQ_MAX_PERCENT.toLocaleString("en-US")}.` });
+      out.push({ index: i, field: "pct", message: `Band ${n}: the percent must be more than 0 and at most ${REQ_MAX_PERCENT.toLocaleString("en-US")}.` });
     }
     if (i > 0) {
       const prev = bands[i - 1]!;
-      if (b.minPower < prev.minPower) out.push({ index: i, message: `Band ${n}: sort bands from low to high power.` });
-      else if (prev.maxPower === null || b.minPower < prev.maxPower) out.push({ index: i, message: `Band ${n} overlaps band ${i}: start it at or above where band ${i} ends.` });
+      if (b.minPower < prev.minPower) out.push({ index: i, field: "min", message: `Band ${n}: sort bands from low to high power.` });
+      else if (prev.maxPower === null || b.minPower < prev.maxPower) out.push({ index: i, field: "min", message: `Band ${n} overlaps band ${i}: start it at or above where band ${i} ends.` });
     }
   });
   return out;
@@ -145,6 +257,8 @@ export function defaultRequirementsCard(over: Partial<RequirementsCard> = {}, no
     formula: "",
     presetId: null,
     requirement: { mode: "percent", bands: [] },
+    excludedDeads: defaultExcludedDeads(),
+    groups: [],
     powerBasis: DEFAULT_POWER_BASIS,
     notes: "",
     sampleAccounts: [],
@@ -161,6 +275,11 @@ function parseStats(x: unknown): FormulaVars {
     if (n !== null) out[v] = n;
   }
   return out;
+}
+
+function parseExcludedDeads(x: unknown): ExcludedDeadsRule {
+  if (!isRecord(x)) return defaultExcludedDeads();
+  return { enabled: x.enabled === true, label: cleanLine(x.label, EXCLUDED_DEADS_LABEL_MAX) || EXCLUDED_DEADS_DEFAULT_LABEL };
 }
 
 function parseRequirement(x: unknown): Requirement {
@@ -196,6 +315,8 @@ export function parseRequirementsCard(x: unknown): RequirementsCard | null {
     formula: cleanLine(x.formula, FORMULA_MAX_CHARS),
     presetId: typeof x.presetId === "string" && x.presetId.length <= 40 ? x.presetId : null,
     requirement: parseRequirement(x.requirement),
+    excludedDeads: parseExcludedDeads(x.excludedDeads),
+    groups: normaliseGroups(x.groups),
     powerBasis: basis || DEFAULT_POWER_BASIS,
     notes: cleanText(x.notes, REQ_NOTES_MAX),
     sampleAccounts: samples,
@@ -226,17 +347,37 @@ export interface TargetInfo {
   target: number;
   /** Band used (percent mode only). */
   band?: PowerBand;
+  /** Group used, when the player picked one of the card's groups. */
+  group?: RequirementGroup;
+  /** Target before the group percent (equals `target` without a group). */
+  baseTarget: number;
 }
 
-/** DKP target for this power, or null when no band covers it. */
-export function targetFor(card: Pick<RequirementsCard, "requirement">, power: number): TargetInfo | null {
+/** The card group with this id, or undefined (unknown ids mean "no group"). */
+export function groupFor(card: Partial<Pick<RequirementsCard, "groups">>, groupId: string | null | undefined): RequirementGroup | undefined {
+  return groupId ? card.groups?.find((g) => g.id === groupId) : undefined;
+}
+
+/**
+ * DKP target for this power, or null when no band covers it.
+ * With a group: ceil(band target × group percent / 100).
+ */
+export function targetFor(card: Pick<RequirementsCard, "requirement"> & Partial<Pick<RequirementsCard, "groups">>, power: number, groupId?: string | null): TargetInfo | null {
   const r = card.requirement;
-  if (r.mode === "fixed") return { target: r.target };
-  const p = Number.isFinite(power) && power > 0 ? power : 0;
-  const band = bandFor(r.bands, p);
-  if (!band) return null;
-  const target = Math.max(0, Math.ceil((p * band.percent) / 100 - 1e-9));
-  return Number.isFinite(target) ? { target, band } : null;
+  let base: number;
+  let band: PowerBand | undefined;
+  if (r.mode === "fixed") base = r.target;
+  else {
+    const p = Number.isFinite(power) && power > 0 ? power : 0;
+    band = bandFor(r.bands, p);
+    if (!band) return null;
+    base = Math.max(0, Math.ceil((p * band.percent) / 100 - 1e-9));
+  }
+  if (!Number.isFinite(base)) return null;
+  const group = groupFor(card, groupId);
+  const target = group ? Math.max(0, Math.ceil((base * group.percent) / 100 - 1e-9)) : base;
+  if (!Number.isFinite(target)) return null;
+  return { target, baseTarget: base, ...(band ? { band } : {}), ...(group ? { group } : {}) };
 }
 
 export interface Way {
@@ -249,6 +390,8 @@ export interface PlayerProgress {
   /** null when no band covers this power. */
   target: number | null;
   band?: PowerBand;
+  /** Group applied to the target, if any. */
+  group?: RequirementGroup;
   /** DKP as a percent of target; null when the target is 0 or unknown. */
   percentOfTarget: number | null;
   /** DKP as a percent of power; null at zero power. */
@@ -264,15 +407,35 @@ export interface PlayerProgress {
 
 export type EvaluatePlayerResult = ({ ok: true } & PlayerProgress) | { ok: false; error: FormulaError };
 
-/** Score one player against the card. `stats` holds gains since the start scan plus power. Never throws. */
-export function evaluatePlayer(card: Pick<RequirementsCard, "formula" | "requirement">, stats: FormulaVars): EvaluatePlayerResult {
+export interface PlayerOptions {
+  /** Deads on excluded days; used only when the card's excludedDeads rule is on. Clamped to 0..deads. */
+  excludedDeads?: number;
+  /** The player's group on this card; unknown ids mean the normal target. */
+  groupId?: string | null;
+}
+
+/** Stats the formula sees: deads minus the excluded deads when the card's rule is on. */
+export function countedStats(card: Partial<Pick<RequirementsCard, "excludedDeads">>, stats: FormulaVars, opts: PlayerOptions = {}): FormulaVars {
+  const ex = opts.excludedDeads;
+  if (!card.excludedDeads?.enabled || typeof ex !== "number" || !Number.isFinite(ex) || ex <= 0) return stats;
+  const deads = typeof stats.deads === "number" && Number.isFinite(stats.deads) && stats.deads > 0 ? stats.deads : 0;
+  return { ...stats, deads: Math.max(0, deads - ex) };
+}
+
+/** Score one player against the card. `rawStats` holds gains since the start scan plus power. Never throws. */
+export function evaluatePlayer(
+  card: Pick<RequirementsCard, "formula" | "requirement"> & Partial<Pick<RequirementsCard, "excludedDeads" | "groups">>,
+  rawStats: FormulaVars,
+  opts: PlayerOptions = {},
+): EvaluatePlayerResult {
   const p = parseFormula(card.formula);
   if (!p.ok) return p;
+  const stats = countedStats(card, rawStats, opts);
   const r = evaluate(p.ast, stats);
   if (!r.ok) return r;
   const dkp = r.value;
   const power = typeof stats.power === "number" && Number.isFinite(stats.power) && stats.power > 0 ? stats.power : 0;
-  const t = targetFor(card, power);
+  const t = targetFor(card, power, opts.groupId);
   const target = t ? t.target : null;
   const remaining = target === null ? null : Math.max(0, Math.ceil(target - dkp - 1e-9));
   const lin = linearWeights(p.ast);
@@ -290,6 +453,7 @@ export function evaluatePlayer(card: Pick<RequirementsCard, "formula" | "require
     dkp,
     target,
     band: t?.band,
+    group: t?.group,
     percentOfTarget: target !== null && target > 0 ? (dkp / target) * 100 : null,
     percentOfPower: power > 0 ? (dkp / power) * 100 : null,
     remaining,

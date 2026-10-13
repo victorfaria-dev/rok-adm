@@ -1,13 +1,15 @@
 // F-30 My requirements (player side): open the council's card link, type your own numbers,
 // see your target and progress. Also works without a link (pick a preset or type a formula).
 import {
-  FORMULA_PRESETS, MEASURED_AS, SHARE_ERROR_TEXT, VAR_NOUN, decodeShare, defaultRequirementsCard, evaluatePlayer, explainFormula,
+  FORMULA_PRESETS, MEASURED_AS, SHARE_ERROR_TEXT, VAR_NOUN, decodeShare, defaultRequirementsCard, evaluatePlayer, excludedDeadsText, explainFormula, groupFor, groupText,
   formatFormula, formatInt, parseFormula, parseRequirementsCard, presetById, shareFromHash, stageLabel, targetFor, usedVariables,
-  type FormulaVar, type FormulaVars, type PowerBand, type RequirementsCard,
+  type FormulaVar, type FormulaVars, type PowerBand, type RequirementsCard, type TargetInfo,
 } from "@rokadm/planner";
 import type { JSX } from "preact";
 import { useEffect, useState } from "preact/hooks";
-import { errorOf, parsePct, parseQty, saveMine, valueOf, latestMine, parseMyDoc, SHARE_KIND } from "../../../lib/kingdom-requirements";
+import {
+  errorOf, parseExcluded, parsePct, parseQty, saveMine, valueOf, latestMine, parseMyDoc, SHARE_KIND, type MyRequirementsDoc,
+} from "../../../lib/kingdom-requirements";
 import { kingdomStorage, listDocs } from "../../../lib/kingdom-store";
 import { SelectField, TextField } from "../shared/Field";
 import FormulaField from "../requirements/FormulaField";
@@ -27,11 +29,20 @@ function statLabel(v: FormulaVar): string {
   return `My ${VAR_NOUN[v].many} since the start scan`;
 }
 
-function savedStatsFor(cardId: string): Partial<Record<FormulaVar, string>> | null {
+/** " (250% of 10,500,000 × 80% for Accounts under 6 months)" or "" when there is nothing to explain. */
+function targetDetail(t: TargetInfo, power: number | null): string {
+  const parts: string[] = [];
+  if (t.band) parts.push(`${t.band.percent}% of ${formatInt(power ?? 0)}`);
+  else if (t.group) parts.push(`${formatInt(t.baseTarget)}`);
+  if (t.group) parts.push(`${t.group.percent}% for ${t.group.name}`);
+  return parts.length ? ` (${parts.join(" × ")})` : "";
+}
+
+function savedFor(cardId: string): MyRequirementsDoc | null {
   const { st } = kingdomStorage();
   for (const d of listDocs("my-requirements", st)) {
     const m = parseMyDoc(d.data);
-    if (m && m.card.id === cardId) return m.myStats;
+    if (m && m.card.id === cardId) return m;
   }
   return null;
 }
@@ -41,6 +52,10 @@ export default function MyRequirements(): JSX.Element {
   const [stats, setStats] = useState<Partial<Record<FormulaVar, string>>>({});
   const [status, setStatus] = useState("");
   const [saveError, setSaveError] = useState("");
+  /** "Deads on excluded days", as typed (card rule excludedDeads). */
+  const [excluded, setExcluded] = useState("");
+  /** Id of the card group the player belongs to ("" = the normal target). */
+  const [group, setGroup] = useState("");
   // Self-made card (no link)
   const [selfPreset, setSelfPreset] = useState<string>(FORMULA_PRESETS[0]!.id);
   const [selfFormula, setSelfFormula] = useState("");
@@ -54,7 +69,10 @@ export default function MyRequirements(): JSX.Element {
         const r = await decodeShare(code, SHARE_KIND, parseRequirementsCard);
         if (!alive) return;
         if (r.ok) {
-          setStats(savedStatsFor(r.data.id) ?? {});
+          const prev = savedFor(r.data.id);
+          setStats(prev?.myStats ?? {});
+          setExcluded(prev?.excludedDeads ?? "");
+          setGroup(prev?.group ?? "");
           setPhase({ kind: "ready", card: r.data, source: "link", linkError: "" });
         } else {
           setPhase({ kind: "ready", card: null, source: "self", linkError: SHARE_ERROR_TEXT[r.error] });
@@ -65,6 +83,8 @@ export default function MyRequirements(): JSX.Element {
       if (!alive) return;
       if (mine && !mine.selfMade) {
         setStats(mine.myStats);
+        setExcluded(mine.excludedDeads ?? "");
+        setGroup(mine.group ?? "");
         setPhase({ kind: "ready", card: mine.card, source: "saved", linkError: "" });
       } else {
         if (mine) {
@@ -102,14 +122,19 @@ export default function MyRequirements(): JSX.Element {
 
   const powerP = parseQty(stats.power ?? "");
   const statP = Object.fromEntries(used.map((v) => [v, parseQty(stats[v] ?? "")])) as Record<FormulaVar, ReturnType<typeof parseQty>>;
-  const hasErrors = [powerP, ...Object.values(statP)].some((p) => errorOf(p)) || !!errorOf(pctP);
+  // Deads on excluded days: only when the card's rule is on and the formula uses deads.
+  const exclusionOn = card.excludedDeads.enabled && used.includes("deads");
+  const excludedP = exclusionOn ? parseExcluded(excluded, valueOf(statP.deads)) : null;
+  const hasErrors = [powerP, ...Object.values(statP), excludedP].some((p) => errorOf(p)) || !!errorOf(pctP);
   const vars: FormulaVars = { power: valueOf(powerP) ?? 0 };
   for (const v of used) vars[v] = valueOf(statP[v]) ?? 0;
   const anyStat = used.some((v) => valueOf(statP[v]) !== null);
   const power = valueOf(powerP);
-  const result = parsed.ok ? evaluatePlayer(card, vars) : null;
+  const excludedDeads = valueOf(excludedP) ?? 0;
+  const groupId = groupFor(card, group)?.id ?? null;
+  const result = parsed.ok ? evaluatePlayer(card, vars, { excludedDeads, groupId }) : null;
   const needsTarget = card.requirement.mode === "fixed" || power !== null;
-  const myTarget = power !== null ? targetFor(card, power) : card.requirement.mode === "fixed" ? targetFor(card, 0) : null;
+  const myTarget = power !== null ? targetFor(card, power, groupId) : card.requirement.mode === "fixed" ? targetFor(card, 0, groupId) : null;
 
   const setStat = (v: FormulaVar, x: string) => { setStats((s) => ({ ...s, [v]: x })); setStatus(""); };
 
@@ -131,7 +156,7 @@ export default function MyRequirements(): JSX.Element {
 
   function onSave() {
     try {
-      saveMine({ card: self ? { ...card, id: "self" } : card, myStats: stats, selfMade: self }, kingdomStorage().st);
+      saveMine({ card: self ? { ...card, id: "self" } : card, myStats: stats, selfMade: self, ...(excluded ? { excludedDeads: excluded } : {}), ...(groupId ? { group: groupId } : {}) }, kingdomStorage().st);
       setSaveError("");
       setStatus("Saved on this device. Open this page again to pick up where you left off.");
     } catch (e) {
@@ -178,6 +203,13 @@ export default function MyRequirements(): JSX.Element {
                     : <ul class="km-bands">{card.requirement.bands.map((b, i) => <li key={i}>{bandText(b)}</li>)}</ul>}
               </dd>
             </div>
+            {card.excludedDeads.enabled && <div><dt>Excluded deads</dt><dd data-excluded-rule>{excludedDeadsText(card.excludedDeads)}</dd></div>}
+            {card.groups.length > 0 && (
+              <div>
+                <dt>Requirement groups (set by your council)</dt>
+                <dd><ul class="km-bands" data-groups>{card.groups.map((g) => <li key={g.id}>{groupText(g)}</li>)}</ul></dd>
+              </div>
+            )}
             <div><dt>Which power counts</dt><dd data-basis>{card.powerBasis}</dd></div>
             <div><dt>Measured as</dt><dd>{MEASURED_AS}</dd></div>
             {card.notes && <div><dt>Notes</dt><dd class="km-notes">{card.notes}</dd></div>}
@@ -189,10 +221,31 @@ export default function MyRequirements(): JSX.Element {
         <h2 id="km-stats-h">My numbers</h2>
         <p class="kg-hint" id="km-delta-hint">Enter what you gained since the start scan (the delta): your number now minus your number when the start scan was taken. Accepts 1,200,000, 10.5m or 300k.</p>
         <div class="km-fields">
-          <TextField id="km-power" label={`My power (${card.powerBasis})`} value={stats.power ?? ""} onValue={(v) => setStat("power", v)} error={errorOf(powerP)} placeholder="e.g. 10.5m" />
+          {card.groups.length > 0 && (
+            <SelectField
+              id="km-group"
+              label="My group"
+              hint="Pick the group your council put you in, if any."
+              value={groupId ?? ""}
+              options={[{ value: "", label: "None of these (normal target)" }, ...card.groups.map((g) => ({ value: g.id, label: `${g.name} (${g.percent}%)` }))]}
+              onValue={(v) => { setGroup(v); setStatus(""); }}
+            />
+          )}
+          <TextField id="km-power"label={`My power (${card.powerBasis})`} value={stats.power ?? ""} onValue={(v) => setStat("power", v)} error={errorOf(powerP)} placeholder="e.g. 10.5m" />
           {used.map((v) => (
             <TextField key={v} id={`km-${v}`} label={statLabel(v)} value={stats[v] ?? ""} onValue={(x) => setStat(v, x)} error={errorOf(statP[v])} placeholder="0" />
           ))}
+          {exclusionOn && (
+            <TextField
+              id="km-excluded-deads"
+              label="Deads on excluded days"
+              hint={`Deads on days you were ${card.excludedDeads.label}. Part of your deads above; they are taken off before your DKP is worked out.`}
+              value={excluded}
+              onValue={(x) => { setExcluded(x); setStatus(""); }}
+              error={errorOf(excludedP)}
+              placeholder="0"
+            />
+          )}
         </div>
       </section>
 
@@ -201,8 +254,9 @@ export default function MyRequirements(): JSX.Element {
         <p class="km-summary" role="status" aria-live="polite" data-summary>{summary}</p>
         {result && result.ok && !hasErrors && (anyStat || needsTarget) && (
           <dl class="km-results">
+            {exclusionOn && excludedDeads > 0 && <div data-row="counted-deads"><dt>Deads that count</dt><dd>{formatInt(Math.max(0, (vars.deads ?? 0) - excludedDeads))}</dd></div>}
             <div data-row="dkp"><dt>DKP so far</dt><dd>{formatInt(result.dkp)}</dd></div>
-            {myTarget && <div data-row="target"><dt>My target</dt><dd>{formatInt(myTarget.target)}{myTarget.band ? ` (${myTarget.band.percent}% of ${formatInt(power ?? 0)})` : ""}</dd></div>}
+            {myTarget && <div data-row="target"><dt>My target</dt><dd>{formatInt(myTarget.target)}{targetDetail(myTarget, power)}</dd></div>}
             {result.remaining !== null && needsTarget && <div data-row="remaining"><dt>Still to go</dt><dd>{result.remaining === 0 ? "Nothing: target met" : formatInt(result.remaining)}</dd></div>}
           </dl>
         )}
@@ -217,7 +271,7 @@ export default function MyRequirements(): JSX.Element {
         {ways.length > 0 && (
           <p data-ways>To close the gap you'd need about {ways.map((w) => `${formatInt(w.unitsNeeded)} more ${w.unitsNeeded === 1 ? VAR_NOUN[w.variable].one : VAR_NOUN[w.variable].many}`).join(" or ")} (each on its own; a mix also works).</p>
         )}
-        {card.presetId === "k2779-kvk2" && presetById("k2779-kvk2")?.ruleNote && <p class="kg-hint">{presetById("k2779-kvk2")!.ruleNote}</p>}
+        {card.presetId === "k2779-kvk2" && !card.excludedDeads.enabled && presetById("k2779-kvk2")?.ruleNote && <p class="kg-hint">{presetById("k2779-kvk2")!.ruleNote}</p>}
         <div class="kg-actions">
           <button type="button" class="btn btn-primary" onClick={onSave}>Save on this device</button>
         </div>
