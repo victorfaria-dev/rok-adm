@@ -89,6 +89,10 @@ test.describe("my requirements (F-30)", () => {
     await expect(page.locator("[data-link-error]")).toHaveText("This link is for a different KingdomOps tool.");
     await gotoHydrated(page, "/kingdom/my/#d=");
     await expect(page.locator("[data-link-error]")).toContainText("no document in it");
+    // Q2 P3: a link whose document was changed after sharing (checksum no longer matches) is "damaged", not shown.
+    const tampered = "1j" + Buffer.from(JSON.stringify({ k: "requirements", d: { ...CARD, kingdom: "K9999" }, h: "00000000" })).toString("base64url");
+    await page.goto(`/kingdom/my/#d=${tampered}`);
+    await expect(page.locator("[data-link-error]")).toHaveText("This link is damaged (the document inside cannot be read). Copy the whole link again.");
     expect(errors).toEqual([]);
   });
 

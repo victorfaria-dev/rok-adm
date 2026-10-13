@@ -1,4 +1,4 @@
-import { decodeShare, emptyRulesDoc, parseRulesDoc, shareFromHash } from "@rokadm/planner";
+import { compactRulesShare, decodeShare, emptyRulesDoc, encodeShare, newCharterDoc, newDocId, parseRulesDoc, shareFromHash } from "@rokadm/planner";
 import { describe, expect, it } from "vitest";
 import { getDoc, memoryStorage, saveDoc } from "./kingdom-store";
 import { docFromSearch, formatDay, listRules, rulesShareLink, saveRules, saveRulesCopy } from "./kingdom-rules";
@@ -38,6 +38,36 @@ describe("rules store glue", () => {
     expect(url.startsWith("https://x.test/kingdom/rules/view/#d=1")).toBe(true);
     const r = await decodeShare(shareFromHash(new URL(url).hash), "rules", parseRulesDoc);
     expect(r).toEqual({ ok: true, data: doc });
+  });
+
+  it("a new charter's link fits well inside one Discord message (Q2 P2-1)", async () => {
+    const doc = newCharterDoc(newDocId(), NOW, () => newDocId());
+    const url = await rulesShareLink(doc, "https://kingdomops.example");
+    expect(url.length).toBeLessThan(1000);
+    const r = await decodeShare(shareFromHash(new URL(url).hash), "rules", parseRulesDoc);
+    expect(r).toEqual({ ok: true, data: doc });
+  });
+
+  it("edits travel as line diffs and decode exactly; old full-document links still open", async () => {
+    const doc = newCharterDoc("c1", NOW);
+    doc.kingdom = "K1234";
+    doc.sections[0] = { ...doc.sections[0]!, body: doc.sections[0]!.body.replace("[name or 'chosen by ...']", "Dave") };
+    doc.sections[1] = { ...doc.sections[1]!, heading: "Votes" };
+    doc.sections.push({ id: "own", heading: "Our own rule", body: "- Be kind\n- No zeroing" });
+    doc.charter = { agreedOn: "2026-10-01", signers: ["Ana", "Bo"] };
+    const url = await rulesShareLink(doc, "https://x.test");
+    expect(url.length).toBeLessThan(1000);
+    expect(await decodeShare(shareFromHash(new URL(url).hash), "rules", parseRulesDoc)).toEqual({ ok: true, data: doc });
+
+    // A link made before the compact form (full document in the envelope) keeps working.
+    const old = await encodeShare("rules", doc);
+    expect(await decodeShare(old, "rules", parseRulesDoc)).toEqual({ ok: true, data: doc });
+  });
+
+  it("a compact link naming an unknown template version is reported as damaged, not shown half-empty", async () => {
+    const code = await encodeShare("rules", { c: 1, id: "x", u: NOW.toISOString(), s: [{ i: "a", f: "kvk@99" }] });
+    expect(await decodeShare(code, "rules", parseRulesDoc)).toEqual({ ok: false, error: "bad_json" });
+    expect(compactRulesShare(emptyRulesDoc("e", NOW))).toEqual({ c: 1, id: "e", u: NOW.toISOString(), s: [] });
   });
 
   it("reads ?doc= and formats days", () => {
