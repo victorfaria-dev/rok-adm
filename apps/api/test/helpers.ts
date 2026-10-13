@@ -3,7 +3,7 @@ import { mkdtempSync, rmSync } from "node:fs";
 import { request } from "node:http";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import type { CreateSpaceResponse, JoinResponse } from "@rokadm/core";
+import type { CreateSpaceResponse, FarmsDocData, JoinResponse } from "@rokadm/core";
 import { startServer, type App } from "../src/app";
 import type { Config, RateLimitConfig } from "../src/config";
 
@@ -102,7 +102,7 @@ export async function startTest(opts: { rateLimit?: Partial<RateLimitConfig>; fi
 }
 
 /** A valid farms document body. */
-export function farmsData(name = "Farm 1") {
+export function farmsData(name = "Farm 1"): FarmsDocData {
   return {
     farms: [
       {
