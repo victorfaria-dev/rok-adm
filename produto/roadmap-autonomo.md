@@ -43,6 +43,9 @@ Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre on
 
 O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` depois de `pnpm check`, build e e2e.
 
+## Congelamento de funcionalidades (2026-10-13, decisão do Victor)
+Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco do Sun Tzu no chat; guia visual com linha do tempo e calendário). Depois disso começa a fase de experiência do usuário: definir as 3 tarefas principais, teste de usabilidade com o Victor no preview e reorganização da navegação a partir dos resultados. O loop autônomo foi parado.
+
 ## Pendências para o próximo ciclo de correções
 - ~~`/tools/migration/`: começa com valores de exemplo e mostra "Eligible" antes de o usuário digitar nada (onda D).~~ Corrigido na onda G (G9).
 - Tabelas A01 com linhas corrompidas (ex.: Farm nível 25 = 2 de comida); as calculadoras excluem e avisam; precisa reextrair da fonte (onda D).
