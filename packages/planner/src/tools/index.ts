@@ -2,3 +2,7 @@
 export * from "./types";
 export * from "./time";
 export * from "./vip";
+export * from "./speedups";
+export * from "./buildings";
+export * from "./healing";
+export * from "./ap";
