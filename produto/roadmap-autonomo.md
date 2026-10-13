@@ -54,7 +54,7 @@ Nenhuma funcionalidade nova. Só terminam os dois trabalhos em andamento (palco 
 - Skill `ui-ux-pro-max` (em `.claude/skills/`) é usada como checklist e referência de padrões; não substitui os tokens `--ko-*`.
 
 ### Etapa UX 1 — aprovada (Victor, 2026-10-13)
-- Navegação jogador: City Hall · Guides · Tools · Me. Navegação líder: Kingdom · Members · Events · Guides · Me. Troca de papel em Me.
+- Navegação jogador: City Hall · Tools · Me. Navegação líder: Kingdom · Members · Events · Me. Troca de papel em Me. Após login, Guides fica dentro do menu (Me); antes do login, guias seguem públicos via landing e links (Victor, 2026-10-13).
 - Primeiro acesso curto caindo na aba City Hall (jogador) ou Kingdom (líder); `/` vira landing page pública.
 - Brand, More e Trust saem da navegação (rodapé). URLs antigas continuam funcionando.
 
