@@ -1,0 +1,88 @@
+---
+import Icon from "./Icon.astro";
+interface Props { id: string; placement?: "down" | "up" }
+const { id, placement = "down" } = Astro.props;
+const options = [
+  { value: "dark", label: "Dark" },
+  { value: "light", label: "Light" },
+  { value: "system", label: "System" },
+];
+---
+<details class:list={["theme", placement]} data-theme-picker>
+  <summary aria-label="Theme">
+    <Icon name="theme" />
+    <span class="label">Theme</span>
+  </summary>
+  <fieldset>
+    <legend class="visually-hidden">Theme</legend>
+    {options.map((o) => (
+      <label>
+        <input type="radio" name={`theme-${id}`} id={`theme-${id}-${o.value}`} value={o.value} />
+        <span>{o.label}</span>
+      </label>
+    ))}
+  </fieldset>
+</details>
+
+<style>
+  .theme { position: relative; }
+  summary {
+    list-style: none; display: inline-flex; align-items: center; gap: var(--ko-space-2);
+    min-width: 48px; min-height: 48px; justify-content: center; cursor: pointer; color: var(--ko-text-muted);
+  }
+  summary::-webkit-details-marker { display: none; }
+  .theme[open] summary { color: var(--ko-text); }
+  .label { font-size: var(--ko-text-sm); }
+  .down .label { display: none; }
+  fieldset {
+    position: absolute; z-index: 20; margin: 0; padding: var(--ko-space-1);
+    min-width: 160px; display: grid; border: 1px solid var(--ko-border);
+    background: var(--ko-surface-raised); box-shadow: var(--ko-shadow-3);
+    transform-origin: top right;
+    animation: pop var(--ko-duration-fast) var(--ko-ease-out);
+  }
+  .down fieldset { top: calc(100% + var(--ko-space-1)); right: 0; }
+  .up fieldset { bottom: calc(100% + var(--ko-space-1)); left: 0; transform-origin: bottom left; }
+  label {
+    display: flex; align-items: center; gap: var(--ko-space-3); min-height: 44px;
+    padding-inline: var(--ko-space-3); cursor: pointer; font-size: var(--ko-text-sm);
+  }
+  input { accent-color: var(--ko-accent); width: 18px; height: 18px; margin: 0; }
+  @media (hover: hover) and (pointer: fine) { label:hover { background: var(--ko-surface); } }
+  @keyframes pop { from { opacity: 0; transform: scale(.96); } }
+</style>
+
+<script>
+  import { readStore, writeStore, type ThemePref } from "../lib/store";
+  import { applyTheme, syncThemeColor } from "../lib/theme";
+
+  const pickers = [...document.querySelectorAll<HTMLDetailsElement>("[data-theme-picker]")];
+  const sync = (pref: ThemePref) => {
+    for (const input of document.querySelectorAll<HTMLInputElement>("[data-theme-picker] input")) {
+      input.checked = input.value === pref;
+    }
+  };
+  sync(readStore().theme);
+  syncThemeColor();
+
+  for (const picker of pickers) {
+    picker.addEventListener("change", (e) => {
+      const pref = (e.target as HTMLInputElement).value as ThemePref;
+      writeStore({ theme: pref });
+      applyTheme(pref);
+      sync(pref);
+    });
+    picker.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && picker.open) {
+        picker.open = false;
+        picker.querySelector("summary")?.focus();
+      }
+    });
+  }
+  // Close when tapping outside.
+  document.addEventListener("click", (e) => {
+    for (const p of pickers) if (p.open && !p.contains(e.target as Node)) p.open = false;
+  });
+  // "System" follows OS changes live.
+  matchMedia("(prefers-color-scheme: light)").addEventListener("change", () => syncThemeColor());
+</script>

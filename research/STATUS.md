@@ -63,7 +63,13 @@ Stack: `docs/adr/0001-stack-mvp.md` (TypeScript, monorepo pnpm, Vitest, CI no Gi
 
 KingdomOps v1.0: kit do Victor em `design/brand/`; tokens gerados em `design/tokens/` (contraste: 0 falhas em `design/contrast-report.md`); ícones em `design/brand/export/`; guia de estilo `design/styleguide.html`. Skill `logo-design` desativada.
 
-Próximo: App Shell (F-52) e telas, com as skills de `produto/skills-frontend.md`.
+## Frontend (`apps/web`, ADR 0002: Astro estático + ilhas Preact)
+
+| Tela | Status |
+|---|---|
+| 1. App Shell + Home | **concluída**: abas no celular, trilho no tablet/desktop, tema Dark/Light/System sem flash, chip de perfil, offline (service worker), JS ≤ 5 KB gz por rota; 15 testes unitários + 63 testes Playwright (axe nos dois temas) |
+| 2. Questionário (`/start`) | próxima |
+| 3. Meu guia + Budget Reality Check (`/guide`) | depois da 2 |
 
 ## Bloqueios
 

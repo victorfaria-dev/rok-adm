@@ -1,0 +1,78 @@
+---
+import Shell from "../layouts/Shell.astro";
+
+const tools = [
+  { href: "/guide/", name: "Guide", text: "Step-by-step plan for your spending, play time and kingdom age. Every step shows its source and the patch it was checked on." },
+  { href: "/routine/", name: "Routine", text: "What to do today in 15, 30 or 60 minutes, most valuable first. Skip the rest without guilt." },
+  { href: "/commanders/", name: "Commanders", text: "A checklist before you spend sculptures, so a pick still makes sense three months from now." },
+];
+---
+<Shell title="Home" docTitle="KingdomOps: account and kingdom planner" description="Answer a few questions and get a step-by-step plan for your account, built for the time you actually have." mode="operate">
+  <section class="hero">
+    <h1>Grow your account on the time you actually have.</h1>
+    <p class="sub">Answer 10 questions. Get a plan for your spending, daily play time and kingdom age.</p>
+    <div class="actions" data-home-actions>
+      <a class="btn btn-primary" href="/start/" data-primary>Build my guide</a>
+      <a class="btn btn-secondary" href="/guide/">Read the F2P guide</a>
+    </div>
+  </section>
+
+  <section class="tools" aria-labelledby="tools-h">
+    <h2 id="tools-h">What's inside</h2>
+    <ul>
+      {tools.map((t) => (
+        <li>
+          <a href={t.href}>
+            <span class="name">{t.name}</span>
+            <span class="text">{t.text}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </section>
+
+  <section class="facts" aria-labelledby="facts-h">
+    <h2 id="facts-h">How we keep it honest</h2>
+    <dl>
+      <div><dt class="mono">282</dt><dd>researched fact cards behind the guides, each with sources</dd></div>
+      <div><dt class="mono">patch</dt><dd>every step says which game version it was checked on</dd></div>
+      <div><dt class="mono">0</dt><dd>logins, bots or game files. Your answers stay in this browser.</dd></div>
+    </dl>
+  </section>
+</Shell>
+
+<style>
+  .hero { display: grid; gap: var(--ko-space-4); padding-block: var(--ko-space-4) var(--ko-space-10); }
+  h1 { font-size: var(--ko-text-4xl); line-height: var(--ko-leading-4xl); max-width: 16ch; }
+  .sub { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); color: var(--ko-text-muted); max-width: 44ch; }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); margin-top: var(--ko-space-2); }
+  h2 {
+    font-size: var(--ko-text-sm); line-height: 1.2; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--ko-text-muted); margin-bottom: var(--ko-space-4);
+  }
+  .tools ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--ko-space-3); }
+  .tools a {
+    display: grid; gap: var(--ko-space-2); height: 100%; padding: var(--ko-space-5);
+    background: var(--ko-surface); border: 1px solid var(--ko-border); text-decoration: none;
+    transition: border-color var(--ko-duration-fast) var(--ko-ease-out);
+  }
+  .name { font: var(--ko-weight-bold) var(--ko-text-xl)/1.2 var(--ko-font-display); }
+  .text { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  @media (hover: hover) and (pointer: fine) { .tools a:hover { border-color: var(--ko-accent); } }
+  .facts { margin-top: var(--ko-space-12); }
+  dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--ko-space-5); }
+  dl div { display: grid; gap: var(--ko-space-1); border-top: 2px solid var(--ko-border); padding-top: var(--ko-space-3); }
+  dt { font-size: var(--ko-text-2xl); color: var(--ko-accent); }
+  dd { margin: 0; color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+  @media (min-width: 768px) { h1 { font-size: var(--ko-text-5xl); line-height: var(--ko-leading-5xl); } }
+</style>
+
+<script>
+  import { readStore } from "../lib/store";
+  import { profileFromCode } from "../lib/profile";
+  // Returning users go straight to their guide.
+  if (profileFromCode(readStore().profileCode)) {
+    const a = document.querySelector<HTMLAnchorElement>("[data-primary]");
+    if (a) { a.textContent = "Open my guide"; a.href = "/guide/"; }
+  }
+</script>

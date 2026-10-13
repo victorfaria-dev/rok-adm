@@ -1,0 +1,6 @@
+dist/
+.astro/
+public/icons/
+public/manifest.webmanifest
+test-results/
+playwright-report/

@@ -1,0 +1,20 @@
+---
+import Shell from "../../layouts/Shell.astro";
+import { Content } from "../../../../../content/legal/trust-and-privacy.md";
+---
+<Shell title="Trust & privacy" description="What KingdomOps does with your data, and what it never does." mode="read">
+  <article class="prose"><Content /></article>
+</Shell>
+
+<style>
+  .prose { display: grid; gap: var(--ko-space-4); }
+  .prose :global(h1) { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  .prose :global(h2) { font-size: var(--ko-text-xl); margin-top: var(--ko-space-4); }
+  .prose :global(h3) { font-size: var(--ko-text-lg); }
+  .prose :global(p), .prose :global(li) { color: var(--ko-text); line-height: var(--ko-leading-md); }
+  .prose :global(blockquote) { margin: 0; padding-left: var(--ko-space-4); border-left: 2px solid var(--ko-warning); color: var(--ko-text-muted); }
+  .prose :global(ul), .prose :global(ol) { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); }
+  .prose :global(table) { border-collapse: collapse; display: block; overflow-x: auto; }
+  .prose :global(th), .prose :global(td) { border: 1px solid var(--ko-border); padding: var(--ko-space-2); text-align: left; }
+  .prose :global(code) { font-family: var(--ko-font-mono); font-size: .9em; }
+</style>

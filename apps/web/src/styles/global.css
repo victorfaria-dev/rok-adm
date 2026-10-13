@@ -1,0 +1,51 @@
+@import "../../../../design/tokens/tokens.css";
+@import "@fontsource/chakra-petch/latin-600.css";
+@import "@fontsource/chakra-petch/latin-700.css";
+@import "@fontsource/ibm-plex-sans/latin-400.css";
+@import "@fontsource/ibm-plex-sans/latin-500.css";
+@import "@fontsource/ibm-plex-sans/latin-600.css";
+@import "@fontsource/ibm-plex-mono/latin-400.css";
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--ko-background);
+  color: var(--ko-text);
+  font: var(--ko-weight-regular) var(--ko-text-md)/var(--ko-leading-md) var(--ko-font-body);
+  -webkit-tap-highlight-color: transparent;
+}
+a, button, summary, label, input { touch-action: manipulation; }
+a { color: inherit; }
+img, svg { max-width: 100%; }
+h1, h2, h3 { font-family: var(--ko-font-display); font-weight: var(--ko-weight-bold); text-wrap: balance; margin: 0; }
+p { margin: 0; text-wrap: pretty; }
+input, select, textarea { font: inherit; font-size: max(16px, 1em); }
+:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 3px; }
+.mono { font-family: var(--ko-font-mono); font-variant-numeric: tabular-nums; }
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* Buttons: chamfered primary (brand moment), quiet secondary. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--ko-space-2);
+  min-height: 48px; padding-inline: var(--ko-space-5);
+  font: var(--ko-weight-semibold) var(--ko-text-sm)/1 var(--ko-font-display);
+  letter-spacing: .08em; text-transform: uppercase; text-decoration: none;
+  border: 0; cursor: pointer;
+  transition: background-color var(--ko-duration-fast) var(--ko-ease-out), transform var(--ko-duration-fast) var(--ko-ease-out);
+}
+.btn:active { transform: scale(.97); }
+.btn-primary {
+  background: var(--ko-accent); color: var(--ko-on-accent);
+  clip-path: polygon(var(--ko-chamfer-sm) 0, 100% 0, 100% calc(100% - var(--ko-chamfer-sm)), calc(100% - var(--ko-chamfer-sm)) 100%, 0 100%, 0 var(--ko-chamfer-sm));
+}
+.btn-primary:active { background: var(--ko-accent-pressed); }
+.btn-secondary { background: transparent; color: var(--ko-text); box-shadow: inset 0 0 0 1px var(--ko-border); }
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover { background: var(--ko-accent-hover); }
+  .btn-secondary:hover { box-shadow: inset 0 0 0 1px var(--ko-text-muted); }
+}

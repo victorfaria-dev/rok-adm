@@ -1,0 +1,15 @@
+---
+// Brand kit SVGs inlined with theme-aware fills (bronze symbol/OPS, KINGDOM in --ko-text).
+import horizontal from "../../../../design/brand/svg/kingdomops-horizontal-dark.svg?raw";
+import icon from "../../../../design/brand/svg/kingdomops-icon-dark.svg?raw";
+interface Props { variant: "horizontal" | "icon"; class?: string }
+const { variant, class: cls = "" } = Astro.props;
+const src = variant === "horizontal" ? horizontal : icon;
+const svg = src
+  .replace(/<title[^>]*>[\s\S]*?<\/title>\s*<desc[^>]*>[\s\S]*?<\/desc>/, "")
+  .replace(' role="img" aria-labelledby="title desc"', ' aria-hidden="true" focusable="false"')
+  .replaceAll('fill="#B58B59"', 'fill="currentColor" style="color:var(--ko-bronze)"')
+  .replaceAll('fill="#E8E3DA"', 'fill="currentColor" style="color:var(--ko-text)"')
+  .replace("<svg ", `<svg class="${cls}" `);
+---
+<Fragment set:html={svg} />

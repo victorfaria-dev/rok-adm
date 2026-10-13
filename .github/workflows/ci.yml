@@ -21,3 +21,14 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm validate
+      - name: Build site and check JS budget
+        run: pnpm --filter @rokadm/web build
+      - name: Install Chromium for Playwright
+        run: pnpm --filter @rokadm/web exec playwright install --with-deps chromium
+      - name: Smoke test (Playwright)
+        run: pnpm --filter @rokadm/web e2e
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-results
+          path: apps/web/test-results
