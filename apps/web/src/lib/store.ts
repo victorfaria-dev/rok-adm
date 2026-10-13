@@ -3,6 +3,10 @@
 import { SPENDING_PROFILES, decodeProfile, type SpendingProfile } from "@rokadm/core";
 
 export type ThemePref = "dark" | "light" | "system";
+
+/** Which bottom nav the site shows (UX stage 1): a player's or a kingdom leader's. Set on /start and /me. */
+export type PlayingAs = "player" | "leader";
+export const PLAYING_AS: readonly PlayingAs[] = ["player", "leader"];
 export const THEME_PREFS: readonly ThemePref[] = ["dark", "light", "system"];
 
 export interface RoutineState {
@@ -49,6 +53,8 @@ export interface StoreV1 {
   commanders: CommanderAnswersMap;
   /** Accounts saved on /me to switch between; profileCode stays the active one. */
   savedProfiles: SavedProfile[];
+  /** "Playing as" on /me: picks the player or the leader tabs. Missing in older saves = player. */
+  playingAs: PlayingAs;
 }
 
 export const STORE_KEY = "ko:v1";
@@ -56,7 +62,7 @@ export const STORE_KEY = "ko:v1";
 export function defaultStore(): StoreV1 {
   return {
     v: 1, profileCode: null, draft: null, routine: null, theme: "dark",
-    profileOverride: null, routinePrefs: null, commanders: {}, savedProfiles: [],
+    profileOverride: null, routinePrefs: null, commanders: {}, savedProfiles: [], playingAs: "player",
   };
 }
 
@@ -98,6 +104,7 @@ export function parseStoreReport(raw: string | null | undefined): { store: Store
     s.routine = { date: r.date, done: [...(r.done as string[])] };
   }
   if (THEME_PREFS.includes(data.theme as ThemePref)) s.theme = data.theme as ThemePref;
+  if (PLAYING_AS.includes(data.playingAs as PlayingAs)) s.playingAs = data.playingAs as PlayingAs;
   if (SPENDING_PROFILES.includes(data.profileOverride as SpendingProfile)) s.profileOverride = data.profileOverride as SpendingProfile;
   const rp = data.routinePrefs;
   if (isRecord(rp)) {
@@ -188,10 +195,10 @@ export function importStoreReport(text: string): { store: StoreV1; skippedProfil
   try {
     data = JSON.parse(text);
   } catch {
-    throw new Error("This file is not a KingdomOps export. Pick the .json file you exported from the You page.");
+    throw new Error("This file is not a KingdomOps export. Pick the .json file you exported from the Me page.");
   }
   if (!isRecord(data) || data.app !== "kingdomops") {
-    throw new Error("This file is not a KingdomOps export. Pick the .json file you exported from the You page.");
+    throw new Error("This file is not a KingdomOps export. Pick the .json file you exported from the Me page.");
   }
   const { app: _app, ...rest } = data;
   return parseStoreReport(JSON.stringify(rest));
