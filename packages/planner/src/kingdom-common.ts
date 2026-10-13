@@ -38,7 +38,10 @@ export function parseQuantity(text: string): number | null {
     const v = Math.round(Number(m[1]) * SUFFIX[m[2]!]!);
     return Number.isSafeInteger(v) ? v : null;
   }
-  if (/^\d{1,3}(,\d{3})+$/.test(s)) return Number(s.replace(/,/g, ""));
+  if (/^\d{1,3}(,\d{3})+$/.test(s)) {
+    const v = Number(s.replace(/,/g, ""));
+    return Number.isSafeInteger(v) ? v : null;
+  }
   if (/^\d+$/.test(s)) {
     const v = Number(s);
     return Number.isSafeInteger(v) ? v : null;
