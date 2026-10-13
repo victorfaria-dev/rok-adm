@@ -1,0 +1,77 @@
+/* City Hall tab (UX stage 1). Only --ko-* tokens. */
+.ch { max-width: 960px; margin-inline: auto; display: grid; gap: var(--ko-space-4); min-width: 0; }
+.ch ul { margin: 0; padding: 0; list-style: none; }
+.ch h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+.ch h2 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); text-transform: uppercase; letter-spacing: .04em; }
+.ch h3 { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); }
+.ch-head { display: grid; gap: var(--ko-space-2); }
+.ch-lead, .ch-muted { color: var(--ko-text-muted); }
+.ch-lead { max-width: 65ch; }
+.ch-small { font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.ch-for { font-size: var(--ko-text-sm); display: flex; flex-wrap: wrap; gap: var(--ko-space-2); align-items: center; }
+.ch-for a { color: var(--ko-text); min-height: 44px; display: inline-flex; align-items: center; }
+
+.ch-banner {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ko-space-3);
+  padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-accent); border-radius: var(--ko-radius-md);
+}
+
+.ch-card {
+  display: grid; gap: var(--ko-space-3); min-width: 0;
+  padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+.ch-card-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--ko-space-2); }
+.ch-count, .ch-level { font-size: var(--ko-text-sm); }
+.ch-level .mono { font-size: var(--ko-text-xl); color: var(--ko-accent); }
+
+.ch-tasks { display: grid; gap: var(--ko-space-2); }
+.ch-task {
+  display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--ko-space-3);
+  min-height: 56px; padding: var(--ko-space-3) var(--ko-space-4);
+  background: var(--ko-background); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md); cursor: pointer;
+}
+.ch-task input { width: 24px; height: 24px; margin: 0; accent-color: var(--ko-accent); }
+.ch-task input:focus-visible { outline: none; }
+.ch-task:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.ch-task > span { display: grid; gap: var(--ko-space-1); min-width: 0; overflow-wrap: anywhere; }
+.ch-task-title { font-weight: var(--ko-weight-medium); }
+.ch-task:has(input:checked) .ch-task-title { color: var(--ko-text-muted); text-decoration: line-through; }
+.ch-task-meta { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+
+.ch-more {
+  justify-self: start; display: inline-flex; align-items: center; min-height: 44px;
+  color: var(--ko-accent); font-weight: var(--ko-weight-semibold);
+}
+
+.ch-kv { margin: 0; display: grid; gap: var(--ko-space-2); }
+.ch-kv div { display: grid; gap: var(--ko-space-1); }
+.ch-kv dt { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.ch-kv dd { margin: 0; overflow-wrap: anywhere; }
+
+.ch-gauges { display: grid; gap: var(--ko-space-3); }
+.ch-gauge { display: grid; gap: var(--ko-space-1); }
+.ch-gauge-label { font-weight: var(--ko-weight-medium); }
+.ch-gauge-text { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+.ch-bar { display: block; height: 8px; background: var(--ko-background); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-pill); overflow: hidden; }
+.ch-bar > span { display: block; height: 100%; background: var(--ko-accent); transform-origin: left; }
+.ch-gauge[data-reached] .ch-bar > span { background: var(--ko-success); }
+
+.ch-facts { display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); color: var(--ko-text-muted); }
+.ch-facts a { color: var(--ko-text); }
+.ch-milestones { display: grid; gap: var(--ko-space-2); font-size: var(--ko-text-sm); }
+.ch-milestones li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-2); }
+.ch-dot { width: 10px; height: 10px; border: 2px solid var(--ko-text-muted); border-radius: var(--ko-radius-pill); flex: none; }
+.ch-milestones li[data-reached] .ch-dot { background: var(--ko-success); border-color: var(--ko-success); }
+.ch-tag { font-size: var(--ko-text-xs); color: var(--ko-success); text-transform: uppercase; letter-spacing: .06em; }
+
+.ch-links { display: grid; gap: var(--ko-space-2); grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.ch-links a {
+  display: grid; gap: var(--ko-space-1); height: 100%; padding: var(--ko-space-3) var(--ko-space-4);
+  background: var(--ko-background); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); color: var(--ko-text); text-decoration: none;
+}
+.ch-links span { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+@media (hover: hover) and (pointer: fine) { .ch-links a:hover { border-color: var(--ko-accent); } }
+@media (min-width: 900px) {
+  .ch { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+  .ch-head, .ch-banner, .ch-card[data-stage-tools] { grid-column: 1 / -1; }
+}
