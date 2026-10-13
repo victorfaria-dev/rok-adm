@@ -163,8 +163,11 @@ export default function Routine({ now = () => new Date() }: Props) {
   const safeSkips = plan.skipped.filter((s) => s.safeToSkip);
   const otherSkips = plan.skipped.filter((s) => !s.safeToSkip);
   const mustMissing = plan.skipped.filter((s) => plan.mustDoSkipped.includes(s.id));
-  const shown = onBreak ? pause.daily : plan.included;
-  const shownMinutes = onBreak ? pause.dailyMinutes : plan.totalMinutes;
+  // Break Mode (Q2 P2-9): the streak task plus the loss-prevention tasks the routine data has
+  // (refill queues incl. healing, send gatherers). No shield or resource-protection task exists yet.
+  const breakTasks = [...pause.daily, ...pause.beforePause];
+  const shown = onBreak ? breakTasks : plan.included;
+  const shownMinutes = onBreak ? Math.round((pause.dailyMinutes + pause.beforePauseMinutes) * 10) / 10 : plan.totalMinutes;
   const estimates = shown.filter((t) => t.isEstimate);
   const estimateMinutes = estimates.reduce((s, t) => s + t.minutes, 0);
   const gems = rc.guaranteedGemsPerDay;
@@ -194,7 +197,7 @@ export default function Routine({ now = () => new Date() }: Props) {
         <input type="checkbox" role="switch" checked={onBreak} onChange={(e) => savePrefs({ breakMode: (e.currentTarget as HTMLInputElement).checked })} />
         <span>
           <span class="rt-switch-label">Break Mode: busy day or pausing</span>
-          <span class="rt-help">Only what keeps losses from piling up while you are away.</span>
+          <span class="rt-help">The minimum: keep your VIP streak and keep queues and gatherers working while you are away.</span>
         </span>
       </label>
 
@@ -238,8 +241,13 @@ export default function Routine({ now = () => new Date() }: Props) {
       )}
 
       <section class="rt-section" aria-labelledby="rt-list-title">
-        <h2 id="rt-list-title">{onBreak ? "Break Mode: every day" : "Checklist"}</h2>
-        {onBreak && <p class="rt-help">The smallest daily set: skipping these costs more than one day of progress.</p>}
+        <h2 id="rt-list-title">{onBreak ? "Break Mode: the minimum" : "Checklist"}</h2>
+        {onBreak && (
+          <p class="rt-help" data-break-scope>
+            Keeps your VIP streak and keeps builders, research, training, healing and gatherers busy while you are away.
+            It does not cover shields or resource protection: KingdomOps has no checked facts on those yet.
+          </p>
+        )}
         <Checklist tasks={shown} done={done} onToggle={toggle} label={onBreak ? "Break Mode daily tasks" : "Today's tasks"} />
 
         {!onBreak && mustMissing.length > 0 && (
@@ -267,13 +275,6 @@ export default function Routine({ now = () => new Date() }: Props) {
 
         {onBreak && (
           <>
-            <h3 class="rt-sub">Before you step away</h3>
-            <p class="rt-help">Do these once, before a long break.</p>
-            <ul class="rt-plain">
-              {pause.beforePause.map((t) => (
-                <li key={t.id}>{t.title} <span class="rt-min">({minutesText(t.minutes, t.isEstimate)})</span></li>
-              ))}
-            </ul>
             <details class="rt-more">
               <summary>Safe to drop while paused (<span class="mono">{pause.dropWhilePaused.length}</span>)</summary>
               <ul class="rt-plain">
@@ -289,11 +290,7 @@ export default function Routine({ now = () => new Date() }: Props) {
         <h2 id="rt-reality-title">Reality check</h2>
         <ul class="rt-facts-list">
           <li>
-            {onBreak ? (
-              <>Break Mode every day: <span class="mono">{fmtMin(shownMinutes)}</span> min, plus <span class="mono">{fmtMin(pause.beforePauseMinutes)}</span> min once before you step away.</>
-            ) : (
-              <>Planned: <span class="mono">{fmtMin(plan.totalMinutes)}</span> of <span class="mono">{fmtMin(plan.budgetMinutes)}</span> min.</>
-            )}
+            Planned: <span class="mono">{fmtMin(shownMinutes)}</span> of <span class="mono">{fmtMin(plan.budgetMinutes)}</span> min{onBreak ? " (Break Mode)" : ""}.
           </li>
           <li>
             {estimates.length === 0
