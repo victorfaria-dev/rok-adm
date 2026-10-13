@@ -64,33 +64,35 @@ export interface NumberQuestion extends QuestionBase<number | null> {
 
 export interface BooleanQuestion extends QuestionBase<boolean> {
   type: "boolean";
+  /** Yes/No labels with their one-line "why this matters". */
+  options: readonly [QuestionOption<boolean>, QuestionOption<boolean>];
 }
 
 export type Question = ChoiceQuestion | NumberQuestion | BooleanQuestion;
 
 const SPENDING_OPTIONS: ReadonlyArray<QuestionOption<SpendingProfile>> = [
-  { value: "f2p", label: "F2P — $0 per month", help: "You don't spend money on the game." },
-  { value: "low", label: "Low spender — $5–$100 per month", help: "e.g. a monthly pass or a few small packs." },
-  { value: "medium", label: "Medium spender — $100–$500 per month" },
-  { value: "high", label: "High spender — $500–$1,000 per month" },
-  { value: "whale", label: "Whale — $1,000–$5,000 per month" },
-  { value: "kraken", label: "Kraken — $5,000+ per month" },
+  { value: "f2p", label: "F2P — $0 per month", help: "No money spent. The guide sticks to the free path." },
+  { value: "low", label: "Low spender — $5–$100 per month", help: "e.g. a monthly pass. Adds the low-spender notes to the free path." },
+  { value: "medium", label: "Medium spender — $100–$500 per month", help: "Adds the spender notes; steps written for medium spenders are tagged for you." },
+  { value: "high", label: "High spender — $500–$1,000 per month", help: "Adds the spender notes; steps written for high spenders are tagged for you." },
+  { value: "whale", label: "Whale — $1,000–$5,000 per month", help: "Adds the spender notes; steps written for whales are tagged for you." },
+  { value: "kraken", label: "Kraken — $5,000+ per month", help: "Adds the spender notes; steps written for krakens are tagged for you." },
 ];
 
 const ROLE_OPTIONS: ReadonlyArray<QuestionOption<Role>> = [
-  { value: "lutador", label: "Fighter", help: "Your main account fights in the field." },
-  { value: "farm", label: "Farm account", help: "A secondary account that gathers resources for a main." },
-  { value: "rally", label: "Rally leader", help: "You lead rallies on forts, flags and cities." },
-  { value: "guarnicao", label: "Garrison", help: "You defend structures and cities." },
-  { value: "lider", label: "Alliance / kingdom leader", help: "R4/R5 or kingdom council." },
+  { value: "lutador", label: "Fighter", help: "Your main fights in the field. The routine keeps the fighter tasks." },
+  { value: "farm", label: "Farm account", help: "A second account that gathers for a main. The routine drops tasks only a main needs." },
+  { value: "rally", label: "Rally leader", help: "You lead rallies on forts, flags and cities. The routine keeps the rally tasks." },
+  { value: "guarnicao", label: "Garrison", help: "You defend structures and cities. The routine keeps the garrison tasks." },
+  { value: "lider", label: "Alliance / kingdom leader", help: "R4/R5 or kingdom council. Adds the kingdom administration guide." },
 ];
 
 const STAGE_OPTIONS: ReadonlyArray<QuestionOption<KingdomStage>> = [
-  { value: "pre_kvk", label: "Before the first KvK", help: "New kingdom, roughly day 0–100." },
-  { value: "kvk1", label: "KvK 1 (Season 1)" },
-  { value: "kvk2", label: "KvK 2" },
-  { value: "kvk3", label: "KvK 3" },
-  { value: "soc", label: "Season of Conquest (SoC)" },
+  { value: "pre_kvk", label: "Before the first KvK", help: "A new kingdom. The guide covers the early phases and the kingdom start." },
+  { value: "kvk1", label: "KvK 1 (Season 1)", help: "The guide adds the KvK 1 sections." },
+  { value: "kvk2", label: "KvK 2", help: "Not researched yet: the guide shows KvK 1 content, labelled." },
+  { value: "kvk3", label: "KvK 3", help: "Not researched yet: the guide shows KvK 1 content, labelled." },
+  { value: "soc", label: "Season of Conquest (SoC)", help: "Not researched yet: the guide shows KvK 1 content, labelled." },
 ];
 
 const titleCase = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
@@ -100,7 +102,7 @@ export const QUESTIONS: readonly Question[] = [
   {
     id: "spending", type: "choice", nullable: false, default: "f2p",
     label: "How much do you spend on Rise of Kingdoms per month?",
-    help: "Picks which advice you see and which options are marked Recommended. Ranges are a community convention, in USD.",
+    help: "Picks which advice you see and which guide steps are tagged for you. There is no right answer. Ranges are a community convention, in USD.",
     options: SPENDING_OPTIONS,
   },
   {
@@ -108,10 +110,10 @@ export const QUESTIONS: readonly Question[] = [
     label: "Roughly how much have you spent in total on this account?",
     help: "Optional. Past spending changes the advice even if you are F2P today.",
     presets: [
-      { value: 0, label: "Nothing" },
-      { value: 100, label: "About $100" },
-      { value: 1_000, label: "About $1,000" },
-      { value: 10_000, label: "$10,000 or more" },
+      { value: 0, label: "Nothing", help: "Your monthly answer alone sets the profile." },
+      { value: 100, label: "About $100", help: "Counts as Low when your monthly answer is lower." },
+      { value: 1_000, label: "About $1,000", help: "Counts as Low; the summary flags it if you play F2P now." },
+      { value: 10_000, label: "$10,000 or more", help: "Counts as High or above when your monthly answer is lower." },
     ],
   },
   {
@@ -119,20 +121,20 @@ export const QUESTIONS: readonly Question[] = [
     label: "How much time can you play on a typical day?",
     help: "Sets the daily routine tier. Pick the time you really have, not the time you wish you had.",
     presets: [
-      { value: 15, label: "15 minutes" },
-      { value: 30, label: "30 minutes" },
-      { value: 60, label: "1 hour" },
-      { value: 120, label: "2 hours or more" },
+      { value: 15, label: "15 minutes", help: "The routine keeps only the tasks worth the most per minute." },
+      { value: 30, label: "30 minutes", help: "The routine fits the daily essentials and a few extras." },
+      { value: 60, label: "1 hour", help: "Room for most daily tasks and some event work." },
+      { value: 120, label: "2 hours or more", help: "The routine fits longer tasks that a short day leaves out." },
     ],
   },
   {
     id: "sessionsPerDay", type: "number", nullable: true, default: null, min: 1, max: 24, integer: true,
     label: "How many times a day do you log in?",
-    help: "Optional. Many short sessions favour long timers and gathering; one long session favours events.",
+    help: "Optional. It shapes how timers and marches fit between your visits.",
     presets: [
-      { value: 1, label: "Once" },
-      { value: 2, label: "2–3 times" },
-      { value: 4, label: "4 or more" },
+      { value: 1, label: "Once", help: "One sitting: set long timers and marches before you leave." },
+      { value: 2, label: "2–3 times", help: "You can refill queues and marches between sittings." },
+      { value: 4, label: "4 or more", help: "Short timers and quick event tasks fit between check-ins." },
     ],
   },
   {
@@ -162,14 +164,22 @@ export const QUESTIONS: readonly Question[] = [
     label: "Which civilization do you play?",
     help: "Leave it as \"Not chosen yet\" if you are still deciding: the guide includes the civilization choice.",
     options: [
-      { value: null, label: "Not chosen yet / not sure" },
-      ...CIVILIZATIONS.map((c) => ({ value: c, label: titleCase(c) })),
+      { value: null, label: "Not chosen yet / not sure", help: "The guide keeps the civilization choice in your plan." },
+      ...CIVILIZATIONS.map((c) => ({
+        value: c,
+        label: titleCase(c),
+        help: "Saved with your profile. The guide does not change by civilization yet.",
+      })),
     ],
   },
   {
     id: "returningPlayer", type: "boolean", nullable: false, default: false,
     label: "Are you coming back after a long break?",
     help: "Returning accounts get catch-up advice where it exists.",
+    options: [
+      { value: true, label: "Yes", help: "The guide opens with the coming-back guide and catch-up steps." },
+      { value: false, label: "No", help: "New accounts at a low City Hall also get the first-30-days path." },
+    ],
   },
 ];
 

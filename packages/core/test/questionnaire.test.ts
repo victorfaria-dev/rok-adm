@@ -26,6 +26,31 @@ describe("questions", () => {
     const labels = q.options.map((o) => o.label).join(" | ");
     for (const r of ["$0", "$5–$100", "$100–$500", "$500–$1,000", "$1,000–$5,000", "$5,000+"]) expect(labels).toContain(r);
   });
+
+  it("every option and preset has a one-line help text (why it matters)", () => {
+    const missing: string[] = [];
+    let count = 0;
+    for (const q of QUESTIONS) {
+      const opts = q.type === "number" ? (q.presets ?? []) : q.options;
+      for (const o of opts) {
+        count++;
+        const help = o.help?.trim() ?? "";
+        if (help === "" || help.includes("\n") || help.length > 120) missing.push(`${q.id}: ${o.label}`);
+      }
+    }
+    expect(count).toBeGreaterThan(30);
+    expect(missing).toEqual([]);
+  });
+
+  it("help texts invent no game numbers beyond the option's own label", () => {
+    // Digits in help may only repeat a number already in the label or question, or a guide name.
+    for (const q of QUESTIONS) {
+      const opts = q.type === "number" ? (q.presets ?? []) : q.options;
+      for (const o of opts) {
+        for (const n of o.help!.match(/\b\d[\d,]*/g) ?? []) expect(`${q.label} ${o.label} KvK 1, first-30-days`, `${q.id}: ${o.help}`).toContain(n);
+      }
+    }
+  });
 });
 
 describe("validateAnswers", () => {
