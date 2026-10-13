@@ -13,6 +13,9 @@ import { RateLimiter } from "./rate-limit";
 import { matchRoute } from "./router";
 import { createStore } from "./store";
 
+/** How long a rejected request body may keep streaming (discarded) before the socket is dropped. */
+const BODY_GRACE_MS = 1_000;
+
 export interface AppDeps {
   /** Clock for timestamps, invite expiry and rate-limit windows. */
   now?: () => Date;
@@ -106,10 +109,16 @@ export function createApp(config: Config, deps: AppDeps = {}): App {
       }
       if (err instanceof HttpError) {
         if (err.extra.closeConnection) {
-          // The body was not (fully) read: answer, then drop the connection instead of draining it.
+          // The body was not (fully) read: answer with Connection: close, discard what is still in
+          // flight for a short grace period (so the client can read the answer instead of getting
+          // a reset), then drop the connection rather than draining an unbounded body.
           res.setHeader("Connection", "close");
           res.on("finish", () => {
-            if (!req.complete) req.socket.destroy();
+            if (req.complete) return;
+            const timer = setTimeout(() => req.socket.destroy(), BODY_GRACE_MS);
+            timer.unref();
+            req.once("end", () => clearTimeout(timer));
+            req.resume();
           });
         }
         sendError(res, err);
