@@ -18,7 +18,7 @@
 .t-field input, .t-field select, .t-textarea {
   min-height: 48px; width: 100%; min-width: 0; padding: 0 var(--ko-space-3);
   background: var(--ko-surface); color: var(--ko-text); caret-color: var(--ko-accent);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
   font-family: var(--ko-font-mono); font-variant-numeric: tabular-nums;
 }
 .t-field select { font-family: var(--ko-font-body); }

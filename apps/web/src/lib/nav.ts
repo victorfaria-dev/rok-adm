@@ -18,9 +18,9 @@ export const DESTINATIONS: readonly NavItem[] = [
 
 export const SECONDARY: readonly { href: string; label: string }[] = [
   { href: "/guides/", label: "All guides" },
+  { href: "/tools/", label: "Tools" },
   { href: "/farms/", label: "Farms" },
   { href: "/card/", label: "Governor card" },
-  { href: "/tools/", label: "Tools" },
   { href: "/trust/", label: "Trust & privacy" },
   { href: "/brand/", label: "Brand" },
 ];

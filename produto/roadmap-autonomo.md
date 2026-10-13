@@ -41,3 +41,9 @@ Ordem: A → B → C → D → E → F → G → H → I, com auditoria entre on
 | F | session_01MoSezpwQFqMWcdJEH5aXi3 | `claude/kingdomops-wave-f` (integrada) |
 
 O diretor junta cada branch na `claude/rise-kingdoms-research-planning-bbpnz7` depois de `pnpm check`, build e e2e.
+
+## Pendências para o próximo ciclo de correções
+- `/tools/migration/`: começa com valores de exemplo e mostra "Eligible" antes de o usuário digitar nada (onda D).
+- Tabelas A01 com linhas corrompidas (ex.: Farm nível 25 = 2 de comida); as calculadoras excluem e avisam; precisa reextrair da fonte (onda D).
+- Botão "More" no celular não faz nada sem JS.
+- Site ainda não usa a API local (decisão F9: falta UI de conflito).
