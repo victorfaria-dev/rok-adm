@@ -1,0 +1,723 @@
+{
+  "columns": [
+    "commander",
+    "season",
+    "troop_type",
+    "rarity",
+    "planner_id"
+  ],
+  "factIds": [
+    "A06-0700"
+  ],
+  "name": "A06-rkg-commander-season",
+  "rows": [
+    {
+      "commander": "Gonzalo de Cordoba",
+      "planner_id": "gonzalo-de-cordoba",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Siege"
+    },
+    {
+      "commander": "Belisarius Prime",
+      "planner_id": "belisarius-prime",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Scipio Aemilianus",
+      "planner_id": "scipio-aemilianus",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "William Wallace",
+      "planner_id": "william-wallace",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Choe Yeong",
+      "planner_id": "choe-yeong",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Shajar al-Durr",
+      "planner_id": "shajar-al-durr",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Philip",
+      "planner_id": "philip-ii",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Ragnar Lodbrok Prime",
+      "planner_id": "ragnar-lodbrok-prime",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Xiang Yu",
+      "planner_id": "xiang-yu",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Nebuchadnezzar",
+      "planner_id": "nebuchadnezzar-ii",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Yi Seong Gye",
+      "planner_id": "yi-seong-gye",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Alexander",
+      "planner_id": "alexander-the-great",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Ramesses",
+      "planner_id": "ramesses-ii",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Guan Yu",
+      "planner_id": "guan-yu",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Amanitore",
+      "planner_id": "amanitore",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Artemisia",
+      "planner_id": "artemisia-i",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Gilgamesh",
+      "planner_id": "gilgamesh",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Harald",
+      "planner_id": "harald",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Pakal",
+      "planner_id": "pakal-ii",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Chandragupta",
+      "planner_id": "chandragupta-maurya",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "William",
+      "planner_id": "william-i",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Attila",
+      "planner_id": "attila",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Takeda",
+      "planner_id": "takeda",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Cyrus",
+      "planner_id": "cyrus",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Saladin",
+      "planner_id": "saladin",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Leonidas",
+      "planner_id": "leonidas-i",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Trajan",
+      "planner_id": "trajan",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Mulan",
+      "planner_id": "mulan",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Richard",
+      "planner_id": "richard-i",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Charles Martel",
+      "planner_id": "charles-martel",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Aethelflaed",
+      "planner_id": "aethelflaed",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Cheok Jun",
+      "planner_id": "cheok-jun-gyeong",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Tomyris",
+      "planner_id": "tomyris",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Honda Tadakatsu",
+      "planner_id": "honda-tadakatsu",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Bertrand",
+      "planner_id": "bertrand",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Alexander Nevsky",
+      "planner_id": "alexander-nevsky",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Suleiman",
+      "planner_id": "suleiman-i",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Constantine",
+      "planner_id": "constantine-i",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Edward",
+      "planner_id": "edward-of-woodstock",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Moctezuma",
+      "planner_id": "moctezuma-i",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Genghis Khan",
+      "planner_id": "genghis-khan",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Lu Bu",
+      "planner_id": "lu-bu",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "El Cid",
+      "planner_id": "el-cid",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Ragnar Lodbrok",
+      "planner_id": "ragnar-lodbrok",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Minamoto",
+      "planner_id": "minamoto",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Mehmed",
+      "planner_id": "mehmed-ii",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Julius Caesar",
+      "planner_id": "julius-caesar",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Hannibal Barca",
+      "planner_id": "hannibal-barca",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Frederick",
+      "planner_id": "frederick-i",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Cao Cao",
+      "planner_id": "cao-cao",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Zenobia",
+      "planner_id": "zenobia",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Yi Sun-Sin",
+      "planner_id": "yi-sun-sin",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Theodora",
+      "planner_id": "theodora",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Jadwiga",
+      "planner_id": "jadwiga",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Wu Zetian",
+      "planner_id": "wu-zetian",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Charlemagne",
+      "planner_id": "charlemagne",
+      "rarity": "Legendary",
+      "season": "Season 2",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Sun Tzu",
+      "planner_id": "sun-tzu",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Joan of Arc",
+      "planner_id": "joan-of-arc",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Pelagius",
+      "planner_id": "pelagius",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Hermann",
+      "planner_id": "hermann",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Kusunoki",
+      "planner_id": "kusunoki-masashige",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Baibars",
+      "planner_id": "baibars",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Boudica",
+      "planner_id": "boudica",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Belisarius",
+      "planner_id": "belisarius",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Osman",
+      "planner_id": "osman-i",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Keira",
+      "planner_id": "keira",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Scipio",
+      "planner_id": "scipio-africanus",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Lohar",
+      "planner_id": "lohar",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Joan Of Arc Prime",
+      "planner_id": "joan-of-arc-prime",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Boudica Prime",
+      "planner_id": "boudica-prime",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Henry",
+      "planner_id": "henry",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Thutmose",
+      "planner_id": "thutmose-iii",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Jan Zizka",
+      "planner_id": "jan-zizka",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Tariq ibn Ziyad",
+      "planner_id": "tariq-ibn-ziyad",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Sargon the Great",
+      "planner_id": "sargon-the-great",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Scipio Prime",
+      "planner_id": "scipio-africanus-prime",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Zhuge Liang",
+      "planner_id": "zhuge-liang",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Dido",
+      "planner_id": "dido",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Margaret",
+      "planner_id": "margaret-i",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Heraclius",
+      "planner_id": "heraclius",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Babur",
+      "planner_id": "babur",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Cleopatra",
+      "planner_id": "cleopatra-vii",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Ishida Mitsunari",
+      "planner_id": "ishida-mitsunari",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Flavius Aetius",
+      "planner_id": "flavius-aetius",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Pyrrhus",
+      "planner_id": "pyrrhus",
+      "rarity": "Legendary",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Huo Qubing",
+      "planner_id": "huo-qubing",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Justinian",
+      "planner_id": "justinian-i",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Gorgo",
+      "planner_id": "gorgo",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Liu Che",
+      "planner_id": "liu-che",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Gonzalo",
+      "planner_id": "gonzalo-de-cordoba",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Gajah Mada",
+      "planner_id": "gajah-mada",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Ashurbanipal",
+      "planner_id": "ashurbanipal",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Hermann Prime",
+      "planner_id": "hermann-prime",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Diaochan",
+      "planner_id": "diaochan",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Pericles",
+      "planner_id": "pericles",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Imhotep",
+      "planner_id": "imhotep",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Archer"
+    },
+    {
+      "commander": "Queen Tamar",
+      "planner_id": "tamar",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Bjorn Ironside",
+      "planner_id": "bjorn-ironside",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Infantry"
+    },
+    {
+      "commander": "Matilda",
+      "planner_id": "matilda-of-flanders",
+      "rarity": "Epic",
+      "season": "Season 0",
+      "troop_type": "Universal"
+    },
+    {
+      "commander": "Eleanor",
+      "planner_id": "eleanor-of-aquitaine",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Cavalry"
+    },
+    {
+      "commander": "Lapulapu",
+      "planner_id": "lapulapu",
+      "rarity": "Legendary",
+      "season": "Season 3",
+      "troop_type": "Universal"
+    }
+  ],
+  "source": "facts/A06/data/rkg-commander-season.csv"
+}
