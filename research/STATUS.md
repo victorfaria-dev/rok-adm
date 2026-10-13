@@ -78,10 +78,10 @@ Usadas nos blocos como `PROPOSED-*` (o validador só avisa). Promover a `L-*` no
 
 | ID | Lacuna | Impacto | Método sugerido | Domínio | Guias |
 |---|---|---|---|---|---|
-| PROPOSED-SHIELDS | Duração, custo, fontes de escudos; proteção de iniciante; o que quebra o escudo | alto | T0 loja/tooltips; notas oficiais | A03/A08 | recuperação, 30 dias, F2P, reino novo |
+| PROPOSED-SHIELDS | Duração, custo, fontes de escudos; proteção de iniciante; o que quebra o escudo. **Parcial:** fichas novas A03-0033..0036 (organizado; preços de wiki antiga, baixa) e lacunas L-A03-08 (o que encerra o escudo) e L-A03-09 (escudo de iniciante, preços atuais). Blocos ainda não citam as fichas novas: precisam de verificação antes | alto | T0 loja/tooltips; notas oficiais | A03/A08 | recuperação, 30 dias, F2P, reino novo |
 | PROPOSED-ZEROING-LOSS-SCOPE | O que um zeramento pode levar além de tropas e recursos saqueáveis (prédios, comandantes, pesquisa, equipamento, VIP) | alto | ajuda oficial/FAQ; T0 antes/depois | A08 | recuperação |
 | PROPOSED-CH-BY-KINGDOM-DAY | CH típico de um não pagante nos dias 3/7/14/21/30 do reino | alto | diário T0 em conta nova; relatos T4 | A01 | 30 dias |
-| PROPOSED-RETURNER-REWARDS | Existe evento/recompensa de retorno? conteúdo, duração, quanto tempo fora | alto | conta parada 30+ dias: prints no primeiro login; fórum oficial | A11 | retornante |
+| ~~PROPOSED-RETURNER-REWARDS~~ → **L-A11-05** | A série Returnee existe (A11-0514, notas oficiais) e o Grand Reunion também (A11-0515); faltam elegibilidade, duração e recompensas. O guia do retornante já cita A11-0514 como incerta | medio | conta parada 30+ dias: prints no primeiro login | A11 | retornante |
 | PROPOSED-CONDUCT-SCORE-RULES | Limites e penalidades do Conduct Score; scanners/bots de print contam? Good Conduct Reward (1.1.10) | alto | texto de regras no jogo (T0); notas/FAQ oficiais | C04/C02 | admin de reino |
 | PROPOSED-HALL-OF-HEROES-RETURN | % de recursos de cura e tropas devolvidos pelo Hall of Heroes após o Lost Kingdom | medio | notas 1.0.89/1.0.94; carta de fim de KvK (T0) | A08/B01 | recuperação |
 | PROPOSED-TELEPORT | Tipos, custos e limites de teleporte após zeramento | medio | T0 loja/tooltips | A03 | recuperação |
@@ -90,6 +90,8 @@ Usadas nos blocos como `PROPOSED-*` (o validador só avisa). Promover a `L-*` no
 | PROPOSED-RECHARGE-EVENT | Recompensas e frequência do evento de Recharge; passes contam? | medio | T0 print do evento (sem compra) | A12/A11 | Low |
 | PROPOSED-DO-CHEST-CONTENTS | Conteúdo dos baús de Daily Objectives (20–100 pontos) após 1.1.09 | medio | T0 dia 1: print da prévia de cada baú | A10/A04/A09 | 30 dias |
 | PROPOSED-SUPPLY-DEPOT-CLAIM | O suprimento de 30 dias precisa ser coletado diariamente? dia perdido some? | baixo | T0 tela de coleta/texto do pacote | A12 | Low |
+
+Fichas novas desta onda (pesquisa, status `organizado`, aguardam verificador): A03-0033 (itens de escudo e preços, baixa), A03-0034 (o que o escudo bloqueia, baixa), A03-0035 (cidade nova começa com escudo, duração desconhecida, baixa), A03-0036 (mudanças oficiais ligadas a escudo/proteção, media), A11-0514 (série Returnee, alta), A11-0515 (Grand Reunion, alta). Pista não registrada: medievalfun.com sobre o que quebra o escudo (fonte fora de `fontes.md`).
 
 Fatos pedidos pelos autores que não existem em fichas (sem ID ainda): tabela de marcos do Growth Fund por CH (cai em L-A12-02); horas do conselho por fluxo; poderes padrão R1–R5; transferência de reinado e de R5 inativo (L-B05/L-B03-05); quantidade de Vacation Permits (L-B03-03); custo de cura vs. retreino (L-A08-01); ordem de desbloqueio do tutorial (L-A01-04); fichas C04 para 1.0.95 (Eve of the Crusade dentro do Lost Kingdom) e 1.1.11 (mudança de tempos de passe), hoje só na linha do tempo.
 
