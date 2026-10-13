@@ -30,3 +30,17 @@ Decisão de arquitetura (admin): **não** escrever um guia por combinação de r
 Isso mantém uma única fonte de verdade (fichas → blocos → guias) e permite adicionar perfis sem reescrever nada.
 
 Primeira entrega: HTML estático (sem backend) com os blocos em JSON, publicado como página. Backend só quando houver estado do usuário a salvar.
+
+## I-06 — Identidade: perfis de jogador e aliança (2026-10-13) — aceita como hipótese forte (módulo M15 "Identity")
+Ideia: jogador cria perfil (nome, governor ID opcional, civilização, função, perfil de gasto), entra/cria aliança dentro do hub; foto de perfil alinhada à aliança (borda na cor da aliança, logo/brasão da aliança, tag).
+
+Análise do admin:
+- **Por que importa além do cosmético:** identidade de aliança é um vetor de distribuição. Se um R4/R5 cria a página da aliança e convida os membros, o hub ganha usuários em grupo (efeito de rede), e o perfil vira a "conta" que liga planner, farms e admin de reino.
+- **Evidência:** ainda hipótese. A validar nas dores/voz do jogador (gasto em cosméticos, molduras, skins de cidade, tags, cargos de Discord por aliança). Pedido enviado à frente de dores dos jogadores.
+- **Consequências de arquitetura:** exige contas de usuário, autenticação e armazenamento → o backend entra mais cedo do que o "HTML estático" previsto em I-05. Proposta: o Guide Builder segue estático; Identity é o primeiro módulo com backend.
+- **Riscos:**
+  - **Direitos de imagem/marca:** brasões, molduras e avatares do jogo são conteúdo da Lilith (ToS 17.1.9 e licença pessoal não comercial). Não reproduzir assets do jogo; usuário faz upload do próprio logo ou usa um editor de brasão próprio do hub (formas/cores/ícones originais).
+  - **Dados de terceiros:** perfil criado pelo próprio jogador = consentimento. Nunca criar perfis de outros jogadores a partir de scans sem permissão (ToS 17.1.13; LGPD/GDPR).
+  - **Moderação:** upload de imagem e nomes exigem moderação básica (conteúdo ofensivo).
+  - **Impersonação:** alguém criar a "aliança X" falsa → verificação de liderança da aliança (ex.: código colocado na descrição da aliança no jogo, conferido por print).
+- **Recursos candidatos:** editor de brasão; borda/cor de aliança no avatar; tag `[TAG]`; cartão de perfil compartilhável (imagem para Discord); página da aliança com membros e cargos (R1–R5); página do reino.
