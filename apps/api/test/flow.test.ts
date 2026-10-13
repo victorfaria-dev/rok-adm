@@ -28,6 +28,7 @@ describe("health", () => {
     const r = await s.call("POST", "/v1/health", { body: {} });
     expect(r.status).toBe(405);
     expect(r.headers.get("allow")).toBe("GET");
+    expect(r.body.error).toBe("method_not_allowed");
     const r2 = await s.call("PATCH", "/v1/spaces/sp_aaaaaaaaaaaaaaaaaaaaaa");
     expect(r2.status).toBe(405);
     expect(r2.headers.get("allow")).toBe("GET, DELETE");

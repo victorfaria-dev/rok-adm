@@ -124,7 +124,7 @@ function insertMember(ctx: Ctx, spaceId: string, displayName: string, role: Spac
 
 /** Deletes a member and the documents they own. */
 function removeMemberRow(ctx: Ctx, spaceId: string, memberId: string): void {
-  ctx.store.deleteDocsOfOwner.run(spaceId, memberId);
+  ctx.store.deleteFarmsOfOwner.run(spaceId, memberId);
   ctx.store.deleteMember.run(memberId, spaceId);
 }
 

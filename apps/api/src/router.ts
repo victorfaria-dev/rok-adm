@@ -37,7 +37,7 @@ export function matchRoute(method: string, pathname: string): RouteMatch {
     allowed.push(c.route.method);
   }
   if (allowed.length) {
-    throw new HttpError(405, "bad_request", "Method not allowed on this path.", { headers: { Allow: allowed.join(", ") } });
+    throw new HttpError(405, "method_not_allowed", "Method not allowed on this path.", { headers: { Allow: allowed.join(", ") } });
   }
   if (bad) throw badRequest("Path segment is not valid percent-encoding.");
   throw notFound("No such route.");

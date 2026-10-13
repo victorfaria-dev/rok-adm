@@ -101,7 +101,7 @@ export function createStore(db: Db) {
     ),
     updateDoc: q("UPDATE docs SET version = ?, data = ?, updated_at = ?, updated_by = ? WHERE space_id = ? AND kind = ? AND id = ?"),
     deleteDoc: q("DELETE FROM docs WHERE space_id = ? AND kind = ? AND id = ?"),
-    deleteDocsOfOwner: q("DELETE FROM docs WHERE space_id = ? AND owner_id = ?"),
+    deleteFarmsOfOwner: q("DELETE FROM docs WHERE space_id = ? AND owner_id = ? AND kind = 'farms'"),
 
     insertAudit: q("INSERT INTO audit (space_id, at, actor_id, action, target) VALUES (?, ?, ?, ?, ?)"),
     auditPage: q("SELECT * FROM audit WHERE space_id = ? AND id < ? ORDER BY id DESC LIMIT ?"),

@@ -873,6 +873,9 @@
               }
             }
           },
+          "400": {
+            "$ref": "#/components/responses/BadRequest"
+          },
           "401": {
             "$ref": "#/components/responses/Unauthorized"
           },
@@ -1000,6 +1003,7 @@
           "unauthorized",
           "forbidden",
           "not_found",
+          "method_not_allowed",
           "version_conflict",
           "payload_too_large",
           "unsupported_media_type",

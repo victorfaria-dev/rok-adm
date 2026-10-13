@@ -241,6 +241,7 @@ export type ErrorCode =
   | "unauthorized"
   | "forbidden"
   | "not_found"
+  | "method_not_allowed"
   | "version_conflict"
   | "payload_too_large"
   | "unsupported_media_type"
