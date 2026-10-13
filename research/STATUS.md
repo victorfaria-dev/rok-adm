@@ -24,7 +24,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | W1 | Mecânicas F2P (piloto) | A01, A04, A05, A09, A10, A14 | `raw/A-pilot/`, `facts/A0x/` | **concluída** — 49 fichas; sem minutos por tarefa nem renda diária completa de gemas |
 | W2 | Estratégia F2P / início de reino | A02, A06, A07, A08, A11, B01 | `raw/A-strategy/`, `facts/` (IDs ≥0500) | **concluída** — 55 fichas, todas ≤ media; fontes T1/T2 bloqueadas |
 | W3 | Dores — jogadores | C03 | `pains/D-0001..0499`, `raw/pains-players/` | em execução |
-| W4 | Dores — líderes + administração | B01–B09, C03 | `pains/D-0500..0999`, `facts/B0x/`, `raw/pains-leaders/` | em execução |
+| W4 | Dores — líderes + administração | B01–B09, C03 | `pains/D-0500..0999`, `facts/B0x/`, `raw/pains-leaders/` | **concluída** — 26 dores (14 validadas), 38 fichas B, 10 fluxos de administração |
 | W5 | Concorrência e ToS | C01, C02 | `facts/C01-C02/`, `context/competitors-and-constraints.md` | **concluída** — ~30 ferramentas, ToS lido; 51 fichas não verificadas |
 | W6 | Economia, coleta, farms, gasto | A03, A12, A13 | `raw/A-economy/`, `facts/A03,A12,A13/` | **concluída** — 47 fichas; lacunas: taxas de coleta por nível, ouro via Trading Post |
 | W7 | Histórico de patches / estado atual | C04 | `facts/C04/`, `context/game-state-and-patch-timeline.md` | **concluída** — 33 fichas; versão atual provável 1.1.12 (confiança baixa) |

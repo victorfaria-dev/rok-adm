@@ -1,0 +1,33 @@
+# Feature ideas per top pain (hypotheses — not validated)
+
+2026-10-13. Constraints from `research/context/competitors-and-constraints.md`: no game automation, no own scanning, import-first, manual/screenshot input, Lilith absorbs in-game features → durable value is in *planning, aggregation, transparency and coordination outside the game*.
+
+| Pain (rank) | Idea | Hypothesis | What must be true |
+|---|---|---|---|
+| D-0513 Civil war / rival leaderships | **Kingdom Charter & Agreements registry**: versioned kingdom rules + inter-alliance agreements (territory, zone rewards, MGE shares) each R5 "signs"; breach log | Written, visible agreements reduce disputes and give leaders a neutral reference | Top-alliance R5s willing to formalize; agreements simple enough to template; disputes are about ambiguity, not just power grabs (risk: power decides anyway) |
+| D-0507 Post-KvK purges | **Exit manager**: tiers from data → notice templates (multi-language) → deadlines → appeal/redemption → status board | Leaders save time and reduce backlash when exits are rule-based, announced in advance and appealable | Kingdoms accept explicit criteria; members accept data as fair; we never facilitate zeroing (keep enforcement out of tool) |
+| D-0501 Fair requirements | **Requirement designer** with formula presets (by seed/stage), simulator ("what if 300% of power"), per-governor target pages before KvK | Transparent targets known in advance cut disputes and recruiting friction | Enough data (baseline scan import); leaders willing to publish formula; per-player pages don't expose data members object to (privacy, ToS 17.1.13) |
+| D-0506 / D-0505 MGE fairness & enforcement | **MGE board**: allocation rule (fixed/rotation/auction), applications, published slots & point caps, history ledger per governor, violation log | A visible ledger turns "hoarding" accusations into checkable facts; rotation module for kingdoms that want it | Kingdoms want to be seen as fair (recruiting incentive — evidence: "fair MGE" in ads); leaderboard monitoring stays manual or via screenshots |
+| D-0510 Recruiting role holders | **Kingdom profile + recruitment board**: open role slots (Archer rally, Infantry garrison…), requirements, KvK record; candidates with verified profile screenshots | Matching on roles beats Reddit spam ads | Critical mass of kingdoms & candidates (two-sided market); verification via own-profile screenshot OCR is accurate enough |
+| D-0500 / D-0503 / D-0504 DKP machine | **Import-first DKP engine**: ingest RokTracker/ROKSTATS/Hero Scrolls/ROK Steward/xlsx/CSV (column mapper), join by governor ID, stage deltas, alt↔main links, anomaly flags (KP vs kills, death spikes outside fight windows), audit trail of manual adjustments | Saves the "2–3 h per event" and reduces data fights; complementary to scanners, not competing | Kingdoms already have scan files; an official export exists or scanners keep working (C02-0016 unconfirmed); we accept T4 data quality |
+| D-0502 Non-kill contribution | **Composite contribution score** (DKP + honor + Acclaim + fort/rally participation + role weights) | Fairer recognition of garrison/rally/structure players | Those metrics obtainable via import/screenshots; leaders agree on weights |
+| D-0514 Insider sabotage | **Officer trust ledger**: who holds which permission/title since when, change alerts, two-person rule reminders, new-member risk flags (recent migrant, linked alts) | Leaders promote more carefully when there's a record | Leaders log changes manually (no game hook) — adoption risk; partly mitigated by official permission categories |
+| D-0516 KvK timelines | **Season timeline templates** per story anchored on the kingdom's start date; Discord/iCal sync; alarms per UTC slot | Replaces per-story spreadsheet hunting | Accurate per-story schedules (T0/T1) maintained each season — ongoing research cost |
+| D-0508 / D-0509 Migration intake | **Intake portal**: application form + own-profile screenshot OCR, auto-check vs kingdom requirements + game rules (age, season, power cap, passports, versioned by patch), seed-impact preview, approval queue | Faster, consistent screening; fewer "didn't know the rules" incidents | Rules engine kept current with patches; migrants willing to submit; kings use it as the official channel |
+| D-0520 Seed management | **Seed simulator**: top-300 tiered kingdom power, migrant in/out what-ifs, farm/vacation power | Leaders want predictability; could replace zeroing-for-seed with migration planning | Accurate power inputs (scan import); ethically sensitive — present as planning, not as a purge tool |
+| D-0518 / D-0515 Rules & comms | **Public kingdom page** (rules, requirements, MGE policy, contacts, verified Discord link), auto-translated; member acknowledgement tracking; "verified official channel" badge against impersonation | Migrants/new members learn rules before acting; scams lose effectiveness | Kingdoms willing to publish; translation quality; badge verification method (e.g. code posted in in-game alliance announcement) |
+| D-0517 Signups & roles | **Event roster**: availability by UTC slot, role/troop type, auto-balanced AoO teams, reminders | Replaces Forms/reaction bots | Competes with Codex Helper/Zoe — must integrate into Discord |
+| D-0519 Leader load | **Leadership cockpit**: one weekly checklist of W1–W10 tasks with delegation to council roles | Reducing context switching keeps leaders longer | Leaders adopt a new tool on top of Discord (biggest risk) |
+
+## Cross-cutting bets
+1. **Transparency as the product**: the strongest signal is that "fair/transparent DKP/MGE" sells kingdoms in recruitment. A hub that makes a kingdom's fairness *verifiable* serves both leaders (recruiting, legitimacy) and members.
+2. **Discord-native**: leaders live in Discord; a web hub + bot is likely required.
+3. **Avoid features Lilith is absorbing** (titles, attendance checks, roster notes, LK selection) unless we add cross-alliance/kingdom-wide aggregation the game lacks.
+4. **Ethics/ToS guardrail**: don't build enforcement (locating cities, zeroing coordination) or scanning; keep personal data of other players minimal and opt-out-able.
+
+## Validation questions for leader interviews (next step)
+- How many hours per KvK stage does your data officer spend? Which tool? What breaks?
+- Would you publish your DKP formula/MGE ledger publicly? Why not?
+- What triggered your last internal conflict? Was there a written agreement?
+- How do you screen migrants today; how many applications per window?
+- Which in-game features (battle roster, Notes, Quick Checks) replaced which bots?
