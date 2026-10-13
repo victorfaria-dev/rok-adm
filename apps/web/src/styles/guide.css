@@ -73,6 +73,8 @@
 /* Sections and phases. */
 .g-body { display: grid; min-width: 0; }
 .g-section { margin-top: var(--ko-space-10); min-width: 0; }
+/* Q2 P2-10: sections below the fold skip style, layout and paint until they come near the viewport. */
+.g-section:not(:first-of-type) { content-visibility: auto; contain-intrinsic-size: auto 1200px; }
 .g-section h2 {
   font-size: var(--ko-text-xl); line-height: 1.25; letter-spacing: .04em; text-transform: uppercase;
   margin-bottom: var(--ko-space-2);

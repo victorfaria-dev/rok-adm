@@ -96,11 +96,19 @@ test.describe("alliance crest (F-61)", () => {
     await expect(page.locator(".cr-svg")).toBeVisible();
     expect(scripts.some((u) => u.includes("crest-3d"))).toBe(false);
 
+    // Q2 P2-10: the 3D scene is built in steps; the page says so and keeps the 2D crest until it is ready.
+    const statuses: string[] = [];
+    await page.exposeFunction("koStatus", (t: string) => statuses.push(t));
+    await page.evaluate(() => {
+      const el = document.querySelector("[data-3d-status]")!;
+      new MutationObserver(() => (window as unknown as { koStatus: (t: string) => void }).koStatus(el.textContent ?? "")).observe(el, { childList: true, characterData: true, subtree: true });
+    });
     await page.getByRole("button", { name: "View in 3D" }).click();
     const canvas = page.locator("canvas[data-crest3d]");
     const fallback = page.getByText(FALLBACK);
     await expect(canvas.or(fallback)).toBeVisible();
     expect(scripts.some((u) => u.includes("crest-3d"))).toBe(true);
+    if (await canvas.isVisible()) expect(statuses.some((t) => /Loading the 3D view|Preparing the 3D view/.test(t))).toBe(true);
     if (await canvas.isVisible()) {
       await expect(page.getByRole("button", { name: "Back to 2D" })).toBeFocused();
       const box = (await canvas.boundingBox())!;

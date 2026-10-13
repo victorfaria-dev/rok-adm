@@ -75,6 +75,26 @@ test("Low profile: budget says what buying doesn't change, with no purchase link
   await expect(done.locator("article").first()).toBeHidden();
 });
 
+test("the personal guide renders in steps after idle, and a #section link renders it all at once (Q2 P2-10)", async ({ page }) => {
+  const expected = selectBlocks(blocksFor(LOW_D20), LOW_D20);
+  const all = expected.meta.shownBlocks + expected.alreadyDone.length;
+  // Count the blocks in the first frame the personal guide appears: only the first steps are there.
+  await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}`);
+  const first = await page.waitForFunction(() => {
+    const n = document.querySelectorAll('[data-guide="personal"] article[data-block-id]').length;
+    return n > 0 ? n : null;
+  });
+  expect(await first.jsonValue()).toBeLessThan(all);
+  await expect(personal(page).locator("article[data-block-id]")).toHaveCount(all);
+  await expect(page.locator("#budget")).toBeAttached();
+  // Below-the-fold sections skip rendering until near the viewport.
+  expect(await page.locator(".g-section").nth(1).evaluate((el) => getComputedStyle(el).contentVisibility)).toBe("auto");
+
+  await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}#budget`);
+  await expect(page.locator("#budget")).toBeAttached();
+  await expect(personal(page).locator("article[data-block-id]")).toHaveCount(all);
+});
+
 test("?p=garbage shows an inline error and the default guide", async ({ page }) => {
   await page.goto("/guide/?p=garbage");
   await expect(page.getByRole("alert")).toContainText("not valid");
@@ -177,7 +197,7 @@ test.describe("guides for you", () => {
     await expect(first).toHaveAttribute("data-guide-link", "farms");
     await expect(first.getByRole("link")).toHaveAttribute("href", "/guides/farms/");
     const low = strip.locator('[data-guide-link="low"]');
-    await expect(low).toHaveAttribute("data-included", "");
+    await expect(low).toHaveAttribute("data-included", "true");
     await expect(low).toContainText("Already in your guide");
     await expect(strip.getByRole("link", { name: "Low spender guide" })).toHaveCount(0);
   });
