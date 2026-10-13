@@ -67,6 +67,20 @@ for (const html of htmlFiles(DIST).sort()) {
   failed ||= !ok;
   rows.push(`${ok ? "ok  " : "FAIL"} ${route.padEnd(24)} ${(bytes / 1024).toFixed(1).padStart(6)} KB gz (limit ${limit / 1024} KB)`);
 }
+// Data payloads fetched by islands (/data/*.json): lean, one per guide set, never the fact dataset.
+const DATA_LIMIT = 40 * 1024;
+const DATA_MARKERS = [DATASET_MARKER, "invalidatedBy"];
+const dataDir = join(DIST, "data");
+for (const f of statSync(dataDir, { throwIfNoEntry: false })?.isDirectory() ? readdirSync(dataDir).sort() : []) {
+  const text = readFileSync(join(dataDir, f), "utf8");
+  const bytes = gz(text);
+  const leaked = DATA_MARKERS.filter((m) => text.includes(m));
+  const ok = bytes <= DATA_LIMIT && leaked.length === 0;
+  failed ||= !ok;
+  if (leaked.length > 0) console.error(`FAIL /data/${f}: contains dataset markers (${leaked.join(", ")})`);
+  rows.push(`${ok ? "ok  " : "FAIL"} ${`/data/${f}`.padEnd(24)} ${(bytes / 1024).toFixed(1).padStart(6)} KB gz (limit ${DATA_LIMIT / 1024} KB, data)`);
+}
+
 console.log(rows.join("\n"));
 if (failed) {
   console.error("JS budget check failed.");

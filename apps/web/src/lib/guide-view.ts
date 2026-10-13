@@ -6,8 +6,10 @@ import {
   decodeProfile,
   defaultProfile,
   GUIDE_SECTIONS,
+  mergeBlockSets,
   selectBlocks,
   type AccountProfile,
+  type GuideSection,
   type KingdomStage,
   type SelectedBlock,
   type StructuredGuide,
@@ -97,9 +99,13 @@ export interface GuideSelection {
   fallbackFrom: KingdomStage | null;
 }
 
-/** True when at least one block of the payload is written for this stage. */
+/**
+ * True when at least one block of the payload is written for this stage. Blocks for
+ * every stage ("todos", e.g. the daily routine tiers since wave H) do not count:
+ * they say nothing about whether the stage itself was researched.
+ */
 export function stageHasContent(payload: GuidePayload, stage: KingdomStage): boolean {
-  return payload.blocks.some((b) => b.stage.includes("todos") || b.stage.includes(stage));
+  return payload.blocks.some((b) => b.stage.includes(stage));
 }
 
 /**
@@ -119,13 +125,13 @@ export function selectGuideWithFallback(payload: GuidePayload, profile: AccountP
  * Every block of a payload in GUIDE_SECTIONS order, without profile filtering
  * (static guides such as the new-kingdom guide, which apply to every profile).
  */
-export function fullGuide(payload: GuidePayload): GuideView {
+export function fullGuide(payload: GuidePayload, sectionTitles: Partial<Record<GuideSection, string>> = {}): GuideView {
   const profile = defaultProfile();
   const base = selectBlocks([], profile);
   const sorted = [...payload.blocks].sort(compareBlocks);
   const sections = GUIDE_SECTIONS.map((s) => ({
     id: s.id,
-    title: s.title,
+    title: sectionTitles[s.id] ?? s.title,
     blocks: sorted.filter((b) => b.section === s.id).map((b) => ({ block: b, flags: blockFlags(b, profile), lowSpenderNote: null, folded: [] })),
   })).filter((s) => s.blocks.length > 0);
   const first = sorted[0];
@@ -191,4 +197,35 @@ export function shareUrl(origin: string, code: string | null): string {
   const u = new URL("/guide/", origin);
   if (code) u.searchParams.set("p", code);
   return u.toString();
+}
+
+// ---------------------------------------------------------------------------
+// Profile deltas (wave H: blocks.low.json over the F2P base)
+
+/** Lean payload URL of a profile delta set, e.g. /data/guide-low.json. */
+export const deltaUrl = (set: string): string => `/data/guide-${set}.json`;
+
+/**
+ * The base payload with delta payloads merged in, as core's selectGuide does for
+ * the base guide: a delta block with the same id replaces the base block, new ids
+ * are added, and the card badges are combined.
+ */
+export function withDeltas(base: GuidePayload, deltas: readonly GuidePayload[]): GuidePayload {
+  if (deltas.length === 0) return base;
+  return {
+    ...base,
+    blocks: mergeBlockSets(base.blocks, ...deltas.map((d) => d.blocks)) as PayloadBlock[],
+    badges: Object.assign({}, base.badges, ...deltas.map((d) => d.badges)),
+  };
+}
+
+// ---------------------------------------------------------------------------
+// Confidence summary (static guide pages)
+
+export type ConfidenceLevel = PayloadBlock["confidence"];
+const CONFIDENCE_ORDER: readonly ConfidenceLevel[] = ["high", "medium", "low", "pending"];
+
+/** How many blocks sit at each confidence level, high → pending, zero counts dropped. */
+export function confidenceCounts(blocks: readonly { confidence: ConfidenceLevel }[]): Array<{ level: ConfidenceLevel; count: number }> {
+  return CONFIDENCE_ORDER.map((level) => ({ level, count: blocks.filter((b) => b.confidence === level).length })).filter((c) => c.count > 0);
 }

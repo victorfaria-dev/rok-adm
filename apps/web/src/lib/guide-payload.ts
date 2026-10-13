@@ -17,7 +17,12 @@ import {
 } from "@rokadm/planner";
 import f2pBlocks from "../../../../guides/data/blocks.f2p.json";
 import farmsBlocks from "../../../../guides/data/blocks.farms.json";
+import first30Blocks from "../../../../guides/data/blocks.first30.json";
+import kingdomAdminBlocks from "../../../../guides/data/blocks.kingdomadmin.json";
+import lowBlocks from "../../../../guides/data/blocks.low.json";
 import newKingdomBlocks from "../../../../guides/data/blocks.newkingdom.json";
+import recoveryBlocks from "../../../../guides/data/blocks.recovery.json";
+import returningBlocks from "../../../../guides/data/blocks.returning.json";
 import type { BudgetPayload, CardBadge, GuideData, GuidePayload, PayloadBlock, PatchBadge } from "./guide-types";
 
 /** Every blocks file in guides/data, by set name. */
@@ -25,6 +30,11 @@ export const BLOCK_SETS: Record<string, readonly GuideBlock[]> = {
   f2p: f2pBlocks as unknown as GuideBlock[],
   newkingdom: newKingdomBlocks as unknown as GuideBlock[],
   farms: farmsBlocks as unknown as GuideBlock[],
+  low: lowBlocks as unknown as GuideBlock[],
+  first30: first30Blocks as unknown as GuideBlock[],
+  returning: returningBlocks as unknown as GuideBlock[],
+  recovery: recoveryBlocks as unknown as GuideBlock[],
+  kingdomadmin: kingdomAdminBlocks as unknown as GuideBlock[],
 };
 
 const md = new Marked({ gfm: true, breaks: false });

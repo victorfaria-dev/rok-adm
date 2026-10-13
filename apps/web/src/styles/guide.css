@@ -169,6 +169,31 @@ h4.g-block-title { font: var(--ko-weight-bold) var(--ko-text-lg)/1.3 var(--ko-fo
 .g-you { font-family: var(--ko-font-display); font-size: var(--ko-text-xs); text-transform: uppercase; letter-spacing: .06em; color: var(--ko-accent); }
 .g-assume summary { cursor: pointer; min-height: 44px; display: flex; align-items: center; font-weight: var(--ko-weight-medium); }
 
+/* Static guide pages: confidence at a glance. */
+.g-conf-summary { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-1) var(--ko-space-4); }
+.g-conf-count { display: inline-flex; align-items: center; gap: var(--ko-space-1); }
+.g-conf-count .g-conf { font-size: inherit; }
+.g-conf-count .mono { color: var(--ko-text); }
+
+/* Guides for you (personal guide): a ruled list, not a card. */
+.g-foryou { display: grid; gap: var(--ko-space-2); padding-block: var(--ko-space-3); border-block: 1px solid var(--ko-border); min-width: 0; }
+.g-foryou-title {
+  font: var(--ko-weight-semibold) var(--ko-text-sm)/1.2 var(--ko-font-display); letter-spacing: .08em; text-transform: uppercase;
+}
+.g-foryou ul { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--ko-space-2); }
+.g-foryou li { display: grid; gap: 2px; min-width: 0; }
+.g-foryou li a, .g-foryou-all { display: inline-flex; align-items: center; min-height: 44px; justify-self: start; font-weight: var(--ko-weight-medium); }
+.g-foryou-why { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); overflow-wrap: anywhere; }
+
+/* /guides/ index. */
+.gi-list { margin: 0; padding: 0; list-style: none; display: grid; border-top: 1px solid var(--ko-border); }
+.gi-item { display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-4); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.gi-item h2 { font-size: var(--ko-text-xl); line-height: 1.25; }
+.gi-item h2 a { display: inline-flex; align-items: center; min-height: 44px; }
+.gi-summary { overflow-wrap: anywhere; }
+.gi-for, .gi-meta { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); overflow-wrap: anywhere; }
+.gi-for strong { color: var(--ko-text); font-weight: var(--ko-weight-semibold); }
+
 @media (min-width: 768px) {
   .g-kv > div { grid-template-columns: 12rem 1fr; gap: var(--ko-space-4); }
   .g-bar-who { flex: 1 1 auto; }

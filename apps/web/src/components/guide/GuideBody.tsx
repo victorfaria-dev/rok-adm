@@ -1,8 +1,10 @@
 import { PHASE_TITLES, type AccountProfile, type GuidePhase } from "@rokadm/core";
 import type { BudgetPayload, CardBadge } from "../../lib/guide-types";
-import { sectionTitle, type GuideView, type ViewBlock } from "../../lib/guide-view";
+import { confidenceCounts, sectionTitle, type GuideView, type ViewBlock } from "../../lib/guide-view";
 import { Block } from "./Block";
 import { Budget } from "./Budget";
+import { Confidence } from "./Confidence";
+import type { GuideLink } from "../../lib/guides";
 
 interface Props {
   view: GuideView;
@@ -98,5 +100,40 @@ export function GuideMeta({ view, label }: { view: GuideView; label: string }) {
         <> Checked against patch <span class="mono">{first.patch.version}</span> on <span class="mono">{first.patch.asOf}</span>.</>
       )}
     </p>
+  );
+}
+
+/** Block confidence at a glance, in words (static guide pages). */
+export function GuideConfidence({ view }: { view: GuideView }) {
+  const blocks = [...view.sections.flatMap((s) => withFolded(s.blocks)), ...view.alreadyDone].map((b) => b.block);
+  return (
+    <p class="g-meta g-conf-summary" data-confidence-summary>
+      <span>Steps by confidence:</span>
+      {confidenceCounts(blocks).map((c) => (
+        <span key={c.level} class="g-conf-count">
+          <Confidence level={c.level} short /> <span class="mono">{c.count}</span>
+        </span>
+      ))}
+    </p>
+  );
+}
+
+/** "Guides for you": other guides that fit this profile, with why, plus the full list. */
+export function GuidesForYou({ links, title = "Guides for you" }: { links: readonly GuideLink[]; title?: string }) {
+  return (
+    <nav class="g-foryou" aria-labelledby="g-foryou-h" data-guides-for-you>
+      <h2 id="g-foryou-h" class="g-foryou-title">{title}</h2>
+      {links.length > 0 && (
+        <ul>
+          {links.map((l) => (
+            <li key={l.set} data-guide-link={l.set}>
+              <a href={l.href}>{l.title}</a>
+              <span class="g-foryou-why">{l.reason}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+      <a class="g-foryou-all" href="/guides/">All guides</a>
+    </nav>
   );
 }
