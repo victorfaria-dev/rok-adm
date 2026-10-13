@@ -22,12 +22,18 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | # | Frente | Domínios | Saída | Status |
 |---|--------|----------|-------|--------|
 | W1 | Mecânicas F2P (piloto) | A01, A04, A05, A09, A10, A14 | `raw/A-pilot/`, `facts/A0x/` | em execução |
-| W2 | Estratégia F2P / início de reino | A02, A06, A07, A08, A11, B01 | `raw/A-strategy/`, `facts/` (IDs ≥0500) | em execução |
+| W2 | Estratégia F2P / início de reino | A02, A06, A07, A08, A11, B01 | `raw/A-strategy/`, `facts/` (IDs ≥0500) | **concluída** — 55 fichas, todas ≤ media; fontes T1/T2 bloqueadas |
 | W3 | Dores — jogadores | C03 | `pains/D-0001..0499`, `raw/pains-players/` | em execução |
 | W4 | Dores — líderes + administração | B01–B09, C03 | `pains/D-0500..0999`, `facts/B0x/`, `raw/pains-leaders/` | em execução |
 | W5 | Concorrência e ToS | C01, C02 | `facts/C01-C02/`, `context/competitors-and-constraints.md` | em execução |
 | W6 | Economia, coleta, farms, gasto | A03, A12, A13 | `raw/A-economy/`, `facts/A03,A12,A13/` | em execução |
 | W7 | Histórico de patches / estado atual | C04 | `facts/C04/`, `context/game-state-and-patch-timeline.md` | em execução |
+
+## Bloqueios
+
+- **rok.guide**: negado pela política de rede do ambiente (502 no CONNECT). Liberável pelo Victor nas configurações do ambiente.
+- **Reddit, Fandom wiki**: respondem 403 (bloqueio do próprio site a bots) — impacta a coleta de dores. Alternativas: espelhos/buscadores, YouTube, reviews de loja.
+- **Site oficial Lilith**: inacessível na W2.
 
 ## Próximas ondas (disparadas quando a anterior terminar)
 

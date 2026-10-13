@@ -19,6 +19,7 @@ fontes:
     url: "https://..."
     trecho: "citação literal curta que sustenta a afirmação"
     acessado_em: 2026-10-13
+    publicado_em: 2026-01-02  # data de publicação/atualização da fonte, se visível (nem sempre confiável)
 versao_jogo: "desconhecida"  # patch/temporada a que o fato se refere, se souber
 data_referencia: 2026-10-13  # quando o fato era verdadeiro
 confianca: baixa             # baixa | media | alta  (regras abaixo)
@@ -40,4 +41,5 @@ notas: ""
 - Sem `url` + `trecho` → a ficha não pode sair de `bruto`.
 - Números nunca são inferidos ou "arredondados de memória". Se não encontrado, registrar lacuna em `notas`.
 - Estratégia (`tipo: estrategia`) sempre tem `consenso` e `perfil` preenchidos.
+- Fontes à venda de recarga/contas (top-up, account shops) são marcadas em `notas` como possível conflito de interesse.
 - Fichas antigas com `baixo|medio|alto` são lidas como `low|medium|high` (migração na integração).
