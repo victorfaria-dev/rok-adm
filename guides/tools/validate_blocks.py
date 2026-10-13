@@ -4,6 +4,11 @@
 Stdlib only. Usage:
     python3 guides/tools/validate_blocks.py [guides/data/blocks.f2p.json ...]
 
+With no arguments, every guides/data/blocks.*.json (except the schema) is validated,
+and block ids must also be unique across those files (R1x). Delta files that override
+a base block on purpose (same id, see README "Adding a profile") are named
+blocks.<perfil>.json for a spending profile and are exempt from the cross-file check.
+
 Part 1 - JSON Schema (the subset used by blocks.schema.json: type, enum, required,
 properties, additionalProperties, items, minItems, maxItems, uniqueItems,
 minLength, pattern, minimum, maximum).
@@ -23,6 +28,7 @@ Part 2 - editorial rules (from the Guide Writer brief and research/schemas/fato.
   R8  every block that has no time_cost_min and is in the daily section lists L-A10-01.
 Exit code 1 on any error.
 """
+import glob
 import json
 import os
 import re
@@ -141,13 +147,23 @@ def editorial(blocks, cards, gap_ids, errors, warnings):
             errors.append(f"R8 {bid}: daily block without time cost must list gap L-A10-01")
 
 
+PROFILE_DELTAS = {"low", "medium", "high", "whale", "kraken"}
+
+
+def default_paths():
+    paths = sorted(p for p in glob.glob(os.path.join(DATA, "blocks.*.json"))
+                   if not p.endswith("blocks.schema.json"))
+    return paths or [os.path.join(DATA, "blocks.f2p.json")]
+
+
 def main(argv):
-    paths = argv[1:] or [os.path.join(DATA, "blocks.f2p.json")]
+    paths = argv[1:] or default_paths()
     with open(os.path.join(DATA, "blocks.schema.json"), encoding="utf-8") as fh:
         schema = json.load(fh)
     cards = factlib.load_cards()
     gap_ids = factlib.load_gap_ids()
     failed = False
+    seen_ids = {}
     for p in paths:
         errors, warnings = [], []
         with open(p, encoding="utf-8") as fh:
@@ -162,7 +178,19 @@ def main(argv):
         for e in errors:
             print("  ERROR", e)
         failed |= bool(errors)
-    return 1 if failed else 0
+        if isinstance(blocks, list):
+            name = os.path.basename(p)[len("blocks."):-len(".json")]
+            if name not in PROFILE_DELTAS:
+                for b in blocks:
+                    if isinstance(b, dict) and "id" in b:
+                        seen_ids.setdefault(b["id"], []).append(os.path.relpath(p))
+    dups = {i: fs for i, fs in seen_ids.items() if len(fs) > 1}
+    for i, fs in sorted(dups.items()):
+        print(f"  ERROR R1x id {i} appears in several files: {', '.join(fs)}")
+    total = sum(len(fs) for fs in seen_ids.values())
+    print(f"== total: {len(paths)} files, {total} non-delta blocks, "
+          f"{'FAILED' if failed or dups else '0 errors'}")
+    return 1 if failed or dups else 0
 
 
 if __name__ == "__main__":

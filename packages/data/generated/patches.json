@@ -1,0 +1,249 @@
+[
+  {
+    "confidence": "alta",
+    "date": "2023-03",
+    "factIds": [
+      "C04-0017"
+    ],
+    "summary": "SoC story Siege of Orléans (auxiliary commanders). Legendary engineering and gathering equipment. Armament transmute.",
+    "version": "1.0.67"
+  },
+  {
+    "confidence": "alta",
+    "date": "2023-07",
+    "factIds": [
+      "C04-0016"
+    ],
+    "summary": "Greece civilization. SoC story Storm of Stratagems (S–D team classes). Armament transmutation (max 10).",
+    "version": "1.0.71"
+  },
+  {
+    "confidence": "alta",
+    "date": "2023-12",
+    "factIds": [
+      "C04-0027"
+    ],
+    "summary": "Iconic equipment awakening (5 tiers, Season 1+). City theme transmog. Hall of Fame.",
+    "version": "1.0.77"
+  },
+  {
+    "confidence": "media",
+    "date": "2024-01",
+    "factIds": [
+      "C04-0033"
+    ],
+    "summary": "Preparation Season starting provinces cut from 6 to 3. Talents and inscriptions can trigger on ranged attacks.",
+    "version": "1.0.78"
+  },
+  {
+    "confidence": "alta",
+    "date": "2024-04",
+    "factIds": [
+      "C04-0030"
+    ],
+    "summary": "SoC events removed: Now or Never, Barbarian Buster, Lord of War, Territory Grab, Strategic Reserves. Museum relics work in SoC only.",
+    "version": "1.0.81"
+  },
+  {
+    "confidence": "alta",
+    "date": "2024-06",
+    "factIds": [
+      "C04-0025"
+    ],
+    "summary": "SoC story Shifting Gears (shifter/skirmisher/artillery troops). Cross-season immigration: 20,000-Gem deposit, minimum 10M power, power cap 85M. Recruitment Plaza.",
+    "version": "1.0.83"
+  },
+  {
+    "confidence": "alta",
+    "date": "2024-08",
+    "factIds": [
+      "C04-0029"
+    ],
+    "summary": "Delta formation (+10% combo). Armament wishlist. CH25 required for SoC registration.",
+    "version": "1.0.85"
+  },
+  {
+    "confidence": "alta",
+    "date": "2024-10",
+    "factIds": [
+      "C04-0024"
+    ],
+    "summary": "VIP19 and SVIP (excess VIP points refunded). SoC key story King of All Britain. Vacation Permit.",
+    "version": "1.0.87"
+  },
+  {
+    "confidence": "alta",
+    "date": "2024-12",
+    "factIds": [
+      "C04-0028"
+    ],
+    "summary": "Realm of Mystique (PvE). Hall of Heroes refunds part of healing resources. Targeted immigration changed.",
+    "version": "1.0.89"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-01-07",
+    "factIds": [
+      "C04-0016",
+      "C04-0023"
+    ],
+    "summary": "Maya civilization. King Arthur. Armament Conversion. Legendary Commander Swap. Gathering of Heroes. Immediate re-registration for SoC. Lv25 Trading Post capacity 5M→10M.",
+    "version": "1.0.90"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-03-11",
+    "factIds": [
+      "C04-0022",
+      "C04-0030"
+    ],
+    "summary": "Wheel of Fortune needs Spin Tickets (Season 3/SoC); SoC pool trades construction speedups for healing. Midseason Review replaces Enemy Elimination. Remastered map on by default.",
+    "version": "1.0.92"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-05-13",
+    "factIds": [
+      "C04-0018",
+      "C04-0021",
+      "C04-0022"
+    ],
+    "summary": "Lost Kingdom tier system (gems; Hall of Heroes return rate). Crystal tech rework begins as a pioneer. Takeda, Cyrus, Cheok and Bertrand moved to Season 2 and reworked. Spin Tickets in Season 2. Transmutation guarantee. Past Glory stage 1 buff cut from 40% to 30%.",
+    "version": "1.0.94"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-06-12",
+    "factIds": [
+      "C04-0020"
+    ],
+    "summary": "SoC team-up phase and match voting. Kingdom power formula (tiered cap; nothing counted above 500M). Imperium threshold 23.5B. Alliance Fortress durability cut. Eve of the Crusade moves inside the Lost Kingdom.",
+    "version": "1.0.95"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-07-14",
+    "factIds": [
+      "C04-0010",
+      "C04-0019"
+    ],
+    "summary": "Supreme Strife tournament. Out-of-combat troops gain no Rage. Archimedes and Mary I added. Special-talent equipment dismantle refunds 100% of forging. Queens, Generals and Prime Ministers can use king skills. Officer permission categories.",
+    "version": "1.0.96"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-10-10",
+    "factIds": [
+      "C04-0009"
+    ],
+    "summary": "SoC key story Song of Troy (Achilles, Hector). Oasis Bazaar event (sell resources for Gems). Watchlist king skill. Domains opened one at a time. Karuak troops capped at level 30.",
+    "version": "1.1.00"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-11-13",
+    "factIds": [
+      "C04-0015",
+      "C04-0016"
+    ],
+    "summary": "Acclaim fully live. Army Groups (pioneer). Domains need 600 active governors. Queue panel at CH8. Alliance markers. Civilization buff switching at CH16. Morale removed from Champions of Olympia.",
+    "version": "1.1.01"
+  },
+  {
+    "confidence": "alta",
+    "date": "2025-12-18",
+    "factIds": [
+      "C04-0018",
+      "C04-0032"
+    ],
+    "summary": "Daily AP claim can exceed cap. Army Groups for all SoC alliances. Swap/Gathering of Heroes tuned (Season 3 Light and Darkness). RoK Toolkit roster import. First-purchase gem multiplier returns (2026-01-01).",
+    "version": "1.1.02"
+  },
+  {
+    "confidence": "alta",
+    "date": "2026-01-20",
+    "factIds": [
+      "C04-0012",
+      "C04-0013",
+      "C04-0014",
+      "C04-0019"
+    ],
+    "summary": "Armament honing. Lost Kingdom tier A+. Kingdom Merger 3→2 kingdoms. Coalitions start with 4 alliances. Forced by-election. Home-kingdom territory protection in SoC. Battle-report skill statistics. Supreme Strife becomes 1v1. Alliance Bounty/Armory (pioneer).",
+    "version": "1.1.03"
+  },
+  {
+    "confidence": "alta",
+    "date": "2026-02-27",
+    "factIds": [
+      "C04-0011",
+      "C04-0015"
+    ],
+    "summary": "Talent/inscription rework: skill-damage reduction now covers combo and smite (Season 2+). Song of Troy patrons rebalanced. Acclaim from T1 units nerfed. Acclaim Shop (Recovery Potions). Weekly cap on Alliance Bounty resources. 4 new queues.",
+    "version": "1.1.04"
+  },
+  {
+    "confidence": "alta",
+    "date": "2026-03-24",
+    "factIds": [
+      "C04-0008",
+      "C04-0009",
+      "C04-0010"
+    ],
+    "summary": "Wedge Formation II (+12% skill). Gem events to reset equipment talents or refund a dismantle. Immigration age limits tightened. Same-season immigration locked until end of Season 1 (pioneer). Oasis Bazaar permanent in SoC (Trading Post Lv25). Bastion quests no longer require speedups.",
+    "version": "1.1.06"
+  },
+  {
+    "confidence": "alta",
+    "date": "2026-05-07",
+    "factIds": [
+      "C04-0006",
+      "C04-0007",
+      "C04-0033"
+    ],
+    "summary": "Conduct Score (scripts/cheats penalised; SoC first). King of All Britain pioneer as Season 3. Alliance Notes, Quick Checks. Auto-peacekeeping improvements.",
+    "version": "1.1.07"
+  },
+  {
+    "confidence": "alta",
+    "date": "2026-06-03",
+    "factIds": [
+      "C04-0031"
+    ],
+    "summary": "Clash of Divine Isles reworked (cross-kingdom invasion event). Rest Mode vote. Secondary password needed to inscribe or convert armaments. World Cup events.",
+    "version": "1.1.08"
+  },
+  {
+    "confidence": "alta",
+    "date": "2026-06-30",
+    "factIds": [
+      "C04-0001",
+      "C04-0004",
+      "C04-0005"
+    ],
+    "summary": "Resource boosts and Deceptive Troops items removed; VIP production bonuses raised. Daily quests changed. Legendary Pelagius from day 5. Duel of Heroes (Heroic Anthem). Bulk gathering items.",
+    "version": "1.1.09"
+  },
+  {
+    "confidence": "baixa",
+    "date": "2026-07-30",
+    "factIds": [
+      "C04-0003",
+      "C04-0017",
+      "C04-0029"
+    ],
+    "summary": "Radiant Rivalry (pioneer, new kingdoms). Yahya ibn Khalid (Legendary gatherer, Season 1+). SoC story Mighty Assembly (pioneer). Pincer +12% smite. Good Conduct Reward.",
+    "version": "1.1.10"
+  },
+  {
+    "confidence": "baixa",
+    "date": "2026-09-22",
+    "factIds": [
+      "C04-0001",
+      "C04-0002",
+      "C04-0007",
+      "C04-0022"
+    ],
+    "summary": "Radiant Rivalry wider. Camp Treaty (pioneer). Chronicles key chapters fixed to Fri–Sat. Season 2/3 level-4 passes semi-protected. Acclaim in Seasons 1–3. Eve of the Crusade opens with the Lost Kingdom. Past Glory stage 2 uses speedups. Season 1 Wheel of Fortune needs Spin Tickets.",
+    "version": "1.1.12"
+  }
+]

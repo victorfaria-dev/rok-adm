@@ -1,0 +1,146 @@
+<title>Alliance Crest Forge</title>
+<style>
+  /* Layout: full-screen 3D stage, controls docked at the bottom. Dark-first. */
+  :root { --bg:#0f1117; --panel:#1a1d26; --line:#343a48; --fg:#e9ebf1; --muted:#9aa2b1; --gold:#d4a640; --on-gold:#17130a; color-scheme: dark; }
+  @media (prefers-color-scheme: light) { :root:not([data-theme="dark"]) { --bg:#eef0f4; --panel:#ffffff; --line:#c9cfdb; --fg:#161922; --muted:#555d6c; --gold:#a8791a; --on-gold:#ffffff; color-scheme: light; } }
+  :root[data-theme="light"] { --bg:#eef0f4; --panel:#ffffff; --line:#c9cfdb; --fg:#161922; --muted:#555d6c; --gold:#a8791a; --on-gold:#ffffff; color-scheme: light; }
+  html, body { height: 100%; }
+  body { background: var(--bg); color: var(--fg); font: 14px/1.4 system-ui, -apple-system, "Segoe UI", sans-serif; overflow: hidden; }
+  #c { display: block; width: 100%; height: 100%; touch-action: none; }
+  .note { position: fixed; top: calc(env(safe-area-inset-top, 0px) + 12px); left: 16px; right: 16px; color: var(--muted); font-size: 12px; letter-spacing: .02em; }
+  .ui { position: fixed; left: 16px; right: 16px; bottom: calc(env(safe-area-inset-bottom, 0px) + 16px); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+  .sw { width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--line); cursor: pointer; padding: 0; }
+  .sw[aria-pressed="true"] { border-color: var(--fg); box-shadow: 0 0 0 2px var(--bg) inset; }
+  .sw:focus-visible, input:focus-visible, button:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+  input { background: var(--panel); color: var(--fg); border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; width: 80px; text-transform: uppercase; font: inherit; }
+  .primary { background: var(--gold); color: var(--on-gold); border: 0; border-radius: 8px; padding: 9px 12px; font: 600 14px/1 system-ui, sans-serif; cursor: pointer; }
+  .sheet { position: fixed; inset: 0; background: color-mix(in srgb, var(--bg) 88%, transparent); display: grid; place-items: center; padding: 16px; }
+  .sheet-card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px; max-width: 360px; width: 100%; display: grid; gap: 12px; text-align: center; }
+  .sheet-card img { width: 100%; border-radius: 8px; background: var(--bg); }
+  .sheet-card p { margin: 0; color: var(--muted); }
+</style>
+<div class="note">Prototype · original art · drag to rotate, pick a color, type your tag</div>
+<div class="sheet" id="sheet" hidden><div class="sheet-card"><img id="out" alt="Alliance crest avatar, 1024 by 1024"><p>Long-press the image to save it on your phone.</p><button class="primary" id="close">Close</button></div></div>
+<canvas id="c"></canvas>
+<div class="ui" id="ui">
+  <input id="tag" maxlength="4" value="VXF" aria-label="Alliance tag">
+  <button id="png" class="primary">Avatar preview</button>
+</div>
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+               "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/" } }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, preserveDrawingBuffer: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+const scene = new THREE.Scene();
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
+camera.position.set(0, 0, 8);
+
+const COLORS = ['#1f4fa8', '#8e1b2b', '#1d6b45', '#5b2a86', '#b3541e', '#0f6f7a', '#262a33'];
+
+function shield(s) {
+  const sh = new THREE.Shape();
+  sh.moveTo(-s, 1.25 * s); sh.quadraticCurveTo(0, 1.05 * s, s, 1.25 * s);
+  sh.lineTo(s, 0.25 * s);
+  sh.bezierCurveTo(s, -0.7 * s, 0.55 * s, -1.2 * s, 0, -1.55 * s);
+  sh.bezierCurveTo(-0.55 * s, -1.2 * s, -s, -0.7 * s, -s, 0.25 * s);
+  sh.closePath(); return sh;
+}
+function star(r1, r2, n) {
+  const s = new THREE.Shape();
+  for (let i = 0; i < n * 2; i++) {
+    const r = i % 2 ? r2 : r1, a = i / (n * 2) * Math.PI * 2 + Math.PI / 2;
+    i ? s.lineTo(Math.cos(a) * r, Math.sin(a) * r) : s.moveTo(Math.cos(a) * r, Math.sin(a) * r);
+  }
+  s.closePath(); return s;
+}
+const ext = (shape, depth, b = 0.02) => new THREE.ExtrudeGeometry(shape, { depth, bevelEnabled: true, bevelThickness: b, bevelSize: b, bevelSegments: 4, curveSegments: 48 });
+
+const gold = new THREE.MeshStandardMaterial({ color: 0xd4a640, metalness: 1, roughness: 0.3 });
+const silver = new THREE.MeshStandardMaterial({ color: 0xdfe3ea, metalness: 1, roughness: 0.22 });
+const fieldMat = new THREE.MeshStandardMaterial({ color: COLORS[0], metalness: 0.3, roughness: 0.5 });
+
+const crest = new THREE.Group(); crest.position.y = 0.35; scene.add(crest);
+const rim = new THREE.Mesh(ext(shield(1.45), 0.22, 0.07), gold); rim.position.z = -0.22; crest.add(rim);
+const field = new THREE.Mesh(ext(shield(1.28), 0.1, 0.03), fieldMat); field.position.z = 0.02; crest.add(field);
+
+const chev = new THREE.Shape();
+chev.moveTo(-1.18, -0.55); chev.lineTo(0, 0.35); chev.lineTo(1.18, -0.55);
+chev.lineTo(1.18, -0.95); chev.lineTo(0, -0.05); chev.lineTo(-1.18, -0.95); chev.closePath();
+const chevron = new THREE.Mesh(ext(chev, 0.06), gold); chevron.position.z = 0.15; crest.add(chevron);
+
+const tower = new THREE.Group();
+tower.add(new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.78, 0.16), silver));
+for (let i = -1; i <= 1; i++) { const m = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.16, 0.16), silver); m.position.set(i * 0.235, 0.47, 0); tower.add(m); }
+const door = new THREE.Mesh(new THREE.BoxGeometry(0.18, 0.28, 0.05), new THREE.MeshStandardMaterial({ color: 0x15171c }));
+door.position.set(0, -0.25, 0.09); tower.add(door);
+tower.position.set(0, 0.62, 0.25); crest.add(tower);
+
+const st = new THREE.Mesh(ext(star(0.28, 0.12, 5), 0.06), gold); st.position.set(0, -0.85, 0.17); crest.add(st);
+
+const tagCanvas = document.createElement('canvas'); tagCanvas.width = 512; tagCanvas.height = 128;
+const tagTex = new THREE.CanvasTexture(tagCanvas); tagTex.colorSpace = THREE.SRGBColorSpace;
+const ribbon = new THREE.Mesh(new THREE.PlaneGeometry(2.6, 0.62), new THREE.MeshStandardMaterial({ map: tagTex, roughness: 0.7, side: THREE.DoubleSide }));
+ribbon.position.set(0, -2.35, 0.3); crest.add(ribbon);
+
+let color = COLORS[0];
+function drawTag() {
+  const g = tagCanvas.getContext('2d');
+  g.fillStyle = '#f3ead6'; g.fillRect(0, 0, 512, 128);
+  g.strokeStyle = '#b8892c'; g.lineWidth = 10; g.strokeRect(5, 5, 502, 118);
+  g.fillStyle = color; g.font = 'bold 72px Georgia, serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText('[' + (document.getElementById('tag').value || 'TAG').toUpperCase() + ']', 256, 68);
+  tagTex.needsUpdate = true;
+}
+function setColor(c) { color = c; fieldMat.color.set(c); drawTag(); document.querySelectorAll('.sw').forEach(b => b.setAttribute('aria-pressed', b.dataset.c === c)); }
+
+const ui = document.getElementById('ui');
+COLORS.forEach(c => { const b = document.createElement('button'); b.className = 'sw'; b.dataset.c = c; b.style.background = c; b.setAttribute('aria-label', 'Alliance color ' + c); b.onclick = () => setColor(c); ui.prepend(b); });
+document.getElementById('tag').oninput = drawTag;
+setColor(COLORS[0]);
+
+scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+const key = new THREE.DirectionalLight(0xffffff, 2); key.position.set(3, 4, 5); scene.add(key);
+const back = new THREE.DirectionalLight(0x9ec5ff, 1.2); back.position.set(-4, 2, -3); scene.add(back);
+
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.enablePan = false; 
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+controls.autoRotate = !reduce; controls.autoRotateSpeed = 1.5;
+
+// Exporta avatar quadrado 1024x1024 (área segura a confirmar no jogo — T0-A1)
+document.getElementById('png').onclick = () => {
+  const auto = controls.autoRotate; controls.autoRotate = false;
+  renderer.setSize(1024, 1024, false); camera.aspect = 1; camera.updateProjectionMatrix();
+  const keep = camera.position.clone(); camera.position.set(0, 0, 10); camera.lookAt(0, 0, 0);
+  renderer.render(scene, camera);
+  document.getElementById('out').src = canvas.toDataURL('image/png');
+  camera.position.copy(keep); controls.autoRotate = auto; resize();
+  document.getElementById('sheet').hidden = false;
+};
+document.getElementById('close').onclick = () => { document.getElementById('sheet').hidden = true; };
+
+function resize() {
+  const w = canvas.clientWidth, h = canvas.clientHeight;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix();
+  // Enquadra o brasão inteiro (≈3,4 × 5,2 unidades) com margem para a barra de controles
+  const t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const dist = Math.max(2.9 / t, 1.9 / (t * camera.aspect)) * 1.15;
+  camera.position.setLength(Math.min(Math.max(dist, 6), 14));
+  controls.minDistance = dist * 0.7; controls.maxDistance = dist * 1.6;
+}
+addEventListener('resize', resize); resize();
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+  if (!reduce) crest.position.y = 0.35 + Math.sin(clock.getElapsedTime() * 1.2) * 0.06;
+  controls.update(); renderer.render(scene, camera);
+});
+</script>

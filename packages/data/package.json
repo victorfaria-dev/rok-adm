@@ -1,0 +1,10 @@
+{
+  "name": "@rokadm/data",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "exports": { ".": "./src/index.ts", "./generated/*": "./generated/*" },
+  "scripts": { "build": "tsx scripts/build.ts", "typecheck": "tsc -p .", "test": "vitest run --passWithNoTests" },
+  "dependencies": { "@rokadm/core": "workspace:*", "yaml": "2.6.1" }
+}

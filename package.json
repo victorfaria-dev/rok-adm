@@ -1,0 +1,19 @@
+{
+  "name": "rok-adm",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.0",
+  "scripts": {
+    "build:data": "pnpm --filter @rokadm/data build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "validate": "python3 research/tools/validate_facts.py && python3 guides/tools/validate_blocks.py && pnpm --filter @rokadm/planner check:data",
+    "check": "pnpm typecheck && pnpm test && pnpm validate"
+  },
+  "devDependencies": {
+    "typescript": "5.6.3",
+    "vitest": "2.1.8",
+    "@types/node": "22.10.2",
+    "tsx": "4.19.2"
+  }
+}
