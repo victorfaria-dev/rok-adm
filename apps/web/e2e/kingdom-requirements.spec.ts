@@ -7,6 +7,8 @@ const SAVED = {
     kingdom: "K1234", title: "", stage: "KvK2", stageOther: "", formula: "t4 * 10 + t5 * 30 + deads * 80", presetId: "k2779-kvk2",
     requirement: { mode: "percent", bands: [{ minPower: 0, maxPower: 20_000_000, percent: 250 }, { minPower: 20_000_000, maxPower: null, percent: 400 }] },
     powerBasis: "Power at the start scan", notes: "Farms are exempt.",
+    excludedDeads: { enabled: true, label: "zeroed in a 'terrible trade'" },
+    groups: [{ id: "young", name: "Accounts under 6 months", percent: 80 }], // test values, as typed by a council
     sampleAccounts: [{ id: "s1", name: "Sample A", stats: { power: 10_000_000, t4: 1_000_000, deads: 200_000 } }], compareFormula: "",
   },
 };
@@ -80,6 +82,38 @@ test.describe("requirements card (F-34)", () => {
     expect(errors).toEqual([]);
   });
 
+  test("requirement groups: add, validate, remove, publish to the player", async ({ page }) => {
+    const errors = trackErrors(page);
+    await page.setViewportSize({ width: 360, height: 780 });
+    await gotoHydrated(page, "/kingdom/requirements/");
+    await expect(page.locator("#kr-groups-hint")).toContainText("set by your council");
+    await expect(page.locator("#kr-groups-hint")).toContainText("B08-0002");
+    await page.getByRole("button", { name: "Add group" }).click();
+    const name = page.locator("#kr-group-0-name");
+    const pct = page.locator("#kr-group-0-pct");
+    await expect(pct).toHaveAttribute("aria-invalid", "true");
+    await page.getByRole("button", { name: "Publish card" }).click();
+    await expect(page.getByRole("alert")).toHaveText("Fix the highlighted fields first.");
+    await name.fill("Accounts under 6 months");
+    await pct.fill("2000");
+    await expect(page.locator("#kr-group-0-pct-error")).toHaveText("Enter more than 0 and at most 1,000.");
+    await pct.fill("80");
+    await page.getByRole("button", { name: "Add group" }).click();
+    await page.locator("#kr-group-1-name").fill("accounts under 6 months");
+    await page.locator("#kr-group-1-pct").fill("90");
+    await expect(page.locator("#kr-group-1-name-error")).toHaveText("Group 2 has the same name as group 1.");
+    await page.getByRole("button", { name: "Remove group 2" }).click();
+    await expect(page.locator("[data-group]")).toHaveCount(1);
+    await expectNoSidewaysScroll(page);
+    await expectTargets44(page);
+    await page.getByRole("button", { name: "Publish card" }).click();
+    const url = await page.locator("#kr-link").inputValue();
+    await page.goto(new URL(url).pathname + new URL(url).hash);
+    await expect(page.locator("[data-groups]")).toContainText("Accounts under 6 months: 80% of the normal target");
+    await expect(page.getByLabel("My group")).toBeVisible();
+    expect(errors).toEqual([]);
+  });
+
   test("save, list, open and delete on this device", async ({ page }) => {
     const errors = trackErrors(page);
     await seed(page, []);
@@ -148,6 +182,12 @@ test.describe("requirements card (F-34)", () => {
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         if (state === "filled") {
           await page.getByRole("button", { name: "Open K1234 requirements" }).click();
+          await expect(page.locator("#kr-excl-label")).toBeVisible();
+          await expect(page.locator("#kr-group-0-name")).toHaveValue("Accounts under 6 months");
+          await page.locator("#kr-group-0-pct").fill("x"); // error state on a group field
+          await expect(page.locator("#kr-group-0-pct")).toHaveAttribute("aria-invalid", "true");
+          await expectAxeClean(page);
+          await page.locator("#kr-group-0-pct").fill("80");
           await page.getByLabel("Second formula").fill("deads * 10");
           await page.getByRole("button", { name: "Publish card" }).click();
           await expect(page.locator("#kr-link")).toBeVisible();

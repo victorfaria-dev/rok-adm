@@ -16,7 +16,13 @@
 .kr-source { display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); }
 
 /* Groups inside a card are separated by a rule, never boxed as cards. */
-.kr-choice, .kr-band, .kr-sample {
+.kr-groups { display: grid; gap: var(--ko-space-3); min-width: 0; padding-top: var(--ko-space-3); border-top: 1px solid var(--ko-border); }
+.kr-groups h3 { margin: 0; font-size: var(--ko-text-md); }
+.kr-groups > .btn, .kr-group > .btn { justify-self: start; }
+.kr-group-fields { display: grid; gap: var(--ko-space-3); min-width: 0; }
+@media (min-width: 640px) { .kr-group-fields { grid-template-columns: 2fr 1fr; } }
+
+.kr-choice, .kr-band, .kr-sample, .kr-group {
   display: grid; gap: var(--ko-space-3); min-width: 0; margin: 0; padding: var(--ko-space-3) 0 0;
   border: 0; border-top: 1px solid var(--ko-border);
 }

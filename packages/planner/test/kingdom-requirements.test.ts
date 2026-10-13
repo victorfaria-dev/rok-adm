@@ -3,8 +3,9 @@ import { join } from "node:path";
 import { describe, expect, it } from "vitest";
 import {
   DEFAULT_POWER_BASIS, EXCLUDED_DEADS_DEFAULT_LABEL, EXCLUDED_DEADS_FACT_ID, EXCLUDED_DEADS_LABEL_MAX, REQ_MAX_BANDS, bandFor, cardSharePayload,
-  countedStats, defaultExcludedDeads, defaultRequirementsCard, evaluatePlayer, excludedDeadsIssue, excludedDeadsText, normaliseBands,
-  parseRequirementsCard, rankSamples, stageLabel, targetFor, validateBands, type PowerBand, type RequirementsCard,
+  REQ_GROUP_MAX_PERCENT, REQ_GROUP_NAME_MAX, REQ_MAX_GROUPS,
+  countedStats, defaultExcludedDeads, defaultRequirementsCard, evaluatePlayer, excludedDeadsIssue, excludedDeadsText, groupFor, groupText,
+  normaliseBands, normaliseGroups, parseRequirementsCard, rankSamples, stageLabel, targetFor, validateBands, validateGroups, type PowerBand, type RequirementsCard,
 } from "../src/kingdom-requirements";
 import { decodeShare, encodeShare } from "../src/kingdom-codec";
 
@@ -60,11 +61,11 @@ describe("bands", () => {
 
 describe("targetFor", () => {
   it("percent of power (B08-0002 example: 250% for a 10.5M player)", () => {
-    expect(targetFor(card(), 10_500_000)).toEqual({ target: 26_250_000, band: BANDS[0] });
+    expect(targetFor(card(), 10_500_000)).toEqual({ target: 26_250_000, baseTarget: 26_250_000, band: BANDS[0] });
     expect(targetFor(card(), 60_000_000)!.target).toBe(240_000_000);
   });
   it("fixed target ignores power; gaps give null; zero power gives 0", () => {
-    expect(targetFor(card({ requirement: { mode: "fixed", target: 5_000_000 } }), 1)).toEqual({ target: 5_000_000 });
+    expect(targetFor(card({ requirement: { mode: "fixed", target: 5_000_000 } }), 1)).toEqual({ target: 5_000_000, baseTarget: 5_000_000 });
     expect(targetFor(card({ requirement: { mode: "percent", bands: [{ minPower: 10, maxPower: null, percent: 100 }] } }), 5)).toBeNull();
     expect(targetFor(card(), 0)!.target).toBe(0);
     expect(targetFor(card(), Number.NaN)!.target).toBe(0);
@@ -171,6 +172,68 @@ describe("rankSamples", () => {
     expect(rankSamples("t4 * 10 + deads * 50", samples).map((r) => r.rank)).toEqual([3, 1, 1]);
     expect(rankSamples("t4 * 10 + deads * 10", samples).map((r) => r.rank)).toEqual([1, 2, 2]);
     expect(rankSamples("t4 +", samples).every((r) => r.rank === null && r.dkp === null)).toBe(true);
+  });
+});
+
+describe("requirement groups (B08-0002: adjusted by account age, seed or player group)", () => {
+  // Every value below is a test value typed as if by a council; none is a sourced game number.
+  const G = [{ id: "young", name: "Accounts under 6 months", percent: 80 }, { id: "seed", name: "Seed group", percent: 150 }];
+
+  it("default and old cards have no groups", () => {
+    expect(defaultRequirementsCard().groups).toEqual([]);
+    expect(parseRequirementsCard({ formula: "deads" })!.groups).toEqual([]);
+    expect(parseRequirementsCard({ groups: "x" })!.groups).toEqual([]);
+  });
+
+  it("validateGroups: names required and distinct, percent in range", () => {
+    expect(validateGroups(G)).toEqual([]);
+    expect(validateGroups([{ name: " ", percent: 80 }])).toEqual([{ index: 0, field: "name", message: "Group 1: enter a name." }]);
+    expect(validateGroups([{ name: "A", percent: 80 }, { name: " a ", percent: 90 }])).toEqual([{ index: 1, field: "name", message: "Group 2 has the same name as group 1." }]);
+    for (const percent of [0, -5, REQ_GROUP_MAX_PERCENT + 1, Number.NaN]) {
+      expect(validateGroups([{ name: "A", percent }])).toEqual([{ index: 0, field: "pct", message: "Group 1: the percent must be more than 0 and at most 1,000." }]);
+    }
+  });
+
+  it("normaliseGroups drops bad ones, de-duplicates ids and names, caps the count", () => {
+    expect(normaliseGroups([
+      { id: "a", name: "  Old   accounts ", percent: 90 },
+      { id: "a", name: "Seed", percent: 120 },
+      { id: "bad id!", name: "Third", percent: 50 },
+      { name: "old accounts", percent: 70 },
+      { name: "", percent: 70 },
+      { name: "Zero", percent: 0 },
+      { name: "Str", percent: "80" },
+      null,
+    ])).toEqual([
+      { id: "a", name: "Old accounts", percent: 90 },
+      { id: "g2", name: "Seed", percent: 120 },
+      { id: "g3", name: "Third", percent: 50 },
+    ]);
+    expect(normaliseGroups(Array.from({ length: 12 }, (_, i) => ({ name: `G${i}`, percent: 100 })))).toHaveLength(REQ_MAX_GROUPS);
+    expect(normaliseGroups([{ name: "x".repeat(100), percent: 1 }])[0]!.name).toHaveLength(REQ_GROUP_NAME_MAX);
+  });
+
+  it("targetFor scales the band target by the group percent, rounding up", () => {
+    const c = card({ groups: G });
+    expect(targetFor(c, 10_500_000, "young")).toEqual({ target: 21_000_000, baseTarget: 26_250_000, band: BANDS[0], group: G[0] });
+    expect(targetFor(c, 10_500_000, "seed")!.target).toBe(39_375_000);
+    expect(targetFor(c, 10_500_000, "nope")).toEqual({ target: 26_250_000, baseTarget: 26_250_000, band: BANDS[0] });
+    expect(targetFor(c, 10_500_000, null)!.group).toBeUndefined();
+    expect(targetFor(card({ groups: [{ id: "x", name: "X", percent: 33 }], requirement: { mode: "fixed", target: 10 } }), 0, "x")!.target).toBe(4); // 3.3 → 4
+    expect(groupFor(c, "seed")).toEqual(G[1]);
+    expect(groupFor(c, undefined)).toBeUndefined();
+  });
+
+  it("evaluatePlayer uses the group target", () => {
+    const r = evaluatePlayer(card({ groups: G }), { power: 10_000_000, deads: 400_000 }, { groupId: "young" });
+    expect(r).toMatchObject({ ok: true, dkp: 20_000_000, target: 20_000_000, met: true, group: G[0] });
+  });
+
+  it("plain text and share round trip", async () => {
+    expect(groupText(G[0]!)).toBe("Accounts under 6 months: 80% of the normal target");
+    const c = card({ groups: G });
+    const back = await decodeShare(await encodeShare("requirements", cardSharePayload(c)), "requirements", parseRequirementsCard);
+    expect(back.ok && back.data.groups).toEqual(G);
   });
 });
 
