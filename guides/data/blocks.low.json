@@ -1,0 +1,481 @@
+[
+  {
+    "id": "low-overview-pass-only",
+    "title": "Low spender, \"pass-only\": what this guide covers",
+    "phase": "overview",
+    "section": "overview",
+    "order": 5,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Who this is for.** The Low profile spans $5–100 per month (project convention, `research/perfis.md`). That range is wide, so this guide covers only the **\"pass-only\"** end: a player who buys the cheapest recurring or one-time gem packs and nothing else. The **\"low full\"** end (roughly $25–100/month: event-timed top-ups, Call of the Ancients tiers, bundles) is **out of scope** here and will get its own delta.\n\n**What the cards rank first** (both from guide and seller sites):\n1. **Growth Fund**: about **$15 once**, about **81,000 gems** paid out as City Hall milestones are reached; full value needs **CH24 (or 25)**. Cited as the best-value purchase [A12-0001].\n2. **30-day gem supply (Supply Depot)**: about **$10 per 30 days** for about **19,500 gems** (650/day). Ranked second after the Growth Fund [A12-0002].\n\nThe cards carry their own derived ratios (about 5,400 gems per dollar for the Growth Fund, about 1,950 for the supply) [A12-0001, A12-0002]; they explain the ranking, but they come from seller-site prices. Prices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).\n\n**What does not change.** The plan is the F2P plan, faster: gems still convert 1:1 to VIP points [A05-0004], the targets are still **VIP 6 then VIP 10** [A05-0008], and gems are still best spent during **More Than Gems** [A11-0502]. The advice for low spenders is to buy **few, high-value items**, time purchases around the **Recharge event**, save gems for gem events and **not chase every new bundle** [A12-0005].\n\nEvery F2P block still applies unless a Low block below replaces it.",
+    "why_md": "A $5 pass and a $100 month buy very different accounts, so one \"Low\" guide would either undersell the pass-only player or push the low-full player's purchases on them. The two packs above are the only purchases with firm (verified, medium-confidence) cards; everything else in the store is either uncertain or out of scope, so this guide stops there.",
+    "cards": [
+      "A05-0004",
+      "A05-0008",
+      "A11-0502",
+      "A12-0001",
+      "A12-0002",
+      "A12-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "All A12 sources are a guide site plus seller/top-up sites (conflict of interest); no official price list was found. The $25 boundary between pass-only and low full is a working proposal, not a game value.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ov-budget-reality-check",
+    "title": "Budget Reality Check: what a pass-only Low spender can expect by KvK1",
+    "phase": "overview",
+    "section": "overview",
+    "order": 10,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Same as F2P**\n- The first KvK starts at about **kingdom day 100**; pre-KvK (Eve of the Crusade) around day 85–95 [B01-0500].\n- **T4 is the working tier for KvK1**; T5 needs CH25 and heavy investment [A08-0500]. T4 unlocks at **CH21** [A01-0001].\n- An **alliance with spenders** is still your best free source of sculptures, keys and VIP points [A06-0516].\n- Compete on MGE **milestones**, not ranking [A11-0500]; fill strong rallies rather than lead [A08-0503].\n\n**What the passes change**\n- **Gem income.** F2P has **100 gems/day** guaranteed [A04-0001]. The 30-day supply adds **650/day** (19,500 per 30 days) [A12-0002], about 6.5× the F2P amount (derived). The Growth Fund adds up to **81,000** more, but only as City Hall milestones are reached, with full value at **CH24** [A12-0001].\n- **VIP pace.** The VIP 6 → VIP 10 path is the same; it arrives earlier [A12-0005, A05-0008]. How much earlier is not known: see *VIP 10 for a pass-only Low spender*.\n- **More Than Gems.** A saved 30-day supply is enough for the reported 7,000 gems/day tier on both days (see Events) [A11-0502].\n\n**What the passes do not change:** you still cannot match whales on power rankings, and your troops and City Hall still move at F2P speed apart from what VIP adds. Prices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).",
+    "why_md": "A pass-only player pays for a faster VIP path, not for a different game. Framing the purchase this way keeps expectations honest: it buys the 2nd builder sooner and moves the daily legendary sculpture (VIP 10) closer, but it does not buy a CH25 account or a top-ranking march for KvK1.",
+    "cards": [
+      "A01-0001",
+      "A04-0001",
+      "A05-0008",
+      "A06-0516",
+      "A08-0500",
+      "A08-0503",
+      "A11-0500",
+      "A11-0502",
+      "A12-0001",
+      "A12-0002",
+      "A12-0005",
+      "B01-0500"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "The 6.5× ratio is derived (650 ÷ 100). How much of the Growth Fund is paid out by KvK1 depends on a milestone table that was not found (L-A12-02). Prices come from seller sites.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02",
+      "L-A04-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "low-growth-fund",
+    "title": "Buy the Growth Fund once, as early as possible",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 62,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "unanimous",
+    "split_views": null,
+    "body_md": "- **Recommended (pass-only Low): the Growth Fund is the first purchase** [A12-0001]. Consensus across the guides found: **unanimous** (3 sources, all guide or seller sites).\n- It is a **one-time** purchase of about **$15** for about **81,000 gems**, paid out **progressively as your City Hall reaches milestone levels**; to claim everything you need **CH24 (or 25)** [A12-0001].\n- **Buy it early.** The gems accrue with City Hall progress, so buying on day 1 loses nothing and lets you claim each milestone as you reach it [A12-0001].\n- **Where the gems go:** the F2P plan. VIP until **VIP 6** (11,500 cumulative VIP points), then save for More Than Gems and VIP 10 [A05-0008, A05-0001, A11-0502]. Never on instant finishes or AP [A04-0009, A04-0008].\n- The Growth Fund gems come **on top of** the fixed City Hall upgrade rewards (100 gems at CH16, 200 at CH21) [A01-0002].\n\n**Check in the store before buying:** the price in your currency, the milestone table and whether a VIP level is required (an unverified 2019 report said VIP 5; it may be obsolete). Prices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).",
+    "why_md": "The Growth Fund pays the most gems of anything the cards price, it is a single purchase, and it rewards progress you were going to make anyway. Because payouts are tied to City Hall, the full 81,000 lands late (CH24), so the early payouts matter most for VIP 6.",
+    "cards": [
+      "A01-0002",
+      "A04-0008",
+      "A04-0009",
+      "A05-0001",
+      "A05-0008",
+      "A11-0502",
+      "A12-0001"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "The VIP 5 requirement is a single 2019 snippet in A12-0001's notes (unverified). The milestone table (which CH pays how much) was not found, so the share paid out before KvK1 is unknown.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "low-supply-depot",
+    "title": "Then the 30-day gem supply, renewed only while you use it",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 64,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Second purchase: the 30-day gem supply** (Supply Depot), about **$10 per 30 days** for about **19,500 gems**, i.e. **650 gems/day** [A12-0002]. Guides rank it **second, after the Growth Fund** [A12-0002].\n- **The advice that comes with it: save those gems for gem events** (the sources name More Than Gems) [A12-0002, A12-0005]. Below VIP 6 the exception is the F2P one: VIP first [A11-0502].\n- **When to renew:** time renewals so that the period covers the **Recharge event** [A12-0005]. What that event pays and how often it runs is not documented yet (see *Recharge event*).\n- **A $5 \"Gem Supply 50% off\"** (~21,700 gems) is listed by one seller site [A12-0003]. It may be a discounted first-purchase variant of this same supply; check in the store whether it is the same pack before counting it as an extra.\n\nPrices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).",
+    "why_md": "It is the only recurring pack with a firm card, and it multiplies the guaranteed daily gem income several times (100 F2P vs 650). Because it is recurring, it is also the easiest pack to keep buying out of habit: renew it on purpose, around the Recharge event, not automatically.",
+    "cards": [
+      "A11-0502",
+      "A12-0002",
+      "A12-0003",
+      "A12-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A12-0003 is baixa (seller site; may conflict with A12-0002's ~19,500 per $10). Whether the supply pays daily into the account or must be claimed (and whether a missed day is lost) is unclear; see the daily block.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-03",
+      "PROPOSED-RECHARGE-EVENT"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "low-daily-supply-claim",
+    "title": "Daily: claim the gem supply with your VIP points",
+    "phase": "daily",
+    "section": "daily",
+    "order": 285,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "single-source",
+    "split_views": null,
+    "body_md": "Add one step to the F2P 15-minute routine, next to the VIP claim: **claim the 30-day gem supply** (650 gems/day while it runs) [A12-0002].\n\n- The card notes that the supply **requires a daily login to claim** [A12-0002]. Whether a missed day is lost or can be claimed later is **unknown** (gap PROPOSED-SUPPLY-DEPOT-CLAIM).\n- Until that is measured, treat it like the VIP streak: **claim every day** [A05-0003].\n\n**Time cost:** Pending in-game measurement (T0), gap L-A10-01 (the card's notes say seconds).",
+    "why_md": "If unclaimed days are lost, a missed login is gems you already paid for. Bundling the claim with the VIP claim means it costs no extra trip into the game.",
+    "cards": [
+      "A05-0003",
+      "A12-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "The daily-claim requirement is in A12-0002's notes, not in its main claim; the missed-day rule is unmeasured.",
+    "gaps": [
+      "L-A10-01",
+      "PROPOSED-SUPPLY-DEPOT-CLAIM"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "d41-vip10-reality",
+    "title": "VIP 10 for a pass-only Low spender: closer, but no date yet",
+    "phase": "day41-90",
+    "section": "plan",
+    "order": 240,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- VIP 10 needs **150,000 cumulative** VIP points [A05-0001]; gems convert 1:1 [A05-0004]. It adds **1 legendary sculpture per day** [A05-0006].\n- For a pure F2P the derived estimate is about **day 503** (an upper bound) [A05-0007]. The passes change the inputs:\n  - 30-day supply: **19,500 gems per period** [A12-0002], so three periods before KvK1 is **58,500** (derived).\n  - Growth Fund: up to **81,000**, but **full value needs CH24** [A12-0001]. Many players enter KvK1 at CH21–22 [B01-0700], so part of it may still be unpaid on day ~100 [B01-0500].\n  - F2P income on top: 100 gems/day [A04-0001] and up to 200 VIP points/day from the streak [A05-0003].\n- **What this means:** VIP 10 moves from \"far after KvK1\" to \"around KvK1 or later\", but **no card gives a date**. The swing factor is how much of the Growth Fund pays out by your City Hall level at KvK1 (L-A12-02).\n- After VIP 6, keep buying VIP **during More Than Gems** [A11-0502].",
+    "why_md": "VIP 10's daily legendary sculpture is the main long-term payoff of the passes, so it is tempting to plan the KvK1 commander around it. Until the Growth Fund milestone table is known, plan KvK1 as a F2P would (banked gold sculptures, Sun Tzu, Aethelflaed) and treat VIP 10 before KvK1 as a bonus.",
+    "cards": [
+      "A04-0001",
+      "A05-0001",
+      "A05-0003",
+      "A05-0004",
+      "A05-0006",
+      "A05-0007",
+      "A11-0502",
+      "A12-0001",
+      "A12-0002",
+      "B01-0500",
+      "B01-0700"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A05-0007 is derived (baixa) and assumes cumulative thresholds (L-A05-01). B01-0700 is baixa (player comments). The 58,500 total is simple arithmetic on A12-0002. The F2P block's earlier note that VIP 10 becomes a pre-KvK1 target is not stated by any A12 card.",
+    "gaps": [
+      "L-A12-02",
+      "L-A05-01",
+      "L-A04-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "ev-more-than-gems",
+    "title": "More Than Gems: where the supply gems go",
+    "phase": "event",
+    "section": "events",
+    "order": 340,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recommended (from VIP 6 on): save gems and spend them on VIP points during More Than Gems** [A11-0502, A11-0504]. Consensus: **majority**. This is also what the guides advise for the 30-day supply gems [A12-0002].\n- Reported structure: a **2-day** event with daily gem-spend milestones; **7,000 gems/day → 5 universal legendary sculptures**, **25,000/day → 13**; about **monthly**, only in kingdoms older than ~21 days [A11-0502].\n- **What the pass changes:** one 30-day supply is **19,500 gems** [A12-0002], more than the **14,000** needed for the 7,000 tier on **both** days (derived: 2 × 7,000). A F2P on guaranteed income has about 3,000 per 30 days [A04-0006]. The top tier (25,000/day, 50,000 over the event) is still out of reach on the supply alone.\n- **Wheel of Fortune:** older guides also say to save for it [A12-0002], but spins now need **Spin Tickets** bought with gems or bundles (Season 2+, and reportedly Season 1 since 1.1.12) [C04-0022]. Don't count on it as a second gem sink.",
+    "why_md": "The same gems buy the same VIP points either way; during MTG they also pay universal legendary sculptures. For a F2P that tier is a stretch, for a pass-only player it is a monthly routine, which makes MTG the single biggest return on the supply.",
+    "cards": [
+      "A04-0006",
+      "A11-0502",
+      "A11-0504",
+      "A12-0002",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0022"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "MTG tier amounts are T3/T4 reports to confirm in game (L-A11-02); cadence resolved from T3 + T4. A04-0006 is baixa (derived F2P estimate). The 14,000 figure is arithmetic on A11-0502. C04-0022's Season 1 change is T3 (patch-state card).",
+    "gaps": [
+      "L-A11-01",
+      "L-A11-02",
+      "L-A11-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "low-recharge-event",
+    "title": "Recharge event: time your renewals around it (contents unknown)",
+    "phase": "event",
+    "section": "events",
+    "order": 345,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- The low-spender advice is to **time purchases around the Recharge event**; one guide says timing the 30-day gem supply (and the 7-day material supply) to give you time for the recharge event should be your top priority [A12-0005].\n- **What is not known:** what the Recharge event pays, how often it runs and whether the passes count toward it. No card states these (gap PROPOSED-RECHARGE-EVENT).\n- **Until measured:** when the 30-day supply runs out, check the event calendar before renewing; if a Recharge event is announced, renew during it. Prices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).",
+    "why_md": "The low-spender sources tie the low-spender advice to this event, so it probably adds value to a purchase you would make anyway. Without its reward table there is nothing more specific to say, and inventing one would be worse.",
+    "cards": [
+      "A12-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "A12-0005's sources monetise purchases (bias risk). The 7-day material supply has no firm card of its own and is not part of the ranked pass-only purchases.",
+    "gaps": [
+      "PROPOSED-RECHARGE-EVENT",
+      "L-A11-01",
+      "L-A12-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "low-what-not-to-buy",
+    "title": "What not to buy (FOMO list)",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 405,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Every new bundle.** Low spenders should avoid chasing every new bundle; selective spending usually builds a stronger account than frequent unfocused purchases [A12-0005].\n2. **Big bundles.** Packs like King's Coronation (a **$385** tier) are aimed at larger spenders [A12-0005]. They are outside pass-only.\n3. **Spending bought gems like a whale.** Bought gems follow the F2P rules: no instant finishes, no AP bought with gems [A04-0009, A04-0008].\n4. **Gem-spend events beyond MTG.** Repeated gem-spending events and power-ranking events are listed as not worth it for F2P [A11-0511]; the Wheel of Fortune now needs Spin Tickets [C04-0022], and older advice was to spin only for a planned target, ideally after VIP 10 [A11-0503].\n5. **\"$5 deals\" taken on trust.** Seller sites list several $5 offers as good value (7-Day Material Supply, Vanquisher bundle, Gem Supply 50% off, Lucerne Scroll) [A12-0003]. None has a firm card; check the contents in the store and compare them with the two ranked packs before buying.\n\nPrices are seller-site figures in USD; **confirm in your store** (region and date vary, gap L-A12-01).",
+    "why_md": "The store is designed around limited-time offers, and for a pass-only budget one impulse bundle can cost more than several months of the supply. The only firm low-spender guidance is \"few, high-value items\"; this list names what that excludes.",
+    "cards": [
+      "A04-0008",
+      "A04-0009",
+      "A11-0503",
+      "A11-0511",
+      "A12-0003",
+      "A12-0005",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0022"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "A11-0511 is baixa. A11-0503 is parcialmente_obsoleto (its gem math predates Spin Tickets). A12-0003 is baixa and comes from seller sites. A12-0005's sources sell top-ups (bias risk); no Reddit low-spender consensus was collected.",
+    "gaps": [
+      "L-A12-01",
+      "L-A11-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "low-open-questions",
+    "title": "Open questions for the pass-only Low guide",
+    "phase": "anytime",
+    "section": "open",
+    "order": 435,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "These gaps weaken the Low blocks above; most close with **store screenshots, no purchase needed** (T0).\n\n| Gap | What it would change | Blocks affected |\n|---|---|---|\n| L-A12-01 in-game prices and contents by region (USD, BRL) | Every price in this guide | all low-* blocks |\n| L-A12-02 Growth Fund milestone table; official VIP per $ | VIP 10 date; Growth Fund value by KvK1 | d41-vip10-reality, low-growth-fund |\n| L-A12-03 first-purchase gem multiplier | Whether the first pack is worth more | low-supply-depot |\n| PROPOSED-RECHARGE-EVENT rewards and cadence | When to renew the supply | low-recharge-event |\n| PROPOSED-SUPPLY-DEPOT-CLAIM missed-day rule | Whether a missed login loses gems | low-daily-supply-claim |\n| L-A05-01 cumulative VIP thresholds | VIP 6 / VIP 10 arithmetic | d41-vip10-reality |\n| L-A11-02 More Than Gems reward table | The 7,000/day tier target | ev-more-than-gems |\n\nPending: a VIP-level requirement for the Growth Fund (an unverified 2019 report) [A12-0001].",
+    "why_md": "Every Low recommendation rests on seller-site prices and T3 reports. Listing what is unknown lets a reader check the store before trusting a number, and tells the research side what to measure.",
+    "cards": [
+      "A12-0001"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "The A12 sources are guide and seller sites (conflict of interest).",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02",
+      "L-A12-03",
+      "PROPOSED-RECHARGE-EVENT",
+      "PROPOSED-SUPPLY-DEPOT-CLAIM",
+      "L-A05-01",
+      "L-A11-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  }
+]

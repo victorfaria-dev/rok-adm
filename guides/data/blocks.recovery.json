@@ -1,0 +1,537 @@
+[
+  {
+    "id": "rz-dont-quit-today",
+    "title": "Just zeroed? Don't quit today",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 100,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Being zeroed feels like losing everything. By what the game's rules actually say, it is usually not:\n- **Your gems and resource items were not taken.** Items cannot be plundered and gems cannot be plundered in any form [A03-0007]. Raw resources up to your Storehouse protection were also protected [A03-0006].\n- **Many of your troops may be wounded, not dead.** Wounded troops go to the hospital up to its capacity; only the overflow dies [A08-0502]. Check the hospital before you count your losses.\n- **The one thing quitting today costs for sure is your streak.** The daily VIP chest gives 40 points on the first day, +20 per consecutive day up to 200; skipping one day resets it to 40 [A05-0003]. The 100-gem Daily Objectives chest is lost for any day you skip [A04-0001].\n\n**Today, do only this:** log in, claim the VIP chest, open the hospital and start healing (next block), and ask your alliance what happened. Decide about the account tomorrow, not tonight.",
+    "why_md": "Being zeroed is one of the most reported pains and is often the moment players quit (pain D-0003). The decision to quit is usually made in the first hour, with the worst picture of the damage. The cards show that the most expensive assets for a F2P (gems, items, streaks) survive, and that wounded troops can still be healed.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A04-0001",
+      "A05-0003",
+      "A08-0502"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "The exact severe-wound/death rules have no official text (L-A08-03). What else a zeroing can or cannot touch (buildings, commanders, research, VIP level) is not covered by any card (PROPOSED-ZEROING-LOSS-SCOPE); see the block *What a zeroing can and cannot take*.",
+    "gaps": [
+      "L-A08-03",
+      "PROPOSED-ZEROING-LOSS-SCOPE"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-first-hour",
+    "title": "Zeroed: the first hour",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 110,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Hospital first.** Wounded troops beyond hospital capacity die [A08-0502], so the troops still in the hospital are the ones you can save. Start healing now.\n2. **Ask for alliance help on every heal.** Allies can help healing, construction and research (not troop training); each help fills 1% of the bar, and the number of helps per job grows with your Alliance Center level (5 at Lv.1, 18 at Lv.14, 30 at Lv.25) [A10-0006]. Short heal batches let you collect help on each one.\n3. **Heal before you retrain.** Retraining costs more than healing in every source we have; the size of the difference is not measured [A08-0502].\n4. **Stop the second hit.** If raw resources are still above Storehouse protection, spend them or leave the rest as unopened items; items cannot be plundered [A03-0006, A03-0007]. Do not open resource boxes \"to rebuild\" until a specific upgrade or heal needs them.\n5. **Shield:** check the in-game shop for a peace shield. Durations and costs are not researched yet (PROPOSED-SHIELDS); do not trust numbers from old guides.\n6. **Find out why** before you react: read your mail and ask an officer. The next block (*Why were you zeroed?*) decides your path.",
+    "why_md": "The first hour decides how much of the damage becomes permanent: troops still in the hospital are recoverable, raw resources left exposed can be taken again, and a hasty counter-attack can turn an enforcement action into a hunt. Each step here costs no gems.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A08-0502",
+      "A10-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Heal vs retrain cost is not quantified (L-A08-01); severe-wound/death rules lack official text (L-A08-03). Shield rules are unknown (PROPOSED-SHIELDS). Whether batching heals actually yields more total help time depends on whether a help is 1% of the total or of the remaining bar, which A10-0006 leaves open.",
+    "gaps": [
+      "L-A08-01",
+      "L-A08-03",
+      "PROPOSED-SHIELDS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-why-were-you-zeroed",
+    "title": "Why were you zeroed? Pick your path",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 120,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Your path depends on the cause. Ask your alliance officers; the attacker's alliance tag and your recent actions usually tell you which case you are in.\n\n| Cause | Signs | Path |\n|---|---|---|\n| **Opportunistic raid** | Large raw stockpile, low CH, a kill event running | Fix exposure (Storehouse, items, hospital) and stay. Big stockpiles at low CH attract raids, especially during kill events [A13-0005]. |\n| **Kingdom enforcement** | You were kicked, told to migrate by a deadline, or broke a rule (orders, MGE agreements, DKP) | Kingdoms enforce rules with a kick, then a migrate-by deadline (e.g. 2 weeks), then zeroing; leading alliances may keep hunting until you leave [B03-0005]. Negotiate with leadership or plan a move (see *Migrate or stay*). Don't rebuild an army only to lose it again. |\n| **Unannounced migrant** | You moved in without asking the king | Many kingdoms expect approval first and treat unannounced migrants as spies or farms [B03-0006]. Contact the king or top alliance now. |\n| **Post-KvK migration list** | You are high power with low DKP after KvK | Some kingdoms publish lists of who must leave and enforce them with a deadline and zeroing [B06-0005]. |\n\nIn the Season of Conquest home kingdom, cities inside **other** alliances' territory cannot be attacked (since 1.1.03) [C04-0014], so in SoC, if you were hit at home, move your city inside your alliance territory.",
+    "why_md": "\"Rebuild and keep going\" is good advice after a random raid but wasted effort when a kingdom has decided you must leave. Knowing which case you are in avoids rebuilding troops that will be zeroed again.",
+    "cards": [
+      "A13-0005",
+      "B03-0005",
+      "B03-0006",
+      "B06-0005",
+      "C04-0014"
+    ],
+    "patch_cards": [
+      "C04-0014"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005 and B06-0005 are organizado (kingdom rules sites and Reddit; two kingdom sites share a template). B03-0006 is organizado/baixa (one Reddit voice plus an account-marketplace guide). C04-0014 is a patch-state card (official 1.1.03 notes). The case table is an editorial synthesis of these cards, not a game rule.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-what-zeroing-takes",
+    "title": "What a zeroing can and cannot take (by the cards)",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 130,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Cannot be taken** (stated by cards):\n- Resources held as **items**; they also have no storage limit [A03-0007].\n- **Gems**, in any form [A03-0007].\n- **Raw resources up to Storehouse protection** [A03-0006].\n\n**Can be lost:**\n- **Raw resources above Storehouse protection** (plunder) [A03-0006].\n- **Troops:** wounded beyond hospital capacity die, and some actions such as attacking cities always kill the severely wounded [A08-0502].\n\n**Not covered by any card yet:** whether a zeroing can affect buildings, commanders, research, equipment or VIP level. Many players assume none of these can be taken, but this hub has no sourced statement (PROPOSED-ZEROING-LOSS-SCOPE). Check your city screens after the attack and compare.\n\n**KvK only:** since 1.0.89 the Hall of Heroes also returns part of the resources you spent healing in the Lost Kingdom when it ends [C04-0028]. The percentage is not in the notes.",
+    "why_md": "A clear list of what survived is the best argument against quitting, but only if it is true. We list only what cards state and mark the rest as unknown rather than repeating forum assumptions.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A08-0502",
+      "C04-0028"
+    ],
+    "patch_cards": [
+      "C04-0028"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0028 is a patch-state card (official 1.0.89 notes); the refund percentage and any unit-return rate are not stated (PROPOSED-HALL-OF-HEROES-RETURN). Severe-wound rules lack official text (L-A08-03). Storehouse protection values below L25 differ between sources (L-A03-05).",
+    "gaps": [
+      "L-A03-05",
+      "L-A08-03",
+      "PROPOSED-ZEROING-LOSS-SCOPE",
+      "PROPOSED-HALL-OF-HEROES-RETURN"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-hospital-mechanics",
+    "title": "Hospitals and troop loss: the numbers we have",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 140,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Capacity per hospital** (unbuffed): 7,500 at Lv.1, 29,000 at Lv.15, 75,000 at Lv.25 [A01-0008]. Older tables showing 3,000 at Lv.1 are outdated (same card).\n- **Number of hospitals:** the 2nd unlocks at CH4, the 3rd at CH9, the 4th at CH15 [A01-0001].\n- **Overflow dies.** Wounded beyond total capacity are gone for good; attacking cities or some objectives always kills the severely wounded [A08-0502].\n- **T5 heals cost much more** resources and time than T4; without a steady economy, fight with T4 and keep a T4 reserve [A08-0505].\n- **Healing can be helped by the alliance; training cannot** [A10-0006].\n\n**After a zeroing:** upgrade or keep up the hospitals before you retrain to your old troop count. A rebuilt army bigger than your hospitals repeats the same loss next time.\n\nNot known yet: heal vs retrain cost (L-A08-01), a hospital-capacity target for KvK1 (L-A08-02), the exact severe-wound rules (L-A08-03).",
+    "why_md": "Hospital capacity is the one defensive number a F2P fully controls. It decides whether the next hit costs healing (cheaper) or retraining (full cost).",
+    "cards": [
+      "A01-0001",
+      "A01-0008",
+      "A08-0502",
+      "A08-0505",
+      "A10-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Hospital values other than Lv.15 rest on one wiki source (A01-0008 notes). A08-0502 and A08-0505 rely on third-party guides only (no official text).",
+    "gaps": [
+      "L-A08-01",
+      "L-A08-02",
+      "L-A08-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-resource-protection",
+    "title": "Protecting what you rebuild: Storehouse and items",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 150,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Storehouse protection** per resource (food/wood/stone/gold): L1 300K/300K/225K/150K; L25 2.5M each [A03-0006]. Levels L6–L24 differ by 10–35% between sources, so read your own Storehouse screen (L-A03-05).\n- **Items are the safe form.** Items cannot be plundered and have no limit; you can open them any time, but raw resources only become items again by **buying** resource items at the Mysterious Merchant [A03-0007]. So open boxes only for a specific upgrade or heal.\n- **Merchant:** at the Courier Station (CH6), appears at 00:00 UTC, and some items are priced in food or wood [A03-0014]. Buy with resources; buy with gems only at large discounts (guides say ~60% off or more) [A04-0011].\n- **Protected resources cannot be shipped.** Only the amount above Storehouse protection can be sent by Trading Post (since 1.0.44) [A03-0030]. A farm feeding a zeroed main can only send its surplus.\n- **Farms are targets too:** big raw stockpiles on a low-CH farm attract raids, especially in kill events; transfer the surplus to the main [A13-0005].",
+    "why_md": "After a zeroing, every resource you gather is rebuild material. Keeping it as items or under protection is the difference between rebuilding once and rebuilding twice.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A03-0014",
+      "A03-0030",
+      "A04-0011",
+      "A13-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "high",
+    "uncertain_notes": "All cards are firm. Storehouse values for L6–L24 conflict between sources (L-A03-05). A03-0014 rests on a 2020 wiki revision.",
+    "gaps": [
+      "L-A03-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-first-3-days",
+    "title": "Zeroed: days 1–3, rebuild one march safely",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 160,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Keep the streaks:** daily VIP chest [A05-0003] and the 100-gem Daily Objectives chest [A04-0001].\n2. **Heal in order, then retrain only what one march needs.** Finish one complete march before anything else; partly built marches give little value [A06-0500]. For KvK1 the working tier is T4 [A08-0500]; avoid rebuilding T5 first, its heals cost much more [A08-0505].\n3. **Gather where you cannot be hit.** Armies gathering at an alliance resource center cannot be attacked (CH8+, one army per governor per center) [A03-0012]. Normal nodes inside alliance territory are 25% faster [A03-0009, A10-0007].\n4. **Speed up gathering cheaply:** Enhanced Gathering items (+50%, 8h or 24h) can be bought with resources at the Mysterious Merchant [A03-0013].\n5. **Don't lead fights.** Stay behind the alliance, retreat early, fill strong rallies and reinforce [A08-0503].\n6. **Use auto-peacekeeping, never a script,** for barbarians [A09-0008].",
+    "why_md": "In the first days the account is weakest and most visible. The plan spends nothing irreplaceable, keeps income flowing from sources that cannot be attacked, and rebuilds the smallest useful army first.",
+    "cards": [
+      "A03-0009",
+      "A03-0012",
+      "A03-0013",
+      "A04-0001",
+      "A05-0003",
+      "A06-0500",
+      "A08-0500",
+      "A08-0503",
+      "A08-0505",
+      "A09-0008",
+      "A10-0007"
+    ],
+    "patch_cards": [],
+    "confidence": "high",
+    "uncertain_notes": "All cards are firm, but A06-0500, A08-0500, A08-0503 and A08-0505 rest on third-party guides only. How fast a F2P can rebuild a march is not measured (L-A03-02).",
+    "gaps": [
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-first-2-weeks",
+    "title": "Zeroed: weeks 1–2, rebuild the economy before the army",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 170,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Be in an active, spending alliance.** Alliance gift chests are a large share of a F2P's sculptures, keys and VIP points [A06-0516]. If your alliance took part in zeroing you, or kicked you, this is the time to find another one in the kingdom.\n2. **Hoard for scored events, as items.** Most guides advise saving speedups, resources (as items) and AP for scored events and KvK healing [A11-0501].\n3. **Size hospitals before troop count** (see *Hospitals and troop loss*) [A08-0502].\n4. **If you have a farm,** ship only its surplus above Storehouse protection [A03-0030]; each trip uses a march queue and travel time, so keep the farm close [A03-0026].\n5. **Spend gems where guides agree:** VIP first [A11-0504]; once past VIP 6, More Than Gems is the best gem-spending window for F2P [A11-0502].\n6. **Re-check the cause.** If leadership still wants you gone after two weeks, read *Migrate or stay*.",
+    "why_md": "A zeroed F2P cannot buy troops back, so the army comes back only as fast as income allows. Two weeks of income from safe sources and alliance gifts, protected as items, is what the next army is built from.",
+    "cards": [
+      "A03-0026",
+      "A03-0030",
+      "A06-0516",
+      "A08-0502",
+      "A11-0501",
+      "A11-0502",
+      "A11-0504"
+    ],
+    "patch_cards": [],
+    "confidence": "high",
+    "uncertain_notes": "All cards are firm. A11-0501 has a minority (2021) view to pour everything into City Hall instead. A11-0502's event cadence is disputed (same card). How long a full rebuild takes is not measured (L-A03-02).",
+    "gaps": [
+      "L-A03-02"
+    ],
+    "low_spender_note": "A Low spender can shorten the rebuild with value packs, but the order (hospital capacity, one march, safe gathering) does not change.",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-migrate-or-stay",
+    "title": "After a zeroing: migrate or stay?",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 180,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Consider moving** when the zeroing was enforcement and the kingdom still wants you out: kingdoms enforce with a migrate-by deadline and may hunt you until you leave [B03-0005].\n\n**Stay and rebuild** when it was a random raid: the game's migration rules may block you anyway.\n\n**What the game checks** (official): age limits, e.g. a character may be at most 150 days older than a first-story SoC kingdom (same-season), 80 days for cross-season into Season 2, 120 days into Season 3; new kingdoms are closed to same-season immigration until the end of Season 1 [B06-0003, C04-0008]. Cross-season immigration needs a refundable 20,000-gem deposit and at least 10M power (max 85M) [C04-0025]: a zeroing that dropped you below 10M can block that route. Jumping a fresh character to a new kingdom (Beginner's Immigration) is gone since 2025-03-26 [C04-0026].\n\n**What players report** (not verified in game): CH16+, no alliance, troops home, resources within Storehouse protection, Passport Pages scaled to power (1 page at 0–10M power), about 30 days of cooldown after a move [B06-0001]. The king sets the normal immigration power cap [B06-0002]. Kingdoms add forms and minimums [B06-0004] and expect you to ask **before** moving [B03-0006].\n\n**Practical order:** ask the target kingdom's king first, check the age rule, then the passport cost.",
+    "why_md": "Migration is the most common escape after an enforcement zeroing, but the rules changed in 2026 and many old answers are wrong. Separating the game's rules from each kingdom's rules tells you whether to negotiate or to stay.",
+    "cards": [
+      "B03-0005",
+      "B03-0006",
+      "B06-0001",
+      "B06-0002",
+      "B06-0003",
+      "B06-0004",
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005, B06-0001, B06-0002 and B06-0004 are organizado (third-party guides, one an account marketplace, plus Reddit); B03-0006 is organizado/baixa. C04-0008, C04-0025 and C04-0026 are patch-state cards; C04-0026 rests on an in-game mail plus wiki/guide. Rules may have changed in 1.1.10–1.1.12 (L-B06-03).",
+    "gaps": [
+      "L-B06-01",
+      "L-B06-02",
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-logoff-checklist",
+    "title": "30-second log-off risk checklist",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Before you put the phone down:\n- [ ] **Raw resources at or below Storehouse protection**; the rest stays as unopened items [A03-0006, A03-0007].\n- [ ] **Hospital empty or healing**, and total capacity at least the troops at home [A08-0502, A01-0008].\n- [ ] **Gatherers on safe or fast nodes:** alliance resource center (cannot be attacked) [A03-0012] or inside alliance territory [A10-0007].\n- [ ] **Kill event running?** Raids spike during kill events; be extra strict [A13-0005].\n- [ ] **Farms:** surplus above Storehouse protection shipped to the main [A13-0005, A03-0030].\n- [ ] **No open order or rule broken today** (alliance orders, MGE agreements, migration approval) [B03-0005, B03-0006].\n- [ ] **SoC home kingdom:** city inside alliance territory; cities inside other alliances' territory cannot be attacked there [C04-0014].\n- [ ] **Shield:** check in game; durations and costs are not researched (PROPOSED-SHIELDS).\n- [ ] **Barbarians on auto-peacekeeping, not a script** [A09-0008].\n\nThe time it takes is not measured; with practice it is a glance at three screens (Storehouse, Hospital, map).",
+    "why_md": "Most avoidable zeroings come from an exposed stockpile, an overflowing hospital, a target farm or a broken kingdom rule. This list extends the five-point new-kingdom checklist with gathering, farms and SoC territory, so it stays useful after the first weeks.",
+    "cards": [
+      "A01-0008",
+      "A03-0006",
+      "A03-0007",
+      "A03-0012",
+      "A03-0030",
+      "A08-0502",
+      "A09-0008",
+      "A10-0007",
+      "A13-0005",
+      "B03-0005",
+      "B03-0006",
+      "C04-0014"
+    ],
+    "patch_cards": [
+      "C04-0014"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005 is organizado; B03-0006 is organizado/baixa. C04-0014 is a patch-state card (official 1.1.03 notes), applies only in the SoC home kingdom. Shield rules: PROPOSED-SHIELDS. Storehouse values below L25: L-A03-05.",
+    "gaps": [
+      "PROPOSED-SHIELDS",
+      "L-A03-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  },
+  {
+    "id": "rz-open-pending",
+    "title": "Zeroing and recovery: what is still unknown",
+    "phase": "anytime",
+    "section": "open",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "These gaps limit the recovery playbook; the blocks above say \"unknown\" instead of guessing:\n- **Peace shields:** durations, costs, sources and what breaks them (PROPOSED-SHIELDS).\n- **Scope of a zeroing:** whether anything besides troops and plunderable raw resources can be lost (PROPOSED-ZEROING-LOSS-SCOPE).\n- **Heal vs retrain cost** for T4/T5 (L-A08-01) and the official **severe-wound** rules (L-A08-03).\n- **Hall of Heroes** return percentage after a Lost Kingdom [C04-0028] (PROPOSED-HALL-OF-HEROES-RETURN).\n- **City relocation (teleport)** after a zeroing: costs and rules (PROPOSED-TELEPORT).\n- **Storehouse protection** L6–L24 (L-A03-05) and **migration rules** after 1.1.09 (L-B06-03).\n- **Rebuild speed:** how many days a F2P needs to regain a march (L-A03-02).",
+    "why_md": "Listing the unknowns keeps the recovery advice honest and gives the T0 measurement plan a clear target list.",
+    "cards": [
+      "C04-0028"
+    ],
+    "patch_cards": [
+      "C04-0028"
+    ],
+    "confidence": "pending",
+    "uncertain_notes": "C04-0028 is a patch-state card (official 1.0.89 notes) without a percentage.",
+    "gaps": [
+      "PROPOSED-SHIELDS",
+      "PROPOSED-ZEROING-LOSS-SCOPE",
+      "PROPOSED-HALL-OF-HEROES-RETURN",
+      "PROPOSED-TELEPORT",
+      "L-A08-01",
+      "L-A08-03",
+      "L-A03-05",
+      "L-B06-03",
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+  }
+]
