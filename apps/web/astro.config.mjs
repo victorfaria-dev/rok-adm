@@ -1,5 +1,6 @@
 // @ts-check
 import { cpSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { createRequire } from "node:module";
 import { dirname, join, relative } from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig } from "astro/config";
@@ -33,6 +34,30 @@ function brandAssets() {
   };
 }
 
+/**
+ * Experimental screenshot reader (F-54): copy the Tesseract worker, the LSTM-only WebAssembly cores and
+ * the English model from node_modules into public/ocr/, so OCR runs from our own origin (no CDN at runtime).
+ * public/ocr/ is generated (gitignored) and left out of the service worker precache (~4 MB, on demand only).
+ */
+function ocrAssets() {
+  return {
+    name: "ko-ocr-assets",
+    hooks: {
+      "astro:config:setup": () => {
+        const require = createRequire(import.meta.url);
+        const tjs = dirname(require.resolve("tesseract.js/package.json"));
+        const core = dirname(require.resolve("tesseract.js-core/package.json", { paths: [tjs] }));
+        const eng = dirname(require.resolve("@tesseract.js-data/eng/package.json"));
+        const out = join(here, "public/ocr");
+        mkdirSync(out, { recursive: true });
+        cpSync(join(tjs, "dist/worker.min.js"), join(out, "worker.min.js"));
+        for (const v of ["lstm", "simd-lstm", "relaxedsimd-lstm"]) cpSync(join(core, `tesseract-core-${v}.wasm.js`), join(out, `tesseract-core-${v}.wasm.js`));
+        cpSync(join(eng, "4.0.0_best_int/eng.traineddata.gz"), join(out, "eng.traineddata.gz"));
+      },
+    },
+  };
+}
+
 /** Write dist/sw.js that precaches every built file, so MVP routes open offline after the first visit. */
 function serviceWorker() {
   return {
@@ -49,7 +74,7 @@ function serviceWorker() {
           }
         };
         walk(root);
-        const precache = files.filter((f) => f !== "/sw.js");
+        const precache = files.filter((f) => f !== "/sw.js" && !f.startsWith("/ocr/"));
         const urls = precache.map((f) => f.replace(/index\.html$/, ""));
         // Hash contents too: a file whose bytes change under the same URL (e.g. /data/guide.json) must bust the cache.
         const version = cacheVersion(precache.map((f, i) => ({ url: urls[i], bytes: readFileSync(join(root, f.slice(1))) })));
@@ -79,7 +104,7 @@ export default defineConfig({
   site: "https://kingdomops.example",
   trailingSlash: "always",
   build: { format: "directory" },
-  integrations: [preact(), brandAssets(), serviceWorker()],
+  integrations: [preact(), brandAssets(), ocrAssets(), serviceWorker()],
   // The lazy Three.js chunk for the 3D crest is ~550 KB raw (~140 KB gz); scripts/check-budget.ts caps it.
   vite: { server: { fs: { allow: [join(here, "../..")] } }, build: { chunkSizeWarningLimit: 600 } },
 });

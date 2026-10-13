@@ -2,12 +2,16 @@
 // Phone/tablet entry point for the SECONDARY pages (the desktop rail lists them;
 // the 4-tab bar stays as is). Disclosure pattern: a button with aria-expanded that
 // shows a list of links right after it, Esc closes and returns focus to the button.
+// Without JavaScript the button stays hidden and a plain link to /more/ (the same list) takes its place.
 import Icon from "./Icon.astro";
 import { SECONDARY, isActive } from "../lib/nav";
 const path = Astro.url.pathname;
 ---
 <div class="more" data-more>
-  <button type="button" class="more-btn" aria-expanded="false" aria-controls="more-panel" aria-label="More" data-more-button>
+  <a class="more-btn" href="/more/" aria-label="More pages" aria-current={path === "/more/" ? "page" : undefined} data-more-link>
+    <Icon name="more" />
+  </a>
+  <button type="button" class="more-btn" aria-expanded="false" aria-controls="more-panel" aria-label="More" hidden data-more-button>
     <Icon name="more" />
   </button>
   <nav id="more-panel" class="more-panel" aria-label="More" hidden data-more-panel>
@@ -25,7 +29,8 @@ const path = Astro.url.pathname;
     display: inline-flex; align-items: center; justify-content: center; min-width: 48px; min-height: 48px;
     padding: 0; border: 0; background: transparent; color: var(--ko-text-muted); cursor: pointer;
   }
-  .more-btn[aria-expanded="true"] { color: var(--ko-text); }
+  .more-btn[hidden] { display: none; }
+  .more-btn[aria-expanded="true"], .more-btn[aria-current="page"] { color: var(--ko-text); }
   .more-btn:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: -2px; }
   .more-panel {
     position: absolute; z-index: 20; top: calc(100% + var(--ko-space-1)); right: 0;
@@ -55,6 +60,10 @@ const path = Astro.url.pathname;
   for (const root of document.querySelectorAll<HTMLElement>("[data-more]")) {
     const button = root.querySelector<HTMLButtonElement>("[data-more-button]")!;
     const panel = root.querySelector<HTMLElement>("[data-more-panel]")!;
+    const link = root.querySelector<HTMLAnchorElement>("[data-more-link]");
+    // JS is on: swap the /more/ link for the disclosure button.
+    if (link) link.hidden = true;
+    button.hidden = false;
     const isOpen = () => button.getAttribute("aria-expanded") === "true";
     const set = (open: boolean) => {
       button.setAttribute("aria-expanded", String(open));

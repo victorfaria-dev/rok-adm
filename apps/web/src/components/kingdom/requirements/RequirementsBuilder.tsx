@@ -6,12 +6,13 @@ import {
 import type { JSX } from "preact";
 import { useEffect, useMemo, useState } from "preact/hooks";
 import { linkLengthHint } from "../../../lib/kingdom-share";
-import { kingdomStorage } from "../../../lib/kingdom-store";
+import { downloadText, kingdomStorage } from "../../../lib/kingdom-store";
 import {
-  EXAMPLE_PERCENT, MAX_BANDS, cardTitle, cardToForm, deleteCard, emptyBand, emptySample, formToCard, listCards, newCard, publishLink, saveCard,
+  EXAMPLE_PERCENT, MAX_BANDS, cardTitle, cardToForm, deleteCard, emptyBand, emptySample, formToCard, listCards, newCard, publishLink, rosterFromCsv, rosterToCsv, saveCard,
   type CardForm, type SampleRow,
 } from "../../../lib/kingdom-requirements";
 import ConfirmAction from "../shared/ConfirmAction";
+import CsvImport from "../shared/CsvImport";
 import CopyText from "../shared/CopyText";
 import { SelectField, TextAreaField, TextField } from "../shared/Field";
 import FormulaField, { formulaState } from "./FormulaField";
@@ -34,6 +35,8 @@ export default function RequirementsBuilder(): JSX.Element {
   const [saveError, setSaveError] = useState("");
   const [link, setLink] = useState("");
   const [comparePreset, setComparePreset] = useState("");
+  const [rosterStatus, setRosterStatus] = useState("");
+  const [rosterErrors, setRosterErrors] = useState<Array<{ line: number; message: string }>>([]);
 
   useEffect(() => {
     const { st, blocked } = kingdomStorage();
@@ -79,6 +82,26 @@ export default function RequirementsBuilder(): JSX.Element {
   const setSample = (id: string, patch: (s: SampleRow) => SampleRow) => set("samples", form.samples.map((s) => (s.id === id ? patch(s) : s)));
   const addSample = () => set("samples", [...form.samples, emptySample(form.samples.length)]);
   const removeSample = (id: string) => set("samples", form.samples.filter((s) => s.id !== id));
+  function importRoster(text: string) {
+    try {
+      const r = rosterFromCsv(form.samples, text);
+      set("samples", r.samples);
+      setRosterErrors(r.errors);
+      const parts = [`Added ${r.added} account${r.added === 1 ? "" : "s"}, updated ${r.updated}.`];
+      if (r.overLimit) parts.push(`${r.overLimit} not added: the sandbox holds ${REQ_MAX_SAMPLES}.`);
+      if (r.errors.length) parts.push(`${r.errors.length} row${r.errors.length === 1 ? "" : "s"} could not be read (see below).`);
+      setRosterStatus(parts.join(" "));
+    } catch (e) {
+      setRosterErrors([]);
+      setRosterStatus(e instanceof Error ? e.message : "This file could not be read.");
+    }
+  }
+  function exportRoster() {
+    const day = new Date().toISOString().slice(0, 10);
+    downloadText(`kingdomops-sample-accounts-${day}.csv`, `\uFEFF${rosterToCsv(check.card)}`, "text/csv;charset=utf-8");
+    setRosterErrors([]);
+    setRosterStatus("CSV ready: check your downloads.");
+  }
 
   const results = check.card.sampleAccounts.map((s) => ({ s, r: formula.parsed?.ok ? evaluatePlayer(check.card, s.stats) : null }));
   const passing = results.filter((x) => x.r?.ok && x.r.met === true).length;
@@ -246,7 +269,19 @@ export default function RequirementsBuilder(): JSX.Element {
             </fieldset>
           ))}
         </div>
-        {form.samples.length < REQ_MAX_SAMPLES && <button type="button" class="btn btn-secondary" onClick={addSample}>Add sample account</button>}
+        <div class="kg-actions">
+          {form.samples.length < REQ_MAX_SAMPLES && <button type="button" class="btn btn-secondary" onClick={addSample}>Add sample account</button>}
+          <CsvImport label="Import accounts (CSV)" describedBy="kr-csv-hint" testId="roster" onText={importRoster} onError={(m) => { setRosterErrors([]); setRosterStatus(m); }} />
+          <button type="button" class="btn btn-secondary" onClick={exportRoster} disabled={form.samples.length === 0}>Export accounts (CSV)</button>
+        </div>
+        <p class="kg-hint" id="kr-csv-hint">CSV with a first row naming the columns: "name" plus any of power, t1–t5, deads, kp. Same name updates that account.</p>
+        <p class="kg-status" role="status" aria-live="polite" data-roster-status>{rosterStatus}</p>
+        {rosterErrors.length > 0 && (
+          <ul class="kg-error" data-roster-errors>
+            {rosterErrors.slice(0, 20).map((e) => <li key={e.line}>Row {e.line}: {e.message}</li>)}
+            {rosterErrors.length > 20 && <li>…and {rosterErrors.length - 20} more.</li>}
+          </ul>
+        )}
 
         <p class="kr-summary" role="status" aria-live="polite" data-summary>{summary}</p>
         {results.length > 0 && formula.parsed?.ok && (

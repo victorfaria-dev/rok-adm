@@ -91,7 +91,7 @@ test("import restores a valid file and rejects an invalid one", async ({ page })
   await page.goto("/me/");
   // The profile renders only after the island has hydrated and read the store: no lost change events.
   await expect(page.getByRole("button", { name: "Edit answers" })).toBeVisible();
-  const input = page.locator("input[type=file]");
+  const input = page.locator("input[type=file]:not([data-backup-file])");
 
   await input.setInputFiles({ name: "bad.json", mimeType: "application/json", buffer: Buffer.from("{\"hello\":1}") });
   await expect(page.getByRole("alert")).toContainText("not a KingdomOps export");

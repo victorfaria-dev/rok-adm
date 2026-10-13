@@ -45,7 +45,7 @@ describe("ShipmentLog", () => {
     expect(s[0]).toMatchObject({ farmId: "a", date: "2026-10-14", resource: "food", gross: 100000, taxRate: rate });
     expect(s[0]!.net).toBe(Math.floor(100000 * (1 - rate) + 1e-6));
     expect(document.activeElement).toBe(field("Amount"));
-    expect(screen.getByRole("status").textContent).toMatch(/^Saved: Alpha sent 100,000 food/);
+    expect(screen.getAllByRole("status")[0]!.textContent).toMatch(/^Saved: Alpha sent 100,000 food/);
     expect(screen.getByText(/Total received this week/).textContent).toContain(s[0]!.net.toLocaleString("en-US"));
 
     // Typing a tax marks it as the user's value; a farm without TP level asks for it.

@@ -19,8 +19,10 @@
     "@rokadm/core": "workspace:*",
     "@rokadm/data": "workspace:*",
     "@rokadm/planner": "workspace:*",
+    "@tesseract.js-data/eng": "1.0.0",
     "astro": "5.18.2",
     "preact": "10.29.8",
+    "tesseract.js": "7.0.0",
     "three": "0.186.1"
   },
   "devDependencies": {

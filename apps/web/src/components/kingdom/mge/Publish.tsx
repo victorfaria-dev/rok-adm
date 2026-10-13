@@ -1,6 +1,9 @@
 import { useEffect, useState } from "preact/hooks";
-import type { MgeDoc, MgePlan } from "@rokadm/planner";
-import { publishMge, type PublishedLink } from "../../../lib/kingdom-mge";
+import { mgePublicPayload, type MgeDoc, type MgePlan } from "@rokadm/planner";
+import { mgeLedgerCsv, publishMge, type PublishedLink } from "../../../lib/kingdom-mge";
+import { downloadText } from "../../../lib/kingdom-store";
+import { mgeResultsMessage } from "../../../lib/discord";
+import DiscordPost from "../../discord/DiscordPost";
 import { CheckField } from "../shared/Field";
 import CopyText from "../shared/CopyText";
 
@@ -16,9 +19,16 @@ export default function Publish({ doc, plan, today }: Props) {
   const [link, setLink] = useState<PublishedLink | null>(null);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
+  const [csvStatus, setCsvStatus] = useState("");
 
   // Any edit makes an earlier link out of date: hide it so nobody copies a stale ledger.
   useEffect(() => setLink(null), [doc, includeScores]);
+
+  function downloadCsv() {
+    const csv = mgeLedgerCsv(mgePublicPayload(doc, includeScores, today, plan));
+    downloadText(`kingdomops-mge-ledger-${today}.csv`, `\uFEFF${csv}`, "text/csv;charset=utf-8");
+    setCsvStatus(`CSV ready${includeScores ? " (with scores)" : ""}: check your downloads.`);
+  }
 
   async function publish() {
     setBusy(true);
@@ -47,9 +57,16 @@ export default function Publish({ doc, plan, today }: Props) {
       />
       <div class="kg-actions">
         <button type="button" class="btn btn-primary" onClick={publish} disabled={busy || doc.events.length === 0}>Create public link</button>
+        <button type="button" class="btn btn-secondary" onClick={downloadCsv} disabled={doc.events.length === 0}>Download ledger (.csv)</button>
         {doc.events.length === 0 && <p class="kg-hint">Add at least one event first.</p>}
       </div>
+      <p class="kg-status" role="status" aria-live="polite" data-csv-status>{csvStatus}</p>
       {error && <p class="kg-error" role="alert" data-too-large>{error}</p>}
+      <DiscordPost
+        id="mge"
+        summary="Post the results to Discord"
+        message={mgeResultsMessage(mgePublicPayload(doc, includeScores, today, plan), link?.url ?? null)}
+      />
       {link && (
         <div class="kg-grid" data-published>
           <CopyText

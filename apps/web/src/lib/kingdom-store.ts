@@ -201,6 +201,43 @@ export function clearKingdom(st: StorageLike | null = storage()): void {
 }
 
 // ---------------------------------------------------------------------------
+// Discord webhook (wave G). A secret: anyone with the URL can post in that channel. It lives in its
+// own key so the council export (and the "Backup everything" file) never carries it.
+
+export const WEBHOOK_KEY = "ko:kingdom:webhook:v1";
+
+/** The saved webhook URL, or null. Shape is checked by lib/discord.ts before any use. */
+export function readWebhook(st: StorageLike | null = storage()): string | null {
+  try {
+    const raw = st?.getItem(WEBHOOK_KEY);
+    if (!raw) return null;
+    const data: unknown = JSON.parse(raw);
+    return isRecord(data) && data.v === 1 && typeof data.url === "string" && data.url.length <= 300 ? data.url : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Save the (already validated) URL. Returns false when the browser blocks saving. */
+export function saveWebhook(url: string, st: StorageLike | null = storage()): boolean {
+  try {
+    if (!st) return false;
+    st.setItem(WEBHOOK_KEY, JSON.stringify({ v: 1, url }));
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+export function forgetWebhook(st: StorageLike | null = storage()): void {
+  try {
+    st?.removeItem(WEBHOOK_KEY);
+  } catch {
+    // ignore
+  }
+}
+
+// ---------------------------------------------------------------------------
 // Export / import
 
 const NOT_EXPORT = "This file is not a KingdomOps council export. Pick the .json file you exported from the Kingdom council page.";

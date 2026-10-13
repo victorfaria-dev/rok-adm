@@ -4,3 +4,4 @@ public/icons/
 public/manifest.webmanifest
 test-results/
 playwright-report/
+public/ocr/

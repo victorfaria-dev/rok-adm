@@ -1,4 +1,5 @@
 // F-69 Farm-to-main shipment ledger: entries, totals, ISO weeks, CSV export. Pure.
+import { csvField, csvSafeText } from "./csv";
 import { RESOURCES, isResource, type Resource } from "./farms-common";
 import { grossForNet, netForGross } from "./farms-trading-post";
 
@@ -130,18 +131,9 @@ export function weekRange(date: string): { from: string; to: string } {
 }
 
 // ---------------------------------------------------------------------------
-// CSV (RFC 4180, CRLF) with a guard against spreadsheet formula injection.
+// CSV (RFC 4180, CRLF) with a guard against spreadsheet formula injection (shared helpers in csv.ts).
 
 export const LEDGER_CSV_HEADER = ["date", "farm", "resource", "gross", "tax_rate", "net", "note"] as const;
-
-/** Text cells starting with = + - @ TAB or CR are prefixed with ' so spreadsheets do not run them. */
-export function csvSafeText(s: string): string {
-  return /^[=+\-@\t\r]/.test(s) ? `'${s}` : s;
-}
-
-export function csvField(s: string): string {
-  return /[",\r\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
-}
 
 export function ledgerToCsv(entries: readonly ShipmentEntry[], farmNames: Readonly<Record<string, string>> = {}): string {
   const text = (s: string) => csvField(csvSafeText(s));

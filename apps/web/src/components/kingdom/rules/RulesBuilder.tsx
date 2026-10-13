@@ -8,6 +8,8 @@ import CopyText from "../shared/CopyText";
 import { SelectField, TextAreaField, TextField } from "../shared/Field";
 import { downloadText, kingdomStorage, removeDoc, type StorageLike } from "../../../lib/kingdom-store";
 import { linkLengthHint } from "../../../lib/kingdom-share";
+import { rulesLinkMessage } from "../../../lib/discord";
+import DiscordPost from "../../discord/DiscordPost";
 import { RULES_BUILDER_PATH, docFromSearch, formatDay, listRules, rulesShareLink, saveRules, type RulesListItem } from "../../../lib/kingdom-rules";
 import RulesView from "./RulesView";
 
@@ -345,6 +347,7 @@ export default function RulesBuilder() {
             <p><a href={link} target="_blank" rel="noopener">Open the view page</a> to check it or print it.</p>
           </div>
         )}
+        <DiscordPost id="rules" summary="Post the link to Discord" message={rulesLinkMessage(title, link)} />
         <p class="kg-note" data-chat-warning><strong>Post the link on Discord, Reddit or your own site. Never paste links in in-game chat:</strong> players report mutes and account flags for sharing outside links there.</p>
       </section>
     </div>
