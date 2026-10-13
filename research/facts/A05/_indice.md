@@ -44,6 +44,6 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 
 | ID | Tipo | Conf. | Status | Title |
 |---|---|---|---|---|
-| A05-0600 | mecanica | media | organizado | VIP Special Privileges one-time packs: $0.99..$99.99; Minamoto sculptures 10..270 |
+| A05-0600 | mecanica | media | verificado | VIP Special Privileges one-time packs: $0.99..$99.99; Minamoto sculptures 10..270 |
 
 New gap L-A05-04.
