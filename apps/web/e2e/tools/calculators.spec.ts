@@ -3,6 +3,7 @@
 import { readFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import { formatDuration } from "../../../../packages/planner/src/tools/time";
 import { axeViolations, hydrated, noSidewaysScroll, openInTheme, toolsStore } from "./helpers";
@@ -213,4 +214,14 @@ for (const route of ROUTES) {
       await noSidewaysScroll(page);
     });
   }
+}
+
+// Q2 P2-7: axe best-practice landmark-unique (not in the WCAG tag set above) on every tool page.
+for (const route of ["/tools/gems/", "/tools/hoard/", "/tools/vip/", "/tools/migration/", "/tools/safety/", "/tools/zeroed/", ...ROUTES]) {
+  test(`landmarks have unique names ${route}`, async ({ page }) => {
+    await page.goto(route);
+    await hydrated(page);
+    const result = await new AxeBuilder({ page }).withRules(["landmark-unique", "landmark-no-duplicate-main"]).analyze();
+    expect(result.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);
+  });
 }
