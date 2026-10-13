@@ -113,10 +113,13 @@ Por que um piloto antes de escalar: rodar todos os coletores em paralelo com um 
 - **Volume sem utilidade** → coletar guiado pelas perguntas Q1–Q8 e pelo modelo do §4, não "tudo sobre RoK".
 - **Bloqueio de acesso a fontes** (Discord fechado, sites com bot-protection) → registrar lacunas em vez de preencher com suposição.
 
-## 10. Decisões em aberto (suas)
+## 10. Decisões tomadas (2026-10-13)
 
-1. Idioma dos guias finais (PT-BR, EN ou ambos)?
-2. Perfis prioritários para o guia v1 (ex.: F2P lutador e baixo gasto)?
-3. Estágio de reino prioritário (reino novo vs. reinos em KvK/SoC)?
-4. Você tem acesso a um reino/conta/Discord de aliança para observação direta e entrevistas? Isso é a fonte mais forte para dores.
-5. Domínio do piloto (sugestão acima) — confirmar ou trocar.
+1. **Idioma:** inglês internacional para guias, fichas e sistema. (Documentos de planejamento podem seguir em PT-BR.)
+2. **Perfil prioritário v1:** F2P.
+3. **Estágio prioritário v1:** início do reino (pré-KvK → primeiro KvK).
+4. **Sem acesso a alianças/Discords fechados:** dores virão de postagens públicas (Reddit, fóruns, reviews de loja, comentários de YouTube, Discords públicos indexados). Consequência: viés de amostra (quem posta reclama mais; jogadores veteranos sobre-representados) — registrar em cada análise.
+5. **Ambição do produto:** "megahub" completo (guias + planejamento de conta + administração de reino). Velocidade é prioridade; autonomia delegada para escolher opções recomendadas.
+6. **Modo:** brainstorming/descoberta em paralelo à coleta — ver `brainstorm/`.
+
+Ajuste de execução: piloto e coleta de dores rodam **em paralelo** (não sequencial) para ganhar velocidade; o risco de retrabalho de schema é aceito e mitigado revisando o primeiro lote de cada agente antes de escalar.
