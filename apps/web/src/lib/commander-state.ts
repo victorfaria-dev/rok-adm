@@ -127,7 +127,8 @@ export const SHELF_LIFE_TEXT: Record<CommanderShelfLife["shelfLife"], string> = 
   unknown: "Shelf-life unknown",
 };
 
-const STAGE_OPTIONS = QUESTIONS.find((q) => q.id === "kingdomStage")?.options ?? [];
+const STAGE_QUESTION = QUESTIONS.find((q) => q.id === "kingdomStage");
+const STAGE_OPTIONS = STAGE_QUESTION?.type === "choice" ? STAGE_QUESTION.options : [];
 
 /** Stage label from the questionnaire (same words everywhere). */
 export function stageLabel(stage: KingdomStage): string {
