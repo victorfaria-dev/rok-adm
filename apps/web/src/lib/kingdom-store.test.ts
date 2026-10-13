@@ -94,4 +94,16 @@ describe("kingdom store", () => {
     expect(() => parseKingdomExport(JSON.stringify({ app: "kingdomops-farms", v: 1 }))).toThrow(/not a KingdomOps council export/);
     expect(() => parseKingdomExport(JSON.stringify({ app: "kingdomops-kingdom", v: 9, docs: [] }))).toThrow(/version/);
   });
+
+  it("import never replaces a document of another kind, and compares real times", () => {
+    const st = memoryStorage();
+    saveDoc({ id: "x", kind: "rules", title: "Mine", data: {} }, st, T0);
+    const other = JSON.stringify({ app: "kingdomops-kingdom", v: 1, docs: [{ id: "x", kind: "mge", title: "Theirs", updatedAt: "2030-01-01T00:00:00Z", data: {} }] });
+    expect(importKingdom(other, st)).toMatchObject({ added: 0, updated: 0, skipped: 1 });
+    expect(getDoc("x", st)?.kind).toBe("rules");
+    // "2026-10-13T09:00:00-05:00" is later than T0 even though it sorts lower as text.
+    const later = JSON.stringify({ app: "kingdomops-kingdom", v: 1, docs: [{ id: "x", kind: "rules", title: "Later", updatedAt: "2026-10-13T09:00:00-05:00", data: {} }] });
+    expect(importKingdom(later, st)).toMatchObject({ updated: 1 });
+    expect(getDoc("x", st)?.title).toBe("Later");
+  });
 });

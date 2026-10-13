@@ -234,7 +234,8 @@ export function importKingdom(text: string, st: StorageLike | null = storage()):
   for (const d of incoming.docs) {
     const i = docs.findIndex((x) => x.id === d.id);
     if (i >= 0) {
-      if (d.updatedAt > docs[i]!.updatedAt) {
+      // Same id but another kind is a different document: never let one overwrite the other.
+      if (docs[i]!.kind === d.kind && Date.parse(d.updatedAt) > Date.parse(docs[i]!.updatedAt)) {
         docs[i] = d;
         updated++;
       } else skipped++;
