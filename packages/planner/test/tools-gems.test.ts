@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   gemsCollected, gemsPerMinute, gemsStillToCome, isPlainItemName, ladderPrice, ladderRows, ladderTotal,
-  reserveGap, shopForVip, shopView, speedupMinutes,
+  reserveGap, shopForVip, shopView, itemSpeedupMinutes,
 } from "../src/tools";
 import gems from "../tools-data/gems.json";
 
@@ -32,13 +32,13 @@ describe("AP bought with gems (A04-0008)", () => {
 
 describe("VIP Shop rows (A04-0007)", () => {
   it("reads the duration from a speedup name only", () => {
-    expect(speedupMinutes("Universal Speedup (5m)")).toBe(5);
-    expect(speedupMinutes("Universal Speedup (60m)")).toBe(60);
-    expect(speedupMinutes("Universal Speedup (8h)")).toBe(480);
-    expect(speedupMinutes("Training Speedup (24h)")).toBe(1440);
-    expect(speedupMinutes("Lv.5 Tome of Knowledge (10,000 xp)")).toBeNull();
-    expect(speedupMinutes("24-Hour Enhanced Defense (Advanced)")).toBeNull();
-    expect(speedupMinutes("Golden Key")).toBeNull();
+    expect(itemSpeedupMinutes("Universal Speedup (5m)")).toBe(5);
+    expect(itemSpeedupMinutes("Universal Speedup (60m)")).toBe(60);
+    expect(itemSpeedupMinutes("Universal Speedup (8h)")).toBe(480);
+    expect(itemSpeedupMinutes("Training Speedup (24h)")).toBe(1440);
+    expect(itemSpeedupMinutes("Lv.5 Tome of Knowledge (10,000 xp)")).toBeNull();
+    expect(itemSpeedupMinutes("24-Hour Enhanced Defense (Advanced)")).toBeNull();
+    expect(itemSpeedupMinutes("Golden Key")).toBeNull();
   });
   it("derives gems per minute as price ÷ minutes (card: 240 ÷ 480 = 0.5)", () => {
     expect(gemsPerMinute(240, 480)).toBe(0.5);

@@ -40,7 +40,7 @@ export function ladderRows(count: number, rule: LadderRule): LadderRow[] {
 }
 
 /** Speedup minutes printed in an item name, e.g. "Universal Speedup (8h)" → 480; null when the name has no duration. */
-export function speedupMinutes(item: string): number | null {
+export function itemSpeedupMinutes(item: string): number | null {
   if (!/speedup/i.test(item)) return null;
   const m = /\(([^()]+)\)\s*$/.exec(item.trim());
   if (!m) return null;
@@ -71,7 +71,7 @@ export interface ShopRowView extends ShopRow {
 /** Add the derived columns to VIP Shop rows. */
 export function shopView(rows: readonly ShopRow[]): ShopRowView[] {
   return rows.map((r) => {
-    const min = speedupMinutes(r.item);
+    const min = itemSpeedupMinutes(r.item);
     return { ...r, gemsPerMinute: min ? gemsPerMinute(r.price, min) : null, weeklyGems: r.price * r.qty };
   });
 }
