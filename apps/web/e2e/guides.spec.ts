@@ -112,7 +112,7 @@ test.describe("More menu (phone)", () => {
     await button.focus();
     await page.keyboard.press("Enter");
     await expect(button).toHaveAttribute("aria-expanded", "true");
-    for (let n = 0; n < 6; n++) await page.keyboard.press("Tab");
+    for (let n = 0; n < 7; n++) await page.keyboard.press("Tab"); // one past the 6 links
     await expect(button).toHaveAttribute("aria-expanded", "false");
   });
 
