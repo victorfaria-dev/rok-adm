@@ -47,7 +47,7 @@ export default function ProfileView({ handle: given }: Props) {
   }, [client, viewerId, handle]);
 
   if (auth.status === "off") {
-    return <div class="pf"><p class="pf-empty" data-auth-off>Player profiles are not switched on yet.</p></div>;
+    return <div class="pf"><h1 class="pf-title">Player profile</h1><p class="pf-empty" data-auth-off>Player profiles are not switched on yet.</p></div>;
   }
   if (auth.status === "error") return <div class="pf"><p class="au-error" role="alert">{auth.message}</p></div>;
   if (!handle) return <div class="pf"><h1 class="pf-title">Player profile</h1><p class="pf-empty">This link has no player handle in it.</p></div>;
