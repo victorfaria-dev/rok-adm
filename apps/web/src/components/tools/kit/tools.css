@@ -49,6 +49,7 @@
   font-size: var(--ko-text-xs); font-weight: var(--ko-weight-semibold);
   color: var(--ko-text); box-shadow: inset 0 0 0 1px var(--ko-warning);
 }
+.t-stale { max-width: 100%; overflow-wrap: anywhere; }
 
 /* Share */
 .t-share { display: grid; gap: var(--ko-space-2); justify-items: start; }
