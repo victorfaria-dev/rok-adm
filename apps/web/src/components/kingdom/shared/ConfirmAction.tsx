@@ -35,7 +35,7 @@ export default function ConfirmAction({ label, ariaLabel, question, yesLabel = "
     );
   }
   return (
-    <div class="kg-card" role="group" aria-label={question}>
+    <div class="kg-confirm" role="group" aria-label={question}>
       <p>{question}</p>
       <div class="kg-actions">
         <button type="button" class="btn btn-primary" ref={yesRef} onClick={() => { setOpen(false); onConfirm(); }}>{yesLabel}</button>

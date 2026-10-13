@@ -86,3 +86,7 @@
 @media print {
   .kg-subnav, .kg-noprint { display: none !important; }
 }
+
+/* Inline confirm step (ConfirmAction): a plain group, so it can sit inside a card. */
+.kg-confirm { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.kg-confirm p { font-weight: var(--ko-weight-medium); }
