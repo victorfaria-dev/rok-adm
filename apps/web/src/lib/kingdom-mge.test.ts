@@ -31,13 +31,14 @@ describe("MGE plans in the council store", () => {
 });
 
 describe("addCandidatesFromText", () => {
-  it("adds new names, skips duplicates (any case) and reports bad lines", () => {
-    const d0 = { ...emptyMgeDoc("p"), candidates: [{ id: "x", name: "Alpha", score: 1, tags: [] }] };
-    const r = addCandidatesFromText(d0, "alpha, 5\nBravo, 4.2m\nCharlie\nDelta, 1.5", ids);
+  it("adds new names, updates scores of listed names (any case) and reports bad lines", () => {
+    const d0 = { ...emptyMgeDoc("p"), candidates: [{ id: "x", name: "Alpha", score: 1, tags: [] }, { id: "y", name: "Echo", score: 2, tags: [] }] };
+    const r = addCandidatesFromText(d0, "alpha, 5\nBravo, 4.2m\nCharlie\nDelta, 1.5\necho", ids);
     expect(r.added).toBe(2);
-    expect(r.duplicates).toEqual(["alpha"]);
+    expect(r.updated).toEqual(["Alpha"]);
+    expect(r.duplicates).toEqual(["echo"]);
     expect(r.errors.map((e) => e.line)).toEqual([4]);
-    expect(r.doc.candidates.map((c) => [c.name, c.score])).toEqual([["Alpha", 1], ["Bravo", 4_200_000], ["Charlie", null]]);
+    expect(r.doc.candidates.map((c) => [c.id, c.name, c.score])).toEqual([["x", "Alpha", 5], ["y", "Echo", 2], ["c1", "Bravo", 4_200_000], ["c2", "Charlie", null]]);
   });
 
   it("stops at the candidate limit", () => {

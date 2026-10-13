@@ -1,0 +1,28 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
+import PrivacyNote from "../../../components/kingdom/shared/PrivacyNote.astro";
+import MgePlanner from "../../../components/kingdom/mge/MgePlanner";
+import { CONFIDENCE_LABEL, MGE_SOURCES } from "@rokadm/planner";
+import "../../../components/kingdom/shared/kingdom.css";
+import "../../../components/kingdom/mge/mge.css";
+---
+<Shell title="MGE planner" description="Plan who gets which MGE slots with a rotation, score or manual rule, keep a ledger of every event and publish a view-only link. Works in your browser." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>MGE planner</h1>
+      <p class="kg-lead">Decide who gets which MGE slots with a rule everyone can check. Every slot in the ledger says when and why. Publish it as a view-only link.</p>
+      <p class="kg-note" data-guardrail><strong>Planning and publishing only. No bots, no scanning, no game files. You do every in-game action yourself.</strong></p>
+    </header>
+    <KingdomNav />
+    <MgePlanner client:load />
+    <PrivacyNote thirdParty />
+    <section class="kg-grid" aria-labelledby="kx-src-h">
+      <h2 id="kx-src-h">Where this comes from</h2>
+      <ul class="kx-sources" data-sources>
+        {MGE_SOURCES.map((s) => <li><strong>{s.id}</strong> (confidence: {CONFIDENCE_LABEL[s.confidence]}): {s.text}</li>)}
+      </ul>
+      <p class="kg-note">How a "rotation" works is never described in public sources (open question L-B05-02). The rotation rule here is KingdomOps' own and is spelled out in full above, so anyone can check it. No MGE point or reward values are shown: none are sourced.</p>
+    </section>
+  </div>
+</Shell>

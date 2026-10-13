@@ -1,0 +1,51 @@
+/* MGE planner and public ledger (/kingdom/mge/**). Only --ko-* tokens. Prefix kx-. */
+
+.kx-h3 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); }
+.kx-muted { color: var(--ko-text-muted); }
+.kx-summary { font-weight: var(--ko-weight-medium); }
+
+.kx-plans { display: grid; gap: var(--ko-space-2); margin: 0; padding: 0; list-style: none; }
+.kx-plans li {
+  display: flex; flex-wrap: wrap; gap: var(--ko-space-3); align-items: center; justify-content: space-between;
+  padding: var(--ko-space-3) 0; border-bottom: 1px solid var(--ko-border); min-width: 0;
+}
+.kx-plan-name { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); align-items: center; min-width: 0; overflow-wrap: anywhere; }
+
+.kx-event {
+  display: grid; gap: var(--ko-space-3); min-width: 0; padding: var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+.kx-event-head { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); align-items: center; }
+
+.kx-details summary {
+  display: flex; align-items: center; min-height: 44px; cursor: pointer;
+  font-weight: var(--ko-weight-medium); font-size: var(--ko-text-sm);
+}
+.kx-details summary:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.kx-details[open] > summary { margin-bottom: var(--ko-space-2); }
+.kx-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.kx-checks { display: grid; gap: var(--ko-space-1); max-height: 360px; overflow-y: auto; }
+@media (min-width: 768px) { .kx-checks { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+.kx-dl { display: grid; gap: var(--ko-space-2); margin: 0; }
+.kx-dl dt { font-weight: var(--ko-weight-semibold); }
+.kx-dl dd { margin: 0; color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+
+.kx-overrides { display: grid; gap: var(--ko-space-2); margin: 0; padding: 0; list-style: none; }
+.kx-overrides li { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); align-items: center; justify-content: space-between; overflow-wrap: anywhere; }
+
+.kx-warn, .kx-errors { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.kx-warn { color: var(--ko-text); }
+.kx-warn li::marker { color: var(--ko-warning); }
+.kx-errors { color: var(--ko-error); }
+
+.kx-ledger caption { text-align: left; font-weight: var(--ko-weight-semibold); padding-bottom: var(--ko-space-2); }
+.kg-table-wrap:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.kx-view-title { font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl); }
+
+.kx-sources { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+
+@media print {
+  .kx-event, .kg-card { break-inside: avoid; }
+  .kg-table-wrap { overflow: visible; }
+}

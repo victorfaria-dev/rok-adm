@@ -35,24 +35,34 @@ export function deleteMgePlan(id: string, st: StorageLike | null): void {
 export interface AddCandidatesResult {
   doc: MgeDoc;
   added: number;
-  /** Lines whose name was already in the list (kept as they were). */
+  /** Names already in the list whose score was replaced by the pasted one. */
+  updated: string[];
+  /** Names already in the list with no new score (kept as they were). */
   duplicates: string[];
   /** Lines dropped because the list is full. */
   overLimit: number;
   errors: LineError[];
 }
 
-/** Add candidates from pasted "Name, score" lines. Names already listed (any case) are skipped. */
+/**
+ * Add candidates from pasted "Name, score" lines. A name already listed (any case) is not added
+ * again: its score is replaced when the line has one (re-pasting DKP after a KvK), else kept.
+ */
 export function addCandidatesFromText(doc: MgeDoc, text: string, makeId: () => string = newDocId): AddCandidatesResult {
   const { rows, errors } = parseCandidateLines(text);
   const seen = new Set(doc.candidates.map((c) => c.name.toLowerCase()));
   const candidates = [...doc.candidates];
   const duplicates: string[] = [];
+  const updated: string[] = [];
   let added = 0, overLimit = 0;
   for (const r of rows) {
     const k = r.name.toLowerCase();
     if (seen.has(k)) {
-      duplicates.push(r.name);
+      const i = candidates.findIndex((c) => c.name.toLowerCase() === k);
+      if (i >= 0 && r.score !== null && candidates[i]!.score !== r.score) {
+        candidates[i] = { ...candidates[i]!, score: r.score };
+        updated.push(candidates[i]!.name);
+      } else duplicates.push(r.name);
       continue;
     }
     if (candidates.length >= MGE_LIMITS.candidates) {
@@ -63,7 +73,7 @@ export function addCandidatesFromText(doc: MgeDoc, text: string, makeId: () => s
     candidates.push({ id: makeId(), name: r.name, score: r.score, tags: [] });
     added++;
   }
-  return { doc: { ...doc, candidates }, added, duplicates, overLimit, errors };
+  return { doc: { ...doc, candidates }, added, updated, duplicates, overLimit, errors };
 }
 
 /** YYYY-MM-DD in the user's local time zone. */
