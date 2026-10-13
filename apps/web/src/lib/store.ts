@@ -1,5 +1,6 @@
 // Device-local state (ADR 0002): one versioned key in localStorage.
 // Every read is tolerant: missing, corrupted or blocked storage falls back to defaults.
+import { SPENDING_PROFILES, type SpendingProfile } from "@rokadm/core";
 
 export type ThemePref = "dark" | "light" | "system";
 export const THEME_PREFS: readonly ThemePref[] = ["dark", "light", "system"];
@@ -9,6 +10,17 @@ export interface RoutineState {
   done: string[]; // RoutineTask ids
 }
 
+/** Routine screen choices (wave B, F-15). */
+export interface RoutinePrefs {
+  /** Time budget picked on /routine; null = use the profile's minutes per day. */
+  minutes: number | null;
+  /** Break Mode: minimal routine for busy days. */
+  breakMode: boolean;
+}
+
+/** F-20 checklist answers per commander id: question id → option id. */
+export type CommanderAnswersMap = Record<string, Record<string, string>>;
+
 export interface StoreV1 {
   v: 1;
   /** Saved profile as an encodeProfile() code, or null when the user has none. */
@@ -17,12 +29,19 @@ export interface StoreV1 {
   draft: Record<string, unknown> | null;
   routine: RoutineState | null;
   theme: ThemePref;
+  /** F-72: spending profile picked by hand on /me; null = computed effective profile. */
+  profileOverride: SpendingProfile | null;
+  routinePrefs: RoutinePrefs | null;
+  commanders: CommanderAnswersMap;
 }
 
 export const STORE_KEY = "ko:v1";
 
 export function defaultStore(): StoreV1 {
-  return { v: 1, profileCode: null, draft: null, routine: null, theme: "dark" };
+  return {
+    v: 1, profileCode: null, draft: null, routine: null, theme: "dark",
+    profileOverride: null, routinePrefs: null, commanders: {},
+  };
 }
 
 const isRecord = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
@@ -45,6 +64,23 @@ export function parseStore(raw: string | null | undefined): StoreV1 {
     s.routine = { date: r.date, done: [...(r.done as string[])] };
   }
   if (THEME_PREFS.includes(data.theme as ThemePref)) s.theme = data.theme as ThemePref;
+  if (SPENDING_PROFILES.includes(data.profileOverride as SpendingProfile)) s.profileOverride = data.profileOverride as SpendingProfile;
+  const rp = data.routinePrefs;
+  if (isRecord(rp)) {
+    const m = rp.minutes;
+    s.routinePrefs = {
+      minutes: typeof m === "number" && Number.isFinite(m) && m > 0 && m <= 1440 ? m : null,
+      breakMode: rp.breakMode === true,
+    };
+  }
+  if (isRecord(data.commanders)) {
+    for (const [id, answers] of Object.entries(data.commanders)) {
+      if (!isRecord(answers)) continue;
+      const clean: Record<string, string> = {};
+      for (const [q, a] of Object.entries(answers)) if (typeof a === "string") clean[q] = a;
+      s.commanders[id] = clean;
+    }
+  }
   return s;
 }
 

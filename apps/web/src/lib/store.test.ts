@@ -49,4 +49,23 @@ describe("store", () => {
     expect(() => importStore("{}")).toThrow(/not a KingdomOps export/);
     expect(() => importStore("nope")).toThrow(/Pick the .json file/);
   });
+
+  it("parses wave B fields tolerantly", () => {
+    const s = parseStore(JSON.stringify({
+      v: 1, profileOverride: "whale", routinePrefs: { minutes: 45, breakMode: true },
+      commanders: { "sun-tzu": { purpose: "field_main", bad: 3 }, junk: 7 },
+    }));
+    expect(s.profileOverride).toBe("whale");
+    expect(s.routinePrefs).toEqual({ minutes: 45, breakMode: true });
+    expect(s.commanders).toEqual({ "sun-tzu": { purpose: "field_main" } });
+    const bad = parseStore(JSON.stringify({ v: 1, profileOverride: "gold", routinePrefs: { minutes: -5, breakMode: "yes" }, commanders: [] }));
+    expect(bad.profileOverride).toBeNull();
+    expect(bad.routinePrefs).toEqual({ minutes: null, breakMode: false });
+    expect(bad.commanders).toEqual({});
+  });
+
+  it("export then import keeps wave B fields", () => {
+    const s = { ...defaultStore(), profileOverride: "low" as const, routinePrefs: { minutes: 15, breakMode: false }, commanders: { cyrus: { purpose: "gatherer" } } };
+    expect(importStore(exportStore(s))).toEqual(s);
+  });
 });
