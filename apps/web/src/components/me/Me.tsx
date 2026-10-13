@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
 import type { SpendingProfile } from "@rokadm/core";
 import {
   exportStore,
-  importStore,
+  importStoreReport,
   readStore,
   writeStore,
   type StoreV1,
@@ -13,6 +13,7 @@ import { profileFromCode, profileSummary } from "../../lib/profile";
 import {
   IMPORTED_MESSAGE,
   deletedMessage,
+  skippedMessage,
   OVERRIDE_CHOICES,
   RULE_BODY,
   THEME_CHOICES,
@@ -152,8 +153,11 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
 
   const importFile = async (file: File): Promise<void> => {
     let imported: StoreV1;
+    let skipped = 0;
     try {
-      imported = importStore(await file.text());
+      const r = importStoreReport(await file.text());
+      imported = r.store;
+      skipped = r.skippedProfiles;
     } catch (e) {
       setStatus({ at: "data", text: "" });
       setImportError(e instanceof Error ? e.message : "This file could not be read.");
@@ -166,7 +170,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     syncProfileChips(next.profileCode);
     setConfirming(false);
     setStore(next);
-    say(IMPORTED_MESSAGE);
+    say(skipped > 0 ? `${IMPORTED_MESSAGE} ${skippedMessage(skipped)}` : IMPORTED_MESSAGE);
   };
 
   const openConfirm = (): void => {

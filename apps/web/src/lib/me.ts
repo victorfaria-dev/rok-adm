@@ -116,7 +116,14 @@ export function deletedMessage(removed: number, offlineCleared: boolean | null):
   return `${what} ${offlineCleared ? "The offline copy of the site was removed too." : "There was no offline copy of the site to remove."}`;
 }
 export const DELETED_MESSAGE = deletedMessage(1, null);
-export const IMPORTED_MESSAGE = "Imported. Your saved state was replaced with the file's contents.";
+export const IMPORTED_MESSAGE = "Imported. Your profile, saved accounts, routine, commander checks and theme were replaced with the file's contents.";
+
+/** Import note when saved accounts in the file had a profile code that does not decode (Q2 P2-5). */
+export function skippedMessage(n: number): string {
+  return n === 1
+    ? "1 saved account in the file had a damaged profile code and was skipped. Answer the questions again on that account to save it."
+    : `${n} saved accounts in the file had a damaged profile code and were skipped. Answer the questions again on those accounts to save them.`;
+}
 
 // ---------------------------------------------------------------------------
 // Saved accounts (main + farms): the active one is profileCode/profileOverride.

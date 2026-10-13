@@ -111,6 +111,19 @@ describe("You island: export and import", () => {
     expect(screen.getByText("High (raised by total spend)")).toBeTruthy();
   });
 
+  it("says how many saved accounts were skipped for a damaged code (Q2 P2-5)", async () => {
+    setup({ profileCode: CODE });
+    const file = JSON.stringify({
+      app: "kingdomops", v: 1, theme: "dark", profileCode: CODE,
+      savedProfiles: [{ id: "a", name: "Main", code: CODE, override: null }, { id: "b", name: "Bad", code: "zzz", override: null }],
+    });
+    const input = document.querySelector("input[type=file]") as HTMLInputElement;
+    Object.defineProperty(input, "files", { value: [fileWith(file)], configurable: true });
+    fireEvent.change(input);
+    await waitFor(() => expect(screen.getByText(/1 saved account in the file had a damaged profile code and was skipped/)).toBeTruthy());
+    expect(readStore().savedProfiles.map((p) => p.name)).toEqual(["Main"]);
+  });
+
   it("an invalid file shows the error and changes nothing", async () => {
     setup({ profileCode: CODE });
     const before = localStorage.getItem(STORE_KEY);
