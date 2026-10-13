@@ -1,5 +1,7 @@
 # Prompt — criação da identidade visual (para o Codex)
 
+> **Substituído por `prompt-identidade-visual-v2.md`** (2026-10-13): a v1 tinha escopo grande demais e o Codex travou.
+
 Copie o bloco abaixo e envie ao Codex com o repositório `victorfaria-dev/rok-adm` aberto.
 
 ```text
