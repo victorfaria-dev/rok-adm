@@ -51,4 +51,8 @@
 .ks-zero[aria-invalid="true"] { border-color: var(--ko-error); }
 
 .ks-assumptions { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 75ch; }
+/* Keep wide tables inside <details> from widening the page: single grid tracks shrink to the viewport. */
+[data-seed], [data-seed] .kg-grid:not(.kg-grid-2) { grid-template-columns: minmax(0, 1fr); }
+.ks-details { min-width: 0; }
+
 .ks-sources { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }

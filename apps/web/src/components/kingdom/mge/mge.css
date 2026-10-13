@@ -45,6 +45,10 @@
 
 .kx-sources { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
 
+/* Same guard as the seed page: wide content inside <details> never widens the page. */
+[data-mge], [data-mge] .kg-grid:not(.kg-grid-2), [data-view] { grid-template-columns: minmax(0, 1fr); }
+.kx-details { min-width: 0; }
+
 @media print {
   .kx-event, .kg-card { break-inside: avoid; }
   .kg-table-wrap { overflow: visible; }
