@@ -25,7 +25,7 @@
 .rt-switch, .rt-check, .rt-choice, .rt-task {
   display: grid; grid-template-columns: auto 1fr; align-items: center; gap: var(--ko-space-3);
   min-height: 48px; padding: var(--ko-space-3) var(--ko-space-4);
-  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  background: var(--ko-surface); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
   cursor: pointer; user-select: none; min-width: 0;
 }
 .rt-switch:has(input:checked), .rt-choice:has(input:checked) { border-color: var(--ko-accent); background: var(--ko-surface-raised); }
@@ -89,7 +89,7 @@ fieldset.rt-budget, fieldset.rt-extra { margin: 0; padding: 0; border: 0; min-wi
   min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
   font-family: var(--ko-font-mono); font-size: 16px; font-variant-numeric: tabular-nums;
   color: var(--ko-text); background: var(--ko-surface); caret-color: var(--ko-accent);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); color-scheme: inherit;
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md); color-scheme: inherit;
 }
 .rt-field input:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
 .rt-status { min-height: 1.5em; font-size: var(--ko-text-sm); color: var(--ko-text-muted); }

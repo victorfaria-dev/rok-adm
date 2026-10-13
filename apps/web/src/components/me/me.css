@@ -51,7 +51,7 @@
 .me-choice {
   display: flex; align-items: center; gap: var(--ko-space-3);
   min-height: 48px; padding: var(--ko-space-2) var(--ko-space-4);
-  background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  background: var(--ko-surface); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
   cursor: pointer; user-select: none; min-width: 0; overflow-wrap: anywhere;
   transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out);
 }
@@ -117,7 +117,7 @@
 .me-input {
   flex: 1 1 12rem; min-width: 0; min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
   font-size: 16px; color: var(--ko-text); background: var(--ko-surface); caret-color: var(--ko-accent);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
 }
 .me-input[aria-invalid="true"] { border-color: var(--ko-error); }
 .me-input:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
