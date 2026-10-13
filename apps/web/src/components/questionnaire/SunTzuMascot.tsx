@@ -12,6 +12,11 @@ export function clipSrc(clips: MascotClips, state: MascotState | undefined, hd: 
   return hd && clip.hd ? clip.hd : clip.sd;
 }
 
+/** Poster for the clip that plays in this state (its own first frame), else the shared poster. */
+function clipPoster(clips: MascotClips, state: MascotState | undefined): string | undefined {
+  return (state && (clips[state] ?? clips.idle)?.poster) || clips.poster;
+}
+
 /**
  * Sun Tzu in the chat. With clips (mascot-clips.ts): a card on the clip's own background, the poster
  * first (server render and first paint load no video), then a muted, inline, looping MP4 for the
@@ -47,7 +52,7 @@ export function SunTzuMascot({ clips = MASCOT_CLIPS, ...props }: MascotProps & {
   return (
     <span class="st-avatar st-card" data-state={state} data-pulse={pulseAttr(props.pulse)} style={{ width: `${size}px`, height: `${size}px` }} aria-hidden="true">
       {src ? (
-        <video key={src} ref={video} src={src} poster={clips.poster} width={size} height={size} muted playsInline loop preload="metadata" disablePictureInPicture tabIndex={-1} />
+        <video key={src} ref={video} src={src} poster={clipPoster(clips, state)} width={size} height={size} muted playsInline loop preload="metadata" disablePictureInPicture tabIndex={-1} />
       ) : (
         <img src={clips.poster} width={size} height={size} alt="" decoding="async" />
       )}

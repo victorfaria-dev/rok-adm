@@ -35,11 +35,12 @@ describe("Sun Tzu mascot slot", () => {
     expect(container.firstElementChild!.getAttribute("aria-hidden")).toBe("true");
   });
 
-  it("the shipped config uses the idle clip: 480 px by default, 720 px only on dense wide screens", () => {
+  it("the shipped config: idle and talk clips, 480 px by default, 720 px only on dense wide screens", () => {
     expect(clipSrc(MASCOT_CLIPS, "idle", false)).toBe("/mascot/idle-480.mp4");
     expect(clipSrc(MASCOT_CLIPS, "idle", true)).toBe("/mascot/idle-720.mp4");
-    // States without their own clip play idle (the card shakes for grumble in CSS).
-    expect(clipSrc(MASCOT_CLIPS, "talking", false)).toBe("/mascot/idle-480.mp4");
+    expect(clipSrc(MASCOT_CLIPS, "talking", false)).toBe("/mascot/talk-480.mp4");
+    expect(clipSrc(MASCOT_CLIPS, "talking", true)).toBe("/mascot/talk-720.mp4");
+    // A state without its own clip plays idle (the card shakes for grumble in CSS).
     expect(clipSrc(MASCOT_CLIPS, "grumble", false)).toBe("/mascot/idle-480.mp4");
     // A still (history) mascot never plays.
     expect(clipSrc(MASCOT_CLIPS, undefined, false)).toBeNull();
@@ -67,6 +68,15 @@ describe("Sun Tzu mascot slot", () => {
     rerender(h(SunTzuMascot, { state: "grumble", clips: CLIPS, pulse: 1 }));
     expect(container.querySelector("video")!.getAttribute("src")).toBe("/m/grumble-480.mp4");
     expect(container.firstElementChild!.getAttribute("data-pulse")).toBe("odd");
+  });
+
+  it("each clip shows its own first frame as poster", async () => {
+    mockMedia({});
+    const { container } = render(h(SunTzuMascot, { state: "talking", clips: MASCOT_CLIPS }));
+    await tick();
+    const v = container.querySelector("video")!;
+    expect(v.getAttribute("src")).toBe("/mascot/talk-480.mp4");
+    expect(v.getAttribute("poster")).toBe("/mascot/talk-poster.webp");
   });
 
   it("dense wide screens get the 720 px clip", async () => {

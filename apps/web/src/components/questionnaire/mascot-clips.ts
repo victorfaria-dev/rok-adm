@@ -10,6 +10,8 @@ export interface MascotClip {
   sd: string;
   /** 720 px square: only for dense screens (HD_MEDIA). */
   hd?: string;
+  /** First frame of this clip, shown while it loads (falls back to the shared poster). */
+  poster?: string;
 }
 
 export type MascotClips = Partial<Record<MascotState, MascotClip>> & {
@@ -25,6 +27,8 @@ export const HD_MEDIA = "(min-resolution: 2dppx) and (min-width: 768px)";
 
 export const MASCOT_CLIPS: MascotClips = {
   poster: "/mascot/idle-poster.webp",
-  idle: { sd: "/mascot/idle-480.mp4", hd: "/mascot/idle-720.mp4" },
-  // talking and grumble arrive later (README: the talk clip waits for a dark-background version).
+  idle: { sd: "/mascot/idle-480.mp4", hd: "/mascot/idle-720.mp4", poster: "/mascot/idle-poster.webp" },
+  // While a new bot bubble appears; then back to idle.
+  talking: { sd: "/mascot/talk-480.mp4", hd: "/mascot/talk-720.mp4", poster: "/mascot/talk-poster.webp" },
+  // grumble arrives later: until then the idle clip plays and the card shakes (CSS).
 };

@@ -38,8 +38,12 @@ const defaultNavigate = (url: string): void => {
   window.location.assign(url);
 };
 
-/** How long the typing dots may show (CSS) before the attribute is cleared; input is never blocked. */
-const TYPING_CLEAR_MS = 700;
+/**
+ * How long a new message counts as "being said": the typing dots are CSS-limited to one slow
+ * duration, and the mascot plays its talk clip until this clears, then goes back to idle. Input is
+ * never blocked.
+ */
+const TYPING_CLEAR_MS = 1600;
 /** How long Sun Tzu grumbles after an empty or invalid answer (the error text stays). */
 const GRUMBLE_MS = 700;
 
