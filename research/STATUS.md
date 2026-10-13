@@ -92,19 +92,21 @@ Usadas nos blocos como `PROPOSED-*` (o validador só avisa). Promover a `L-*` no
 | PROPOSED-CH-BY-KINGDOM-DAY | CH típico de um não pagante nos dias 3/7/14/21/30 do reino | alto | diário T0 em conta nova; relatos T4 | A01 | 30 dias |
 | ~~PROPOSED-RETURNER-REWARDS~~ → **L-A11-05** | A série Returnee existe (A11-0514, notas oficiais) e o Grand Reunion também (A11-0515); faltam elegibilidade, duração e recompensas. O guia do retornante já cita A11-0514 como incerta | medio | conta parada 30+ dias: prints no primeiro login | A11 | retornante |
 | PROPOSED-CONDUCT-SCORE-RULES | Limites e penalidades do Conduct Score; scanners/bots de print contam? Good Conduct Reward (1.1.10) | alto | texto de regras no jogo (T0); notas/FAQ oficiais | C04/C02 | admin de reino |
-| PROPOSED-HALL-OF-HEROES-RETURN | % de recursos de cura e tropas devolvidos pelo Hall of Heroes após o Lost Kingdom | medio | notas 1.0.89/1.0.94; carta de fim de KvK (T0) | A08/B01 | recuperação |
+| ~~PROPOSED-HALL-OF-HEROES-RETURN~~ → **L-A08-04** | Onda J: regras oficiais em A08-0601 (devolução sobe com o tier do Lost Kingdom desde 1.0.94; reembolso parcial de cura desde 1.0.89); o percentual continua sem fonte | medio | carta de fim de KvK (T0) | A08/B01 | recuperação |
 | PROPOSED-TELEPORT | Tipos, custos e limites de teleporte após zeramento | medio | T0 loja/tooltips | A03 | recuperação |
 | PROPOSED-SWAP-ACCESS | Retornante em reino pós-Season 2 ainda usa o Legendary Commander Swap? | medio | calendário de evento em reino SoC; notas 1.1.02+ | A06 | retornante |
 | PROPOSED-INACTIVE-ACCOUNT-STATE | O que acontece com cidade inativa (escudo, queima, realocação, cargo na aliança) | medio | ajuda no jogo; FAQ oficial | A13/B04 | retornante |
-| PROPOSED-RECHARGE-EVENT | Recompensas e frequência do evento de Recharge; passes contam? | medio | T0 print do evento (sem compra) | A12/A11 | Low |
+| ~~PROPOSED-RECHARGE-EVENT~~ → **L-A11-07, L-A11-08** | Onda J: tipos oficiais (A11-0600), limiar diário de 2.500 gemas (A11-0601, baixa), passes contam (A11-0602, baixa); faltam cadência e tabelas de recompensa | medio | T0 print do evento (sem compra) | A12/A11 | Low |
 | PROPOSED-DO-CHEST-CONTENTS | Conteúdo dos baús de Daily Objectives (20–100 pontos) após 1.1.09 | medio | T0 dia 1: print da prévia de cada baú | A10/A04/A09 | 30 dias |
-| PROPOSED-SUPPLY-DEPOT-CLAIM | O suprimento de 30 dias precisa ser coletado diariamente? dia perdido some? | baixo | T0 tela de coleta/texto do pacote | A12 | Low |
+| ~~PROPOSED-SUPPLY-DEPOT-CLAIM~~ → **L-A12-05** | Onda J: coleta diária e dia perdido some, segundo uma fonte vendedora (A12-0603, baixa) | baixo | T0 tela de coleta/texto do pacote | A12 | Low |
 
 Fichas novas desta onda (pesquisa, status `organizado`, aguardam verificador): A03-0033 (itens de escudo e preços, baixa), A03-0034 (o que o escudo bloqueia, baixa), A03-0035 (cidade nova começa com escudo, duração desconhecida, baixa), A03-0036 (mudanças oficiais ligadas a escudo/proteção, media), A11-0514 (série Returnee, alta), A11-0515 (Grand Reunion, alta). Pista não registrada: medievalfun.com sobre o que quebra o escudo (fonte fora de `fontes.md`).
 
 Fatos pedidos pelos autores que não existem em fichas (sem ID ainda): tabela de marcos do Growth Fund por CH (cai em L-A12-02); horas do conselho por fluxo; poderes padrão R1–R5; transferência de reinado e de R5 inativo (L-B05/L-B03-05); quantidade de Vacation Permits (L-B03-03); custo de cura vs. retreino (L-A08-01); ordem de desbloqueio do tutorial (L-A01-04); fichas C04 para 1.0.95 (Eve of the Crusade dentro do Lost Kingdom) e 1.1.11 (mudança de tempos de passe), hoje só na linha do tempo.
 
 Conteúdo para estágios avançados (KvK2, KvK3, SoC): o guia base só tem a rotina diária (agora `todos`); faltam blocos de progressão pós-KvK1 para jogador comum (os guias retornante, recuperação e admin de reino cobrem parte). Há poucas fichas com `estagio_reino` kvk2/kvk3/soc fora de C04 e B — lacuna de pesquisa para uma onda futura (proposta: `PROPOSED-LATE-STAGE-PROGRESSION`, domínios A01/A06/A08).
+
+**Onda J (2026-10-13): `PROPOSED-LATE-STAGE-PROGRESSION` atendida em parte** — ver seção "Onda J" abaixo.
 
 Manutenção de fichas apontada (não alterada nesta onda): A13-0005 tem nota dizendo que C04-0014 invalida parte do conselho mas `invalidado_por: null`; B02-0001 (governador que sai da aliança fica no roster, 1.0.91) e B08-0008 (matchmaking usa poder médio e kill points, 1.0.96) têm fatos oficiais só nas `notas`; B05-0004 (Auctioneer Bot sem manutenção desde 2025-01, validade vencida); A12-0004 (tabela VIP por dólar não é citação literal); A11-0502 ("exceto abaixo de VIP 6" ambíguo); A04-0001/A09-0006 (conteúdo dos baús vem de wiki 2020); A03-0014 (Mercador, wiki 2020).
 
@@ -123,3 +125,23 @@ Manutenção de fichas apontada (não alterada nesta onda): A13-0005 tem nota di
 5. **Guia F2P v1** (EN) e **guia de administração de reino v1**; depois deltas Low → Medium → High → Whale → Kraken (`perfis.md`).
 6. **Mapas de processo + árvore de funcionalidades** (Sub-admin PRODUTO): processo completo de conta e de reino → pontos de apoio do sistema → árvore de funcionalidades. Método: `produto/metodo-arvore-funcionalidades.md`.
 7. **Especificação do sistema:** requisitos, modelo de dados, arquitetura.
+
+## Onda J (2026-10-13): fase tardia (KvK2/KvK3/SoC) e Low spender
+
+Três frentes de pesquisa em paralelo (J1 comandantes/equipamento, J2 tropas/cura/pesquisa/gemas, J3 compras do Low e valor por dólar), cada uma seguida de um verificador adversarial que rebuscou todas as citações. Relatórios: `facts/_verificacao-onda-j-J1.md`, `-J2.md`, `-J3.md`; notas brutas em `raw/J1-*`, `raw/J2-*`, `raw/J3-*`.
+
+| Frente | Fichas | Confiança (alta/média/baixa) | Status |
+|---|---|---|---|
+| J1 (A06-0600..0611, A07-0600..0606) | 19 | 7 / 7 / 5 | 19 verificado |
+| J2 (A08-0600..0608, A02-0600..0602, A04-0600..0605, B01-0900..0902, C04-0620/0621) | 23 | 8 / 7 / 8 | 22 verificado, 1 contestado (A08-0604) |
+| J3 (A12-0600..0618, A11-0600..0602, A05-0600, C04-0640) | 24 | 3 / 4 / 17 | 24 verificado |
+| **Total** | **66** | **18 / 18 / 30** | |
+
+Entregas:
+- **Guia de fase tardia** `guides/data/staging/blocks.latestage.json` (17 blocos, ids `ls-*`, stage kvk2/kvk3/soc; 14 média, 2 baixa, 1 pendente; 1 bloco só para Low). Fica em `staging/` porque os testes de `apps/web` exigem que todo `guides/data/blocks.*.json` esteja registrado no site; o validador de blocos já checa `staging/`. Para publicar: mover para `guides/data/`, registrar em `packages/core/src/guideSets.ts` (oferecer quando `kingdomStage` ∈ kvk2/kvk3/soc) e no site (`BLOCK_SETS`, `GUIDE_PAGES`), e revisar o fallback de estágio do site (hoje KvK2+ cai para KvK1). Gerador: `guides/tools/_gen_latestage.py` + `_latestage_content.py`.
+- **Planner Low** `packages/planner/data/low-spender.json` + `src/low-spender.ts` (`lowSpenderTargets`, `lowTier`, `lowPurchases`, `lowVipTimeline`), 15 testes. Faixas: *pass-only* (Gem Supply + Lucerne/mês ≈ US$14,99; Growth Fund uma vez) e *low-full* (≈ US$62,85/mês). Razões por dólar só em gemas/VIP brutos (método A12-0618). Confiança baixa (preços de jogadores/vendedores, variação regional). `realityCheck` não mudou: `researchedProfiles` continua `["f2p"]` até o site renderizar os alvos Low.
+- **Método de valor por dólar** (A12-0618, derivado, baixa): só gemas e VIP brutos por US$ são defensáveis; valorar itens muda o ranking em até ~5× e os rótulos "% value" da loja usam preço cheio.
+
+Lacunas novas: L-A06-06..10, L-A07-04..07, L-A08-04..07, L-A02-04..05, L-A04-07..09, L-B01-05, L-A12-04..08, L-A11-07..08, L-A05-04. Continuam abertas: L-A12-01 (preços atuais por região), L-A12-02 (marcos do Growth Fund abaixo do CH25), L-A06-01 (pares F2P por função em 2026).
+
+Não afirmar como firme (verificadores): números de custo de cura e a razão 20× de ouro; upgrade T4→T5 custar igual a treinar; percentual do Hall of Heroes; metas de estoque (500M/200M/100M); 49/50 dias como duração atual de toda temporada; ordem de gemas após VIP 10; bônus de primeira compra x2; 2.200 gemas iniciais do Gem Supply; Growth Fund comprado tarde pagar marcos passados; preços de Lucerne e Daily Special Offers; King Arthur grátis; dia exato do swap; números de Iconic por temporada.
