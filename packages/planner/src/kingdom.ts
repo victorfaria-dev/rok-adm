@@ -5,3 +5,5 @@ export * from "./kingdom-formula";
 export * from "./kingdom-requirements";
 export * from "./kingdom-rules";
 export * from "./kingdom-recruit";
+export * from "./kingdom-mge";
+export * from "./kingdom-seed";
