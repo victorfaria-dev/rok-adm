@@ -5,6 +5,7 @@ import Logo from "../components/Logo.astro";
 import ThemePicker from "../components/ThemePicker.astro";
 import ProfileChip from "../components/ProfileChip.astro";
 import Footer from "../components/Footer.astro";
+import LogoSting from "../components/LogoSting.astro";
 import { DESTINATIONS, SECONDARY, isActive } from "../lib/nav";
 import { THEME_BOOT_SCRIPT } from "../lib/theme";
 
@@ -41,6 +42,7 @@ const fullTitle = docTitle ?? `${title} · KingdomOps`;
     <meta property="og:type" content="website" />
   </head>
   <body class:list={[{ bare }]}>
+    <LogoSting />
     <a class="skip" href="#main">Skip to content</a>
 
     {!bare && (
