@@ -48,6 +48,19 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | Mapas de processo + árvore de funcionalidades | Sub-admin PRODUTO | `produto/` — **concluída**: 5 áreas, 20 épicos, 59 funcionalidades, MVP + R1–R3 |
 | Migração v2 das fichas C01, C02, C04 e B01-0001..0003 | dados | **concluída** — 87 fichas, validador 0 erros (B02–B09 pendentes com o sub-admin REINO) |
 
+## Construção do MVP sem identidade visual (em execução)
+
+Stack: `docs/adr/0001-stack-mvp.md` (TypeScript, monorepo pnpm, Vitest, CI no GitHub Actions).
+
+| Frente | Pacote/pasta | Funcionalidades |
+|--------|--------------|-----------------|
+| Pipeline de dados + biblioteca de regras e fórmulas | `packages/data` | F-50 v0 |
+| Motor de blocos + questionário | `packages/core` | F-51, F-01 (lógica) |
+| Rotina por tempo, reality check, checklist de comandante | `packages/planner` | F-15, F-14, F-20 |
+| Conteúdo: guia de reino novo, privacidade, kit de divulgação | `guides/data`, `content/` | F-12, F-56, F-57 |
+
+Aguardando identidade visual: App Shell (F-52) e telas.
+
 ## Bloqueios
 
 - **rok.guide**: fora do ar na origem — o DNS do domínio falha (servidores de nome recusam a consulta, SERVFAIL via dns.google em 2026-10-13). Não é a política de rede (ambiente está em acesso completo). Possível domínio expirado/abandonado → relevante para concorrência (C01). Usar cópias em archive/buscadores quando possível.
