@@ -34,6 +34,7 @@ Onda 1 (abaixo) foi disparada diretamente pelo admin geral; a partir da onda 2 o
 | Frente | Responsável | Escopo |
 |--------|-------------|--------|
 | Integração + verificação + lacunas + protocolo T0 + context packs de conta | Sub-admin CONTA | A01–A14, B01 |
+| Verificação + dores de líderes + context packs de administração de reino | Sub-admin REINO | B02–B09, D-05xx |
 
 ## Bloqueios
 
