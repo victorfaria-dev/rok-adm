@@ -1,34 +1,125 @@
 ---
-// /guides/: every guide, with what it is and who it is for. Static, no JS.
+// Guides tab (UX stage 1): every guide in one list grouped by intent, with glossary search on top.
+// Public, no login, works without JS. With a saved profile, a small script offers "For you" (default)
+// or "All guides" (lib/guides-hub.ts tagsFor).
 import Shell from "../../layouts/Shell.astro";
 import { BLOCK_SETS, patchBadge } from "../../lib/guide-payload";
-import { GUIDE_PAGES } from "../../lib/guides";
+import { HUB_GROUPS } from "../../lib/guides-hub";
 import "../../styles/guide.css";
 
-const rows = GUIDE_PAGES.map((g) => {
-  const blocks = BLOCK_SETS[g.set] ?? [];
-  const versions = blocks.map((b) => patchBadge(b).version).filter((v) => v !== "unknown");
-  const asOf = blocks.map((b) => b.as_of).sort().at(-1) ?? null;
-  return { ...g, steps: blocks.length, patch: versions[0] ?? null, asOf };
-});
+const meta = (set?: string) => {
+  if (!set) return null;
+  const blocks = BLOCK_SETS[set] ?? [];
+  if (!blocks.length) return null;
+  const version = blocks.map((b) => patchBadge(b).version).find((v) => v !== "unknown") ?? null;
+  return { steps: blocks.length, patch: version };
+};
+
+// Every user-facing string on this page, in one place (i18n later).
+const S = {
+  title: "Guides",
+  description: "Every KingdomOps guide in one place, grouped by what you want to do: plan your account, start in a new kingdom, come back after a break, recover, run farms or lead a kingdom. Plus the glossary.",
+  intro: "Every guide in one list. Each one cites its sources and says how sure it is.",
+  searchLabel: "Look up a term",
+  searchHint: "DKP, MGE, seed, T4…",
+  searchBtn: "Search glossary",
+  filterLegend: "Show",
+  forYou: "For you",
+  all: "All guides",
+  steps: (n: number) => `${n} steps`,
+  patch: (p: string) => `checked on patch ${p}`,
+};
 ---
-<Shell title="All guides" description="Every KingdomOps guide in one list: the early-kingdom plan, late game, new kingdom, first 30 days, low spender, returning, recovery, kingdom administration and farms." mode="read">
-  <div class="g-page">
-    <h1>All guides</h1>
-    <p class="g-intro">Each guide cites its sources and says how sure it is. Not sure where to start? <a href="/start/">Answer 10 questions</a> and your guide links the ones that fit you.</p>
-    <ul class="gi-list">
-      {rows.map((g) => (
-        <li class="gi-item" data-guide-entry={g.set}>
-          <h2><a href={g.href}>{g.title}</a></h2>
-          <p class="gi-summary">{g.summary}</p>
-          <p class="gi-for"><strong>For:</strong> {g.audience}</p>
-          <p class="gi-meta">
-            <span class="mono">{g.steps}</span> steps
-            {g.patch && <>, checked against patch <span class="mono">{g.patch}</span></>}
-            {g.asOf && <> on <span class="mono">{g.asOf}</span></>}.
-          </p>
-        </li>
-      ))}
-    </ul>
+<Shell title={S.title} description={S.description} mode="read">
+  <div class="g-page gh">
+    <h1>{S.title}</h1>
+    <p class="g-intro">{S.intro}</p>
+
+    <form class="gh-search" action="/glossary/" method="get" role="search">
+      <label for="gh-q">{S.searchLabel}</label>
+      <div class="gh-search-row">
+        <input id="gh-q" name="q" type="search" placeholder={S.searchHint} autocomplete="off" />
+        <button class="btn btn-secondary" type="submit">{S.searchBtn}</button>
+      </div>
+    </form>
+
+    <fieldset class="gh-filter" data-guides-filter hidden>
+      <legend class="visually-hidden">{S.filterLegend}</legend>
+      <label class="gh-choice"><input type="radio" name="gh-filter" value="mine" checked /> <span>{S.forYou}</span></label>
+      <label class="gh-choice"><input type="radio" name="gh-filter" value="all" /> <span>{S.all}</span></label>
+    </fieldset>
+
+    {HUB_GROUPS.map((g) => (
+      <section class="gh-group" aria-labelledby={`gh-${g.id}`} data-guide-group>
+        <h2 id={`gh-${g.id}`}>{g.title}</h2>
+        <ul class="gh-list">
+          {g.items.map((i) => {
+            const m = meta(i.set);
+            return (
+              <li class="gh-item" data-guide-entry={i.set ?? i.href} data-tag={i.tag}>
+                <a class="gh-link" href={i.href}>{i.title}</a>
+                <p class="gh-summary">{i.summary}</p>
+                {m && <p class="gh-meta">{S.steps(m.steps)}{m.patch && <>, {S.patch(m.patch)}</>}</p>}
+                {i.links && (
+                  <ul class="gh-sub">
+                    {i.links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+                  </ul>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    ))}
   </div>
 </Shell>
+
+<style>
+  .gh { display: grid; gap: var(--ko-space-6); }
+  .gh-search { display: grid; gap: var(--ko-space-2); }
+  .gh-search label { font-weight: var(--ko-weight-semibold); }
+  .gh-search-row { display: flex; gap: var(--ko-space-2); flex-wrap: wrap; }
+  .gh-search input {
+    flex: 1 1 200px; min-height: 48px; padding-inline: var(--ko-space-3); min-width: 0;
+    background: var(--ko-surface); color: var(--ko-text); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md); font: inherit;
+  }
+  .gh-filter { display: flex; gap: var(--ko-space-2); border: 0; margin: 0; padding: 0; }
+  .gh-filter[hidden] { display: none; }
+  .gh-choice {
+    display: inline-flex; align-items: center; gap: var(--ko-space-2); min-height: 44px; padding-inline: var(--ko-space-4);
+    border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-pill); cursor: pointer;
+  }
+  .gh-choice:has(input:checked) { border-color: var(--ko-accent); background: var(--ko-surface-raised); }
+  .gh-choice input { accent-color: var(--ko-accent); margin: 0; }
+  .gh-group { display: grid; gap: var(--ko-space-2); }
+  .gh-group[hidden] { display: none; }
+  .gh-group h2 { font-size: var(--ko-text-sm); line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); }
+  .gh-list { list-style: none; margin: 0; padding: 0; display: grid; border-top: 1px solid var(--ko-border); }
+  .gh-item { display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+  .gh-item[hidden] { display: none; }
+  .gh-link { font: var(--ko-weight-semibold) var(--ko-text-lg)/1.3 var(--ko-font-display); display: inline-flex; align-items: center; min-height: 44px; }
+  .gh-summary { overflow-wrap: anywhere; }
+  .gh-meta { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+  .gh-sub { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 var(--ko-space-4); }
+  .gh-sub a { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--ko-text-sm); }
+</style>
+
+<script>
+  import { readStore } from "../../lib/store";
+  import { profileFromCode } from "../../lib/profile";
+  import { tagsFor } from "../../lib/guides-hub";
+
+  const store = readStore();
+  const profile = profileFromCode(store.profileCode);
+  const filter = document.querySelector<HTMLFieldSetElement>("[data-guides-filter]");
+  if (profile && filter) {
+    const tags = tagsFor(profile, store.playingAs);
+    const apply = (mine: boolean): void => {
+      for (const li of document.querySelectorAll<HTMLElement>("[data-tag]")) li.hidden = mine && !tags.has(li.dataset.tag as never);
+      for (const g of document.querySelectorAll<HTMLElement>("[data-guide-group]")) g.hidden = !g.querySelector("[data-tag]:not([hidden])");
+    };
+    filter.hidden = false;
+    filter.addEventListener("change", (e) => apply((e.target as HTMLInputElement).value === "mine"));
+    apply(true);
+  }
+</script>

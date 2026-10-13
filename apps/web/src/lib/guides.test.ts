@@ -6,7 +6,8 @@ import { defaultProfile, GUIDE_SETS, selectGuide, type AccountProfile, type Guid
 import { BLOCK_SETS, buildGuidePayload } from "./guide-payload";
 import { confidenceCounts, deltaUrl, fullGuide, selectGuide as selectPayload, withDeltas } from "./guide-view";
 import { defaultGuideLinks, GUIDE_PAGES, guidesForYou, hasLowDelta, STATIC_GUIDES } from "./guides";
-import { SECONDARY } from "./nav";
+import { HUB_GROUPS, tagsFor } from "./guides-hub";
+import { LEADER_NAV, PLAYER_NAV } from "./nav";
 
 const make = (p: Partial<AccountProfile>): AccountProfile => ({ ...defaultProfile(), ...p });
 
@@ -27,9 +28,35 @@ describe("guide directory", () => {
     for (const g of STATIC_GUIDES) expect(g.href).toBe(`/guides/${g.slug}/`);
   });
 
-  it("links All guides from the secondary nav, not the new kingdom guide", () => {
-    expect(SECONDARY[0]).toEqual({ href: "/guides/", label: "All guides" });
-    expect(SECONDARY.map((s) => s.href)).not.toContain("/guides/new-kingdom/");
+  it("links the Guides hub from both tab sets, not a single guide", () => {
+    for (const nav of [PLAYER_NAV, LEADER_NAV]) {
+      const g = nav.find((d) => d.label === "Guides");
+      expect(g?.href).toBe("/guides/");
+      expect(nav.map((d) => d.href)).not.toContain("/guides/new-kingdom/");
+    }
+  });
+});
+
+describe("guides hub (UX stage 1)", () => {
+  const hrefs = HUB_GROUPS.flatMap((g) => g.items.map((i) => i.href));
+
+  it("lists every guide page once, plus the safety FAQ, zeroed plan and what changed", () => {
+    for (const g of GUIDE_PAGES) expect(hrefs.filter((h) => h === g.href), g.href).toHaveLength(1);
+    for (const h of ["/tools/safety/", "/tools/zeroed/", "/changes/"]) expect(hrefs).toContain(h);
+    expect(new Set(hrefs).size).toBe(hrefs.length);
+  });
+
+  it("links the four farm resource guides under Farm accounts", () => {
+    const farms = HUB_GROUPS.flatMap((g) => g.items).find((i) => i.href === "/guides/farms/");
+    expect(farms?.links?.map((l) => l.href)).toEqual(["/guides/farms/food/", "/guides/farms/wood/", "/guides/farms/stone/", "/guides/farms/gold/"]);
+  });
+
+  it("filters by profile: the base guide always, admin for leaders, returning for returners", () => {
+    const f2p = tagsFor(make({ spending: "f2p" }), "player");
+    expect(f2p.has("always")).toBe(true);
+    expect(f2p.has("kingdomadmin")).toBe(false);
+    expect(tagsFor(make({}), "leader").has("kingdomadmin")).toBe(true);
+    expect(tagsFor(make({ returningPlayer: true, cityHall: 20 }), "player").has("returning")).toBe(true);
   });
 });
 

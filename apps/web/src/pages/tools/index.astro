@@ -9,16 +9,28 @@ const built = new Set(
   Object.keys(import.meta.glob("/src/pages/**/index.astro")).map((k) => k.replace(/^\/src\/pages/, "").replace(/index\.astro$/, "")),
 );
 const live = TOOLS.filter((t) => built.has(t.href));
+
+// Every user-facing string on this page, in one place (i18n later).
+const S = {
+  title: "Tools",
+  description: "Calculators and checklists for Rise of Kingdoms players, grouped by task: spend and value, speedups and time, combat and healing, kingdom moves and farms. Every number cites its source.",
+  lead: "Calculators and checklists, grouped by what you are trying to do. What you type stays on this device.",
+  notYet: "Not here yet",
+  notYetItems: [
+    "Research costs and troop training costs: no research or troop table in our data yet.",
+    "First 30 days path and milestone benchmark: they wait on in-game measurements.",
+  ],
+};
 ---
-<Shell title="Tools" description="Calculators and checklists for Rise of Kingdoms players: VIP, gems, speedups, building costs, healing, Action Points, migration and KvK readiness. Every number cites its source." mode="operate">
+<Shell title={S.title} description={S.description} mode="operate">
   <div class="t-page">
     <header>
-      <h1>Tools</h1>
-      <p class="t-lead">Calculators and checklists. Every number shows the fact card it comes from and how sure we are. What you type stays on this device.</p>
+      <h1>{S.title}</h1>
+      <p class="t-lead">{S.lead}</p>
       <DataStamp />
     </header>
     {GROUPS.filter((g) => live.some((t) => t.group === g.id)).map((g) => (
-      <section aria-labelledby={`g-${g.id}`} class="t-page-body">
+      <section aria-labelledby={`g-${g.id}`} class="t-page-body" data-tool-group={g.id}>
         <h2 id={`g-${g.id}`}>{g.title}</h2>
         <ul class="t-hub">
           {live.filter((t) => t.group === g.id).map((t) => (
@@ -27,12 +39,9 @@ const live = TOOLS.filter((t) => built.has(t.href));
         </ul>
       </section>
     ))}
-    <section class="t-deferred" aria-labelledby="t-deferred-h">
-      <h2 id="t-deferred-h">Not here yet</h2>
-      <ul>
-        <li>Research costs and troop training costs: no research or troop table in our data yet.</li>
-        <li>First 30 days path and milestone benchmark: they wait on in-game measurements.</li>
-      </ul>
-    </section>
+    <details class="t-deferred">
+      <summary>{S.notYet}</summary>
+      <ul>{S.notYetItems.map((x) => <li>{x}</li>)}</ul>
+    </details>
   </div>
 </Shell>

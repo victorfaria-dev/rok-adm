@@ -25,6 +25,9 @@ export default function GlossarySearch({ total }: { total: number }) {
       },
     }));
     setReady(true);
+    // "Look up a term" on the Guides tab submits here as ?q=.
+    const initial = new URLSearchParams(location.search).get("q");
+    if (initial) apply(initial.slice(0, 80));
     // A link to a term hidden by the filter clears the filter so the target is visible.
     const onHash = (): void => {
       const id = decodeURIComponent(location.hash.slice(1));
