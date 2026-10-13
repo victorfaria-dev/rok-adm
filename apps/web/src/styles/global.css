@@ -5,6 +5,8 @@
 @import "@fontsource/ibm-plex-sans/latin-500.css";
 @import "@fontsource/ibm-plex-sans/latin-600.css";
 @import "@fontsource/ibm-plex-mono/latin-400.css";
+/* Depth ("layers"): section panels, header strips, elevated cards. */
+@import "./depth.css";
 
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }

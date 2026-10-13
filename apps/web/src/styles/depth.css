@@ -1,183 +1,142 @@
-/* Depth experiment (prototype, owner picks one). Inert by default: every rule hangs off
-   <html data-depth>, set only by ?depth=a or ?depth=b (lib/depth.ts boot script).
-   Applied to /guide/ (personal guide) and /tools/pack-value/.
-   Tokens only: --ko-surface-0/1/2 (page, section, card), --ko-surface-head (B's header strip)
-   and --ko-shadow-1/2.
-   Nesting rule: a card never holds another card. */
+/* Depth, "layers" (owner's pick, variant B of the 8f88a2d prototype). On by default.
+   Level 0 = page. Level 1 = a section: a panel (--ko-surface-1) whose title sits on a recessed
+   header strip (--ko-surface-head). Level 2 = interactive and primary elements: cards
+   (--ko-surface-2, border, --ko-shadow-2); a card that follows a strip is pulled up over its edge.
+   Everything else (prose, lists, notes, callouts, disclaimers) stays flat on its panel; callouts
+   become a side rule. Nesting stops at one level: a card never holds another card.
+   Shared selectors, so pages built on the same kits (g-, fg-, t-, fm-/ft-, kg-) inherit it.
+   Tokens only. */
 
-/* ===========================================================================
-   Variant A, "bands": each major section is a full-width band; bands alternate
-   surface-0 / surface-1 and open with a numbered header. Content stays flat inside
-   the band; the only cards are interactive elements (profile bar, index, disclosures,
-   the calculator form). */
-
-:root[data-depth="a"] {
-  /* Bleed from the content column out to the edges of <main> (page edge, or the rail on desktop). */
-  --d-bleed: calc((100vw - var(--rail-w)) / 2 - 50%);
-  --d-band-y: var(--ko-space-8);
-}
-@media (min-width: 768px) { :root[data-depth="a"] { --d-band-y: var(--ko-space-10); } }
-:root[data-depth="a"] .main { overflow-x: clip; }
-
-/* Band surfaces. */
-:root[data-depth="a"] :is(.g-foryou, .gv, .g-body > .g-section, .t-page > section, .t-page > astro-island > section) {
-  margin-inline: calc(-1 * var(--d-bleed));
-  padding-inline: var(--d-bleed);
-  padding-block: var(--d-band-y);
-  background: var(--ko-surface-0);
-}
-:root[data-depth="a"] :is(.g-foryou, .g-body > .g-section:nth-child(even), .t-page > section:not(.t-sources)) {
-  background: var(--ko-surface-1);
-  border-block: 1px solid var(--ko-border);
-}
-
-/* Bands touch: spacing lives inside them. */
-:root[data-depth="a"] :is([data-guide], .t-page) { gap: 0; }
-:root[data-depth="a"] .t-page > header { padding-bottom: var(--d-band-y); }
-:root[data-depth="a"] [data-guide] > .g-meta { padding-block: var(--ko-space-4) var(--d-band-y); }
-:root[data-depth="a"] .g-section { margin-top: 0; }
-:root[data-depth="a"] .g-toc { padding-bottom: var(--d-band-y); }
-:root[data-depth="a"] .gv { padding-bottom: var(--ko-space-6); }
-
-/* Numbered section header: eyebrow index + title + a short accent rule. */
-:root[data-depth="a"] :is(.g-body, .t-page) { counter-reset: ko-band; }
-:root[data-depth="a"] :is(.g-body > .g-section, .t-page > section, .t-page > astro-island > section) { counter-increment: ko-band; }
-:root[data-depth="a"] :is(.g-section > h2, .g-done summary h2, .t-section > h2, .t-sources > h2) {
-  font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl); letter-spacing: .03em;
-  margin-bottom: var(--ko-space-4); padding-bottom: var(--ko-space-3);
-  background: linear-gradient(var(--ko-accent), var(--ko-accent)) left bottom / 48px 2px no-repeat;
-}
-:root[data-depth="a"] :is(.g-section > h2, .g-done summary h2, .t-section > h2, .t-sources > h2)::before {
-  content: counter(ko-band, decimal-leading-zero);
-  content: counter(ko-band, decimal-leading-zero) / "";
-  display: block; margin-bottom: var(--ko-space-1);
-  font: var(--ko-weight-regular) var(--ko-text-sm)/1 var(--ko-font-mono); letter-spacing: .12em; color: var(--ko-accent);
-}
-:root[data-depth="a"] .g-done details > summary { border-bottom: 0; padding-block: 0; }
-:root[data-depth="a"] .g-done details > summary h2 { display: block; gap: 0; }
-:root[data-depth="a"] .g-done details > summary h2::after { content: " +"; content: " +" / ""; font-family: var(--ko-font-mono); color: var(--ko-accent); }
-:root[data-depth="a"] .g-done details[open] > summary h2::after { content: " \2212"; content: " \2212" / ""; }
-:root[data-depth="a"] .g-phase-title { padding-top: var(--ko-space-2); border-top: 1px solid var(--ko-border); }
-/* The last block in a band needs no closing rule: the band edge closes it. */
-:root[data-depth="a"] :is(.g-section, .g-phase) > .g-block:last-child { border-bottom: 0; padding-bottom: 0; }
-
-@media (min-width: 768px) {
-  :root[data-depth="a"] :is(.g-section > h2, .g-done summary h2, .t-section > h2, .t-sources > h2) { font-size: var(--ko-text-2xl); line-height: var(--ko-leading-2xl); }
-}
-
-/* Cards: interactive only, one level, always inside a band. */
-:root[data-depth="a"] :is(.g-bar, .g-toc details, .t-form) {
-  background: var(--ko-surface-2);
-  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
-  box-shadow: var(--ko-shadow-1);
-}
-:root[data-depth="a"] .g-bar { padding: var(--ko-space-4); }
-:root[data-depth="a"] .g-toc details { border-block: 1px solid var(--ko-border); padding-inline: var(--ko-space-4); }
-:root[data-depth="a"] .t-form { padding: var(--ko-space-4); }
-:root[data-depth="a"] .g-more {
-  background: var(--ko-surface-2); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
-  padding-inline: var(--ko-space-3);
-}
-/* Results are output, not a control: flat, marked by an accent rule instead of a box. */
-:root[data-depth="a"] .t-results {
-  background: none; border: 0; border-radius: 0; padding: var(--ko-space-1) 0 var(--ko-space-1) var(--ko-space-4);
-  border-inline-start: 3px solid var(--ko-accent);
-}
-
-/* ===========================================================================
-   Variant B, "layers": sections are level-1 panels (surface-1) with a tinted header
-   strip; interactive and primary elements are level-2 cards (surface-2, border,
-   shadow-2). The first card after a header is pulled up over the strip's edge, so the
-   card visibly sits on top of the section. Supporting text stays flat on level 1. */
-
-:root[data-depth="b"] {
-  --d-pad: var(--ko-space-3);
-  --d-card-pad: var(--ko-space-4);
-  --d-head: var(--ko-surface-head);
-  --d-lift: var(--ko-space-6);
+:root {
+  --d-pad: var(--ko-space-4);       /* panel padding; phone panels run edge to edge, so this is the page gutter */
+  --d-card-pad: var(--ko-space-3);
+  --d-lift: var(--ko-space-5);      /* how far a card overlaps the strip above it */
+  --d-strip-r: 0;                   /* strip top corners follow the panel's */
 }
 @media (min-width: 768px) {
-  :root[data-depth="b"] { --d-pad: var(--ko-space-6); --d-card-pad: var(--ko-space-5); }
+  :root { --d-pad: var(--ko-space-6); --d-card-pad: var(--ko-space-5); --d-strip-r: calc(var(--ko-radius-lg) - 1px); }
 }
 
-/* Level 1: section panels. Phone: edge to edge (no side border). Wider: hang out by the
-   panel padding, so card text lines up with the page's text column. */
-:root[data-depth="b"] :is(.g-foryou, .gv, .g-section, .t-page > section, .t-page > astro-island > section) {
-  position: relative; isolation: isolate;
+/* ---------------------------------------------------------------------------
+   Level 1: panels. Phone: edge to edge (bleed through the 16px gutter, rules top and bottom).
+   Wider: a rounded panel that hangs out by its padding, so its text lines up with the page column.
+   --d-gap is the panel's own row gap (0 for block layout), used to place the strip exactly. */
+:root:root :where(
+  .g-foryou, .gv, .g-section,
+  .fg-legend, .fg-toc, .fg-block, .fg-more,
+  .t-page > section:not(.t-results), .t-page > astro-island > section:not(.t-results),
+  .t-page-body > section.t-section, .t-page > astro-island > div.t-page-body:not(:has(> section.t-section)),
+  :is(.ft, .fh) > section:not(.fm-card),
+  section.kg-grid:not(section.kg-grid section, .kg-card section), .km-explainer
+) {
+  --d-gap: 0px;
   margin-inline: calc(-1 * var(--ko-space-4));
-  padding: 0 var(--d-pad) var(--d-pad);
+  padding: var(--d-pad);
   background: var(--ko-surface-1);
-  border-block: 1px solid var(--ko-border);
+  border: 0; border-block: 1px solid var(--ko-border); border-radius: 0;
 }
 @media (min-width: 768px) {
-  :root[data-depth="b"] :is(.g-foryou, .gv, .g-section, .t-page > section, .t-page > astro-island > section) {
+  :root:root :where(
+    .g-foryou, .gv, .g-section,
+    .fg-legend, .fg-toc, .fg-block, .fg-more,
+    .t-page > section:not(.t-results), .t-page > astro-island > section:not(.t-results),
+    .t-page-body > section.t-section, .t-page > astro-island > div.t-page-body:not(:has(> section.t-section)),
+    :is(.ft, .fh) > section:not(.fm-card),
+    section.kg-grid:not(section.kg-grid section, .kg-card section), .km-explainer
+  ) {
     margin-inline: calc(-1 * var(--d-pad));
     border: 1px solid var(--ko-border); border-radius: var(--ko-radius-lg);
   }
 }
-:root[data-depth="b"] .gv { padding-top: var(--d-pad); }
-:root[data-depth="b"] .g-section { margin-top: var(--ko-space-8); }
-:root[data-depth="b"] :is([data-guide], .t-page) { gap: var(--ko-space-6); }
+:root :is(.g-foryou, .fg-toc, .fg-more) { --d-gap: var(--ko-space-2); }
+:root :is(.t-section, .t-sources, .t-checklist, .fg-legend, .fg-block, .t-page-body) { --d-gap: var(--ko-space-3); }
+:root :is(.kg-grid, .ft-section, .fh > section) { --d-gap: var(--ko-space-4); }
+:root .g-section { margin-top: var(--ko-space-8); }
+:root .g-body > .g-section:first-of-type { margin-top: var(--ko-space-6); }
 
-/* Header strip: the section title on a tinted band across the top of the panel. */
-:root[data-depth="b"] :is(.g-section > h2, .g-foryou-title, .g-done details > summary) {
-  margin: 0 calc(-1 * var(--d-pad)) var(--ko-space-4);
-  padding: var(--ko-space-5) var(--d-pad) var(--ko-space-4);
-  background: var(--d-head); border-bottom: 1px solid var(--ko-border);
+/* Header strip: the panel's title on a recessed band across its top. */
+:root:root :where(
+  .g-section > h2:first-child, .g-foryou-title, .fg-block > .fg-block-head,
+  :is(.fg-legend, .fg-toc, .fg-more) > h2:first-child,
+  :is(.t-section, .t-sources, .t-deferred, .t-checklist, section.t-page-body) > h2:first-child,
+  :is(.ft, .fh) > section:not(.fm-card) > h2:first-child,
+  section.kg-grid > h2:first-child:not(.visually-hidden), .km-explainer > h2:first-child
+) {
+  margin: calc(-1 * var(--d-pad)) calc(-1 * var(--d-pad)) calc(var(--ko-space-4) - var(--d-gap));
+  padding: var(--ko-space-4) var(--d-pad);
+  background: var(--ko-surface-head);
+  border-bottom: 1px solid var(--ko-border);
+  border-radius: var(--d-strip-r) var(--d-strip-r) 0 0;
+  max-width: none;
 }
-@media (min-width: 768px) {
-  :root[data-depth="b"] :is(.g-section > h2, .g-foryou-title, .g-done details > summary) {
-    border-radius: calc(var(--ko-radius-lg) - 1px) calc(var(--ko-radius-lg) - 1px) 0 0;
-  }
+/* A note right under a tools title joins the strip (title + note read as one header). */
+:root .t-section > h2:first-child:has(+ .t-note) {
+  margin-bottom: calc(-1 * var(--d-gap)); padding-bottom: var(--ko-space-1); border-bottom: 0;
 }
-:root[data-depth="b"] .g-done details[open] > summary { margin-bottom: var(--ko-space-4); }
-:root[data-depth="b"] .g-done details:not([open]) > summary { margin-bottom: calc(-1 * var(--d-pad)); border-bottom: 0; }
-/* Tools sections are grids: the strip is a ::before spanning the title row (and its note). */
-:root[data-depth="b"] :is(.t-section, .t-sources) { --d-rows: 1; grid-template-columns: minmax(0, 1fr); }
-:root[data-depth="b"] :is(.t-section, .t-sources):has(> h2 + .t-note) { --d-rows: 2; }
-:root[data-depth="b"] :is(.t-section, .t-sources)::before {
-  content: ""; z-index: -1;
-  grid-column: 1; grid-row: 1 / span var(--d-rows);
-  margin-inline: calc(-1 * var(--d-pad));
-  background: var(--d-head); border-bottom: 1px solid var(--ko-border);
+:root .t-section > h2:first-child + .t-note {
+  margin: 0 calc(-1 * var(--d-pad)) calc(var(--ko-space-4) - var(--d-gap));
+  padding: 0 var(--d-pad) var(--ko-space-4); max-width: none;
+  background: var(--ko-surface-head); border-bottom: 1px solid var(--ko-border);
 }
-@media (min-width: 768px) {
-  :root[data-depth="b"] :is(.t-section, .t-sources)::before { border-radius: calc(var(--ko-radius-lg) - 1px) calc(var(--ko-radius-lg) - 1px) 0 0; }
+/* "Already done?" folds: its summary is the strip. */
+:root .g-done details > summary {
+  margin: calc(-1 * var(--d-pad)) calc(-1 * var(--d-pad)) var(--ko-space-4);
+  padding: var(--ko-space-4) var(--d-pad);
+  background: var(--ko-surface-head); border-bottom: 1px solid var(--ko-border);
+  border-radius: var(--d-strip-r) var(--d-strip-r) 0 0;
 }
-:root[data-depth="b"] :is(.t-section, .t-sources) > h2 { grid-area: 1 / 1; padding-block: var(--ko-space-5) var(--ko-space-4); }
-:root[data-depth="b"] :is(.t-section, .t-sources) > h2:has(+ .t-note) { padding-bottom: 0; }
-:root[data-depth="b"] :is(.t-section, .t-sources) > h2 + .t-note { grid-area: 2 / 1; padding-bottom: var(--ko-space-4); }
-:root[data-depth="b"] .t-sources { border-top: 1px solid var(--ko-border); }
+:root .g-done details:not([open]) > summary { margin-bottom: calc(-1 * var(--d-pad)); border-bottom: 0; border-radius: var(--d-strip-r); }
+/* The strip reaches the panel edge, where an outside ring would be clipped (g-section paint containment). */
+:root .g-done details > summary:focus-visible { outline-offset: -3px; }
+:root .g-foryou { padding-block: var(--d-pad); }
 
-/* Level 2: cards. */
-:root[data-depth="b"] :is(.g-bar, .g-toc details, .g-block, .g-foryou li, .g-budget .g-sub, .t-form, .t-results) {
-  position: relative;
+/* ---------------------------------------------------------------------------
+   Level 2: cards. Guide steps (blocks) and budget groups, the profile bar and the section index;
+   tool forms and results; farm and council cards; the farm tools' live answer. */
+:root:root :where(
+  .g-block, .g-bar, .g-toc details, .g-budget .g-sub,
+  .t-form, .t-results,
+  .fm-card, .ft-live, .kg-card
+) {
   background: var(--ko-surface-2);
   border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
   box-shadow: var(--ko-shadow-2);
+  padding: var(--d-card-pad);
 }
-:root[data-depth="b"] :is(.g-bar, .t-form, .t-results) { padding: var(--d-card-pad); }
-:root[data-depth="b"] .g-toc details { padding-inline: var(--d-card-pad); box-shadow: var(--ko-shadow-1); }
-:root[data-depth="b"] .g-block { padding: var(--d-card-pad); }
-:root[data-depth="b"] .g-block + .g-block { margin-top: var(--ko-space-3); }
-:root[data-depth="b"] .g-foryou li { padding: var(--ko-space-2) var(--ko-space-4); box-shadow: var(--ko-shadow-1); }
-:root[data-depth="b"] .g-budget .g-sub { padding: var(--d-card-pad); margin-top: 0; }
-:root[data-depth="b"] .g-foryou { border-block: 1px solid var(--ko-border); }
+:root .g-toc details { padding-block: 0; box-shadow: var(--ko-shadow-1); }
+:root :is(.g-block + .g-block, .g-phase-title + .g-block) { margin-top: var(--ko-space-3); }
+:root .g-block:last-child { margin-bottom: 0; }
+:root .g-budget .g-sub { margin-top: 0; }
+:root .fg-hypothesis { border-style: dashed; }
+:root .ft-next { border-color: var(--ko-accent); border-width: 2px; }
+:root .ft-live { border-inline-start: 3px solid var(--ko-accent); }
 
-/* Lift: the first card after a header strip overlaps the strip's lower edge. */
-:root[data-depth="b"] .g-section > h2:has(+ .g-block),
-:root[data-depth="b"] .g-foryou-title:has(+ ul) { padding-bottom: calc(var(--d-lift) + var(--ko-space-4)); margin-bottom: 0; }
-:root[data-depth="b"] .g-section > h2 + .g-block,
-:root[data-depth="b"] .g-foryou-title + ul { margin-top: calc(-1 * var(--d-lift)); }
-:root[data-depth="b"] .g-foryou { gap: var(--ko-space-3); }
-:root[data-depth="b"] [data-tool] > h2 + .t-note:has(+ .t-form) { padding-bottom: calc(var(--d-lift) + var(--ko-space-4)); }
-:root[data-depth="b"] [data-tool] > h2 + .t-note + .t-form { margin-top: calc(-1 * (var(--d-lift) + var(--ko-space-3))); }
+/* Lift: a card right under a strip overlaps the strip's lower edge, so it visibly sits on top. */
+:root :is(.g-section, .t-section, .ft-section, section.kg-grid) > h2:first-child:has(+ :is(.g-block, .t-form, .t-results, .fm-card, .ft-live, .kg-card)),
+:root .t-section > h2:first-child + .t-note:has(+ :is(.t-form, .t-results)) {
+  padding-bottom: calc(var(--ko-space-4) + var(--d-lift));
+  margin-bottom: calc(-1 * var(--d-gap));
+}
+:root :is(.g-section, .t-section, .ft-section, section.kg-grid) > h2:first-child + :is(.g-block, .t-form, .t-results, .fm-card, .ft-live, .kg-card),
+:root .t-section > h2:first-child + .t-note + :is(.t-form, .t-results) {
+  position: relative; margin-top: calc(-1 * var(--d-lift));
+}
 
-/* Inside a card nothing is boxed again: callouts become a side rule, disclosures stay flat. */
-:root[data-depth="b"] :is(.g-block, .g-sub) .g-callout { border: 0; border-inline-start: 3px solid var(--ko-warning); border-radius: 0; padding-block: var(--ko-space-1); }
-:root[data-depth="b"] .g-block { border-bottom: 1px solid var(--ko-border); }
-:root[data-depth="b"] .g-phase { margin-top: var(--ko-space-6); }
-:root[data-depth="b"] .g-phase-title { margin-bottom: var(--ko-space-3); }
-
-/* The strip-summary reaches the panel edge, where the section's paint containment would clip an outside ring. */
-:root[data-depth="b"] .g-done details > summary:focus-visible { outline-offset: -3px; }
+/* ---------------------------------------------------------------------------
+   Flat inside the panel. Callouts and disclaimers: a side rule, never a box. */
+:root :is(.g-callout, .t-callout, .tw-note) {
+  border: 0; border-inline-start: 3px solid var(--ko-warning); border-radius: 0;
+  padding: var(--ko-space-1) 0 var(--ko-space-1) var(--ko-space-4); background: none;
+}
+:root .kg-privacy {
+  background: none; border: 0; border-inline-start: 3px solid var(--ko-text-muted); border-radius: 0;
+  padding: var(--ko-space-1) 0 var(--ko-space-1) var(--ko-space-4);
+}
+/* Inside a card, blocks of supporting text stay flat. */
+:root .g-block :is(.g-more, .g-note) { background: none; border: 0; box-shadow: none; }
+:root .g-foryou li { padding: 0; }
+:root .g-phase { margin-top: var(--ko-space-6); }
+:root .g-phase:first-of-type { margin-top: 0; }
+:root .g-phase-title { margin-bottom: var(--ko-space-3); }
+/* Grid panels space their children with gap; a list's own margins would double it. */
+:root :is(.t-section, .t-sources, .t-deferred, .kg-grid, .ft-section) > :is(ul, ol) { margin-block: 0; }
