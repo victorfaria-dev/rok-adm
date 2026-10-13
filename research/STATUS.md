@@ -1,6 +1,6 @@
 # Status do projeto (painel do administrador)
 
-Atualizado: 2026-10-13
+Atualizado: 2026-10-13 (tarde)
 
 ## Organização (delegação)
 
@@ -72,7 +72,14 @@ KingdomOps v1.0: kit do Victor em `design/brand/`; tokens gerados em `design/tok
 | 2. Questionário (`/start`) | **concluída** |
 | 3. Meu guia + Budget Reality Check (`/guide`), guia de reino novo | **concluída** |
 | Cartão de governador 3D (`/card`), sting do logo, `/brand` | **concluída** |
-| Ondas B, C, H | em construção por coordenadores (ver `produto/roadmap-autonomo.md`) |
+| Onda B: rotina + Break Mode + .ics, comandantes, /me (perfis, perfil efetivo, backup) | **concluída** |
+| Onda C: hub de farms + guias de farm | **concluída** |
+| Onda D: /tools (6 calculadoras, migração, KvK, reservas, zerado, segurança), /glossary, /changes | **concluída** |
+| Onda E: kit do conselho /kingdom (regras, requisitos/DKP, meus requisitos, MGE, recrutamento, seed) | **concluída** |
+| Onda F: backend local `apps/api` (espaços de reino, sync, OpenAPI, segurança) — site ainda não ligado | **concluída** |
+| Onda H: 5 guias novos + /guides/ | **concluída** |
+| Onda I: brasão 3D (/crest), transições | **concluída** (torre de progresso adiada) |
+| Onda G: integrações sem credenciais + pendências; 2ª auditoria por personas | em andamento |
 
 ## Lacunas da onda H (guias)
 
