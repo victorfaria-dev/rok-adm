@@ -1,0 +1,53 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import MigrationCheck from "../../../components/tools/migration/MigrationCheck";
+import { Checklist } from "../../../components/tools/kit/Checklist";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import type { MigrationRules } from "@rokadm/planner/tools";
+import m from "../../../../../../packages/planner/tools-data/migration.json";
+import "../../../components/tools/kit/tools.css";
+
+const src = (x: { facts: string[]; patch: string }) => ({ facts: x.facts, patch: x.patch });
+const rules: MigrationRules = {
+  chMin: { value: m.chMin.value, ...src(m.chMin) },
+  cooldownDays: { value: m.cooldownDays.value, ...src(m.cooldownDays) },
+  ageLimit: {
+    "same-soc": { value: m.ageLimit["same-soc"].value, ...src(m.ageLimit["same-soc"]) },
+    "cross-s2": { value: m.ageLimit["cross-s2"].value, ...src(m.ageLimit["cross-s2"]) },
+    "cross-s3": { value: m.ageLimit["cross-s3"].value, ...src(m.ageLimit["cross-s3"]) },
+  },
+  passport: { bands: m.passport.bands.map((b) => ({ fromM: b.fromM, toM: b.toM, pages: b.value })), ...src(m.passport) },
+  crossPower: { minM: m.crossPower.minM, maxM: m.crossPower.maxM, ...src(m.crossPower) },
+  personal: src(m.personal),
+  kingdom: src(m.kingdom),
+};
+const items = m.checklist.map((i) => ({ id: i.id, text: i.text, ...(i.detail ? { detail: i.detail } : {}), cite: cite(i.facts) }));
+const ruleIds = [
+  ...m.chMin.facts, ...m.cooldownDays.facts, ...m.personal.facts, ...m.passport.facts, ...m.crossPower.facts, ...m.kingdom.facts,
+  ...Object.values(m.ageLimit).flatMap((a) => a.facts),
+];
+const ids = [...new Set([...ruleIds, ...m.checklist.flatMap((i) => i.facts)])];
+const cites = Object.fromEntries(ids.map((id) => [id, cite([id])]));
+---
+<Shell title="Migration checker" description="Can you migrate to another Rise of Kingdoms kingdom? City Hall, alliance, troops, cooldown, age limits per route and Passport Pages, each rule with its source and patch." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Migration checker</h1>
+      <p class="t-lead">Enter your account and the target kingdom. You get eligible or not eligible, every reason, and the Passport Pages for your power. Each rule shows the patch it was checked on. Values stay on this device.</p>
+      <DataStamp />
+    </header>
+    <MigrationCheck client:load rules={rules} cites={cites} />
+    <Checklist client:load listId="migration-before" title="Before you move" items={items} />
+    <section class="t-deferred" aria-labelledby="t-deferred-h">
+      <h2 id="t-deferred-h">Not here yet</h2>
+      <ul>
+        <li>The full Passport Page table between 10M and 50M and between 55M and 100M: only three data points are known.</li>
+        <li>Rules from the 1.1.10 to 1.1.12 official notes: not verified yet.</li>
+        <li>Fewer pages for Vacation Permit holders: the reduction is not quantified.</li>
+      </ul>
+    </section>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

@@ -1,0 +1,63 @@
+---
+// F-13 Zeroed Recovery Playbook + 30-second log-off checklist. Content from tools-data/zeroed.json.
+// Peace shield costs and durations are a known gap: shown as pending measurement, never as numbers.
+import Shell from "../../../layouts/Shell.astro";
+import { Checklist } from "../../../components/tools/kit/Checklist";
+import { Cite } from "../../../components/tools/kit/Cite";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import z from "../../../../../../packages/planner/tools-data/zeroed.json";
+import "../../../components/tools/kit/tools.css";
+import "../../../components/tools/zeroed/zeroed.css";
+
+const logoff = z.logoff.map((i) => ({ id: i.id, text: i.text, detail: i.detail, cite: cite(i.facts) }));
+const withCite = <T extends { facts: string[] }>(xs: T[]) => xs.map((x) => ({ ...x, cite: cite(x.facts) }));
+const steps = withCite(z.steps), still = withCite(z.stillCounts), farm = withCite(z.farm);
+const ids = [z.logoff, z.steps, z.stillCounts, z.farm].flatMap((xs) => xs.flatMap((x) => x.facts));
+---
+<Shell title="Zeroed? Recovery plan" description="Just got zeroed in Rise of Kingdoms? A 30-second log-off checklist, what to rebuild first, what still counts, and how to protect a farm." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Zeroed? Here is the plan</h1>
+      <p class="t-lead">Losing your troops hurts, but it is not the end of the account. Start with the 30-second check before you log off, then rebuild in this order.</p>
+      <DataStamp />
+    </header>
+
+    <Checklist client:load listId="zeroed-logoff" title="30-second log-off check" items={logoff} />
+
+    <div class="z-gap" role="note" aria-label="Known gap">
+      <p><strong>Peace shields: pending measurement.</strong> We have no fact card yet on shield prices or durations, so this page gives no numbers. Check the item description in your game.</p>
+    </div>
+
+    <section class="z-section" aria-labelledby="z-steps-h">
+      <h2 id="z-steps-h">Recovery, step by step</h2>
+      <ol class="z-steps">
+        {steps.map((s) => (
+          <li id={`step-${s.id}`}>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            {"link" in s && s.link ? <a class="z-link" href={s.link.href}>{s.link.text}</a> : null}
+            <Cite cite={s.cite} />
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="z-section" aria-labelledby="z-still-h">
+      <h2 id="z-still-h">What still counts</h2>
+      <ul class="z-list">
+        {still.map((s) => <li><p>{s.text}</p><Cite cite={s.cite} /></li>)}
+      </ul>
+    </section>
+
+    <section class="z-section" aria-labelledby="z-farm-h">
+      <h2 id="z-farm-h">If it was your farm</h2>
+      <ul class="z-list">
+        {farm.map((s) => <li><p>{s.text}</p><Cite cite={s.cite} /></li>)}
+      </ul>
+    </section>
+
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

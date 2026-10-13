@@ -1,0 +1,370 @@
+{
+  "_about": "Glossary of /glossary/ (F-88). Definitions are our own words (never copied from the Fandom wiki, CC-BY-SA, C02-0021), at most two sentences, and say only what the cited cards support. The patch shown next to a term is the card's own patch (Fact.patch), read at build time.",
+  "terms": [
+    {
+      "id": "acclaim",
+      "term": "Acclaim",
+      "aliases": [],
+      "definition": "A KvK contribution currency in newer Season of Conquest Lost Kingdoms, earned from enemy troops you wound or kill and from your own losses, scaled by troop level. Some Crusader Achievements and the Acclaim Shop use it.",
+      "facts": ["C04-0015"],
+      "related": ["kvk", "lost-kingdom"]
+    },
+    {
+      "id": "action-points",
+      "term": "Action Points",
+      "aliases": ["AP"],
+      "definition": "The energy you spend to attack barbarians, capped at 1,500, plus 500 more you can claim each day. A barbarian attack costs 50 AP, a little less on consecutive hits by the same commander.",
+      "facts": ["A09-0001", "A09-0002"],
+      "related": ["barbarians", "lohars-trial"]
+    },
+    {
+      "id": "alliance-help",
+      "term": "Alliance help",
+      "aliases": ["helps"],
+      "definition": "Allies tapping help on your construction, research or healing, where each help fills 1% of the progress bar. How many helps one job can get depends on your Alliance Center level, and troop training can't be helped.",
+      "facts": ["A10-0006"],
+      "related": ["speedups"]
+    },
+    {
+      "id": "alliance-territory",
+      "term": "Alliance territory",
+      "aliases": ["territory"],
+      "definition": "Your alliance's area on the map, where gathering at normal resource points is 25% faster. Since 1.1.03, once in Season of Conquest, cities inside another alliance's territory in your home kingdom can't be attacked.",
+      "facts": ["A03-0009", "C04-0014"],
+      "related": ["zeroing"]
+    },
+    {
+      "id": "ark-of-osiris",
+      "term": "Ark of Osiris",
+      "aliases": ["AoO", "AOO"],
+      "definition": "An alliance battleground with about 30 players per side, held roughly every two weeks. Sources disagree on how much a free player can get out of it.",
+      "facts": ["A11-0508"]
+    },
+    {
+      "id": "auto-peacekeeping",
+      "term": "Auto-peacekeeping",
+      "aliases": ["auto barbarians"],
+      "definition": "The game's own option that sends your troops to hunt barbarians automatically. It is the allowed way to automate this, while third-party scripts cost you Conduct Score.",
+      "facts": ["A09-0008", "C04-0006"],
+      "related": ["conduct-score", "barbarians"]
+    },
+    {
+      "id": "barbarians",
+      "term": "Barbarians",
+      "aliases": ["barbs", "Barbarian Forts", "forts"],
+      "definition": "Neutral troops on the map that you attack with AP for commander EXP, resources and speedups. Barbarian Forts are tougher camps that can only be beaten by a rally.",
+      "facts": ["A09-0003", "A09-0005"],
+      "related": ["action-points", "rally"]
+    },
+    {
+      "id": "books-of-covenant",
+      "term": "Books of Covenant",
+      "aliases": ["Book of Covenant"],
+      "definition": "Items that Castle upgrades need, won mostly from Barbarian Fort rallies. Each fort reward tier has about a 50% chance to include them.",
+      "facts": ["A09-0005", "A09-0007"],
+      "related": ["barbarians", "rally"]
+    },
+    {
+      "id": "builder-queue",
+      "term": "Builder queue",
+      "aliases": ["second builder"],
+      "definition": "How many buildings you can upgrade at the same time: one by default, at most two. The second comes from Builder Recruitment items (two days each) or permanently at VIP 6.",
+      "facts": ["A01-0006"],
+      "related": ["vip", "city-hall"]
+    },
+    {
+      "id": "city-hall",
+      "term": "City Hall",
+      "aliases": ["CH"],
+      "definition": "Your main building: no other building can go above its level. Big unlocks are tied to it, such as City Hall 25 to register for Season of Conquest.",
+      "facts": ["A01-0003", "C04-0033"],
+      "related": ["builder-queue", "season-of-conquest"]
+    },
+    {
+      "id": "civilization",
+      "term": "Civilization",
+      "aliases": ["civ"],
+      "definition": "The nation you play as, one of 15, each with three perks, a starting commander and a special unit. You can change it later with an item or gems.",
+      "facts": ["A14-0001", "A14-0002"]
+    },
+    {
+      "id": "conduct-score",
+      "term": "Conduct Score",
+      "aliases": [],
+      "definition": "A score the game lowers when it detects third-party tools such as scripts or cheats, with penalties once it falls below set thresholds. It arrived in 1.1.07, first in Season of Conquest kingdoms.",
+      "facts": ["C04-0006"],
+      "related": ["auto-peacekeeping"]
+    },
+    {
+      "id": "daily-objectives",
+      "term": "Daily Objectives",
+      "aliases": ["dailies", "activity points"],
+      "definition": "The daily task list that resets at 00:00 UTC, where tasks give activity points toward chests at 20, 40, 60, 80 and 100 points. The 100-point chest holds 100 gems, the only guaranteed daily gem source found.",
+      "facts": ["A10-0001", "A04-0001"],
+      "related": ["gems"]
+    },
+    {
+      "id": "dkp",
+      "term": "DKP",
+      "aliases": ["Dead Kill Points", "dead/kill points"],
+      "definition": "A KvK score each kingdom builds from T4 and T5 kills and dead troops, with weights it chooses itself, usually counting deaths the most. There is no official formula, so read your own kingdom's rules.",
+      "facts": ["B08-0001"],
+      "related": ["kill-points", "kvk", "t4-t5"]
+    },
+    {
+      "id": "eve-of-the-crusade",
+      "term": "Eve of the Crusade",
+      "aliases": ["pre-KvK", "marauders"],
+      "definition": "The pre-KvK event that starts around kingdom day 85 to 95, where saved AP goes into marauders that drop speedups, gems and credits. Newer patches tie its start to the Lost Kingdom opening instead of before it.",
+      "facts": ["B01-0500", "A09-0007", "B01-0503"],
+      "related": ["kvk", "lost-kingdom", "action-points"]
+    },
+    {
+      "id": "farm-account",
+      "term": "Farm account",
+      "aliases": ["farm", "alt"],
+      "definition": "A second city of your own in the same kingdom, made with the in-game Character Management, that gathers resources for your main. It sends them through the Trading Post, which charges a tax.",
+      "facts": ["A13-0001", "A13-0010", "C02-0017"],
+      "related": ["trading-post", "zeroing"]
+    },
+    {
+      "id": "garrison",
+      "term": "Garrison",
+      "aliases": ["garrison lead"],
+      "definition": "One of the KvK combat roles kingdoms hand out, next to rally and open field, for players who hold and defend positions. Alliances can give officers a separate Garrison/Rally permission.",
+      "facts": ["B02-0003", "B04-0001"],
+      "related": ["rally"]
+    },
+    {
+      "id": "gems",
+      "term": "Gems",
+      "aliases": [],
+      "definition": "The premium currency, which also buys VIP points at one point per gem. Gems can't be plundered in any form.",
+      "facts": ["A05-0004", "A03-0007"],
+      "related": ["vip", "more-than-gems", "daily-objectives"]
+    },
+    {
+      "id": "hall-of-heroes",
+      "term": "Hall of Heroes",
+      "aliases": [],
+      "definition": "Returns part of the resources you spent healing in the Lost Kingdom when that Lost Kingdom ends. This refund exists since 1.0.89.",
+      "facts": ["C04-0028"],
+      "related": ["lost-kingdom", "hospital"]
+    },
+    {
+      "id": "hospital",
+      "term": "Hospital",
+      "aliases": ["hospital capacity"],
+      "definition": "Holds your wounded troops so you can heal them; wounded troops beyond its capacity die. Some attacks, such as hits on cities and objectives, always kill severely wounded troops.",
+      "facts": ["A08-0502"],
+      "related": ["t4-t5", "hall-of-heroes"]
+    },
+    {
+      "id": "kill-points",
+      "term": "Kill Points",
+      "aliases": ["KP"],
+      "definition": "The kill score that kingdom scans collect for every governor, next to T1 to T5 kills and dead troops. DKP formulas often weight it lightly or ignore low-tier kills.",
+      "facts": ["B08-0004", "B08-0001"],
+      "related": ["dkp"]
+    },
+    {
+      "id": "kvk",
+      "term": "KvK",
+      "aliases": ["Kingdom vs Kingdom", "Kingdom versus Kingdom", "KvK1"],
+      "definition": "The seasons in which several kingdoms fight on a shared map, the Lost Kingdom. A new kingdom's first KvK starts around day 100.",
+      "facts": ["B01-0500", "B01-0501"],
+      "related": ["lost-kingdom", "season-of-conquest", "dkp"]
+    },
+    {
+      "id": "lohars-trial",
+      "term": "Lohar's Trial",
+      "aliases": ["Lohar"],
+      "definition": "An event where killing ordinary barbarians earns Bone Necklaces for rewards. Guides rate it highly for free players and suggest saving AP items for it.",
+      "facts": ["A11-0505"],
+      "related": ["action-points", "barbarians"]
+    },
+    {
+      "id": "lost-kingdom",
+      "term": "Lost Kingdom",
+      "aliases": ["KvK map"],
+      "definition": "The separate map where KvK is fought; entry is reported to need City Hall 17. Since 1.1.03 Lost Kingdoms come in tiers A, A+, S and S+.",
+      "facts": ["B01-0503", "C04-0013"],
+      "related": ["kvk", "eve-of-the-crusade"]
+    },
+    {
+      "id": "march-queue",
+      "term": "March queue",
+      "aliases": ["marches", "march slots"],
+      "definition": "How many armies you can send out at once, from 1 up to 5 as City Hall rises (5 from City Hall 22). A Trading Post trip uses one too.",
+      "facts": ["A03-0023"],
+      "related": ["trading-post", "city-hall"]
+    },
+    {
+      "id": "mge",
+      "term": "MGE",
+      "aliases": ["Mightiest Governor", "Mightiest Governor Event"],
+      "definition": "A six-day individual ranking event whose top ranks pay legendary sculptures of one featured commander. Many kingdoms decide in advance who may take the top ranks, called a fixed MGE.",
+      "facts": ["B05-0001", "B05-0002"],
+      "related": ["sculptures", "dkp"]
+    },
+    {
+      "id": "migration",
+      "term": "Migration",
+      "aliases": ["migrate", "immigration"],
+      "definition": "Moving your city to another kingdom, which needs City Hall 16 or more, no alliance, troops at home and resources within storehouse protection. You also pay passport pages, and age limits per route change often.",
+      "facts": ["B06-0001", "B06-0003"],
+      "related": ["passport-pages", "storehouse-protection"]
+    },
+    {
+      "id": "more-than-gems",
+      "term": "More Than Gems",
+      "aliases": ["MTG"],
+      "definition": "A two-day event that pays milestone rewards for gems you spend, reported to run about once a month. Guides call it the best time to spend gems once you are past VIP 6.",
+      "facts": ["A11-0502"],
+      "related": ["gems", "vip"]
+    },
+    {
+      "id": "mysterious-merchant",
+      "term": "Mysterious Merchant",
+      "aliases": ["Courier Station", "merchant"],
+      "definition": "A trader at the Courier Station, unlocked at City Hall 6, who arrives at 00:00 UTC with items priced in resources or gems. Guides say to pay with resources and use gems only at deep discounts.",
+      "facts": ["A03-0014", "A04-0011"],
+      "related": ["speedups", "resource-items"]
+    },
+    {
+      "id": "passport-pages",
+      "term": "Passport pages",
+      "aliases": ["passports"],
+      "definition": "The items you spend to migrate, more of them the more power you have, from 1 page under 10M power to 75 above 100M. The Alliance Shop sells a weekly limited stock for individual credits.",
+      "facts": ["B06-0001"],
+      "related": ["migration"]
+    },
+    {
+      "id": "peerless-scholar",
+      "term": "Peerless Scholar",
+      "aliases": ["Lyceum of Wisdom", "quiz"],
+      "definition": "A quiz event at the Lyceum of Wisdom (City Hall 10) with a Mock Exam every weekday and a Preliminary and Final exam every two weeks. Everyone who passes splits a pool of gems.",
+      "facts": ["A10-0005"],
+      "related": ["gems"]
+    },
+    {
+      "id": "rally",
+      "term": "Rally",
+      "aliases": ["rallies"],
+      "definition": "A joint attack where allies add their troops to one player's march. Barbarian Forts can only be beaten this way, and guides tell weaker accounts to join strong rallies rather than fight alone.",
+      "facts": ["A09-0005", "A08-0503"],
+      "related": ["garrison", "barbarians"]
+    },
+    {
+      "id": "resource-items",
+      "term": "Resource items",
+      "aliases": ["RSS items", "resource packs"],
+      "definition": "Resources kept as bag items instead of raw stock, which can't be plundered and have no storage limit. You can open them into raw resources whenever you need them.",
+      "facts": ["A03-0007"],
+      "related": ["storehouse-protection", "zeroing"]
+    },
+    {
+      "id": "sculptures",
+      "term": "Sculptures",
+      "aliases": ["commander sculptures", "heads", "universal sculptures", "gold heads"],
+      "definition": "The items used to unlock and star up commanders; universal legendary sculptures work on any legendary. Guides say to save the universal ones for one long-term legendary.",
+      "facts": ["A06-0510", "A05-0006"],
+      "related": ["mge"]
+    },
+    {
+      "id": "season-of-conquest",
+      "term": "Season of Conquest",
+      "aliases": ["SoC"],
+      "definition": "The repeating KvK stage a kingdom reaches after Season 3, played as rotating stories such as Song of Troy. Registering for a story needs City Hall 25.",
+      "facts": ["C04-0033", "C04-0017"],
+      "related": ["seasons", "seed", "kvk"]
+    },
+    {
+      "id": "seasons",
+      "term": "Seasons 1 to 3",
+      "aliases": ["Preparation Season", "Season 1", "Season 2", "Season 3"],
+      "definition": "The fixed stages a new kingdom goes through: Preparation Season, then Seasons 1, 2 and 3, then Season of Conquest. Season 1 is the kingdom's first KvK.",
+      "facts": ["C04-0033", "B01-0501"],
+      "related": ["season-of-conquest", "kvk"]
+    },
+    {
+      "id": "seed",
+      "term": "Seed",
+      "aliases": ["seeding", "Imperium"],
+      "definition": "The bracket (Imperium, A, B, C or D) a kingdom is matched in for Season of Conquest, set by the power of its top 300 governors. Each governor's power counts in steps, and nothing above 500M counts.",
+      "facts": ["B01-0001", "B08-0008"],
+      "related": ["season-of-conquest", "vacation-permit"]
+    },
+    {
+      "id": "speedups",
+      "term": "Speedups",
+      "aliases": ["universal speedups"],
+      "definition": "Items that cut time from building, research, training or healing; universal ones work on any of them. Free players get them from Daily Objectives, barbarians, the VIP Shop, events and more.",
+      "facts": ["A04-0010"],
+      "related": ["alliance-help", "daily-objectives"]
+    },
+    {
+      "id": "storehouse-protection",
+      "term": "Storehouse protection",
+      "aliases": ["storehouse", "protected resources"],
+      "definition": "The amount of each raw resource your Storehouse keeps safe from plunder, 2.5M at level 25. Protected resources also can't be sent through the Trading Post.",
+      "facts": ["A03-0006", "A03-0030"],
+      "related": ["resource-items", "trading-post", "zeroing"]
+    },
+    {
+      "id": "sunset-canyon",
+      "term": "Sunset Canyon",
+      "aliases": [],
+      "definition": "A ranked mode with free attempts every day, plus extra attempts from VIP 5. The top five of each day's ranking earn Golden Key rewards.",
+      "facts": ["A10-0008"]
+    },
+    {
+      "id": "t4-t5",
+      "term": "T4 / T5",
+      "aliases": ["T4", "T5", "tier 4", "tier 5", "troop tiers"],
+      "definition": "Troop tiers 4 and 5, the two strongest. T4 is the working tier for a free player's first KvK, while T5 needs City Hall 25 and costs much more to heal.",
+      "facts": ["A08-0500", "A08-0505"],
+      "related": ["dkp", "hospital"]
+    },
+    {
+      "id": "trading-post",
+      "term": "Trading Post",
+      "aliases": ["TP"],
+      "definition": "The building that sends resources to an ally's city, taxed at 35% at level 1 down to 8% at level 25. Trips are not instant: a trader walks there and uses a march queue.",
+      "facts": ["A03-0024", "A03-0026"],
+      "related": ["farm-account", "storehouse-protection", "march-queue"]
+    },
+    {
+      "id": "vacation-permit",
+      "term": "Vacation Permit",
+      "aliases": [],
+      "definition": "A permit the king can give a governor in Season of Conquest that takes them out of the kingdom's matchmaking score for the season. Holders also need fewer passport pages to leave.",
+      "facts": ["B03-0007"],
+      "related": ["seed", "passport-pages"]
+    },
+    {
+      "id": "vip",
+      "term": "VIP",
+      "aliases": ["VIP level", "VIP points"],
+      "definition": "A permanent level raised with VIP points, which come from gems (one point per gem), a daily free chest and alliance gifts. Each level adds buffs and a bigger daily chest.",
+      "facts": ["A05-0001", "A05-0004", "A05-0006"],
+      "related": ["gems", "builder-queue"]
+    },
+    {
+      "id": "wheel-of-fortune",
+      "term": "Wheel of Fortune",
+      "aliases": ["WoF", "Spin Tickets"],
+      "definition": "A gem event where you spin for a featured commander's sculptures, which in later seasons needs Spin Tickets. Guides tell free players to spin only for a planned commander and usually stop at 10 spins.",
+      "facts": ["C04-0022", "A11-0503"],
+      "related": ["sculptures", "gems"]
+    },
+    {
+      "id": "zeroing",
+      "term": "Zeroing",
+      "aliases": ["zeroed", "zero"],
+      "definition": "Destroying a governor's troops and city until nothing is left, used by kingdoms as their harshest penalty. Farms holding large raw stockpiles are frequent targets, especially during kill events.",
+      "facts": ["B03-0005", "A13-0005"],
+      "related": ["storehouse-protection", "resource-items", "farm-account"]
+    }
+  ]
+}

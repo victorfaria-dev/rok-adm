@@ -1,0 +1,63 @@
+{
+  "_about": "Inputs of the Action Points calculator (/tools/action-points/).",
+  "cap": {
+    "value": 1500,
+    "unit": "AP cap without buffs",
+    "facts": ["A09-0001"],
+    "evidence": { "A09-0001": "the maximum Action Points is 1,500" }
+  },
+  "dailyClaim": {
+    "value": 500,
+    "unit": "AP claimable once a day",
+    "facts": ["A09-0001", "A09-0006"],
+    "evidence": { "A09-0001": "claim an extra 500 free AP per day", "A09-0006": "claimable whenever AP is below the cap and may push AP above it" }
+  },
+  "barbarianBase": {
+    "value": 50,
+    "unit": "AP per barbarian attack",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "Attacking barbarians costs 50 AP" }
+  },
+  "barbarianStep": {
+    "value": 2,
+    "unit": "AP less per consecutive attack without returning",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "reduces the cost by 2 AP" }
+  },
+  "barbarianMaxStreak": {
+    "value": 10,
+    "unit": "AP largest streak reduction",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "down to a maximum reduction of 10 AP" }
+  },
+  "insightMax": {
+    "value": 10,
+    "unit": "AP more off with the Insight talent, at most",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "can reduce it by up to 10 AP more" }
+  },
+  "packAp": {
+    "value": 500,
+    "unit": "AP per gem purchase",
+    "facts": ["A04-0008"],
+    "evidence": { "A04-0008": "500 AP for 100 gems" }
+  },
+  "packStartGems": {
+    "value": 100,
+    "unit": "gems for the first purchase of the day",
+    "facts": ["A04-0008"],
+    "evidence": { "A04-0008": "the price starts at 100 gems" }
+  },
+  "packStepGems": {
+    "value": 50,
+    "unit": "gems more per purchase",
+    "facts": ["A04-0008"],
+    "evidence": { "A04-0008": "rises by 50 gems per purchase, resetting to 100 gems at the daily server reset" }
+  },
+  "regenPerHour": {
+    "value": 0,
+    "unit": "AP regenerated per hour",
+    "pending": true,
+    "_note": "Unknown in our data (gap L-A09-01, A09-0001). Player measurement only."
+  }
+}

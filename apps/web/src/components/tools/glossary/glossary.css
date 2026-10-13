@@ -1,0 +1,17 @@
+/* /glossary/ (F-88). Tokens only. */
+.g-search { display: grid; gap: var(--ko-space-2); max-width: 40rem; }
+.g-search input[type="search"] { font-family: var(--ko-font-body); }
+.g-empty { display: grid; gap: var(--ko-space-3); justify-items: start; padding: var(--ko-space-4); border: 1px dashed var(--ko-border); border-radius: var(--ko-radius-md); }
+.g-list { margin: 0; display: grid; gap: 0; min-width: 0; }
+.g-term { display: grid; gap: var(--ko-space-1); padding: var(--ko-space-4) 0; border-bottom: 1px solid var(--ko-border); scroll-margin-top: var(--ko-space-20); min-width: 0; }
+.g-term[hidden] { display: none; }
+.g-term:target { box-shadow: inset 3px 0 0 var(--ko-accent); padding-left: var(--ko-space-3); }
+.g-term dt { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--ko-space-1) var(--ko-space-3); }
+.g-anchor { display: inline-flex; align-items: center; min-height: 44px; color: var(--ko-text); text-decoration: none; }
+.g-anchor dfn { font-style: normal; font-family: var(--ko-font-display); font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); font-weight: var(--ko-weight-semibold); }
+@media (hover: hover) and (pointer: fine) { .g-anchor:hover dfn { text-decoration: underline; } }
+.g-aliases { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+.g-term dd { margin: 0; display: grid; gap: var(--ko-space-2); min-width: 0; }
+.g-term dd p { max-width: 65ch; overflow-wrap: anywhere; }
+.g-meta { display: flex; flex-wrap: wrap; gap: var(--ko-space-1) var(--ko-space-3); align-items: center; }
+.g-related { font-size: var(--ko-text-sm); }

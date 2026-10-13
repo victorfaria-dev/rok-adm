@@ -1,0 +1,52 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import { Checklist } from "../../../components/tools/kit/Checklist";
+import RuleList from "../../../components/tools/hoard/RuleList.astro";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import kvk from "../../../../../../packages/planner/tools-data/kvk.json";
+import "../../../components/tools/kit/tools.css";
+
+const groups = kvk.groups.map((g) => ({
+  id: g.id,
+  title: g.title,
+  items: g.items.map((i) => ({
+    id: i.id, text: i.text, ...("detail" in i && i.detail ? { detail: i.detail } : {}), cite: i.facts.length ? cite(i.facts) : null,
+  })),
+}));
+const ids = [...kvk.groups.flatMap((g) => g.items.flatMap((i) => i.facts)), ...kvk.explainer.flatMap((e) => e.facts)];
+---
+<Shell title="KvK readiness" description="A checklist for your first Kingdom vs Kingdom in Rise of Kingdoms (City Hall, troops, hospital, speedups, commanders, alliance) and a plain season explainer. Every item cites its source." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>KvK readiness</h1>
+      <p class="t-lead">Tick what you have ready for Kingdom vs Kingdom (KvK). Your marks stay on this device. Items without a fact card say "No consensus".</p>
+      <DataStamp />
+    </header>
+
+    <section class="t-section" aria-labelledby="kvk-season-h">
+      <h2 id="kvk-season-h">The season in one page</h2>
+      <RuleList rules={kvk.explainer} testId="kvk-explainer" />
+    </section>
+
+    <section class="t-section" aria-labelledby="kvk-list-h">
+      <h2 id="kvk-list-h">Checklist</h2>
+      <nav class="t-links" aria-label="Related tools">
+        <a href="/tools/healing/">Healing planner</a>
+        <a href="/tools/hoard/">Hoard advisor</a>
+        <a href="/tools/migration/">Migration checker</a>
+      </nav>
+      {groups.map((g) => <Checklist client:load listId={`kvk-${g.id}`} title={g.title} items={g.items} level={3} />)}
+    </section>
+
+    <section class="t-deferred" aria-labelledby="t-deferred-h">
+      <h2 id="t-deferred-h">Not here yet</h2>
+      <ul>
+        <li>A checklist by role (rally lead, garrison, filler) and by budget: it waits on more cards.</li>
+        <li>Day-by-day KvK calendars per story: not collected yet.</li>
+      </ul>
+    </section>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>
