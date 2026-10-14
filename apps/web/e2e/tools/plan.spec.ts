@@ -19,84 +19,84 @@ test.describe("gem value table", () => {
     await expect(sum.locator('tr[data-row="ap"]')).toContainText("A04-0008");
     await expect(sum.locator('tr[data-row="speedups"]')).toContainText("A04-0007");
     await expect(sum.locator('tr[data-row="ch"]')).toContainText("800");
-    await expect(sum.locator('tr[data-row="wheel"]')).toContainText("Low confidence");
-    await expect(sum.getByRole("link", { name: "VIP points" })).toHaveAttribute("href", "/tools/vip/");
-    await expect(page.getByText(/Wheel of Fortune guarantees.*needs cost data/)).toBeVisible();
-    await expect(page.getByTestId("gems-guidance")).toContainText("Community divided");
+    await expect(sum.locator('tr[data-row="wheel"]')).toContainText("Confiança baixa");
+    await expect(sum.getByRole("link", { name: "Pontos VIP" })).toHaveAttribute("href", "/tools/vip/");
+    await expect(page.getByText(/Garantias da Roda da Fortuna.*precisa de dados de custo/)).toBeVisible();
+    await expect(page.getByTestId("gems-guidance")).toContainText("Comunidade dividida");
   });
 
   test("AP ladder, City Hall gems and the VIP filter; saved under ko:tools:v1 only", async ({ page }) => {
     await fresh(page, "/tools/gems/");
-    await page.getByLabel("Purchases today").fill("5");
-    await expect(page.getByTestId("gems-ap-total").locator(".t-value")).toHaveText("1,000");
-    await expect(page.getByTestId("gems-ap-total")).toContainText("2,500 AP");
-    await page.getByLabel("Your City Hall level").fill("16");
+    await page.getByLabel("Compras hoje").fill("5");
+    await expect(page.getByTestId("gems-ap-total").locator(".t-value")).toHaveText("1.000");
+    await expect(page.getByTestId("gems-ap-total")).toContainText("2.500 PA");
+    await page.getByLabel("Nível da sua Prefeitura").fill("16");
     await expect(page.getByTestId("gems-ch-left").locator(".t-value")).toHaveText("700");
-    await page.getByLabel("Show items you can buy at").selectOption("3");
-    await expect(page.getByTestId("gems-shop-count")).toHaveText("2 of 32 items shown");
-    await expect(page.getByTestId("gems-shop")).toContainText("1.20");
+    await page.getByLabel("Mostrar itens que você pode comprar com").selectOption("3");
+    await expect(page.getByTestId("gems-shop-count")).toHaveText("2 de 32 itens exibidos");
+    await expect(page.getByTestId("gems-shop")).toContainText("1,20");
     const s = await toolsStore(page);
     expect(s).toMatchObject({ v: 1, inputs: { gems: { apBuys: 5, cityHall: 16, shopVip: "3" } } });
     expect(await page.evaluate(() => localStorage.getItem("ko:v1"))).toBeNull();
     await page.reload();
     await hydrated(page);
-    await expect(page.getByLabel("Purchases today")).toHaveValue("5");
+    await expect(page.getByLabel("Compras hoje")).toHaveValue("5");
   });
 });
 
 async function fillEligible(page: Page): Promise<void> {
-  await page.getByLabel("City Hall level").fill("16");
-  await page.getByLabel("Displayed power (millions)").fill("10");
-  await page.getByLabel("Are you in an alliance?").selectOption("no");
-  await page.getByLabel("Are all your troops home?").selectOption("yes");
-  await page.getByLabel("Are your resources within storehouse protection?").selectOption("yes");
-  await page.getByLabel("Is a migration cooldown active?").selectOption("no");
-  await page.getByLabel("Character age (days)").fill("100");
-  await page.getByLabel("Target kingdom age (days)").fill("100");
+  await page.getByLabel("Nível da Prefeitura").fill("16");
+  await page.getByLabel("Poder exibido (milhões)").fill("10");
+  await page.getByLabel("Você está em uma aliança?").selectOption("no");
+  await page.getByLabel("Todas as suas tropas estão em casa?").selectOption("yes");
+  await page.getByLabel("Seus recursos estão dentro da proteção do Depósito?").selectOption("yes");
+  await page.getByLabel("Há um período de espera de migração ativo?").selectOption("no");
+  await page.getByLabel("Idade do personagem (dias)").fill("100");
+  await page.getByLabel("Idade do reino de destino (dias)").fill("100");
 }
 
 test.describe("migration checker", () => {
   test("starts empty and neutral: no verdict before the user answers", async ({ page }) => {
     await fresh(page, "/tools/migration/");
-    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Not checked yet");
-    await expect(page.getByTestId("mig-verdict")).toContainText("Answer 8 more questions");
-    await expect(page.getByLabel("City Hall level")).toHaveValue("");
-    await expect(page.getByTestId("mig-pages").locator(".t-value")).toHaveText("Enter your power");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Ainda não verificado");
+    await expect(page.getByTestId("mig-verdict")).toContainText("Responda mais 8 perguntas");
+    await expect(page.getByLabel("Nível da Prefeitura")).toHaveValue("");
+    await expect(page.getByTestId("mig-pages").locator(".t-value")).toHaveText("Digite o seu poder");
     await expect(page.locator('[data-check="ch"]')).toHaveAttribute("data-ok", "unknown");
-    await expect(page.locator('[data-check="ch"]')).toContainText("Not checked");
-    await page.getByLabel("City Hall level").fill("12");
-    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Not eligible");
-    await page.getByLabel("City Hall level").fill("");
-    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Not checked yet");
+    await expect(page.locator('[data-check="ch"]')).toContainText("Não verificado");
+    await page.getByLabel("Nível da Prefeitura").fill("12");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Não elegível");
+    await page.getByLabel("Nível da Prefeitura").fill("");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Ainda não verificado");
   });
 
   test("all answers passing are eligible; each failing rule is listed with its card and patch", async ({ page }) => {
     await fresh(page, "/tools/migration/");
     await fillEligible(page);
-    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Eligible");
-    await page.getByLabel("City Hall level").fill("15");
-    await page.getByLabel("Are you in an alliance?").selectOption("yes");
-    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Not eligible");
-    await expect(page.getByTestId("mig-verdict")).toContainText("2 rules block the move");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Elegível");
+    await page.getByLabel("Nível da Prefeitura").fill("15");
+    await page.getByLabel("Você está em uma aliança?").selectOption("yes");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Não elegível");
+    await expect(page.getByTestId("mig-verdict")).toContainText("2 regras bloqueiam a mudança");
     const ch = page.locator('[data-check="ch"]');
     await expect(ch).toHaveAttribute("data-ok", "false");
-    await expect(ch).toContainText("Blocks");
+    await expect(ch).toContainText("Bloqueia");
     await expect(ch).toContainText("B06-0001");
-    await page.getByLabel("City Hall level").fill("16");
-    await page.getByLabel("Are you in an alliance?").selectOption("no");
-    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Eligible");
+    await page.getByLabel("Nível da Prefeitura").fill("16");
+    await page.getByLabel("Você está em uma aliança?").selectOption("no");
+    await expect(page.getByTestId("mig-verdict").locator(".t-value")).toHaveText("Elegível");
   });
 
   test("age limit per route: 150 days passes, 151 fails (1.1.06)", async ({ page }) => {
     await fresh(page, "/tools/migration/");
-    await page.getByLabel("Target kingdom age (days)").fill("0");
-    await page.getByLabel("Character age (days)").fill("150");
+    await page.getByLabel("Idade do reino de destino (dias)").fill("0");
+    await page.getByLabel("Idade do personagem (dias)").fill("150");
     await expect(page.locator('[data-check="age"]')).toHaveAttribute("data-ok", "true");
     await expect(page.locator('[data-check="age"]')).toContainText("1.1.06");
-    await page.getByLabel("Character age (days)").fill("151");
+    await page.getByLabel("Idade do personagem (dias)").fill("151");
     await expect(page.locator('[data-check="age"]')).toHaveAttribute("data-ok", "false");
-    await page.getByLabel("Route", { exact: true }).selectOption("cross-s3");
-    await page.getByLabel("Character age (days)").fill("120");
+    await page.getByLabel("Rota", { exact: true }).selectOption("cross-s3");
+    await page.getByLabel("Idade do personagem (dias)").fill("120");
     await expect(page.locator('[data-check="age"]')).toHaveAttribute("data-ok", "true");
     await expect(page.locator('[data-check="cross-power"]')).toContainText("C04-0025");
   });
@@ -104,41 +104,41 @@ test.describe("migration checker", () => {
   test("passport pages: exact only at known data points, ranges in between", async ({ page }) => {
     await fresh(page, "/tools/migration/");
     const pages = page.getByTestId("mig-pages");
-    const power = page.getByLabel("Displayed power (millions)");
+    const power = page.getByLabel("Poder exibido (milhões)");
     await power.fill("10");
-    await expect(pages.locator(".t-value")).toHaveText("1 page");
+    await expect(pages.locator(".t-value")).toHaveText("1 página");
     await power.fill("30");
-    await expect(pages.locator(".t-value")).toHaveText("Between 1 and 25 pages");
-    await expect(pages).toContainText("Exact table pending");
+    await expect(pages.locator(".t-value")).toHaveText("Entre 1 e 25 páginas");
+    await expect(pages).toContainText("Tabela exata pendente");
     await power.fill("50");
-    await expect(pages.locator(".t-value")).toHaveText("25 pages");
+    await expect(pages.locator(".t-value")).toHaveText("25 páginas");
     await power.fill("100");
-    await expect(pages.locator(".t-value")).toHaveText("Between 25 and 75 pages");
+    await expect(pages.locator(".t-value")).toHaveText("Entre 25 e 75 páginas");
     await power.fill("120");
-    await expect(pages.locator(".t-value")).toHaveText("75 pages");
+    await expect(pages.locator(".t-value")).toHaveText("75 páginas");
   });
 
   test("officer link opens the checker with the kingdom fields only", async ({ page, context }) => {
     await context.grantPermissions(["clipboard-read", "clipboard-write"]);
     await fresh(page, "/tools/migration/");
-    await page.getByLabel("City Hall level").fill("22");
-    await page.getByLabel("Route", { exact: true }).selectOption("cross-s2");
-    await page.getByLabel("Target kingdom age (days)").fill("200");
-    await page.getByLabel("Target kingdom power cap (millions, optional)").fill("40");
-    await page.getByRole("button", { name: /Copy applicant link/ }).click();
+    await page.getByLabel("Nível da Prefeitura").fill("22");
+    await page.getByLabel("Rota", { exact: true }).selectOption("cross-s2");
+    await page.getByLabel("Idade do reino de destino (dias)").fill("200");
+    await page.getByLabel("Limite de poder do reino de destino (milhões, opcional)").fill("40");
+    await page.getByRole("button", { name: /Copiar link para candidatos/ }).click();
     const status = page.getByTestId("mig-officer-status");
     await expect(status).not.toBeEmpty();
     const text = (await status.textContent()) ?? "";
-    const url = text.startsWith("Copy this link: ") ? text.slice("Copy this link: ".length) : await page.evaluate(() => navigator.clipboard.readText());
+    const url = text.startsWith("Copie este link: ") ? text.slice("Copie este link: ".length) : await page.evaluate(() => navigator.clipboard.readText());
     expect(url).toContain("/tools/migration/?s=");
     await page.evaluate(() => localStorage.removeItem("ko:tools:v1"));
     await page.goto(url);
     await hydrated(page);
-    await expect(page.getByText("Showing values from a link")).toBeVisible();
-    await expect(page.getByLabel("Route", { exact: true })).toHaveValue("cross-s2");
-    await expect(page.getByLabel("Target kingdom age (days)")).toHaveValue("200");
-    await expect(page.getByLabel("Target kingdom power cap (millions, optional)")).toHaveValue("40");
-    await expect(page.getByLabel("City Hall level")).toHaveValue("");
+    await expect(page.getByText("Mostrando valores de um link")).toBeVisible();
+    await expect(page.getByLabel("Rota", { exact: true })).toHaveValue("cross-s2");
+    await expect(page.getByLabel("Idade do reino de destino (dias)")).toHaveValue("200");
+    await expect(page.getByLabel("Limite de poder do reino de destino (milhões, opcional)")).toHaveValue("40");
+    await expect(page.getByLabel("Nível da Prefeitura")).toHaveValue("");
     await expect(page.locator('[data-check="cap"]')).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem("ko:tools:v1"))).toBeNull();
   });
@@ -151,7 +151,7 @@ test.describe("migration checker", () => {
     await page.reload();
     await hydrated(page);
     await expect(page.getByRole("checkbox", { name: /Have enough Passport Pages/ })).toBeChecked();
-    await expect(page.locator('[data-checklist="migration-before"] .t-progress')).toHaveText("1 of 7 done");
+    await expect(page.locator('[data-checklist="migration-before"] .t-progress')).toHaveText("1 de 7 concluídos");
   });
 });
 
@@ -162,10 +162,10 @@ test.describe("KvK readiness", () => {
       await expect(page.getByRole("heading", { name: h, exact: true })).toBeVisible();
     }
     await expect(page.locator('[data-checklist="kvk-troops"]')).toContainText("A08-0500");
-    await expect(page.locator('[data-checklist="kvk-commanders"]')).toContainText("No consensus");
-    await expect(page.getByRole("link", { name: "Healing planner" })).toHaveAttribute("href", "/tools/healing/");
-    await expect(page.getByRole("link", { name: "Hoard advisor" })).toHaveAttribute("href", "/tools/hoard/");
-    await expect(page.getByTestId("kvk-explainer")).toContainText("Checked on: 1.1.06");
+    await expect(page.locator('[data-checklist="kvk-commanders"]')).toContainText("Sem consenso");
+    await expect(page.getByRole("link", { name: "Planejador de cura" })).toHaveAttribute("href", "/tools/healing/");
+    await expect(page.getByRole("link", { name: "Guia de acúmulo" })).toHaveAttribute("href", "/tools/hoard/");
+    await expect(page.getByTestId("kvk-explainer")).toContainText("Conferido em: 1.1.06");
     await page.getByRole("checkbox", { name: /Fight your first KvK with T4/ }).check();
     expect(await toolsStore(page)).toMatchObject({ checks: { "kvk-troops": ["t4"] } });
     expect(await page.evaluate(() => localStorage.getItem("ko:v1"))).toBeNull();
@@ -183,7 +183,7 @@ test.describe("hoard advisor", () => {
     await expect(page.locator('[data-goal="eve"]')).toContainText("A09-0007");
     await expect(page.locator('[data-goal="mge"]')).toContainText("A11-0500");
     const universal = page.getByTestId("hoard-general").locator('[data-rule="universal"]');
-    await expect(universal).toContainText("Community divided");
+    await expect(universal).toContainText("Comunidade dividida");
     await expect(universal).toContainText("A02-0503");
     await expect(page.getByTestId("hoard-general")).toContainText("A11-0512");
   });
@@ -193,13 +193,13 @@ test.describe("hoard advisor", () => {
     await page.evaluate(() => localStorage.setItem("ko:tools:v1", JSON.stringify({ v: 1, inventory: { speedupHealingMin: 1234 }, inputs: {}, checks: {} })));
     await page.goto("/tools/hoard/");
     await hydrated(page);
-    await page.getByLabel("Saving for").selectOption("eve");
-    await expect(page.getByLabel("Healing speedups saved (minutes)")).toHaveValue("1234");
-    await page.getByLabel("Saving for").selectOption("mtg");
-    await page.getByLabel("Gems saved (gems)").fill("3000");
-    await page.getByLabel(/Gems target \(gems\)/).fill("7000");
-    await expect(page.getByTestId("hoard-gap-gems").locator(".t-value")).toHaveText("4,000 gems to go (42%)");
-    await expect(page.getByTestId("hoard-gap-gems")).toContainText("pending measurement");
+    await page.getByLabel("Guardando para").selectOption("eve");
+    await expect(page.getByLabel("Guardado: Acelerações de cura (minutos)")).toHaveValue("1234");
+    await page.getByLabel("Guardando para").selectOption("mtg");
+    await page.getByLabel("Guardado: Gemas (gemas)").fill("3000");
+    await page.getByLabel(/Meta: Gemas \(gemas\)/).fill("7000");
+    await expect(page.getByTestId("hoard-gap-gems").locator(".t-value")).toHaveText("Faltam 4.000 gemas (42%)");
+    await expect(page.getByTestId("hoard-gap-gems")).toContainText("medição pendente");
     expect(await toolsStore(page)).toMatchObject({ inventory: { gems: 3000, speedupHealingMin: 1234 }, inputs: { hoard: { goal: "mtg", target_gems: 7000 } } });
   });
 });
@@ -210,8 +210,8 @@ test.describe("without JavaScript", () => {
     test(`${route} renders defaults and sources`, async ({ page }) => {
       await page.goto(route);
       await expect(page.getByTestId(id)).toBeVisible();
-      await expect(page.getByRole("heading", { name: "Sources on this page" })).toBeVisible();
-      await expect(page.getByText(/latest official patch/)).toBeVisible();
+      await expect(page.getByRole("heading", { name: "Fontes desta página" })).toBeVisible();
+      await expect(page.getByText(/último patch oficial/)).toBeVisible();
     });
   }
 });

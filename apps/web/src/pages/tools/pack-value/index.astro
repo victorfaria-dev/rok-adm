@@ -16,41 +16,41 @@ const refs: PackReference[] = low.purchases.map((p) => ({
   id: p.id, label: p.label, priceUsd: p.priceUsd.value, gemsPerUsd: p.gemsPerUsd?.value ?? null, vipPerUsd: p.vipPerUsd?.value ?? null,
 }));
 const method = cite(low.valueMethod.facts);
-const fmt = (n: number, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
-const usd = (x: number) => `$${fmt(x, Number.isInteger(x) ? 0 : 2)}`;
+const fmt = (n: number, d = 0) => n.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const usd = (x: number) => `US$ ${fmt(x, Number.isInteger(x) ? 0 : 2)}`;
 const ids = [...low.valueMethod.facts, ...low.purchases.flatMap((p) => p.facts)];
 ---
-<Shell title="Pack value" description="Gems and VIP points per dollar for a Rise of Kingdoms pack at the price your store shows. Raw ratios only: items are never priced in gems." mode="operate">
+<Shell title="Valor de pacotes" description="Gemas e pontos VIP por dólar de um pacote de Rise of Kingdoms, no preço que a sua loja mostra. Só razões brutas: os itens nunca são avaliados em gemas." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Pack value</h1>
-      <p class="t-lead">Gems and VIP points per dollar for a pack, at the price you see. Values stay on this device.</p>
+      <h1>Valor de pacotes</h1>
+      <p class="t-lead">Gemas e pontos VIP por dólar de um pacote, no preço que você vê. Os valores ficam neste aparelho.</p>
       <DataStamp />
     </header>
 
     <section class="t-section" aria-labelledby="pv-limits-h" data-pack-limits>
-      <h2 id="pv-limits-h">What this does not tell you</h2>
+      <h2 id="pv-limits-h">O que isto não diz</h2>
       <ul>
-        <li>Only gems and VIP points count. Speedups, sculptures, materials and keys are not converted to gems: depending on the basis, that changes which pack looks best by up to about 5×. <Cite cite={method} /></li>
-        <li>The “% value” labels in the store use undiscounted prices, so they are not compared here.</li>
-        <li>Store prices depend on region, currency, taxes and date. The reference prices below are USD list prices quoted by players, sellers and guides, not your price.</li>
-        <li>It does not say whether to buy. A pack worth many gems per dollar is still money spent.</li>
+        <li>Só contam gemas e pontos VIP. Acelerações, esculturas, materiais e chaves não são convertidos em gemas: dependendo da base, isso muda qual pacote parece o melhor em até cerca de 5×. <Cite cite={method} /></li>
+        <li>Os selos de “% de valor” da loja usam preços sem desconto, então não são comparados aqui.</li>
+        <li>Os preços da loja dependem de região, moeda, impostos e data. Os preços de referência abaixo são preços de tabela em USD citados por jogadores, vendedores e guias, não o seu preço.</li>
+        <li>Não diz se você deve comprar. Um pacote que rende muitas gemas por dólar continua sendo dinheiro gasto.</li>
       </ul>
     </section>
 
     <PackValueCalc client:load refs={refs} method={method} />
 
     <section class="t-section" aria-labelledby="pv-ref-h">
-      <h2 id="pv-ref-h">Reference packs (USD list prices)</h2>
+      <h2 id="pv-ref-h">Pacotes de referência (preços de tabela em USD)</h2>
       <p class="t-note">{low.priceWarning}</p>
-      <div class="t-table" role="region" aria-label="Reference packs, table" tabindex="0">
+      <div class="t-table" role="region" aria-label="Pacotes de referência, tabela" tabindex="0">
         <table data-testid="pv-refs">
-          <thead><tr><th scope="col">Pack</th><th scope="col">List price</th><th scope="col">Gems per $</th><th scope="col">VIP points per $</th><th scope="col">Source</th></tr></thead>
+          <thead><tr><th scope="col">Pacote</th><th scope="col">Preço de tabela</th><th scope="col">Gemas por US$</th><th scope="col">Pontos VIP por US$</th><th scope="col">Fonte</th></tr></thead>
           <tbody>
             {low.purchases.map((p) => (
               <tr data-row={p.id}>
                 <td>{p.label}</td>
-                <td><span class="mono">{usd(p.priceUsd.value)}</span> <span class="t-note">list price, varies by region</span></td>
+                <td><span class="mono">{usd(p.priceUsd.value)}</span> <span class="t-note">preço de tabela, varia por região</span></td>
                 <td class="mono">{p.gemsPerUsd ? fmt(p.gemsPerUsd.value) : "–"}</td>
                 <td class="mono">{p.vipPerUsd ? fmt(p.vipPerUsd.value) : "–"}</td>
                 <td><Cite cite={cite(p.facts)} /></td>
@@ -59,7 +59,7 @@ const ids = [...low.valueMethod.facts, ...low.purchases.flatMap((p) => p.facts)]
           </tbody>
         </table>
       </div>
-      <p class="t-note">For which of these a Low spender buys first, see the <a href="/guide/#budget-low">Low spender targets</a> in your guide (Low profile).</p>
+      <p class="t-note">Para saber qual destes um jogador de gasto baixo compra primeiro, veja as <a href="/guide/#budget-low">metas de gasto baixo</a> no seu guia (perfil Baixo).</p>
     </section>
     <SourcesList ids={ids} />
   </div>

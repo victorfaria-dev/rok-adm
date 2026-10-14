@@ -10,8 +10,8 @@ export interface BuildingTable { id: string; name: string; rows: BuildingRow[]; 
 
 export interface BuildingsCalcProps { tables: BuildingTable[] }
 
-const fmt = (n: number) => n.toLocaleString("en-US");
-const res = (n: number) => (n === 0 ? "None" : fmt(n));
+const fmt = (n: number) => n.toLocaleString("pt-BR");
+const res = (n: number) => (n === 0 ? "Nenhum" : fmt(n));
 const levels = (xs: number[]) => xs.join(", ");
 
 /** F-81: resources, items and raw time from one level to another, any building. */
@@ -28,45 +28,45 @@ export default function BuildingsCalc({ tables }: BuildingsCalcProps) {
   try {
     cost = upgradeCost(table.rows, from, to);
   } catch (e) {
-    error = e instanceof RangeError ? "Pick a target level above your current level." : "These levels cannot be read.";
+    error = e instanceof RangeError ? "Escolha um nível alvo acima do seu nível atual." : "Não foi possível ler estes níveis.";
   }
   const target = table.rows.find((r) => r.level === to);
   const req = cleanRequirement(target?.requirements);
   const c = table.cite;
   const notes: string[] = [];
-  if (cost?.skipped.length) notes.push(`Level ${levels(cost.skipped)} left out: that row of the source table is garbled. Check it in game.`);
-  if (cost?.missingTime.length) notes.push(`No raw time in the table for level ${levels(cost.missingTime)}: the time shown leaves it out.`);
-  const bonusNote = "Read as raw time ÷ (1 + bonus). Your bonus is your own figure (pending measurement).";
+  if (cost?.skipped.length) notes.push(`Nível ${levels(cost.skipped)} fora da conta: essa linha da tabela de origem está ilegível. Confira no jogo.`);
+  if (cost?.missingTime.length) notes.push(`Sem tempo bruto na tabela para o nível ${levels(cost.missingTime)}: o tempo mostrado não o inclui.`);
+  const bonusNote = "Lido como tempo bruto ÷ (1 + bônus). O bônus é um número seu (medição pendente).";
 
   return (
     <div class="t-page-body" data-tool="buildings">
-      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Building and levels">
-        <SelectField id="b-building" label="Building" value={table.id} onChange={(x) => set({ building: x })}
+      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Construção e níveis">
+        <SelectField id="b-building" label="Construção" value={table.id} onChange={(x) => set({ building: x })}
           options={tables.map((t) => ({ value: t.id, label: t.name }))} />
-        <SelectField id="b-from" label="Current level" value={from} onChange={(x) => set({ from: x })}
-          options={[{ value: 0, label: "Not built yet" }, ...table.rows.map((r) => ({ value: r.level, label: `Level ${r.level}` }))]} />
-        <SelectField id="b-to" label="Target level" value={to} onChange={(x) => set({ to: x })}
-          options={table.rows.map((r) => ({ value: r.level, label: `Level ${r.level}` }))} />
-        <NumberField id="b-bonus" label="Your build speed bonus" suffix="%" value={v.bonusPct} max={1000} integer={false} pending
-          onChange={(x) => set({ bonusPct: x })} help="From your City Hall info screen. 0 shows raw time." />
+        <SelectField id="b-from" label="Nível atual" value={from} onChange={(x) => set({ from: x })}
+          options={[{ value: 0, label: "Ainda não construído" }, ...table.rows.map((r) => ({ value: r.level, label: `Nível ${r.level}` }))]} />
+        <SelectField id="b-to" label="Nível alvo" value={to} onChange={(x) => set({ to: x })}
+          options={table.rows.map((r) => ({ value: r.level, label: `Nível ${r.level}` }))} />
+        <NumberField id="b-bonus" label="Seu bônus de velocidade de construção" suffix="%" value={v.bonusPct} max={1000} integer={false} pending
+          onChange={(x) => set({ bonusPct: x })} help="Da tela de informações da Prefeitura. 0 mostra o tempo bruto." />
       </form>
       {error || !cost ? (
         <p class="t-error" role="alert" data-testid="b-error">{error}</p>
       ) : (
         <>
-        {from === to ? <p class="t-note" data-testid="b-same">You are already at this level: nothing to pay.</p> : null}
-        <Results title={`${table.name}: level ${from} to ${to}`}>
-          <ResultRow testId="b-food" label="Food" value={res(cost.food)} cite={c} notes={notes} />
-          <ResultRow testId="b-wood" label="Wood" value={res(cost.wood)} cite={c} />
-          <ResultRow testId="b-stone" label="Stone" value={res(cost.stone)} cite={c} />
-          <ResultRow testId="b-gold" label="Gold" value={res(cost.gold)} cite={c} />
-          <ResultRow testId="b-items" label="Items" cite={c}
-            value={cost.items.length ? cost.items.map((i) => `${i.name} ×${fmt(i.count)}`).join(", ") : "None"}
-            notes={cost.unreadableExtra.length ? [`Item cell for level ${levels(cost.unreadableExtra)} is not readable in the source table.`] : []} />
-          <ResultRow testId="b-time" label="Raw build time" value={formatDuration(cost.seconds)} cite={c} />
-          <ResultRow testId="b-time-buffed" label={`Time with a ${fmt(v.bonusPct)}% speed bonus`} value={formatDuration(buffedSeconds(cost.seconds, v.bonusPct))}
-            cite={c} pending={["build speed bonus"]} notes={[bonusNote]} />
-          <ResultRow testId="b-req" label={`Needed for level ${to}`} value={req ?? "Nothing listed"} cite={c} />
+        {from === to ? <p class="t-note" data-testid="b-same">Você já está neste nível: nada a pagar.</p> : null}
+        <Results title={`${table.name}: nível ${from} a ${to}`}>
+          <ResultRow testId="b-food" label="Comida" value={res(cost.food)} cite={c} notes={notes} />
+          <ResultRow testId="b-wood" label="Madeira" value={res(cost.wood)} cite={c} />
+          <ResultRow testId="b-stone" label="Pedra" value={res(cost.stone)} cite={c} />
+          <ResultRow testId="b-gold" label="Ouro" value={res(cost.gold)} cite={c} />
+          <ResultRow testId="b-items" label="Itens" cite={c}
+            value={cost.items.length ? cost.items.map((i) => `${i.name} ×${fmt(i.count)}`).join(", ") : "Nenhum"}
+            notes={cost.unreadableExtra.length ? [`A célula de itens do nível ${levels(cost.unreadableExtra)} não é legível na tabela de origem.`] : []} />
+          <ResultRow testId="b-time" label="Tempo bruto de construção" value={formatDuration(cost.seconds)} cite={c} />
+          <ResultRow testId="b-time-buffed" label={`Tempo com bônus de velocidade de ${fmt(v.bonusPct)}%`} value={formatDuration(buffedSeconds(cost.seconds, v.bonusPct))}
+            cite={c} pending={["bônus de velocidade de construção"]} notes={[bonusNote]} />
+          <ResultRow testId="b-req" label={`Necessário para o nível ${to}`} value={req ?? "Nada listado"} cite={c} />
         </Results>
         </>
       )}

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "preact/hooks";
 import type { TargetedEvent } from "preact";
 import { validateTag } from "../../lib/card";
 import {
-  ALLIANCE_COLORS, crestFileName, defaultCrest, describeCrest, EMBLEM_LABELS, EMBLEM_NAMES, emblemPoints, pathOf,
+  ALLIANCE_COLORS, ALLIANCE_COLOR_NAMES, crestFileName, defaultCrest, describeCrest, EMBLEM_LABELS, EMBLEM_NAMES, emblemPoints, pathOf,
   readSavedCrest, SHIELD_LABELS, SHIELD_SHAPES, SHIELDS, writeCrest, type CrestV1,
 } from "../../lib/crest";
 import type { Crest3D } from "../../lib/crest-3d";
@@ -12,7 +12,7 @@ import CrestSvg from "../CrestSvg";
 import "./crest.css";
 
 const REDUCE_MQ = "(prefers-reduced-motion: reduce)";
-const FALLBACK = "The 3D view is not available on this device or browser, so you are seeing the 2D crest. Everything else still works.";
+const FALLBACK = "A visão em 3D não está disponível neste aparelho ou navegador, então você está vendo o brasão em 2D. O resto continua funcionando.";
 
 type Mode = "2d" | "loading" | "3d";
 
@@ -76,7 +76,7 @@ export default function CrestBuilder() {
     mod.current
       .mountCrest3D(host.current, crest, {
         autoRotate,
-        label: `3D view: ${describeCrest(crest)} Drag or use the arrow keys to rotate.`,
+        label: `Visão em 3D: ${describeCrest(crest)} Arraste ou use as setas do teclado para girar.`,
         onLost: fallback,
         cancelled: () => cancelled,
       })
@@ -131,16 +131,16 @@ export default function CrestBuilder() {
   };
 
   const exportFile = async (kind: "svg" | "png" | "3d") => {
-    setStatus("Preparing the file…");
+    setStatus("Preparando o arquivo…");
     try {
       const ex = await import("../../lib/crest-export");
       const file = kind === "3d" ? crestFileName(crest, "png").replace(".png", "-3d.png") : crestFileName(crest, kind);
       const blob = kind === "svg" ? ex.crestSvgBlob(crest) : kind === "png" ? await ex.crestPngBlob(crest) : await view.current!.snapshot();
       ex.saveBlob(blob, file);
       document.dispatchEvent(new CustomEvent("ko:crest-export", { detail: { file, bytes: blob.size, type: blob.type } }));
-      setStatus(`Saved ${file}.`);
+      setStatus(`Salvo ${file}.`);
     } catch (err) {
-      setStatus(err instanceof Error ? err.message : "Could not save the file.");
+      setStatus(err instanceof Error ? err.message : "Não foi possível salvar o arquivo.");
     }
   };
 
@@ -149,21 +149,21 @@ export default function CrestBuilder() {
 
   return (
     <div class="cr-wrap">
-      <section class="cr-stage" aria-label="Crest preview">
+      <section class="cr-stage" aria-label="Prévia do brasão">
         <div class="cr-view" data-mode={mode}>
-          {(mode !== "3d" || preparing) && <CrestSvg crest={crest} class="cr-svg" label={`Alliance crest: ${desc}`} />}
+          {(mode !== "3d" || preparing) && <CrestSvg crest={crest} class="cr-svg" label={`Brasão da aliança: ${desc}`} />}
           <div ref={host} class="cr-3d" hidden={mode !== "3d" || preparing} />
         </div>
         <p class="cr-desc">{desc}</p>
         <div class="cr-row">
           {mode === "3d" ? (
             <>
-              <button ref={backBtn} type="button" class="btn btn-secondary" onClick={close3d}>Back to 2D</button>
-              <button type="button" class="btn btn-secondary" onClick={() => exportFile("3d")} disabled={preparing}>Download 3D PNG</button>
+              <button ref={backBtn} type="button" class="btn btn-secondary" onClick={close3d}>Voltar ao 2D</button>
+              <button type="button" class="btn btn-secondary" onClick={() => exportFile("3d")} disabled={preparing}>Baixar PNG em 3D</button>
             </>
           ) : (
             <button ref={threeBtn} type="button" class="btn btn-secondary" onClick={open3d} disabled={mode === "loading"} data-view-3d>
-              {mode === "loading" ? "Loading 3D…" : "View in 3D"}
+              {mode === "loading" ? "Carregando 3D…" : "Ver em 3D"}
             </button>
           )}
         </div>
@@ -171,23 +171,23 @@ export default function CrestBuilder() {
           <>
             <label class="cr-check">
               <input type="checkbox" checked={autoRotate} onChange={(e) => setAutoRotate(e.currentTarget.checked)} data-auto-rotate />
-              <span>Rotate on its own</span>
+              <span>Girar sozinho</span>
             </label>
             <p class="cr-help">
-              Drag the shield or focus it and use the arrow keys to turn it.
-              {reduce && " Your device asks for reduced motion, so it starts still."}
+              Arraste o escudo ou foque nele e use as setas do teclado para girá-lo.
+              {reduce && " Seu aparelho pede movimento reduzido, então ele começa parado."}
             </p>
           </>
         )}
-        <p class="cr-help" role="status" data-3d-status>{mode === "loading" ? "Loading the 3D view…" : mode === "3d" && preparing ? "Preparing the 3D view…" : ""}</p>
+        <p class="cr-help" role="status" data-3d-status>{mode === "loading" ? "Carregando a visão em 3D…" : mode === "3d" && preparing ? "Preparando a visão em 3D…" : ""}</p>
         {notice && <p class="cr-notice" data-fallback>{notice}</p>}
-        <p class="cr-help">{mode === "2d" || mode === "loading" ? "The 3D view loads only when you ask for it (about 140 KB)." : ""}</p>
+        <p class="cr-help">{mode === "2d" || mode === "loading" ? "A visão em 3D só é carregada quando você pede (cerca de 140 KB)." : ""}</p>
       </section>
 
       <form class="cr-form" onSubmit={(e) => e.preventDefault()} autocomplete="off">
-        <h2>Design your crest</h2>
+        <h2>Monte o seu brasão</h2>
         <fieldset class="cr-group">
-          <legend>Shield</legend>
+          <legend>Escudo</legend>
           <div class="cr-options">
             {SHIELD_SHAPES.map((s) => (
               <label class="cr-option">
@@ -199,24 +199,24 @@ export default function CrestBuilder() {
           </div>
         </fieldset>
         <fieldset class="cr-group">
-          <legend>Alliance colour</legend>
+          <legend>Cor da aliança</legend>
           <div class="cr-swatches">
             {ALLIANCE_COLORS.map((c) => (
               <label class="cr-sw" style={`--sw: var(--ko-alliance-${c})`}>
                 <input type="radio" name="crest-color" value={c} checked={crest.color === c} onChange={() => update({ color: c })} />
-                <span class="visually-hidden">{c}</span>
+                <span class="visually-hidden">{ALLIANCE_COLOR_NAMES[c]}</span>
               </label>
             ))}
           </div>
         </fieldset>
         <div class="cr-field">
-          <label for={tagId}>Alliance tag</label>
+          <label for={tagId}>Sigla da aliança</label>
           <input id={tagId} value={tagRaw} maxLength={6} onInput={onTag} aria-invalid={tagError ? "true" : undefined}
             aria-describedby={`${tagId}-help`} placeholder="ABC" autocapitalize="characters" spellcheck={false} />
-          <p id={`${tagId}-help`} class={tagError ? "cr-error" : "cr-help"}>{tagError ?? "2 to 4 letters or digits, shown as [ABC]. Leave empty for no tag."}</p>
+          <p id={`${tagId}-help`} class={tagError ? "cr-error" : "cr-help"}>{tagError ?? "2 a 4 letras ou dígitos, exibida como [ABC]. Deixe em branco para ficar sem sigla."}</p>
         </div>
         <fieldset class="cr-group">
-          <legend>Emblem</legend>
+          <legend>Emblema</legend>
           <div class="cr-options">
             {EMBLEM_NAMES.map((e) => (
               <label class="cr-option">
@@ -228,9 +228,9 @@ export default function CrestBuilder() {
           </div>
         </fieldset>
         <div class="cr-actions">
-          <button type="button" class="btn btn-primary" onClick={() => exportFile("png")} data-export-png>Download PNG</button>
-          <button type="button" class="btn btn-secondary" onClick={() => exportFile("svg")} data-export-svg>Download SVG</button>
-          <p class="cr-help" role="status">{status || (saved ? "Saved on this device. It also shows on your governor card." : "Changes save on this device.")}</p>
+          <button type="button" class="btn btn-primary" onClick={() => exportFile("png")} data-export-png>Baixar PNG</button>
+          <button type="button" class="btn btn-secondary" onClick={() => exportFile("svg")} data-export-svg>Baixar SVG</button>
+          <p class="cr-help" role="status">{status || (saved ? "Salvo neste aparelho. Também aparece no seu cartão de governador." : "As alterações são salvas neste aparelho.")}</p>
         </div>
       </form>
     </div>

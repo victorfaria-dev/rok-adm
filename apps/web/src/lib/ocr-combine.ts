@@ -23,13 +23,13 @@ export interface Combined {
 }
 
 export const SCREEN_NAMES: Record<ScreenKind, string> = {
-  profile: "Governor Profile",
-  city: "City view (City Hall tapped)",
-  vip: "VIP screen",
-  album: "Album",
+  profile: "Perfil do Governador",
+  city: "Visão da cidade (Prefeitura tocada)",
+  vip: "Tela de VIP",
+  album: "Álbum",
 };
 
-const fmt = (n: number) => n.toLocaleString("en-US");
+const fmt = (n: number) => n.toLocaleString("pt-BR");
 /** Same name, ignoring spaces, case and the usual digit slips (l/I/| for 1, O for 0). */
 const norm = (s: string) => s.replace(/\s+/g, "").replace(/(?<=\d|^)[lI|]|[lI|](?=\d)/g, "1").replace(/(?<=\d)O|O(?=\d)/g, "0").toLowerCase();
 const sameName = (a: string, b: string) => norm(a) === norm(b);
@@ -38,7 +38,7 @@ export function combineReads(reads: readonly ScreenRead[], vipLevels: readonly V
   const out: Combined = { values: {}, sources: {}, notes: [], album: null, screens: [] };
   const last = <K extends ScreenKind>(k: K) => {
     const all = reads.filter((r) => r.screen === k) as Extract<ScreenRead, { screen: K }>[];
-    if (all.length > 1) out.notes.push(`${all.length} ${SCREEN_NAMES[k]} screenshots: the last one is used.`);
+    if (all.length > 1) out.notes.push(`${all.length} prints de "${SCREEN_NAMES[k]}": o último é usado.`);
     return all[all.length - 1];
   };
   const set = (key: FieldKey, value: number | string | null | undefined, from: ScreenKind) => {
@@ -56,7 +56,7 @@ export function combineReads(reads: readonly ScreenRead[], vipLevels: readonly V
   }
   if (profile) {
     if (profile.power !== null && city?.power != null && profile.power !== city.power) {
-      out.notes.push(`Power differs between the Governor Profile (${fmt(profile.power)}) and the city view (${fmt(city.power)}). The profile value is suggested; power changes often, so use the newest screenshot.`);
+      out.notes.push(`O poder difere entre o Perfil do Governador (${fmt(profile.power)}) e a visão da cidade (${fmt(city.power)}). O valor do perfil é sugerido; o poder muda muito, então use o print mais recente.`);
     }
     set("governorId", profile.governorId, "profile");
     set("power", profile.power, "profile");
@@ -67,18 +67,18 @@ export function combineReads(reads: readonly ScreenRead[], vipLevels: readonly V
   }
   if (vip) {
     if (vip.vip !== null && city?.vip != null && vip.vip !== city.vip) {
-      out.notes.push(`VIP level differs between the VIP screen (${vip.vip}) and the badge in the city view (${city.vip}). The VIP screen is suggested.`);
+      out.notes.push(`O nível de VIP difere entre a tela de VIP (${vip.vip}) e o emblema na visão da cidade (${city.vip}). A tela de VIP é sugerida.`);
     }
     let level = vip.vip;
     if (vip.nextLevelPoints !== null) {
       const next = vipLevels.find((l) => l.threshold === vip.nextLevelPoints);
       if (level === null && next) {
         level = next.vip - 1;
-        out.notes.push(`VIP level ${level} worked out from the points bar's target (${fmt(vip.nextLevelPoints)}).`);
+        out.notes.push(`Nível de VIP ${level} deduzido do alvo da barra de pontos (${fmt(vip.nextLevelPoints)}).`);
       } else if (level !== null && vipLevels.length) {
         const want = level + 1, target = vip.nextLevelPoints;
         if (!vipLevels.some((l) => l.vip === want && l.threshold === target)) {
-          out.notes.push(`The points bar's target (${fmt(target)}) is not the VIP ${want} threshold in our table. Check the VIP level and points.`);
+          out.notes.push(`O alvo da barra de pontos (${fmt(target)}) não é o limite do VIP ${want} na nossa tabela. Confira o nível de VIP e os pontos.`);
         }
       }
     }

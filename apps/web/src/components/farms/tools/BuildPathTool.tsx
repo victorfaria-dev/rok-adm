@@ -8,23 +8,23 @@ import { Sourced } from "../shared/Sourced";
 import { SelectField, TextField } from "./Field";
 
 export const LEVEL_LABEL: Record<BuildCheckField, string> = {
-  cityHall: "City Hall",
-  tradingPost: "Trading Post",
-  goldmine: "Goldmine",
-  academy: "Academy",
-  commanderLevel: "Gathering commander level",
+  cityHall: "Prefeitura",
+  tradingPost: "Entreposto Comercial",
+  goldmine: "Mina de Ouro",
+  academy: "Academia",
+  commanderLevel: "Nível do comandante de coleta",
 };
 const FIELDS = Object.keys(LEVEL_LABEL) as FarmLevelField[];
 
 export const STATUS_TEXT: Record<BuildStepStatus, string> = {
-  done: "Done",
-  todo: "To do",
-  unknown: "Enter your level to check",
+  done: "Concluído",
+  todo: "A fazer",
+  unknown: "Informe seu nível para conferir",
   info: "Info",
 };
 const STATUS_ICON: Record<BuildStepStatus, string> = { done: "✓", todo: "!", unknown: "?", info: "i" };
 
-const FOCUS_OPTIONS = FARM_FOCUSES.map((f) => ({ value: f, label: f === "general" ? "All resources" : RESOURCE_LABEL[f] }));
+const FOCUS_OPTIONS = FARM_FOCUSES.map((f) => ({ value: f, label: f === "general" ? "Todos os recursos" : RESOURCE_LABEL[f] }));
 
 type LevelText = Record<FarmLevelField, string>;
 const emptyText = (): LevelText => ({ cityHall: "", tradingPost: "", goldmine: "", academy: "", commanderLevel: "" });
@@ -45,8 +45,8 @@ function StatusMark({ status }: { status: BuildStepStatus }): JSX.Element {
 
 function levelLine(s: BuildStep): string | null {
   if (!s.check) return null;
-  const need = `Needs ${LEVEL_LABEL[s.check.field]} ${s.check.min}.`;
-  return s.current === null ? `${need} You: not entered.` : `${need} You: ${s.current}.`;
+  const need = `Precisa de ${LEVEL_LABEL[s.check.field]} ${s.check.min}.`;
+  return s.current === null ? `${need} Você: não informado.` : `${need} Você: ${s.current}.`;
 }
 
 function StepItem({ s }: { s: BuildStep }): JSX.Element {
@@ -60,7 +60,7 @@ function StepItem({ s }: { s: BuildStep }): JSX.Element {
       {line && <p class="ft-step-level">{line}</p>}
       <p class="ft-step-detail">{s.detail}</p>
       <details class="ft-details">
-        <summary>Sources for this step</summary>
+        <summary>Fontes deste passo</summary>
         <Sourced confidence={s.confidence} facts={s.facts} gaps={s.gaps} hypothesis={s.hypothesis} />
       </details>
     </li>
@@ -109,12 +109,12 @@ export default function BuildPathTool(): JSX.Element {
   const done = checkable.filter((s) => s.status === "done").length;
   const unknown = checkable.filter((s) => s.status === "unknown").length;
   const summary = hasErrors
-    ? "Fix the highlighted fields to update the path."
+    ? "Corrija os campos destacados para atualizar o caminho."
     : path.next
-      ? `Next step: ${path.next.label}. ${done} of ${checkable.length} checked steps done.`
+      ? `Próximo passo: ${path.next.label}. ${done} de ${checkable.length} passos conferidos concluídos.`
       : unknown > 0
-        ? `Enter your levels to find your next step. ${done} of ${checkable.length} checked steps done.`
-        : `Every checked step is done (${done} of ${checkable.length}).`;
+        ? `Informe seus níveis para achar o próximo passo. ${done} de ${checkable.length} passos conferidos concluídos.`
+        : `Todos os passos conferidos estão concluídos (${done} de ${checkable.length}).`;
 
   const setLevel = (k: FarmLevelField) => (v: string) => {
     setText((t) => ({ ...t, [k]: v }));
@@ -126,23 +126,23 @@ export default function BuildPathTool(): JSX.Element {
     try {
       const s = updateFarm(farm.id, { levels: levels, role: focus });
       setFarms(s.farms);
-      setSaved(`Saved to ${farm.name}.`);
+      setSaved(`Salvo em ${farm.name}.`);
     } catch (e) {
-      setSaved(e instanceof Error ? e.message : "Could not save.");
+      setSaved(e instanceof Error ? e.message : "Não foi possível salvar.");
     }
   };
 
-  const farmOptions = [{ value: "", label: "Enter levels by hand" }, ...farms.map((f) => ({ value: f.id, label: f.name }))];
+  const farmOptions = [{ value: "", label: "Informar níveis à mão" }, ...farms.map((f) => ({ value: f.id, label: f.name }))];
 
   return (
     <div class="ft">
       <form class="fm-card ft-form" aria-labelledby="bp-form-h" onSubmit={(e) => e.preventDefault()}>
-        <h2 id="bp-form-h">Your farm</h2>
-        {missing && <p class="fm-note" data-missing>That farm is not saved in this browser. Enter its levels by hand.</p>}
+        <h2 id="bp-form-h">Sua conta farm</h2>
+        {missing && <p class="fm-note" data-missing>Essa conta farm não está salva neste navegador. Informe os níveis à mão.</p>}
         {farms.length > 0 ? (
-          <SelectField id="bp-farm" label="Farm" value={farmId} options={farmOptions} onValue={(id) => load(farms.find((f) => f.id === id))} />
+          <SelectField id="bp-farm" label="Conta farm" value={farmId} options={farmOptions} onValue={(id) => load(farms.find((f) => f.id === id))} />
         ) : (
-          <p class="fm-note">No farms saved yet. Enter levels by hand, or add a farm in <a href="/farms/">My farms</a>.</p>
+          <p class="fm-note">Nenhuma conta farm salva ainda. Informe os níveis à mão ou adicione uma em <a href="/farms/">Minhas contas farm</a>.</p>
         )}
         <div class="ft-fields">
           {FIELDS.map((k) => (
@@ -150,24 +150,24 @@ export default function BuildPathTool(): JSX.Element {
               key={k}
               id={`bp-${k}`}
               label={LEVEL_LABEL[k]}
-              hint={`Level ${FARM_LEVEL_RANGES[k][0]} to ${FARM_LEVEL_RANGES[k][1]}. Leave empty if you don't know.`}
+              hint={`Nível ${FARM_LEVEL_RANGES[k][0]} a ${FARM_LEVEL_RANGES[k][1]}. Deixe em branco se não souber.`}
               value={text[k]}
               onValue={setLevel(k)}
               error={errorOf(parsed[k])}
             />
           ))}
-          <SelectField id="bp-focus" label="Focus" hint="What the farm mainly gathers. Picks the Academy steps." value={focus} options={FOCUS_OPTIONS} onValue={(v) => { setFocus(v); setSaved(""); }} />
+          <SelectField id="bp-focus" label="Foco" hint="O que a conta farm mais coleta. Define os passos da Academia." value={focus} options={FOCUS_OPTIONS} onValue={(v) => { setFocus(v); setSaved(""); }} />
         </div>
         {farm && (
           <div class="fm-actions">
-            <button type="button" class="btn btn-secondary" disabled={hasErrors} onClick={save} aria-describedby="bp-save-status">Save levels to {farm.name}</button>
+            <button type="button" class="btn btn-secondary" disabled={hasErrors} onClick={save} aria-describedby="bp-save-status">Salvar níveis em {farm.name}</button>
           </div>
         )}
         <p id="bp-save-status" class="ft-saved" role="status">{saved}</p>
       </form>
 
       <section class="ft-section" aria-labelledby="bp-next-h">
-        <h2 id="bp-next-h">Next step</h2>
+        <h2 id="bp-next-h">Próximo passo</h2>
         <p class="ft-live" aria-live="polite" data-summary>{summary}</p>
         {path.next && (
           <article class="fm-card ft-next" data-next={path.next.id}>
@@ -180,11 +180,11 @@ export default function BuildPathTool(): JSX.Element {
       </section>
 
       <section class="ft-section" aria-labelledby="bp-path-h">
-        <h2 id="bp-path-h">Build path</h2>
+        <h2 id="bp-path-h">Caminho de construção</h2>
         <ol class="ft-steps" data-stages>
           {path.stages.map((stage) => (
             <li key={stage.id} data-stage={stage.id}>
-              <h3>{stage.label}{stage.complete ? " (done)" : ""}</h3>
+              <h3>{stage.label}{stage.complete ? " (concluído)" : ""}</h3>
               <ol class="ft-steps">
                 {stage.steps.map((s) => <StepItem key={s.id} s={s} />)}
               </ol>
@@ -194,7 +194,7 @@ export default function BuildPathTool(): JSX.Element {
       </section>
 
       <section class="fm-card" aria-labelledby="bp-tp-h">
-        <h2 id="bp-tp-h">Trading Post unlock: contested</h2>
+        <h2 id="bp-tp-h">Desbloqueio do Entreposto Comercial: contestado</h2>
         <p>{path.tradingPostUnlock.text}</p>
         <Sourced confidence={path.tradingPostUnlock.confidence} facts={path.tradingPostUnlock.facts} gaps={path.tradingPostUnlock.gaps} />
       </section>

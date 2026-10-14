@@ -8,16 +8,16 @@ interface Props {
   useLink?: () => void;
 }
 
-/** "Copy link" for the current inputs, with an inline status (no toast library), and the link-values choice. */
+/** "Copiar link" for the current inputs, with an inline status (no toast library), and the link-values choice. */
 export function ShareBar({ shareUrl, shared, keepMine, useLink }: Props) {
   const [msg, setMsg] = useState("");
   const copy = async (): Promise<void> => {
     const url = shareUrl();
     try {
       await navigator.clipboard.writeText(url);
-      setMsg("Link copied. It holds these inputs only, nothing about you.");
+      setMsg("Link copiado. Ele guarda só estes valores, nada sobre você.");
     } catch {
-      setMsg(`Copy this link: ${url}`);
+      setMsg(`Copie este link: ${url}`);
     }
   };
   const choose = (fn: () => void, text: string): void => {
@@ -29,17 +29,17 @@ export function ShareBar({ shareUrl, shared, keepMine, useLink }: Props) {
       {shared ? (
         <div class="t-shared" role="group" aria-labelledby="t-shared-text" data-link-choice>
           <p id="t-shared-text">
-            Showing values from a link. Your saved values stay as they are (only a field you edit is saved) until you choose.
+            Mostrando valores de um link. Seus valores salvos continuam como estão (só o campo que você editar é salvo) até você escolher.
           </p>
           {keepMine && useLink ? (
             <div class="t-shared-actions">
-              <button type="button" class="btn btn-secondary" onClick={() => choose(keepMine, "Back to your saved values.")}>Keep mine</button>
-              <button type="button" class="btn btn-secondary" onClick={() => choose(useLink, "Saved the link values as yours.")}>Use link values</button>
+              <button type="button" class="btn btn-secondary" onClick={() => choose(keepMine, "De volta aos seus valores salvos.")}>Manter os meus</button>
+              <button type="button" class="btn btn-secondary" onClick={() => choose(useLink, "Valores do link salvos como seus.")}>Usar os valores do link</button>
             </div>
           ) : null}
         </div>
       ) : null}
-      <button type="button" class="btn btn-secondary" onClick={() => void copy()}>Copy link to these inputs</button>
+      <button type="button" class="btn btn-secondary" onClick={() => void copy()}>Copiar link destes valores</button>
       <p role="status" class="t-status">{msg}</p>
     </div>
   );

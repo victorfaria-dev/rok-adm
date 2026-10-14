@@ -15,7 +15,7 @@ export interface GemsCalcProps {
   cites: { ap: CiteData; shop: CiteData; ch: CiteData };
 }
 
-const fmt = (n: number, d = 0) => n.toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const fmt = (n: number, d = 0) => n.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
 const MAX_BUYS = 20;
 
 /** F-21: AP price ladder, VIP Shop items by VIP level, City Hall reward gems still to come. */
@@ -27,30 +27,30 @@ export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
   const last = rows.at(-1)!;
   const vipFilter = v.shopVip === "all" ? null : Number(v.shopVip);
   const shown = shopForVip(shop, Number.isFinite(vipFilter) ? vipFilter : null);
-  const vipOptions = [{ value: "all", label: "All VIP levels" }, ...Array.from({ length: maxVip }, (_, i) => ({ value: String(i + 1), label: `VIP ${i + 1} and below` }))];
+  const vipOptions = [{ value: "all", label: "Todos os níveis de VIP" }, ...Array.from({ length: maxVip }, (_, i) => ({ value: String(i + 1), label: `VIP ${i + 1} ou menos` }))];
 
   return (
     <div class="t-page-body" data-tool="gems">
       <section class="t-section" aria-labelledby="ap-h">
-        <h2 id="ap-h">Action Points bought with gems</h2>
-        <p class="t-note">You can buy {fmt(ap.perPurchase)} AP with gems only when you have no AP recovery items left. The price goes up with each purchase and resets at the daily server reset.</p>
-        <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Action Point purchase inputs">
-          <NumberField id="gems-ap-buys" label="Purchases today" value={v.apBuys} min={1} max={MAX_BUYS} onChange={(x) => set({ apBuys: x })}
-            help={`How many times you buy ${fmt(ap.perPurchase)} AP today (1 to ${MAX_BUYS}).`} />
-          <NumberField id="gems-ch" label="Your City Hall level" value={v.cityHall} min={1} max={25} onChange={(x) => set({ cityHall: x })}
-            help="For the one-time gems City Hall upgrades still give you." />
+        <h2 id="ap-h">Pontos de Ação comprados com gemas</h2>
+        <p class="t-note">Você só pode comprar {fmt(ap.perPurchase)} PA com gemas quando não tem mais itens de recuperação de PA. O preço sobe a cada compra e volta ao normal no reset diário do servidor.</p>
+        <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Dados da compra de Pontos de Ação">
+          <NumberField id="gems-ap-buys" label="Compras hoje" value={v.apBuys} min={1} max={MAX_BUYS} onChange={(x) => set({ apBuys: x })}
+            help={`Quantas vezes você compra ${fmt(ap.perPurchase)} PA hoje (1 a ${MAX_BUYS}).`} />
+          <NumberField id="gems-ch" label="Nível da sua Prefeitura" value={v.cityHall} min={1} max={25} onChange={(x) => set({ cityHall: x })}
+            help="Para as gemas únicas que as melhorias da Prefeitura ainda dão." />
         </form>
         <Results>
-          <ResultRow testId="gems-ap-total" label={`Gems for ${buys} purchase${buys === 1 ? "" : "s"} today`} value={fmt(ladderTotal(buys, ap))} cite={cites.ap}
-            notes={[`That is ${fmt(last.amount)} AP. The last purchase costs ${fmt(last.price)} gems (${fmt(last.perUnit, 2)} gems per AP).`]} />
-          <ResultRow testId="gems-ch-left" label={`One-time gems still to come from City Hall rewards above level ${v.cityHall}`}
+          <ResultRow testId="gems-ap-total" label={`Gemas para ${buys} ${buys === 1 ? "compra" : "compras"} hoje`} value={fmt(ladderTotal(buys, ap))} cite={cites.ap}
+            notes={[`Isso dá ${fmt(last.amount)} PA. A última compra custa ${fmt(last.price)} gemas (${fmt(last.perUnit, 2)} gemas por PA).`]} />
+          <ResultRow testId="gems-ch-left" label={`Gemas únicas que ainda virão das recompensas da Prefeitura acima do nível ${v.cityHall}`}
             value={fmt(gemsStillToCome(v.cityHall, chGems))} cite={cites.ch}
-            notes={[`Already collected up to City Hall ${v.cityHall}: ${fmt(gemsCollected(v.cityHall, chGems))} gems.`]} />
+            notes={[`Já coletadas até a Prefeitura ${v.cityHall}: ${fmt(gemsCollected(v.cityHall, chGems))} gemas.`]} />
         </Results>
-        <div class="t-table" role="region" aria-label="Action Point price by purchase" tabindex={0}>
+        <div class="t-table" role="region" aria-label="Preço dos Pontos de Ação por compra" tabindex={0}>
           <table>
-            <caption>Price of each purchase today <Cite cite={cites.ap} /></caption>
-            <thead><tr><th scope="col">Purchase</th><th scope="col">Price (gems)</th><th scope="col">Total so far</th><th scope="col">AP so far</th><th scope="col">Gems per AP</th></tr></thead>
+            <caption>Preço de cada compra hoje <Cite cite={cites.ap} /></caption>
+            <thead><tr><th scope="col">Compra</th><th scope="col">Preço (gemas)</th><th scope="col">Total até agora</th><th scope="col">PA até agora</th><th scope="col">Gemas por PA</th></tr></thead>
             <tbody>
               {rows.map((r) => (
                 <tr key={r.n}><td class="mono">{r.n}</td><td class="mono">{fmt(r.price)}</td><td class="mono">{fmt(r.total)}</td><td class="mono">{fmt(r.amount)}</td><td class="mono">{fmt(r.perUnit, 2)}</td></tr>
@@ -61,17 +61,17 @@ export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
       </section>
 
       <section class="t-section" aria-labelledby="shop-h">
-        <h2 id="shop-h">VIP Shop items priced in gems</h2>
-        <p class="t-note">The shop restocks weekly. "Gems per minute" is derived (price ÷ the minutes in the item name) and only shown for speedups.</p>
-        <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="VIP Shop filter">
-          <SelectField id="gems-shop-vip" label="Show items you can buy at" value={v.shopVip} options={vipOptions} onChange={(x) => set({ shopVip: x })} />
+        <h2 id="shop-h">Itens da Loja VIP vendidos em gemas</h2>
+        <p class="t-note">A loja reabastece toda semana. "Gemas por minuto" é calculado (preço ÷ os minutos no nome do item) e só aparece para acelerações.</p>
+        <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Filtro da Loja VIP">
+          <SelectField id="gems-shop-vip" label="Mostrar itens que você pode comprar com" value={v.shopVip} options={vipOptions} onChange={(x) => set({ shopVip: x })} />
         </form>
-        <p class="t-progress" aria-live="polite" data-testid="gems-shop-count">{shown.length} of {shop.length} items shown</p>
-        <div class="t-table" role="region" aria-label="VIP Shop price table" tabindex={0}>
+        <p class="t-progress" aria-live="polite" data-testid="gems-shop-count">{shown.length} de {shop.length} itens exibidos</p>
+        <div class="t-table" role="region" aria-label="Tabela de preços da Loja VIP" tabindex={0}>
           <table data-testid="gems-shop">
-            <caption>VIP Shop, gem prices <Cite cite={cites.shop} /></caption>
+            <caption>Loja VIP, preços em gemas <Cite cite={cites.shop} /></caption>
             <thead>
-              <tr><th scope="col">Item</th><th scope="col">Gems</th><th scope="col">VIP needed</th><th scope="col">Per week</th><th scope="col">Gems per minute (derived)</th></tr>
+              <tr><th scope="col">Item</th><th scope="col">Gemas</th><th scope="col">VIP necessário</th><th scope="col">Por semana</th><th scope="col">Gemas por minuto (calculado)</th></tr>
             </thead>
             <tbody>
               {shown.map((r) => (
@@ -80,7 +80,7 @@ export default function GemsCalc({ ap, shop, chGems, cites }: GemsCalcProps) {
                   <td class="mono">{fmt(r.price)}</td>
                   <td class="mono">{r.vip}</td>
                   <td class="mono">{fmt(r.qty)}</td>
-                  <td class="mono">{r.gemsPerMinute === null ? "n/a" : fmt(r.gemsPerMinute, 2)}</td>
+                  <td class="mono">{r.gemsPerMinute === null ? "n/d" : fmt(r.gemsPerMinute, 2)}</td>
                 </tr>
               ))}
             </tbody>

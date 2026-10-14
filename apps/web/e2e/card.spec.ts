@@ -12,14 +12,14 @@ test.describe("governor card", () => {
     const errors: string[] = [];
     page.on("pageerror", (e) => errors.push(e.message));
     await page.goto("/card/");
-    await expect(page.locator("h1")).toHaveText("Governor card");
+    await expect(page.locator("h1")).toHaveText("Cartão do governador");
     const card = page.locator(".gc");
     await expect(card).toHaveAttribute("data-rarity", "epic");
     await expect(card).toHaveAttribute("data-example", "");
-    await expect(card.getByText("Example")).toBeVisible();
-    await expect(card.getByText("Self-reported")).toBeVisible();
-    await expect(card.getByText("F2P Achiever")).toBeVisible();
-    await expect(page.locator(".gc-example").getByRole("link", { name: "Build my guide" })).toHaveAttribute("href", "/start/");
+    await expect(card.getByText("Exemplo")).toBeVisible();
+    await expect(card.getByText("Autodeclarado")).toBeVisible();
+    await expect(card.getByText("Conquista F2P")).toBeVisible();
+    await expect(page.locator(".gc-example").getByRole("link", { name: "Monte meu guia" })).toHaveAttribute("href", "/start/");
     expect(errors).toEqual([]);
   });
 
@@ -30,11 +30,11 @@ test.describe("governor card", () => {
     const card = page.locator(".gc");
     await expect(card).toHaveAttribute("data-rarity", "epic");
     await expect(card).not.toHaveAttribute("data-example", "");
-    await expect(card.locator(".gc-rar")).toHaveText("Epic");
+    await expect(card.locator(".gc-rar")).toHaveText("Épico");
     await expect(card.locator(".gc-stats dd").first()).toHaveText("22");
     await expect(card.locator(".gc-stats dd").nth(1)).toHaveText("F2P");
-    await expect(card.getByText("F2P Achiever")).toBeVisible();
-    await expect(card.getByText("Example")).toHaveCount(0);
+    await expect(card.getByText("Conquista F2P")).toBeVisible();
+    await expect(card.getByText("Exemplo")).toHaveCount(0);
   });
 
   test("City Hall 12 spender: Common, no F2P Achiever mark", async ({ page }) => {
@@ -43,8 +43,8 @@ test.describe("governor card", () => {
     await page.goto("/card/");
     const card = page.locator(".gc");
     await expect(card).toHaveAttribute("data-rarity", "common");
-    await expect(card.locator(".gc-rar")).toHaveText("Common");
-    await expect(card.getByText("F2P Achiever")).toHaveCount(0);
+    await expect(card.locator(".gc-rar")).toHaveText("Comum");
+    await expect(card.getByText("Conquista F2P")).toHaveCount(0);
   });
 
   test("name and tag: validated, shown on the card, persisted in ko:card:v1 without touching ko:v1", async ({ page }) => {
@@ -53,8 +53,8 @@ test.describe("governor card", () => {
     await page.goto("/card/");
     // Typing before hydration is lost when the island takes over the input.
     await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
-    const name = page.getByLabel("Governor name");
-    const tag = page.getByLabel("Alliance tag");
+    const name = page.getByLabel("Nome do governador");
+    const tag = page.getByLabel("Sigla da aliança");
 
     await name.fill("Valerius Maximus the Third");
     await expect(name).toHaveValue("Valerius Maximus"); // maxlength 16
@@ -69,7 +69,7 @@ test.describe("governor card", () => {
     await expect(tag).not.toHaveAttribute("aria-invalid", "true");
     await expect(page.locator(".gc-tag")).toHaveText("[K9X]");
 
-    await page.getByRole("radio", { name: "rose" }).check();
+    await page.getByRole("radio", { name: "Rosa" }).check();
     await expect(page.locator(".gc")).toHaveAttribute("style", /--ko-alliance-rose/);
 
     const stored = await page.evaluate(() => ({ card: localStorage.getItem("ko:card:v1"), store: localStorage.getItem("ko:v1") }));
@@ -79,22 +79,22 @@ test.describe("governor card", () => {
     await page.reload();
     await expect(page.locator(".gc-name")).toHaveText("Valerius Maximus");
     await expect(page.locator(".gc-tag")).toHaveText("[K9X]");
-    await expect(page.getByRole("radio", { name: "rose" })).toBeChecked();
+    await expect(page.getByRole("radio", { name: "Rosa" })).toBeChecked();
   });
 
   test("Download PNG fires a download of a 1080×1080 PNG", async ({ page }) => {
     await page.goto("/");
     await page.evaluate(saveProfile(CH22_F2P), CH22_F2P);
     await page.goto("/card/");
-    await page.getByLabel("Governor name").fill("Valerius");
+    await page.getByLabel("Nome do governador").fill("Valerius");
     const fired = page.evaluate(() => new Promise<{ file: string; bytes: number }>((r) => document.addEventListener("ko:card-png", (e) => r((e as CustomEvent).detail), { once: true })));
     const downloadPromise = page.waitForEvent("download");
-    await page.getByRole("button", { name: "Download PNG" }).click();
+    await page.getByRole("button", { name: "Baixar PNG" }).click();
     const [download, detail] = await Promise.all([downloadPromise, fired]);
     expect(download.suggestedFilename()).toBe("kingdomops-card-valerius.png");
     expect(detail.file).toBe("kingdomops-card-valerius.png");
     expect(detail.bytes).toBeGreaterThan(10_000);
-    await expect(page.getByRole("status")).toContainText("Saved kingdomops-card-valerius.png");
+    await expect(page.getByRole("status")).toContainText("Salvo kingdomops-card-valerius.png");
   });
 
   test("tilt follows the pointer and the Reduce motion switch flattens it", async ({ page }) => {
@@ -103,7 +103,7 @@ test.describe("governor card", () => {
     const box = (await card.boundingBox())!;
     await page.mouse.move(box.x + box.width * 0.9, box.y + box.height * 0.1);
     await expect(card).toHaveAttribute("style", /--ry: ?\d+(\.\d+)?deg/);
-    await page.getByLabel("Reduce motion", { exact: false }).check();
+    await page.getByLabel("Reduzir movimento", { exact: false }).check();
     await expect(card).toHaveClass(/still/);
     await expect(card).toHaveCSS("transform", "none");
   });
@@ -112,7 +112,7 @@ test.describe("governor card", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await page.goto("/card/");
     await expect(page.locator(".gc")).toHaveClass(/still/);
-    await expect(page.getByLabel("Reduce motion", { exact: false })).toBeChecked();
+    await expect(page.getByLabel("Reduzir movimento", { exact: false })).toBeChecked();
   });
 
   test("no sideways scroll at 360px", async ({ page }) => {

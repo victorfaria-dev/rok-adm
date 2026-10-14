@@ -37,20 +37,20 @@ interface Field {
   kind?: "civ";
 }
 const FIELDS: readonly Field[] = [
-  { key: "governorId", label: "Governor ID", help: "The number after \"ID:\" on your profile.", min: 100_000, max: 999_999_999_999 },
-  { key: "power", label: "Power", help: "As shown in the game, e.g. 45,678,901.", min: 1_000, max: 1_000_000_000_000 },
-  { key: "killPoints", label: "Kill points", help: "From your profile.", min: 0, max: 1_000_000_000_000_000 },
-  { key: "civilization", label: "Civilization", help: "Pick it if it was not found.", min: 0, max: 0, kind: "civ" },
-  { key: "merit", label: "Merit points", help: "From your profile.", min: 0, max: 1_000_000_000_000 },
-  { key: "highestMerit", label: "Highest merit", help: "From your profile.", min: 0, max: 1_000_000_000_000 },
-  { key: "cityHall", label: "City Hall level", help: "1 to 25.", min: 1, max: 25 },
-  { key: "vip", label: "VIP level", help: "0 to 20.", min: 0, max: 20 },
-  { key: "vipPoints", label: "VIP points", help: "The first number on the VIP points bar.", min: 0, max: 100_000_000 },
-  { key: "streakDay", label: "Login streak (days)", help: "\"Consecutive login days\" on the VIP screen.", min: 1, max: 10_000 },
+  { key: "governorId", label: "ID do Governador", help: "O número depois de \"ID:\" no seu perfil.", min: 100_000, max: 999_999_999_999 },
+  { key: "power", label: "Poder", help: "Como aparece no jogo, por exemplo 45.678.901.", min: 1_000, max: 1_000_000_000_000 },
+  { key: "killPoints", label: "Pontos de abate", help: "Do seu perfil.", min: 0, max: 1_000_000_000_000_000 },
+  { key: "civilization", label: "Civilização", help: "Escolha, se não foi encontrada.", min: 0, max: 0, kind: "civ" },
+  { key: "merit", label: "Pontos de mérito", help: "Do seu perfil.", min: 0, max: 1_000_000_000_000 },
+  { key: "highestMerit", label: "Maior mérito", help: "Do seu perfil.", min: 0, max: 1_000_000_000_000 },
+  { key: "cityHall", label: "Nível da Prefeitura", help: "1 a 25.", min: 1, max: 25 },
+  { key: "vip", label: "Nível de VIP", help: "0 a 20.", min: 0, max: 20 },
+  { key: "vipPoints", label: "Pontos VIP", help: "O primeiro número da barra de pontos VIP.", min: 0, max: 100_000_000 },
+  { key: "streakDay", label: "Sequência de login (dias)", help: "O contador de dias seguidos de login na tela de VIP.", min: 1, max: 10_000 },
 ];
 
 const SOURCE: Record<string, string> = {
-  profile: "Governor Profile", city: "city view", vip: "VIP screen", album: "Album",
+  profile: "Perfil do Governador", city: "visão da cidade", vip: "tela de VIP", album: "Álbum",
 };
 
 function parseField(f: Field, text: string): { value: number | string | null; error: string | null } {
@@ -58,14 +58,14 @@ function parseField(f: Field, text: string): { value: number | string | null; er
   if (!t) return { value: null, error: null };
   if (f.kind === "civ") return { value: t, error: null };
   const n = t.replace(/[,.\s'’]/g, "");
-  if (!/^\d+$/.test(n)) return { value: null, error: "Enter a whole number." };
+  if (!/^\d+$/.test(n)) return { value: null, error: "Digite um número inteiro." };
   const v = Number(n);
-  if (v < f.min || v > f.max) return { value: null, error: `Use ${f.min.toLocaleString("en-US")} to ${f.max.toLocaleString("en-US")}.` };
+  if (v < f.min || v > f.max) return { value: null, error: `Use ${f.min.toLocaleString("pt-BR")} a ${f.max.toLocaleString("pt-BR")}.` };
   return { value: v, error: null };
 }
 
 const show = (f: Field, v: number | string | undefined): string =>
-  v === undefined ? "" : typeof v === "string" ? v : f.key === "governorId" || f.key === "cityHall" || f.key === "vip" ? String(v) : v.toLocaleString("en-US");
+  v === undefined ? "" : typeof v === "string" ? v : f.key === "governorId" || f.key === "cityHall" || f.key === "vip" ? String(v) : v.toLocaleString("pt-BR");
 
 const link = (path: string, inputs: Record<string, number>): string => `${path}?s=${encodeShare(inputs)}`;
 const empty = (): Record<FieldKey, string> => Object.fromEntries(FIELDS.map((f) => [f.key, ""])) as Record<FieldKey, string>;
@@ -95,7 +95,7 @@ export default function ScreenshotReader({ vipLevels = [], createReader = defaul
     const room = MAX_FILES - items.length;
     const bad = files.map(checkImageFile).find((x) => x !== null);
     if (bad) return setError(bad);
-    if (files.length > room) return setError(`Up to ${MAX_FILES} screenshots at a time: one of each screen.`);
+    if (files.length > room) return setError(`No máximo ${MAX_FILES} prints por vez: um de cada tela.`);
     setError("");
     const added = files.map((file) => {
       const preview = URL.createObjectURL(file);
@@ -119,7 +119,7 @@ export default function ScreenshotReader({ vipLevels = [], createReader = defaul
     if (!items.length) return;
     setPhase("reading");
     setError("");
-    setProgress({ progress: 0, step: "Loading the text reader" });
+    setProgress({ progress: 0, step: "Carregando o leitor de texto" });
     let reader: ScreenReader | null = null;
     try {
       reader = await createReader(setProgress);
@@ -137,7 +137,7 @@ export default function ScreenshotReader({ vipLevels = [], createReader = defaul
       setPhase("done");
     } catch {
       setPhase("failed");
-      setError("This browser could not run the text reader (it needs WebAssembly and about 4 MB). Type the values yourself in the tools instead.");
+      setError("Este navegador não conseguiu executar o leitor de texto (ele precisa de WebAssembly e de cerca de 4 MB). Digite os valores você mesmo nas ferramentas.");
     } finally {
       await reader?.close().catch(() => {});
     }
@@ -159,30 +159,30 @@ export default function ScreenshotReader({ vipLevels = [], createReader = defaul
   return (
     <div class="t-page-body ocr" data-ocr={phase}>
       <section class="t-section" aria-labelledby="ocr-pick-h">
-        <h2 id="ocr-pick-h">1. Your screenshots</h2>
-        <p class="t-note">Up to {MAX_FILES}, one of each of these screens of your own account. The reader finds out which is which.</p>
+        <h2 id="ocr-pick-h">1. Seus prints</h2>
+        <p class="t-note">Até {MAX_FILES}, um de cada uma destas telas da sua própria conta. O leitor descobre qual é qual.</p>
         <ul class="ocr-screens" data-ocr-screens>
-          <li><strong>Governor Profile</strong> (tap your portrait): ID, power, kill points, civilization, merit.</li>
-          <li><strong>City view with the City Hall tapped</strong>, so its name and level show above it: City Hall level, VIP level, power.</li>
-          <li><strong>VIP screen</strong> (tap the VIP badge): VIP level, VIP points, login streak.</li>
-          <li><strong>Album</strong> (from your profile): your name and the six-digit code on a photo. Optional; nothing uses the code yet.</li>
+          <li><strong>Perfil do Governador</strong> (toque no seu retrato): ID, poder, pontos de abate, civilização, mérito.</li>
+          <li><strong>Visão da cidade com a Prefeitura tocada</strong>, para o nome e o nível aparecerem acima dela: nível da Prefeitura, nível de VIP, poder.</li>
+          <li><strong>Tela de VIP</strong> (toque no emblema de VIP): nível de VIP, pontos VIP, sequência de login.</li>
+          <li><strong>Álbum</strong> (a partir do seu perfil): o seu nome e o código de seis dígitos numa foto. Opcional; nada usa o código ainda.</li>
         </ul>
         <label class={`btn btn-secondary ocr-file${phase === "reading" || items.length >= MAX_FILES ? " is-disabled" : ""}`}>
-          {items.length ? "Add screenshots" : "Choose screenshots"}
+          {items.length ? "Adicionar prints" : "Escolher prints"}
           <input class="visually-hidden" type="file" multiple accept="image/png,image/jpeg,image/webp" onChange={pick} data-ocr-file
             disabled={phase === "reading" || items.length >= MAX_FILES} />
         </label>
         {items.length > 0 && (
-          <ul class="ocr-items" aria-label="Chosen screenshots">
+          <ul class="ocr-items" aria-label="Prints escolhidos">
             {items.map((it, i) => (
               <li class="ocr-item" key={it.id} data-ocr-item>
-                <img class="ocr-preview" src={it.preview} alt={`Screenshot ${i + 1} (stays on this device)`} data-ocr-preview />
+                <img class="ocr-preview" src={it.preview} alt={`Print ${i + 1} (fica neste aparelho)`} data-ocr-preview />
                 <div class="ocr-item-body">
-                  <p class="ocr-item-name">Screenshot {i + 1}</p>
-                  {it.read && <p class="t-note" data-ocr-kind={it.read.screen}>Looks like: {SCREEN_NAMES[it.read.screen]}</p>}
+                  <p class="ocr-item-name">Print {i + 1}</p>
+                  {it.read && <p class="t-note" data-ocr-kind={it.read.screen}>Parece ser: {SCREEN_NAMES[it.read.screen]}</p>}
                   {it.problem && <p class="t-error" data-ocr-problem>{it.problem}</p>}
                   {phase !== "reading" && (
-                    <button type="button" class="btn btn-secondary ocr-remove" onClick={() => remove(it.id)} aria-label={`Remove screenshot ${i + 1}`}>Remove</button>
+                    <button type="button" class="btn btn-secondary ocr-remove" onClick={() => remove(it.id)} aria-label={`Remover print ${i + 1}`}>Remover</button>
                   )}
                 </div>
               </li>
@@ -192,34 +192,34 @@ export default function ScreenshotReader({ vipLevels = [], createReader = defaul
       </section>
 
       <section class="t-section" aria-labelledby="ocr-read-h">
-        <h2 id="ocr-read-h">2. Read them on this device</h2>
-        <p class="t-note">The first time, the text reader downloads from this site (about 4 MB). Your images are never uploaded. Each screenshot takes a few seconds.</p>
+        <h2 id="ocr-read-h">2. Leia-os neste aparelho</h2>
+        <p class="t-note">Na primeira vez, o leitor de texto é baixado deste site (cerca de 4 MB). Suas imagens nunca são enviadas. Cada print leva alguns segundos.</p>
         <button type="button" class="btn btn-primary" onClick={() => void run()} disabled={!items.length || phase === "reading"} data-ocr-read>
-          {phase === "reading" ? "Reading…" : items.length > 1 ? "Read the screenshots" : "Read the screenshot"}
+          {phase === "reading" ? "Lendo…" : items.length > 1 ? "Ler os prints" : "Ler o print"}
         </button>
         <p class="t-status" role="status" aria-live="polite" data-ocr-status>
           {phase === "reading" && progress
-            ? `${items.length > 1 ? `Screenshot ${current} of ${items.length}: ` : ""}${progress.step}… ${pct}%`
-            : phase === "done" ? "Done. Check the suggestions below." : ""}
+            ? `${items.length > 1 ? `Print ${current} de ${items.length}: ` : ""}${progress.step}… ${pct}%`
+            : phase === "done" ? "Pronto. Confira as sugestões abaixo." : ""}
         </p>
-        {phase === "reading" && <progress class="ocr-progress" max={100} value={pct} aria-label="Reading progress" />}
+        {phase === "reading" && <progress class="ocr-progress" max={100} value={pct} aria-label="Progresso da leitura" />}
         {error && <p class="t-error" role="alert">{error}</p>}
       </section>
 
       {phase === "done" && combined && (
         <section class="t-section" aria-labelledby="ocr-out-h" data-ocr-results>
-          <h2 id="ocr-out-h" tabIndex={-1} ref={resultsHeading}>3. Check the suggestions</h2>
+          <h2 id="ocr-out-h" tabIndex={-1} ref={resultsHeading}>3. Confira as sugestões</h2>
           <p class="t-note">
-            These are guesses from reading the image, not checked against the game. Compare each value with your screen and fix it.
-            Nothing is saved until you open a tool and change something there.
+            São palpites a partir da leitura da imagem, não conferidos com o jogo. Compare cada valor com a sua tela e corrija.
+            Nada é salvo até você abrir uma ferramenta e mudar algo lá.
           </p>
-          {combined.screens.length === 0 && <p class="t-error" data-ocr-none>None of the screenshots matched a supported screen. You can still type your values below.</p>}
+          {combined.screens.length === 0 && <p class="t-error" data-ocr-none>Nenhum dos prints correspondeu a uma tela compatível. Você ainda pode digitar seus valores abaixo.</p>}
           {combined.notes.length > 0 && (
-            <ul class="ocr-notes" aria-label="Notes about the reading" data-ocr-notes>
+            <ul class="ocr-notes" aria-label="Observações sobre a leitura" data-ocr-notes>
               {combined.notes.map((n) => <li key={n}>{n}</li>)}
             </ul>
           )}
-          <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Suggested values">
+          <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Valores sugeridos">
             {shown.map((f) => {
               const p = parsed[f.key];
               const id = `ocr-${f.key}`;
@@ -229,10 +229,10 @@ export default function ScreenshotReader({ vipLevels = [], createReader = defaul
               return (
                 <div class={`t-field${p.error ? " t-field-error" : ""}`} key={f.key}>
                   <label for={id}>{f.label}</label>
-                  <p id={`${id}-help`} class="t-help">{src ? `Suggested from the ${SOURCE[src]}. ` : "Not found in your screenshots: type it if you want. "}{f.help}</p>
+                  <p id={`${id}-help`} class="t-help">{src ? `Sugerido por: ${SOURCE[src]}. ` : "Não encontrado nos seus prints: digite, se quiser. "}{f.help}</p>
                   {f.kind === "civ" ? (
                     <select id={id} value={values[f.key]} aria-describedby={describedBy} onChange={onInput}>
-                      <option value="">Not set</option>
+                      <option value="">Não definida</option>
                       {Object.entries(CIVILIZATION_NAMES).map(([k, n]) => <option key={k} value={k}>{n}</option>)}
                     </select>
                   ) : (
@@ -246,28 +246,28 @@ export default function ScreenshotReader({ vipLevels = [], createReader = defaul
           </form>
           {combined.album && (
             <div class="ocr-album" data-ocr-album>
-              <h3>Album</h3>
-              <p>Name above the photos: <strong>{combined.album.name ?? "not readable"}</strong>.{" "}
-                {combined.album.sameNameAsProfile === true && "Same name as on your profile screenshot."}
-                {combined.album.sameNameAsProfile === false && "Not the same name as on your profile screenshot."}
+              <h3>Álbum</h3>
+              <p>Nome acima das fotos: <strong>{combined.album.name ?? "ilegível"}</strong>.{" "}
+                {combined.album.sameNameAsProfile === true && "Mesmo nome do print do seu perfil."}
+                {combined.album.sameNameAsProfile === false && "Nome diferente do print do seu perfil."}
               </p>
-              <p>Six-digit code{combined.album.codes.length > 1 ? "s" : ""} on the photos: <strong>{combined.album.codes.join(", ")}</strong></p>
-              <p class="t-note">Account checks with an album code are not available on this site yet. This only shows what was read.</p>
+              <p>{combined.album.codes.length > 1 ? "Códigos" : "Código"} de seis dígitos nas fotos: <strong>{combined.album.codes.join(", ")}</strong></p>
+              <p class="t-note">A verificação de conta com código do álbum ainda não está disponível neste site. Isto só mostra o que foi lido.</p>
             </div>
           )}
-          <h3>Use them in a tool</h3>
+          <h3>Use em uma ferramenta</h3>
           <ul class="t-links ocr-links">
-            {Object.keys(migration).length > 0 && <li><a href={link("/tools/migration/", migration)} data-ocr-use="migration">Migration checker with these values</a></li>}
-            {ch !== null && <li><a href={link("/tools/gems/", { cityHall: ch })} data-ocr-use="gems">Gem value table for City Hall {ch}</a></li>}
+            {Object.keys(migration).length > 0 && <li><a href={link("/tools/migration/", migration)} data-ocr-use="migration">Verificador de migração com estes valores</a></li>}
+            {ch !== null && <li><a href={link("/tools/gems/", { cityHall: ch })} data-ocr-use="gems">Tabela de valor das gemas para a Prefeitura {ch}</a></li>}
             {Object.keys(vipInputs).length > 0 && (
-              <li><a href={link("/tools/vip/", vipInputs)} data-ocr-use="vip">{vipInputs.targetVip ? `Gems to reach VIP ${vipInputs.targetVip}` : "Gems to VIP with these values"}</a></li>
+              <li><a href={link("/tools/vip/", vipInputs)} data-ocr-use="vip">{vipInputs.targetVip ? `Gemas para chegar ao VIP ${vipInputs.targetVip}` : "Gemas para VIP com estes valores"}</a></li>
             )}
           </ul>
-          <p class="t-note">These links fill the tool for one visit; the tool saves only when you edit a value there.</p>
+          <p class="t-note">Estes links preenchem a ferramenta por uma visita; a ferramenta só salva quando você edita um valor lá.</p>
           {items.map((it, i) => (
             <details class="ocr-raw" key={it.id}>
-              <summary>Text read from screenshot {i + 1}</summary>
-              <pre data-ocr-text>{it.text?.trim() || "(no text found)"}</pre>
+              <summary>Texto lido do print {i + 1}</summary>
+              <pre data-ocr-text>{it.text?.trim() || "(nenhum texto encontrado)"}</pre>
             </details>
           ))}
         </section>

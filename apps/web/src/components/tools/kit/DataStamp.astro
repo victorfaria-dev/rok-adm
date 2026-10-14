@@ -4,8 +4,8 @@ import { dataStamp } from "../../../lib/tools-payload";
 const s = dataStamp();
 ---
 <p class="t-stamp">
-  Data: latest official patch <span class="mono">{s.official?.version ?? "unknown"}</span>
+  Dados: último patch oficial <span class="mono">{s.official?.version ?? "desconhecido"}</span>
   {s.official ? <>({s.official.date})</> : null}
-  {s.latest && s.latest.version !== s.official?.version ? <>, reported live <span class="mono">{s.latest.version}</span> (low confidence)</> : null}
-  · dataset <span class="mono">{s.datasetVersion}</span>. Cards confirmed before the official patch show <strong>Re-verify</strong>.
+  {s.latest && s.latest.version !== s.official?.version ? <>, relatado ao vivo <span class="mono">{s.latest.version}</span> (confiança baixa)</> : null}
+  · conjunto de dados <span class="mono">{s.datasetVersion}</span>. Fichas confirmadas antes do patch oficial mostram <strong>Reverificar</strong>.
 </p>

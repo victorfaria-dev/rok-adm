@@ -10,15 +10,15 @@ const built = new Set(
 );
 const live = TOOLS.filter((t) => built.has(t.href));
 
-// Every user-facing string on this page, in one place (i18n later).
+// Every user-facing string on this page, in one place (pt-BR).
 const S = {
-  title: "Tools",
-  description: "Calculators and checklists for Rise of Kingdoms players, grouped by task: spend and value, speedups and time, combat and healing, kingdom moves and farms. Every number cites its source.",
-  lead: "Calculators and checklists, grouped by what you are trying to do. What you type stays on this device.",
-  notYet: "Not here yet",
+  title: "Ferramentas",
+  description: "Calculadoras e listas para jogadores de Rise of Kingdoms, agrupadas por tarefa: gastos e valor, acelerações e tempo, combate e cura, mudanças de reino e contas farm. Cada número cita sua fonte.",
+  lead: "Calculadoras e listas, agrupadas pelo que você quer fazer. O que você digita fica neste aparelho.",
+  notYet: "Ainda não está aqui",
   notYetItems: [
-    "Research costs and troop training costs: no research or troop table in our data yet.",
-    "First 30 days path and milestone benchmark: they wait on in-game measurements.",
+    "Custos de pesquisa e de treinamento de tropas: ainda não temos tabela de pesquisa nem de tropas nos nossos dados.",
+    "Caminho dos primeiros 30 dias e referência de marcos: dependem de medições no jogo.",
   ],
 };
 ---

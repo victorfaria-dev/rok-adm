@@ -45,7 +45,7 @@ export function sourceRows(ids: Iterable<string>): SourceRow[] {
     const f = getFact(id);
     return {
       id,
-      title: f?.title ?? "Card not in the dataset",
+      title: f?.title ?? "Ficha fora do conjunto de dados",
       confidence: factConfidence(f) as Confidence,
       verifiedOn: f?.validUntil ?? null,
       stale: isStale(id),

@@ -22,11 +22,11 @@ const props = {
 };
 const ids = [...ap.cap.facts, ...ap.dailyClaim.facts, ...ap.barbarianBase.facts, ...ap.packAp.facts];
 ---
-<Shell title="Action Points" description="How many barbarians one chain of attacks takes with your AP, your AP after the daily claim, and the gem price of buying more AP today." mode="operate">
+<Shell title="Pontos de Ação" description="Quantos bárbaros uma sequência de ataques consome com os seus PA, seus PA depois da coleta diária e o preço em gemas para comprar mais PA hoje." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Action Points</h1>
-      <p class="t-lead">Barbarian attacks per chain, AP after the daily claim, and what buying AP with gems costs today. The base regeneration rate is not in our data: enter your own if you measured it. Values stay on this device.</p>
+      <h1>Pontos de Ação</h1>
+      <p class="t-lead">Ataques a bárbaros por sequência, PA depois da coleta diária e quanto custa comprar PA com gemas hoje. A taxa base de recuperação não está nos nossos dados: informe a sua, se você a mediu. Os valores ficam neste aparelho.</p>
       <DataStamp />
     </header>
     <ApCalc client:load {...props} />

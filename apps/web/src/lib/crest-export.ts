@@ -55,10 +55,10 @@ export async function crestPngBlob(c: CrestV1, size = PNG_SIZE): Promise<Blob> {
   const canvas = document.createElement("canvas");
   canvas.width = size; canvas.height = size;
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Your browser could not draw the crest.");
+  if (!ctx) throw new Error("Seu navegador não conseguiu desenhar o brasão.");
   drawCrest(ctx, c, size);
   return new Promise((resolve, reject) => {
-    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("Your browser could not save the PNG."))), "image/png");
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("Seu navegador não conseguiu salvar o PNG."))), "image/png");
   });
 }
 

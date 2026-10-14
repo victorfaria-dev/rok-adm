@@ -85,7 +85,7 @@ describe("cardData", () => {
   it("real profile: rarity from City Hall, no F2P mark for spenders, display fields from the card", () => {
     const d = cardData({ cityHall: 25, spending: "whale" }, { ...defaultCard(), name: "Ada", tag: "K9X", color: "rose" });
     expect(d).toMatchObject({ example: false, cityHall: 25, rarity: "legendary", f2pAchiever: false, name: "Ada", tag: "K9X", color: "rose", spendingLabel: "Whale" });
-    expect(cardData({ cityHall: 12, spending: "f2p" }, defaultCard())).toMatchObject({ rarity: "common", f2pAchiever: false, name: "Governor", tag: "" });
+    expect(cardData({ cityHall: 12, spending: "f2p" }, defaultCard())).toMatchObject({ rarity: "common", f2pAchiever: false, name: "Governador", tag: "" });
     expect(cardData({ cityHall: 40, spending: "f2p" }, defaultCard()).cityHall).toBe(25);
   });
 

@@ -13,15 +13,15 @@ test.describe("farm guide pages", () => {
       const res = await page.goto(route);
       expect(res?.status()).toBe(200);
       await expect(page.locator("h1")).toHaveCount(1);
-      await expect(page.getByRole("heading", { level: 2, name: "How sure are we?" })).toBeVisible();
+      await expect(page.getByRole("heading", { level: 2, name: "Qual o grau de certeza?" })).toBeVisible();
       expect(await page.locator("[data-block]").count()).toBeGreaterThanOrEqual(3);
       // Every block shows its confidence as text.
       for (const block of await page.locator("[data-block]").all()) {
         await expect(block.locator("[data-confidence]")).toHaveCount(1);
-        await expect(block.locator("[data-confidence]")).toHaveText(/confidence|Pending in-game check/);
+        await expect(block.locator("[data-confidence]")).toHaveText(/Confiança|Conferência no jogo pendente/);
       }
       expect(await page.locator("[data-block] .fg-cite").count()).toBeGreaterThan(0);
-      await expect(page.locator("[data-guardrail]")).toContainText("You do every in-game action yourself");
+      await expect(page.locator("[data-guardrail]")).toContainText("Você faz cada ação no jogo por conta própria");
       await expect(page.locator('a[href="/farms/"]').first()).toBeAttached();
       const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
       expect(overflow).toBeLessThanOrEqual(0);
@@ -33,9 +33,9 @@ test.describe("farm guide pages", () => {
     test(`${route} labels the food + wood pair as a hypothesis`, async ({ page }) => {
       await page.goto(route);
       const hyp = page.locator('[data-block="farms-pair-food-wood"]');
-      await expect(hyp.locator("[data-hypothesis]")).toHaveText("Hypothesis — not sourced");
-      await expect(hyp).toContainText("No source recommends this.");
-      await hyp.getByText("Read the reasoning").click();
+      await expect(hyp.locator("[data-hypothesis]")).toHaveText("Hipótese: sem fonte");
+      await expect(hyp).toContainText("Nenhuma fonte recomenda isto.");
+      await hyp.getByText("Ler o raciocínio").click();
       await expect(hyp.getByText("No source recommends resource pairs", { exact: true })).toBeVisible();
     });
   }
@@ -55,23 +55,23 @@ test.describe("farm guide pages", () => {
     await expect(split).toBeVisible();
     await expect(split).toContainText("View A");
     await expect(split).toContainText("View B");
-    await expect(page.locator('[data-block="farms-gold-ship-or-main"]')).toContainText("Sources disagree");
+    await expect(page.locator('[data-block="farms-gold-ship-or-main"]')).toContainText("As fontes divergem");
   });
 
   test("the Why section opens and lists the cited cards", async ({ page }) => {
     await page.goto("/guides/farms/");
     const block = page.locator('[data-block="farms-general-accounts"]');
-    await block.locator("summary", { hasText: "Why" }).click();
+    await block.locator("summary", { hasText: "Por quê" }).click();
     await expect(block.locator(".fg-facts")).toContainText("C04-0006");
-    await expect(block.locator(".fg-gaps")).toContainText("Pending research: L-A13-02");
+    await expect(block.locator(".fg-gaps")).toContainText("Pesquisa pendente: L-A13-02");
   });
 
   test("links between the guides", async ({ page }) => {
     await page.goto("/guides/farms/");
-    const more = page.getByRole("navigation", { name: "Farm guides" });
-    await more.getByRole("link", { name: "Gold on a farm" }).click();
+    const more = page.getByRole("navigation", { name: "Guias de farm" });
+    await more.getByRole("link", { name: "Ouro numa conta farm" }).click();
     await expect(page).toHaveURL(/\/guides\/farms\/gold\/$/);
-    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Gold on a farm");
+    await expect(page.getByRole("heading", { level: 1 })).toHaveText("Ouro numa conta farm");
   });
 });
 

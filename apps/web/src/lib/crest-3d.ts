@@ -228,7 +228,7 @@ export async function mountCrest3D(host: HTMLElement, crest: CrestV1, opts: Moun
     rotateBy,
     snapshot() {
       render();
-      return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("Could not save the 3D view."))), "image/png"));
+      return new Promise((resolve, reject) => canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("Não foi possível salvar a visão em 3D."))), "image/png"));
     },
     dispose() {
       disposed = true;

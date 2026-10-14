@@ -1,7 +1,7 @@
 // Alliance crest (F-61, experimental): shield shape + alliance colour + tag + emblem, kept in its own key.
 // All geometry is original and lives here as polygons in a 100 × 120 box (y down), so the in-page SVG,
 // the exported SVG/PNG and the 3D extrusion draw exactly the same shapes. No game art.
-import { ALLIANCE_COLORS, isAllianceColor, validateTag, type AllianceColor } from "./card";
+import { ALLIANCE_COLORS, ALLIANCE_COLOR_NAMES, isAllianceColor, validateTag, type AllianceColor } from "./card";
 
 export const CREST_KEY = "ko:crest:v1";
 export const CREST_W = 100;
@@ -37,7 +37,7 @@ export const SHIELDS = {
 export type ShieldShape = keyof typeof SHIELDS;
 export const SHIELD_SHAPES = Object.keys(SHIELDS) as ShieldShape[];
 export const SHIELD_LABELS: Record<ShieldShape, string> = {
-  heater: "Heater", kite: "Kite", round: "Round", banner: "Banner", bastion: "Bastion",
+  heater: "Clássico", kite: "Pipa", round: "Redondo", banner: "Estandarte", bastion: "Bastião",
 };
 
 function star(points: number, outer: number, inner: number): Point[] {
@@ -66,7 +66,7 @@ export const EMBLEMS = {
 export type Emblem = keyof typeof EMBLEMS;
 export const EMBLEM_NAMES = Object.keys(EMBLEMS) as Emblem[];
 export const EMBLEM_LABELS: Record<Emblem, string> = {
-  star: "Star", crown: "Crown", tower: "Tower", chevron: "Chevron", bolt: "Bolt", sword: "Sword",
+  star: "Estrela", crown: "Coroa", tower: "Torre", chevron: "Divisa", bolt: "Raio", sword: "Espada",
 };
 
 /** Where the emblem and the tag band sit, the same for every shield (tested to stay inside each outline). */
@@ -195,7 +195,7 @@ export function crestSvg(c: CrestV1, p: CrestPalette): string {
     ? `<rect x="${l.tag.band.x}" y="${l.tag.band.y}" width="${l.tag.band.w}" height="${l.tag.band.h}" fill="${esc(p.band)}"/>` +
       `<text x="${l.tag.x}" y="${l.tag.y}" fill="${esc(p.ink)}" font-family='${TAG_FONT_STACK}' font-weight="700" font-size="${l.tag.size}" text-anchor="middle" dominant-baseline="central">${esc(l.tag.text)}</text>`
     : "";
-  const title = c.tag ? `[${c.tag}] alliance crest` : "Alliance crest";
+  const title = c.tag ? `[${c.tag}] brasão da aliança` : "Brasão da aliança";
   return (
     `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-4 -4 ${CREST_W + 8} ${CREST_H + 8}" width="${(CREST_W + 8) * 4}" height="${(CREST_H + 8) * 4}">` +
     `<title>${esc(title)}</title>` +
@@ -222,8 +222,8 @@ export function crestFileName(c: CrestV1, ext: "svg" | "png"): string {
 }
 
 export function describeCrest(c: CrestV1): string {
-  const tag = c.tag ? ` with the tag [${c.tag}]` : "";
-  return `${SHIELD_LABELS[c.shape]} shield in ${c.color}, ${EMBLEM_LABELS[c.emblem].toLowerCase()} emblem${tag}.`;
+  const tag = c.tag ? ` com a sigla [${c.tag}]` : "";
+  return `Escudo ${SHIELD_LABELS[c.shape].toLowerCase()} em ${ALLIANCE_COLOR_NAMES[c.color].toLowerCase()}, emblema ${EMBLEM_LABELS[c.emblem].toLowerCase()}${tag}.`;
 }
 
-export { ALLIANCE_COLORS };
+export { ALLIANCE_COLORS, ALLIANCE_COLOR_NAMES };

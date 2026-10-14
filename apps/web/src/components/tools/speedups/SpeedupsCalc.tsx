@@ -22,7 +22,7 @@ const DURATIONS: readonly { min: number; label: string }[] = [
   { min: 900, label: "15h" }, { min: 1440, label: "24h" }, { min: 4320, label: "3d" }, { min: 10080, label: "7d" },
 ];
 
-const NAME: Record<SpeedupType, string> = { universal: "Universal", building: "Building", research: "Research", training: "Training", healing: "Healing" };
+const NAME: Record<SpeedupType, string> = { universal: "Universal", building: "Construção", research: "Pesquisa", training: "Treinamento", healing: "Cura" };
 const INV_KEY: Record<SpeedupType, string> = {
   universal: "speedupUniversalMin", building: "speedupBuildingMin", research: "speedupResearchMin",
   training: "speedupTrainingMin", healing: "speedupHealingMin",
@@ -40,7 +40,7 @@ function defaults(): Record<string, number | string> {
   return d;
 }
 
-const fmt = (n: number) => n.toLocaleString("en-US");
+const fmt = (n: number) => n.toLocaleString("pt-BR");
 const mins = (m: number) => formatDuration(m * 60);
 
 /** F-81: add up speedups by type and check them against a job's time (alliance helps included). */
@@ -63,15 +63,15 @@ export default function SpeedupsCalc({ helps, helpPct, cites }: SpeedupsCalcProp
     set({ [countKey(t, min)]: n, [INV_KEY[t]]: speedupTotals({ [t]: countsOf(next, t) })[t] });
   };
 
-  const durationNote = "Durations as printed in item names.";
-  const helpNote = `Each help takes ${helpPct}% of the job's total time. Assumes no per-help minimum: our data has none.`;
+  const durationNote = "Durações como aparecem no nome dos itens.";
+  const helpNote = `Cada ajuda tira ${helpPct}% do tempo total da tarefa. Presume que não há mínimo por ajuda: nossos dados não trazem nenhum.`;
 
   return (
     <div class="t-page-body" data-tool="speedups">
-      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Speedup counts">
-        <SelectField id="sp-type" label="Speedup type to enter" value={editType} onChange={(x) => set({ editType: x })}
+      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Quantidade de acelerações">
+        <SelectField id="sp-type" label="Tipo de aceleração a preencher" value={editType} onChange={(x) => set({ editType: x })}
           options={SPEEDUP_TYPES.map((t) => ({ value: t, label: `${NAME[t]} (${mins(totals[t])})` }))}
-          help="Pick a type, then type how many items of each duration you hold." />
+          help="Escolha um tipo e digite quantos itens de cada duração você tem." />
         <div class="t-sp-grid">
           {DURATIONS.map((x) => (
             <NumberField key={`${editType}-${x.min}`} id={`sp-${editType}-${x.min}`} label={`${NAME[editType]} ${x.label}`}
@@ -80,38 +80,38 @@ export default function SpeedupsCalc({ helps, helpPct, cites }: SpeedupsCalcProp
         </div>
       </form>
 
-      <Results title="Your speedups">
+      <Results title="Suas acelerações">
         {SPEEDUP_TYPES.map((t) => (
-          <ResultRow key={t} testId={`sp-total-${t}`} label={`${NAME[t]} speedups`} value={mins(totals[t])} cite={cites.durations} />
+          <ResultRow key={t} testId={`sp-total-${t}`} label={`Acelerações (${NAME[t].toLowerCase()})`} value={mins(totals[t])} cite={cites.durations} />
         ))}
-        <ResultRow testId="sp-total-all" label="All speedups together" value={mins(totals.total)} cite={cites.durations}
-          notes={[durationNote, "Totals per type stay on this device; the Healing planner reads your healing total."]} />
+        <ResultRow testId="sp-total-all" label="Todas as acelerações juntas" value={mins(totals.total)} cite={cites.durations}
+          notes={[durationNote, "Os totais por tipo ficam neste aparelho; o planejador de cura lê o seu total de cura."]} />
       </Results>
 
       <section class="t-sp-job" aria-labelledby="sp-job-h">
-        <h2 id="sp-job-h">Compare with a job</h2>
-        <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Job to finish">
-          <DurationField id="sp-job-time" label="Job time" value={String(v.jobTime)} onChange={(text) => set({ jobTime: text })}
-            help="As shown in game, e.g. 2d 4h 30m." />
-          <SelectField id="sp-job-type" label="Job type" value={jobType} onChange={(x) => set({ jobType: x })}
+        <h2 id="sp-job-h">Compare com uma tarefa</h2>
+        <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Tarefa a concluir">
+          <DurationField id="sp-job-time" label="Tempo da tarefa" value={String(v.jobTime)} onChange={(text) => set({ jobTime: text })}
+            help="Como aparece no jogo, por exemplo 2d 4h 30m." />
+          <SelectField id="sp-job-type" label="Tipo de tarefa" value={jobType} onChange={(x) => set({ jobType: x })}
             options={JOBS.map((j) => ({ value: j, label: NAME[j] }))} />
-          <SelectField id="sp-ac" label="Your Alliance Center level" value={Number(v.acLevel) || 0} onChange={(x) => set({ acLevel: x })}
-            options={[{ value: 0, label: "No alliance helps" }, ...helps.map((h) => ({ value: h.level, label: `Level ${h.level} (${h.helps} helps)` }))]}
-            help="Sets how many times allies can help one job." />
+          <SelectField id="sp-ac" label="Nível do seu Centro da Aliança" value={Number(v.acLevel) || 0} onChange={(x) => set({ acLevel: x })}
+            options={[{ value: 0, label: "Sem ajudas da aliança" }, ...helps.map((h) => ({ value: h.level, label: `Nível ${h.level} (${h.helps} ajudas)` }))]}
+            help="Define quantas vezes os aliados podem ajudar em uma tarefa." />
         </form>
       </section>
 
       <section class="t-results" aria-labelledby="sp-job-res-h">
-        <h2 id="sp-job-res-h">Job result</h2>
+        <h2 id="sp-job-res-h">Resultado da tarefa</h2>
         <dl aria-live="polite">
-        <ResultRow testId="sp-helps" label="Time taken off by alliance helps"
-          value={jobType === "training" ? "None: training cannot be helped" : `${mins(cover.helped / 60)} (${fmt(helpCount)} helps)`}
+        <ResultRow testId="sp-helps" label="Tempo reduzido pelas ajudas da aliança"
+          value={jobType === "training" ? "Nenhum: treinamento não recebe ajuda" : `${mins(cover.helped / 60)} (${fmt(helpCount)} ajudas)`}
           cite={mergeCites(cites.helps, cites.helpPct)} notes={[helpNote]} />
-        <ResultRow testId="sp-remaining" label="Time left to speed up" value={formatDuration(cover.remaining)} cite={mergeCites(cites.helps, cites.helpPct)} />
-        <ResultRow testId="sp-used" label={`Speedups used (${NAME[jobType].toLowerCase()} first, then universal)`}
+        <ResultRow testId="sp-remaining" label="Tempo restante para acelerar" value={formatDuration(cover.remaining)} cite={mergeCites(cites.helps, cites.helpPct)} />
+        <ResultRow testId="sp-used" label={`Acelerações usadas (${NAME[jobType].toLowerCase()} primeiro, depois universal)`}
           value={`${mins(cover.typedUsedMin)} ${NAME[jobType].toLowerCase()} + ${mins(cover.universalUsedMin)} universal`} cite={cites.durations} />
-        <ResultRow testId="sp-cover" label="Do your speedups finish it?"
-          value={cover.covered ? `Yes, ${mins(totals[jobType] + totals.universal - cover.typedUsedMin - cover.universalUsedMin)} left over` : `No, short by ${formatDuration(cover.shortfall)}`}
+        <ResultRow testId="sp-cover" label="Suas acelerações concluem a tarefa?"
+          value={cover.covered ? `Sim, sobram ${mins(totals[jobType] + totals.universal - cover.typedUsedMin - cover.universalUsedMin)}` : `Não, faltam ${formatDuration(cover.shortfall)}`}
           cite={mergeCites(cites.durations, cites.helps, cites.helpPct)} />
         </dl>
       </section>

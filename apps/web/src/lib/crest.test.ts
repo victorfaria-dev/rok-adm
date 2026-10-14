@@ -90,7 +90,7 @@ describe("exports", () => {
   it("SVG: standalone, titled, with the tag band only when there is a tag", () => {
     const svg = crestSvg({ ...defaultCrest(), tag: "ABC", emblem: "crown" }, pal);
     expect(svg.startsWith('<svg xmlns="http://www.w3.org/2000/svg"')).toBe(true);
-    expect(svg).toContain("<title>[ABC] alliance crest</title>");
+    expect(svg).toContain("<title>[ABC] brasão da aliança</title>");
     expect(svg).toContain(">[ABC]</text>");
     expect(svg).toContain('fill="rgb(1 2 3)"');
     expect((svg.match(/<path /g) ?? []).length).toBe(2);

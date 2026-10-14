@@ -26,8 +26,8 @@ test.describe("farm tools", () => {
       const res = await page.goto(route);
       expect(res?.status()).toBe(200);
       await expect(page.locator("h1")).toHaveCount(1);
-      await expect(page.locator("[data-guardrail]")).toHaveText("Planning and bookkeeping only. You do every in-game action yourself.");
-      await expect(page.getByRole("navigation", { name: "Farm hub" })).toBeVisible();
+      await expect(page.locator("[data-guardrail]")).toHaveText("Só planejamento e anotações. Você faz cada ação no jogo por conta própria.");
+      await expect(page.getByRole("navigation", { name: "Central de farms" })).toBeVisible();
       await expect(page.locator("[data-summary]")).toHaveAttribute("aria-live", "polite");
       // Open every <details> so the reference table is measured too.
       await page.evaluate(() => document.querySelectorAll<HTMLDetailsElement>("#main details").forEach((d) => { d.open = true; }));
@@ -39,17 +39,17 @@ test.describe("farm tools", () => {
 
   test("calculator works with the keyboard only", async ({ page }) => {
     await page.goto("/farms/trading-post/");
-    const net = page.getByLabel("Amount your main needs (after tax)");
+    const net = page.getByLabel("Quantidade que a sua principal precisa (depois do imposto)");
     await net.focus();
     await page.keyboard.type("1,000,000");
     await page.keyboard.press("Tab"); // Resource
     await page.keyboard.press("Tab"); // Trading Post level
-    await expect(page.getByLabel("Farm Trading Post level")).toBeFocused();
+    await expect(page.getByLabel("Nível do Entreposto Comercial da conta farm")).toBeFocused();
     await page.keyboard.type("15");
     const summary = page.locator("[data-summary]");
-    await expect(summary).toHaveText("Send 1,265,823 food so your main receives 1,000,000. 1 trip.");
-    await expect(page.locator('[data-row="tax"] dd')).toHaveText("265,823 (21%, from table)");
-    await expect(page.locator('[data-warning="capacity_counts_gross"]')).toContainText("Hypothesis, not sourced");
+    await expect(summary).toHaveText("Envie 1.265.823 comida para a sua principal receber 1.000.000. 1 viagem.");
+    await expect(page.locator('[data-row="tax"] dd')).toHaveText("265.823 (21%, da tabela)");
+    await expect(page.locator('[data-warning="capacity_counts_gross"]')).toContainText("Hipótese, sem fonte");
     // An invalid amount shows an error, never NaN.
     await net.fill("lots");
     await expect(page.locator("#tp-net-error")).toBeVisible();
@@ -65,34 +65,34 @@ test.describe("farm tools", () => {
     await page.goto("/farms/choose/");
     const pair = page.locator('[data-variant="pair-food-wood"]');
     await expect(pair).toHaveCount(0);
-    await page.getByLabel("Show hypotheses").check();
+    await page.getByLabel("Mostrar hipóteses").check();
     await expect(pair).toBeVisible();
-    await expect(pair).toContainText("No source recommends resource pairs. This is our own reasoning, pending an in-game test.");
+    await expect(pair).toContainText("Nenhuma fonte recomenda pares de recursos. Este é um raciocínio nosso, pendente de teste no jogo.");
     await page.reload();
-    await expect(page.getByLabel("Show hypotheses")).toBeChecked();
+    await expect(page.getByLabel("Mostrar hipóteses")).toBeChecked();
     await expect(pair).toBeVisible();
   });
 
   test("build path loads a seeded farm from ?farm= and saves edits back", async ({ page }) => {
     await seedFarm(page);
     await page.goto(`/farms/build/?farm=${FARM.id}`);
-    await expect(page.getByLabel("Farm", { exact: true })).toHaveValue(FARM.id);
-    await expect(page.getByLabel("City Hall", { exact: true })).toHaveValue("17");
-    await expect(page.locator("[data-summary]")).toContainText("Next step: Goldmine at the same level");
-    await expect(page.locator('[data-step="ch11"] [data-step-status]')).toContainText("Done");
-    await page.getByLabel("Goldmine", { exact: true }).fill("15");
+    await expect(page.getByLabel("Conta farm", { exact: true })).toHaveValue(FARM.id);
+    await expect(page.getByLabel("Prefeitura", { exact: true })).toHaveValue("17");
+    await expect(page.locator("[data-summary]")).toContainText("Próximo passo: Goldmine at the same level");
+    await expect(page.locator('[data-step="ch11"] [data-step-status]')).toContainText("Concluído");
+    await page.getByLabel("Mina de Ouro", { exact: true }).fill("15");
     await expect(page.locator("[data-summary]")).not.toContainText("Goldmine");
-    await page.getByRole("button", { name: "Save levels to Food Farm" }).click();
-    await expect(page.getByRole("status")).toHaveText("Saved to Food Farm.");
+    await page.getByRole("button", { name: "Salvar níveis em Food Farm" }).click();
+    await expect(page.getByRole("status")).toHaveText("Salvo em Food Farm.");
     await page.reload();
-    await expect(page.getByLabel("Goldmine", { exact: true })).toHaveValue("15");
+    await expect(page.getByLabel("Mina de Ouro", { exact: true })).toHaveValue("15");
   });
 
   test("Trading Post prefills from ?farm=", async ({ page }) => {
     await seedFarm(page);
     await page.goto(`/farms/trading-post/?farm=${FARM.id}`);
-    await expect(page.getByLabel("Farm Trading Post level")).toHaveValue("15");
-    await expect(page.locator("[data-prefilled]")).toHaveText("Trading Post level prefilled from Food Farm.");
+    await expect(page.getByLabel("Nível do Entreposto Comercial da conta farm")).toHaveValue("15");
+    await expect(page.locator("[data-prefilled]")).toHaveText("Nível do Entreposto Comercial preenchido a partir de Food Farm.");
   });
 });
 
@@ -107,12 +107,12 @@ test.describe("farm tools accessibility", () => {
         await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
         // Fill the calculator so results and warnings are checked too; show hypotheses on the chooser.
         if (route === "/farms/trading-post/") {
-          await page.getByLabel("Amount your main needs (after tax)").fill("1m");
-          await page.getByLabel("Farm Trading Post level").fill("15");
+          await page.getByLabel("Quantidade que a sua principal precisa (depois do imposto)").fill("1m");
+          await page.getByLabel("Nível do Entreposto Comercial da conta farm").fill("15");
           await expect(page.locator("[data-warning]").first()).toBeVisible();
         }
         if (route === "/farms/choose/") {
-          await page.getByLabel("Show hypotheses").check();
+          await page.getByLabel("Mostrar hipóteses").check();
           await expect(page.locator('[data-variant="pair-food-wood"]')).toBeVisible();
         }
         await page.evaluate(() => document.querySelectorAll<HTMLDetailsElement>("#main details").forEach((d) => { d.open = true; }));

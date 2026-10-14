@@ -238,14 +238,14 @@ export interface NewFarmInput {
 /** Adds a farm. Throws with a message the user can act on (bad name, limit reached). */
 export function addFarm(input: NewFarmInput, st: StorageLike | null = storage(), now: Date = new Date()): { store: FarmsStoreV1; farm: Farm } {
   const s = readFarms(st);
-  if (s.farms.length >= MAX_FARMS) throw new Error(`You can track up to ${MAX_FARMS} farms. Remove one first.`);
+  if (s.farms.length >= MAX_FARMS) throw new Error(`Você pode acompanhar até ${MAX_FARMS} contas farm. Remova uma primeiro.`);
   const name = cleanFarmName(input.name);
-  if (!name) throw new Error(`Give the farm a name (1–${FARM_NAME_MAX} characters).`);
+  if (!name) throw new Error(`Dê um nome à conta farm (1 a ${FARM_NAME_MAX} caracteres).`);
   const farm = parseFarm({
     id: newId(), name, role: input.role ?? "general", note: input.note ?? "",
     levels: { ...emptyLevels(), ...input.levels }, gatheringUntil: null, daily: null, goal: null, createdAt: now.toISOString(),
   });
-  if (!farm) throw new Error("Could not create the farm.");
+  if (!farm) throw new Error("Não foi possível criar a conta farm.");
   return { store: writeFarms({ farms: [...s.farms, farm] }, st), farm };
 }
 
@@ -257,7 +257,7 @@ export function updateFarm(id: string, patch: FarmPatch, st: StorageLike | null 
   const i = s.farms.findIndex((f) => f.id === id);
   const cur = s.farms[i];
   if (!cur) return s;
-  if (patch.name !== undefined && !cleanFarmName(patch.name)) throw new Error(`Give the farm a name (1–${FARM_NAME_MAX} characters).`);
+  if (patch.name !== undefined && !cleanFarmName(patch.name)) throw new Error(`Dê um nome à conta farm (1 a ${FARM_NAME_MAX} caracteres).`);
   const merged = parseFarm({ ...cur, ...patch, id: cur.id, createdAt: cur.createdAt, levels: { ...cur.levels, ...patch.levels } });
   if (!merged) return s;
   const farms = [...s.farms];
@@ -277,7 +277,7 @@ export function removeFarm(id: string, st: StorageLike | null = storage()): Farm
 /** Appends a shipment (build it with makeShipment from @rokadm/planner). Oldest are dropped past MAX_SHIPMENTS. */
 export function addShipment(entry: ShipmentEntry, st: StorageLike | null = storage()): FarmsStoreV1 {
   const e = parseShipment(entry);
-  if (!e) throw new Error("This shipment is not valid.");
+  if (!e) throw new Error("Este envio não é válido.");
   const s = readFarms(st);
   return writeFarms({ shipments: [...s.shipments.filter((x) => x.id !== e.id), e] }, st);
 }
@@ -290,7 +290,7 @@ export function removeShipment(id: string, st: StorageLike | null = storage()): 
 // ---------------------------------------------------------------------------
 // Export / import
 
-const NOT_EXPORT = "This file is not a KingdomOps farms export. Pick the .json file you exported from the Farms page.";
+const NOT_EXPORT = "Este arquivo não é uma exportação de contas farm do KingdomOps. Escolha o arquivo .json que você exportou da página Contas farm.";
 
 export function exportFarms(s: FarmsStoreV1): string {
   return JSON.stringify({ app: FARMS_EXPORT_APP, ...s }, null, 2);
@@ -305,6 +305,6 @@ export function importFarms(text: string): FarmsStoreV1 {
     throw new Error(NOT_EXPORT);
   }
   if (!isRecord(data) || data.app !== FARMS_EXPORT_APP) throw new Error(NOT_EXPORT);
-  if (data.v !== 1) throw new Error("This farms export has a version this app cannot read.");
+  if (data.v !== 1) throw new Error("Esta exportação de contas farm tem uma versão que este app não consegue ler.");
   return normalise(data);
 }

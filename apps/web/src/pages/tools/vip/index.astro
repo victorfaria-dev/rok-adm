@@ -22,11 +22,11 @@ const props = {
 };
 const ids = [...t.factIds, ...vip.chestStart.facts, ...vip.gemToVip.facts, ...vip.dailyGems.facts];
 ---
-<Shell title="Gems to VIP" description="How many VIP points and gems you need for your next VIP level, and how many days the daily chest takes. Every number cites its fact card." mode="operate">
+<Shell title="Gemas para VIP" description="Quantos pontos VIP e gemas você precisa para o próximo nível de VIP, e quantos dias o baú diário leva. Cada número cita a sua ficha de fonte." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Gems to VIP</h1>
-      <p class="t-lead">Points and gems to your target VIP level, and the days it takes with the daily VIP chest. Values stay on this device.</p>
+      <h1>Gemas para VIP</h1>
+      <p class="t-lead">Pontos e gemas até o nível de VIP desejado, e os dias que leva com o baú VIP diário. Os valores ficam neste aparelho.</p>
       <DataStamp />
     </header>
     <VipCalc client:load {...props} />

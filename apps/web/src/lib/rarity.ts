@@ -6,7 +6,7 @@ export type Rarity = "common" | "rare" | "epic" | "legendary";
 export const RARITIES: readonly Rarity[] = ["common", "rare", "epic", "legendary"];
 
 export const RARITY_LABELS: Record<Rarity, string> = {
-  common: "Common", rare: "Rare", epic: "Epic", legendary: "Legendary",
+  common: "Comum", rare: "Raro", epic: "Épico", legendary: "Lendário",
 };
 
 /** Inclusive City Hall range for each tier. */
@@ -16,10 +16,10 @@ export const RARITY_RANGES: Record<Rarity, readonly [number, number]> = {
 
 /** What the tier means in the game (copy for the card page). */
 export const RARITY_MEANING: Record<Rarity, string> = {
-  common: "Building up the account",
-  rare: "Ready for the first KvK",
-  epic: "Late game, last push to the top",
-  legendary: "Maxed City Hall, ready for Season of Conquest",
+  common: "Montando a conta",
+  rare: "Pronto para o primeiro KvK",
+  epic: "Fim de jogo, última arrancada rumo ao topo",
+  legendary: "Prefeitura no máximo, pronto para a Temporada de Conquista",
 };
 
 export const CITY_HALL_MAX = 25;

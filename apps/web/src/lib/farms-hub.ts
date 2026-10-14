@@ -4,21 +4,21 @@ import { readQuantity, type FarmFocus, type Resource } from "@rokadm/planner";
 import { FARM_LEVEL_RANGES, FARM_NAME_MAX, FARM_NOTE_MAX, type FarmLevelField, type FarmLevelsState } from "./farms-store";
 
 export const FOCUS_LABEL: Record<FarmFocus, string> = {
-  general: "General (all resources)",
-  food: "Food",
-  wood: "Wood",
-  stone: "Stone",
-  gold: "Gold",
+  general: "Geral (todos os recursos)",
+  food: "Comida",
+  wood: "Madeira",
+  stone: "Pedra",
+  gold: "Ouro",
 };
 
-export const RESOURCE_LABEL: Record<Resource, string> = { food: "Food", wood: "Wood", stone: "Stone", gold: "Gold" };
+export const RESOURCE_LABEL: Record<Resource, string> = { food: "Comida", wood: "Madeira", stone: "Pedra", gold: "Ouro" };
 
 export const LEVEL_LABEL: Record<FarmLevelField, string> = {
-  cityHall: "City Hall",
-  tradingPost: "Trading Post",
-  goldmine: "Goldmine",
-  academy: "Academy",
-  commanderLevel: "Gathering commander level",
+  cityHall: "Prefeitura",
+  tradingPost: "Entreposto Comercial",
+  goldmine: "Mina de Ouro",
+  academy: "Academia",
+  commanderLevel: "Nível do comandante de coleta",
 };
 
 export const LEVEL_FIELDS: readonly FarmLevelField[] = ["cityHall", "tradingPost", "goldmine", "academy", "commanderLevel"];
@@ -37,18 +37,18 @@ export function addDays(day: string, n: number): string {
   return d.toISOString().slice(0, 10);
 }
 
-/** "12 Oct" for a YYYY-MM-DD day. */
+/** "12 de out." for a YYYY-MM-DD day. */
 export function shortDay(day: string): string {
-  return new Date(`${day}T00:00:00Z`).toLocaleDateString("en-US", { month: "short", day: "numeric", timeZone: "UTC" });
+  return new Date(`${day}T00:00:00Z`).toLocaleDateString("pt-BR", { month: "short", day: "numeric", timeZone: "UTC" });
 }
 
-/** "Mon, Oct 12, 2026" for a YYYY-MM-DD day. */
+/** "seg., 12 de out. de 2026" for a YYYY-MM-DD day. */
 export function longDay(day: string): string {
-  return new Date(`${day}T00:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  return new Date(`${day}T00:00:00Z`).toLocaleDateString("pt-BR", { weekday: "short", month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
 }
 
 export function fmtNumber(n: number): string {
-  return n.toLocaleString("en-US");
+  return n.toLocaleString("pt-BR");
 }
 
 /** "45 min", "1 h", "1 h 20 min". */
@@ -60,15 +60,15 @@ export function formatDuration(minutes: number): string {
   return r === 0 ? `${h} h` : `${h} h ${r} min`;
 }
 
-/** Local clock time ("14:05" style, user's locale), with "tomorrow" when it is not today. */
+/** Local clock time ("14:05" style, user's locale), with "amanhã" when it is not today. */
 export function formatLocalTime(iso: string, now: Date): string {
   const d = new Date(iso);
-  const time = d.toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" });
+  const time = d.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" });
   const day = localDay(d);
   const today = localDay(now);
   if (day === today) return time;
-  if (day === addDays(today, 1)) return `tomorrow ${time}`;
-  return `${d.toLocaleDateString(undefined, { month: "short", day: "numeric" })} ${time}`;
+  if (day === addDays(today, 1)) return `amanhã ${time}`;
+  return `${d.toLocaleDateString("pt-BR", { month: "short", day: "numeric" })} ${time}`;
 }
 
 /** ISO time `hours` from `now`. */
@@ -96,10 +96,10 @@ export function timeInputValue(iso: string | null): string {
   return `${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
-/** "City Hall 12 · Trading Post 5", or "" when no level is saved. */
+/** "Prefeitura 12 · Entreposto Comercial 5", or "" when no level is saved. */
 export function levelsSummary(levels: FarmLevelsState): string {
   return LEVEL_FIELDS.filter((f) => levels[f] !== null)
-    .map((f) => `${f === "commanderLevel" ? "Commander" : LEVEL_LABEL[f]} ${levels[f]}`)
+    .map((f) => `${f === "commanderLevel" ? "Comandante" : LEVEL_LABEL[f]} ${levels[f]}`)
     .join(" · ");
 }
 
@@ -130,7 +130,7 @@ export function parseLevel(field: FarmLevelField, raw: string): LevelParse {
   const [min, max] = FARM_LEVEL_RANGES[field];
   const n = parseWhole(raw);
   if (n === null) return { ok: true, value: null };
-  if (Number.isNaN(n) || n < min || n > max) return { ok: false, error: `${LEVEL_LABEL[field]}: enter a whole number from ${min} to ${max}, or leave it empty.` };
+  if (Number.isNaN(n) || n < min || n > max) return { ok: false, error: `${LEVEL_LABEL[field]}: digite um número inteiro de ${min} a ${max}, ou deixe em branco.` };
   return { ok: true, value: n };
 }
 
@@ -151,10 +151,10 @@ export interface FarmFormResult {
 export function validateFarmForm(v: FarmFormValues): FarmFormResult {
   const errors: FarmFormErrors = {};
   const name = v.name.trim();
-  if (name.length === 0) errors.name = "Give the farm a name.";
-  else if (name.length > FARM_NAME_MAX) errors.name = `Use at most ${FARM_NAME_MAX} characters (now ${name.length}).`;
+  if (name.length === 0) errors.name = "Dê um nome à conta farm.";
+  else if (name.length > FARM_NAME_MAX) errors.name = `Use no máximo ${FARM_NAME_MAX} caracteres (agora ${name.length}).`;
   const note = v.note.trim();
-  if (note.length > FARM_NOTE_MAX) errors.note = `Use at most ${FARM_NOTE_MAX} characters (now ${note.length}).`;
+  if (note.length > FARM_NOTE_MAX) errors.note = `Use no máximo ${FARM_NOTE_MAX} caracteres (agora ${note.length}).`;
   const levels = {} as FarmLevelsState;
   for (const f of LEVEL_FIELDS) {
     const p = parseLevel(f, v.levels[f]);
@@ -172,7 +172,7 @@ export type TaxParse = { ok: true; rate: number } | { ok: false; error: string }
 /** Percent text ("21", "21.5", "21%") → rate 0..<1. */
 export function parseTaxPercent(raw: string): TaxParse {
   const s = raw.trim().replace(/%$/, "").trim().replace(",", ".");
-  const error = "Enter the tax as a percent from 0 to 99, e.g. 21.";
+  const error = "Digite o imposto como porcentagem de 0 a 99, por exemplo 21.";
   if (s === "" || !/^\d+(\.\d+)?$/.test(s)) return { ok: false, error };
   const n = Number(s);
   if (!(n >= 0 && n < 100)) return { ok: false, error };

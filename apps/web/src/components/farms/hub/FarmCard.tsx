@@ -23,10 +23,10 @@ interface Props {
 
 function GatheringStatus({ farm, now }: { farm: Farm; now: Date }) {
   const until = farm.gatheringUntil ? Date.parse(farm.gatheringUntil) : Number.NaN;
-  if (!Number.isFinite(until)) return <p class="fh-status">Idle: no return time set.</p>;
-  if (until <= now.getTime()) return <p class="fh-status">Marches back since {formatLocalTime(farm.gatheringUntil!, now)}. Send them out again.</p>;
+  if (!Number.isFinite(until)) return <p class="fh-status">Parada: sem horário de volta definido.</p>;
+  if (until <= now.getTime()) return <p class="fh-status">Marchas de volta desde {formatLocalTime(farm.gatheringUntil!, now)}. Envie-as de novo.</p>;
   const left = Math.ceil((until - now.getTime()) / 60000);
-  return <p class="fh-status">Gathering: back in {formatDuration(left)} (at {formatLocalTime(farm.gatheringUntil!, now)}).</p>;
+  return <p class="fh-status">Coletando: volta em {formatDuration(left)} (às {formatLocalTime(farm.gatheringUntil!, now)}).</p>;
 }
 
 export default function FarmCard({ farm, now, today, shipments, clock, onUpdate, onEdit, onDelete }: Props) {
@@ -46,58 +46,58 @@ export default function FarmCard({ farm, now, today, shipments, clock, onUpdate,
     e.preventDefault();
     const n = parseResourceAmount(goalAmt);
     if (n === null || Number.isNaN(n) || n <= 0) {
-      setGoalErr("Enter the amount the main should receive today above 0, e.g. 500000, 500k or 1.5m.");
+      setGoalErr("Digite a quantidade que a principal deve receber hoje, acima de 0, por exemplo 500000, 500k ou 1.5m.");
       document.getElementById(`${pre}-goal-amt`)?.focus();
       return;
     }
     setGoalErr(null);
-    onUpdate({ goal: { resource: goalRes, amount: n } }, `Daily goal saved for ${farm.name}.`);
+    onUpdate({ goal: { resource: goalRes, amount: n } }, `Meta diária salva para ${farm.name}.`);
   };
 
   return (
     <article class="fm-card fh-farm" aria-labelledby={`${pre}-h`} data-farm={farm.id}>
       <header class="fh-farm-head">
         <h3 id={`${pre}-h`} tabIndex={-1}>{farm.name}</h3>
-        <p class="fh-meta"><span class="fh-chip">{FOCUS_LABEL[farm.role]}</span> {levels ? <span class="mono">{levels}</span> : <span class="fm-note">No levels saved.</span>}</p>
+        <p class="fh-meta"><span class="fh-chip">{FOCUS_LABEL[farm.role]}</span> {levels ? <span class="mono">{levels}</span> : <span class="fm-note">Nenhum nível salvo.</span>}</p>
         {farm.note && <p class="fm-note">{farm.note}</p>}
         <p class="fh-links">
-          <a href={`/farms/build/?farm=${q}`}>Build path<span class="visually-hidden"> for {farm.name}</span></a>
-          <a href={`/farms/trading-post/?farm=${q}`}>Trading Post calculator<span class="visually-hidden"> for {farm.name}</span></a>
+          <a href={`/farms/build/?farm=${q}`}>Caminho de construção<span class="visually-hidden"> de {farm.name}</span></a>
+          <a href={`/farms/trading-post/?farm=${q}`}>Calculadora do Entreposto Comercial<span class="visually-hidden"> de {farm.name}</span></a>
         </p>
       </header>
 
       <fieldset class="fh-fieldset fh-section">
-        <legend class="fm-label">Gathering until</legend>
+        <legend class="fm-label">Coletando até</legend>
         <GatheringStatus farm={farm} now={now} />
-        <div class="fh-quick" role="group" aria-label={`Set ${farm.name} back time from now`}>
+        <div class="fh-quick" role="group" aria-label={`Definir daqui a quanto ${farm.name} volta`}>
           {QUICK_HOURS.map((h) => (
             <button
               type="button" class="btn btn-secondary fh-small" key={h}
-              onClick={() => onUpdate({ gatheringUntil: untilInHours(clock(), h) }, `${farm.name}: back in ${h} h.`)}
+              onClick={() => onUpdate({ gatheringUntil: untilInHours(clock(), h) }, `${farm.name}: volta em ${h} h.`)}
             >+{h} h</button>
           ))}
         </div>
         <div class="fh-row">
           <div class="fm-field fh-time">
-            <label for={`${pre}-time`}>Back at (your local time)</label>
+            <label for={`${pre}-time`}>Volta às (seu horário local)</label>
             <input
               id={`${pre}-time`} type="time" value={timeInputValue(farm.gatheringUntil)}
               onChange={(e) => {
                 const iso = untilAtLocalTime(clock(), (e.target as HTMLInputElement).value);
-                if (iso) onUpdate({ gatheringUntil: iso }, `${farm.name}: back time saved.`);
+                if (iso) onUpdate({ gatheringUntil: iso }, `${farm.name}: horário de volta salvo.`);
               }}
             />
           </div>
           {farm.gatheringUntil && (
-            <button type="button" class="btn btn-secondary fh-small" onClick={() => onUpdate({ gatheringUntil: null }, `${farm.name}: back time cleared.`)}>
-              Clear<span class="visually-hidden"> back time for {farm.name}</span>
+            <button type="button" class="btn btn-secondary fh-small" onClick={() => onUpdate({ gatheringUntil: null }, `${farm.name}: horário de volta limpo.`)}>
+              Limpar<span class="visually-hidden"> horário de volta de {farm.name}</span>
             </button>
           )}
         </div>
       </fieldset>
 
       <fieldset class="fh-fieldset fh-section">
-        <legend class="fm-label">Today's checklist: {doneRequired} of {required.length} done</legend>
+        <legend class="fm-label">Lista de hoje: {doneRequired} de {required.length} concluídas</legend>
         <ul class="fh-tasks">
           {FARM_DAILY_TASKS.map((t) => {
             const id = `${pre}-t-${t.id}`;
@@ -106,34 +106,34 @@ export default function FarmCard({ farm, now, today, shipments, clock, onUpdate,
                 <div class="fh-task">
                   <input
                     id={id} type="checkbox" checked={marks.done.includes(t.id)} aria-describedby={`${id}-d`}
-                    onChange={() => onUpdate({ daily: toggleDaily(farm.daily, today, t.id) }, `${farm.name}: checklist saved.`)}
+                    onChange={() => onUpdate({ daily: toggleDaily(farm.daily, today, t.id) }, `${farm.name}: lista salva.`)}
                   />
-                  <label for={id}>{t.label}{t.optional && <span class="fh-chip fh-optional">Optional</span>}</label>
+                  <label for={id}>{t.label}{t.optional && <span class="fh-chip fh-optional">Opcional</span>}</label>
                 </div>
                 <p class="fm-hint fh-task-detail" id={`${id}-d`}>{t.detail}</p>
                 <details class="fh-why">
-                  <summary>Why<span class="visually-hidden">: {t.label}</span></summary>
+                  <summary>Por quê<span class="visually-hidden">: {t.label}</span></summary>
                   <Sourced confidence={t.confidence} facts={t.facts} gaps={t.gaps} hypothesis={t.hypothesis} />
                 </details>
               </li>
             );
           })}
         </ul>
-        <p class="fm-hint">Ticks reset at local midnight.</p>
+        <p class="fm-hint">As marcações zeram à meia-noite local.</p>
       </fieldset>
 
       <form class="fh-section fh-goal" onSubmit={saveGoal} aria-labelledby={`${pre}-goal-h`} noValidate>
-        <h4 id={`${pre}-goal-h`} class="fm-label">Daily goal (optional)</h4>
-        <p class="fm-hint">What the main should receive from this farm today. You set the number; we don't suggest one because farm yields are not measured yet.</p>
+        <h4 id={`${pre}-goal-h`} class="fm-label">Meta diária (opcional)</h4>
+        <p class="fm-hint">O que a principal deve receber desta conta farm hoje. Você define o número; não sugerimos um porque a produção das contas farm ainda não foi medida.</p>
         <div class="fh-row">
           <div class="fm-field">
-            <label for={`${pre}-goal-res`}>Resource</label>
+            <label for={`${pre}-goal-res`}>Recurso</label>
             <select id={`${pre}-goal-res`} value={goalRes} onChange={(e) => setGoalRes((e.target as HTMLSelectElement).value as Resource)}>
               {RESOURCES.map((r) => <option value={r} key={r}>{RESOURCE_LABEL[r]}</option>)}
             </select>
           </div>
           <div class="fm-field">
-            <label for={`${pre}-goal-amt`}>Amount received</label>
+            <label for={`${pre}-goal-amt`}>Quantidade recebida</label>
             <input
               id={`${pre}-goal-amt`} type="text" inputMode="numeric" autocomplete="off" value={goalAmt}
               aria-invalid={goalErr ? "true" : undefined} aria-describedby={goalErr ? `${pre}-goal-err` : undefined}
@@ -143,29 +143,29 @@ export default function FarmCard({ farm, now, today, shipments, clock, onUpdate,
         </div>
         {goalErr && <p class="fm-error" id={`${pre}-goal-err`} role="alert">{goalErr}</p>}
         <div class="fm-actions">
-          <button type="submit" class="btn btn-secondary fh-small">Save goal<span class="visually-hidden"> for {farm.name}</span></button>
+          <button type="submit" class="btn btn-secondary fh-small">Salvar meta<span class="visually-hidden"> de {farm.name}</span></button>
           {farm.goal && (
-            <button type="button" class="btn btn-secondary fh-small" onClick={() => { setGoalAmt(""); onUpdate({ goal: null }, `${farm.name}: daily goal removed.`); }}>
-              Remove goal<span class="visually-hidden"> for {farm.name}</span>
+            <button type="button" class="btn btn-secondary fh-small" onClick={() => { setGoalAmt(""); onUpdate({ goal: null }, `${farm.name}: meta diária removida.`); }}>
+              Remover meta<span class="visually-hidden"> de {farm.name}</span>
             </button>
           )}
         </div>
         {progress && (
           <div class="fh-progress">
             <p id={`${pre}-goal-p`}>
-              {progress.done ? "Goal met: " : ""}
-              <span class="mono">{fmtNumber(progress.shipped)}</span> of <span class="mono">{fmtNumber(progress.target)}</span> {RESOURCE_LABEL[progress.resource].toLowerCase()} received today ({Math.round(progress.ratio * 100)}%)
-              {!progress.done && <>, <span class="mono">{fmtNumber(progress.remaining)}</span> to go</>}.
+              {progress.done ? "Meta cumprida: " : ""}
+              <span class="mono">{fmtNumber(progress.shipped)}</span> de <span class="mono">{fmtNumber(progress.target)}</span> ({RESOURCE_LABEL[progress.resource].toLowerCase()}) recebidos hoje ({Math.round(progress.ratio * 100)}%)
+              {!progress.done && <>, faltam <span class="mono">{fmtNumber(progress.remaining)}</span></>}.
             </p>
             <progress max={100} value={Math.round(progress.ratio * 100)} aria-labelledby={`${pre}-goal-p`} />
-            <p class="fm-hint">Counts today's entries in the <a href="/farms/log/">shipment log</a> (net received).</p>
+            <p class="fm-hint">Conta os lançamentos de hoje no <a href="/farms/log/">registro de envios</a> (líquido recebido).</p>
           </div>
         )}
       </form>
 
       <div class="fm-actions fh-farm-actions">
-        <button type="button" class="btn btn-secondary" onClick={onEdit}>Edit<span class="visually-hidden"> {farm.name}</span></button>
-        <ConfirmAction label="Delete" ariaLabel={`Delete ${farm.name}`} question={`Delete ${farm.name} and its shipments?`} onConfirm={onDelete} />
+        <button type="button" class="btn btn-secondary" onClick={onEdit}>Editar<span class="visually-hidden"> {farm.name}</span></button>
+        <ConfirmAction label="Excluir" ariaLabel={`Excluir ${farm.name}`} question={`Excluir ${farm.name} e seus envios?`} onConfirm={onDelete} />
       </div>
     </article>
   );

@@ -183,8 +183,8 @@ export function matchCivilization(text: string): string | null {
 }
 
 export const CIVILIZATION_NAMES: Readonly<Record<string, string>> = {
-  rome: "Rome", germany: "Germany", britain: "Britain", france: "France", spain: "Spain", china: "China", japan: "Japan",
-  korea: "Korea", arabia: "Arabia", ottoman: "Ottoman", byzantium: "Byzantium", vikings: "Vikings", maya: "Maya",
+  rome: "Roma", germany: "Alemanha", britain: "Grã-Bretanha", france: "França", spain: "Espanha", china: "China", japan: "Japão",
+  korea: "Coreia", arabia: "Arábia", ottoman: "Otomanos", byzantium: "Bizâncio", vikings: "Vikings", maya: "Maias",
 };
 
 // ---------------------------------------------------------------------------------------------
@@ -218,7 +218,7 @@ const NAME_ID_RE = /([0-9lI|O]{6,12})$/;
  * line up in the same two right-hand columns. Above them: "(ID: n)" and the name.
  */
 export function parseProfile(words: readonly OcrWord[], size?: { width: number; height: number }): ProfileRead | Rejection {
-  if (!words.length) return { ok: false, reason: "No text was found in the image." };
+  if (!words.length) return { ok: false, reason: "Nenhum texto foi encontrado na imagem." };
   const h = textHeight(words);
   const rows = groupRows(words, h);
   const nums = rows.map((r) => rowNumbers(r, h));
@@ -251,7 +251,7 @@ export function parseProfile(words: readonly OcrWord[], size?: { width: number; 
   if (!best) {
     return {
       ok: false,
-      reason: "This does not look like the Governor Profile screen: the two rows of numbers (kill points and power, then merit) were not found in their columns.",
+      reason: "Isto não parece a tela do Perfil do Governador: as duas linhas de números (pontos de abate e poder, depois mérito) não foram achadas nas colunas.",
     };
   }
   const { a, b, col2, col3 } = best;
@@ -294,14 +294,14 @@ export function parseProfile(words: readonly OcrWord[], size?: { width: number; 
   if (governorId === null && nameDigits) {
     governorId = Number(nameDigits);
     idSource = "name";
-    notes.push("The ID was taken from the default name (the \"(ID: …)\" line was not readable).");
+    notes.push("O ID foi tirado do nome padrão (a linha \"(ID: …)\" não estava legível).");
   } else if (governorId !== null && nameDigits && Number(nameDigits) !== governorId && nameDigits.length === String(governorId).length) {
-    notes.push("The \"(ID: …)\" line and the name show different digits; check the ID.");
+    notes.push("A linha \"(ID: …)\" e o nome mostram dígitos diferentes; confira o ID.");
   }
 
   const civText = rowB.words.filter((w) => w.bbox.x0 >= left && w.bbox.x1 <= col2 - h * 0.3).map((w) => w.text).join(" ");
   const civilization = matchCivilization(civText);
-  if (!civilization && /\p{L}/u.test(civText)) notes.push("Civilization name not recognised: pick it yourself.");
+  if (!civilization && /\p{L}/u.test(civText)) notes.push("Nome da civilização não reconhecido: escolha você mesmo.");
 
   const power = pick(a, col3);
   const killPoints = pick(a, col2);
@@ -345,7 +345,7 @@ export function parseAlbum(words: readonly OcrWord[]): AlbumRead | Rejection {
   const big = words
     .filter((w) => /^[0-9OolI|SB]{6}$/.test(w.text.trim()) && /\d{4}/.test(w.text) && height(w.bbox) >= h * 1.6)
     .sort((p, q) => p.bbox.y0 - q.bbox.y0 || p.bbox.x0 - q.bbox.x0);
-  if (!big.length) return { ok: false, reason: "No six-digit code was found on the album photos." };
+  if (!big.length) return { ok: false, reason: "Nenhum código de seis dígitos foi encontrado nas fotos do álbum." };
   const codes = [...new Set(big.map((w) => fixDigits(w.text.trim())))];
   const top = big[0]!;
   const rows = groupRows(words.filter((w) => !big.includes(w)), h);
@@ -362,8 +362,8 @@ export function parseAlbum(words: readonly OcrWord[]): AlbumRead | Rejection {
     name = group.map((w) => w.text).join(" ").trim() || null;
   }
   const notes: string[] = [];
-  if (codes.length > 1) notes.push("More than one code is on the album; the site's code must be one of them.");
-  if (!name) notes.push("The name above the photos was not readable.");
+  if (codes.length > 1) notes.push("Há mais de um código no álbum; o código do site precisa ser um deles.");
+  if (!name) notes.push("O nome acima das fotos não estava legível.");
   return { ok: true, screen: "album", name, codes, notes };
 }
 
@@ -449,10 +449,10 @@ export function parseVip(words: readonly OcrWord[]): VipRead | Rejection {
     }
   }
   if (vip === null && points === null) {
-    return { ok: false, reason: "This does not look like the VIP screen: neither \"VIP n\" in the section titles nor the points bar was found." };
+    return { ok: false, reason: "Isto não parece a tela de VIP: nem \"VIP n\" nos títulos das seções nem a barra de pontos foram encontrados." };
   }
   if (vip === null && pairRow < 0) {
-    return { ok: false, reason: "A points bar was found, but not the rest of the VIP screen." };
+    return { ok: false, reason: "Foi encontrada uma barra de pontos, mas não o resto da tela de VIP." };
   }
   const notes: string[] = [];
   let bar: Box | null = null;
@@ -555,7 +555,7 @@ export function parseBuildingBanner(words: readonly OcrWord[]): BannerRead {
 
 /** Accepts only image files the browser can decode, up to 15 MB. */
 export function checkImageFile(f: { type: string; size: number }): string | null {
-  if (!/^image\/(png|jpeg|webp|bmp|gif)$/.test(f.type)) return "Pick a screenshot image (PNG, JPEG or WebP).";
-  if (f.size > 15_000_000) return "This image is larger than 15 MB. Take a normal screenshot and try again.";
+  if (!/^image\/(png|jpeg|webp|bmp|gif)$/.test(f.type)) return "Escolha uma imagem de print (PNG, JPEG ou WebP).";
+  if (f.size > 15_000_000) return "Esta imagem tem mais de 15 MB. Tire um print normal e tente de novo.";
   return null;
 }

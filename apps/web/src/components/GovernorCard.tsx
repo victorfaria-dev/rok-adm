@@ -6,7 +6,7 @@ import type { AccountProfile } from "@rokadm/core";
 import { readStore } from "../lib/store";
 import { profileFromCode } from "../lib/profile";
 import {
-  ALLIANCE_COLORS, cardData, defaultCard, NAME_MAX, pngFileName, readCard, validateName, validateTag, writeCard,
+  ALLIANCE_COLORS, ALLIANCE_COLOR_NAMES, cardData, defaultCard, NAME_MAX, pngFileName, readCard, validateName, validateTag, writeCard,
   type AllianceColor, type CardV1,
 } from "../lib/card";
 import { RARITY_LABELS } from "../lib/rarity";
@@ -119,7 +119,7 @@ export default function GovernorCard() {
   const download = async () => {
     if (busy) return;
     setBusy(true);
-    setStatus("Drawing the card…");
+    setStatus("Desenhando o cartão…");
     try {
       const { renderCardPng } = await import("../lib/card-png");
       const blob = await renderCardPng(data);
@@ -133,9 +133,9 @@ export default function GovernorCard() {
       a.remove();
       setTimeout(() => URL.revokeObjectURL(url), 2000);
       document.dispatchEvent(new CustomEvent("ko:card-png", { detail: { file, bytes: blob.size } }));
-      setStatus(`Saved ${file} (1080 × 1080).`);
+      setStatus(`Salvo ${file} (1080 × 1080).`);
     } catch (err) {
-      setStatus(err instanceof Error ? err.message : "Could not save the PNG.");
+      setStatus(err instanceof Error ? err.message : "Não foi possível salvar o PNG.");
     } finally {
       setBusy(false);
     }
@@ -146,7 +146,7 @@ export default function GovernorCard() {
 
   return (
     <div class="gc-wrap">
-      <section class="gc-stage" aria-label="Governor card">
+      <section class="gc-stage" aria-label="Cartão do governador">
         <div
           ref={el}
           class={`gc${reduce ? " still" : ""}`}
@@ -163,8 +163,8 @@ export default function GovernorCard() {
             <div class="gc-face">
               <p class="gc-top">
                 <span class="gc-pill gc-rar">{rarity}</span>
-                {data.example && <span class="gc-pill gc-ex">Example</span>}
-                <span class="gc-proof">Self-reported</span>
+                {data.example && <span class="gc-pill gc-ex">Exemplo</span>}
+                <span class="gc-proof">Autodeclarado</span>
               </p>
               <div class="gc-avatar" aria-hidden="true">
                 <svg viewBox={`${K_VIEWBOX.x} ${K_VIEWBOX.y} ${K_VIEWBOX.w} ${K_VIEWBOX.h}`} focusable="false">
@@ -174,16 +174,16 @@ export default function GovernorCard() {
               <h2 class="gc-name">{data.name}</h2>
               <p class="gc-tagline">
                 {crest && <CrestSvg crest={crest} class="gc-crest" />}
-                {data.tag ? <span class="gc-tag">[{data.tag}]</span> : <span class="gc-notag">No alliance tag</span>}
+                {data.tag ? <span class="gc-tag">[{data.tag}]</span> : <span class="gc-notag">Sem sigla de aliança</span>}
               </p>
               <dl class="gc-stats">
-                <div><dt>City Hall</dt><dd class="mono">{data.cityHall}</dd></div>
-                <div><dt>Spending</dt><dd>{data.spendingLabel}</dd></div>
+                <div><dt>Prefeitura</dt><dd class="mono">{data.cityHall}</dd></div>
+                <div><dt>Gasto</dt><dd>{data.spendingLabel}</dd></div>
               </dl>
               <p class="gc-marks">
-                {data.f2pAchiever && <span class="gc-pill gc-f2p">F2P Achiever</span>}
+                {data.f2pAchiever && <span class="gc-pill gc-f2p">Conquista F2P</span>}
               </p>
-              <p class="gc-foot"><span>{rarity} · City Hall {data.cityHall}</span><span>KingdomOps</span></p>
+              <p class="gc-foot"><span>{rarity} · Prefeitura {data.cityHall}</span><span>KingdomOps</span></p>
               <div class="gc-foil" aria-hidden="true" />
               <div class="gc-sweep" aria-hidden="true" />
               <div class="gc-glare" aria-hidden="true" />
@@ -191,49 +191,49 @@ export default function GovernorCard() {
           </div>
         </div>
         <p class="gc-hint">
-          {reduce ? "Motion is reduced: the card stays flat." : "Move over or drag the card to tilt it."} Everything on it is also plain text.
+          {reduce ? "Movimento reduzido: o cartão fica parado." : "Passe o mouse ou arraste o cartão para inclinar."} Tudo o que está nele também está em texto simples.
         </p>
         {data.example && (
           <p class="gc-example">
-            Sample numbers. <a href="/start/">Build my guide</a> and the card uses your City Hall and spending profile.
+            Números de exemplo. <a href="/start/">Monte meu guia</a> e o cartão usa a sua Prefeitura e o seu perfil de gasto.
           </p>
         )}
       </section>
 
       <form class="gc-form" onSubmit={(e) => e.preventDefault()} autocomplete="off">
-        <h2>Make it yours</h2>
+        <h2>Deixe com a sua cara</h2>
         <div class="gc-field">
-          <label for={nameId}>Governor name</label>
+          <label for={nameId}>Nome do governador</label>
           <input id={nameId} value={nameRaw} maxLength={NAME_MAX} onInput={onName} aria-invalid={nameError ? "true" : undefined}
-            aria-describedby={`${nameId}-help`} placeholder={data.example ? "Valerius" : "Governor"} />
-          <p id={`${nameId}-help`} class={nameError ? "gc-error" : "gc-help"}>{nameError ?? `Up to ${NAME_MAX} characters.`}</p>
+            aria-describedby={`${nameId}-help`} placeholder={data.example ? "Valerius" : "Governador"} />
+          <p id={`${nameId}-help`} class={nameError ? "gc-error" : "gc-help"}>{nameError ?? `Até ${NAME_MAX} caracteres.`}</p>
         </div>
         <div class="gc-field">
-          <label for={tagId}>Alliance tag</label>
+          <label for={tagId}>Sigla da aliança</label>
           <input id={tagId} value={tagRaw} maxLength={6} onInput={onTag} aria-invalid={tagError ? "true" : undefined}
             aria-describedby={`${tagId}-help`} placeholder="ABC" autocapitalize="characters" spellcheck={false} />
-          <p id={`${tagId}-help`} class={tagError ? "gc-error" : "gc-help"}>{tagError ?? "2 to 4 letters or digits, shown as [ABC]."}</p>
+          <p id={`${tagId}-help`} class={tagError ? "gc-error" : "gc-help"}>{tagError ?? "2 a 4 letras ou dígitos, exibida como [ABC]."}</p>
         </div>
         <fieldset class="gc-colors">
-          <legend>Alliance color</legend>
+          <legend>Cor da aliança</legend>
           <div class="gc-swatches">
             {ALLIANCE_COLORS.map((c) => (
               <label class="gc-sw" style={`--sw: var(--ko-alliance-${c})`}>
                 <input type="radio" name="alliance-color" value={c} checked={card.color === c} onChange={() => onColor(c)} />
-                <span class="visually-hidden">{c}</span>
+                <span class="visually-hidden">{ALLIANCE_COLOR_NAMES[c]}</span>
               </label>
             ))}
           </div>
         </fieldset>
         <label class="gc-check">
           <input type="checkbox" checked={reduce} onChange={onReduce} />
-          <span>Reduce motion (no tilt or shine)</span>
+          <span>Reduzir movimento (sem inclinação nem brilho)</span>
         </label>
         <div class="gc-actions">
           <button type="button" class="btn btn-primary" onClick={download} disabled={busy} data-download>
-            {busy ? "Drawing…" : "Download PNG"}
+            {busy ? "Desenhando…" : "Baixar PNG"}
           </button>
-          <p class="gc-help" role="status">{status || "1080 × 1080, flat, with the K. Use it as your avatar."}</p>
+          <p class="gc-help" role="status">{status || "1080 × 1080, plano, com o K. Use como seu avatar."}</p>
         </div>
       </form>
     </div>

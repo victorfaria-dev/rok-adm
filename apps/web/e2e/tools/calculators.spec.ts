@@ -12,7 +12,7 @@ type Row = Record<string, string | number | null>;
 const TABLES = resolve(dirname(fileURLToPath(import.meta.url)), "../../../../packages/data/generated/tables");
 const table = (name: string): Row[] => (JSON.parse(readFileSync(`${TABLES}/${name}.json`, "utf8")) as { rows: Row[] }).rows;
 const num = (c: unknown): number => (typeof c === "number" ? c : Number(String(c ?? "").replace(/,/g, "")) || 0);
-const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
+const fmt = (n: number) => Math.round(n).toLocaleString("pt-BR");
 const rowAt = (rows: Row[], lv: number) => rows.find((r) => num(r.Level ?? r.Lvl) === lv)!;
 const value = (page: Page, id: string) => page.getByTestId(id).locator(".t-value");
 
@@ -25,24 +25,24 @@ test.describe("speedups", () => {
     await page.getByLabel("Universal 5m", { exact: true }).fill("16");
     await page.getByLabel("Universal 60m", { exact: true }).fill("2");
     await expect(value(page, "sp-total-universal")).toHaveText(formatDuration(200 * 60));
-    await page.getByLabel("Speedup type to enter").selectOption("healing");
-    await page.getByLabel("Healing 24h", { exact: true }).fill("1");
+    await page.getByLabel("Tipo de aceleração a preencher").selectOption("healing");
+    await page.getByLabel("Cura 24h", { exact: true }).fill("1");
     await expect(value(page, "sp-total-healing")).toHaveText("1d");
     await expect(value(page, "sp-total-all")).toHaveText(formatDuration((200 + 1440) * 60));
     await expect(page.getByTestId("sp-total-all")).toContainText("A04-0007");
 
     const helps = num(rowAt(table("A01-buildings-alliance-center"), 14)["Times You Can Be Helped"]);
-    await page.getByLabel("Job time").fill("10h");
-    await page.getByLabel("Job type").selectOption("building");
-    await page.getByLabel("Your Alliance Center level").selectOption("14");
+    await page.getByLabel("Tempo da tarefa").fill("10h");
+    await page.getByLabel("Tipo de tarefa").selectOption("building");
+    await page.getByLabel("Nível do seu Centro da Aliança").selectOption("14");
     const helped = 36000 * helps / 100, remaining = 36000 - helped;
-    await expect(value(page, "sp-helps")).toHaveText(`${formatDuration(helped)} (${helps} helps)`);
+    await expect(value(page, "sp-helps")).toHaveText(`${formatDuration(helped)} (${helps} ajudas)`);
     await expect(page.getByTestId("sp-helps")).toContainText("A10-0006");
     await expect(value(page, "sp-remaining")).toHaveText(formatDuration(remaining));
-    await expect(value(page, "sp-cover")).toHaveText(`No, short by ${formatDuration(remaining - 200 * 60)}`);
+    await expect(value(page, "sp-cover")).toHaveText(`Não, faltam ${formatDuration(remaining - 200 * 60)}`);
 
-    await page.getByLabel("Job type").selectOption("training");
-    await expect(value(page, "sp-helps")).toHaveText("None: training cannot be helped");
+    await page.getByLabel("Tipo de tarefa").selectOption("training");
+    await expect(value(page, "sp-helps")).toHaveText("Nenhum: treinamento não recebe ajuda");
 
     const s = await toolsStore(page);
     expect(s).toMatchObject({ v: 1, inventory: { speedupUniversalMin: 200, speedupHealingMin: 1440 }, inputs: { speedups: { universal_5: 16, healing_1440: 1 } } });
@@ -51,15 +51,15 @@ test.describe("speedups", () => {
     // The healing planner reads the healing minutes from the shared inventory.
     await page.goto("/tools/healing/");
     await hydrated(page);
-    await expect(page.getByLabel("Healing speedups you hold")).toHaveValue("1440");
+    await expect(page.getByLabel("Acelerações de cura que você tem")).toHaveValue("1440");
   });
 
   test("a bad job time shows an error", async ({ page }) => {
     await page.goto("/tools/speedups/");
     await hydrated(page);
-    await page.getByLabel("Job time").fill("soon");
-    await expect(page.getByText("Enter a time like 2d 4h 30m.")).toBeVisible();
-    await expect(page.getByLabel("Job time")).toHaveAttribute("aria-invalid", "true");
+    await page.getByLabel("Tempo da tarefa").fill("soon");
+    await expect(page.getByText("Digite um tempo como 2d 4h 30m.")).toBeVisible();
+    await expect(page.getByLabel("Tempo da tarefa")).toHaveAttribute("aria-invalid", "true");
   });
 });
 
@@ -72,17 +72,17 @@ test.describe("buildings", () => {
 
     await page.goto("/tools/buildings/");
     await hydrated(page);
-    await page.getByLabel("Building", { exact: true }).selectOption({ label: "Hospital" });
-    await page.getByLabel("Current level").selectOption("9");
-    await page.getByLabel("Target level").selectOption("15");
+    await page.getByLabel("Construção", { exact: true }).selectOption({ label: "Hospital" });
+    await page.getByLabel("Nível atual").selectOption("9");
+    await page.getByLabel("Nível alvo").selectOption("15");
     await expect(value(page, "b-food")).toHaveText(fmt(sum("food")));
     await expect(value(page, "b-wood")).toHaveText(fmt(sum("wood")));
-    await expect(value(page, "b-stone")).toHaveText(sum("stone") ? fmt(sum("stone")) : "None");
+    await expect(value(page, "b-stone")).toHaveText(sum("stone") ? fmt(sum("stone")) : "Nenhum");
     await expect(value(page, "b-time")).toHaveText(formatDuration(secs));
     await expect(page.getByTestId("b-food")).toContainText("A01-0004");
-    await page.getByLabel("Your build speed bonus").fill("25");
+    await page.getByLabel("Seu bônus de velocidade de construção").fill("25");
     await expect(value(page, "b-time-buffed")).toHaveText(formatDuration(secs / 1.25));
-    await expect(page.getByTestId("b-time-buffed")).toContainText("pending measurement");
+    await expect(page.getByTestId("b-time-buffed")).toContainText("medição pendente");
     await expect(value(page, "b-req")).toHaveText(String(rowAt(rows, 15).Requirements));
 
     const s = await toolsStore(page);
@@ -99,22 +99,22 @@ test.describe("buildings", () => {
       .reduce((a, r) => a + Number(/x(\d+)/.exec(String(r.extra_cost))?.[1] ?? 0), 0);
     await page.goto("/tools/buildings/");
     await hydrated(page);
-    await page.getByLabel("Building", { exact: true }).selectOption({ label: "Castle" });
-    await page.getByLabel("Current level").selectOption("1");
-    await page.getByLabel("Target level").selectOption("4");
+    await page.getByLabel("Construção", { exact: true }).selectOption({ label: "Castelo" });
+    await page.getByLabel("Nível atual").selectOption("1");
+    await page.getByLabel("Nível alvo").selectOption("4");
     await expect(value(page, "b-items")).toHaveText(`Book of Covenant ×${books}`);
 
-    await page.getByLabel("Current level").selectOption("4");
+    await page.getByLabel("Nível atual").selectOption("4");
     await expect(page.getByTestId("b-same")).toBeVisible();
-    await expect(value(page, "b-food")).toHaveText("None");
+    await expect(value(page, "b-food")).toHaveText("Nenhum");
 
-    await page.getByLabel("Current level").selectOption("6");
-    await expect(page.getByTestId("b-error")).toHaveText("Pick a target level above your current level.");
+    await page.getByLabel("Nível atual").selectOption("6");
+    await expect(page.getByTestId("b-error")).toHaveText("Escolha um nível alvo acima do seu nível atual.");
 
-    await page.getByLabel("Building", { exact: true }).selectOption({ label: "Farm" });
-    await page.getByLabel("Current level").selectOption("24");
-    await page.getByLabel("Target level").selectOption("25");
-    await expect(page.getByTestId("b-food")).toContainText("Level 25 left out");
+    await page.getByLabel("Construção", { exact: true }).selectOption({ label: "Fazenda" });
+    await page.getByLabel("Nível atual").selectOption("24");
+    await page.getByLabel("Nível alvo").selectOption("25");
+    await expect(page.getByTestId("b-food")).toContainText("Nível 25 fora da conta");
   });
 });
 
@@ -124,24 +124,24 @@ test.describe("healing", () => {
     const all = cap15 * 4;
     await page.goto("/tools/healing/");
     await hydrated(page);
-    await page.getByLabel("Hospital level").selectOption("15");
-    await page.getByLabel("Hospitals in your city").fill("4");
-    await expect(value(page, "h-cap-one")).toHaveText(`${fmt(cap15)} troops`);
+    await page.getByLabel("Nível do hospital").selectOption("15");
+    await page.getByLabel("Hospitais na sua cidade").fill("4");
+    await expect(value(page, "h-cap-one")).toHaveText(`${fmt(cap15)} tropas`);
     await expect(page.getByTestId("h-cap-one")).toContainText("A01-0008");
-    await expect(value(page, "h-cap-all")).toHaveText(`${fmt(all)} troops`);
-    await page.getByLabel("Wounded you expect in a fight").fill(String(all + 14000));
-    await expect(value(page, "h-dead")).toHaveText("14,000 troops");
+    await expect(value(page, "h-cap-all")).toHaveText(`${fmt(all)} tropas`);
+    await page.getByLabel("Feridos que você espera numa luta").fill(String(all + 14000));
+    await expect(value(page, "h-dead")).toHaveText("14.000 tropas");
     await expect(page.getByTestId("h-dead")).toContainText("A08-0502");
 
-    await expect(value(page, "h-wave-cost")).toHaveText("Enter the heal cost per troop from your hospital screen");
-    await expect(value(page, "h-wave-time")).toHaveText("Enter the heal time per troop from your hospital screen");
-    await page.getByLabel("Food per troop").fill("10");
-    await expect(value(page, "h-wave-cost")).toHaveText(`Food ${fmt(all * 10)} · Wood 0 · Stone 0 · Gold 0`);
-    await page.getByLabel("Heal time per troop").fill("2");
-    await page.getByLabel("Healing speedups you hold").fill("1440");
+    await expect(value(page, "h-wave-cost")).toHaveText("Digite o custo de cura por tropa da tela do seu hospital");
+    await expect(value(page, "h-wave-time")).toHaveText("Digite o tempo de cura por tropa da tela do seu hospital");
+    await page.getByLabel("Comida por tropa").fill("10");
+    await expect(value(page, "h-wave-cost")).toHaveText(`Comida ${fmt(all * 10)} · Madeira 0 · Pedra 0 · Ouro 0`);
+    await page.getByLabel("Tempo de cura por tropa").fill("2");
+    await page.getByLabel("Acelerações de cura que você tem").fill("1440");
     await expect(value(page, "h-wave-time")).toHaveText(formatDuration(all * 2));
     await expect(value(page, "h-wave-speedups")).toHaveText(formatDuration(all * 2 - 1440 * 60));
-    await expect(page.locator(".t-callout")).toContainText("T5 heals cost much more");
+    await expect(page.locator(".t-callout")).toContainText("Curar T5 custa muito mais");
     await expect(page.locator(".t-callout")).toContainText("A08-0505");
 
     const s = await toolsStore(page);
@@ -155,22 +155,22 @@ test.describe("action points", () => {
     await page.goto("/tools/action-points/");
     await hydrated(page);
     // 1,000 AP: 50+48+46+44+42 = 230, then 40 each → 5 + 19 attacks, 10 left.
-    await expect(value(page, "ap-chain-now")).toHaveText("24 attacks (990 AP, 10 left)");
+    await expect(value(page, "ap-chain-now")).toHaveText("24 ataques (990 PA gastos, sobram 10)");
     await expect(page.getByTestId("ap-chain-now")).toContainText("A09-0002");
-    await expect(value(page, "ap-claim")).toHaveText("1,500 AP");
-    await expect(value(page, "ap-chain-after")).toHaveText("36 attacks");
-    await page.getByLabel("AP packs bought with gems today").fill("2");
-    await page.getByLabel("Packs you want to buy now").fill("3");
-    await expect(value(page, "ap-gems")).toHaveText("750 gems");
+    await expect(value(page, "ap-claim")).toHaveText("1.500 PA");
+    await expect(value(page, "ap-chain-after")).toHaveText("36 ataques");
+    await page.getByLabel("Pacotes de PA comprados com gemas hoje").fill("2");
+    await page.getByLabel("Pacotes que você quer comprar agora").fill("3");
+    await expect(value(page, "ap-gems")).toHaveText("750 gemas");
     await expect(page.getByTestId("ap-gems")).toContainText("A04-0008");
-    await expect(value(page, "ap-total")).toHaveText("3,000 AP");
-    await expect(value(page, "ap-regen")).toHaveText("Enter the AP you regain per hour");
-    await page.getByLabel("AP you regain per hour").fill("60");
+    await expect(value(page, "ap-total")).toHaveText("3.000 PA");
+    await expect(value(page, "ap-regen")).toHaveText("Digite os PA que você recupera por hora");
+    await page.getByLabel("PA que você recupera por hora").fill("60");
     await expect(value(page, "ap-regen")).toHaveText("8h 20m");
-    await page.getByLabel("Your Action Points now").fill("1500");
-    await expect(value(page, "ap-claim")).toHaveText("Cannot claim: you are at or above the 1,500 cap");
-    await page.getByLabel("Your Action Points now").fill("1200");
-    await expect(value(page, "ap-claim")).toHaveText("1,700 AP (200 over the 1,500 cap)");
+    await page.getByLabel("Seus Pontos de Ação agora").fill("1500");
+    await expect(value(page, "ap-claim")).toHaveText("Não dá para coletar: você está no limite de 1.500 ou acima dele");
+    await page.getByLabel("Seus Pontos de Ação agora").fill("1200");
+    await expect(value(page, "ap-claim")).toHaveText("1.700 PA (200 acima do limite de 1.500)");
 
     const s = await toolsStore(page);
     expect(s).toMatchObject({ v: 1, inputs: { ap: { currentAp: 1200, purchasesToday: 2, packsToBuy: 3, regenPerHour: 60 } } });
@@ -184,17 +184,17 @@ test.describe("without JavaScript", () => {
     const ch10 = rowAt(table("A01-city-hall"), 10);
     await page.goto("/tools/buildings/");
     await expect(value(page, "b-food")).toHaveText(fmt(num(ch10.food)));
-    await expect(page.getByRole("heading", { name: "Sources on this page" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Fontes desta página" })).toBeVisible();
     await page.goto("/tools/speedups/");
     await expect(value(page, "sp-total-all")).toHaveText("0m");
     await page.goto("/tools/healing/");
     await expect(value(page, "h-cap-one")).toHaveText(`${fmt(num(rowAt(table("A01-buildings-hospital"), 10)["Hospital Capacity"]))} troops`);
     await page.goto("/tools/action-points/");
-    await expect(value(page, "ap-chain-now")).toHaveText("24 attacks (990 AP, 10 left)");
+    await expect(value(page, "ap-chain-now")).toHaveText("24 ataques (990 PA gastos, sobram 10)");
     for (const r of ROUTES) {
       await page.goto(r);
-      await expect(page.getByText(/latest official patch/)).toBeVisible();
-      await expect(page.getByRole("button", { name: "Copy link to these inputs" })).toBeVisible();
+      await expect(page.getByText(/último patch oficial/)).toBeVisible();
+      await expect(page.getByRole("button", { name: "Copiar link destes valores" })).toBeVisible();
     }
   });
 });

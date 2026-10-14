@@ -6,6 +6,7 @@ interface Props {
   cards: readonly CardMeta[];
 }
 const { cards } = Astro.props;
+const CONF = { high: "alta", medium: "média", low: "baixa" } as const;
 ---
 {cards.length > 0 && (
   <ul class="fg-facts">
@@ -13,7 +14,7 @@ const { cards } = Astro.props;
       <li>
         <span class="mono">{c.id}</span>
         <span>{c.title}</span>
-        <span class="fg-facts-meta">{c.confidence === "pending" ? "pending" : `${c.confidence} confidence`} · {c.status}{c.badge ? ` · ${c.badge}` : ""}</span>
+        <span class="fg-facts-meta">{c.confidence === "pending" ? "pendente" : `confiança ${CONF[c.confidence]}`} · {c.status}{c.badge ? ` · ${c.badge}` : ""}</span>
       </li>
     ))}
   </ul>

@@ -27,37 +27,37 @@ afterEach(cleanup);
 describe("FarmHub: empty state and adding", () => {
   it("shows the empty state with links, then adds a farm", () => {
     setup();
-    expect(screen.getByRole("heading", { name: "Track your farm accounts" })).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Which farm should I build?" }).getAttribute("href")).toBe("/farms/choose/");
-    fireEvent.click(screen.getByRole("button", { name: "Add a farm" }));
-    expect(document.activeElement).toBe(input("Name"));
-    fireEvent.input(input("Name"), { target: { value: "Farm Food" } });
-    fireEvent.click(screen.getByRole("radio", { name: "Food" }));
-    fireEvent.input(input("Trading Post"), { target: { value: "5" } });
-    fireEvent.click(screen.getByRole("button", { name: "Add farm" }));
+    expect(screen.getByRole("heading", { name: "Acompanhe suas contas farm" })).toBeTruthy();
+    expect(screen.getByRole("link", { name: "Qual farm devo criar?" }).getAttribute("href")).toBe("/farms/choose/");
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar uma conta farm" }));
+    expect(document.activeElement).toBe(input("Nome"));
+    fireEvent.input(input("Nome"), { target: { value: "Farm Food" } });
+    fireEvent.click(screen.getByRole("radio", { name: "Comida" }));
+    fireEvent.input(input("Entreposto Comercial"), { target: { value: "5" } });
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar conta farm" }));
     const stored = readFarms().farms;
     expect(stored).toHaveLength(1);
     expect(stored[0]).toMatchObject({ name: "Farm Food", role: "food", levels: { tradingPost: 5, cityHall: null } });
     const heading = screen.getByRole("heading", { level: 3, name: "Farm Food" });
     expect(document.activeElement).toBe(heading);
-    expect(screen.getByRole("link", { name: /Build path/ }).getAttribute("href")).toBe(`/farms/build/?farm=${stored[0]!.id}`);
-    expect(screen.getByRole("link", { name: /Trading Post calculator/ }).getAttribute("href")).toBe(`/farms/trading-post/?farm=${stored[0]!.id}`);
-    expect(screen.getByRole("status").textContent).toBe("Farm Food added.");
+    expect(screen.getByRole("link", { name: /Caminho de construção/ }).getAttribute("href")).toBe(`/farms/build/?farm=${stored[0]!.id}`);
+    expect(screen.getByRole("link", { name: /Calculadora do Entreposto Comercial/ }).getAttribute("href")).toBe(`/farms/trading-post/?farm=${stored[0]!.id}`);
+    expect(screen.getByRole("status").textContent).toBe("Farm Food adicionada.");
   });
 
   it("validation: empty name and out-of-range level show errors tied by aria-describedby", () => {
     setup();
-    fireEvent.click(screen.getByRole("button", { name: "Add a farm" }));
-    fireEvent.input(input("City Hall"), { target: { value: "30" } });
-    fireEvent.click(screen.getByRole("button", { name: "Add farm" }));
-    expect(screen.getByRole("alert").textContent).toBe("Fix 2 fields below.");
-    const name = input("Name");
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar uma conta farm" }));
+    fireEvent.input(input("Prefeitura"), { target: { value: "30" } });
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar conta farm" }));
+    expect(screen.getByRole("alert").textContent).toBe("Corrija 2 campos abaixo.");
+    const name = input("Nome");
     expect(name.getAttribute("aria-invalid")).toBe("true");
-    const nameErr = screen.getByText("Give the farm a name.");
+    const nameErr = screen.getByText("Dê um nome à conta farm.");
     expect(name.getAttribute("aria-describedby")).toContain(nameErr.id);
     expect(document.activeElement).toBe(name);
-    const ch = input("City Hall");
-    const chErr = screen.getByText(/City Hall: enter a whole number from 1 to 25/);
+    const ch = input("Prefeitura");
+    const chErr = screen.getByText(/Prefeitura: digite um número inteiro de 1 a 25/);
     expect(ch.getAttribute("aria-describedby")).toContain(chErr.id);
     expect(readFarms().farms).toHaveLength(0);
   });
@@ -65,19 +65,19 @@ describe("FarmHub: empty state and adding", () => {
   it("shows the limit message at 10 farms", () => {
     seed(Array.from({ length: MAX_FARMS }, (_, i) => farm(`f${i}`, `Farm ${i}`)));
     setup();
-    expect(screen.queryByRole("button", { name: "Add a farm" })).toBeNull();
-    expect(screen.getByText(/You track 10 farms, the limit/)).toBeTruthy();
+    expect(screen.queryByRole("button", { name: "Adicionar uma conta farm" })).toBeNull();
+    expect(screen.getByText(/Você acompanha 10 contas farm, o limite/)).toBeTruthy();
   });
 
   it("delete asks inline, then removes the farm and its shipments", () => {
     seed([farm("a", "Alpha"), farm("b", "Beta")], [{ id: "s1", farmId: "a", date: "2026-10-13", resource: "food", gross: 100, taxRate: 0.2, net: 80 }]);
     setup();
-    fireEvent.click(screen.getByRole("button", { name: "Delete Alpha" }));
-    const group = screen.getByRole("group", { name: "Delete Alpha and its shipments?" });
-    fireEvent.click(within(group).getByRole("button", { name: "No, keep it" }));
+    fireEvent.click(screen.getByRole("button", { name: "Excluir Alpha" }));
+    const group = screen.getByRole("group", { name: "Excluir Alpha e seus envios?" });
+    fireEvent.click(within(group).getByRole("button", { name: "Não, manter" }));
     expect(readFarms().farms).toHaveLength(2);
-    fireEvent.click(screen.getByRole("button", { name: "Delete Alpha" }));
-    fireEvent.click(screen.getByRole("button", { name: "Yes, delete" }));
+    fireEvent.click(screen.getByRole("button", { name: "Excluir Alpha" }));
+    fireEvent.click(screen.getByRole("button", { name: "Sim, excluir" }));
     const s = readFarms();
     expect(s.farms.map((f) => f.name)).toEqual(["Beta"]);
     expect(s.shipments).toHaveLength(0);
@@ -90,11 +90,11 @@ describe("FarmHub: gathering and checklist", () => {
     const at = (min: number) => new Date(current.getTime() + min * 60000).toISOString();
     seed([farm("a", "Alpha", { gatheringUntil: at(200) }), farm("b", "Beta", { gatheringUntil: at(80) }), farm("c", "Gamma"), farm("d", "Delta", { gatheringUntil: at(-5) })]);
     setup();
-    const list = screen.getByRole("heading", { name: "Visit next" }).parentElement!.querySelector("ol")!;
+    const list = screen.getByRole("heading", { name: "Visitar em seguida" }).parentElement!.querySelector("ol")!;
     const items = [...list.querySelectorAll("li")].map((li) => li.textContent ?? "");
-    expect(items.map((t) => t.split(/idle|marches|back/)[0])).toEqual(["Gamma", "Delta", "Beta", "Alpha"]);
-    expect(items[2]).toContain("back in 1 h 20 min");
-    expect(items[3]).toContain("back in 3 h 20 min");
+    expect(items.map((t) => t.split(/parada|as marchas|volta/)[0])).toEqual(["Gamma", "Delta", "Beta", "Alpha"]);
+    expect(items[2]).toContain("volta em 1 h 20 min");
+    expect(items[3]).toContain("volta em 3 h 20 min");
   });
 
   it("+2 h sets gatheringUntil from now; Clear removes it", () => {
@@ -102,8 +102,8 @@ describe("FarmHub: gathering and checklist", () => {
     setup();
     fireEvent.click(screen.getByRole("button", { name: "+2 h" }));
     expect(Date.parse(readFarms().farms[0]!.gatheringUntil!) - current.getTime()).toBe(2 * 3_600_000);
-    expect(screen.getByText(/Gathering: back in 2 h/)).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: /Clear/ }));
+    expect(screen.getByText(/Coletando: volta em 2 h/)).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: /Limpar/ }));
     expect(readFarms().farms[0]!.gatheringUntil).toBeNull();
   });
 
@@ -126,8 +126,8 @@ describe("FarmHub: gathering and checklist", () => {
     setup();
     expect((screen.getByRole("checkbox", { name: first.label }) as HTMLInputElement).checked).toBe(false);
     // Optional tasks are marked; the pending-minutes note appears once.
-    expect(screen.getAllByText("Optional").length).toBe(FARM_DAILY_TASKS.filter((t) => t.optional).length);
-    expect(screen.getAllByText(/L-A13-01\), so the checklist shows no times/)).toHaveLength(1);
+    expect(screen.getAllByText("Opcional").length).toBe(FARM_DAILY_TASKS.filter((t) => t.optional).length);
+    expect(screen.getAllByText(/L-A13-01\), então a lista não mostra tempos/)).toHaveLength(1);
   });
 
   it("daily goal shows progress from today's net shipments", () => {
@@ -136,19 +136,19 @@ describe("FarmHub: gathering and checklist", () => {
       { id: "s2", farmId: "a", date: "2026-10-12", resource: "food", gross: 125000, taxRate: 0.2, net: 100000 },
     ]);
     setup();
-    expect(screen.getByText(/received today/).textContent).toContain("100,000 of 400,000 food received today (25%), 300,000 to go.");
+    expect(screen.getByText(/recebidos hoje/).textContent).toContain("100.000 de 400.000 (comida) recebidos hoje (25%), faltam 300.000.");
     expect((document.querySelector("progress") as HTMLProgressElement).getAttribute("value")).toBe("25");
   });
 
   it("goal validation and save", () => {
     seed([farm("a", "Alpha")]);
     setup();
-    fireEvent.input(input("Amount received"), { target: { value: "abc" } });
-    fireEvent.click(screen.getByRole("button", { name: /Save goal/ }));
-    expect(screen.getByRole("alert").textContent).toMatch(/above 0, e.g. 500000, 500k or 1.5m/);
-    fireEvent.change(screen.getByLabelText("Resource"), { target: { value: "wood" } });
-    fireEvent.input(input("Amount received"), { target: { value: "1,000,000" } });
-    fireEvent.click(screen.getByRole("button", { name: /Save goal/ }));
+    fireEvent.input(input("Quantidade recebida"), { target: { value: "abc" } });
+    fireEvent.click(screen.getByRole("button", { name: /Salvar meta/ }));
+    expect(screen.getByRole("alert").textContent).toMatch(/acima de 0, por exemplo 500000, 500k ou 1.5m/);
+    fireEvent.change(screen.getByLabelText("Recurso"), { target: { value: "wood" } });
+    fireEvent.input(input("Quantidade recebida"), { target: { value: "1,000,000" } });
+    fireEvent.click(screen.getByRole("button", { name: /Salvar meta/ }));
     expect(readFarms().farms[0]!.goal).toEqual({ resource: "wood", amount: 1_000_000 });
   });
 });

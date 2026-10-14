@@ -12,16 +12,16 @@ import { HypothesisPill, Sourced } from "../shared/Sourced";
 import { CheckField, SelectField, TextField } from "./Field";
 
 const STATUS_TEXT: Record<Exclude<VariantStatus, "hidden">, string> = {
-  recommended: "Recommended",
-  possible: "Possible",
-  not_recommended: "Not recommended for you",
+  recommended: "Recomendado",
+  possible: "Possível",
+  not_recommended: "Não recomendado para você",
 };
 
-export const PAIR_SENTENCE = "No source recommends resource pairs. This is our own reasoning, pending an in-game test.";
+export const PAIR_SENTENCE = "Nenhuma fonte recomenda pares de recursos. Este é um raciocínio nosso, pendente de teste no jogo.";
 
 type SpendingChoice = "" | SpendingProfile;
 const SPENDING_OPTIONS: ReadonlyArray<{ value: SpendingChoice; label: string }> = [
-  { value: "", label: "Not set" },
+  { value: "", label: "Não definido" },
   ...(Object.keys(PROFILE_NAMES) as SpendingProfile[]).map((v) => ({ value: v as SpendingChoice, label: PROFILE_NAMES[v] })),
 ];
 
@@ -88,11 +88,11 @@ export default function FarmChooser(): JSX.Element {
   const recommended = rec.variants.filter((v) => v.status === "recommended").map((v) => v.label);
   const count = rec.farmCount.value;
   const summary = hasErrors
-    ? "Fix the highlighted fields to update the advice."
+    ? "Corrija os campos destacados para atualizar o conselho."
     : [
-        count === 0 ? "No farm yet." : `${count} farm${count === 1 ? "" : "s"} suggested.`,
-        recommended.length > 0 ? `Recommended: ${listText(recommended)}.` : "",
-        rec.mainBottleneck ? `Your main mostly needs ${listText(rec.mainBottleneck.resources)}.` : "",
+        count === 0 ? "Nenhuma conta farm ainda." : `${count} ${count === 1 ? "conta farm sugerida" : "contas farm sugeridas"}.`,
+        recommended.length > 0 ? `Recomendado: ${listText(recommended)}.` : "",
+        rec.mainBottleneck ? `A sua principal precisa mais de ${listText(rec.mainBottleneck.resources.map((r) => RESOURCE_LABEL[r].toLowerCase()))}.` : "",
       ].filter(Boolean).join(" ");
 
   const civFacts = [...new Set(RESOURCES.flatMap((r) => rec.civByResource[r].facts))];
@@ -101,36 +101,36 @@ export default function FarmChooser(): JSX.Element {
   return (
     <div class="ft">
       <form class="fm-card ft-form" aria-labelledby="fc-form-h" onSubmit={(e) => e.preventDefault()}>
-        <h2 id="fc-form-h">About your main</h2>
-        {prefilled && <p class="ft-prefill" data-prefilled>Prefilled from your profile. Change any value; nothing is saved to your profile.</p>}
+        <h2 id="fc-form-h">Sobre a sua principal</h2>
+        {prefilled && <p class="ft-prefill" data-prefilled>Preenchido a partir do seu perfil. Mude qualquer valor; nada é salvo no seu perfil.</p>}
         <div class="ft-fields">
-          <TextField id="fc-ch" label="Main City Hall" hint="Level 1 to 25." value={cityHall} onValue={setCityHall} error={errorOf(chP)} />
-          <TextField id="fc-min" label="Minutes per day" hint="Time you can spend on the game each day." value={minutes} onValue={setMinutes} error={errorOf(minP)} />
-          <SelectField id="fc-spend" label="Spending profile" value={spending} options={SPENDING_OPTIONS} onValue={setSpending} />
-          <TextField id="fc-owned" label="Farms you already have" value={owned} onValue={setOwned} error={errorOf(ownedP)} />
+          <TextField id="fc-ch" label="Prefeitura da principal" hint="Nível 1 a 25." value={cityHall} onValue={setCityHall} error={errorOf(chP)} />
+          <TextField id="fc-min" label="Minutos por dia" hint="Tempo que você pode dedicar ao jogo por dia." value={minutes} onValue={setMinutes} error={errorOf(minP)} />
+          <SelectField id="fc-spend" label="Perfil de gasto" value={spending} options={SPENDING_OPTIONS} onValue={setSpending} />
+          <TextField id="fc-owned" label="Contas farm que você já tem" value={owned} onValue={setOwned} error={errorOf(ownedP)} />
         </div>
-        <CheckField id="fc-many" label="I want more than one farm" checked={wantsMany} onValue={setWantsMany} />
+        <CheckField id="fc-many" label="Quero mais de uma conta farm" checked={wantsMany} onValue={setWantsMany} />
         <CheckField
           id="fc-hyp"
-          label="Show hypotheses"
-          hint="Also show ideas no source recommends. Saved in this browser."
+          label="Mostrar hipóteses"
+          hint="Mostra também ideias que nenhuma fonte recomenda. Fica salvo neste navegador."
           checked={showHyp}
           onValue={toggleHyp}
         />
       </form>
 
       <section class="ft-section" aria-labelledby="fc-res-h">
-        <h2 id="fc-res-h">Your answer</h2>
+        <h2 id="fc-res-h">Sua resposta</h2>
         <p class="ft-live" aria-live="polite" data-summary>{summary}</p>
         <div class="fm-grid fm-grid-2">
           <article class="fm-card" data-card="count">
-            <h3>How many farms</h3>
+            <h3>Quantas contas farm</h3>
             <p class="ft-big" data-count>{count}</p>
             <p>{rec.farmCount.why}</p>
             <Sourced confidence={rec.farmCount.confidence} facts={rec.farmCount.facts} gaps={rec.farmCount.gaps} hypothesis={rec.farmCount.hypothesis} />
           </article>
           <article class="fm-card" data-card="bottleneck">
-            <h3>What your main is short of</h3>
+            <h3>O que falta na sua principal</h3>
             {rec.mainBottleneck ? (
               <>
                 <p class="ft-big">{listText(rec.mainBottleneck.resources.map((r) => RESOURCE_LABEL[r]))}</p>
@@ -138,26 +138,26 @@ export default function FarmChooser(): JSX.Element {
                 <Sourced confidence={rec.mainBottleneck.confidence} facts={rec.mainBottleneck.facts} />
               </>
             ) : (
-              <p>Enter your main's City Hall to see which resources it runs short of.</p>
+              <p>Informe a Prefeitura da sua principal para ver de quais recursos ela anda curta.</p>
             )}
           </article>
         </div>
       </section>
 
       <section class="ft-section" aria-labelledby="fc-var-h">
-        <h2 id="fc-var-h">Farm types</h2>
-        {!showHyp && <p class="fm-note">One idea without any source is hidden. Turn on "Show hypotheses" to see it.</p>}
+        <h2 id="fc-var-h">Tipos de conta farm</h2>
+        {!showHyp && <p class="fm-note">Uma ideia sem nenhuma fonte está oculta. Ative "Mostrar hipóteses" para vê-la.</p>}
         <div class="fm-grid">
           {variants.map((v) => <VariantCard key={v.id} v={v} />)}
         </div>
       </section>
 
       <section class="ft-section" aria-labelledby="fc-civ-h">
-        <h2 id="fc-civ-h">Civilization by resource</h2>
+        <h2 id="fc-civ-h">Civilização por recurso</h2>
         <div class="fm-table-wrap">
           <table class="fm-table">
-            <caption class="visually-hidden">Civilizations with a gathering bonus for each resource</caption>
-            <thead><tr><th scope="col">Resource</th><th scope="col">Civilizations</th><th scope="col">Gathering bonus</th></tr></thead>
+            <caption class="visually-hidden">Civilizações com bônus de coleta para cada recurso</caption>
+            <thead><tr><th scope="col">Recurso</th><th scope="col">Civilizações</th><th scope="col">Bônus de coleta</th></tr></thead>
             <tbody>
               {RESOURCES.map((r) => (
                 <tr key={r}>
@@ -173,13 +173,13 @@ export default function FarmChooser(): JSX.Element {
       </section>
 
       <section class="ft-section" aria-labelledby="fc-next-h">
-        <h2 id="fc-next-h">Next</h2>
+        <h2 id="fc-next-h">Em seguida</h2>
         <div class="fm-actions">
-          <a class="btn btn-primary" href="/farms/">Add this farm to My farms</a>
-          <a class="btn btn-secondary" href="/farms/build/">See the build path</a>
+          <a class="btn btn-primary" href="/farms/">Adicionar esta conta farm a Minhas contas farm</a>
+          <a class="btn btn-secondary" href="/farms/build/">Ver o caminho de construção</a>
         </div>
-        <ul class="ft-links" aria-label="Farm guides by resource">
-          {RESOURCES.map((r) => <li key={r}><a href={`/guides/farms/${r}/`}>{RESOURCE_LABEL[r]} farm guide</a></li>)}
+        <ul class="ft-links" aria-label="Guias de farm por recurso">
+          {RESOURCES.map((r) => <li key={r}><a href={`/guides/farms/${r}/`}>Guia de farm de {RESOURCE_LABEL[r].toLowerCase()}</a></li>)}
         </ul>
       </section>
     </div>

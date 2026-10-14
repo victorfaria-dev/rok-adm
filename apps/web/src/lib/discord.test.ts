@@ -16,20 +16,20 @@ describe("checkWebhookUrl", () => {
   });
 
   it.each([
-    ["", "Paste"],
+    ["", "Cole"],
     [URL_OK.replace("https", "http"), "https://"],
-    [URL_OK.replace("discord.com", "evil.com"), "Only webhooks"],
-    [URL_OK.replace("discord.com", "discord.com.evil.com"), "Only webhooks"],
-    [URL_OK.replace("discord.com", "ptb.discord.com"), "Only webhooks"],
-    [URL_OK.replace("discord.com", "discord.com:8443"), "Only webhooks"],
-    [URL_OK.replace("https://", "https://user:pw@"), "Only webhooks"],
-    [`${URL_OK}?wait=true`, "Remove"],
-    [`${URL_OK}#x`, "Remove"],
-    [`https://discord.com/api/webhooks/${ID}`, "not a Discord webhook"],
-    [`https://discord.com/api/webhooks/abc/${TOKEN}`, "not a Discord webhook"],
-    [`https://discord.com/api/webhooks/${ID}/short`, "not a Discord webhook"],
-    [`https://discord.com/api/webhooks/${ID}/${TOKEN}/slack`, "not a Discord webhook"],
-    [`https://discord.com/channels/${ID}/${ID}`, "not a Discord webhook"],
+    [URL_OK.replace("discord.com", "evil.com"), "Só webhooks"],
+    [URL_OK.replace("discord.com", "discord.com.evil.com"), "Só webhooks"],
+    [URL_OK.replace("discord.com", "ptb.discord.com"), "Só webhooks"],
+    [URL_OK.replace("discord.com", "discord.com:8443"), "Só webhooks"],
+    [URL_OK.replace("https://", "https://user:pw@"), "Só webhooks"],
+    [`${URL_OK}?wait=true`, "Remova"],
+    [`${URL_OK}#x`, "Remova"],
+    [`https://discord.com/api/webhooks/${ID}`, "não é uma URL de webhook do Discord"],
+    [`https://discord.com/api/webhooks/abc/${TOKEN}`, "não é uma URL de webhook do Discord"],
+    [`https://discord.com/api/webhooks/${ID}/short`, "não é uma URL de webhook do Discord"],
+    [`https://discord.com/api/webhooks/${ID}/${TOKEN}/slack`, "não é uma URL de webhook do Discord"],
+    [`https://discord.com/channels/${ID}/${ID}`, "não é uma URL de webhook do Discord"],
     ["javascript:alert(1)", "https://"],
   ])("refuses %s", (raw, msg) => {
     const r = checkWebhookUrl(raw);
@@ -39,7 +39,7 @@ describe("checkWebhookUrl", () => {
 
   it("masks the token and most of the id", () => {
     const m = maskWebhook(URL_OK);
-    expect(m).toBe("discord.com/api/webhooks/1234…5678 (token hidden)");
+    expect(m).toBe("discord.com/api/webhooks/1234…5678 (token oculto)");
     expect(m).not.toContain(TOKEN.slice(0, 10));
   });
 });
@@ -72,9 +72,9 @@ describe("message builders", () => {
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.content).toBe([
-      "**MGE results: K1 \\*MGE\\***\nRule: Score, 2 slots per event.",
-      "**Thu, Oct 1, 2026, Cao Cao** (final)\n1. @​everyone — score rank 1\n2. not filled",
-      "Full ledger: https://x.test/kingdom/mge/view/#d=1",
+      "**Resultados do MGE: K1 \\*MGE\\***\nRegra: Score, 2 vagas por evento.",
+      "**qui., 1 de out. de 2026, Cao Cao** (final)\n1. @​everyone — score rank 1\n2. não preenchida",
+      "Registro completo: https://x.test/kingdom/mge/view/#d=1",
     ].join("\n\n"));
     const withScores = mgeResultsMessage({ ...pub, includeScores: true }, null);
     expect(withScores.ok && withScores.content).toContain("@​everyone (5) — score rank 1");
@@ -91,8 +91,8 @@ describe("message builders", () => {
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.content.length).toBeLessThanOrEqual(DISCORD_MAX);
-    expect(r.content).toMatch(/…and \d+ more events\./);
-    expect(r.content).toContain("the link is too long for this message");
+    expect(r.content).toMatch(/…e mais \d+ eventos\./);
+    expect(r.content).toContain("o link é longo demais para esta mensagem");
     // One huge event alone is cut by lines.
     const huge = mgeResultsMessage({ ...pub, events: [{ ...many[0]!, slots: Array.from({ length: 60 }, (_, j) => ({ slot: j + 1, name: "N".repeat(40), reason: "R".repeat(60) })) }] }, null);
     expect(huge.ok && huge.content.length).toBeLessThanOrEqual(DISCORD_MAX);
@@ -101,7 +101,7 @@ describe("message builders", () => {
 
   it("rules and recruitment", () => {
     expect(rulesLinkMessage("K1 rules", null)).toMatchObject({ ok: false });
-    expect(rulesLinkMessage("K1 rules", "https://x.test/r#d=1")).toEqual({ ok: true, content: "**K1 rules**\nRead our kingdom rules (view-only): https://x.test/r#d=1" });
+    expect(rulesLinkMessage("K1 rules", "https://x.test/r#d=1")).toEqual({ ok: true, content: "**K1 rules**\nLeia as regras do nosso reino (somente leitura): https://x.test/r#d=1" });
     expect(rulesLinkMessage("x", `https://x.test/${"a".repeat(2000)}`)).toMatchObject({ ok: false });
     expect(recruitMessage("  ")).toMatchObject({ ok: false });
     expect(recruitMessage("a".repeat(2001))).toMatchObject({ ok: false });
@@ -117,9 +117,9 @@ describe("message builders", () => {
     expect(r).toEqual({
       ok: true,
       content: [
-        "**Farm shipments, Mon, Oct 5, 2026 – Sun, Oct 11, 2026**\nReceived by the main: **1,350,000** (2 shipments, tax paid 150,000)",
-        "Food: sent 1,000,000, received 900,000\nWood: sent 500,000, received 450,000",
-        "By farm:\nFarm\\_1: received 900,000\nFarm 2: received 450,000",
+        "**Envios das contas farm, seg., 5 de out. de 2026 – dom., 11 de out. de 2026**\nRecebido pela principal: **1.350.000** (2 envios, imposto pago 150.000)",
+        "Comida: enviado 1.000.000, recebido 900.000\nMadeira: enviado 500.000, recebido 450.000",
+        "Por conta farm:\nFarm\\_1: recebido 900.000\nFarm 2: recebido 450.000",
       ].join("\n\n"),
     });
     expect(farmsWeekMessage(summarizeLedger([], range), range, {})).toMatchObject({ ok: false });

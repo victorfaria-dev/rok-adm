@@ -126,16 +126,16 @@ export function drawCard(ctx: CanvasRenderingContext2D, d: CardData, size = PNG_
   }
 
   // Top row: rarity pill (left), proof (right).
-  const label = `${RARITY_LABELS[d.rarity].toUpperCase()} · CITY HALL ${d.cityHall}`;
+  const label = `${RARITY_LABELS[d.rarity].toUpperCase()} · PREFEITURA ${d.cityHall}`;
   pill(ctx, label, 92, 92, rgba(mix(rar, ivory, d.rarity === "common" ? 0.5 : 0.3)), null, `600 30px ${DISPLAY}`);
   ctx.font = `400 28px ${MONO}`;
   ctx.fillStyle = rgba(ivory, 0.75);
   ctx.textAlign = "right"; ctx.textBaseline = "middle";
-  ctx.fillText("SELF-REPORTED", size - 92, 120);
+  ctx.fillText("AUTODECLARADO", size - 92, 120);
   if (d.example) {
     ctx.fillStyle = rgba(ivory, 0.9);
     ctx.font = `600 26px ${DISPLAY}`;
-    ctx.fillText("EXAMPLE", size - 92, 164);
+    ctx.fillText("EXEMPLO", size - 92, 164);
   }
 
   // Avatar: alliance ring with the brand K.
@@ -172,7 +172,7 @@ export function drawCard(ctx: CanvasRenderingContext2D, d: CardData, size = PNG_
 
   // Marks: spending profile and F2P Achiever, centered.
   const marks: Array<[string, boolean]> = [[d.spendingLabel.toUpperCase(), false]];
-  if (d.f2pAchiever) marks.push(["F2P ACHIEVER", true]);
+  if (d.f2pAchiever) marks.push(["CONQUISTA F2P", true]);
   ctx.font = `600 30px ${DISPLAY}`;
   const widths = marks.map(([t]) => Math.ceil(ctx.measureText(t).width) + 44);
   let x = cx - (widths.reduce((a, b) => a + b, 0) + (marks.length - 1) * 16) / 2;
@@ -185,9 +185,9 @@ export function drawCard(ctx: CanvasRenderingContext2D, d: CardData, size = PNG_
   ctx.font = `400 26px ${MONO}`;
   ctx.fillStyle = rgba(ivory, 0.6);
   ctx.textAlign = "left"; ctx.textBaseline = "middle";
-  ctx.fillText("KINGDOMOPS · GOVERNOR CARD", 92, size - 108);
+  ctx.fillText("KINGDOMOPS · CARTÃO DE GOVERNADOR", 92, size - 108);
   ctx.textAlign = "right";
-  ctx.fillText("NOT AFFILIATED WITH LILITH GAMES", size - 92, size - 108);
+  ctx.fillText("SEM AFILIAÇÃO COM A LILITH GAMES", size - 92, size - 108);
 }
 
 /** Render to a PNG blob at 1080×1080. Rejects when the canvas is unavailable. */
@@ -196,9 +196,9 @@ export async function renderCardPng(d: CardData): Promise<Blob> {
   const canvas = document.createElement("canvas");
   canvas.width = PNG_SIZE; canvas.height = PNG_SIZE;
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("Your browser could not draw the card.");
+  if (!ctx) throw new Error("Seu navegador não conseguiu desenhar o cartão.");
   drawCard(ctx, d);
   return new Promise((resolve, reject) => {
-    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("Your browser could not save the PNG."))), "image/png");
+    canvas.toBlob((b) => (b ? resolve(b) : reject(new Error("Seu navegador não conseguiu salvar o PNG."))), "image/png");
   });
 }

@@ -9,8 +9,8 @@ afterEach(cleanup);
 
 function field(props: Partial<Parameters<typeof NumberField>[0]> = {}) {
   const onChange = vi.fn();
-  render(h(NumberField, { id: "f", label: "Your VIP points now", value: 0, onChange, ...props }));
-  const input = screen.getByLabelText("Your VIP points now") as HTMLInputElement;
+  render(h(NumberField, { id: "f", label: "Seus pontos VIP agora", value: 0, onChange, ...props }));
+  const input = screen.getByLabelText("Seus pontos VIP agora") as HTMLInputElement;
   const type = (t: string) => fireEvent.input(input, { target: { value: t } });
   return { onChange, input, type };
 }
@@ -30,7 +30,7 @@ describe("NumberField", () => {
     const { onChange, input, type } = field();
     type("-5");
     expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByText("Use 0 or more.")).toBeTruthy();
+    expect(screen.getByText("Use 0 ou mais.")).toBeTruthy();
     expect(input.getAttribute("aria-invalid")).toBe("true");
   });
 
@@ -38,7 +38,7 @@ describe("NumberField", () => {
     const { onChange, type } = field();
     type("1e3");
     expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByText(/Enter a whole number, like 1500/)).toBeTruthy();
+    expect(screen.getByText(/Digite um número inteiro, como 1500/)).toBeTruthy();
   });
 
   it("decimal fields keep decimals; whole-number fields refuse them", () => {
@@ -49,7 +49,7 @@ describe("NumberField", () => {
     const w = field();
     w.type("12.5");
     expect(w.onChange).not.toHaveBeenCalled();
-    expect(screen.getByText("Enter a whole number.")).toBeTruthy();
+    expect(screen.getByText("Digite um número inteiro.")).toBeTruthy();
   });
 
   it("shows stored values without scientific notation", () => {

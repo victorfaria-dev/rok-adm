@@ -6,14 +6,20 @@ import SourcesList from "../../../components/tools/kit/SourcesList.astro";
 import { levelTable } from "../../../lib/tools-payload";
 import "../../../components/tools/kit/tools.css";
 
-// City Hall first, then the 16 other A01 building tables in name order. Names come from the table names.
+// Prefeitura first, then the 16 other A01 building tables in name order. Names come from the table names.
 const SLUGS = [
   "academy", "alliance-center", "archery-range", "barracks", "castle", "farm", "goldmine", "hospital", "lumber-mill",
   "quarry", "scout-camp", "siege-workshop", "stable", "storehouse", "tavern", "wall", "watchtower",
 ];
-const title = (slug: string) => slug.split("-").map((w) => w[0]!.toUpperCase() + w.slice(1)).join(" ");
+const NAMES: Record<string, string> = {
+  academy: "Academia", "alliance-center": "Centro da Aliança", "archery-range": "Campo de Arquearia", barracks: "Quartel", castle: "Castelo",
+  farm: "Fazenda", goldmine: "Mina de Ouro", hospital: "Hospital", "lumber-mill": "Serraria", quarry: "Pedreira",
+  "scout-camp": "Acampamento de Batedores", "siege-workshop": "Oficina de Cerco", stable: "Estábulo", storehouse: "Depósito",
+  tavern: "Taverna", wall: "Muralha", watchtower: "Torre de Vigia",
+};
+const title = (slug: string) => NAMES[slug] ?? slug;
 const tables = [
-  { id: "A01-city-hall", name: "City Hall" },
+  { id: "A01-city-hall", name: "Prefeitura" },
   ...SLUGS.map((s) => ({ id: `A01-buildings-${s}`, name: title(s) })),
 ].map(({ id, name }) => {
   const t = levelTable(id);
@@ -27,11 +33,11 @@ const tables = [
 });
 const ids = tables.flatMap((t) => t.cite.facts);
 ---
-<Shell title="Building costs" description="Food, wood, stone, gold, items and raw build time from one level to another for City Hall and every other building, with the requirements of the target level." mode="operate">
+<Shell title="Custo de construções" description="Comida, madeira, pedra, ouro, itens e tempo bruto de construção de um nível a outro, para a Prefeitura e todas as outras construções, com os requisitos do nível alvo." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Building costs</h1>
-      <p class="t-lead">Pick a building and two levels. You get the resources, items and raw build time to get there, and what the target level needs first. Values stay on this device.</p>
+      <h1>Custo de construções</h1>
+      <p class="t-lead">Escolha uma construção e dois níveis. Você vê os recursos, itens e o tempo bruto para chegar lá, e o que o nível alvo exige antes. Os valores ficam neste aparelho.</p>
       <DataStamp />
     </header>
     <BuildingsCalc client:load tables={tables} />

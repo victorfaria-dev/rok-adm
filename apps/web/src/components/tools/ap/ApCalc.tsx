@@ -13,7 +13,7 @@ export interface ApCalcProps {
   cites: { cap: Cite; claim: Cite; barbarian: Cite; pack: Cite };
 }
 
-const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
+const fmt = (n: number) => Math.round(n).toLocaleString("pt-BR");
 
 /** F-81: barbarian attacks per chain, AP after the daily claim, and the gem price of buying AP. */
 export default function ApCalc({ cap, dailyClaim, barbarian, insightMax, pack, cites }: ApCalcProps) {
@@ -28,38 +28,38 @@ export default function ApCalc({ cap, dailyClaim, barbarian, insightMax, pack, c
   const gems = packsCost(v.purchasesToday, v.packsToBuy, pack);
   const withPacks = claim.ap + v.packsToBuy * pack.ap;
   const hours = hoursToCap(v.currentAp, fullCap, v.regenPerHour);
-  const chainNote = `Reading: the first attack costs ${barbarian.base} AP, each next one without returning ${barbarian.step} less, down to ${barbarian.base - barbarian.maxStreak}${insight ? `, minus ${insight} for Insight` : ""}.`;
-  const capPending = v.capBonus ? ["AP cap bonus"] : [];
+  const chainNote = `Leitura: o primeiro ataque custa ${barbarian.base} PA, cada seguinte sem voltar custa ${barbarian.step} a menos, até ${barbarian.base - barbarian.maxStreak}${insight ? `, menos ${insight} por Insight` : ""}.`;
+  const capPending = v.capBonus ? ["bônus do limite de PA"] : [];
   const both = mergeCites(cites.cap, cites.claim);
 
   return (
     <div class="t-page-body" data-tool="ap">
-      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Action Points inputs">
-        <NumberField id="ap-now" label="Your Action Points now" value={v.currentAp} max={100000} onChange={(x) => set({ currentAp: x })} />
-        <NumberField id="ap-insight" label="Insight talent reduction" suffix="AP" value={v.insight} max={insightMax} onChange={(x) => set({ insight: x })}
-          help={`0 without the talent; up to ${insightMax} AP off each attack.`} />
-        <NumberField id="ap-cap-bonus" label="Extra AP cap from VIP" suffix="AP" value={v.capBonus} max={10000} pending onChange={(x) => set({ capBonus: x })}
-          help="Your VIP level may raise the cap (A09-0001 gives VIP 15 only). 0 if unsure." />
-        <NumberField id="ap-bought" label="AP packs bought with gems today" value={v.purchasesToday} max={1000} onChange={(x) => set({ purchasesToday: x })}
-          help="Resets at the daily server reset." />
-        <NumberField id="ap-more" label="Packs you want to buy now" value={v.packsToBuy} max={1000} onChange={(x) => set({ packsToBuy: x })}
-          help={`Each pack is ${fmt(pack.ap)} AP. The game sells them only when you have no AP items left.`} />
-        <NumberField id="ap-regen" label="AP you regain per hour" value={v.regenPerHour} integer={false} max={10000} pending onChange={(x) => set({ regenPerHour: x })}
-          help="Unknown in our data: note your AP at two times, with no buffs, and divide." />
+      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Dados de Pontos de Ação">
+        <NumberField id="ap-now" label="Seus Pontos de Ação agora" value={v.currentAp} max={100000} onChange={(x) => set({ currentAp: x })} />
+        <NumberField id="ap-insight" label="Redução do talento Insight" suffix="AP" value={v.insight} max={insightMax} onChange={(x) => set({ insight: x })}
+          help={`0 sem o talento; até ${insightMax} PA a menos por ataque.`} />
+        <NumberField id="ap-cap-bonus" label="Limite extra de PA pelo VIP" suffix="AP" value={v.capBonus} max={10000} pending onChange={(x) => set({ capBonus: x })}
+          help="Seu nível de VIP pode aumentar o limite (A09-0001 só informa o VIP 15). 0 se não tiver certeza." />
+        <NumberField id="ap-bought" label="Pacotes de PA comprados com gemas hoje" value={v.purchasesToday} max={1000} onChange={(x) => set({ purchasesToday: x })}
+          help="Zera no reset diário do servidor." />
+        <NumberField id="ap-more" label="Pacotes que você quer comprar agora" value={v.packsToBuy} max={1000} onChange={(x) => set({ packsToBuy: x })}
+          help={`Cada pacote dá ${fmt(pack.ap)} PA. O jogo só vende quando você não tem mais itens de PA.`} />
+        <NumberField id="ap-regen" label="PA que você recupera por hora" value={v.regenPerHour} integer={false} max={10000} pending onChange={(x) => set({ regenPerHour: x })}
+          help="Não consta nos nossos dados: anote seus PA em dois momentos, sem bônus, e divida." />
       </form>
       <Results>
-        <ResultRow testId="ap-chain-now" label="Barbarian attacks in one chain with your AP now" value={`${fmt(chainNow.attacks)} attacks (${fmt(chainNow.spent)} AP, ${fmt(chainNow.left)} left)`}
+        <ResultRow testId="ap-chain-now" label="Ataques a bárbaros em uma sequência com os seus PA agora" value={`${fmt(chainNow.attacks)} ataques (${fmt(chainNow.spent)} PA gastos, sobram ${fmt(chainNow.left)})`}
           cite={cites.barbarian} notes={[chainNote]} />
-        <ResultRow testId="ap-claim" label="AP after the daily claim" cite={both} pending={capPending}
-          value={claim.claimed ? `${fmt(claim.ap)} AP${claim.overCap ? ` (${fmt(claim.overCap)} over the ${fmt(fullCap)} cap)` : ""}` : `Cannot claim: you are at or above the ${fmt(fullCap)} cap`}
-          notes={["The claim works while you are below the cap and can take you over it."]} />
-        <ResultRow testId="ap-chain-after" label="Barbarian attacks in one chain after the claim" value={`${fmt(chainAfter.attacks)} attacks`}
+        <ResultRow testId="ap-claim" label="PA depois da coleta diária" cite={both} pending={capPending}
+          value={claim.claimed ? `${fmt(claim.ap)} PA${claim.overCap ? ` (${fmt(claim.overCap)} acima do limite de ${fmt(fullCap)})` : ""}` : `Não dá para coletar: você está no limite de ${fmt(fullCap)} ou acima dele`}
+          notes={["A coleta funciona enquanto você está abaixo do limite e pode levá-lo acima dele."]} />
+        <ResultRow testId="ap-chain-after" label="Ataques a bárbaros em uma sequência depois da coleta" value={`${fmt(chainAfter.attacks)} ataques`}
           cite={mergeCites(cites.barbarian, cites.claim)} />
-        <ResultRow testId="ap-gems" label={`Gems for ${fmt(v.packsToBuy)} more pack${v.packsToBuy === 1 ? "" : "s"} today`} value={`${fmt(gems)} gems`} cite={cites.pack}
-          notes={[`The next pack costs ${fmt(packPrice(v.purchasesToday, pack))} gems; each one after costs ${fmt(pack.stepGems)} more until the daily reset.`]} />
-        <ResultRow testId="ap-total" label="AP after the claim and those packs" value={`${fmt(withPacks)} AP`} cite={mergeCites(both, cites.pack)} />
-        <ResultRow testId="ap-regen" label={`Time to refill to the ${fmt(fullCap)} cap`} cite={cites.cap} pending={["AP regained per hour"]}
-          value={hours === null ? <span class="t-prompt">Enter the AP you regain per hour</span> : formatDuration(hours * 3600)} />
+        <ResultRow testId="ap-gems" label={`Gemas para mais ${fmt(v.packsToBuy)} ${v.packsToBuy === 1 ? "pacote" : "pacotes"} hoje`} value={`${fmt(gems)} gemas`} cite={cites.pack}
+          notes={[`O próximo pacote custa ${fmt(packPrice(v.purchasesToday, pack))} gemas; cada um depois custa ${fmt(pack.stepGems)} a mais até o reset diário.`]} />
+        <ResultRow testId="ap-total" label="PA depois da coleta e desses pacotes" value={`${fmt(withPacks)} PA`} cite={mergeCites(both, cites.pack)} />
+        <ResultRow testId="ap-regen" label={`Tempo para encher até o limite de ${fmt(fullCap)}`} cite={cites.cap} pending={["PA recuperados por hora"]}
+          value={hours === null ? <span class="t-prompt">Digite os PA que você recupera por hora</span> : formatDuration(hours * 3600)} />
       </Results>
       <ShareBar shareUrl={shareUrl} shared={shared} keepMine={keepMine} useLink={useLink} />
     </div>
