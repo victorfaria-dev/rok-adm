@@ -47,13 +47,13 @@ test.describe("MGE planner", () => {
       await page.getByRole("button", { name: "Adicionar evento" }).click();
     }
     await expect(page.locator("[data-event]")).toHaveCount(3);
-    await expect(page.locator("[data-summary]")).toContainText("5 governadores, 3 eventos, regra rotation, 2 vagas por evento. Todas as vagas estão preenchidas.");
+    await expect(page.locator("[data-summary]")).toContainText("5 governadores, 3 eventos, regra rodízio, 2 vagas por evento. Todas as vagas estão preenchidas.");
 
-    const never = "rotation: longest wait since last slot (never had one)";
+    const never = "rodízio: maior espera desde a última vaga (nunca teve uma)";
     expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Alpha", never], ["2", "Bravo", never]]);
     expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Charlie", never], ["2", "Delta", never]]);
     const third = await ledgerRows(page, "2026-10-29");
-    expect(third).toEqual([["1", "Echo", never], ["2", "Alpha", "rotation: longest wait since last slot (2 events ago, on 2026-10-01)"]]);
+    expect(third).toEqual([["1", "Echo", never], ["2", "Alpha", "rodízio: maior espera desde a última vaga (há 2 eventos, em 2026-10-01)"]]);
 
     await page.getByRole("button", { name: "Criar link público" }).click();
     const url = await page.locator("#kx-link").inputValue();
@@ -62,8 +62,8 @@ test.describe("MGE planner", () => {
     await gotoHydrated(page, url);
     await expect(page.locator("[data-view-title]")).toHaveText("K1234 KvK3 MGE");
     await expect(page.locator("[data-view]")).toContainText("Publicado pelo conselho, não pelo KingdomOps");
-    await expect(page.locator("[data-view-rules]")).toContainText("2 slots per event, set by the council.");
-    await expect(page.locator("[data-view-rules]")).toContainText("Cooldown: 1 event after a slot.");
+    await expect(page.locator("[data-view-rules]")).toContainText("2 vagas por evento (definição do conselho).");
+    await expect(page.locator("[data-view-rules]")).toContainText("Período de espera: 1 evento depois de uma vaga.");
     expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Alpha", never], ["2", "Bravo", never]]);
     expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Charlie", never], ["2", "Delta", never]]);
     expect(await ledgerRows(page, "2026-10-29")).toEqual(third);
@@ -77,24 +77,24 @@ test.describe("MGE planner", () => {
     await gotoHydrated(page, "/kingdom/mge/");
     await expect(page.locator("[data-plans]")).toContainText("K1234 MGE");
     // Manual placement first, then score rank among applicants not placed by hand; Delta did not apply.
-    const rest = "among applicants not placed by hand";
+    const rest = "entre os candidatos não colocados à mão";
     expect(await ledgerRows(page, "2026-10-01")).toEqual([
-      ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest} (4,200,000)`], ["3", "Bravo", `score rank 2 ${rest} (3,000,000)`],
+      ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `posição 1 por pontuação ${rest} (4.200.000)`], ["3", "Bravo", `posição 2 por pontuação ${rest} (3.000.000)`],
     ]);
-    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 among applicants (4,200,000)"], ["2", "Bravo", "score rank 2 among applicants (3,000,000)"], ["3", "Não preenchida", ""]]);
-    await expect(page.locator("[data-plan-warnings]")).toContainText("Delta has no score");
+    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "posição 1 por pontuação entre os candidatos (4.200.000)"], ["2", "Bravo", "posição 2 por pontuação entre os candidatos (3.000.000)"], ["3", "Não preenchida", ""]]);
+    await expect(page.locator("[data-plan-warnings]")).toContainText("Delta não tem pontuação");
 
     await page.getByRole("button", { name: "Criar link público" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
     await expect(page.locator("[data-view]")).toContainText("As pontuações não estão incluídas neste link.");
-    await expect(page.locator("[data-view]")).not.toContainText("4,200,000");
-    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest}`], ["3", "Bravo", `score rank 2 ${rest}`]]);
+    await expect(page.locator("[data-view]")).not.toContainText("4.200.000");
+    expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `posição 1 por pontuação ${rest}`], ["3", "Bravo", `posição 2 por pontuação ${rest}`]]);
 
     await gotoHydrated(page, "/kingdom/mge/");
     await page.getByLabel("Incluir pontuações no link público").check();
     await page.getByRole("button", { name: "Criar link público" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
-    await expect(page.locator('table[data-ledger="2026-10-01"]')).toContainText("4,200,000");
+    await expect(page.locator('table[data-ledger="2026-10-01"]')).toContainText("4.200.000");
   });
 
   test("manual placement needs a reason; lock keeps history", async ({ page }) => {
@@ -153,7 +153,7 @@ test.describe("MGE planner", () => {
     await page.keyboard.press("Enter");
     const scoreInput = page.getByLabel("Pontuação de Echo (opcional)");
     await expect(scoreInput).toHaveAttribute("aria-invalid", "true");
-    await expect(page.locator("#kx-edit-e-score-error")).toContainText("too large");
+    await expect(page.locator("#kx-edit-e-score-error")).toContainText("grande demais");
     await expect(scoreInput).toHaveAttribute("aria-describedby", /kx-edit-e-score-error/);
     await expect(scoreInput).toBeFocused();
 
@@ -166,7 +166,7 @@ test.describe("MGE planner", () => {
     await expect(editor).toHaveCount(0);
     await expect(page.locator("[data-cand-status]")).toHaveText("Echo Prime (era Echo) salvo.");
     await expect(page.getByRole("button", { name: "Editar Echo Prime" })).toBeFocused();
-    await expect(page.locator('tr[data-candidate="e"]')).toContainText("5,000,000");
+    await expect(page.locator('tr[data-candidate="e"]')).toContainText("5.000.000");
     await expect(page.locator('tr[data-candidate="e"]')).toContainText("garrison lead");
 
     // The locked event keeps the old name; the open event uses the new one and the manual placement stays attached.
@@ -180,7 +180,7 @@ test.describe("MGE planner", () => {
     await page.getByLabel("Nome de Bravo").fill("alpha");
     await page.getByRole("button", { name: "Salvar" }).click();
     await expect(page.locator("[data-cand-status]")).toContainText("Outro governador também se chama alpha");
-    await expect(page.locator("[data-plan-warnings]")).toContainText('share the name "Alpha"');
+    await expect(page.locator("[data-plan-warnings]")).toContainText('2 candidatos com o nome "Alpha"');
     expect(errors).toEqual([]);
   });
 
@@ -199,15 +199,15 @@ test.describe("MGE planner", () => {
     expect(ledger.file).toMatch(/^kingdomops-mge-ledger-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
     expect([...ledger.bytes.subarray(0, 3)]).toEqual([0xef, 0xbb, 0xbf]);
     const text = ledger.bytes.toString("utf8").slice(1);
-    const rest = "among applicants not placed by hand";
+    const rest = "entre os candidatos não colocados à mão";
     expect(text.split("\r\n")).toEqual([
       "date,commander,slot,governor,reason,locked",
       "2026-10-01,Cao Cao,1,Echo,manual: Garrison lead for Kingsland,no",
-      `2026-10-01,Cao Cao,2,Alpha,score rank 1 ${rest},no`,
-      `2026-10-01,Cao Cao,3,Bravo,score rank 2 ${rest},no`,
-      "2026-10-15,,1,Alpha,score rank 1 among applicants,no",
-      "2026-10-15,,2,Bravo,score rank 2 among applicants,no",
-      "2026-10-15,,3,,not filled,no",
+      `2026-10-01,Cao Cao,2,Alpha,posição 1 por pontuação ${rest},no`,
+      `2026-10-01,Cao Cao,3,Bravo,posição 2 por pontuação ${rest},no`,
+      "2026-10-15,,1,Alpha,posição 1 por pontuação entre os candidatos,no",
+      "2026-10-15,,2,Bravo,posição 2 por pontuação entre os candidatos,no",
+      "2026-10-15,,3,,não preenchida,no",
       "",
     ]);
     await expect(page.locator("[data-csv-status]")).toContainText("está pronto: confira seus downloads.");
@@ -215,7 +215,7 @@ test.describe("MGE planner", () => {
     await page.getByLabel("Incluir pontuações no CSV do registro").check();
     const scored = (await get("Baixar CSV do registro")).bytes.toString("utf8");
     expect(scored).toContain("date,commander,slot,governor,reason,locked,score\r\n");
-    expect(scored).toContain(`2026-10-01,Cao Cao,2,Alpha,"score rank 1 ${rest} (4,200,000)",no,4200000\r\n`);
+    expect(scored).toContain(`2026-10-01,Cao Cao,2,Alpha,posição 1 por pontuação ${rest} (4.200.000),no,4200000\r\n`);
 
     const gov = await get("Baixar CSV dos governadores");
     expect(gov.file).toMatch(/^kingdomops-mge-governors-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
@@ -226,9 +226,9 @@ test.describe("MGE planner", () => {
 
   test("bad links show a plain error", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/mge/view/#d=1zNOT-A-REAL-LINK");
-    await expect(page.getByRole("alert")).toContainText("This link is damaged");
+    await expect(page.getByRole("alert")).toContainText("Este link está danificado");
     await gotoHydrated(page, "/kingdom/mge/view/");
-    await expect(page.getByRole("alert")).toContainText("This link has no document in it");
+    await expect(page.getByRole("alert")).toContainText("Este link não tem nenhum documento");
   });
 
   test("360px: no sideways scroll, 44px targets (filled)", async ({ page }) => {

@@ -4,7 +4,7 @@ import { KINGDOM_KEY, expectAxeClean, expectNoSidewaysScroll, expectTargets44, s
 const M = 1e6;
 /** Marginal bands of B08-0008, recomputed here independently of the app code. */
 const counted = (p: number) => Math.min(p, 150 * M) + 0.8 * Math.max(0, Math.min(p, 300 * M) - 150 * M) + 0.5 * Math.max(0, Math.min(p, 500 * M) - 300 * M);
-const fmt = (n: number) => Math.round(n).toLocaleString("en-US");
+const fmt = (n: number) => Math.round(n).toLocaleString("pt-BR");
 
 const SIM = {
   id: "s1", kind: "seed", title: "Before SoC", updatedAt: "2026-10-13T10:00:00.000Z",
@@ -17,7 +17,7 @@ test.describe("seed simulator", () => {
     await gotoHydrated(page, "/kingdom/seed/");
     await expect(page.locator("h1")).toHaveText("Simulador de seed");
     await expect(page.locator("[data-experimental].kg-badge")).toHaveText("Experimental");
-    await expect(page.locator("[data-freshness]")).toContainText("Last verified for patch 1.0.95; check date passed, may be outdated.");
+    await expect(page.locator("[data-freshness]")).toContainText("Última verificação no patch 1.0.95; a data de conferência passou, pode estar desatualizado.");
     await expect(page.locator("[data-assumptions] li")).toHaveCount(8);
     await expect(page.locator("[data-assumptions]")).toContainText("L-B03-03");
     await expect(page.locator("[data-sources]")).toContainText("B08-0008 (confiança: high)");
@@ -66,7 +66,7 @@ test.describe("seed simulator", () => {
     expect(stored.docs[0].kind).toBe("seed");
     expect(stored.docs[0].data.whatIf).toEqual({ vacation: ["L1"], zeroed: { L3: 50_000_000 } });
     await page.reload();
-    await expect(page.locator("[data-saved]")).toContainText("Seed simulation");
+    await expect(page.locator("[data-saved]")).toContainText("Simulação de seed");
     await expect(page.locator("[data-after]")).toHaveText("470M");
   });
 

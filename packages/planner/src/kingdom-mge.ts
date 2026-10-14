@@ -761,7 +761,7 @@ export function mgeLedgerCsv(plan: MgePlan, includeScores: boolean): string {
         csvText(e.commander),
         String(slot),
         csvText(a ? a.name : ""),
-        csvText(a ? (includeScores ? a.reason : a.publicReason) : "not filled"),
+        csvText(a ? (includeScores ? a.reason : a.publicReason) : "não preenchida"),
         e.locked ? "yes" : "no",
       ];
       if (includeScores) row.push(a && a.score !== null ? String(a.score) : "");

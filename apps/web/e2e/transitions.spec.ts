@@ -39,7 +39,7 @@ test.describe("page transitions", () => {
     expect(await page.evaluate((c) => matchMedia(c).matches, condition!)).toBe(false);
     // Navigation still works without the animation.
     await page.goto("/crest/");
-    await expect(page.locator("h1")).toHaveText("Alliance crest");
+    await expect(page.locator("h1")).toHaveText("Brasão da aliança");
   });
 
   test("after a link navigation: theme, skip link, islands and the service worker still work", async ({ page, isMobile }) => {
@@ -67,7 +67,7 @@ test.describe("page transitions", () => {
     await page.goBack();
     await page.waitForURL("**/crest/");
     await expect(page.locator("astro-island:has(.cr-wrap)")).not.toHaveAttribute("ssr", "");
-    await page.getByRole("radio", { name: "Round" }).check();
+    await page.getByRole("radio", { name: "Redondo" }).check();
     await expect(page.locator(".cr-svg")).toHaveAttribute("data-shape", "round");
   });
 

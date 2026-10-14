@@ -78,10 +78,10 @@ test.describe("farm tools", () => {
     await page.goto(`/farms/build/?farm=${FARM.id}`);
     await expect(page.getByLabel("Conta farm", { exact: true })).toHaveValue(FARM.id);
     await expect(page.getByLabel("Prefeitura", { exact: true })).toHaveValue("17");
-    await expect(page.locator("[data-summary]")).toContainText("Próximo passo: Goldmine at the same level");
+    await expect(page.locator("[data-summary]")).toContainText("Próximo passo: Mina de Ouro no mesmo nível");
     await expect(page.locator('[data-step="ch11"] [data-step-status]')).toContainText("Concluído");
     await page.getByLabel("Mina de Ouro", { exact: true }).fill("15");
-    await expect(page.locator("[data-summary]")).not.toContainText("Goldmine");
+    await expect(page.locator("[data-summary]")).not.toContainText("Próximo passo: Mina de Ouro");
     await page.getByRole("button", { name: "Salvar níveis em Food Farm" }).click();
     await expect(page.getByRole("status")).toHaveText("Salvo em Food Farm.");
     await page.reload();

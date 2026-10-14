@@ -54,7 +54,7 @@ test("keyboard only: answer the 5 questions and land on City Hall, not the long 
   await tabTo(page, "input[type=radio]");
   await page.keyboard.press("ArrowDown"); // Low spender
   await enter(page);
-  await expect(page.getByRole("log")).toContainText("Low spender");
+  await expect(page.getByRole("log")).toContainText("Low (gasta pouco)");
 
   await tabTo(page, "#q-input"); // minutes per day: "Other"
   await page.keyboard.type("45");
@@ -90,13 +90,13 @@ test("reload resumes on the same step with the answers kept", async ({ page }) =
   await open(page);
   await page.getByRole("radio", { name: /Como jogador/ }).click(); // a tap on a quick reply sends it
   await expect(page.getByText("2 de 5")).toBeVisible();
-  await page.getByRole("radio", { name: /Medium spender/ }).click();
+  await page.getByRole("radio", { name: /Medium \(gasta médio\)/ }).click();
   await expect(page.getByText("3 de 5")).toBeVisible();
   await page.reload();
   await expect(title(page)).toHaveText(STEPS[2]!.label);
   await expect(page.getByText("3 de 5")).toBeVisible();
   await page.getByRole("button", { name: "Voltar" }).click();
-  await expect(page.getByRole("radio", { name: /Medium spender/ })).toBeChecked();
+  await expect(page.getByRole("radio", { name: /Medium \(gasta médio\)/ })).toBeChecked();
 });
 
 test("Sun Tzu asks in a live log; the reply is ready at once and focus skips the log", async ({ page }) => {
@@ -235,7 +235,7 @@ test("worst case answers fit 360 px on every step and the summary", async ({ pag
     expect(overflow, `step ${step}`).toBeLessThanOrEqual(0);
   }
   await expect(page.getByText("1.440 min")).toBeVisible();
-  await expect(page.getByText("Season of Conquest (SoC)")).toBeVisible();
+  await expect(page.getByText("Temporada de Conquista (SoC)")).toBeVisible();
 });
 
 test.describe("accessibility", () => {

@@ -462,10 +462,10 @@ describe("CSV export", () => {
     expect(rows.slice(1)).toEqual([
       ["2026-10-01", "'+Ramesses", "1", "Bravo, Jr", "manual: Garrison, Kingsland", "no"],
       ["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "posição 1 por pontuação entre os governadores não colocados à mão", "no"],
-      ["2026-10-01", "'+Ramesses", "3", "", "not filled", "no"],
+      ["2026-10-01", "'+Ramesses", "3", "", "não preenchida", "no"],
       ["2026-10-15", '"Cao" Cao', "1", "'=HYPERLINK(\"x\")", "posição 1 por pontuação", "no"],
       ["2026-10-15", '"Cao" Cao', "2", "Bravo, Jr", "posição 2 por pontuação", "no"],
-      ["2026-10-15", '"Cao" Cao', "3", "", "not filled", "no"],
+      ["2026-10-15", '"Cao" Cao', "3", "", "não preenchida", "no"],
     ]);
     expect(csv).not.toContain("500");
     expect(csv).not.toContain("400");

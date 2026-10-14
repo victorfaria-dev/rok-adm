@@ -87,7 +87,7 @@ test("guide pages fetch no guide payload", async ({ page }) => {
 
 test("the returning guide uses its own chapter titles", async ({ page }) => {
   await page.goto("/guides/returning/");
-  await expect(page.locator(".g-section h2").first()).toHaveText("What changed while you were away");
+  await expect(page.locator(".g-section h2").first()).toHaveText("O que mudou enquanto você estava fora");
 });
 
 test("with a profile the hub filters to For you; All guides shows everything", async ({ page }) => {
@@ -101,7 +101,7 @@ test("with a profile the hub filters to For you; All guides shows everything", a
   await filter.getByText("Todos os guias").click();
   await expect(page.locator('[data-tag="kingdomadmin"]')).toBeVisible();
   await page.goto("/glossary/?q=MGE");
-  await expect(page.getByLabel("Search the glossary")).toHaveValue("MGE");
+  await expect(page.getByLabel("Buscar no glossário")).toHaveValue("MGE");
 });
 
 test.describe("guides under Me (phone)", () => {

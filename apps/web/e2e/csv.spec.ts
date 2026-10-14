@@ -20,19 +20,19 @@ test("MGE: import governors from a CSV, then download the ledger as CSV", async 
     name: "dkp.csv", mimeType: "text/csv",
     buffer: Buffer.from("Governor;DKP\nalpha;4.2m\n\"Bo, Jr\";\"1,200\"\n'=Cmd;5\nBad;xx\n"),
   });
-  await expect(page.locator("[data-cand-status]")).toContainText("Added 2 governors. Updated the score of 1.");
-  await expect(page.locator("[data-paste-errors]")).toContainText("Line 5");
+  await expect(page.locator("[data-cand-status]")).toContainText("2 governadores adicionados. Pontuação atualizada em 1.");
+  await expect(page.locator("[data-paste-errors]")).toContainText("Linha 5");
   await expect(page.locator("table[data-candidates]")).toContainText("Bo, Jr");
   await expect(page.locator("table[data-candidates]")).toContainText("=Cmd");
 
-  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download ledger CSV" }).click()]);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Baixar CSV do registro" }).click()]);
   expect(download.suggestedFilename()).toMatch(/^kingdomops-mge-ledger-k1-mge-\d{4}-\d{2}-\d{2}\.csv$/);
   const text = readFileSync((await download.path())!, "utf8").replace(/^﻿/, "");
   const lines = text.split("\r\n");
   expect(lines[0]).toBe("date,commander,slot,governor,reason,locked");
   expect(lines[1]).toMatch(/^2026-10-01,Cao Cao,1,Alpha,.*,no$/);
   expect(text).not.toContain("4200000");
-  await expect(page.locator("[data-csv-status]")).toContainText("is ready: check your downloads.");
+  await expect(page.locator("[data-csv-status]")).toContainText("está pronto: confira seus downloads.");
   expect(errors).toEqual([]);
 });
 
@@ -42,12 +42,12 @@ test("Requirements: import sample accounts from CSV and export them back", async
   await page.locator('[data-csv-import="roster"]').setInputFiles({
     name: "roster.csv", mimeType: "text/csv", buffer: Buffer.from("name,power,t4,t5,deads\nRiver,20m,1m,500k,200k\n,1,1,1,1\n"),
   });
-  await expect(page.locator("[data-roster-status]")).toContainText("Added 1 account, updated 0.");
-  await expect(page.locator("[data-roster-errors]")).toContainText("Row 3: No name on this row.");
+  await expect(page.locator("[data-roster-status]")).toContainText("1 conta adicionada, 0 atualizadas.");
+  await expect(page.locator("[data-roster-errors]")).toContainText("Linha 3: Nenhum nome nesta linha.");
   await expect(page.getByRole("group", { name: "River" })).toBeVisible();
   await expect(page.locator("[data-result]")).toHaveCount(4);
 
-  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Export accounts (CSV)" }).click()]);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Exportar contas (CSV)" }).click()]);
   const text = readFileSync((await download.path())!, "utf8");
   expect(text).toContain("River,20000000,");
   expect(text.split("\r\n")[0]).toContain("name,power,t1,t2,t3,t4,t5,deads,kp,dkp,target,percent_of_target,result");

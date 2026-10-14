@@ -59,7 +59,7 @@ function enhanceTower(fig: HTMLElement): () => void {
         floors,
         here,
         autoRotate: !matchMedia("(prefers-reduced-motion: reduce)").matches,
-        label: `3D progress tower, ${floors.length} floors from ${floors[0]?.t ?? ""} to ${floors.at(-1)?.t ?? ""}. ${where} Drag or use the arrow keys to turn it.`,
+        label: `Torre de progresso em 3D, ${floors.length} andares, de ${floors[0]?.t ?? ""} a ${floors.at(-1)?.t ?? ""}. ${where} Arraste ou use as setas do teclado para girar.`,
         onLost: () => set2d(TOWER_FALLBACK),
         cancelled: () => mine !== token,
       });
@@ -69,7 +69,7 @@ function enhanceTower(fig: HTMLElement): () => void {
       svg.style.display = "none";
       btn.textContent = "Voltar ao 2D";
       btn.disabled = false;
-      status.textContent = "3D view ready. Drag the tower or focus it and use the arrow keys.";
+      status.textContent = "Vista em 3D pronta. Arraste a torre ou foque nela e use as setas do teclado.";
     } catch {
       if (mine === token) set2d(TOWER_FALLBACK);
     }

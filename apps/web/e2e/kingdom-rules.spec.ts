@@ -68,8 +68,8 @@ test.describe("rules page builder", () => {
     await page.getByLabel("Adicionar uma seção").selectOption("farms");
     await page.getByRole("button", { name: "Adicionar seção" }).click();
     await expect(page.locator("[data-section]")).toHaveCount(2);
-    await page.getByRole("button", { name: 'Subir "Farms & alt accounts"' }).click();
-    await expect(page.locator("[data-section]").first().getByLabel("Título da seção")).toHaveValue("Farms & alt accounts");
+    await page.getByRole("button", { name: 'Subir "Farms e contas alternativas"' }).click();
+    await expect(page.locator("[data-section]").first().getByLabel("Título da seção")).toHaveValue("Farms e contas alternativas");
     await expect(page.locator("[data-prompts-left]")).toBeVisible();
     await page.locator("[data-section]").first().getByLabel("Texto", { exact: true }).fill("Register farms with the council.");
     await expect(page.locator("[data-prompts-left]")).toHaveCount(0);
@@ -103,7 +103,7 @@ test.describe("rules page builder", () => {
     await view.goto(link);
     await expect(view.locator("h1")).toHaveText("K1234 rules");
     await expect(view.locator(".kq-doc-kingdom")).toHaveText("K1234");
-    await expect(view.locator("[data-rules-doc] h2")).toHaveText(["Farms & alt accounts", "MGE policy", "Carta"]);
+    await expect(view.locator("[data-rules-doc] h2")).toHaveText(["Farms e contas alternativas", "MGE policy", "Carta"]);
     await expect(view.locator(".kq-section ol li")).toHaveText(["Top 10 fixed", "<b>Others</b> capped"]);
     await expect(view.locator(".kq-section b")).toHaveCount(0);
     await expect(view.locator(".kq-doc-intro li")).toHaveText("Be kind");
@@ -138,7 +138,7 @@ test.describe("rules page builder", () => {
     await gotoHydrated(page, "/kingdom/rules/");
     await page.getByRole("button", { name: "Nova carta do reino" }).click();
     await expect(page.locator("[data-section]")).toHaveCount(7);
-    await expect(page.getByLabel("Título", { exact: true })).toHaveValue("Kingdom charter");
+    await expect(page.getByLabel("Título", { exact: true })).toHaveValue("Carta do reino");
     await expect(page.locator("[data-prompts-left]")).toBeVisible();
   });
 
@@ -210,10 +210,10 @@ test.describe("rules view page", () => {
     const errors = trackErrors(page);
     await gotoHydrated(page, "/kingdom/rules/view/#d=1zAB$$broken");
     await expect(page.locator("h1")).toHaveText("Este link de regras não pode ser aberto");
-    await expect(page.getByRole("alert")).toContainText("This link is damaged");
+    await expect(page.getByRole("alert")).toContainText("Este link está danificado");
     await expect(page.getByRole("link", { name: "Ir ao montador da página de regras" })).toHaveAttribute("href", "/kingdom/rules/");
     await gotoHydrated(page, "/kingdom/rules/view/");
-    await expect(page.getByRole("alert")).toContainText("This link has no document in it");
+    await expect(page.getByRole("alert")).toContainText("Este link não tem nenhum documento");
     expect(errors).toEqual([]);
   });
 
@@ -224,7 +224,7 @@ test.describe("rules view page", () => {
     const tampered = link.slice(0, i) + (link[i] === "A" ? "B" : "A") + link.slice(i + 1);
     await gotoHydrated(page, tampered);
     await expect(page.locator("h1")).toHaveText("Este link de regras não pode ser aberto");
-    await expect(page.getByRole("alert")).toContainText("This link is damaged");
+    await expect(page.getByRole("alert")).toContainText("Este link está danificado");
   });
 
   for (const theme of ["dark", "light"] as const) {
@@ -312,14 +312,14 @@ test.describe("rules in more than one language", () => {
     await expect(switcher.getByRole("button", { name: "Español" })).toHaveAttribute("aria-pressed", "true");
     await expect(view.locator("h1")).toHaveText("Reglas de K1234");
     await expect(doc).toHaveAttribute("lang", "es");
-    await expect(view.locator("[data-translation-note]")).toHaveText("Translation by the council. If it differs, the original prevails.");
+    await expect(view.locator("[data-translation-note]")).toHaveText("Tradução feita pelo conselho. Se houver diferença, o original prevalece.");
     await expect(view.locator("[data-translation-note]")).toHaveAttribute("lang", "pt-BR");
     await expect(doc.locator("h2").first()).toHaveText("Política de MGE");
     const untranslated = doc.locator("section[data-untranslated]");
     await expect(untranslated).toHaveCount(1);
     await expect(untranslated.locator("h2")).toHaveText("Farms & alt accounts");
     await expect(untranslated.locator("h2")).toHaveAttribute("lang", "en");
-    await expect(untranslated.locator("[data-untranslated-note]")).toHaveText("Not translated yet. Shown in the original language.");
+    await expect(untranslated.locator("[data-untranslated-note]")).toHaveText("Ainda não traduzido. Mostrado no idioma original.");
     await expect(view.locator("[data-byline]")).toHaveAttribute("lang", "pt-BR");
     await expect(view).toHaveURL(/&lang=es$/);
     await expect(view).toHaveTitle(/Reglas de K1234/);

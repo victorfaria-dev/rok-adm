@@ -60,7 +60,7 @@ export default function CandidateEditor({ doc, candidate, onSave, onCancel }: Pr
       <fieldset class="kx-fieldset kg-grid">
         <legend class="kx-legend">Editar {candidate.name}</legend>
         <TextField id={`${base}-name`} label={`Nome de ${candidate.name}`} value={name} onValue={setName} error={errors.name} maxLength={MGE_LIMITS.name + 1} />
-        <TextField id={`${base}-score`} label={`Pontuação de ${candidate.name} (opcional)`} value={score} onValue={setScore} error={errors.score} hint="4200000, 4,200,000 ou 4.2m. Deixe vazio para sem pontuação." />
+        <TextField id={`${base}-score`} label={`Pontuação de ${candidate.name} (opcional)`} value={score} onValue={setScore} error={errors.score} hint="4200000, 4.200.000 ou 4.2m. Deixe vazio para sem pontuação." />
         <TextField id={`${base}-tags`} label={`Etiquetas de ${candidate.name} (opcional)`} value={tags} onValue={setTags} error={errors.tags} hint={`Separe com vírgulas, até ${MGE_LIMITS.tags}.`} />
       </fieldset>
       <p class="kg-hint">Eventos travados mantêm o nome com que foram travados.</p>

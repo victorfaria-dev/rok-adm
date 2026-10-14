@@ -193,7 +193,7 @@ test.describe("3D tower", () => {
     await expect(page.locator("canvas[data-tower3d], [data-tower-fallback]:not([hidden])").first()).toBeVisible({ timeout: 20_000 });
     expect(chunks.some((c) => c.includes("guide-tower-3d"))).toBe(true);
     if (await page.locator("canvas[data-tower3d]").count()) {
-      await expect(page.locator("canvas[data-tower3d]")).toHaveAttribute("aria-label", /Você está no andar Days 15–40/);
+      await expect(page.locator("canvas[data-tower3d]")).toHaveAttribute("aria-label", /Você está no andar Dias 15–40/);
       await expect(page.locator("[data-tower-svg]")).toBeHidden();
       // Centre it first: the fixed top bar on phones covers a button scrolled to the top edge.
       await btn.evaluate((el) => el.scrollIntoView({ block: "center" }));

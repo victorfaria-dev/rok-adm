@@ -24,19 +24,19 @@ test("pick a commander, see suggestions, answer, reload, clear and undo", async 
   await expect(page.getByText("Útil até o KvK1: perde valor depois")).toBeVisible();
   await expect(page.getByText(/Etiqueta de 2026-10-13/)).toBeVisible();
 
-  const purpose = group(page, /What job will this commander do/);
+  const purpose = group(page, /Que função este comandante terá/);
   await expect(purpose.getByText("Sugerida", { exact: true })).toBeVisible();
-  await expect(purpose.getByRole("radio", { name: /Barbarians/ })).toBeChecked();
+  await expect(purpose.getByRole("radio", { name: /bárbaros/ })).toBeChecked();
   await expect(verdict(page)).toContainText("Espere");
 
-  await group(page, /What are you about to spend/).getByText("Universal legendary (gold) sculptures").click();
+  await group(page, /O que você está prestes a gastar/).getByText("Esculturas lendárias universais (douradas)").click();
   await expect(verdict(page)).toContainText("Evite");
-  await expect(page.getByText(/Never spend universal gold sculptures on gatherers/)).toBeVisible();
+  await expect(page.getByText(/Nunca gaste esculturas universais douradas em coletores/)).toBeVisible();
   expect((await stored(page)).commanders).toEqual({ lohar: { sculptureType: "universal_gold" } });
 
   await page.reload();
   await expect(page.getByRole("heading", { level: 2, name: "Lohar" })).toBeVisible();
-  await expect(group(page, /What are you about to spend/).getByRole("radio", { name: /Universal legendary/ })).toBeChecked();
+  await expect(group(page, /O que você está prestes a gastar/).getByRole("radio", { name: /Esculturas lendárias universais/ })).toBeChecked();
   await expect(verdict(page)).toContainText("Evite");
 
   const overview = page.locator(".cmd-overview");
@@ -70,7 +70,7 @@ test("corrupted stored answers do not break the page", async ({ page }) => {
   await expect(verdict(page)).toHaveText(/Vale a pena|Espere|Evite/);
   await expect(page.getByText("Nada salvo ainda.", { exact: false })).toBeVisible();
   // Answering still works and only writes clean answers for that commander.
-  await group(page, /Does it fill a troop type/).getByText("Yes", { exact: true }).click();
+  await group(page, /Ele preenche um tipo de tropa/).getByText("Sim", { exact: true }).click();
   expect((await stored(page)).commanders["sun-tzu"]).toEqual({ roleNeed: "yes" });
   expect(errors).toEqual([]);
 });

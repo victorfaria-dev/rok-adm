@@ -145,12 +145,12 @@ test.describe("migration checker", () => {
 
   test("before-you-move checklist persists in ko:tools:v1 only", async ({ page }) => {
     await fresh(page, "/tools/migration/");
-    await page.getByRole("checkbox", { name: /Have enough Passport Pages/ }).check();
+    await page.getByRole("checkbox", { name: /Tenha Páginas de Passaporte suficientes/ }).check();
     expect(await toolsStore(page)).toMatchObject({ checks: { "migration-before": ["pages"] } });
     expect(await page.evaluate(() => localStorage.getItem("ko:v1"))).toBeNull();
     await page.reload();
     await hydrated(page);
-    await expect(page.getByRole("checkbox", { name: /Have enough Passport Pages/ })).toBeChecked();
+    await expect(page.getByRole("checkbox", { name: /Tenha Páginas de Passaporte suficientes/ })).toBeChecked();
     await expect(page.locator('[data-checklist="migration-before"] .t-progress')).toHaveText("1 de 7 concluídos");
   });
 });
@@ -158,7 +158,7 @@ test.describe("migration checker", () => {
 test.describe("KvK readiness", () => {
   test("grouped checklist with cites, No consensus items and related links; marks persist", async ({ page }) => {
     await fresh(page, "/tools/kvk/");
-    for (const h of ["City Hall", "Troops", "Hospital", "Speedups and resources", "Commanders", "Alliance and behaviour"]) {
+    for (const h of ["Prefeitura", "Tropas", "Hospital", "Acelerações e recursos", "Comandantes", "Aliança e comportamento"]) {
       await expect(page.getByRole("heading", { name: h, exact: true })).toBeVisible();
     }
     await expect(page.locator('[data-checklist="kvk-troops"]')).toContainText("A08-0500");
@@ -166,12 +166,12 @@ test.describe("KvK readiness", () => {
     await expect(page.getByRole("link", { name: "Planejador de cura" })).toHaveAttribute("href", "/tools/healing/");
     await expect(page.getByRole("link", { name: "Guia de acúmulo" })).toHaveAttribute("href", "/tools/hoard/");
     await expect(page.getByTestId("kvk-explainer")).toContainText("Conferido em: 1.1.06");
-    await page.getByRole("checkbox", { name: /Fight your first KvK with T4/ }).check();
+    await page.getByRole("checkbox", { name: /Lute sua primeira KvK com T4/ }).check();
     expect(await toolsStore(page)).toMatchObject({ checks: { "kvk-troops": ["t4"] } });
     expect(await page.evaluate(() => localStorage.getItem("ko:v1"))).toBeNull();
     await page.reload();
     await hydrated(page);
-    await expect(page.getByRole("checkbox", { name: /Fight your first KvK with T4/ })).toBeChecked();
+    await expect(page.getByRole("checkbox", { name: /Lute sua primeira KvK com T4/ })).toBeChecked();
   });
 });
 
@@ -179,7 +179,7 @@ test.describe("hoard advisor", () => {
   test("rules per goal with cites; divided advice is marked", async ({ page }) => {
     await fresh(page, "/tools/hoard/");
     await expect(page.locator('[data-goal="lohar"]')).toContainText("A11-0505");
-    await expect(page.locator('[data-goal="mtg"]')).toContainText("7,000 gems a day");
+    await expect(page.locator('[data-goal="mtg"]')).toContainText("7.000 gemas por dia");
     await expect(page.locator('[data-goal="eve"]')).toContainText("A09-0007");
     await expect(page.locator('[data-goal="mge"]')).toContainText("A11-0500");
     const universal = page.getByTestId("hoard-general").locator('[data-rule="universal"]');

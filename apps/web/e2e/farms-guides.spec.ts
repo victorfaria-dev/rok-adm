@@ -36,7 +36,7 @@ test.describe("farm guide pages", () => {
       await expect(hyp.locator("[data-hypothesis]")).toHaveText("Hipótese: sem fonte");
       await expect(hyp).toContainText("Nenhuma fonte recomenda isto.");
       await hyp.getByText("Ler o raciocínio").click();
-      await expect(hyp.getByText("No source recommends resource pairs", { exact: true })).toBeVisible();
+      await expect(hyp.getByText("Nenhuma fonte recomenda pares de recursos", { exact: true })).toBeVisible();
     });
   }
 
@@ -53,8 +53,8 @@ test.describe("farm guide pages", () => {
     await page.goto("/guides/farms/gold/");
     const split = page.locator('[data-block="farms-gold-ship-or-main"] [data-split]');
     await expect(split).toBeVisible();
-    await expect(split).toContainText("View A");
-    await expect(split).toContainText("View B");
+    await expect(split).toContainText("Visão A");
+    await expect(split).toContainText("Visão B");
     await expect(page.locator('[data-block="farms-gold-ship-or-main"]')).toContainText("As fontes divergem");
   });
 

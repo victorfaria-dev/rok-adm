@@ -99,14 +99,14 @@ test("farms: add two, set gathering and a daily task, reload keeps everything", 
   await expect(visit.nth(0)).toContainText("volta em 2 h");
   await expect(visit.nth(1)).toContainText("Alpha");
 
-  const task = alpha.getByRole("checkbox", { name: "Gather inside alliance territory" });
+  const task = alpha.getByRole("checkbox", { name: "Colete dentro do território da aliança" });
   await task.check();
   await expect(alpha.getByText(/Lista de hoje: 1 de/)).toBeVisible();
   await expect(alpha.getByRole("link", { name: /Caminho de construção/ })).toHaveAttribute("href", /\/farms\/build\/\?farm=/);
 
   await page.reload();
   await expect(page.getByRole("heading", { level: 3, name: "Alpha" })).toBeVisible();
-  await expect(alpha.getByRole("checkbox", { name: "Gather inside alliance territory" })).toBeChecked();
+  await expect(alpha.getByRole("checkbox", { name: "Colete dentro do território da aliança" })).toBeChecked();
   await expect(alpha.getByText("Prefeitura 14 · Entreposto Comercial 1")).toBeVisible();
   await expect(page.locator(".fh-visit-list li").nth(0)).toContainText("Beta");
   const stored = await page.evaluate((k) => JSON.parse(localStorage.getItem(k) ?? "null"), KEY);
@@ -151,7 +151,7 @@ test("shipment log: gross → net with table tax, weekly summary, CSV, delete", 
   await expect(page.getByRole("table", { name: "Por recurso" })).toContainText("Comida");
 
   await page.getByLabel("Recurso").selectOption("gold");
-  await expect(page.locator("[data-warning='gold_pending_t0']")).toContainText("not yet confirmed in game");
+  await expect(page.locator("[data-warning='gold_pending_t0']")).toContainText("ainda não foi confirmado no jogo");
 
   const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: /Exportar CSV: exibidos/ }).click()]);
   expect(download.suggestedFilename()).toBe(`kingdomops-shipments-${localDay()}.csv`);

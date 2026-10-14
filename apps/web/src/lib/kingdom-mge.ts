@@ -76,7 +76,7 @@ export function addCandidatesFromCsv(doc: MgeDoc, text: string, makeId: () => st
     let score: number | null = null;
     if (values.score) {
       const r = parseMgeScore(values.score);
-      if (!r.ok) { errors.push({ line, text: raw, message: r.tooBig ? r.message : "A pontuação não é um número (use 4200000, 4,200,000 ou 4.2m)." }); continue; }
+      if (!r.ok) { errors.push({ line, text: raw, message: r.tooBig ? r.message : "A pontuação não é um número (use 4200000, 4.200.000 ou 4.2m)." }); continue; }
       score = r.score;
     }
     rows.push({ name, score });

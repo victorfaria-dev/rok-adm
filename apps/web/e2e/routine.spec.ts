@@ -130,7 +130,7 @@ test("calendar file downloads with a daily event", async ({ page }) => {
   const ics = readFileSync((await second.path())!, "utf8").replace(/\r\n /g, "");
   expect(ics).toContain(`SUMMARY:Rotina do KingdomOps (${String(planned).replace(".", "\\,")} min)`);
   expect(ics).toContain(`DURATION:PT${Math.max(1, Math.ceil(planned))}M`);
-  expect(ics).toContain("Refill queues");
+  expect(ics).toContain("Reabastecer as filas");
 });
 
 test("no sideways scroll at 360 px, in both modes", async ({ page }) => {

@@ -97,7 +97,7 @@ export default function Candidates({ doc, plan, onChange }: Props) {
         <div class="kg-grid">
           <h3 class="kx-h3">Adicionar um</h3>
           <TextField id="kx-cand-name" label="Nome do governador" value={name} onValue={setName} error={errors.name} maxLength={MGE_LIMITS.name + 1} />
-          <TextField id="kx-cand-score" label="Pontuação (opcional)" value={score} onValue={setScore} error={errors.score} hint="4200000, 4,200,000 ou 4.2m" />
+          <TextField id="kx-cand-score" label="Pontuação (opcional)" value={score} onValue={setScore} error={errors.score} hint="4200000, 4.200.000 ou 4.2m" />
           <TextField id="kx-cand-tags" label="Etiquetas (opcional)" value={tags} onValue={setTags} error={errors.tags} hint="Separe com vírgulas, por exemplo: líder de rally, líder de guarnição" />
           <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={addOne}>Adicionar governador</button></div>
         </div>

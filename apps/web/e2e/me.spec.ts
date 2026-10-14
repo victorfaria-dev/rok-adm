@@ -30,8 +30,8 @@ test("summary shows a seeded profile in words", async ({ page }) => {
   await expect(h1(page)).toHaveText("Eu: Principal");
   await expect(page.locator(".me-hero-line")).toHaveText("Jogador · F2P · CH 12");
   await openRow(page, "Perfil e contas");
-  await expect(page.getByLabel("What is this account's main role?")).toHaveValue("farm");
-  await expect(page.getByText("F2P — $0 per month").first()).toBeVisible();
+  await expect(page.getByLabel("Qual é a função principal desta conta?")).toHaveValue("farm");
+  await expect(page.getByText("F2P — $0 por mês").first()).toBeVisible();
   await expect(page.locator("main").getByText("30 min", { exact: true })).toBeVisible();
   await expect(page.getByText(QUESTIONS[0]!.label)).toBeVisible();
   await expect(page.locator("h1")).toHaveCount(1);
@@ -87,7 +87,7 @@ test("Edit answers clears the draft and opens /start/ with the saved answers", a
   await page.getByRole("button", { name: "Editar respostas" }).click();
   await page.waitForURL(/\/start\/$/);
   await expect(h1(page)).toHaveText("Confira suas respostas");
-  await expect(page.getByText("F2P — $0 per month")).toBeVisible();
+  await expect(page.getByText("F2P — $0 por mês")).toBeVisible();
   await expect(page.getByText("Whale")).toHaveCount(0);
 });
 
@@ -226,7 +226,7 @@ test("360 px: no sideways scroll with the worst-case profile and confirmation op
   await seed(page, { profileCode: "1.5.4.4.25.1440.24.5000.10000000.byzantium.1", profileOverride: "kraken" });
   await page.goto("/me/");
   await openRow(page, "Perfil e contas");
-  await expect(page.getByLabel("Roughly how much have you spent in total on this account?")).toHaveValue("10000000");
+  await expect(page.getByLabel("Mais ou menos quanto você já gastou, no total, nesta conta?")).toHaveValue("10000000");
   await openRow(page, "Seus dados");
   await page.getByRole("button", { name: "Apagar todos os dados" }).click();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);

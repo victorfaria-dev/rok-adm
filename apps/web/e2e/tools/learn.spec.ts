@@ -15,7 +15,7 @@ const ROUTES = ["/glossary/", "/changes/", "/tools/safety/", "/tools/zeroed/"] a
 test.describe("glossary", () => {
   test("search filters by term, alias and definition, with a live count", async ({ page }) => {
     await page.goto("/glossary/");
-    await expect(page.locator("h1")).toHaveText("Glossary");
+    await expect(page.locator("h1")).toHaveText("Glossário");
     await hydrated(page);
     const all = page.locator("[data-glossary-term]");
     await expect(all).toHaveCount(glossary.terms.length);
@@ -62,7 +62,7 @@ test.describe("what changed since", () => {
     await expect(page.locator(".c-patch")).toHaveCount(patches.length);
     await page.getByLabel("Quando você parou de jogar?").selectOption("2025-05");
     const expected = patchesSince(patches, "2025-05");
-    await expect(page.getByTestId("c-summary")).toHaveText(`${expected.length} patches desde May 2025, do mais novo ao mais antigo.`);
+    await expect(page.getByTestId("c-summary")).toHaveText(`${expected.length} patches desde maio de 2025, do mais novo ao mais antigo.`);
     const shown = await page.locator(".c-patch").evaluateAll((els) => els.map((e) => e.getAttribute("data-version")!));
     expect(new Set(shown)).toEqual(new Set(expected.map((x) => x.patch.version)));
     expect(shown).not.toContain("1.0.92");
@@ -91,7 +91,7 @@ test.describe("what changed since", () => {
 
   test("links to the migration checker", async ({ page }) => {
     await page.goto("/changes/");
-    await expect(page.getByRole("link", { name: /Check whether you can migrate/ })).toHaveAttribute("href", "/tools/migration/");
+    await expect(page.getByRole("link", { name: /Veja se você pode migrar agora/ })).toHaveAttribute("href", "/tools/migration/");
   });
 });
 
@@ -107,12 +107,12 @@ test.describe("play it safe", () => {
   test("account checklist persists in ko:tools:v1", async ({ page }) => {
     await page.goto("/tools/safety/");
     await hydrated(page);
-    const box = page.getByRole("checkbox", { name: /Never share your password/ });
+    const box = page.getByRole("checkbox", { name: /Nunca compartilhe sua senha/ });
     await box.check();
     expect(await toolsStore(page)).toMatchObject({ v: 1, checks: { "safety-account": ["password"] } });
     await page.reload();
     await hydrated(page);
-    await expect(page.getByRole("checkbox", { name: /Never share your password/ })).toBeChecked();
+    await expect(page.getByRole("checkbox", { name: /Nunca compartilhe sua senha/ })).toBeChecked();
   });
 
   test("ticket builder writes the typed governor ID and saves nothing", async ({ page }) => {
@@ -120,13 +120,13 @@ test.describe("play it safe", () => {
     await page.evaluate(() => localStorage.clear());
     await page.reload();
     await hydrated(page);
-    await page.getByRole("radio", { name: /Appeal a ban or mute/ }).check();
-    await page.getByLabel("Your governor ID").fill("87654321");
-    await page.getByLabel("Kingdom number").fill("2708");
-    await page.getByLabel("When the ban or mute started").fill("2026-10-12 18:00 UTC");
-    await expect(page.getByTestId("s-missing")).toContainText("Why you think it is a mistake");
-    await page.getByLabel("Why you think it is a mistake").fill("I only posted rally times in alliance chat.");
-    await page.getByLabel(/Screenshots you will attach/).fill("mute notice\nprofile page");
+    await page.getByRole("radio", { name: /Recorrer de um banimento ou silenciamento/ }).check();
+    await page.getByLabel("Seu ID de governador").fill("87654321");
+    await page.getByLabel("Número do reino").fill("2708");
+    await page.getByLabel("Quando o banimento ou silenciamento começou").fill("2026-10-12 18:00 UTC");
+    await expect(page.getByTestId("s-missing")).toContainText("Por que você acha que foi um engano");
+    await page.getByLabel("Por que você acha que foi um engano").fill("I only posted rally times in alliance chat.");
+    await page.getByLabel(/Capturas de tela que você vai anexar/).fill("mute notice\nprofile page");
     const out = page.getByLabel("Texto do ticket para copiar");
     await expect(out).toHaveJSProperty("readOnly", true);
     await expect(out).toHaveValue(/Subject: Appeal of a ban or mute/);
@@ -149,7 +149,7 @@ test.describe("zeroed recovery", () => {
     expect(await items.count()).toBeLessThanOrEqual(6);
     await expect(page.locator('[data-checklist="zeroed-logoff"]')).toContainText("Medição pendente");
     await expect(page.getByText("Escudos de paz: medição pendente.")).toBeVisible();
-    await page.getByRole("checkbox", { name: /Heal or clear your hospital/ }).check();
+    await page.getByRole("checkbox", { name: /Cure ou esvazie o seu hospital/ }).check();
     expect(await toolsStore(page)).toMatchObject({ checks: { "zeroed-logoff": ["hospital"] } });
     await expect(page.locator("ol.z-steps > li")).toHaveCount(7);
     await expect(page.getByRole("heading", { name: "Se era a sua conta farm" })).toBeVisible();

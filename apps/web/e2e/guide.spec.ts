@@ -87,8 +87,8 @@ test("Low profile: Low spender targets, with tiers, per-dollar caveat, price war
   await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}#budget`);
   const low = page.locator("#budget-low");
   await expect(low.getByRole("heading", { name: "Metas para quem gasta pouco" })).toBeVisible();
-  await expect(low.locator("[data-low-tier='pass-only'] h4")).toContainText("Pass-only");
-  await expect(low.locator("[data-low-tier='low-full'] h4")).toContainText("fuller budget");
+  await expect(low.locator("[data-low-tier='pass-only'] h4")).toContainText("Só passes");
+  await expect(low.locator("[data-low-tier='low-full'] h4")).toContainText("orçamento mais completo");
   await expect(low.locator("#budget-low-method")).toContainText("Só gemas e pontos de VIP brutos por dólar");
   await expect(low.locator("[data-low-purchase='gem-supply-30d']").first()).toContainText("1.952");
   // Every line with a price carries the regional warning; every purchase row has confidence and fact ids.

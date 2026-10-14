@@ -68,7 +68,7 @@ test("hub: paste, validate, save (masked), keep out of the council export, forge
   await seed(page, [PLAN]);
   await seedWebhook(page);
   await gotoHydrated(page, "/kingdom/");
-  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Export (.json)" }).click()]);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Exportar (.json)" }).click()]);
   const { readFileSync } = await import("node:fs");
   expect(readFileSync((await download.path())!, "utf8")).not.toContain(TOKEN);
 
@@ -90,8 +90,8 @@ test("MGE: preview is exactly what is posted; nothing is sent before the click; 
   await panel.locator("summary").click();
   const preview = panel.locator("[data-discord-preview]");
   await expect(preview).toContainText("**Resultados do MGE: K1 MGE**");
-  await expect(preview).toContainText("1. Alpha — score rank 1");
-  await expect(preview).toContainText("2. @​everyone — score rank 2");
+  await expect(preview).toContainText("1. Alpha — posição 1 por pontuação");
+  await expect(preview).toContainText("2. @​everyone — posição 2 por pontuação");
   await expect(preview).not.toContainText("4.200.000");
   expect(sent).toHaveLength(0);
 
@@ -104,7 +104,7 @@ test("MGE: preview is exactly what is posted; nothing is sent before the click; 
   expect(sent[0]!.postDataJSON()).toEqual({ content: text, allowed_mentions: { parse: [] } });
 
   // Creating the public link adds it to the message (new message → old result cleared).
-  await page.getByRole("button", { name: "Create public link" }).click();
+  await page.getByRole("button", { name: "Criar link público" }).click();
   await expect(preview).toContainText("Registro completo: http");
   await expect(panel.locator("[data-discord-result]")).toHaveCount(0);
   expect(lines.filter((l) => l.includes(TOKEN))).toEqual([]);
@@ -149,7 +149,7 @@ test("recruitment post and rules link go to Discord in Discord format", async ({
   const panel = page.locator('[data-discord="recruit"]');
   await panel.locator("summary").click();
   await expect(panel.locator("[data-discord-reason]")).toContainText("a publicação está vazia");
-  await page.getByLabel("Contact").fill("DM Ana on Discord");
+  await page.getByLabel("Contato").fill("DM Ana on Discord");
   await expect(panel.locator("[data-discord-preview]")).toContainText("DM Ana on Discord");
   await panel.getByRole("button", { name: "Enviar ao Discord" }).click();
   await expect(panel.locator('[data-discord-result="ok"]')).toBeVisible();

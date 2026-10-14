@@ -17,7 +17,7 @@ test("pick a commander by its portrait", async ({ page }) => {
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/commanders/");
   await expect(picker(page).getByRole("heading", { name: "Escolha um comandante" })).toBeVisible();
-  await expect(picker(page).getByRole("group", { name: "From kingdom start" })).toBeVisible();
+  await expect(picker(page).getByRole("group", { name: "Desde o início do reino" })).toBeVisible();
   // Eager first-row portraits load; every portrait reserves its box (width/height attributes).
   const first = picker(page).locator(".ckt-img").first();
   await expect.poll(() => first.evaluate((img: HTMLImageElement) => img.complete && img.naturalWidth)).toBeGreaterThan(0);
@@ -32,7 +32,7 @@ test("pick a commander by its portrait", async ({ page }) => {
   await expect(page).toHaveURL(/#lohar$/);
   await expect(page.getByRole("heading", { level: 2, name: "Lohar" })).toBeFocused();
   await expect(tile(page, "Lohar")).toHaveAttribute("aria-pressed", "true");
-  await expect(page.getByRole("group", { name: /What job will this commander do/ })).toBeVisible();
+  await expect(page.getByRole("group", { name: /Que função este comandante terá/ })).toBeVisible();
 
   // Search ignores accents and case.
   await page.getByLabel("Buscar pelo nome").fill("SÚN TZ");
@@ -77,28 +77,28 @@ test("future commanders are dimmed and ask no questions", async ({ page }) => {
   const guan = tile(page, "Guan Yu");
   await expect(guan).toHaveAttribute("aria-disabled", "true");
   await expect(guan).toContainText("Temporada 3");
-  await expect(picker(page).getByRole("group", { name: /Season 3 \(KvK3\)/ })).toContainText("Chega depois");
+  await expect(picker(page).getByRole("group", { name: /Temporada 3 \(KvK3\)/ })).toContainText("Chega depois");
   await guan.click({ force: true }); // aria-disabled: still clickable, it explains when it arrives
-  await expect(picker(page).getByRole("status")).toHaveText("Guan Yu chega em Season 3 (KvK3). Ainda não há o que decidir.");
+  await expect(picker(page).getByRole("status")).toHaveText("Guan Yu chega em Temporada 3 (KvK3). Ainda não há o que decidir.");
   await expect(page.locator("#cmd-name")).toHaveCount(0);
-  await expect(page.getByRole("radio", { name: /Open-field/ })).toHaveCount(0);
+  await expect(page.getByRole("radio", { name: /Lutar em campo aberto/ })).toHaveCount(0);
 
   // A direct link to a future commander shows when it arrives, not the checklist.
   await page.goto("/commanders/#guan-yu");
   await expect(page.getByRole("heading", { level: 2, name: "Guan Yu" })).toBeVisible();
-  await expect(page.getByText("Este comandante chega em Season 3 (KvK3); ainda não há o que decidir.")).toBeVisible();
+  await expect(page.getByText("Este comandante chega em Temporada 3 (KvK3); ainda não há o que decidir.")).toBeVisible();
   await expect(page.locator(".cmd-verdict")).toHaveCount(0);
-  await expect(page.getByRole("group", { name: /What job will this commander do/ })).toHaveCount(0);
+  await expect(page.getByRole("group", { name: /Que função este comandante terá/ })).toHaveCount(0);
 
   // "Only what I can get now" hides the later seasons.
   await page.getByText("Filtros", { exact: true }).click();
   await page.getByRole("checkbox", { name: "Só o que posso conseguir agora" }).check();
-  await expect(picker(page).getByRole("group", { name: /Season 3/ })).toHaveCount(0);
+  await expect(picker(page).getByRole("group", { name: /Temporada 3/ })).toHaveCount(0);
   await expect(picker(page).locator("button.ckt[data-future]")).toHaveCount(0);
 
   // A commander already reachable still gets its questions.
   await tile(page, "Lohar").click();
-  await expect(page.getByRole("group", { name: /What job will this commander do/ })).toBeVisible();
+  await expect(page.getByRole("group", { name: /Que função este comandante terá/ })).toBeVisible();
 });
 
 test("360 px: no sideways scroll, targets at least 44 px", async ({ page }) => {
