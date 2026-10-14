@@ -53,7 +53,7 @@ describe("parseNumber", () => {
     expect(parseNumber("1'189'358")).toBe(1_189_358);
     expect(parseNumber("١٬١٨٩٬٣٥٨")).toBe(1_189_358);
     expect(parseNumber("(ID: 0)")).toBeNull();
-    expect(parseNumber("205759497)")).toBe(205_759_497);
+    expect(parseNumber("123456789)")).toBe(123_456_789);
     expect(parseNumber("0")).toBe(0);
   });
 
