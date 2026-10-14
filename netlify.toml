@@ -6,6 +6,14 @@
 
 [build.environment]
   NODE_VERSION = "22"
+  # Sign-in (optional): set PUBLIC_SUPABASE_URL and PUBLIC_SUPABASE_ANON_KEY in the Netlify UI
+  # (Site configuration → Environment variables), never here. See supabase/README.md.
+
+# Public profiles: every /u/<handle>/ is served by the static /u/ shell, which loads the profile.
+[[redirects]]
+  from = "/u/*"
+  to = "/u/index.html"
+  status = 200
 
 # The service worker must never be cached by the browser, or updates would not reach installed apps.
 [[headers]]
