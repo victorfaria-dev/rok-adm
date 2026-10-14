@@ -1,7 +1,7 @@
 [
   {
     "id": "ls-overview-after-kvk1",
-    "title": "After KvK1: what changes for an ordinary account",
+    "title": "Depois da KvK1: o que muda para uma conta comum",
     "phase": "anytime",
     "section": "overview",
     "order": 10,
@@ -27,8 +27,8 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "**Who this is for.** Your kingdom has finished its first KvK and is heading into KvK2, KvK3 or a Season of Conquest (SoC) story. The daily routine of the base guide still applies; this guide covers what changes.\n\n**The calendar.** Official notes set the first two Lost Kingdom seasons to **49 days** each, extended the Heroic Anthem SoC story to **50 days** (1.0.76) and cut the trip home after the Lost Kingdom from 3 to **2 days** (1.0.90) [B01-0900]. These are the officially stated lengths; current seasons may differ, so read your own event calendar. How long the gap between seasons lasts has **no official number**: one guide site gives two different figures (about 2 or about 3 months), and a kingdom that finishes an SoC story can register for the next one immediately [B01-0902, weak card].\n\n**The pressure.** In its October 2024 Q&A Lilith itself said constant KvKs are stressful for players without time to gather between seasons, and announced a partial refund of healing resources at the end of KvK [B01-0901]. Plan the off-season as gathering and preparation time, not as a break.\n\n**The three shifts after KvK1:**\n1. **Troops:** T5 becomes a long research project, and healing (not training) becomes the main resource cost.\n2. **Commanders:** the one-time Commander Swap and the Season 3 / SoC commander pools change what is worth building.\n3. **SoC systems:** crystal technology, seasonal strategies and new currencies only exist inside SoC stories.",
-    "why_md": "The KvK1 plan is about reaching CH21+ and T4 in about 100 days. After that the bottlenecks move to gold, healing and season-gated systems, and the cards for those stages are different, so a KvK1 checklist would point a KvK2 player at the wrong priorities.",
+    "body_md": "**Para quem é.** O seu reino terminou a primeira KvK e está indo para a KvK2, a KvK3 ou uma história da Temporada de Conquista (SoC). A rotina diária do guia-base continua valendo; este guia cobre o que muda.\n\n**O calendário.** As notas oficiais definem as duas primeiras temporadas de Reino Perdido em **49 dias** cada, estenderam a história Heroic Anthem da SoC para **50 dias** (1.0.76) e reduziram a viagem de volta depois do Reino Perdido de 3 para **2 dias** (1.0.90) [B01-0900]. Essas são as durações oficialmente declaradas; as temporadas atuais podem diferir, então leia o seu próprio calendário de eventos. A duração do intervalo entre temporadas **não tem número oficial**: um site de guia dá dois valores diferentes (cerca de 2 ou cerca de 3 meses), e um reino que termina uma história da SoC pode se registrar na próxima imediatamente [B01-0902, ficha fraca].\n\n**A pressão.** No Q&A de outubro de 2024, a própria Lilith disse que KvKs constantes estressam jogadores sem tempo para coletar entre as temporadas, e anunciou um reembolso parcial dos recursos de cura no fim da KvK [B01-0901]. Planeje a entressafra como tempo de coleta e preparação, não como descanso.\n\n**As três mudanças depois da KvK1:**\n1. **Tropas:** o T5 vira um longo projeto de pesquisa, e a cura (não o treinamento) passa a ser o principal custo de recursos.\n2. **Comandantes:** a Troca de Comandante única e os pools de comandantes da Temporada 3 / SoC mudam o que vale a pena construir.\n3. **Sistemas da SoC:** tecnologia de cristal, estratégias sazonais e novas moedas só existem dentro das histórias da SoC.",
+    "why_md": "O plano da KvK1 é chegar à Prefeitura 21+ e ao T4 em cerca de 100 dias. Depois disso os gargalos passam para ouro, cura e sistemas ligados à temporada, e as fichas dessas etapas são outras, então uma lista de KvK1 apontaria para um jogador de KvK2 as prioridades erradas.",
     "cards": [
       "B01-0900",
       "B01-0901",
@@ -36,17 +36,17 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "B01-0902 (gap between seasons) is weak: one guide site with two inconsistent figures; no official count.",
+    "uncertain_notes": "B01-0902 (intervalo entre temporadas) é fraco: um site de guia com dois valores inconsistentes; sem contagem oficial.",
     "gaps": [
       "L-B01-05"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-t5-is-a-research-project",
-    "title": "T5 is a research project measured in months",
+    "title": "O T5 é um projeto de pesquisa medido em meses",
     "phase": "anytime",
     "section": "plan",
     "order": 20,
@@ -72,26 +72,26 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "**The gate.** Each T5 unit tech needs **Medical Corps 10**, **Academy 25** and the level-10 defence tech of its line (Royal Guard: Scutum; Royal Crossbowman: Pavise; Royal Knight: Plate Armor; Trebuchet: Heavy Frame). The T5 tech itself costs **10.0M food, 10.0M wood, 7.5M stone and 10.0M gold** and takes **100 days 1 hour** of raw research (Trebuchet 150d 1h) [A02-0600].\n\n**Medical Corps** is the long pole: level 10 alone (needs Academy 24, Combined Arms 10 and Encampment 10) takes **231 days 14 hours** raw, and levels 1–10 together about **461 days** raw [A02-0600]. Raw times assume no research bonuses; with buffs they are shorter, but how much shorter is not measured (gap L-A02-05).\n\n**Academy 25 needs Castle 25.** Buying the Books of Covenant with gems for Castle 24→25 alone is about **50,000 gems**, about 500 days of the F2P guaranteed gem income, so free accounts depend on books from barbarian forts [A04-0601, weak card].\n\n**What to do:** start Medical Corps and the defence tech of your main line as soon as KvK1 ends, keep the Academy queue busy every day, and treat T5 as a goal for KvK3 or later rather than for KvK2 if you do not spend.",
-    "why_md": "Players often plan T5 as the next step after T4. The research table says the gate is hundreds of raw research days, so the realistic question for a free account is which season, not which week. Starting the long techs early is the only lever a non-spender fully controls.",
+    "body_md": "**O portão.** Cada tecnologia de unidade T5 exige **Corpo Médico 10**, **Academia 25** e a tecnologia de defesa de nível 10 da sua linha (Guarda Real: Scutum; Besteiro Real: Pavise; Cavaleiro Real: Plate Armor; Trabuco: Heavy Frame). A própria tecnologia T5 custa **10,0M de comida, 10,0M de madeira, 7,5M de pedra e 10,0M de ouro** e leva **100 dias e 1 hora** de pesquisa bruta (Trabuco 150d 1h) [A02-0600].\n\nO **Corpo Médico** é o gargalo mais longo: só o nível 10 (exige Academia 24, Armas Combinadas 10 e Acampamento 10) leva **231 dias e 14 horas** brutos, e os níveis 1–10 juntos cerca de **461 dias** brutos [A02-0600]. Os tempos brutos pressupõem nenhum bônus de pesquisa; com bônus são menores, mas quanto menores não foi medido (lacuna L-A02-05).\n\n**A Academia 25 exige o Castelo 25.** Comprar com gemas os Livros do Pacto só para o Castelo 24→25 custa cerca de **50.000 gemas**, cerca de 500 dias da renda de gemas garantida do F2P, então as contas gratuitas dependem de livros dos fortes bárbaros [A04-0601, ficha fraca].\n\n**O que fazer:** comece o Corpo Médico e a tecnologia de defesa da sua linha principal assim que a KvK1 terminar, mantenha a fila da Academia ocupada todo dia, e trate o T5 como meta da KvK3 ou depois, não da KvK2, se você não gasta.",
+    "why_md": "Os jogadores costumam planejar o T5 como o próximo passo depois do T4. A tabela de pesquisa diz que o portão são centenas de dias brutos de pesquisa, então a pergunta realista para uma conta gratuita é em qual temporada, não em qual semana. Começar cedo as tecnologias longas é a única alavanca que quem não gasta controla por completo.",
     "cards": [
       "A02-0600",
       "A04-0601"
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A04-0601 (gem price of Castle 25) is a derived figure from guide prices of Books of Covenant (weak card).",
+    "uncertain_notes": "A04-0601 (preço em gemas do Castelo 25) é um valor derivado de preços de guias para os Livros do Pacto (ficha fraca).",
     "gaps": [
       "L-A02-05",
       "L-A04-07"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-t4-field-t5-rallies",
-    "title": "Keep T4 for the open field; use T5 where stats decide",
+    "title": "Guarde o T4 para o campo aberto; use o T5 onde os atributos decidem",
     "phase": "anytime",
     "section": "plan",
     "order": 30,
@@ -119,8 +119,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "Guides agree that once you have T5, an account without a heavy gold economy should keep **T4 for large open-field fights** (cheaper heals, better trades) and use **T5 where stats decide the outcome**: rallies, garrison defence, 1v1 fights and Ark of Osiris (healed for free at the end) [A08-0606].\n\n**Why gold is the problem.** In one guide site's healing calculator, healing a T5 infantry costs **20×** the gold of a T4 infantry (160 vs 8 gold per unit, before reductions) and about 2.7× the food and wood [A08-0603, weak card]. A seller guide quotes much larger absolute numbers that do not match the calculator, so do not plan with absolute heal costs from either source [A08-0604, contested].",
-    "why_md": "Converting everything to T5 looks like progress on the power screen but can leave a free account unable to afford heals mid-KvK. Splitting by fight type follows the cost difference and is the advice the guide sources share.",
+    "body_md": "Os guias concordam que, quando você tem T5, uma conta sem uma economia de ouro forte deve manter o **T4 para grandes lutas em campo aberto** (curas mais baratas, melhores trocas) e usar o **T5 onde os atributos decidem o resultado**: rallies, defesa de guarnição, lutas 1v1 e Arca de Osíris (curado de graça no fim) [A08-0606].\n\n**Por que o ouro é o problema.** Na calculadora de cura de um site de guia, curar uma Infantaria T5 custa **20×** o ouro de uma Infantaria T4 (160 contra 8 de ouro por unidade, antes das reduções) e cerca de 2,7× a comida e a madeira [A08-0603, ficha fraca]. Um guia de vendedor cita números absolutos muito maiores que não batem com a calculadora, então não planeje com custos absolutos de cura de nenhuma das fontes [A08-0604, contestado].",
+    "why_md": "Converter tudo para T5 parece progresso na tela de poder, mas pode deixar uma conta gratuita sem condições de pagar curas no meio da KvK. Dividir por tipo de luta segue a diferença de custo e é o conselho que as fontes dos guias compartilham.",
     "cards": [
       "A08-0603",
       "A08-0604",
@@ -128,17 +128,17 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A08-0603 (calculator constants, single guide site) is weak; A08-0604 is contested (seller site, numbers 6–9× the calculator). Only the T4/T5 role split (A08-0606) is firm.",
+    "uncertain_notes": "A08-0603 (constantes da calculadora, site de guia único) é fraca; A08-0604 é contestada (site de vendedor, números 6–9× os da calculadora). Só a divisão de papéis T4/T5 (A08-0606) é firme.",
     "gaps": [
       "L-A08-05"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-t5-convert-during-events",
-    "title": "Convert to T5 during scored events, and keep a T4 reserve",
+    "title": "Converta para T5 durante eventos pontuados e mantenha uma reserva de T4",
     "phase": "event",
     "section": "events",
     "order": 40,
@@ -165,9 +165,9 @@
     "ch_range": null,
     "civ": [],
     "consensus": "split",
-    "split_views": "Same cost: a 2022 guide says T4 + upgrade = T5 trained directly. Higher cost: the wiki's Barracks page says upgrading has a greater overall resource cost [A08-0607].",
-    "body_md": "Guides advise converting troops to T5 **only during scored events** (Mightiest Governor training/power stages, Zenith of Power) with runes, kingdom buffs and titles active, and keeping a **T4 reserve** for field fights. In MGE a trained T5 is worth **100 points** vs **40** for a T4, and upgrades earn the point difference [A08-0607].\n\n**Upgrade vs train is disputed.** One 2022 guide says T4 cost plus the upgrade cost equals training T5 directly; the wiki's Barracks page says upgrading costs **more** overall than training the higher tier directly [A08-0607]. Until this is measured (gap L-A08-07), upgrade only when the event points or the time saved justify it.",
-    "why_md": "Training and upgrading happen anyway; doing them inside a scored event turns the same resources into event rewards. The cost dispute is real, so the block does not claim upgrading is free.",
+    "split_views": "Mesmo custo: um guia de 2022 diz que T4 + melhoria = T5 treinado direto. Custo maior: a página do Quartel na wiki diz que melhorar tem um custo total de recursos maior [A08-0607].",
+    "body_md": "Os guias aconselham converter tropas para T5 **só durante eventos pontuados** (etapas de treinamento/poder do Governador Mais Poderoso, Zenith of Power) com runas, bônus do reino e títulos ativos, e manter uma **reserva de T4** para lutas em campo. No MGE um T5 treinado vale **100 pontos** contra **40** de um T4, e as melhorias rendem a diferença de pontos [A08-0607].\n\n**Melhorar ou treinar é disputado.** Um guia de 2022 diz que o custo do T4 mais o custo da melhoria é igual a treinar o T5 direto; a página do Quartel na wiki diz que melhorar custa **mais** no total do que treinar o nível maior direto [A08-0607]. Até isso ser medido (lacuna L-A08-07), melhore só quando os pontos do evento ou o tempo poupado justificarem.",
+    "why_md": "Treinar e melhorar acontecem de qualquer jeito; fazer isso dentro de um evento pontuado transforma os mesmos recursos em recompensas do evento. A disputa de custo é real, então o bloco não afirma que melhorar é de graça.",
     "cards": [
       "A08-0607"
     ],
@@ -179,11 +179,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-healing-economy",
-    "title": "Healing is your main KvK cost: how wounds work and how to heal cheaply",
+    "title": "A cura é o seu principal custo na KvK: como os ferimentos funcionam e como curar barato",
     "phase": "anytime",
     "section": "plan",
     "order": 50,
@@ -210,8 +210,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**What happens to wounded troops** [A08-0600]:\n- Defending your own city, open-field and resource-point fights: severely wounded go to the **hospital**.\n- Reinforcing an ally's city: **half** of your severely wounded die (official, 2025).\n- Attacking cities or alliance buildings: **all** of your severely wounded die.\n- Wounded that do not fit in the hospital **die**, so hospital capacity is a hard limit.\nThe sanctum, altar, shrine, pass and Lost Temple rows come only from a 2020 wiki revision; check them in-game before relying on them.\n\n**Hospital capacity.** With all four hospitals at the same level, base capacity is **200,000** at level 21, **260,000** at level 24 and **300,000** at level 25 (level 25 needs Castle 25 and a Master's Blueprint) [A08-0605]. Research, alliance and item buffs add to this but were not quantified (gap L-A08-06).\n\n**Heal in small batches.** Guides agree alliance help is the cheapest way to cut healing time: heal small batches (1–2k troops, or about 2-hour chunks) so helps finish them, avoid emptying the hospital with speedups mid-fight, and do not burn healing speedups outside meaningful fighting before a KvK [A04-0603].",
-    "why_md": "Most KvK losses for ordinary accounts come from overflowing the hospital or healing everything with speedups at once. The wound rules decide which fights are cheap for you, and capacity decides how long you can stay in them.",
+    "body_md": "**O que acontece com as tropas feridas** [A08-0600]:\n- Defender a sua própria cidade, lutas em campo aberto e em pontos de recurso: os gravemente feridos vão para o **hospital**.\n- Reforçar a cidade de um aliado: **metade** dos seus gravemente feridos morre (oficial, 2025).\n- Atacar cidades ou edifícios de aliança: **todos** os seus gravemente feridos morrem.\n- Os feridos que não cabem no hospital **morrem**, então a capacidade do hospital é um limite rígido.\nAs linhas de santuário, altar, capela, passagem e Templo Perdido vêm apenas de uma revisão da wiki de 2020; confira no jogo antes de confiar nelas.\n\n**Capacidade do hospital.** Com os quatro hospitais no mesmo nível, a capacidade base é de **200.000** no nível 21, **260.000** no nível 24 e **300.000** no nível 25 (o nível 25 exige Castelo 25 e uma Planta do Mestre) [A08-0605]. Bônus de pesquisa, aliança e itens somam a isso, mas não foram quantificados (lacuna L-A08-06).\n\n**Cure em lotes pequenos.** Os guias concordam que a ajuda da aliança é a forma mais barata de cortar o tempo de cura: cure lotes pequenos (1–2 mil tropas, ou blocos de cerca de 2 horas) para as ajudas os terminarem, evite esvaziar o hospital com acelerações no meio da luta, e não queime acelerações de cura fora de lutas relevantes antes de uma KvK [A04-0603].",
+    "why_md": "A maior parte das perdas de contas comuns na KvK vem de transbordar o hospital ou de curar tudo de uma vez com acelerações. As regras de ferimento decidem quais lutas saem baratas para você, e a capacidade decide por quanto tempo você aguenta nelas.",
     "cards": [
       "A04-0603",
       "A08-0600",
@@ -226,11 +226,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-hall-of-heroes",
-    "title": "Hall of Heroes: what comes back at the end of the season",
+    "title": "Salão dos Heróis: o que volta no fim da temporada",
     "phase": "anytime",
     "section": "plan",
     "order": 60,
@@ -256,8 +256,8 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "Official notes say troops in the **Hall of Heroes** are returned at the end of the season **even if you are offline** (1.0.45) [A08-0601, C04-0621]. Since **1.0.94** (May 2025), Lost Kingdom tier-ups (earned from dead and severely wounded units) **raise the return rate**, and since **1.0.89** (Dec 2024) the Hall also **refunds part of the resources spent healing** in the Lost Kingdom [A08-0601].\n\n**No official percentage exists.** A 2022 guide says half of the lost troops come back; since 1.0.94 the rate depends on the Lost Kingdom tier, so do **not** plan with a flat 50% [A08-0602, weak card].\n\n**What to do:** fight in the Lost Kingdom when your alliance needs you; dead troops there are partly recoverable, and the refund also covers part of the healing bill. Read the end-of-season mail and record what came back (gap L-A08-04).",
-    "why_md": "Fear of losing troops keeps many low-power players out of KvK. The official rules say part of those losses and part of the healing cost come back, which changes how costly participation really is; the exact rate is unknown, so the block gives no number.",
+    "body_md": "As notas oficiais dizem que as tropas no **Salão dos Heróis** são devolvidas no fim da temporada **mesmo que você esteja offline** (1.0.45) [A08-0601, C04-0621]. Desde a **1.0.94** (maio de 2025), as subidas de nível do Reino Perdido (ganhas com unidades mortas e gravemente feridas) **aumentam a taxa de retorno**, e desde a **1.0.89** (dez de 2024) o Salão também **reembolsa parte dos recursos gastos em cura** no Reino Perdido [A08-0601].\n\n**Não existe percentual oficial.** Um guia de 2022 diz que metade das tropas perdidas volta; desde a 1.0.94 a taxa depende do nível do Reino Perdido, então **não** planeje com 50% fixos [A08-0602, ficha fraca].\n\n**O que fazer:** lute no Reino Perdido quando a sua aliança precisar de você; as tropas mortas ali são parcialmente recuperáveis, e o reembolso também cobre parte da conta de cura. Leia o correio de fim de temporada e anote o que voltou (lacuna L-A08-04).",
+    "why_md": "O medo de perder tropas mantém muitos jogadores de pouco poder fora da KvK. As regras oficiais dizem que parte dessas perdas e parte do custo de cura voltam, o que muda o quanto participar realmente custa; a taxa exata é desconhecida, então o bloco não dá número.",
     "cards": [
       "A08-0601",
       "A08-0602",
@@ -265,17 +265,17 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A08-0602 (50% return, one 2022 guide) is weak and superseded by the tier-based rule since 1.0.94.",
+    "uncertain_notes": "A08-0602 (retorno de 50%, um guia de 2022) é fraca e foi superada pela regra por nível desde a 1.0.94.",
     "gaps": [
       "L-A08-04"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-soc-healing-levers",
-    "title": "Season of Conquest: the seasonal levers that cut healing cost",
+    "title": "Temporada de Conquista: as alavancas sazonais que cortam o custo de cura",
     "phase": "anytime",
     "section": "plan",
     "order": 70,
@@ -299,8 +299,8 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "Official posts show Lilith addressing T5 healing cost with **season-specific** levers rather than a base-cost cut [A08-0608]:\n- **Crystal technologies** that reduce T5 healing cost (SoC only) [A02-0601].\n- **Seasonal strategies** in King of the Nile: Frugality (−10% healing resources) saves at most **700,000,000** resources per season, Medical Skills (+15% healing speed) at most **6,000 minutes**, Safe Return (−8% severely wounded become slightly wounded) at most **500,000** units and does not affect dead units [C04-0620].\n- **Healing speedups** in the SoC Wheel of Fortune pool (1.0.92) and the Hall of Heroes refund (1.0.89) [A08-0608].\n- **Recovery Potions** for Acclaim Coins (1.1.04, a pioneer in the Heroic Anthem story only) [A08-0608].\n\n**What to do:** in an SoC story, pick the healing strategies and crystal techs early, before the big fights; the caps mean they help most for a mid-sized account and stop scaling for very large heals.",
-    "why_md": "Because most of the help with healing cost exists only inside SoC stories, KvK2 and KvK3 are likely the most expensive seasons to heal in (an inference from the cards, not a stated fact). Knowing the levers and their caps lets a player choose them before they are needed.",
+    "body_md": "Posts oficiais mostram a Lilith tratando o custo de cura do T5 com alavancas **específicas de temporada** em vez de um corte no custo base [A08-0608]:\n- **Tecnologias de Cristal** que reduzem o custo de cura do T5 (apenas SoC) [A02-0601].\n- **Estratégias sazonais** em King of the Nile: Frugality (−10% de recursos de cura) economiza no máximo **700.000.000** de recursos por temporada, Medical Skills (+15% de velocidade de cura) no máximo **6.000 minutos**, Safe Return (−8% dos gravemente feridos viram levemente feridos) no máximo **500.000** unidades e não afeta unidades mortas [C04-0620].\n- **Acelerações de cura** no pool da Roda da Fortuna da SoC (1.0.92) e o reembolso do Salão dos Heróis (1.0.89) [A08-0608].\n- **Poções de Recuperação** por Moedas de Acclaim (1.1.04, pioneira apenas na história Heroic Anthem) [A08-0608].\n\n**O que fazer:** em uma história da SoC, escolha cedo as estratégias de cura e as tecnologias de cristal, antes das grandes lutas; os tetos fazem com que ajudem mais uma conta de porte médio e deixem de escalar para curas muito grandes.",
+    "why_md": "Como a maior parte da ajuda com o custo de cura existe só dentro das histórias da SoC, a KvK2 e a KvK3 provavelmente são as temporadas mais caras para curar (uma inferência das fichas, não um fato declarado). Conhecer as alavancas e seus tetos permite escolhê-las antes de precisar delas.",
     "cards": [
       "A02-0601",
       "A08-0608",
@@ -312,11 +312,11 @@
     "gaps": [],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-crystal-tech",
-    "title": "Crystal technology: specialise in one unit type",
+    "title": "Tecnologia de Cristal: especialize-se em um tipo de unidade",
     "phase": "anytime",
     "section": "plan",
     "order": 80,
@@ -340,25 +340,25 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "In Season of Conquest stories each governor builds a **Crystal Mine** and a **Crystal Research Center** and researches crystal technologies paid with **Crystals** (from the mine, barbarian patrols/forts, Kahar, Trial of Kau Karuak and bastion quests) [A02-0601]. The reworked tree (pioneered in 1.0.94–1.0.99, rolled out to selected stories in 1.1.02) lets you invest in your **preferred unit type** without researching unused unit techs, with Unit Capacity earlier [A02-0601].\n\nGuides advise free and low spenders to be **selective**: invest in production (Crystals, Favor) early without maxing it, then put the rest into the military branch of your **one** main unit type [A02-0602, weak card].",
-    "why_md": "A free account cannot max every branch; the rework officially rewards picking one unit type. The production-first order is guide advice from before the rework, so it is labelled uncertain.",
+    "body_md": "Nas histórias da Temporada de Conquista cada governador constrói uma **Mina de Cristal** e um **Centro de Pesquisa de Cristal** e pesquisa tecnologias de cristal pagas com **Cristais** (da mina, de patrulhas/fortes bárbaros, Kahar, Trial of Kau Karuak e missões de bastião) [A02-0601]. A árvore retrabalhada (pioneira na 1.0.94–1.0.99, lançada em histórias selecionadas na 1.1.02) permite investir no seu **tipo de unidade preferido** sem pesquisar tecnologias de unidades não usadas, com Capacidade de Unidade mais cedo [A02-0601].\n\nOs guias aconselham quem é gratuito ou gasta pouco a ser **seletivo**: invista cedo em produção (Cristais, Favor) sem maximizá-la, depois ponha o resto no ramo militar do seu **único** tipo de unidade principal [A02-0602, ficha fraca].",
+    "why_md": "Uma conta gratuita não consegue maximizar todos os ramos; o retrabalho recompensa oficialmente a escolha de um tipo de unidade. A ordem de produção primeiro é conselho de guia anterior ao retrabalho, por isso está rotulada como incerta.",
     "cards": [
       "A02-0601",
       "A02-0602"
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A02-0602 (selective crystal tech priorities) is weak: guide advice partly written before the 2025 rework.",
+    "uncertain_notes": "A02-0602 (prioridades seletivas de tecnologia de cristal) é fraca: conselho de guia em parte escrito antes do retrabalho de 2025.",
     "gaps": [
       "L-A02-04"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-offseason-stockpile",
-    "title": "Between seasons: gather, keep resources in items, favour gold on T5",
+    "title": "Entre temporadas: colete, guarde recursos em itens, priorize ouro no T5",
     "phase": "anytime",
     "section": "plan",
     "order": 90,
@@ -384,8 +384,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "For the gap before KvK2, KvK3 or SoC, guides agree to **gather continuously** (farm accounts included), keep reserves as **unopened resource items** (they cannot be plundered) and, once on T5, **prioritise gold** [A04-0604]. Lilith frames the off-season the same way in its 2024 Q&A [B01-0901].\n\n**No stockpile target is reliable.** Only one seller guide gives numbers (at least 500M food and wood, 200M stone and 100M gold in item form), and its wording does not say whether the food and wood figure is each or combined; treat it as one seller's opinion, not a target.\n\nThere is **no daily cap** on resources received by assistance or plunder: the 200M caps announced in 1.0.49 were removed on 2021-08-04 [A04-0605], so a main account can be fed by farms without a daily limit.",
-    "why_md": "Healing cost is what ends a KvK for a free account, and healing is paid in resources. Items are the safe form for a stockpile because they cannot be plundered while you are offline.",
+    "body_md": "Para o intervalo antes da KvK2, da KvK3 ou da SoC, os guias concordam em **coletar continuamente** (inclusive contas farm), guardar reservas como **itens de recurso fechados** (não podem ser saqueados) e, já no T5, **priorizar o ouro** [A04-0604]. A Lilith enquadra a entressafra do mesmo jeito no Q&A de 2024 [B01-0901].\n\n**Nenhuma meta de estoque é confiável.** Só um guia de vendedor dá números (pelo menos 500M de comida e madeira, 200M de pedra e 100M de ouro em forma de itens), e o texto dele não diz se o valor de comida e madeira é cada um ou somado; trate como opinião de um vendedor, não como meta.\n\n**Não há limite diário** de recursos recebidos por assistência ou saque: os limites de 200M anunciados na 1.0.49 foram removidos em 2021-08-04 [A04-0605], então uma conta principal pode ser alimentada por farms sem limite diário.",
+    "why_md": "O custo de cura é o que encerra uma KvK para uma conta gratuita, e a cura é paga em recursos. Itens são a forma segura para um estoque porque não podem ser saqueados enquanto você está offline.",
     "cards": [
       "A04-0604",
       "A04-0605",
@@ -399,11 +399,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-speedups-research-or-healing",
-    "title": "Universal speedups: research between seasons or healing during KvK?",
+    "title": "Acelerações universais: pesquisa entre temporadas ou cura durante a KvK?",
     "phase": "anytime",
     "section": "plan",
     "order": 100,
@@ -428,25 +428,25 @@
     "ch_range": null,
     "civ": [],
     "consensus": "split",
-    "split_views": "Research first: one guide says F2P aiming at T5 should never use universal speedups to heal. Healing reserve: 2026 commercial guides say to keep universals for KvK healing [A04-0602].",
-    "body_md": "Sources split by goal [A04-0602, weak card]: one guide tells free accounts aiming at T5 to put **every universal speedup into research** and never into healing; 2026 commercial guides say to **reserve universal speedups for hospital healing** during KvK and to use specialised speedups first.\n\n**A rule that respects both:** use specialised (research, healing) speedups first; spend universals on the long T5 techs between seasons, but keep enough to stay in the fights your alliance commits to. Speedups spent during Mightiest Governor or power events also earn event points.",
-    "why_md": "Both views are coherent; they optimise different things (long-term tech vs staying in the current KvK). The card is weak, so the guide shows the split instead of picking a side.",
+    "split_views": "Pesquisa primeiro: um guia diz que o F2P que mira o T5 nunca deve usar acelerações universais para curar. Reserva de cura: guias comerciais de 2026 dizem para guardar as universais para a cura na KvK [A04-0602].",
+    "body_md": "As fontes se dividem pelo objetivo [A04-0602, ficha fraca]: um guia diz às contas gratuitas que miram o T5 para pôr **toda aceleração universal em pesquisa** e nunca em cura; guias comerciais de 2026 dizem para **reservar as acelerações universais para a cura no hospital** durante a KvK e usar primeiro as especializadas.\n\n**Uma regra que respeita as duas:** use primeiro as acelerações especializadas (pesquisa, cura); gaste as universais nas longas tecnologias de T5 entre temporadas, mas guarde o suficiente para permanecer nas lutas a que a sua aliança se compromete. Acelerações gastas durante eventos do Governador Mais Poderoso ou de poder também rendem pontos de evento.",
+    "why_md": "As duas visões são coerentes; otimizam coisas diferentes (tecnologia de longo prazo contra continuar na KvK atual). A ficha é fraca, então o guia mostra a divisão em vez de escolher um lado.",
     "cards": [
       "A04-0602"
     ],
     "patch_cards": [],
     "confidence": "low",
-    "uncertain_notes": "A04-0602 is weak (one F2P guide vs seller-site guides).",
+    "uncertain_notes": "A04-0602 é fraca (um guia F2P contra guias de sites de vendedores).",
     "gaps": [
       "L-A04-09"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-gems-after-vip10",
-    "title": "Gems after VIP 10: Books of Covenant or more VIP",
+    "title": "Gemas depois do VIP 10: Livros do Pacto ou mais VIP",
     "phase": "anytime",
     "section": "plan",
     "order": 110,
@@ -473,26 +473,26 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "After VIP 10, guides split free gems between **Books of Covenant** (for Castle 25, needed for Academy 25 and T5) and more **VIP levels** (VIP 12 = 2 and VIP 14 = 3 legendary sculptures a day), buying during **More Than Gems** [A04-0600, weak card]. In one 2022 priority list the Wheel of Fortune sits between VIP 12 and VIP 14; VIP Shop and discounted Courier Station items are only for spare gems [A04-0600].\n\nCastle 24→25 bought only with gems costs about **50,000 gems** [A04-0601, weak card], so most free accounts mix fort books with gems.",
-    "why_md": "Both uses are long-term; which comes first depends on whether T5 (books) or commander sculptures (VIP) is your bottleneck. The sources are old and partly unconfirmed, so this is shown as a low-confidence orientation.",
+    "body_md": "Depois do VIP 10, os guias dividem as gemas gratuitas entre **Livros do Pacto** (para o Castelo 25, necessário para a Academia 25 e o T5) e mais **níveis de VIP** (VIP 12 = 2 e VIP 14 = 3 esculturas lendárias por dia), comprando durante o **Mais que Gemas** [A04-0600, ficha fraca]. Em uma lista de prioridades de 2022, a Roda da Fortuna fica entre o VIP 12 e o VIP 14; a Loja VIP e os itens com desconto da Estação de Correio são só para gemas sobrando [A04-0600].\n\nCastelo 24→25 comprado só com gemas custa cerca de **50.000 gemas** [A04-0601, ficha fraca], então a maioria das contas gratuitas mistura livros de fortes com gemas.",
+    "why_md": "Os dois usos são de longo prazo; qual vem primeiro depende de o seu gargalo ser o T5 (livros) ou as esculturas de comandantes (VIP). As fontes são antigas e em parte não confirmadas, então isto é mostrado como uma orientação de baixa confiança.",
     "cards": [
       "A04-0600",
       "A04-0601"
     ],
     "patch_cards": [],
     "confidence": "low",
-    "uncertain_notes": "A04-0600 (gem priorities after VIP 10, 2022–2023 text without recent confirmation) and A04-0601 (derived gem price) are weak.",
+    "uncertain_notes": "A04-0600 (prioridades de gemas depois do VIP 10, texto de 2022–2023 sem confirmação recente) e A04-0601 (preço derivado em gemas) são fracas.",
     "gaps": [
       "L-A04-07",
       "L-A04-08"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-commander-swap",
-    "title": "The Legendary Commander Swap: build one commander, then move it",
+    "title": "A Troca de Comandante Lendário: construa um comandante e depois mova-o",
     "phase": "anytime",
     "section": "plan",
     "order": 120,
@@ -518,8 +518,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**What it is.** The Legendary Commander Swap (1.0.90) swaps the levels, skill levels and stars of two permanently recruited legendary commanders. Each governor gets **2 swaps**, each commander can be swapped **only once**, and swaps cannot be undone (a one-time gem **Revoke** was added in 1.1.02). Tickets needed grow with the skill-level gap: expertised↔1111 costs **120** tickets, expertised↔5551 costs **2**; level and stars do not change the cost. Per the January 2025 FAQ, tickets cost **100 gems** each (max 120 via gems) or come from a **US$4.99 bundle of 12** (max 120 via the bundle). Since 1.0.94, **Takeda Shingen, Cyrus the Great, Cheok Jun-gyeong and Bertrand du Guesclin can no longer be swapped** [A06-0602].\n\n**When.** The window sits at the end of Season 2 / start of Season 3. The January 2025 FAQ said it starts 3 days before the end of Season 2 and lasts 5 days; since 1.1.02 it is listed among Season 3 events, and players in 2025–2026 report it starts right after KvK2 ends [A06-0603]. **Decide your swap targets before KvK2 ends.**\n\n**Gathering of Heroes** runs alongside it: event points recruit legendaries you do not own, and the Swap FAQ names it as the way for a Season 2 kingdom to get a Season of Conquest commander to swap into. Since 1.1.02 recruitable commanders come in tiers with rising cost [A06-0604]. Bank event points' worth of activity, gems and speedups before it.\n\n**What free and low spenders are told to do:** put universal (gold) sculptures into **one** commander you will actually finish for KvK1–KvK2, instead of several half-built ones, then move that build at the swap to the commander you need for Season 3/SoC. Check first that the commander you plan to swap away is still swappable [A06-0605].",
-    "why_md": "Sculptures are the scarcest commander resource for a free account. The swap means a finished commander keeps its value when the meta moves, while several half-built ones never become useful. The four non-swappable commanders and the ticket cost are where players get caught out.",
+    "body_md": "**O que é.** A Troca de Comandante Lendário (1.0.90) troca os níveis, os níveis de habilidade e as estrelas de dois comandantes lendários recrutados permanentemente. Cada governador tem **2 trocas**, cada comandante pode ser trocado **uma só vez**, e as trocas não podem ser desfeitas (um **Revoke** único por gemas foi adicionado na 1.1.02). Os tíquetes necessários crescem com a diferença de nível de habilidade: especializado↔1111 custa **120** tíquetes, especializado↔5551 custa **2**; nível e estrelas não mudam o custo. Segundo o FAQ de janeiro de 2025, os tíquetes custam **100 gemas** cada (máx. 120 por gemas) ou vêm de um **pacote de 12 por US$ 4,99** (máx. 120 pelo pacote). Desde a 1.0.94, **Takeda Shingen, Cyrus the Great, Cheok Jun-gyeong e Bertrand du Guesclin não podem mais ser trocados** [A06-0602].\n\n**Quando.** A janela fica no fim da Temporada 2 / início da Temporada 3. O FAQ de janeiro de 2025 disse que começa 3 dias antes do fim da Temporada 2 e dura 5 dias; desde a 1.1.02 ela aparece entre os eventos da Temporada 3, e jogadores em 2025–2026 relatam que começa logo depois do fim da KvK2 [A06-0603]. **Decida seus alvos de troca antes de a KvK2 terminar.**\n\nO **Gathering of Heroes** roda junto: os pontos do evento recrutam lendários que você não tem, e o FAQ da Troca o cita como a forma de um reino da Temporada 2 conseguir um comandante da Temporada de Conquista para onde trocar. Desde a 1.1.02 os comandantes recrutáveis vêm em faixas de custo crescente [A06-0604]. Junte antes dele atividade, gemas e acelerações equivalentes a pontos de evento.\n\n**O que se diz a quem é gratuito ou gasta pouco:** ponha esculturas universais (douradas) em **um** comandante que você de fato vai terminar para a KvK1–KvK2, em vez de vários pela metade, e depois mova essa construção na troca para o comandante de que precisa na Temporada 3/SoC. Confira antes se o comandante que você pretende trocar ainda pode ser trocado [A06-0605].",
+    "why_md": "As esculturas são o recurso de comandante mais escasso de uma conta gratuita. A troca faz um comandante terminado manter o valor quando o meta muda, enquanto vários pela metade nunca se tornam úteis. Os quatro comandantes que não podem ser trocados e o custo dos tíquetes são onde os jogadores se complicam.",
     "cards": [
       "A06-0602",
       "A06-0603",
@@ -528,18 +528,18 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "The ticket prices (100 gems, US$4.99 for 12) are from the January 2025 official FAQ and were not re-confirmed officially since; check the event page. The exact swap day comes from player reports (A06-0603).",
+    "uncertain_notes": "Os preços dos tíquetes (100 gemas, US$ 4,99 por 12) são do FAQ oficial de janeiro de 2025 e não foram reconfirmados oficialmente desde então; confira a página do evento. O dia exato da troca vem de relatos de jogadores (A06-0603).",
     "gaps": [
       "L-A06-08",
       "L-A06-09"
     ],
-    "low_spender_note": "A low spender can buy swap tickets instead of gems (US$4.99 for 12 per the January 2025 FAQ) [A06-0602]; at 120 tickets for an expertised↔1111 swap, plan the ticket budget a season ahead.",
+    "low_spender_note": "Quem gasta pouco pode comprar tíquetes de troca em vez de usar gemas (US$ 4,99 por 12 segundo o FAQ de janeiro de 2025) [A06-0602]; com 120 tíquetes para uma troca especializado↔1111, planeje o orçamento de tíquetes com uma temporada de antecedência.",
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-commander-pools-by-season",
-    "title": "Which commanders you can win depends on your kingdom's season",
+    "title": "Quais comandantes você pode ganhar depende da temporada do seu reino",
     "phase": "anytime",
     "section": "plan",
     "order": 130,
@@ -565,8 +565,8 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "- **Season 3:** since 1.0.91 (Feb 2025) the Mightiest Governor and Wheel of Fortune reward lists in Season 3 kingdoms include all commanders, so Season of Conquest commanders can be won there. The lists still change by patch (1.0.94 moved four commanders to Season 2) [A06-0600].\n- **Season of Conquest:** kingdoms entering SoC get a Tavern **Legendary Chest** from day 7, opened with **Sovereign Keys** or gems; since 1.1.02 the SoC Daily Objective chest gives a Sovereign Key instead of a Golden Key, and Silk Road drops can also give Sovereign Keys [A06-0609].\n- **King Arthur** was claimable for free through the King's Trials event in kingdoms that completed Season 2 (1.0.90 notes); nothing after January 2025 re-confirms the event [A06-0601, weak card].\n- **Release pace.** In 2022 the developers said they would space commander generations about 7 months apart; observed releases have been faster, so any named commander list goes stale within months [A06-0611].\n\n**What to do:** save sculptures and event currency for the season in which the commander you want enters the pools, and date every tier list you read.",
-    "why_md": "Players at KvK2 often chase commanders their kingdom cannot win yet, or invest in a KvK1 favourite just before a better one becomes available. The season gate is official and predictable; the specific names are not.",
+    "body_md": "- **Temporada 3:** desde a 1.0.91 (fev/2025), as listas de recompensas do Governador Mais Poderoso e da Roda da Fortuna em reinos da Temporada 3 incluem todos os comandantes, então comandantes da Temporada de Conquista podem ser ganhos ali. As listas ainda mudam por patch (a 1.0.94 moveu quatro comandantes para a Temporada 2) [A06-0600].\n- **Temporada de Conquista:** reinos que entram na SoC recebem um **Baú Lendário** da Taverna a partir do dia 7, aberto com **Chaves Soberanas** ou gemas; desde a 1.1.02 o baú de Objetivos Diários da SoC dá uma Chave Soberana no lugar da Chave de Ouro, e drops da Rota da Seda também podem dar Chaves Soberanas [A06-0609].\n- O **Rei Arthur** podia ser obtido de graça pelo evento King's Trials em reinos que completaram a Temporada 2 (notas da 1.0.90); nada depois de janeiro de 2025 reconfirma o evento [A06-0601, ficha fraca].\n- **Ritmo de lançamento.** Em 2022 os desenvolvedores disseram que espaçariam as gerações de comandantes em cerca de 7 meses; os lançamentos observados foram mais rápidos, então qualquer lista de comandantes citados fica desatualizada em meses [A06-0611].\n\n**O que fazer:** guarde esculturas e moeda de evento para a temporada em que o comandante que você quer entra nos pools, e date toda tier list que ler.",
+    "why_md": "Jogadores na KvK2 muitas vezes correm atrás de comandantes que o reino ainda não pode ganhar, ou investem em um favorito da KvK1 pouco antes de um melhor ficar disponível. O portão por temporada é oficial e previsível; os nomes específicos, não.",
     "cards": [
       "A06-0600",
       "A06-0601",
@@ -575,18 +575,18 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A06-0601 (free King Arthur via King's Trials) is weak: official notes from January 2025 only.",
+    "uncertain_notes": "A06-0601 (Rei Arthur grátis pelo King's Trials) é fraca: apenas notas oficiais de janeiro de 2025.",
     "gaps": [
       "L-A06-06",
       "L-A06-07"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-older-legendaries",
-    "title": "Older legendaries: what carries into SoC and what does not",
+    "title": "Lendários mais antigos: o que segue para a SoC e o que não",
     "phase": "anytime",
     "section": "plan",
     "order": 140,
@@ -613,9 +613,9 @@
     "ch_range": null,
     "civ": [],
     "consensus": "majority",
-    "split_views": "Pessimistic: a long F2P account reports about one expertised legendary in SoC. Optimistic: others say an active VIP 14 player maxes about one commander per KvK cycle [A06-0610].",
-    "body_md": "2026 tier lists mark a group of older legendaries as worth investing in **only before Season of Conquest**, with no new investment after: Minamoto, Alexander the Great, Mehmed, Saladin, Charles Martel and Richard I are named. Over-investing in KvK1 favourites expecting them to carry into SoC is called a common mistake [A06-0606].\n\n**The usual exception is Yi Seong-Gye (YSG):** no longer top of tier lists, but still strong for archers behind newer archer primaries, with Museum relic upgrades; free players are told to build and keep him [A06-0607].\n\n**Museum relics** boost specific older commanders; relic bonuses added since 1.0.81 work only in Season of Conquest, and since 1.1.03 some relics (Mary I, Archimedes, Takeda Shingen, Siyaj K'ak') can be bought in Season 3 [A06-0608].\n\n**How far a free account gets in SoC is disputed:** one long free account reports T5 plus about one expertised legendary and two or three commanders at ~5511; others say an active VIP 14 player can max about one commander per KvK cycle and field one or two competitive marches [A06-0610, weak card].",
-    "why_md": "The names above are dated 2026 tier-list opinions, not mechanics. The block is here so a KvK2 player can weigh a sculpture investment against its shelf life, not to rank commanders.",
+    "split_views": "Pessimista: uma conta F2P antiga relata cerca de um lendário especializado na SoC. Otimista: outros dizem que um jogador VIP 14 ativo maximiza cerca de um comandante por ciclo de KvK [A06-0610].",
+    "body_md": "Tier lists de 2026 marcam um grupo de lendários mais antigos como válidos de investimento **apenas antes da Temporada de Conquista**, sem novo investimento depois: são citados Minamoto, Alexander the Great, Mehmed, Saladin, Charles Martel e Richard I. Investir demais em favoritos da KvK1 esperando que sigam para a SoC é chamado de erro comum [A06-0606].\n\n**A exceção habitual é Yi Seong-Gye (YSG):** não está mais no topo das tier lists, mas continua forte para arqueiros atrás de principais de arqueiros mais novos, com melhorias de relíquias do Museu; jogadores gratuitos são orientados a construí-lo e mantê-lo [A06-0607].\n\nAs **relíquias do Museu** impulsionam comandantes antigos específicos; os bônus de relíquias adicionados desde a 1.0.81 só funcionam na Temporada de Conquista, e desde a 1.1.03 algumas relíquias (Mary I, Archimedes, Takeda Shingen, Siyaj K'ak') podem ser compradas na Temporada 3 [A06-0608].\n\n**Até onde uma conta gratuita chega na SoC é disputado:** uma conta gratuita antiga relata T5 mais cerca de um lendário especializado e dois ou três comandantes em ~5511; outros dizem que um jogador VIP 14 ativo consegue maximizar cerca de um comandante por ciclo de KvK e botar uma ou duas marchas competitivas [A06-0610, ficha fraca].",
+    "why_md": "Os nomes acima são opiniões de tier lists datadas de 2026, não mecânicas. O bloco existe para um jogador de KvK2 pesar um investimento em esculturas contra o prazo de validade dele, não para ranquear comandantes.",
     "cards": [
       "A06-0606",
       "A06-0607",
@@ -624,18 +624,18 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A06-0610 (F2P pace in SoC) is weak and divided. Named commanders come from 2026 tier lists (A06-0606, A06-0607) and go stale quickly.",
+    "uncertain_notes": "A06-0610 (ritmo do F2P na SoC) é fraca e dividida. Os comandantes citados vêm de tier lists de 2026 (A06-0606, A06-0607) e ficam desatualizados rápido.",
     "gaps": [
       "L-A06-01",
       "L-A06-10"
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-equipment-by-season",
-    "title": "Equipment after KvK1: armaments, Iconic awakening and SoC shops",
+    "title": "Equipamento depois da KvK1: armamentos, despertar Icônico e lojas da SoC",
     "phase": "anytime",
     "section": "plan",
     "order": 150,
@@ -661,8 +661,8 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "- **Armaments** arrive mostly from Season 2: Formation Choice Chests and Random Armament Chests come from Lucerne Scrolls, Silk Road, civilization and Lost Kingdom events in Season 2 through SoC; Transmutation Stones and the In Search of Wonders event are Season 3/SoC [A07-0604].\n- **Iconic awakening** needs the kingdom in Season 1 or later. Iconic I costs Iconic Crystals and gold; crystals come from the Artisan's Forge event, the Lost Canyon Shop, Crystal Quest rewards, 12 equipment 'Champion' achievements and SoC Crusader achievements; the total a free player can collect is not stated [A07-0601]. One guide says Iconic attributes grow by season group (Seasons 1–2, Season 3, SoC) [A07-0602, weak card] and advises putting the first crystals on accessories [A07-0603, weak card].\n- **SoC shops** add channels earlier seasons lack: discounted legendary sculptures and Legendary Equipment Material Choice Chests in the Season Shop, and the smite/combo accessories in the SoC Combat Shop [A07-0605].\n- **The 13 'KvK' pieces** (Hammer of the Sun and Moon, Pride of the Khan and others) were announced as restricted to SoC in 2021; it was never re-confirmed and does not say whether it limits use or purchase. Players in 2026 buy them with Conquest Coins in SoC [A07-0600, weak card]. Do not plan a Season 1–3 build around them.\n\n**Order that guides agree on:** every main pairing on epic gear before any legendary piece. Whether a free player can finish a full legendary set by SoC is disputed [A07-0606, weak card].",
-    "why_md": "Equipment sources open by season, so a KvK2 player who plans around SoC-shop items or Iconic tiers of a later season wastes materials. The gated sources are official; the per-season Iconic numbers are not.",
+    "body_md": "- **Armamentos** chegam principalmente a partir da Temporada 2: Baús de Escolha de Formação e Baús de Armamento Aleatório vêm de Pergaminhos de Lucerna, Rota da Seda, eventos de civilização e do Reino Perdido da Temporada 2 até a SoC; Pedras de Transmutação e o evento In Search of Wonders são da Temporada 3/SoC [A07-0604].\n- **O despertar Icônico** exige o reino na Temporada 1 ou depois. O Icônico I custa Cristais Icônicos e ouro; os cristais vêm do evento Artisan's Forge, da Lost Canyon Shop, de recompensas de Crystal Quest, de 12 conquistas \"Champion\" de equipamento e de conquistas de Cruzado da SoC; o total que um jogador gratuito consegue juntar não é informado [A07-0601]. Um guia diz que os atributos Icônicos crescem por grupo de temporada (Temporadas 1–2, Temporada 3, SoC) [A07-0602, ficha fraca] e aconselha pôr os primeiros cristais em acessórios [A07-0603, ficha fraca].\n- **As lojas da SoC** acrescentam canais que temporadas anteriores não têm: esculturas lendárias com desconto e Baús de Escolha de Material de Equipamento Lendário na Loja da Temporada, e os acessórios de smite/combo na Loja de Combate da SoC [A07-0605].\n- **As 13 peças \"KvK\"** (Hammer of the Sun and Moon, Pride of the Khan e outras) foram anunciadas como restritas à SoC em 2021; nunca foi reconfirmado e não diz se limita o uso ou a compra. Em 2026 os jogadores as compram com Moedas de Conquista na SoC [A07-0600, ficha fraca]. Não planeje uma construção das Temporadas 1–3 em torno delas.\n\n**Ordem em que os guias concordam:** toda dupla principal com equipamento épico antes de qualquer peça lendária. Se um jogador gratuito consegue terminar um conjunto lendário completo até a SoC é disputado [A07-0606, ficha fraca].",
+    "why_md": "As fontes de equipamento abrem por temporada, então um jogador de KvK2 que planeja em torno de itens das lojas da SoC ou de níveis Icônicos de uma temporada posterior desperdiça materiais. As fontes com portão são oficiais; os números Icônicos por temporada, não.",
     "cards": [
       "A07-0600",
       "A07-0601",
@@ -674,7 +674,7 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A07-0600 (2021 SoC-only list, never re-confirmed), A07-0602 (Iconic scaling numbers, one 2022 guide), A07-0603 (crystal priority, single source) and A07-0606 (full legendary set for F2P, divided) are weak.",
+    "uncertain_notes": "A07-0600 (lista só da SoC de 2021, nunca reconfirmada), A07-0602 (números de escala Icônica, um guia de 2022), A07-0603 (prioridade de cristais, fonte única) e A07-0606 (conjunto lendário completo para F2P, dividido) são fracas.",
     "gaps": [
       "L-A07-04",
       "L-A07-05",
@@ -682,11 +682,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-low-spender-late",
-    "title": "Low spender after KvK1: what still pays, and when to buy",
+    "title": "Quem gasta pouco depois da KvK1: o que ainda compensa, e quando comprar",
     "phase": "anytime",
     "section": "plan",
     "order": 160,
@@ -711,8 +711,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**The core does not change.** The community order for small budgets is Growth Fund (once), then the 30-day Gem Supply, then Lucerne Scrolls, then pop-ups such as Writer of History [A12-0615].\n\n**Growth Fund is a City Hall 25 purchase in practice:** players report its City Hall 25 milestone alone pays **40,000** of the ~81,000 gems [A12-0605, weak card]; whether buying it late still pays the milestones you already passed is disputed [A12-0606, weak card].\n\n**Recharge events change with the season.** Official notes list **Gem Rush** only for kingdoms over 21 days old and **before Season 2**; for Season 2 or later they list Road to Greatness (1.0.82) and Epic Glory (1.0.86) [A11-0600]. Players report that the Gem Supply, material supply and daily offers count toward recharge thresholds, so time renewals inside one [A11-0602, weak card].\n\n**Swap tickets.** The Commander Swap can be fed with tickets bought as a US$4.99 bundle of 12 instead of 100 gems each (January 2025 FAQ) [A06-0602].\n\n**Daily Special Offers** (about $3 a day, ~$90 a month) use almost the whole Low range; treat them as the ceiling, not the default [A12-0611, weak card].\n\nRaw gems per dollar (Growth Fund 5,400, Gem Supply 1,952) are the only defensible value comparison; item values swing rankings by up to 5× [A12-0618, weak card].",
-    "why_md": "A low spender's money buys the most when it lands on the few high-ratio purchases and inside recharge events; both of those depend on the kingdom's season, which is why this is repeated for later stages.",
+    "body_md": "**O essencial não muda.** A ordem da comunidade para orçamentos pequenos é Fundo de Crescimento (uma vez), depois o Suprimento de Gemas de 30 dias, depois Pergaminhos de Lucerna, depois pop-ups como Writer of History [A12-0615].\n\n**O Fundo de Crescimento é, na prática, uma compra de Prefeitura 25:** jogadores relatam que só o marco da Prefeitura 25 paga **40.000** das ~81.000 gemas [A12-0605, ficha fraca]; se comprá-lo tarde ainda paga os marcos que você já passou é disputado [A12-0606, ficha fraca].\n\n**Os eventos de recarga mudam com a temporada.** As notas oficiais listam **Gem Rush** só para reinos com mais de 21 dias e **antes da Temporada 2**; para a Temporada 2 ou depois listam Road to Greatness (1.0.82) e Epic Glory (1.0.86) [A11-0600]. Jogadores relatam que o Suprimento de Gemas, o suprimento de materiais e as ofertas diárias contam para os limiares de recarga, então escolha as renovações dentro de um [A11-0602, ficha fraca].\n\n**Tíquetes de troca.** A Troca de Comandante pode ser alimentada com tíquetes comprados em um pacote de 12 por US$ 4,99 em vez de 100 gemas cada (FAQ de janeiro de 2025) [A06-0602].\n\n**As Ofertas Especiais Diárias** (cerca de US$ 3 por dia, ~US$ 90 por mês) usam quase toda a faixa Low; trate como o teto, não como o padrão [A12-0611, ficha fraca].\n\nAs gemas brutas por dólar (Fundo de Crescimento 5.400, Suprimento de Gemas 1.952) são a única comparação de valor defensável; os valores dos itens mudam os rankings em até 5× [A12-0618, ficha fraca].",
+    "why_md": "O dinheiro de quem gasta pouco rende mais quando cai nas poucas compras de alta razão e dentro de eventos de recarga; ambos dependem da temporada do reino, por isso isto se repete para as etapas posteriores.",
     "cards": [
       "A06-0602",
       "A11-0600",
@@ -725,7 +725,7 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A12-0605, A12-0606, A11-0602, A12-0611 and A12-0618 are weak (player reports, seller sites, a derived method with weak inputs). Prices are USD list prices; your store may differ (L-A12-01).",
+    "uncertain_notes": "A12-0605, A12-0606, A11-0602, A12-0611 e A12-0618 são fracas (relatos de jogadores, sites de vendedores, um método derivado com entradas fracas). Os preços são de tabela em USD; sua loja pode diferir (L-A12-01).",
     "gaps": [
       "L-A12-01",
       "L-A12-06",
@@ -734,11 +734,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "ls-open-questions",
-    "title": "Open questions for KvK2, KvK3 and SoC (pending in-game measurement)",
+    "title": "Perguntas em aberto para a KvK2, a KvK3 e a SoC (pendentes de medição no jogo)",
     "phase": "anytime",
     "section": "open",
     "order": 900,
@@ -764,8 +764,8 @@
     "civ": [],
     "consensus": "n/a",
     "split_views": null,
-    "body_md": "These numbers are not in any source we could verify. Each needs an in-game screenshot or measurement (T0):\n- Hall of Heroes return percentage and healing refund percentage by Lost Kingdom tier (L-A08-04).\n- Healing vs training cost per unit, T4 vs T5 (L-A08-05); hospital capacity buffs (L-A08-06); whether upgrading T4→T5 costs more than training T5 (L-A08-07).\n- Research time to T5 with bonuses applied (L-A02-05); the current crystal tech tree (L-A02-04).\n- A healing-speedup budget per KvK (L-A04-09); gem priorities after VIP 14 (L-A04-08); Books of Covenant prices (L-A04-07).\n- Current season lengths and the gap between seasons (L-B01-05).\n- Commander pools by season (L-A06-06), King's Trials (L-A06-07), current swap timing and free tickets (L-A06-08), Gathering of Heroes costs (L-A06-09).\n- Whether the 13 SoC-only equipment pieces are still restricted (L-A07-04); Iconic scaling and crystal totals (L-A07-05); SoC shop prices (L-A07-07).",
-    "why_md": "Listing what is unknown keeps the guide honest: a player can measure these in their own account, and the research side can close them.",
+    "body_md": "Esses números não estão em nenhuma fonte que pudemos verificar. Cada um precisa de uma captura de tela ou medição no jogo (T0):\n- Percentual de retorno do Salão dos Heróis e percentual de reembolso de cura por nível do Reino Perdido (L-A08-04).\n- Custo de cura contra treinamento por unidade, T4 contra T5 (L-A08-05); bônus de capacidade de hospital (L-A08-06); se melhorar T4→T5 custa mais que treinar T5 (L-A08-07).\n- Tempo de pesquisa até o T5 com bônus aplicados (L-A02-05); a árvore atual de tecnologia de cristal (L-A02-04).\n- Um orçamento de acelerações de cura por KvK (L-A04-09); prioridades de gemas depois do VIP 14 (L-A04-08); preços dos Livros do Pacto (L-A04-07).\n- Durações atuais das temporadas e o intervalo entre temporadas (L-B01-05).\n- Pools de comandantes por temporada (L-A06-06), King's Trials (L-A06-07), momento atual da troca e tíquetes grátis (L-A06-08), custos do Gathering of Heroes (L-A06-09).\n- Se as 13 peças de equipamento só da SoC ainda são restritas (L-A07-04); escala Icônica e totais de cristais (L-A07-05); preços das lojas da SoC (L-A07-07).",
+    "why_md": "Listar o que não se sabe mantém o guia honesto: um jogador pode medir isso na própria conta, e o lado da pesquisa pode fechar as lacunas.",
     "cards": [],
     "patch_cards": [],
     "confidence": "pending",
@@ -791,6 +791,6 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   }
 ]
