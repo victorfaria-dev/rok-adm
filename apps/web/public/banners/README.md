@@ -4,9 +4,9 @@ Arte original gerada com IA (ElevenLabs, modelo gpt-image-2.5-sunburst), sem art
 
 | Arquivo | Uso | Proporção |
 |---|---|---|
-| `main-{640,1280}.webp` | conta principal, tablet/desktop | 16:9 |
-| `farm-{640,1280}.webp` | conta farm/alt, tablet/desktop | 16:9 |
-| `main-portrait-{480,768}.webp` | conta principal, celular | 3:4 |
-| `farm-portrait-{480,768}.webp` | conta farm/alt, celular | 3:4 |
+| `main-portrait-{480,768}.webp` | conta principal, todas as telas | 3:4 |
+| `farm-portrait-{480,768}.webp` | conta farm/alt, todas as telas | 3:4 |
 
 Na versão 3:4 o terço de baixo é escuro para o texto do card. O usuário pode trocar por uma imagem própria.
+
+Decisão (Victor, 2026-10-14): banner em pé (3:4) em todas as telas, inclusive no computador, para não haver disparidade.
