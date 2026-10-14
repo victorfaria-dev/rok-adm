@@ -188,7 +188,7 @@ test.describe("without JavaScript", () => {
     await page.goto("/tools/speedups/");
     await expect(value(page, "sp-total-all")).toHaveText("0m");
     await page.goto("/tools/healing/");
-    await expect(value(page, "h-cap-one")).toHaveText(`${fmt(num(rowAt(table("A01-buildings-hospital"), 10)["Hospital Capacity"]))} troops`);
+    await expect(value(page, "h-cap-one")).toHaveText(`${fmt(num(rowAt(table("A01-buildings-hospital"), 10)["Hospital Capacity"]))} tropas`);
     await page.goto("/tools/action-points/");
     await expect(value(page, "ap-chain-now")).toHaveText("24 ataques (990 PA gastos, sobram 10)");
     for (const r of ROUTES) {

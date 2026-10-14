@@ -126,7 +126,7 @@ test("farms: add two, set gathering and a daily task, reload keeps everything", 
 
   await page.getByRole("button", { name: "Excluir todos os dados de contas farm" }).click();
   await page.getByRole("button", { name: "Sim, excluir tudo" }).click();
-  await expect(page.getByRole("heading", { name: "Track your farm accounts" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Acompanhe suas contas farm" })).toBeVisible();
   expect(await page.evaluate((k) => localStorage.getItem(k), KEY)).toBeNull();
   expect(errors).toEqual([]);
 });
