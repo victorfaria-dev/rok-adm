@@ -7,14 +7,18 @@
 // (localIdForSavedProfile / localIdForFarm).
 import type { KoSupabase } from "./client";
 import type { CityKind } from "./database.types";
-import { encodeToFit, extensionOf } from "./image";
+import { encodeToFit, extensionOf, planCrop } from "./image";
 import { dbError } from "./profile-api";
 
-export const ACCOUNT_BANNER = { bucket: "account_banners", maxBytes: 1024 * 1024, maxSide: 1280 } as const;
+/**
+ * City banners are 3:4 portrait on every screen size (owner, 2026-10-13): one stored variant per
+ * city, center-cropped to 3:4 and scaled to at most 960×1280. Bucket limit 768 KB (migration 08).
+ */
+export const ACCOUNT_BANNER = { bucket: "account_banners", maxBytes: 768 * 1024, width: 960, height: 1280 } as const;
 
-/** Static default: main and alt use the main banner, farms the farm banner. */
-export function defaultBannerSrc(kind: CityKind, width: 640 | 1280 = 1280): string {
-  return `/banners/${kind === "farm" ? "farm" : "main"}-${width}.webp`;
+/** Static default: main and alt use the main banner, farms the farm banner (files owned by the City Hall track). */
+export function defaultBannerSrc(kind: CityKind, size: 640 | 1280 = 1280): string {
+  return `/banners/${kind === "farm" ? "farm" : "main"}-${size}.webp`;
 }
 
 /** accounts.local_id of a saved account from /me (lib/store.ts SavedProfile.id). */
@@ -36,17 +40,18 @@ export interface LocalBanner {
  */
 export const loadLocalBanners = async (): Promise<LocalBanner[]> => [];
 
-/** Browser only: scale down to 1280 px on the long side, re-encode (drops metadata), ≤ 1 MB. */
+/** Browser only: center-crop to 3:4, scale to at most 960×1280, re-encode (drops metadata), ≤ 768 KB. */
 export async function prepareAccountBanner(file: Blob): Promise<Blob> {
   const bitmap = await createImageBitmap(file);
   try {
-    const s = Math.min(1, ACCOUNT_BANNER.maxSide / Math.max(bitmap.width, bitmap.height));
+    const plan = planCrop(bitmap.width, bitmap.height, ACCOUNT_BANNER.width, ACCOUNT_BANNER.height);
     const canvas = document.createElement("canvas");
-    canvas.width = Math.max(1, Math.round(bitmap.width * s));
-    canvas.height = Math.max(1, Math.round(bitmap.height * s));
+    canvas.width = plan.width;
+    canvas.height = plan.height;
     const ctx = canvas.getContext("2d");
     if (!ctx) throw new Error("This browser cannot resize images.");
-    ctx.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
+    ctx.imageSmoothingQuality = "high";
+    ctx.drawImage(bitmap, plan.sx, plan.sy, plan.sw, plan.sh, 0, 0, plan.width, plan.height);
     const blob = await encodeToFit((type, q) => new Promise((res) => canvas.toBlob(res, type, q)), ACCOUNT_BANNER.maxBytes);
     if (!blob) throw new Error("This banner is too big even after resizing.");
     return blob;
@@ -59,7 +64,7 @@ export async function prepareAccountBanner(file: Blob): Promise<Blob> {
 export async function setAccountBanner(
   client: KoSupabase, userId: string, accountId: string, blob: Blob, previousPath: string | null, now: number = Date.now(),
 ): Promise<{ ok: true; path: string } | { ok: false; message: string }> {
-  if (blob.size > ACCOUNT_BANNER.maxBytes) return { ok: false, message: "Banner is over the 1 MB limit." };
+  if (blob.size > ACCOUNT_BANNER.maxBytes) return { ok: false, message: "Banner is over the 768 KB limit." };
   const path = `${userId}/${accountId}-${now}.${extensionOf(blob.type)}`;
   const bucket = client.storage.from(ACCOUNT_BANNER.bucket);
   const up = await bucket.upload(path, blob, { contentType: blob.type, upsert: false, cacheControl: "31536000" });

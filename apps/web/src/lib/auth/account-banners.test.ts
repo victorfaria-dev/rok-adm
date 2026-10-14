@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ACCOUNT_BANNER, LOCAL_ID_ACTIVE, accountBannerSrc, defaultBannerSrc, localIdForFarm, localIdForSavedProfile, removeAccountBanner, setAccountBanner, uploadLocalBanners } from "./account-banners";
 import { fakeSupabase } from "./fake-supabase";
+import { planCrop } from "./image";
 
 const U = "user-1";
 const sql = readFileSync(new URL("../../../../../supabase/migrations/20261013200008_account_banners.sql", import.meta.url), "utf8");
@@ -16,6 +17,9 @@ describe("city banners", () => {
   it("limits match the private bucket", () => {
     expect(sql).toContain(`('account_banners', 'account_banners', false, ${ACCOUNT_BANNER.maxBytes}`);
     expect(sql).toContain("account_type public.city_kind generated always as (kind) stored");
+    // One 3:4 portrait variant per city.
+    expect(ACCOUNT_BANNER.width / ACCOUNT_BANNER.height).toBe(3 / 4);
+    expect(planCrop(4000, 3000, ACCOUNT_BANNER.width, ACCOUNT_BANNER.height)).toMatchObject({ sw: 2250, sh: 3000, width: 960, height: 1280 });
   });
   it("local ids are the ones the first-login upload gives cities", () => {
     expect(localIdForSavedProfile("p1")).toBe("profile:p1");

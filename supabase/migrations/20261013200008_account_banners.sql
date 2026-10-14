@@ -11,9 +11,11 @@ alter table public.accounts
 
 -- Bucket NOT public: a city banner is readable by its owner, and by others only when the owner's
 -- profile is visible to them (can_view_user: public/members visibility, not blocked). The site
--- shows it with a short-lived signed URL. 1 MB, images only.
+-- shows it with a short-lived signed URL.
+-- City banners are 3:4 portrait on every screen size: ONE stored variant per city, 960×1280,
+-- cropped and re-encoded on the device (WebP ~150–450 KB). Limit 768 KB, images only.
 insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
-values ('account_banners', 'account_banners', false, 1048576, array['image/webp', 'image/jpeg', 'image/png'])
+values ('account_banners', 'account_banners', false, 786432, array['image/webp', 'image/jpeg', 'image/png'])
 on conflict (id) do update
   set public = excluded.public,
       file_size_limit = excluded.file_size_limit,
