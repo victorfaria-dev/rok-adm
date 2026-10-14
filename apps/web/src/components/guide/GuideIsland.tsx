@@ -80,7 +80,7 @@ function refreshChips(summary: string) {
     if (text) text.textContent = summary;
     chip.href = "/me/";
     chip.removeAttribute("data-empty");
-    chip.setAttribute("aria-label", `Your profile: ${summary}`);
+    chip.setAttribute("aria-label", `Seu perfil: ${summary}`);
   }
 }
 
@@ -209,7 +209,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     setManualUrl(null);
     if (typeof navigator.share === "function") {
       try {
-        await navigator.share({ title: "My KingdomOps guide", url });
+        await navigator.share({ title: "Meu guia do KingdomOps", url });
         return;
       } catch (e) {
         if (e instanceof DOMException && e.name === "AbortError") return;
@@ -218,10 +218,10 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     if (await copyText(url)) {
       setLive("");
       // Re-set so a second copy is announced again.
-      requestAnimationFrame(() => setLive("Link copied"));
+      requestAnimationFrame(() => setLive("Link copiado"));
     } else {
       setManualUrl(url);
-      setLive("Copy the link below");
+      setLive("Copie o link abaixo");
     }
   }
 
@@ -230,7 +230,7 @@ export default function GuideIsland({ dataUrl, children }: Props) {
     writeStore({ profileCode: choice.code });
     setChoice({ ...choice, canSave: false });
     refreshChips(profileSummary(choice.profile));
-    setLive("Saved. This is now your profile.");
+    setLive("Salvo. Este agora é o seu perfil.");
   }
 
   return (
@@ -238,71 +238,71 @@ export default function GuideIsland({ dataUrl, children }: Props) {
       {choice?.error && (
         <div class="g-error" role="alert">
           <p>{choice.error}</p>
-          <a href="/start/">Build my guide</a>
+          <a href="/start/">Montar meu guia</a>
         </div>
       )}
 
       {mounted && summary && (
         <div class="g-bar">
           <p class="g-bar-who">
-            {choice?.source === "url" ? "Shared profile: " : "Your profile: "}
+            {choice?.source === "url" ? "Perfil compartilhado: " : "Seu perfil: "}
             <span class="mono">{summary}</span>
           </p>
           <div class="g-bar-actions">
             {choice?.canSave && status !== "failed" && (
-              <button type="button" class="btn btn-primary" onClick={onSave}>Use this profile</button>
+              <button type="button" class="btn btn-primary" onClick={onSave}>Usar este perfil</button>
             )}
-            <button type="button" class="btn btn-secondary" onClick={onShare}>Share</button>
+            <button type="button" class="btn btn-secondary" onClick={onShare}>Compartilhar</button>
           </div>
           <p class="g-live" aria-live="polite" role="status">{live}</p>
           {manualUrl && (
             <label class="g-manual">
-              Link to this guide
+              Link para este guia
               <input type="text" readOnly value={manualUrl} onFocus={(e) => (e.currentTarget as HTMLInputElement).select()} />
             </label>
           )}
         </div>
       )}
 
-      {status === "loading" && <p class="g-loading" role="status">Loading the guide for this profile…</p>}
+      {status === "loading" && <p class="g-loading" role="status">Carregando o guia para este perfil…</p>}
       {status === "failed" && (
-        <p class="g-error" role="alert">Could not load the guide for this profile, so you are seeing the default F2P guide. Check your connection and reload.</p>
+        <p class="g-error" role="alert">Não foi possível carregar o guia para este perfil, então você está vendo o guia F2P padrão. Confira sua conexão e recarregue.</p>
       )}
 
       {view && choice ? (
         <div class="g-personal" data-guide="personal">
           {selection?.lateStage && (
             <aside class="g-notice" data-guide-late aria-labelledby="g-late-h">
-              <p id="g-late-h" class="g-notice-title">Your plan for {STAGE_NAMES[choice.profile.kingdomStage]}</p>
+              <p id="g-late-h" class="g-notice-title">Seu plano para {STAGE_NAMES[choice.profile.kingdomStage]}</p>
               <p>
-                Your kingdom is past KvK1, so the main plan below is the <a href={latePage.href}>late game guide</a> for KvK2, KvK3
-                and Season of Conquest, plus the daily routine.
+                Seu reino já passou do KvK1, então o plano principal abaixo é o <a href={latePage.href}>guia do fim de jogo</a> para KvK2, KvK3
+                e Temporada de Conquista, mais a rotina diária.
                 {selection.fallbackSections.length > 0 && (
-                  <> Sections marked “Closest available: KvK1 content” have no late-game steps yet.</>
+                  <> As seções marcadas com “O mais próximo disponível: conteúdo do KvK1” ainda não têm passos de fim de jogo.</>
                 )}
               </p>
             </aside>
           )}
           {selection?.fallbackFrom && !selection.lateStage && (
             <aside class="g-notice" data-guide-fallback aria-labelledby="g-fallback-h">
-              <p id="g-fallback-h" class="g-notice-title">Closest available: {STAGE_NAMES[FALLBACK_STAGE]} content</p>
+              <p id="g-fallback-h" class="g-notice-title">O mais próximo disponível: conteúdo do {STAGE_NAMES[FALLBACK_STAGE]}</p>
               <p>
-                Your kingdom is at {STAGE_NAMES[selection.fallbackFrom]}. The late game guide could not be loaded, so this page
-                shows the steps written for {STAGE_NAMES[FALLBACK_STAGE]}, the closest stage we have. Some may not fit your kingdom;
-                check them against what your kingdom is doing now, or reload to try again.
+                Seu reino está no {STAGE_NAMES[selection.fallbackFrom]}. Não foi possível carregar o guia do fim de jogo, então esta página
+                mostra os passos escritos para o {STAGE_NAMES[FALLBACK_STAGE]}, a fase mais próxima que temos. Alguns podem não servir ao seu reino;
+                confira com o que o seu reino está fazendo agora, ou recarregue para tentar de novo.
               </p>
             </aside>
           )}
-          <GuideMeta view={view} label={`For ${profileSummary(choice.profile)}`} />
+          <GuideMeta view={view} label={`Para ${profileSummary(choice.profile)}`} />
           <GuidesForYou links={links} />
           {visual}
           {empty && (
             <aside class="g-notice" data-guide-empty aria-labelledby="g-empty-h">
-              <p id="g-empty-h" class="g-notice-title">No researched steps fit this profile yet</p>
+              <p id="g-empty-h" class="g-notice-title">Ainda não há passos pesquisados para este perfil</p>
               <p>
-                None of the guide steps we have researched apply to this profile. That is a gap in our research, not something
-                you did wrong. You can <a href="/start/">check your answers</a>; the <a href="/guides/new-kingdom/">new kingdom guide</a> is
-                also worth a look.
+                Nenhum dos passos do guia que pesquisamos se aplica a este perfil. Isso é uma lacuna na nossa pesquisa, não um erro
+                seu. Você pode <a href="/start/">conferir suas respostas</a>; o <a href="/guides/new-kingdom/">guia do reino novo</a> também
+                vale uma olhada.
               </p>
             </aside>
           )}

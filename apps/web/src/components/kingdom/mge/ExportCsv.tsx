@@ -17,29 +17,29 @@ export default function ExportCsv({ doc, plan, today }: Props) {
   function download(kind: MgeCsvKind) {
     try {
       const { filename } = downloadMgeCsv(kind, doc, plan, includeScores, today);
-      setStatus(`${filename} is ready: check your downloads.`);
+      setStatus(`${filename} está pronto: confira seus downloads.`);
     } catch {
-      setStatus("The file could not be made in this browser.");
+      setStatus("Não foi possível gerar o arquivo neste navegador.");
     }
   }
 
   return (
     <section class="kg-grid" aria-labelledby="kx-csv-h" data-csv>
-      <h2 id="kx-csv-h">Export to a spreadsheet</h2>
+      <h2 id="kx-csv-h">Exportar para uma planilha</h2>
       <p class="kg-note">
-        CSV files open in Excel, Google Sheets or Numbers. The ledger lists every event, oldest first, one row per slot.
-        The governor list has each name, score and tags. Both hold other players' names as your council typed them: share them only with your council.
+        Arquivos CSV abrem no Excel, no Google Planilhas ou no Numbers. O registro lista cada evento, do mais antigo ao mais novo, uma linha por vaga.
+        A lista de governadores tem cada nome, pontuação e etiquetas. Os dois guardam nomes de outros jogadores como o seu conselho digitou: compartilhe só com o conselho.
       </p>
       <CheckField
         id="kx-csv-scores"
-        label="Include scores in the ledger CSV"
+        label="Incluir pontuações no CSV do registro"
         checked={includeScores}
         onValue={setIncludeScores}
-        hint="Off by default: the ledger file then has names, slots and reasons only. The governor list always has the scores."
+        hint="Desligado por padrão: o arquivo do registro então tem só nomes, vagas e motivos. A lista de governadores sempre tem as pontuações."
       />
       <div class="kg-actions">
-        <button type="button" class="btn btn-secondary" onClick={() => download("ledger")} disabled={doc.events.length === 0}>Download ledger CSV</button>
-        <button type="button" class="btn btn-secondary" onClick={() => download("governors")} disabled={doc.candidates.length === 0}>Download governors CSV</button>
+        <button type="button" class="btn btn-secondary" onClick={() => download("ledger")} disabled={doc.events.length === 0}>Baixar CSV do registro</button>
+        <button type="button" class="btn btn-secondary" onClick={() => download("governors")} disabled={doc.candidates.length === 0}>Baixar CSV dos governadores</button>
       </div>
       <p class="kg-status" role="status" aria-live="polite" data-csv-status>{status}</p>
     </section>

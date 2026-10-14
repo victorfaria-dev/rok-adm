@@ -14,40 +14,40 @@ export default function Settings({ doc, onChange }: Props) {
   const set = (patch: Partial<MgeDoc>) => onChange({ ...doc, ...patch });
   return (
     <section class="kg-grid" aria-labelledby="kx-rules-h">
-      <h2 id="kx-rules-h">Rules</h2>
+      <h2 id="kx-rules-h">Regras</h2>
       <div class="kg-grid kg-grid-2">
-        <TextField id="kx-title" label="Plan name" value={doc.title} maxLength={MGE_LIMITS.title} onValue={(v) => set({ title: v.slice(0, MGE_LIMITS.title) })} hint="For example: KvK3 MGE plan." />
-        <SelectField<MgePolicy> id="kx-policy" label="How slots are given" value={doc.policy} options={POLICY_OPTIONS} onValue={(v) => set({ policy: v })} hint={MGE_POLICY_TEXT[doc.policy].text} />
+        <TextField id="kx-title" label="Nome do plano" value={doc.title} maxLength={MGE_LIMITS.title} onValue={(v) => set({ title: v.slice(0, MGE_LIMITS.title) })} hint="Por exemplo: plano de MGE do KvK3." />
+        <SelectField<MgePolicy> id="kx-policy" label="Como as vagas são dadas" value={doc.policy} options={POLICY_OPTIONS} onValue={(v) => set({ policy: v })} hint={MGE_POLICY_TEXT[doc.policy].text} />
         <NumberField
           id="kx-slots"
-          label="Slots per event"
+          label="Vagas por evento"
           value={doc.slotsPerEvent}
           min={MGE_LIMITS.slotsMin}
           max={MGE_LIMITS.slotsMax}
           onValue={(n) => set({ slotsPerEvent: n })}
-          hint="Set by your council (1 to 20). Some kingdoms publish a top-10 list."
+          hint="Definido pelo seu conselho (1 a 20). Alguns reinos publicam uma lista top 10."
         />
         {doc.policy === "rotation" && (
           <NumberField
             id="kx-cooldown"
-            label="Cooldown (events)"
+            label="Intervalo de descanso (eventos)"
             value={doc.cooldownEvents}
             min={0}
             max={MGE_LIMITS.cooldownMax}
             onValue={(n) => set({ cooldownEvents: n })}
-            hint="How many events a governor sits out after getting a slot. 0 means no cooldown."
+            hint="Quantos eventos um governador fica de fora depois de receber uma vaga. 0 significa sem descanso."
           />
         )}
       </div>
       <CheckField
         id="kx-apply"
-        label="Governors must apply for each event"
+        label="Os governadores precisam se candidatar a cada evento"
         checked={doc.applicationsRequired}
         onValue={(v) => set({ applicationsRequired: v })}
-        hint="When ticked, only governors marked as applicants of an event can get a slot in it."
+        hint="Quando marcado, só governadores marcados como candidatos de um evento podem receber vaga nele."
       />
       <details class="kx-details">
-        <summary>What each rule means</summary>
+        <summary>O que cada regra significa</summary>
         <dl class="kx-dl">
           {MGE_POLICIES.map((p) => (
             <div key={p}>

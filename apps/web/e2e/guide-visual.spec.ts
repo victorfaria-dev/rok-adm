@@ -54,12 +54,12 @@ test.describe("without JavaScript", () => {
     const first = timeline(page).locator(".tl-node").first();
     await first.locator("summary").click();
     await expect(first.locator(".tl-gist")).toBeVisible();
-    await expect(first.locator(".tl-meta")).toContainText("Sources:");
+    await expect(first.locator(".tl-meta")).toContainText("Fontes:");
     await expect(first.locator("a.tl-more")).toHaveAttribute("href", /^#b-/);
     // No reveal without JS: every node is visible as rendered.
     await expect(timeline(page)).not.toHaveAttribute("data-reveal", "");
-    await expect(page.locator("[data-calendar] [data-milestone='kvk1'] .cal-day")).toHaveText("Day ~100");
-    await expect(page.locator("[data-calendar] .cal-pending summary")).toContainText("Pending");
+    await expect(page.locator("[data-calendar] [data-milestone='kvk1'] .cal-day")).toHaveText("Dia ~100");
+    await expect(page.locator("[data-calendar] .cal-pending summary")).toContainText("Pendentes");
     await expect(page.locator("[data-tower-svg]")).toBeVisible();
     await expect(page.locator("[data-tower-toggle]")).toBeHidden();
     await expect(page.locator("[data-you-are-here]")).toHaveCount(0);
@@ -86,10 +86,10 @@ test("why, sources and uncertain notes are folded per step; confidence and patch
   await expect(block.locator(".g-patch")).toBeVisible();
   const more = block.locator("details[data-block-more]");
   await expect(more).not.toHaveAttribute("open", "");
-  await expect(more.locator("summary")).toContainText("Sources:");
+  await expect(more.locator("summary")).toContainText("Fontes:");
   await expect(more.locator(".g-note-label").first()).toBeHidden();
   await more.locator("summary").click();
-  await expect(more.locator(".g-note-label", { hasText: "Why" })).toBeVisible();
+  await expect(more.locator(".g-note-label", { hasText: "Por quê" })).toBeVisible();
 });
 
 test("keyboard: arrows move between steps, Enter opens one, Read more lands on the full step", async ({ page }) => {
@@ -122,12 +122,12 @@ test("keyboard: arrows move between steps, Enter opens one, Read more lands on t
 
 test("you are here: the profile's phase, tower floor and calendar day are marked; finished phases fold", async ({ page }) => {
   await personal(page);
-  await expect(timeline(page).locator("[data-lane='day15-40'][data-here] [data-you-are-here]")).toContainText("Kingdom day 20");
+  await expect(timeline(page).locator("[data-lane='day15-40'][data-here] [data-you-are-here]")).toContainText("Dia 20 do reino");
   await expect(page.locator(".tw-floor-here")).toHaveAttribute("data-floor", "day15-40");
-  await expect(page.locator("[data-calendar] [data-you-are-here]")).toContainText("kingdom day 20");
+  await expect(page.locator("[data-calendar] [data-you-are-here]")).toContainText("dia 20 do reino");
   // Days 0–3 and 4–14 are behind a day-20 kingdom: folded, still one tap away.
   const early = timeline(page).locator("[data-lane='day0-3'] details.tl-fold");
-  await expect(early.locator(":scope > summary")).toContainText("probably done");
+  await expect(early.locator(":scope > summary")).toContainText("provavelmente já feitos");
   await expect(early.locator(".tl-node").first()).toBeHidden();
 });
 
@@ -151,7 +151,7 @@ test("calendar milestones link to steps on the page and never show a day without
     await expect(page.locator(href), href).toHaveCount(1);
   }
   for (const item of await cal.locator("[data-pending]").all()) {
-    await expect(item.locator(".cal-day")).toHaveText("Pending");
+    await expect(item.locator(".cal-day")).toHaveText("Pendente");
     await expect(item.locator("[data-confidence='pending']")).toHaveCount(1);
   }
   await expect(cal.locator("[data-milestone='pelagius'] .cal-meta")).toContainText("C04-0005");
@@ -188,12 +188,12 @@ test.describe("3D tower", () => {
     await personal(page);
     expect(chunks.some((c) => c.includes("guide-tower-3d"))).toBe(false);
     const btn = page.locator("[data-tower-toggle]");
-    await expect(btn).toHaveText("View in 3D");
+    await expect(btn).toHaveText("Ver em 3D");
     await btn.click();
     await expect(page.locator("canvas[data-tower3d], [data-tower-fallback]:not([hidden])").first()).toBeVisible({ timeout: 20_000 });
     expect(chunks.some((c) => c.includes("guide-tower-3d"))).toBe(true);
     if (await page.locator("canvas[data-tower3d]").count()) {
-      await expect(page.locator("canvas[data-tower3d]")).toHaveAttribute("aria-label", /You are on the Days 15–40 floor/);
+      await expect(page.locator("canvas[data-tower3d]")).toHaveAttribute("aria-label", /Você está no andar Days 15–40/);
       await expect(page.locator("[data-tower-svg]")).toBeHidden();
       // Centre it first: the fixed top bar on phones covers a button scrolled to the top edge.
       await btn.evaluate((el) => el.scrollIntoView({ block: "center" }));
@@ -201,7 +201,7 @@ test.describe("3D tower", () => {
       await expect(page.locator("canvas[data-tower3d]")).toHaveCount(0);
     }
     await expect(page.locator("[data-tower-svg]")).toBeVisible();
-    await expect(btn).toHaveText("View in 3D");
+    await expect(btn).toHaveText("Ver em 3D");
   });
 
   test("without WebGL: the SVG stays and a message says why", async ({ page }) => {
@@ -214,7 +214,7 @@ test.describe("3D tower", () => {
     });
     await personal(page);
     await page.locator("[data-tower-toggle]").click();
-    await expect(page.locator("[data-tower-fallback]")).toContainText("3D view is not available");
+    await expect(page.locator("[data-tower-fallback]")).toContainText("vista 3D não está disponível");
     await expect(page.locator("[data-tower-svg]")).toBeVisible();
     await expect(page.locator("canvas[data-tower3d]")).toHaveCount(0);
     await expect(page.locator("[data-tower-toggle]")).toBeEnabled();

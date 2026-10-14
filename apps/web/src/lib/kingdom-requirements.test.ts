@@ -12,7 +12,7 @@ describe("inputs", () => {
     expect(parseQty("10.5m")).toEqual({ ok: true, value: 10_500_000 });
     expect(parseQty("1,200,000")).toEqual({ ok: true, value: 1_200_000 });
     expect(parseQty("abc")).toMatchObject({ ok: false });
-    expect(parseQty("9999999b")).toMatchObject({ ok: false, error: "This number is too large." });
+    expect(parseQty("9999999b")).toMatchObject({ ok: false, error: "Este número é grande demais." });
   });
   it("parsePct", () => {
     expect(parsePct("250")).toEqual({ ok: true, value: 250 });
@@ -28,7 +28,7 @@ describe("new card and form round trip", () => {
     const c = newCard();
     expect(c.formula).toBe("t4 * 10 + t5 * 20 + deads * 50");
     expect(c.requirement).toEqual({ mode: "percent", bands: [{ minPower: 0, maxPower: null, percent: EXAMPLE_PERCENT }] });
-    expect(c.sampleAccounts.map((s) => s.name)).toEqual(["Sample A", "Sample B", "Sample C"]);
+    expect(c.sampleAccounts.map((s) => s.name)).toEqual(["Exemplo A", "Exemplo B", "Exemplo C"]);
     for (const s of c.sampleAccounts) expect(evaluatePlayer(c, s.stats).ok).toBe(true);
   });
 
@@ -49,24 +49,24 @@ describe("new card and form round trip", () => {
     expect(formToCard(f).errors).toEqual({ "band-1-min": "Band 2 overlaps band 1: start it at or above where band 1 ends." });
     f.bands = [{ ...emptyBand("x"), pct: "" }];
     const r = formToCard(f);
-    expect(r.errors["band-0-min"]).toMatch(/whole number/);
-    expect(r.errors["band-0-pct"]).toMatch(/percent/);
+    expect(r.errors["band-0-min"]).toMatch(/número inteiro/);
+    expect(r.errors["band-0-pct"]).toMatch(/porcentagem/);
     f.bands = [];
     expect(formToCard(f).bandIssues[0]!.message).toMatch(/at least one/);
     f.mode = "fixed";
-    expect(formToCard(f).errors.fixed).toBe("Enter the DKP target.");
+    expect(formToCard(f).errors.fixed).toBe("Digite a meta de DKP.");
     f.fixed = "5m";
     expect(formToCard(f).card.requirement).toEqual({ mode: "fixed", target: 5_000_000 });
     const s = emptySample(3);
-    expect(s.name).toBe("Sample D");
+    expect(s.name).toBe("Exemplo D");
     s.values.t4 = "lots";
     f.samples = [s];
-    expect(formToCard(f).errors[`sample-${s.id}-t4`]).toMatch(/whole number/);
+    expect(formToCard(f).errors[`sample-${s.id}-t4`]).toMatch(/número inteiro/);
   });
 
   it("titles", () => {
-    expect(cardTitle({ title: "", kingdom: "" })).toBe("Untitled requirements card");
-    expect(cardTitle({ title: "", kingdom: "K1" })).toBe("K1 requirements");
+    expect(cardTitle({ title: "", kingdom: "" })).toBe("Cartão de requisitos sem título");
+    expect(cardTitle({ title: "", kingdom: "K1" })).toBe("Requisitos de K1");
     expect(cardTitle({ title: "T", kingdom: "K1" })).toBe("T");
   });
 });
@@ -79,7 +79,7 @@ describe("store", () => {
     saveCard(c, st);
     expect(listCards(st)).toHaveLength(1);
     expect(listCards(st)[0]!.kingdom).toBe("K1234");
-    expect(listDocs("requirements", st)[0]!.title).toBe("K1234 requirements");
+    expect(listDocs("requirements", st)[0]!.title).toBe("Requisitos de K1234");
     deleteCard(c.id, st);
     expect(listCards(st)).toEqual([]);
   });
@@ -104,8 +104,8 @@ describe("requirement groups", () => {
     expect(parseGroupPct("80")).toEqual({ ok: true, value: 80 });
     expect(parseGroupPct("112.5%")).toEqual({ ok: true, value: 112.5 });
     expect(parseGroupPct("0")).toMatchObject({ ok: false });
-    expect(parseGroupPct("1001")).toEqual({ ok: false, error: "Enter more than 0 and at most 1,000." });
-    expect(parseGroupPct("eighty")).toEqual({ ok: false, error: "Enter a percent like 80." });
+    expect(parseGroupPct("1001")).toEqual({ ok: false, error: "Digite mais que 0 e no máximo 1.000." });
+    expect(parseGroupPct("eighty")).toEqual({ ok: false, error: "Digite uma porcentagem como 80." });
   });
 
   it("new group ids are short and unique", () => {
@@ -128,9 +128,9 @@ describe("requirement groups", () => {
 
     f.groups = [{ ...emptyGroup([]), name: "", pct: "" }, { ...emptyGroup([]), name: "A", pct: "x" }, { ...emptyGroup([]), name: "a", pct: "90" }, { ...emptyGroup([]), name: "B", pct: "90" }];
     const r = formToCard(f);
-    expect(r.errors["group-0-name"]).toBe("Enter a name for this group.");
-    expect(r.errors["group-0-pct"]).toBe("Enter the percent of the normal target.");
-    expect(r.errors["group-1-pct"]).toBe("Enter a percent like 80.");
+    expect(r.errors["group-0-name"]).toBe("Digite um nome para este grupo.");
+    expect(r.errors["group-0-pct"]).toBe("Digite a porcentagem da meta normal.");
+    expect(r.errors["group-1-pct"]).toBe("Digite uma porcentagem como 80.");
     expect(r.errors["group-2-name"]).toBe("Group 3 has the same name as group 2.");
     expect(r.errors["group-3-name"]).toBeUndefined();
   });
@@ -160,7 +160,7 @@ describe("excluded deads", () => {
     expect(parseExcluded("", 100)).toBeNull();
     expect(parseExcluded("50", 100)).toEqual({ ok: true, value: 50 });
     expect(parseExcluded("1k", 1000)).toEqual({ ok: true, value: 1000 });
-    expect(parseExcluded("x", 100)).toMatchObject({ ok: false, error: expect.stringMatching(/whole number/) });
+    expect(parseExcluded("x", 100)).toMatchObject({ ok: false, error: expect.stringMatching(/número inteiro/) });
     expect(parseExcluded("101", 100)).toEqual({ ok: false, error: "This can't be more than your deads (100)." });
     expect(parseExcluded("1", null)).toEqual({ ok: false, error: "This can't be more than your deads (0)." });
   });

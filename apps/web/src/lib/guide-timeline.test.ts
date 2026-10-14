@@ -59,7 +59,7 @@ describe("you are here", () => {
   it("uses the kingdom day first", () => {
     expect(hereFor(make({ kingdomDay: 2, cityHall: 20 })).lane).toBe("day0-3");
     expect(hereFor(make({ kingdomDay: 14 })).lane).toBe("day4-14");
-    expect(hereFor(make({ kingdomDay: 20 }))).toMatchObject({ lane: "day15-40", basis: "day", text: "Kingdom day 20", day: 20 });
+    expect(hereFor(make({ kingdomDay: 20 }))).toMatchObject({ lane: "day15-40", basis: "day", text: "Dia 20 do reino", day: 20 });
     expect(hereFor(make({ kingdomDay: 90 })).lane).toBe("day41-90");
     expect(hereFor(make({ kingdomDay: 120, kingdomStage: "kvk1" })).lane).toBe("pre-kvk1");
   });
@@ -118,10 +118,10 @@ describe("kingdom calendar", () => {
   });
 
   it("labels days and positions", () => {
-    expect(dayText({ day: [5, 5], approx: false })).toBe("Day 5");
-    expect(dayText({ day: [20, 23], approx: true })).toBe("Days ~20–23");
-    expect(dayText({ day: [100, 160], approx: true })).toBe("Day ~100+");
-    expect(dayText({ day: null, approx: false })).toBe("Pending");
+    expect(dayText({ day: [5, 5], approx: false })).toBe("Dia 5");
+    expect(dayText({ day: [20, 23], approx: true })).toBe("Dias ~20–23");
+    expect(dayText({ day: [100, 160], approx: true })).toBe("Dia ~100+");
+    expect(dayText({ day: null, approx: false })).toBe("Pendente");
     expect(stripPos(80)).toBe(50);
     expect(stripPos(400)).toBe(100);
   });

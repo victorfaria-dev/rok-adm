@@ -60,12 +60,12 @@ test.describe("council kit worst-case text at 360px", () => {
 });
 
 test("focus stays on the page after a confirmed delete (keyboard)", async ({ page }) => {
-  await seed(page, [{ id: "r1", kind: "rules", title: "K1 rules", updatedAt: T, data: { ...rules, title: "K1 rules", sections: [{ id: "a", heading: "First", body: "x" }, { id: "b", heading: "Second", body: "y" }] } }]);
+  await seed(page, [{ id: "r1", kind: "rules", title: "Regras do K1", updatedAt: T, data: { ...rules, title: "Regras do K1", sections: [{ id: "a", heading: "First", body: "x" }, { id: "b", heading: "Second", body: "y" }] } }]);
   await gotoHydrated(page, "/kingdom/rules/?doc=r1");
-  await page.getByRole("button", { name: "Delete \"First\"" }).focus();
+  await page.getByRole("button", { name: "Apagar \"First\"" }).focus();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("button", { name: "Yes, delete" })).toBeFocused();
+  await expect(page.getByRole("button", { name: "Sim, apagar" })).toBeFocused();
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("button", { name: "Delete \"Second\"" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Apagar \"Second\"" })).toBeVisible();
   await expect.poll(() => page.evaluate(() => document.activeElement?.tagName)).not.toBe("BODY");
 });

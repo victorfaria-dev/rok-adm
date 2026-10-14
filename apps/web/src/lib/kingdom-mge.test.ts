@@ -87,7 +87,7 @@ describe("public link", () => {
 describe("dates", () => {
   it("formats days", () => {
     expect(localDay(new Date(2026, 9, 3, 23, 0))).toBe("2026-10-03");
-    expect(longDay("2026-10-01")).toBe("Thu, Oct 1, 2026");
+    expect(longDay("2026-10-01")).toBe("qui., 1 de out. de 2026");
   });
 });
 

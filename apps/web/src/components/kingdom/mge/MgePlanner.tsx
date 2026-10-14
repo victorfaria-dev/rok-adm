@@ -43,7 +43,7 @@ export default function MgePlanner({ clock = realClock }: Props) {
       setError("");
     } catch (e) {
       setDoc(next);
-      setError(e instanceof Error ? e.message : "This plan could not be saved.");
+      setError(e instanceof Error ? e.message : "Não foi possível salvar este plano.");
     }
     setPlans(listMgePlans(stRef.current));
   }
@@ -53,9 +53,9 @@ export default function MgePlanner({ clock = realClock }: Props) {
     try {
       setDoc(saveMgePlan(d, stRef.current, clock()));
       setError("");
-      setStatus("New plan created.");
+      setStatus("Novo plano criado.");
     } catch (e) {
-      setError(e instanceof Error ? e.message : "This plan could not be created.");
+      setError(e instanceof Error ? e.message : "Não foi possível criar este plano.");
     }
     setPlans(listMgePlans(stRef.current));
   }
@@ -64,7 +64,7 @@ export default function MgePlanner({ clock = realClock }: Props) {
     const d = loadMgePlan(id, stRef.current);
     if (d) {
       setDoc(d);
-      setStatus(`Opened ${d.title}.`);
+      setStatus(`${d.title} aberto.`);
     }
   }
 
@@ -73,37 +73,37 @@ export default function MgePlanner({ clock = realClock }: Props) {
     const list = listMgePlans(stRef.current);
     setPlans(list);
     if (doc?.id === id) setDoc(null);
-    setStatus("Plan deleted.");
+    setStatus("Plano apagado.");
   }
 
   const unfilled = plan ? plan.events.reduce((s, e) => s + e.unfilled.length, 0) : 0;
   const summary = doc && plan
-    ? `${doc.title}: ${doc.candidates.length} governor${doc.candidates.length === 1 ? "" : "s"}, ${doc.events.length} event${doc.events.length === 1 ? "" : "s"}, ${MGE_POLICY_TEXT[doc.policy].label.toLowerCase()} rule, ${doc.slotsPerEvent} slots per event.${doc.events.length ? ` ${unfilled === 0 ? "Every slot is filled." : `${unfilled} slot${unfilled === 1 ? "" : "s"} not filled.`}` : ""}`
+    ? `${doc.title}: ${doc.candidates.length} ${doc.candidates.length === 1 ? "governador" : "governadores"}, ${doc.events.length} ${doc.events.length === 1 ? "evento" : "eventos"}, regra ${MGE_POLICY_TEXT[doc.policy].label.toLowerCase()}, ${doc.slotsPerEvent} vagas por evento.${doc.events.length ? ` ${unfilled === 0 ? "Todas as vagas estão preenchidas." : `${unfilled} ${unfilled === 1 ? "vaga não preenchida" : "vagas não preenchidas"}.`}` : ""}`
     : "";
 
   return (
     <div class="kg" data-mge>
-      {blocked && <p class="kg-error" data-blocked>This browser blocks saving. Your plan lasts until you close this page; export it from the Kingdom overview to keep it.</p>}
+      {blocked && <p class="kg-error" data-blocked>Este navegador bloqueia o salvamento. Seu plano dura até você fechar esta página; exporte-o pela visão geral do Reino para guardá-lo.</p>}
       <section class="kg-grid" aria-labelledby="kx-plans-h">
-        <h2 id="kx-plans-h">Saved plans</h2>
-        {plans.length === 0 ? <p class="kg-note">No MGE plan on this device yet.</p> : (
+        <h2 id="kx-plans-h">Planos salvos</h2>
+        {plans.length === 0 ? <p class="kg-note">Nenhum plano de MGE neste aparelho ainda.</p> : (
           <ul class="kx-plans" data-plans>
             {plans.map((p) => (
               <li key={p.id}>
                 <span class="kx-plan-name">
-                  <strong>{p.title || "MGE plan"}</strong>
-                  {doc?.id === p.id && <span class="kg-badge">Open</span>}
-                  <span class="kg-hint">Edited {localDay(new Date(p.updatedAt))}</span>
+                  <strong>{p.title || "Plano de MGE"}</strong>
+                  {doc?.id === p.id && <span class="kg-badge">Aberto</span>}
+                  <span class="kg-hint">Editado em {localDay(new Date(p.updatedAt))}</span>
                 </span>
                 <span class="kg-actions">
-                  {doc?.id !== p.id && <button type="button" class="btn btn-secondary" aria-label={`Open ${p.title}`} onClick={() => open(p.id)}>Open</button>}
-                  <ConfirmAction label="Delete" ariaLabel={`Delete ${p.title}`} question={`Delete the plan "${p.title}"? This cannot be undone.`} onConfirm={() => remove(p.id)} />
+                  {doc?.id !== p.id && <button type="button" class="btn btn-secondary" aria-label={`Abrir ${p.title}`} onClick={() => open(p.id)}>Abrir</button>}
+                  <ConfirmAction label="Apagar" ariaLabel={`Apagar ${p.title}`} question={`Apagar o plano "${p.title}"? Isto não pode ser desfeito.`} onConfirm={() => remove(p.id)} />
                 </span>
               </li>
             ))}
           </ul>
         )}
-        <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={newPlan}>New plan</button></div>
+        <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={newPlan}>Novo plano</button></div>
         {error && <p class="kg-error" role="alert">{error}</p>}
         <p class="kg-status" role="status" aria-live="polite">{status}</p>
       </section>

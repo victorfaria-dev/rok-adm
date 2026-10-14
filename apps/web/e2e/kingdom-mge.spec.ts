@@ -27,27 +27,27 @@ test.describe("MGE planner", () => {
   test("create plan → paste governors → 3 events → rotation ledger → publish → view matches", async ({ page }) => {
     const errors = trackErrors(page);
     await gotoHydrated(page, "/kingdom/mge/");
-    await expect(page.locator("h1")).toHaveText("MGE planner");
+    await expect(page.locator("h1")).toHaveText("Planejador de MGE");
     await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
-    await page.getByRole("button", { name: "New plan" }).click();
+    await page.getByRole("button", { name: "Novo plano" }).click();
 
-    await page.getByLabel("Plan name").fill("K1234 KvK3 MGE");
-    await page.getByLabel("Slots per event").fill("2");
-    await expect(page.getByLabel("How slots are given")).toHaveValue("rotation");
-    await expect(page.getByLabel("Cooldown (events)")).toHaveValue("1");
+    await page.getByLabel("Nome do plano").fill("K1234 KvK3 MGE");
+    await page.getByLabel("Vagas por evento").fill("2");
+    await expect(page.getByLabel("Como as vagas são dadas")).toHaveValue("rotation");
+    await expect(page.getByLabel("Intervalo de descanso (eventos)")).toHaveValue("1");
 
-    await page.getByLabel("Governors, one per line").fill("Alpha, 500\nBravo, 400\nCharlie, 300\nDelta, 200\nEcho, 100");
-    await page.getByRole("button", { name: "Add from list" }).click();
-    await expect(page.locator("[data-cand-status]")).toContainText("Added 5 governors.");
+    await page.getByLabel("Governadores, um por linha").fill("Alpha, 500\nBravo, 400\nCharlie, 300\nDelta, 200\nEcho, 100");
+    await page.getByRole("button", { name: "Adicionar da lista" }).click();
+    await expect(page.locator("[data-cand-status]")).toContainText("5 governadores adicionados.");
     await expect(page.locator("table[data-candidates] tbody tr")).toHaveCount(5);
 
     for (const d of ["2026-10-01", "2026-10-15", "2026-10-29"]) {
       await page.locator("#kx-ev-date").fill(d);
-      await page.getByRole("button", { name: "Add event" }).click();
+      await page.getByRole("button", { name: "Adicionar evento" }).click();
     }
     await expect(page.locator("[data-event]")).toHaveCount(3);
-    await expect(page.locator("[data-summary]")).toContainText("5 governors, 3 events, rotation rule, 2 slots per event. Every slot is filled.");
+    await expect(page.locator("[data-summary]")).toContainText("5 governadores, 3 eventos, regra rotation, 2 vagas por evento. Todas as vagas estão preenchidas.");
 
     const never = "rotation: longest wait since last slot (never had one)";
     expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Alpha", never], ["2", "Bravo", never]]);
@@ -55,20 +55,20 @@ test.describe("MGE planner", () => {
     const third = await ledgerRows(page, "2026-10-29");
     expect(third).toEqual([["1", "Echo", never], ["2", "Alpha", "rotation: longest wait since last slot (2 events ago, on 2026-10-01)"]]);
 
-    await page.getByRole("button", { name: "Create public link" }).click();
+    await page.getByRole("button", { name: "Criar link público" }).click();
     const url = await page.locator("#kx-link").inputValue();
     expect(url).toMatch(/\/kingdom\/mge\/view\/#d=1[zj]/);
 
     await gotoHydrated(page, url);
     await expect(page.locator("[data-view-title]")).toHaveText("K1234 KvK3 MGE");
-    await expect(page.locator("[data-view]")).toContainText("Published by the council, not by KingdomOps");
+    await expect(page.locator("[data-view]")).toContainText("Publicado pelo conselho, não pelo KingdomOps");
     await expect(page.locator("[data-view-rules]")).toContainText("2 slots per event, set by the council.");
     await expect(page.locator("[data-view-rules]")).toContainText("Cooldown: 1 event after a slot.");
     expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Alpha", never], ["2", "Bravo", never]]);
     expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Charlie", never], ["2", "Delta", never]]);
     expect(await ledgerRows(page, "2026-10-29")).toEqual(third);
-    await expect(page.getByRole("button", { name: "Print" })).toBeVisible();
-    await expect(page.getByRole("columnheader", { name: "Score" })).toHaveCount(0);
+    await expect(page.getByRole("button", { name: "Imprimir" })).toBeVisible();
+    await expect(page.getByRole("columnheader", { name: "Pontuação" })).toHaveCount(0);
     expect(errors).toEqual([]);
   });
 
@@ -81,18 +81,18 @@ test.describe("MGE planner", () => {
     expect(await ledgerRows(page, "2026-10-01")).toEqual([
       ["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest} (4,200,000)`], ["3", "Bravo", `score rank 2 ${rest} (3,000,000)`],
     ]);
-    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 among applicants (4,200,000)"], ["2", "Bravo", "score rank 2 among applicants (3,000,000)"], ["3", "Not filled", ""]]);
+    expect(await ledgerRows(page, "2026-10-15")).toEqual([["1", "Alpha", "score rank 1 among applicants (4,200,000)"], ["2", "Bravo", "score rank 2 among applicants (3,000,000)"], ["3", "Não preenchida", ""]]);
     await expect(page.locator("[data-plan-warnings]")).toContainText("Delta has no score");
 
-    await page.getByRole("button", { name: "Create public link" }).click();
+    await page.getByRole("button", { name: "Criar link público" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
-    await expect(page.locator("[data-view]")).toContainText("Scores are not included in this link.");
+    await expect(page.locator("[data-view]")).toContainText("As pontuações não estão incluídas neste link.");
     await expect(page.locator("[data-view]")).not.toContainText("4,200,000");
     expect(await ledgerRows(page, "2026-10-01")).toEqual([["1", "Echo", "manual: Garrison lead for Kingsland"], ["2", "Alpha", `score rank 1 ${rest}`], ["3", "Bravo", `score rank 2 ${rest}`]]);
 
     await gotoHydrated(page, "/kingdom/mge/");
-    await page.getByLabel("Include scores in the public link").check();
-    await page.getByRole("button", { name: "Create public link" }).click();
+    await page.getByLabel("Incluir pontuações no link público").check();
+    await page.getByRole("button", { name: "Criar link público" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
     await expect(page.locator('table[data-ledger="2026-10-01"]')).toContainText("4,200,000");
   });
@@ -101,26 +101,26 @@ test.describe("MGE planner", () => {
     await seed(page, [PLAN]);
     await gotoHydrated(page, "/kingdom/mge/");
     const block = page.locator('[data-event="2026-10-15"]');
-    await block.getByText("Place a governor by hand").click();
-    await block.getByRole("button", { name: /Place in slot/ }).click();
-    await expect(block.locator(".kg-error")).toContainText("Write why this governor gets this slot");
-    await block.getByLabel("Slot").selectOption("3");
-    await block.getByLabel("Governor", { exact: true }).selectOption({ label: "Charlie" });
-    await block.getByLabel("Reason (required)").fill("Rally lead, applied late");
-    await block.getByRole("button", { name: "Place in slot 3" }).click();
+    await block.getByText("Colocar um governador à mão").click();
+    await block.getByRole("button", { name: /Colocar na vaga/ }).click();
+    await expect(block.locator(".kg-error")).toContainText("Escreva por que este governador fica com esta vaga");
+    await block.getByLabel("Vaga").selectOption("3");
+    await block.getByLabel("Governador", { exact: true }).selectOption({ label: "Charlie" });
+    await block.getByLabel("Motivo (obrigatório)").fill("Rally lead, applied late");
+    await block.getByRole("button", { name: "Colocar na vaga 3" }).click();
     expect((await ledgerRows(page, "2026-10-15"))[2]).toEqual(["3", "Charlie", "manual: Rally lead, applied late"]);
 
     const first = page.locator('[data-event="2026-10-01"]');
-    await first.getByRole("button", { name: "Lock event" }).click();
-    await expect(first.getByText("Locked", { exact: true })).toBeVisible();
+    await first.getByRole("button", { name: "Travar evento" }).click();
+    await expect(first.getByText("Travado", { exact: true })).toBeVisible();
     // Raising Charlie's score (an applicant of the locked event) does not change its stored ledger.
-    await page.getByLabel("Governors, one per line").fill("Charlie, 9m");
-    await page.getByRole("button", { name: "Add from list" }).click();
-    await expect(page.locator("[data-cand-status]")).toContainText("Updated the score of 1.");
+    await page.getByLabel("Governadores, um por linha").fill("Charlie, 9m");
+    await page.getByRole("button", { name: "Adicionar da lista" }).click();
+    await expect(page.locator("[data-cand-status]")).toContainText("Pontuação atualizada em 1.");
     expect((await ledgerRows(page, "2026-10-01")).map((r) => r[1])).toEqual(["Echo", "Alpha", "Bravo"]);
 
     await page.reload();
-    await expect(page.locator('[data-event="2026-10-01"]').getByText("Locked", { exact: true })).toBeVisible();
+    await expect(page.locator('[data-event="2026-10-01"]').getByText("Travado", { exact: true })).toBeVisible();
   });
 
   test("inline edit by keyboard: rename keeps placements and locked history; bad scores are refused", async ({ page }) => {
@@ -128,30 +128,30 @@ test.describe("MGE planner", () => {
     await seed(page, [PLAN]);
     await gotoHydrated(page, "/kingdom/mge/");
     const first = page.locator('[data-event="2026-10-01"]');
-    await first.getByRole("button", { name: "Lock event" }).click();
-    await expect(first.getByText("Locked", { exact: true })).toBeVisible();
+    await first.getByRole("button", { name: "Travar evento" }).click();
+    await expect(first.getByText("Travado", { exact: true })).toBeVisible();
 
     // Open the editor from the keyboard; focus lands in the name field.
-    await page.getByRole("button", { name: "Edit Echo" }).focus();
+    await page.getByRole("button", { name: "Editar Echo" }).focus();
     await page.keyboard.press("Enter");
     const editor = page.locator('[data-editor="e"]');
-    await expect(editor.getByRole("group", { name: "Edit Echo" })).toBeVisible();
-    await expect(page.getByLabel("Name for Echo")).toBeFocused();
+    await expect(editor.getByRole("group", { name: "Editar Echo" })).toBeVisible();
+    await expect(page.getByLabel("Nome de Echo")).toBeFocused();
 
     // Escape cancels and returns focus to the row's Edit button.
     await page.keyboard.press("Escape");
     await expect(editor).toHaveCount(0);
-    await expect(page.getByRole("button", { name: "Edit Echo" })).toBeFocused();
+    await expect(page.getByRole("button", { name: "Editar Echo" })).toBeFocused();
 
     await page.keyboard.press("Enter");
     await page.keyboard.press("Control+A");
     await page.keyboard.type("Echo Prime");
     await page.keyboard.press("Tab");
-    await expect(page.getByLabel("Score for Echo (optional)")).toBeFocused();
+    await expect(page.getByLabel("Pontuação de Echo (opcional)")).toBeFocused();
     await page.keyboard.press("Control+A");
     await page.keyboard.type("9,007,199,254,740,992");
     await page.keyboard.press("Enter");
-    const scoreInput = page.getByLabel("Score for Echo (optional)");
+    const scoreInput = page.getByLabel("Pontuação de Echo (opcional)");
     await expect(scoreInput).toHaveAttribute("aria-invalid", "true");
     await expect(page.locator("#kx-edit-e-score-error")).toContainText("too large");
     await expect(scoreInput).toHaveAttribute("aria-describedby", /kx-edit-e-score-error/);
@@ -160,12 +160,12 @@ test.describe("MGE planner", () => {
     await page.keyboard.press("Control+A");
     await page.keyboard.type("5m");
     await page.keyboard.press("Tab");
-    await expect(page.getByLabel("Tags for Echo (optional)")).toBeFocused();
+    await expect(page.getByLabel("Etiquetas de Echo (opcional)")).toBeFocused();
     await page.keyboard.type("Garrison Lead");
     await page.keyboard.press("Enter");
     await expect(editor).toHaveCount(0);
-    await expect(page.locator("[data-cand-status]")).toHaveText("Saved Echo Prime (was Echo).");
-    await expect(page.getByRole("button", { name: "Edit Echo Prime" })).toBeFocused();
+    await expect(page.locator("[data-cand-status]")).toHaveText("Echo Prime (era Echo) salvo.");
+    await expect(page.getByRole("button", { name: "Editar Echo Prime" })).toBeFocused();
     await expect(page.locator('tr[data-candidate="e"]')).toContainText("5,000,000");
     await expect(page.locator('tr[data-candidate="e"]')).toContainText("garrison lead");
 
@@ -176,10 +176,10 @@ test.describe("MGE planner", () => {
     expect((await ledgerRows(page, "2026-10-01"))[0]![1]).toBe("Echo");
 
     // Duplicate name: allowed, with the warning.
-    await page.getByRole("button", { name: "Edit Bravo" }).click();
-    await page.getByLabel("Name for Bravo").fill("alpha");
-    await page.getByRole("button", { name: "Save" }).click();
-    await expect(page.locator("[data-cand-status]")).toContainText("Another governor is also named alpha");
+    await page.getByRole("button", { name: "Editar Bravo" }).click();
+    await page.getByLabel("Nome de Bravo").fill("alpha");
+    await page.getByRole("button", { name: "Salvar" }).click();
+    await expect(page.locator("[data-cand-status]")).toContainText("Outro governador também se chama alpha");
     await expect(page.locator("[data-plan-warnings]")).toContainText('share the name "Alpha"');
     expect(errors).toEqual([]);
   });
@@ -195,7 +195,7 @@ test.describe("MGE planner", () => {
       return { file: dl.suggestedFilename(), bytes: await readFile((await dl.path())!) };
     };
 
-    const ledger = await get("Download ledger CSV");
+    const ledger = await get("Baixar CSV do registro");
     expect(ledger.file).toMatch(/^kingdomops-mge-ledger-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
     expect([...ledger.bytes.subarray(0, 3)]).toEqual([0xef, 0xbb, 0xbf]);
     const text = ledger.bytes.toString("utf8").slice(1);
@@ -210,14 +210,14 @@ test.describe("MGE planner", () => {
       "2026-10-15,,3,,not filled,no",
       "",
     ]);
-    await expect(page.locator("[data-csv-status]")).toContainText("is ready: check your downloads.");
+    await expect(page.locator("[data-csv-status]")).toContainText("está pronto: confira seus downloads.");
 
-    await page.getByLabel("Include scores in the ledger CSV").check();
-    const scored = (await get("Download ledger CSV")).bytes.toString("utf8");
+    await page.getByLabel("Incluir pontuações no CSV do registro").check();
+    const scored = (await get("Baixar CSV do registro")).bytes.toString("utf8");
     expect(scored).toContain("date,commander,slot,governor,reason,locked,score\r\n");
     expect(scored).toContain(`2026-10-01,Cao Cao,2,Alpha,"score rank 1 ${rest} (4,200,000)",no,4200000\r\n`);
 
-    const gov = await get("Download governors CSV");
+    const gov = await get("Baixar CSV dos governadores");
     expect(gov.file).toMatch(/^kingdomops-mge-governors-k1234-mge-\d{4}-\d{2}-\d{2}\.csv$/);
     expect(gov.bytes.toString("utf8")).toBe("\uFEFFname,score,tags\r\nAlpha,4200000,\r\nBravo,3000000,\r\nCharlie,2000000,\r\nDelta,,\r\nEcho,1000000,\r\n");
     expect(requests).toEqual([]);
@@ -239,12 +239,12 @@ test.describe("MGE planner", () => {
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
     // With the inline governor editor open, too.
-    await page.getByRole("button", { name: "Edit Charlie" }).click();
-    await expect(page.getByLabel("Name for Charlie")).toBeVisible();
+    await page.getByRole("button", { name: "Editar Charlie" }).click();
+    await expect(page.getByLabel("Nome de Charlie")).toBeVisible();
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
-    await page.getByRole("button", { name: "Cancel" }).click();
-    await page.getByRole("button", { name: "Create public link" }).click();
+    await page.getByRole("button", { name: "Cancelar" }).click();
+    await page.getByRole("button", { name: "Criar link público" }).click();
     await page.goto(await page.locator("#kx-link").inputValue());
     await expect(page.locator("[data-view]")).toBeVisible();
     await expectNoSidewaysScroll(page);
@@ -266,9 +266,9 @@ test.describe("MGE planner", () => {
     test(`axe planner ${theme} with the governor editor open (and an error)`, async ({ page }) => {
       await seed(page, [PLAN], theme);
       await gotoHydrated(page, "/kingdom/mge/");
-      await page.getByRole("button", { name: "Edit Alpha" }).click();
-      await page.getByLabel("Score for Alpha (optional)").fill("lots");
-      await page.getByRole("button", { name: "Save" }).click();
+      await page.getByRole("button", { name: "Editar Alpha" }).click();
+      await page.getByLabel("Pontuação de Alpha (opcional)").fill("lots");
+      await page.getByRole("button", { name: "Salvar" }).click();
       await expect(page.locator("#kx-edit-a-score-error")).toBeVisible();
       await expectAxeClean(page);
     });
@@ -276,7 +276,7 @@ test.describe("MGE planner", () => {
     test(`axe view ${theme} (ledger and error)`, async ({ page }) => {
       await seed(page, [PLAN], theme);
       await gotoHydrated(page, "/kingdom/mge/");
-      await page.getByRole("button", { name: "Create public link" }).click();
+      await page.getByRole("button", { name: "Criar link público" }).click();
       await page.goto(await page.locator("#kx-link").inputValue());
       await expect(page.locator("[data-view]")).toBeVisible();
       await expectAxeClean(page);

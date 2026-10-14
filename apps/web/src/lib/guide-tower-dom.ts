@@ -4,7 +4,7 @@
 // prefers-reduced-motion.
 import type { Tower3D, TowerFloor } from "./guide-tower-3d";
 
-export const TOWER_FALLBACK = "The 3D view is not available on this device or browser, so you are seeing the flat tower. Everything else still works.";
+export const TOWER_FALLBACK = "A vista 3D não está disponível neste aparelho ou navegador, então você está vendo a torre plana. O resto continua funcionando.";
 
 function enhanceTower(fig: HTMLElement): () => void {
   fig.dataset.enhanced = "";
@@ -29,7 +29,7 @@ function enhanceTower(fig: HTMLElement): () => void {
     host.hidden = true;
     svg.removeAttribute("hidden");
     svg.style.display = "";
-    btn.textContent = "View in 3D";
+    btn.textContent = "Ver em 3D";
     btn.disabled = false;
     status.textContent = "";
     note.hidden = message === null;
@@ -40,9 +40,9 @@ function enhanceTower(fig: HTMLElement): () => void {
     const mine = ++token;
     mode = "loading";
     btn.disabled = true;
-    btn.textContent = "Loading 3D…";
+    btn.textContent = "Carregando 3D…";
     note.hidden = true;
-    status.textContent = "Loading the 3D view…";
+    status.textContent = "Carregando a vista 3D…";
     try {
       const mod = await import("./guide-tower-3d");
       if (mine !== token) return;
@@ -53,7 +53,7 @@ function enhanceTower(fig: HTMLElement): () => void {
         floors = [];
       }
       const here = Number(fig.dataset.here ?? "-1");
-      const where = here >= floors.length ? "You are past the top floor." : here >= 0 ? `You are on the ${floors[here]?.t} floor.` : "";
+      const where = here >= floors.length ? "Você passou do último andar." : here >= 0 ? `Você está no andar ${floors[here]?.t}.` : "";
       host.hidden = false;
       const v = await mod.mountTower3D(host, {
         floors,
@@ -67,7 +67,7 @@ function enhanceTower(fig: HTMLElement): () => void {
       view = v;
       mode = "3d";
       svg.style.display = "none";
-      btn.textContent = "Back to 2D";
+      btn.textContent = "Voltar ao 2D";
       btn.disabled = false;
       status.textContent = "3D view ready. Drag the tower or focus it and use the arrow keys.";
     } catch {

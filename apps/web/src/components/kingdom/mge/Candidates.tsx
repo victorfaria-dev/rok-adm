@@ -50,13 +50,13 @@ export default function Candidates({ doc, plan, onChange }: Props) {
       const candidates = [...doc.candidates];
       candidates[i] = { ...candidates[i]!, score: s ?? candidates[i]!.score, tags: tags.trim() ? r.tags : candidates[i]!.tags };
       onChange({ ...doc, candidates });
-      setStatus(`Updated ${candidates[i]!.name}.`);
+      setStatus(`${candidates[i]!.name} atualizado.`);
     } else if (doc.candidates.length >= MGE_LIMITS.candidates) {
-      setErrors({ name: `The list is full (${MGE_LIMITS.candidates} governors). Remove someone first.` });
+      setErrors({ name: `A lista está cheia (${MGE_LIMITS.candidates} governadores). Remova alguém primeiro.` });
       return;
     } else {
       onChange({ ...doc, candidates: [...doc.candidates, { id: newDocId(), name: n, score: s, tags: r.tags }] });
-      setStatus(`Added ${n}.`);
+      setStatus(`${n} adicionado.`);
     }
     setName("");
     setScore("");
@@ -65,11 +65,11 @@ export default function Candidates({ doc, plan, onChange }: Props) {
 
   function report(r: AddCandidatesResult) {
     setPasteErrors(r.errors);
-    const parts = [`Added ${r.added} governor${r.added === 1 ? "" : "s"}.`];
-    if (r.updated.length) parts.push(`Updated the score of ${r.updated.length}.`);
-    if (r.duplicates.length) parts.push(`${r.duplicates.length} already listed, kept as they were.`);
-    if (r.overLimit) parts.push(`${r.overLimit} not added: the list holds ${MGE_LIMITS.candidates}.`);
-    if (r.errors.length) parts.push(`${r.errors.length} line${r.errors.length === 1 ? "" : "s"} could not be read (see below).`);
+    const parts = [`${r.added} ${r.added === 1 ? "governador adicionado" : "governadores adicionados"}.`];
+    if (r.updated.length) parts.push(`Pontuação atualizada em ${r.updated.length}.`);
+    if (r.duplicates.length) parts.push(`${r.duplicates.length} já ${r.duplicates.length === 1 ? "listado" : "listados"}, mantidos como estavam.`);
+    if (r.overLimit) parts.push(`${r.overLimit} não ${r.overLimit === 1 ? "adicionado" : "adicionados"}: a lista comporta ${MGE_LIMITS.candidates}.`);
+    if (r.errors.length) parts.push(`${r.errors.length} ${r.errors.length === 1 ? "linha não pôde" : "linhas não puderam"} ser lida${r.errors.length === 1 ? "" : "s"} (veja abaixo).`);
     setStatus(parts.join(" "));
     if (r.added || r.updated.length) onChange(r.doc);
   }
@@ -85,58 +85,58 @@ export default function Candidates({ doc, plan, onChange }: Props) {
       report(addCandidatesFromCsv(doc, text));
     } catch (e) {
       setPasteErrors([]);
-      setStatus(e instanceof Error ? e.message : "This file could not be read.");
+      setStatus(e instanceof Error ? e.message : "Não foi possível ler este arquivo.");
     }
   }
 
   return (
     <section class="kg-grid" aria-labelledby="kx-cand-h">
-      <h2 id="kx-cand-h">Governors ({doc.candidates.length})</h2>
-      <p class="kg-note">The score is your council's own number, for example DKP. Leave it empty if you do not rank by score.</p>
+      <h2 id="kx-cand-h">Governadores ({doc.candidates.length})</h2>
+      <p class="kg-note">A pontuação é um número do próprio conselho, por exemplo o DKP. Deixe vazia se vocês não ordenam por pontuação.</p>
       <div class="kg-grid kg-grid-2">
         <div class="kg-grid">
-          <h3 class="kx-h3">Add one</h3>
-          <TextField id="kx-cand-name" label="Governor name" value={name} onValue={setName} error={errors.name} maxLength={MGE_LIMITS.name + 1} />
-          <TextField id="kx-cand-score" label="Score (optional)" value={score} onValue={setScore} error={errors.score} hint="4200000, 4,200,000 or 4.2m" />
-          <TextField id="kx-cand-tags" label="Tags (optional)" value={tags} onValue={setTags} error={errors.tags} hint="Separate with commas, for example: rally lead, garrison lead" />
-          <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={addOne}>Add governor</button></div>
+          <h3 class="kx-h3">Adicionar um</h3>
+          <TextField id="kx-cand-name" label="Nome do governador" value={name} onValue={setName} error={errors.name} maxLength={MGE_LIMITS.name + 1} />
+          <TextField id="kx-cand-score" label="Pontuação (opcional)" value={score} onValue={setScore} error={errors.score} hint="4200000, 4,200,000 ou 4.2m" />
+          <TextField id="kx-cand-tags" label="Etiquetas (opcional)" value={tags} onValue={setTags} error={errors.tags} hint="Separe com vírgulas, por exemplo: líder de rally, líder de guarnição" />
+          <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={addOne}>Adicionar governador</button></div>
         </div>
         <div class="kg-grid">
-          <h3 class="kx-h3">Paste a list</h3>
+          <h3 class="kx-h3">Colar uma lista</h3>
           <TextAreaField
             id="kx-paste"
-            label="Governors, one per line"
+            label="Governadores, um por linha"
             value={paste}
             onValue={setPaste}
             rows={6}
-            hint={"Name and score on each line: \"Dave, 4.2m\", \"Dave; 4.2m\", \"Dave 4.2m\" or a pasted spreadsheet row. The score is optional. Names already listed (any case) get the new score."}
-            error={pasteErrors.length ? `${pasteErrors.length} line${pasteErrors.length === 1 ? "" : "s"} could not be read.` : undefined}
+            hint={"Nome e pontuação em cada linha: \"Davi, 4.2m\", \"Davi; 4.2m\", \"Davi 4.2m\" ou uma linha colada de planilha. A pontuação é opcional. Nomes já listados (maiúsculas ou minúsculas) recebem a nova pontuação."}
+            error={pasteErrors.length ? `${pasteErrors.length} ${pasteErrors.length === 1 ? "linha não pôde" : "linhas não puderam"} ser lida${pasteErrors.length === 1 ? "" : "s"}.` : undefined}
           />
           {pasteErrors.length > 0 && (
             <ul class="kx-errors" data-paste-errors>
-              {pasteErrors.slice(0, 20).map((e) => <li key={e.line}>Line {e.line} ("{e.text.slice(0, 40)}"): {e.message}</li>)}
-              {pasteErrors.length > 20 && <li>…and {pasteErrors.length - 20} more.</li>}
+              {pasteErrors.slice(0, 20).map((e) => <li key={e.line}>Linha {e.line} ("{e.text.slice(0, 40)}"): {e.message}</li>)}
+              {pasteErrors.length > 20 && <li>…e mais {pasteErrors.length - 20}.</li>}
             </ul>
           )}
           <div class="kg-actions">
-            <button type="button" class="btn btn-primary" onClick={addPasted} disabled={!paste.trim()}>Add from list</button>
-            <CsvImport label="Import CSV" describedBy="kx-csv-hint" testId="mge" onText={addCsv} onError={(m) => { setPasteErrors([]); setStatus(m); }} />
+            <button type="button" class="btn btn-primary" onClick={addPasted} disabled={!paste.trim()}>Adicionar da lista</button>
+            <CsvImport label="Importar CSV" describedBy="kx-csv-hint" testId="mge" onText={addCsv} onError={(m) => { setPasteErrors([]); setStatus(m); }} />
           </div>
-          <p class="kg-hint" id="kx-csv-hint">CSV from a spreadsheet: a first row with "name" (or "governor") and, optionally, "score" (or "dkp").</p>
+          <p class="kg-hint" id="kx-csv-hint">CSV de uma planilha: uma primeira linha com "name" (ou "nome" / "governor") e, se quiser, "score" (ou "dkp" / "pontos").</p>
         </div>
       </div>
       <p class="kg-status" role="status" aria-live="polite" data-cand-status>{status}</p>
       {doc.candidates.length > 0 && (
-        <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Governor list" ref={tableRef}>
+        <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Lista de governadores" ref={tableRef}>
           <table class="kg-table" data-candidates>
-            <caption class="visually-hidden">Governors in this plan</caption>
+            <caption class="visually-hidden">Governadores neste plano</caption>
             <thead>
               <tr>
-                <th scope="col">Name</th>
-                <th scope="col" class="num">Score</th>
-                <th scope="col">Tags</th>
-                <th scope="col" class="num">Slots in plan</th>
-                <th scope="col"><span class="visually-hidden">Actions</span></th>
+                <th scope="col">Nome</th>
+                <th scope="col" class="num">Pontuação</th>
+                <th scope="col">Etiquetas</th>
+                <th scope="col" class="num">Vagas no plano</th>
+                <th scope="col"><span class="visually-hidden">Ações</span></th>
               </tr>
             </thead>
             <tbody>
@@ -163,8 +163,8 @@ export default function Candidates({ doc, plan, onChange }: Props) {
                   <td class="num">{slotsSoFar.get(c.id) ?? 0}</td>
                   <td>
                     <div class="kg-actions kx-row-actions">
-                      <button type="button" class="btn btn-secondary" data-edit={c.id} aria-label={`Edit ${c.name}`} onClick={() => { setEditing(c.id); setStatus(""); }}>Edit</button>
-                      <ConfirmAction label="Remove" ariaLabel={`Remove ${c.name}`} question={`Remove ${c.name} from this plan? Locked events keep their name.`} yesLabel="Yes, remove" onConfirm={() => onChange(removeCandidate(doc, c.id))} />
+                      <button type="button" class="btn btn-secondary" data-edit={c.id} aria-label={`Editar ${c.name}`} onClick={() => { setEditing(c.id); setStatus(""); }}>Editar</button>
+                      <ConfirmAction label="Remover" ariaLabel={`Remover ${c.name}`} question={`Remover ${c.name} deste plano? Eventos travados mantêm o nome.`} yesLabel="Sim, remover" onConfirm={() => onChange(removeCandidate(doc, c.id))} />
                     </div>
                   </td>
                 </tr>

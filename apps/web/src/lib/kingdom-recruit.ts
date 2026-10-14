@@ -13,7 +13,7 @@ export interface RecruitListItem {
 }
 
 export function recruitTitle(i: Pick<RecruitInput, "kingdom">): string {
-  return i.kingdom.trim() ? `${kingdomLabel(i.kingdom)} recruitment post` : "Recruitment post";
+  return i.kingdom.trim() ? `Post de recrutamento do ${kingdomLabel(i.kingdom)}` : "Post de recrutamento";
 }
 
 /** Saved drafts, most recently edited first. */
@@ -41,24 +41,24 @@ export function draftInput(doc: RecruitDoc): RecruitInput {
   return input;
 }
 
-const fmt = (n: number): string => n.toLocaleString("en-US");
+const fmt = (n: number): string => n.toLocaleString("pt-BR");
 
 /** Warning when the post body is over its format's limit ("" when it fits or has no limit). */
 export function overLimitText(post: Pick<RecruitPost, "format" | "chars" | "limit" | "over">): string {
   if (!post.over || post.limit === null) return "";
   const by = fmt(post.chars - post.limit);
   return post.format === "reddit"
-    ? `This post body is ${fmt(post.chars)} characters, over Reddit's ${fmt(post.limit)}-character limit by ${by}. Shorten the notes before you post.`
-    : `This post is ${fmt(post.chars)} characters, over Discord's ${fmt(post.limit)}-character limit by ${by}. Shorten the notes or split it into two messages.`;
+    ? `O corpo deste post tem ${fmt(post.chars)} caracteres, ${by} acima do limite de ${fmt(post.limit)} caracteres do Reddit. Encurte as notas antes de postar.`
+    : `Este post tem ${fmt(post.chars)} caracteres, ${by} acima do limite de ${fmt(post.limit)} caracteres do Discord. Encurte as notas ou divida em duas mensagens.`;
 }
 
 /** Note when the Reddit title had to be cut to fit ("" otherwise). */
 export function titleCutText(post: Pick<RecruitPost, "titleCut">): string {
-  return post.titleCut ? `Reddit titles stop at ${fmt(REDDIT_TITLE_LIMIT)} characters, so the end was cut (…). Shorten the kingdom name or stage, or list fewer roles.` : "";
+  return post.titleCut ? `Os títulos do Reddit param em ${fmt(REDDIT_TITLE_LIMIT)} caracteres, então o final foi cortado (…). Encurte o nome do reino ou a fase, ou liste menos funções.` : "";
 }
 
-/** "1,234 / 2,000 characters". */
+/** "1.234 / 2.000 caracteres". */
 export function charCount(chars: number, limit: number | null): string {
-  const n = chars.toLocaleString("en-US");
-  return limit === null ? `${n} characters` : `${n} / ${limit.toLocaleString("en-US")} characters`;
+  const n = chars.toLocaleString("pt-BR");
+  return limit === null ? `${n} caracteres` : `${n} / ${limit.toLocaleString("pt-BR")} caracteres`;
 }

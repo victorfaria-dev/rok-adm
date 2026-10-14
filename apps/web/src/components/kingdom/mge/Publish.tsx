@@ -29,8 +29,8 @@ export default function Publish({ doc, plan, today }: Props) {
       setLink(await publishMge(doc, plan, includeScores, today));
     } catch (e) {
       setError(e instanceof Error && e.name === "ShareTooLargeError"
-        ? `${e.message} Lock and remove old events, or start a new plan for the next season.`
-        : "The link could not be made in this browser.");
+        ? `${e.message} Trave e remova eventos antigos, ou comece um plano novo para a próxima temporada.`
+        : "Não foi possível gerar o link neste navegador.");
     } finally {
       setBusy(false);
     }
@@ -38,38 +38,38 @@ export default function Publish({ doc, plan, today }: Props) {
 
   return (
     <section class="kg-grid" aria-labelledby="kx-pub-h">
-      <h2 id="kx-pub-h">Publish the ledger</h2>
-      <p class="kg-lead">A public ledger turns "hoarding" accusations into checkable facts: anyone in the kingdom can see who got which slot, when and why.</p>
+      <h2 id="kx-pub-h">Publicar o registro</h2>
+      <p class="kg-lead">Um registro público transforma acusações de "monopólio" em fatos conferíveis: qualquer pessoa do reino pode ver quem ficou com qual vaga, quando e por quê.</p>
       <CheckField
         id="kx-scores"
-        label="Include scores in the public link"
+        label="Incluir pontuações no link público"
         checked={includeScores}
         onValue={setIncludeScores}
-        hint="Off by default: the link shows names, slots, reasons and your rules. Turn it on only if your governors agreed to have their scores shown."
+        hint="Desligado por padrão: o link mostra nomes, vagas, motivos e as suas regras. Ligue só se os seus governadores concordaram em ter as pontuações exibidas."
       />
       <div class="kg-actions">
-        <button type="button" class="btn btn-primary" onClick={publish} disabled={busy || doc.events.length === 0}>Create public link</button>
-        {doc.events.length === 0 && <p class="kg-hint">Add at least one event first.</p>}
+        <button type="button" class="btn btn-primary" onClick={publish} disabled={busy || doc.events.length === 0}>Criar link público</button>
+        {doc.events.length === 0 && <p class="kg-hint">Adicione pelo menos um evento primeiro.</p>}
       </div>
       {error && <p class="kg-error" role="alert" data-too-large>{error}</p>}
       <DiscordPost
         id="mge"
-        summary="Post the results to Discord"
+        summary="Postar os resultados no Discord"
         message={mgeResultsMessage(mgePublicPayload(doc, includeScores, today, plan), link?.url ?? null)}
       />
       {link && (
         <div class="kg-grid" data-published>
           <CopyText
             id="kx-link"
-            label="Public ledger link"
+            label="Link do registro público"
             text={link.url}
             variant="link"
-            copyLabel="Copy link"
+            copyLabel="Copiar link"
             hint={link.hint === "long"
-              ? `This link is ${link.url.length.toLocaleString("en-US")} characters long and may be cut in Discord (2,000 per message). Post it in a pinned file or shorten the plan (fewer events).`
-              : "Anyone with this link can read the ledger. The ledger travels inside the link; nothing is stored on a server."}
+              ? `Este link tem ${link.url.length.toLocaleString("pt-BR")} caracteres e pode ser cortado no Discord (2.000 por mensagem). Poste-o num arquivo fixado ou encurte o plano (menos eventos).`
+              : "Quem tiver este link pode ler o registro. O registro viaja dentro do link; nada fica guardado em servidor."}
           />
-          <p><a href={link.url} target="_blank" rel="noopener">Open the public ledger</a> (new tab)</p>
+          <p><a href={link.url} target="_blank" rel="noopener">Abrir o registro público</a> (nova aba)</p>
         </div>
       )}
     </section>

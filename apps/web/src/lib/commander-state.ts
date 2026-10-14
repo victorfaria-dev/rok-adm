@@ -20,13 +20,13 @@ export type AnswersMap = Record<string, Answers>;
 
 /** Entry for commanders that are not in the shelf-life table. */
 export const OTHER_ID = "other";
-export const OTHER_NAME = "Another commander";
+export const OTHER_NAME = "Outro comandante";
 
 export interface CommanderChoice { id: string; name: string }
 
 /** Picker entries: table commanders A to Z, then "Another commander". */
 export const COMMANDER_CHOICES: readonly CommanderChoice[] = [
-  ...[...COMMANDER_SHELF_LIFE].map((c) => ({ id: c.id, name: c.name })).sort((a, b) => a.name.localeCompare(b.name, "en")),
+  ...[...COMMANDER_SHELF_LIFE].map((c) => ({ id: c.id, name: c.name })).sort((a, b) => a.name.localeCompare(b.name, "pt-BR")),
   { id: OTHER_ID, name: OTHER_NAME },
 ];
 
@@ -131,10 +131,10 @@ export function savedChecks(map: unknown, choices: readonly CommanderChoice[] = 
 // Text shown to the player
 
 export const SHELF_LIFE_TEXT: Record<CommanderShelfLife["shelfLife"], string> = {
-  long_term: "Useful long term: past KvK1 and into Season of Conquest",
-  kvk1_only: "Useful until KvK1: loses value later",
-  no_priority: "No priority for F2P",
-  unknown: "Shelf-life unknown",
+  long_term: "Útil a longo prazo: além do KvK1 e até a Temporada de Conquista",
+  kvk1_only: "Útil até o KvK1: perde valor depois",
+  no_priority: "Sem prioridade para F2P",
+  unknown: "Validade desconhecida",
 };
 
 const STAGE_QUESTION = QUESTIONS.find((q) => q.id === "kingdomStage");
@@ -146,24 +146,24 @@ export function stageLabel(stage: KingdomStage): string {
 }
 
 export const VERDICT_TEXT: Record<Verdict, { word: string; summary: string }> = {
-  go: { word: "Go", summary: "Your answers support this investment. Read the reasons before you spend." },
-  wait: { word: "Wait", summary: "Hold your sculptures for now. The reasons below say what would change this." },
-  avoid: { word: "Avoid", summary: "Your answers match a choice F2P guides warn against." },
+  go: { word: "Vale a pena", summary: "Suas respostas apoiam este investimento. Leia os motivos antes de gastar." },
+  wait: { word: "Espere", summary: "Guarde suas esculturas por enquanto. Os motivos abaixo dizem o que mudaria isso." },
+  avoid: { word: "Evite", summary: "Suas respostas combinam com uma escolha que os guias F2P desaconselham." },
 };
 
 export const CONFIDENCE_TEXT: Record<Confidence, string> = {
-  high: "High confidence",
-  medium: "Medium confidence",
-  low: "Low confidence",
-  pending: "Pending",
+  high: "Confiança alta",
+  medium: "Confiança média",
+  low: "Confiança baixa",
+  pending: "Pendente",
 };
 
 export const EFFECT_TEXT: Record<CommanderReason["effect"], string> = {
-  avoid: "Against",
-  wait: "Wait",
-  unanswered: "Missing answer",
-  go: "For",
-  info: "Note",
+  avoid: "Contra",
+  wait: "Espere",
+  unanswered: "Falta resposta",
+  go: "A favor",
+  info: "Nota",
 };
 
 export { getShelfLife, SHELF_LIFE_AS_OF, COMMANDER_CHECKLIST } from "@rokadm/planner";

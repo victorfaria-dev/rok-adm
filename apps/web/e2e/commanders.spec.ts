@@ -16,37 +16,37 @@ test("pick a commander, see suggestions, answer, reload, clear and undo", async 
   page.on("pageerror", (e) => errors.push(e.message));
   await page.goto("/commanders/");
   await expect(page.locator("h1")).toHaveCount(1);
-  await expect(page.getByText("Nothing saved yet.", { exact: false })).toBeVisible();
+  await expect(page.getByText("Nada salvo ainda.", { exact: false })).toBeVisible();
 
-  await page.getByRole("button", { name: /^Lohar, Epic/ }).click();
+  await page.getByRole("button", { name: /^Lohar, Épico/ }).click();
   await expect(page).toHaveURL(/#lohar$/);
   await expect(page.getByRole("heading", { level: 2, name: "Lohar" })).toBeVisible();
-  await expect(page.getByText("Useful until KvK1: loses value later")).toBeVisible();
-  await expect(page.getByText(/Tag as of 2026-10-13/)).toBeVisible();
+  await expect(page.getByText("Útil até o KvK1: perde valor depois")).toBeVisible();
+  await expect(page.getByText(/Etiqueta de 2026-10-13/)).toBeVisible();
 
   const purpose = group(page, /What job will this commander do/);
-  await expect(purpose.getByText("Suggested", { exact: true })).toBeVisible();
+  await expect(purpose.getByText("Sugerida", { exact: true })).toBeVisible();
   await expect(purpose.getByRole("radio", { name: /Barbarians/ })).toBeChecked();
-  await expect(verdict(page)).toContainText("Wait");
+  await expect(verdict(page)).toContainText("Espere");
 
   await group(page, /What are you about to spend/).getByText("Universal legendary (gold) sculptures").click();
-  await expect(verdict(page)).toContainText("Avoid");
+  await expect(verdict(page)).toContainText("Evite");
   await expect(page.getByText(/Never spend universal gold sculptures on gatherers/)).toBeVisible();
   expect((await stored(page)).commanders).toEqual({ lohar: { sculptureType: "universal_gold" } });
 
   await page.reload();
   await expect(page.getByRole("heading", { level: 2, name: "Lohar" })).toBeVisible();
   await expect(group(page, /What are you about to spend/).getByRole("radio", { name: /Universal legendary/ })).toBeChecked();
-  await expect(verdict(page)).toContainText("Avoid");
+  await expect(verdict(page)).toContainText("Evite");
 
   const overview = page.locator(".cmd-overview");
   const row = overview.getByRole("listitem").filter({ hasText: "Lohar" });
-  await expect(row).toContainText("Avoid");
-  await row.getByRole("button", { name: "Clear answers for Lohar" }).click();
+  await expect(row).toContainText("Evite");
+  await row.getByRole("button", { name: "Apagar respostas de Lohar" }).click();
   await expect(overview.getByRole("link", { name: "Lohar" })).toHaveCount(0);
   expect((await stored(page)).commanders).toEqual({});
-  await expect(verdict(page)).toContainText("Wait"); // back to suggestions only
-  await overview.getByRole("button", { name: "Undo" }).click();
+  await expect(verdict(page)).toContainText("Espere"); // back to suggestions only
+  await overview.getByRole("button", { name: "Desfazer" }).click();
   await expect(overview.getByRole("link", { name: "Lohar" })).toBeVisible();
   expect((await stored(page)).commanders).toEqual({ lohar: { sculptureType: "universal_gold" } });
   expect(errors).toEqual([]);
@@ -58,7 +58,7 @@ test("a link to a saved check opens that commander", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 2, name: "Lohar" })).toBeVisible();
   await page.locator(".cmd-overview").getByRole("link", { name: "Sun Tzu" }).click();
   await expect(page.getByRole("heading", { level: 2, name: "Sun Tzu" })).toBeFocused();
-  await expect(page.getByRole("button", { name: /^Sun Tzu, Epic/ })).toHaveAttribute("aria-pressed", "true");
+  await expect(page.getByRole("button", { name: /^Sun Tzu, Épico/ })).toHaveAttribute("aria-pressed", "true");
 });
 
 test("corrupted stored answers do not break the page", async ({ page }) => {
@@ -67,8 +67,8 @@ test("corrupted stored answers do not break the page", async ({ page }) => {
   await seed(page, { commanders: { "sun-tzu": { purpose: "bogus", nope: 3 }, ghost: "x", lohar: ["a"] } });
   await page.goto("/commanders/#sun-tzu");
   await expect(page.getByRole("heading", { level: 2, name: "Sun Tzu" })).toBeVisible();
-  await expect(verdict(page)).toHaveText(/Go|Wait|Avoid/);
-  await expect(page.getByText("Nothing saved yet.", { exact: false })).toBeVisible();
+  await expect(verdict(page)).toHaveText(/Vale a pena|Espere|Evite/);
+  await expect(page.getByText("Nada salvo ainda.", { exact: false })).toBeVisible();
   // Answering still works and only writes clean answers for that commander.
   await group(page, /Does it fill a troop type/).getByText("Yes", { exact: true }).click();
   expect((await stored(page)).commanders["sun-tzu"]).toEqual({ roleNeed: "yes" });

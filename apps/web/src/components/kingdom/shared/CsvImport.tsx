@@ -1,7 +1,7 @@
 import { useRef } from "preact/hooks";
 
 interface Props {
-  /** Button text, e.g. "Import CSV". */
+  /** Button text, ex.: "Importar CSV". */
   label: string;
   /** Called with the file's text; nothing is uploaded. */
   onText: (text: string, fileName: string) => void;
@@ -23,11 +23,11 @@ export default function CsvImport({ label, onText, onError, describedBy, testId 
     const file = input.files?.[0];
     input.value = "";
     if (!file) return;
-    if (file.size > MAX_BYTES) return onError("This file is too large (over 1 MB). Export fewer rows.");
+    if (file.size > MAX_BYTES) return onError("Este arquivo é grande demais (mais de 1 MB). Exporte menos linhas.");
     try {
       onText(await file.text(), file.name);
     } catch {
-      onError("This file could not be read.");
+      onError("Não foi possível ler este arquivo.");
     }
   }
 

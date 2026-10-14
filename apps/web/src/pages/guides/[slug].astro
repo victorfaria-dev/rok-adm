@@ -27,24 +27,24 @@ const forWho = page.audience.replace(/\.$/, "");
 <Shell title={page.title} description={`${page.summary} ${page.audience}`} mode="read">
   <div class="g-page" data-guide-set={set}>
     <h1>{page.title}</h1>
-    <GuideMeta view={view} label={`For: ${forWho}`} />
+    <GuideMeta view={view} label={`Para: ${forWho}`} />
     <GuideConfidence view={view} />
     {set === "low" ? (
       <p class="g-intro">
-        These steps are a delta over the F2P plan: a step here replaces the F2P step with the same topic, the rest are added.
-        If your profile is Low or higher, <a href="/guide/">your guide</a> already merges them in.
+        Estes passos são um complemento ao plano F2P: um passo daqui substitui o passo F2P do mesmo assunto, e os demais são acrescentados.
+        Se o seu perfil é Low ou maior, <a href="/guide/">o seu guia</a> já os incorpora.
       </p>
     ) : set === "latestage" ? (
       <p class="g-intro">
-        The plan after KvK1, for kingdoms in KvK2, KvK3 or Season of Conquest. If your profile is at one of those stages,
-        <a href="/guide/">your guide</a> shows these steps as its main plan. Other guides are on <a href="/guides/">all guides</a>.
+        O plano depois do KvK1, para reinos no KvK2, no KvK3 ou na Temporada de Conquista. Se o seu perfil está em uma dessas fases,
+        <a href="/guide/">o seu guia</a> mostra estes passos como plano principal. Os outros guias estão em <a href="/guides/">todos os guias</a>.
       </p>
     ) : set === "recovery" ? (
-      <p class="g-intro">Start with the first step, even if you read nothing else today. Then come back for the rest. Other guides are on <a href="/guides/">all guides</a>.</p>
+      <p class="g-intro">Comece pelo primeiro passo, mesmo que não leia mais nada hoje. Depois volte para o resto. Os outros guias estão em <a href="/guides/">todos os guias</a>.</p>
     ) : (
-      <p class="g-intro">{page.summary} Use it alongside <a href="/guide/">your guide</a>; other guides are on <a href="/guides/">all guides</a>.</p>
+      <p class="g-intro">{page.summary} Use junto com <a href="/guide/">o seu guia</a>; os outros guias estão em <a href="/guides/">todos os guias</a>.</p>
     )}
-    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Timeline" />}
+    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Linha do tempo" />}
     <GuideBody view={view} badges={payload.badges} profileTags={false} />
     {hasTimeline && <TimelineScript />}
   </div>

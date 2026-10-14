@@ -20,71 +20,71 @@ export const GUIDE_PAGES: readonly GuidePage[] = [
   {
     set: "f2p",
     href: "/guide/",
-    title: "Your guide",
-    summary: "The step-by-step plan from day 0 to KvK1, with a budget reality check.",
-    audience: "Every account. It filters to your spending, play time and City Hall once you answer 5 quick questions.",
+    title: "Seu guia",
+    summary: "O plano passo a passo do dia 0 até o KvK1, com um teste de realidade do orçamento.",
+    audience: "Toda conta. Ele se ajusta ao seu gasto, tempo de jogo e Prefeitura depois de 5 perguntas rápidas.",
   },
   {
     set: "latestage",
     href: "/guides/late-game/",
     slug: "late-game",
-    title: "Late game guide",
-    summary: "After KvK1: T5 as a research project, healing and the Hall of Heroes, commander swaps and pools, gear by season.",
-    audience: "Players whose kingdom is in KvK2, KvK3 or Season of Conquest.",
+    title: "Guia do fim de jogo",
+    summary: "Depois do KvK1: T5 como projeto de pesquisa, cura e o Salão dos Heróis, trocas e reservas de comandantes, equipamentos por temporada.",
+    audience: "Jogadores cujo reino está no KvK2, no KvK3 ou na Temporada de Conquista.",
   },
   {
     set: "newkingdom",
     href: "/guides/new-kingdom/",
-    title: "New kingdom guide",
-    summary: "Survive day 1 of a new kingdom and set up the first two weeks.",
-    audience: "Players in a kingdom that opened in the last 14 days.",
+    title: "Guia do reino novo",
+    summary: "Sobreviva ao dia 1 de um reino novo e organize as duas primeiras semanas.",
+    audience: "Jogadores num reino que abriu nos últimos 14 dias.",
   },
   {
     set: "first30",
     href: "/guides/first-30-days/",
     slug: "first-30-days",
-    title: "Your first 30 days",
-    summary: "Goals and one key concept for each stretch of your first month.",
-    audience: "New players, up to about City Hall 16.",
+    title: "Seus primeiros 30 dias",
+    summary: "Metas e um conceito-chave para cada trecho do seu primeiro mês.",
+    audience: "Jogadores novos, até cerca da Prefeitura 16.",
   },
   {
     set: "low",
     href: "/guides/low-spender/",
     slug: "low-spender",
-    title: "Low spender guide",
-    summary: "What changes when you buy only the Growth Fund and the 30-day gem supply.",
-    audience: "Pass-only Low spenders. These steps add to or replace steps in your guide.",
+    title: "Guia para quem gasta pouco",
+    summary: "O que muda quando você compra só o Fundo de Crescimento e o suprimento de gemas de 30 dias.",
+    audience: "Quem gasta pouco e compra só os passes. Estes passos acrescentam ou substituem passos do seu guia.",
   },
   {
     set: "returning",
     href: "/guides/returning/",
     slug: "returning",
-    title: "Coming back to the game",
-    summary: "What changed while you were away, a 14-day catch-up plan, and stay, migrate or restart.",
-    audience: "Players returning after a break of weeks or more.",
+    title: "Voltando ao jogo",
+    summary: "O que mudou enquanto você esteve fora, um plano de 14 dias para se atualizar, e ficar, migrar ou recomeçar.",
+    audience: "Jogadores que voltam depois de uma pausa de semanas ou mais.",
   },
   {
     set: "recovery",
     href: "/guides/recovery/",
     slug: "recovery",
-    title: "Recovering after being zeroed",
-    summary: "The first hour, the first two weeks, and a log-off risk checklist.",
-    audience: "Anyone who just lost most of their troops or resources to an attack.",
+    title: "Recuperação depois de ser zerado",
+    summary: "A primeira hora, as duas primeiras semanas e uma lista de riscos ao sair do jogo.",
+    audience: "Quem acabou de perder a maior parte das tropas ou dos recursos num ataque.",
   },
   {
     set: "kingdomadmin",
     href: "/guides/kingdom-admin/",
     slug: "kingdom-admin",
-    title: "Kingdom administration",
-    summary: "Rules, DKP, KvK and MGE preparation, migration and failure points.",
-    audience: "Kings, council members and alliance leaders.",
+    title: "Administração do reino",
+    summary: "Regras, DKP, preparação de KvK e MGE, migração e pontos de falha.",
+    audience: "Reis, conselheiros e líderes de aliança.",
   },
   {
     set: "farms",
     href: "/guides/farms/",
-    title: "Farm accounts",
-    summary: "Whether to run a farm, which one, how to build it and how to send resources.",
-    audience: "Players thinking about a second account to feed their main.",
+    title: "Contas farm",
+    summary: "Se vale ter uma farm, qual, como montar e como enviar recursos.",
+    audience: "Jogadores pensando numa segunda conta para abastecer a principal.",
   },
 ];
 
@@ -103,7 +103,7 @@ export interface GuideLink {
   set: GuidePage["set"];
   href: string;
   title: string;
-  /** Why it is offered, English. */
+  /** Por que é oferecido. */
   reason: string;
   /** Steps already merged into the guide on this page (shown apart, after the matches). */
   included?: boolean;
@@ -115,7 +115,7 @@ export interface GuideLink {
  * player sees Returning first). A farm account also gets the farm guides (Q2 P2-8).
  * Low and higher profiles also get the Low spender page, whose steps their guide
  * already merges in: it is marked `included` and always listed last, and for Medium
- * and above it is labelled as steps inside their guide, never as "Low spender guide".
+ * and above it is labelled as steps inside their guide, never as "Guia para quem gasta pouco".
  */
 export function guidesForYou(profile: AccountProfile, situation: GuideSituation = {}): GuideLink[] {
   const out: GuideLink[] = guidesForProfile(profile, situation)
@@ -123,18 +123,18 @@ export function guidesForYou(profile: AccountProfile, situation: GuideSituation 
     .map((g) => {
       const page = guidePage(g.set.id);
       // Late game (KvK2+): core lists it right after the reported situations; on /guide/ it is also the main plan.
-      const reason = g.set.id === "latestage" ? `${g.reason} Its steps are the main plan on this page; read them on their own here.` : g.reason;
+      const reason = g.set.id === "latestage" ? `${g.reason} Os passos dele são o plano principal desta página; leia-os separados aqui.` : g.reason;
       return { set: page.set, href: page.href, title: page.title, reason };
     });
   if (profile.role === "farm") {
     const page = guidePage("farms");
-    out.push({ set: "farms", href: page.href, title: page.title, reason: "You said this is a farm account: what to build and how to send resources to your main." });
+    out.push({ set: "farms", href: page.href, title: page.title, reason: "Você disse que esta é uma conta farm: o que construir e como enviar recursos para a principal." });
   }
   if (hasLowDelta(profile)) {
     const page = guidePage("low");
     out.push(profile.spending === "low"
-      ? { set: "low", href: page.href, title: page.title, reason: "Its steps are already merged into your guide below; read them on their own here.", included: true }
-      : { set: "low", href: page.href, title: "Pass-only steps (Low spender page)", reason: "Your guide already includes these steps, since they apply to every spender who buys the Growth Fund and gem supply. Read them on their own here.", included: true });
+      ? { set: "low", href: page.href, title: page.title, reason: "Os passos dele já estão incorporados ao seu guia abaixo; leia-os separados aqui.", included: true }
+      : { set: "low", href: page.href, title: "Passos só do passe (página de quem gasta pouco)", reason: "Seu guia já inclui estes passos, pois valem para todo jogador que compra o Fundo de Crescimento e o suprimento de gemas. Leia-os separados aqui.", included: true });
   }
   return out;
 }

@@ -1,6 +1,6 @@
 ---
 // Guides tab (UX stage 1): every guide in one list grouped by intent, with glossary search on top.
-// Public, no login, works without JS. With a saved profile, a small script offers "For you" (default)
+// Public, no login, works without JS. With a saved profile, a small script oferece "Para você" (default)
 // or "All guides" (lib/guides-hub.ts tagsFor).
 import Shell from "../../layouts/Shell.astro";
 import { BLOCK_SETS, patchBadge } from "../../lib/guide-payload";
@@ -15,19 +15,19 @@ const meta = (set?: string) => {
   return { steps: blocks.length, patch: version };
 };
 
-// Every user-facing string on this page, in one place (i18n later).
+// Todos os textos desta página, num lugar só.
 const S = {
-  title: "Guides",
-  description: "Every KingdomOps guide in one place, grouped by what you want to do: plan your account, start in a new kingdom, come back after a break, recover, run farms or lead a kingdom. Plus the glossary.",
-  intro: "Every guide in one list. Each one cites its sources and says how sure it is.",
-  searchLabel: "Look up a term",
+  title: "Guias",
+  description: "Todos os guias do KingdomOps num lugar só, agrupados pelo que você quer fazer: planejar sua conta, começar num reino novo, voltar depois de uma pausa, se recuperar, cuidar de farms ou liderar um reino. Mais o glossário.",
+  intro: "Todos os guias numa lista só. Cada um cita as fontes e diz o quanto temos de certeza.",
+  searchLabel: "Procurar um termo",
   searchHint: "DKP, MGE, seed, T4…",
-  searchBtn: "Search glossary",
-  filterLegend: "Show",
-  forYou: "For you",
-  all: "All guides",
-  steps: (n: number) => `${n} steps`,
-  patch: (p: string) => `checked on patch ${p}`,
+  searchBtn: "Buscar no glossário",
+  filterLegend: "Mostrar",
+  forYou: "Para você",
+  all: "Todos os guias",
+  steps: (n: number) => `${n} passos`,
+  patch: (p: string) => `conferido na atualização ${p}`,
 };
 ---
 <Shell title={S.title} description={S.description} mode="read">

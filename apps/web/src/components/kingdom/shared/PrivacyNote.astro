@@ -6,11 +6,11 @@ interface Props {
 const { thirdParty = false } = Astro.props;
 ---
 <aside class="kg-privacy kg-noprint" data-privacy aria-labelledby="kg-privacy-h">
-  <h2 id="kg-privacy-h">Privacy</h2>
+  <h2 id="kg-privacy-h">Privacidade</h2>
   <ul>
-    <li>Everything you type stays in this browser. Nothing is sent to a server.</li>
-    <li>A share link carries the document inside the link itself. Anyone with the link can read it, so share it only where you mean to.</li>
-    {thirdParty && <li>Only enter other players' names and numbers that your council collected itself and that they agreed to share. Do not paste passwords, emails or scans you were not allowed to make.</li>}
-    <li>Export, import or delete all council data in <a href="/kingdom/#data">Your council data</a> below.</li>
+    <li>Tudo o que você digita fica neste navegador. Nada é enviado a um servidor.</li>
+    <li>O link de compartilhamento leva o documento dentro dele mesmo. Qualquer pessoa com o link pode lê-lo, então compartilhe só onde você quiser.</li>
+    {thirdParty && <li>Informe só nomes e números de outros jogadores que o seu conselho coletou por conta própria e que eles aceitaram compartilhar. Não cole senhas, e-mails nem leituras que você não tinha permissão para fazer.</li>}
+    <li>Exporte, importe ou apague todos os dados do conselho em <a href="/kingdom/#data">Dados do seu conselho</a>, abaixo.</li>
   </ul>
 </aside>

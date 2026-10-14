@@ -27,12 +27,12 @@ export function Blocks({ text }: { text: string }) {
   );
 }
 
-/** Interface text (English) inside content that may be in another language. */
-const EN = "en";
+/** Texto da interface (português) dentro de conteúdo que pode estar em outro idioma. */
+const EN = "pt-BR";
 
 /**
  * Read-only rendering of a rules document (view page and builder preview). The article carries the
- * version's lang attribute; English interface lines carry lang="en", and parts shown in the original
+ * version's lang attribute; as linhas de interface em português levam lang="pt-BR", and parts shown in the original
  * because they are not translated yet carry the original's lang ("" = unknown, never the wrong one).
  */
 export default function RulesView({ doc, level, version = ORIGINAL_KEY }: Props): JSX.Element {
@@ -40,7 +40,7 @@ export default function RulesView({ doc, level, version = ORIGINAL_KEY }: Props)
   const H = level === 1 ? "h1" : "h2";
   const S = level === 1 ? "h2" : "h3";
   const { agreedOn, signers } = doc.charter;
-  const council = doc.kingdom ? `the council of ${doc.kingdom}` : "the kingdom's council";
+  const council = doc.kingdom ? `conselho de ${doc.kingdom}` : "conselho do reino";
   // Original with no code: inherit the page language, as before languages existed.
   const articleLang = v.isOriginal ? (v.lang || undefined) : v.lang;
   const origLang = v.isOriginal ? undefined : cleanLangCode(doc.originalLang);
@@ -51,9 +51,9 @@ export default function RulesView({ doc, level, version = ORIGINAL_KEY }: Props)
         <H class="kq-doc-title" lang={v.titleFallback ? origLang : undefined}>{v.title}</H>
         {doc.kingdom && doc.title && <p class="kq-doc-kingdom">{doc.kingdom}</p>}
         {!v.isOriginal && <p class="kq-doc-meta kq-tr-note" lang={EN} data-translation-note>{TRANSLATION_NOTE}</p>}
-        {v.isOriginal && hasVersions && <p class="kq-doc-meta" lang={EN} data-original-note>This is the original version.</p>}
+        {v.isOriginal && hasVersions && <p class="kq-doc-meta" lang={EN} data-original-note>Esta é a versão original.</p>}
         {doc.languageNote && <p class="kq-doc-meta" lang={origLang}>{doc.languageNote}</p>}
-        {doc.lastReviewed && <p class="kq-doc-meta" lang={EN}>Last reviewed {formatDay(doc.lastReviewed)}</p>}
+        {doc.lastReviewed && <p class="kq-doc-meta" lang={EN}>Última revisão em {formatDay(doc.lastReviewed)}</p>}
       </header>
       {v.intro && (
         <div class="kq-doc-intro kq-section" data-untranslated={v.introFallback ? "" : undefined}>
@@ -63,24 +63,24 @@ export default function RulesView({ doc, level, version = ORIGINAL_KEY }: Props)
       )}
       {v.sections.map((s, i) => (
         <section key={s.id} class="kq-section" aria-labelledby={`kq-s-${level}-${i}`} data-untranslated={s.fallback ? "" : undefined}>
-          <S id={`kq-s-${level}-${i}`} lang={s.heading ? (s.fallback ? origLang : undefined) : EN}>{s.heading || "Untitled section"}</S>
+          <S id={`kq-s-${level}-${i}`} lang={s.heading ? (s.fallback ? origLang : undefined) : EN}>{s.heading || "Seção sem título"}</S>
           {s.fallback && <p class="kq-untr" lang={EN} data-untranslated-note>{UNTRANSLATED_NOTE}</p>}
           <div class="kq-body" lang={s.fallback ? origLang : undefined}><Blocks text={s.body} /></div>
         </section>
       ))}
       {(agreedOn || signers.length > 0) && (
         <section class="kq-charter" aria-labelledby={`kq-charter-${level}`} lang={EN}>
-          <S id={`kq-charter-${level}`}>Charter</S>
-          {agreedOn && <p>Agreed on {formatDay(agreedOn)}.</p>}
+          <S id={`kq-charter-${level}`}>Carta</S>
+          {agreedOn && <p>Combinado em {formatDay(agreedOn)}.</p>}
           {signers.length > 0 && (
             <>
-              <p>Signed by:</p>
+              <p>Assinada por:</p>
               <ul data-signers>{signers.map((n, i) => <li key={i}>{n}</li>)}</ul>
             </>
           )}
         </section>
       )}
-      <p class="kq-byline" lang={EN} data-byline>Written by {council}, not by KingdomOps.</p>
+      <p class="kq-byline" lang={EN} data-byline>Escrito pelo {council}, não pelo KingdomOps.</p>
     </article>
   );
 }

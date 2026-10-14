@@ -117,7 +117,7 @@ describe("rules store glue", () => {
     expect(docFromSearch("?doc=abc")).toBe("abc");
     expect(docFromSearch("")).toBeNull();
     expect(docFromSearch(`?doc=${"x".repeat(65)}`)).toBeNull();
-    expect(formatDay("2026-10-03")).toBe("3 Oct 2026");
+    expect(formatDay("2026-10-03")).toBe("3 de out. de 2026");
     expect(formatDay("nope")).toBe("nope");
   });
 });

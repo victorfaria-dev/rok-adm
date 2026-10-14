@@ -4,13 +4,13 @@ import MgeView from "../../../../components/kingdom/mge/MgeView";
 import "../../../../components/kingdom/shared/kingdom.css";
 import "../../../../components/kingdom/mge/mge.css";
 ---
-<Shell title="MGE ledger" description="A kingdom council's MGE ledger: who got which slot, when and why. View only." mode="read">
+<Shell title="Registro de MGE" description="O registro de MGE de um conselho: quem ficou com qual vaga, quando e por quê. Só leitura." mode="read">
   <div class="kg">
     <header class="kg-head">
-      <h1>MGE ledger</h1>
-      <p class="kg-lead">Who got which MGE slot, when and why, under the rules your council published.</p>
+      <h1>Registro de MGE</h1>
+      <p class="kg-lead">Quem ficou com cada vaga de MGE, quando e por quê, segundo as regras que o seu conselho publicou.</p>
     </header>
     <MgeView client:load />
-    <p class="kg-note kg-noprint">Made with the <a href="/kingdom/mge/">KingdomOps MGE planner</a>. The ledger lives inside the link; nothing is stored on a server.</p>
+    <p class="kg-note kg-noprint">Feito com o <a href="/kingdom/mge/">planejador de MGE do KingdomOps</a>. O registro vive dentro do link; nada fica guardado em servidor.</p>
   </div>
 </Shell>

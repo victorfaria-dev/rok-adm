@@ -51,7 +51,7 @@ export function chooseProfile(search: string, savedCode: string | null): Profile
       if (code === savedCode) return { source: "saved", profile: r.profile, code, error: null, canSave: false };
       return { source: "url", profile: r.profile, code, error: null, canSave: true };
     }
-    return { ...fallback, error: "This profile link is not valid, so you are seeing the default F2P guide. Ask for a new link or build your own profile." };
+    return { ...fallback, error: "Este link de perfil não é válido, então você está vendo o guia F2P padrão. Peça um link novo ou monte o seu próprio perfil." };
   }
   if (savedCode) {
     const r = decodeProfile(savedCode);
@@ -90,11 +90,11 @@ export function selectGuide(payload: GuidePayload, profile: AccountProfile): Gui
 export const FALLBACK_STAGE: KingdomStage = "kvk1";
 
 export const STAGE_NAMES: Record<KingdomStage, string> = {
-  pre_kvk: "pre-KvK",
+  pre_kvk: "pré-KvK",
   kvk1: "KvK1",
   kvk2: "KvK2",
   kvk3: "KvK3",
-  soc: "Season of Conquest",
+  soc: "Temporada de Conquista",
 };
 
 export interface GuideSelection {

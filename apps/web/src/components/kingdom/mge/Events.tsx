@@ -34,8 +34,8 @@ export default function Events({ doc, plan, today, onChange }: Props) {
   const pub = mgePublicPayload(doc, true, today, plan);
 
   function addEvent() {
-    if (!isDay(date)) return setError("Pick the event's date.");
-    if (doc.events.length >= MGE_LIMITS.events) return setError(`A plan holds up to ${MGE_LIMITS.events} events. Start a new plan or delete old events.`);
+    if (!isDay(date)) return setError("Escolha a data do evento.");
+    if (doc.events.length >= MGE_LIMITS.events) return setError(`Um plano comporta até ${MGE_LIMITS.events} eventos. Comece um plano novo ou apague eventos antigos.`);
     setError("");
     const ev: MgeEvent = { id: newDocId(), date, commander: cleanLine(commander, MGE_LIMITS.commander), applicants: [], overrides: [], locked: false, result: null };
     onChange({ ...doc, events: [...doc.events, ev] });
@@ -46,18 +46,18 @@ export default function Events({ doc, plan, today, onChange }: Props) {
 
   return (
     <section class="kg-grid" aria-labelledby="kx-events-h">
-      <h2 id="kx-events-h">Events and ledger ({doc.events.length})</h2>
+      <h2 id="kx-events-h">Eventos e registro ({doc.events.length})</h2>
       <div class="kg-grid kg-grid-2">
-        <DateField id="kx-ev-date" label="Event date" value={date} onValue={setDate} error={error} />
-        <TextField id="kx-ev-cmd" label="Commander (optional)" value={commander} onValue={setCommander} maxLength={MGE_LIMITS.commander} hint="As your council writes it, for example the MGE commander of that week." />
+        <DateField id="kx-ev-date" label="Data do evento" value={date} onValue={setDate} error={error} />
+        <TextField id="kx-ev-cmd" label="Comandante (opcional)" value={commander} onValue={setCommander} maxLength={MGE_LIMITS.commander} hint="Como o seu conselho escreve, por exemplo o comandante do MGE daquela semana." />
       </div>
-      <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={addEvent}>Add event</button></div>
+      <div class="kg-actions"><button type="button" class="btn btn-primary" onClick={addEvent}>Adicionar evento</button></div>
       {plan.warnings.length > 0 && (
-        <ul class="kx-warn" data-plan-warnings aria-label="Plan warnings">
+        <ul class="kx-warn" data-plan-warnings aria-label="Avisos do plano">
           {plan.warnings.map((w, i) => <li key={i}>{w.message}</li>)}
         </ul>
       )}
-      {doc.events.length === 0 && <p class="kg-note">No events yet. Add the date of the next MGE to see who gets each slot.</p>}
+      {doc.events.length === 0 && <p class="kg-note">Nenhum evento ainda. Adicione a data do próximo MGE para ver quem fica com cada vaga.</p>}
       {orderedEvents(doc).map((ev, i) => {
         const p = plan.events[i]!;
         const pe = pub.events[i]!;
@@ -99,9 +99,9 @@ function EventBlock({ doc, ev, warnings, ledger, onPatch, onLock, onDelete }: Bl
 
   function place() {
     const e: typeof errs = {};
-    if (!byId.has(who)) e.who = "Pick a governor.";
+    if (!byId.has(who)) e.who = "Escolha um governador.";
     const r = cleanLine(reason, MGE_LIMITS.reason);
-    if (!r) e.reason = "Write why this governor gets this slot. The reason is shown in the ledger.";
+    if (!r) e.reason = "Escreva por que este governador fica com esta vaga. O motivo aparece no registro.";
     setErrs(e);
     if (e.who || e.reason) return;
     const s = Number(slot);
@@ -114,20 +114,20 @@ function EventBlock({ doc, ev, warnings, ledger, onPatch, onLock, onDelete }: Bl
     <article class="kx-event" aria-labelledby={`${base}-h`} data-event={ev.date}>
       <div class="kx-event-head">
         <h3 id={`${base}-h`} class="kx-h3">{title}</h3>
-        {ev.locked && <span class="kg-badge">Locked</span>}
+        {ev.locked && <span class="kg-badge">Travado</span>}
       </div>
       {!ev.locked && (
         <>
           <div class="kg-grid kg-grid-2">
-            <DateField id={`${base}-date`} label="Date" value={ev.date} onValue={(v) => isDay(v) && onPatch({ date: v })} />
-            <TextField id={`${base}-cmd`} label="Commander" value={ev.commander} maxLength={MGE_LIMITS.commander} onValue={(v) => onPatch({ commander: v.slice(0, MGE_LIMITS.commander) })} />
+            <DateField id={`${base}-date`} label="Data" value={ev.date} onValue={(v) => isDay(v) && onPatch({ date: v })} />
+            <TextField id={`${base}-cmd`} label="Comandante" value={ev.commander} maxLength={MGE_LIMITS.commander} onValue={(v) => onPatch({ commander: v.slice(0, MGE_LIMITS.commander) })} />
           </div>
           {doc.applicationsRequired && (
             <details class="kx-details">
-              <summary>Applicants: {ev.applicants.length} of {doc.candidates.length}</summary>
-              {doc.candidates.length === 0 ? <p class="kg-note">Add governors first.</p> : (
+              <summary>Candidatos: {ev.applicants.length} de {doc.candidates.length}</summary>
+              {doc.candidates.length === 0 ? <p class="kg-note">Adicione governadores primeiro.</p> : (
                 <fieldset class="kx-fieldset">
-                  <legend class="visually-hidden">Applicants for {title}</legend>
+                  <legend class="visually-hidden">Candidatos para {title}</legend>
                   <div class="kx-checks">
                     {doc.candidates.map((c) => (
                       <div class="kg-check" key={c.id}>
@@ -149,33 +149,33 @@ function EventBlock({ doc, ev, warnings, ledger, onPatch, onLock, onDelete }: Bl
             </details>
           )}
           <details class="kx-details">
-            <summary>Place a governor by hand ({ev.overrides.length})</summary>
-            {doc.candidates.length === 0 ? <p class="kg-note">Add governors first.</p> : (
+            <summary>Colocar um governador à mão ({ev.overrides.length})</summary>
+            {doc.candidates.length === 0 ? <p class="kg-note">Adicione governadores primeiro.</p> : (
               <div class="kg-grid">
                 <div class="kg-grid kg-grid-2">
                   <div class="kg-field">
-                    <label for={`${base}-slot`}>Slot</label>
+                    <label for={`${base}-slot`}>Vaga</label>
                     <select id={`${base}-slot`} value={slot} onChange={(e) => setSlot((e.currentTarget as HTMLSelectElement).value)}>
                       {Array.from({ length: doc.slotsPerEvent }, (_, i) => <option key={i} value={String(i + 1)}>{i + 1}</option>)}
                     </select>
                   </div>
                   <div class="kg-field">
-                    <label for={`${base}-who`}>Governor</label>
+                    <label for={`${base}-who`}>Governador</label>
                     <select id={`${base}-who`} value={who} aria-invalid={errs.who ? "true" : undefined} aria-describedby={errs.who ? `${base}-who-error` : undefined} onChange={(e) => setWho((e.currentTarget as HTMLSelectElement).value)}>
-                      {!byId.has(who) && <option value="">Pick a governor</option>}
+                      {!byId.has(who) && <option value="">Escolha um governador</option>}
                       {doc.candidates.map((c) => <option key={c.id} value={c.id}>{c.name}</option>)}
                     </select>
                     {errs.who && <p id={`${base}-who-error`} class="kg-error">{errs.who}</p>}
                   </div>
                 </div>
-                <TextField id={`${base}-reason`} label="Reason (required)" value={reason} onValue={setReason} maxLength={MGE_LIMITS.reason} error={errs.reason} hint="Shown in the public ledger, for example: garrison lead for the Kingsland fight." />
-                <div class="kg-actions"><button type="button" class="btn btn-secondary" onClick={place}>Place in slot {slot}</button></div>
+                <TextField id={`${base}-reason`} label="Motivo (obrigatório)" value={reason} onValue={setReason} maxLength={MGE_LIMITS.reason} error={errs.reason} hint="Aparece no registro público, por exemplo: líder de guarnição na luta da Terra dos Reis." />
+                <div class="kg-actions"><button type="button" class="btn btn-secondary" onClick={place}>Colocar na vaga {slot}</button></div>
                 {ev.overrides.length > 0 && (
                   <ul class="kx-overrides">
                     {ev.overrides.map((o) => (
                       <li key={o.slot}>
-                        <span>Slot {o.slot}: {byId.get(o.candidateId)?.name ?? "removed governor"}. {o.reason}</span>
-                        <button type="button" class="btn btn-secondary" aria-label={`Remove manual placement in slot ${o.slot}`} onClick={() => onPatch({ overrides: ev.overrides.filter((x) => x.slot !== o.slot) })}>Remove</button>
+                        <span>Vaga {o.slot}: {byId.get(o.candidateId)?.name ?? "governador removido"}. {o.reason}</span>
+                        <button type="button" class="btn btn-secondary" aria-label={`Remover colocação manual na vaga ${o.slot}`} onClick={() => onPatch({ overrides: ev.overrides.filter((x) => x.slot !== o.slot) })}>Remover</button>
                       </li>
                     ))}
                   </ul>
@@ -187,16 +187,16 @@ function EventBlock({ doc, ev, warnings, ledger, onPatch, onLock, onDelete }: Bl
       )}
       {ledger}
       {warnings.length > 0 && (
-        <ul class="kx-warn" aria-label={`Warnings for ${title}`}>
+        <ul class="kx-warn" aria-label={`Avisos de ${title}`}>
           {warnings.map((w, i) => <li key={i}>{w}</li>)}
         </ul>
       )}
       <div class="kg-actions">
-        <button type="button" class="btn btn-secondary" onClick={() => onLock(!ev.locked)} aria-describedby={`${base}-lock-hint`}>{ev.locked ? "Unlock event" : "Lock event"}</button>
-        <ConfirmAction label="Delete event" ariaLabel={`Delete event ${title}`} question={`Delete the event of ${title}?`} onConfirm={onDelete} />
+        <button type="button" class="btn btn-secondary" onClick={() => onLock(!ev.locked)} aria-describedby={`${base}-lock-hint`}>{ev.locked ? "Destravar evento" : "Travar evento"}</button>
+        <ConfirmAction label="Apagar evento" ariaLabel={`Apagar evento ${title}`} question={`Apagar o evento de ${title}?`} onConfirm={onDelete} />
       </div>
       <p id={`${base}-lock-hint`} class="kg-hint">
-        {ev.locked ? "Locked: this ledger is kept as history. Unlocking recalculates it from the current list and rules." : "Lock an event once it is over: its ledger is kept as history, and later edits do not change it."}
+        {ev.locked ? "Travado: este registro é mantido como histórico. Destravar recalcula com a lista e as regras atuais." : "Trave um evento quando ele acabar: o registro fica como histórico e edições posteriores não o alteram."}
       </p>
     </article>
   );

@@ -10,12 +10,12 @@ const here = dirname(fileURLToPath(import.meta.url));
 const load = (set: string) => JSON.parse(readFileSync(join(here, `../../../guides/data/blocks.${set}.json`), "utf8")) as GuideBlock[];
 
 const GUIDES = [
-  ["/guides/first-30-days/", "first30", "Your first 30 days"],
-  ["/guides/low-spender/", "low", "Low spender guide"],
-  ["/guides/returning/", "returning", "Coming back to the game"],
-  ["/guides/recovery/", "recovery", "Recovering after being zeroed"],
-  ["/guides/kingdom-admin/", "kingdomadmin", "Kingdom administration"],
-  ["/guides/late-game/", "latestage", "Late game guide"],
+  ["/guides/first-30-days/", "first30", "Seus primeiros 30 dias"],
+  ["/guides/low-spender/", "low", "Guia para quem gasta pouco"],
+  ["/guides/returning/", "returning", "Voltando ao jogo"],
+  ["/guides/recovery/", "recovery", "Recuperação depois de ser zerado"],
+  ["/guides/kingdom-admin/", "kingdomadmin", "Administração do reino"],
+  ["/guides/late-game/", "latestage", "Guia do fim de jogo"],
 ] as const;
 
 async function axe(page: Page) {
@@ -26,7 +26,7 @@ async function axe(page: Page) {
 }
 
 // Guides are not a tab (owner decision, UX stage 1): guide pages mark Me, where the Guides row is.
-const meTab = (page: Page) => page.locator("nav.tabs[data-nav=player]").getByRole("link", { name: "Me", exact: true });
+const meTab = (page: Page) => page.locator("nav.tabs[data-nav=player]").getByRole("link", { name: "Eu", exact: true });
 
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
@@ -38,20 +38,20 @@ test.describe("without JavaScript", () => {
       await expect(page.locator("h1")).toHaveText(title);
       await expect(page.locator("article[data-block-id]")).toHaveCount(blocks.length);
       const summary = page.locator("[data-confidence-summary]");
-      await expect(summary).toContainText("Steps by confidence");
+      await expect(summary).toContainText("Passos por confiança");
       const total = (await summary.locator(".g-conf-count .mono").allTextContents()).reduce((n, t) => n + Number(t), 0);
       expect(total).toBe(blocks.length);
       for (const b of blocks) {
         const article = page.locator(`article[data-block-id="${b.id}"]`);
         await expect(article.locator(`.g-tags [data-confidence="${b.confidence}"]`)).toHaveCount(1);
-        await expect(article.locator(".g-patch")).toContainText(/Verified on patch \d+\.\d+\.\d+/);
+        await expect(article.locator(".g-patch")).toContainText(/Verificado na atualização \d+\.\d+\.\d+/);
       }
     });
   }
 
   test("/guides/ is one list grouped by intent with every guide, safety, zeroed and what changed", async ({ page }) => {
     await page.goto("/guides/");
-    await expect(page.locator("h1")).toHaveText("Guides");
+    await expect(page.locator("h1")).toHaveText("Guias");
     const entries = page.locator("[data-guide-entry]");
     await expect(entries).toHaveCount(HUB_GROUPS.reduce((n, g) => n + g.items.length, 0));
     await expect(page.locator("[data-guide-group] h2")).toHaveText(HUB_GROUPS.map((g) => g.title));
@@ -65,14 +65,14 @@ test.describe("without JavaScript", () => {
 
   test("the glossary search submits to /glossary/ without JS", async ({ page }) => {
     await page.goto("/guides/");
-    await page.getByLabel("Look up a term").fill("MGE");
-    await page.getByRole("button", { name: "Search glossary" }).click();
+    await page.getByLabel("Procurar um termo").fill("MGE");
+    await page.getByRole("button", { name: "Buscar no glossário" }).click();
     await expect(page).toHaveURL(/\/glossary\/\?q=MGE$/);
   });
 
   test("the low spender page explains it is a delta over the F2P guide", async ({ page }) => {
     await page.goto("/guides/low-spender/");
-    await expect(page.locator(".g-intro")).toContainText("delta over the F2P plan");
+    await expect(page.locator(".g-intro")).toContainText("complemento ao plano F2P");
     await expect(page.locator(".g-intro a[href='/guide/']")).toHaveCount(1);
   });
 });
@@ -98,7 +98,7 @@ test("with a profile the hub filters to For you; All guides shows everything", a
   await expect(filter).toBeVisible();
   await expect(page.locator('[data-tag="kingdomadmin"]')).toBeHidden();
   await expect(page.locator('a.gh-link[href="/guide/"]')).toBeVisible();
-  await filter.getByText("All guides").click();
+  await filter.getByText("Todos os guias").click();
   await expect(page.locator('[data-tag="kingdomadmin"]')).toBeVisible();
   await page.goto("/glossary/?q=MGE");
   await expect(page.getByLabel("Search the glossary")).toHaveValue("MGE");
@@ -114,7 +114,7 @@ test.describe("guides under Me (phone)", () => {
     }
     await expect(page.locator("nav.tabs[data-nav=player] li")).toHaveCount(3);
     await page.goto("/me/");
-    await page.locator("ul.me-group").first().getByRole("link", { name: "Guides", exact: true }).click();
+    await page.locator("ul.me-group").first().getByRole("link", { name: "Guias", exact: true }).click();
     await page.waitForURL(/\/guides\/$/);
     await expect(page.getByRole("button", { name: "More" })).toHaveCount(0);
   });
@@ -140,7 +140,7 @@ test("desktop: guide pages mark Me in the rail and no More button is shown", asy
   test.skip(isMobile, "desktop only");
   await page.goto("/guides/recovery/");
   const rail = page.locator("nav.rail");
-  await expect(rail.getByRole("link", { name: "Me", exact: true })).toBeVisible();
-  await expect(rail.getByRole("link", { name: "Me", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(rail.getByRole("link", { name: "Eu", exact: true })).toBeVisible();
+  await expect(rail.getByRole("link", { name: "Eu", exact: true })).toHaveAttribute("aria-current", "page");
   await expect(page.getByRole("button", { name: "More" })).toHaveCount(0);
 });

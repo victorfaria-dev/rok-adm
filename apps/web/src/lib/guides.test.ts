@@ -82,9 +82,9 @@ describe("guides for you", () => {
       expect(matches.map((l) => l.set), spending).not.toContain("low");
       const low = links.find((l) => l.set === "low")!;
       expect(low.included, spending).toBe(true);
-      expect(low.title, spending).not.toBe("Low spender guide");
+      expect(low.title, spending).not.toBe("Guia para quem gasta pouco");
     }
-    expect(guidesForYou(make({ spending: "low" })).find((l) => l.set === "low")?.title).toBe("Low spender guide");
+    expect(guidesForYou(make({ spending: "low" })).find((l) => l.set === "low")?.title).toBe("Guia para quem gasta pouco");
   });
 
   it("puts Returning first for a returning player, Recovery first when zeroed", () => {
@@ -99,7 +99,7 @@ describe("guides for you", () => {
       const links = guidesForYou(make({ kingdomStage, cityHall: 25, role: "lider" }));
       expect(links[0]?.set, kingdomStage).toBe("latestage");
       expect(links[0]?.href).toBe("/guides/late-game/");
-      expect(links[0]?.reason).toMatch(/main plan on this page/);
+      expect(links[0]?.reason).toMatch(/plano principal desta página/);
     }
     for (const kingdomStage of ["pre_kvk", "kvk1"] as const)
       expect(guidesForYou(make({ kingdomStage })).map((l) => l.set), kingdomStage).not.toContain("latestage");

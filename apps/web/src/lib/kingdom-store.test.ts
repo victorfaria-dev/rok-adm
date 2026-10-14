@@ -52,8 +52,8 @@ describe("kingdom store", () => {
   it("enforces the per-kind limit and the size limit with actionable errors", () => {
     const st = memoryStorage();
     for (let i = 0; i < MAX_DOCS_PER_KIND; i++) saveDoc({ id: `r${i}`, kind: "rules", title: "x", data: {} }, st, T0);
-    expect(() => saveDoc({ id: "extra", kind: "rules", title: "x", data: {} }, st, T0)).toThrow(/up to 20/);
-    expect(() => saveDoc({ id: "m", kind: "mge", title: "x", data: "a".repeat(MAX_DOC_CHARS + 1) }, st, T0)).toThrow(/too large/);
+    expect(() => saveDoc({ id: "extra", kind: "rules", title: "x", data: {} }, st, T0)).toThrow(/até 20/);
+    expect(() => saveDoc({ id: "m", kind: "mge", title: "x", data: "a".repeat(MAX_DOC_CHARS + 1) }, st, T0)).toThrow(/grande demais/);
     // Replacing an existing one still works at the limit.
     expect(() => saveDoc({ id: "r0", kind: "rules", title: "y", data: {} }, st, T1)).not.toThrow();
   });
@@ -90,9 +90,9 @@ describe("kingdom store", () => {
   });
 
   it("refuses files that are not council exports", () => {
-    expect(() => parseKingdomExport("nope")).toThrow(/not a KingdomOps council export/);
-    expect(() => parseKingdomExport(JSON.stringify({ app: "kingdomops-farms", v: 1 }))).toThrow(/not a KingdomOps council export/);
-    expect(() => parseKingdomExport(JSON.stringify({ app: "kingdomops-kingdom", v: 9, docs: [] }))).toThrow(/version/);
+    expect(() => parseKingdomExport("nope")).toThrow(/não é uma exportação do conselho do KingdomOps/);
+    expect(() => parseKingdomExport(JSON.stringify({ app: "kingdomops-farms", v: 1 }))).toThrow(/não é uma exportação do conselho do KingdomOps/);
+    expect(() => parseKingdomExport(JSON.stringify({ app: "kingdomops-kingdom", v: 9, docs: [] }))).toThrow(/versão/);
   });
 
   it("import never replaces a document of another kind, and compares real times", () => {

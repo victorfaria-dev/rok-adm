@@ -15,7 +15,7 @@ describe("MGE governors from CSV", () => {
     expect(r.added).toBe(2);
     expect(r.updated).toEqual(["Alpha"]);
     expect(r.doc.candidates.map((c) => [c.name, c.score])).toEqual([["Alpha", 4_200_000], ["Bo, Jr", 1200], ["Dee", 300_000]]);
-    expect(r.errors).toEqual([{ line: 4, text: "Cy, abc", message: expect.stringContaining("not a number") }]);
+    expect(r.errors).toEqual([{ line: 4, text: "Cy, abc", message: expect.stringContaining("não é um número") }]);
   });
 
   it("a guarded formula comes back as plain text, never evaluated", () => {
@@ -35,7 +35,7 @@ describe("requirements roster CSV", () => {
     const p = parseCsv(csv);
     expect(p.ok && p.rows[0]).toEqual(["name", "power", "t1", "t2", "t3", "t4", "t5", "deads", "kp", "dkp", "target", "percent_of_target", "result"]);
     expect(p.ok && p.rows.length).toBe(4);
-    expect(p.ok && p.rows[1]![0]).toBe("Sample A");
+    expect(p.ok && p.rows[1]![0]).toBe("Exemplo A");
     expect(p.ok && ["pass", "below", "no band"]).toContain(p.ok && p.rows[1]![12]);
 
     const back = rosterFromCsv([], csv, ids);
@@ -48,10 +48,10 @@ describe("requirements roster CSV", () => {
 
   it("same name updates, bad numbers are reported per row, the limit holds", () => {
     const start = cardToForm(newCard()).samples;
-    const r = rosterFromCsv(start, "Name,Power,T4 kills\nsample a,1m,\nNew,xx,1\nNew2,2m,5k\n", ids);
+    const r = rosterFromCsv(start, "Name,Power,T4 kills\nexemplo a,1m,\nNew,xx,1\nNew2,2m,5k\n", ids);
     expect(r.updated).toBe(1);
     expect(r.samples[0]!.values.power).toBe("1m");
-    expect(r.errors).toEqual([{ line: 3, message: "Not a number: power." }]);
+    expect(r.errors).toEqual([{ line: 3, message: "Não é um número: power." }]);
     expect(r.samples.at(-1)).toMatchObject({ name: "New2", values: { power: "2m", t4: "5k" } });
     const many = "name\n" + Array.from({ length: 30 }, (_, i) => `G${i}`).join("\n");
     const full = rosterFromCsv([], many, ids);

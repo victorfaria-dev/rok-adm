@@ -87,9 +87,9 @@ export function docFromSearch(search: string): string | null {
   return id && id.length <= 64 ? id : null;
 }
 
-/** "13 Oct 2026" for a YYYY-MM-DD day (UTC, so the day never shifts). */
+/** "13 de out. de 2026" para um dia AAAA-MM-DD (UTC, so the day never shifts). */
 export function formatDay(day: string): string {
   const d = new Date(`${day}T00:00:00Z`);
   if (!Number.isFinite(d.getTime())) return day;
-  return d.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  return d.toLocaleDateString("pt-BR", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
 }

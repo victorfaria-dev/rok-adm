@@ -41,8 +41,8 @@ test.describe("rules page builder", () => {
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
     await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
-    await expect(page.getByText("No rules pages saved on this device yet.")).toBeVisible();
-    await expect(page.getByRole("link", { name: "kingdom admin guide" })).toHaveAttribute("href", "/guides/kingdom-admin/");
+    await expect(page.getByText("Nenhuma página de regras salva neste aparelho ainda.")).toBeVisible();
+    await expect(page.getByRole("link", { name: "guia de administração do reino" })).toHaveAttribute("href", "/guides/kingdom-admin/");
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
     expect(errors).toEqual([]);
@@ -52,32 +52,32 @@ test.describe("rules page builder", () => {
     const errors = trackErrors(page);
     await page.setViewportSize({ width: 360, height: 780 });
     await gotoHydrated(page, "/kingdom/rules/");
-    await page.getByRole("button", { name: "New blank rules page" }).click();
+    await page.getByRole("button", { name: "Nova página de regras em branco" }).click();
     await expect(page.locator("[data-editor-title]")).toBeFocused();
     await expect(page).toHaveURL(/\?doc=/);
 
-    await page.getByLabel("Kingdom", { exact: true }).fill("K1234");
-    await page.getByLabel("Title", { exact: true }).fill("K1234 rules");
-    await page.getByLabel("Introduction").fill("Read these first.\n\n- Be kind");
+    await page.getByLabel("Reino", { exact: true }).fill("K1234");
+    await page.getByLabel("Título", { exact: true }).fill("K1234 rules");
+    await page.getByLabel("Introdução").fill("Read these first.\n\n- Be kind");
 
-    await page.getByRole("button", { name: "Add section" }).click();
-    await expect(page.getByLabel("Heading")).toBeFocused();
-    await page.getByLabel("Heading").fill("MGE policy");
-    await page.getByLabel("Text", { exact: true }).fill("Rotation.\n\n1. Top 10 fixed\n2. <b>Others</b> capped");
+    await page.getByRole("button", { name: "Adicionar seção" }).click();
+    await expect(page.getByLabel("Título da seção")).toBeFocused();
+    await page.getByLabel("Título da seção").fill("MGE policy");
+    await page.getByLabel("Texto", { exact: true }).fill("Rotation.\n\n1. Top 10 fixed\n2. <b>Others</b> capped");
 
-    await page.getByLabel("Add a section").selectOption("farms");
-    await page.getByRole("button", { name: "Add section" }).click();
+    await page.getByLabel("Adicionar uma seção").selectOption("farms");
+    await page.getByRole("button", { name: "Adicionar seção" }).click();
     await expect(page.locator("[data-section]")).toHaveCount(2);
-    await page.getByRole("button", { name: 'Move "Farms & alt accounts" up' }).click();
-    await expect(page.locator("[data-section]").first().getByLabel("Heading")).toHaveValue("Farms & alt accounts");
+    await page.getByRole("button", { name: 'Subir "Farms & alt accounts"' }).click();
+    await expect(page.locator("[data-section]").first().getByLabel("Título da seção")).toHaveValue("Farms & alt accounts");
     await expect(page.locator("[data-prompts-left]")).toBeVisible();
-    await page.locator("[data-section]").first().getByLabel("Text", { exact: true }).fill("Register farms with the council.");
+    await page.locator("[data-section]").first().getByLabel("Texto", { exact: true }).fill("Register farms with the council.");
     await expect(page.locator("[data-prompts-left]")).toHaveCount(0);
 
-    await page.getByLabel("Agreed on").fill("2026-10-01");
-    await page.getByLabel("Signed by").fill("Ana\nBo");
-    await page.getByLabel("Last reviewed").fill("2026-10-10");
-    await expect(page.locator("[data-save-status]")).toHaveText("All changes saved on this device.");
+    await page.getByLabel("Combinado em").fill("2026-10-01");
+    await page.getByLabel("Assinada por").fill("Ana\nBo");
+    await page.getByLabel("Última revisão").fill("2026-10-10");
+    await expect(page.locator("[data-save-status]")).toHaveText("Todas as alterações foram salvas neste aparelho.");
     // The status can read "saved" from an earlier field while the last edit's save is still pending
     // under load: wait for the stored document itself.
     await expect.poll(async () => ((await storedDocs(page))[0]?.data.charter as { signers?: string[] } | undefined)?.signers).toEqual(["Ana", "Bo"]);
@@ -85,15 +85,15 @@ test.describe("rules page builder", () => {
     expect(docs).toHaveLength(1);
     expect(docs[0]!.kind).toBe("rules");
 
-    await page.getByRole("button", { name: "Preview" }).click();
+    await page.getByRole("button", { name: "Visualizar" }).click();
     await expect(page.locator("[data-preview] h2").first()).toHaveText("K1234 rules");
-    await page.getByRole("button", { name: "Preview" }).click();
+    await page.getByRole("button", { name: "Visualizar" }).click();
 
-    await page.getByRole("button", { name: "Share view-only link" }).click();
+    await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
     const link = await page.locator("#kq-link").inputValue();
     expect(link).toMatch(/\/kingdom\/rules\/view\/#d=1[zj]/);
     await expect(page.locator("[data-link-long]")).toHaveCount(0);
-    await expect(page.locator("[data-chat-warning]")).toContainText("Never paste links in in-game chat");
+    await expect(page.locator("[data-chat-warning]")).toContainText("Nunca cole links no chat do jogo");
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
 
@@ -103,20 +103,20 @@ test.describe("rules page builder", () => {
     await view.goto(link);
     await expect(view.locator("h1")).toHaveText("K1234 rules");
     await expect(view.locator(".kq-doc-kingdom")).toHaveText("K1234");
-    await expect(view.locator("[data-rules-doc] h2")).toHaveText(["Farms & alt accounts", "MGE policy", "Charter"]);
+    await expect(view.locator("[data-rules-doc] h2")).toHaveText(["Farms & alt accounts", "MGE policy", "Carta"]);
     await expect(view.locator(".kq-section ol li")).toHaveText(["Top 10 fixed", "<b>Others</b> capped"]);
     await expect(view.locator(".kq-section b")).toHaveCount(0);
     await expect(view.locator(".kq-doc-intro li")).toHaveText("Be kind");
     await expect(view.locator("[data-signers] li")).toHaveText(["Ana", "Bo"]);
-    await expect(view.getByText("Agreed on 1 Oct 2026.")).toBeVisible();
-    await expect(view.getByText("Last reviewed 10 Oct 2026")).toBeVisible();
-    await expect(view.locator("[data-byline]")).toHaveText("Written by the council of K1234, not by KingdomOps.");
+    await expect(view.getByText("Combinado em 1 de out. de 2026.")).toBeVisible();
+    await expect(view.getByText("Última revisão em 10 de out. de 2026")).toBeVisible();
+    await expect(view.locator("[data-byline]")).toHaveText("Escrito pelo conselho de K1234, não pelo KingdomOps.");
     await expect(view).toHaveTitle(/K1234 rules/);
     await expectNoSidewaysScroll(view);
     await expectTargets44(view);
 
     await view.evaluate(() => { (window as unknown as { printed: number }).printed = 0; window.print = () => { (window as unknown as { printed: number }).printed++; }; });
-    await view.getByRole("button", { name: "Print or save as PDF" }).click();
+    await view.getByRole("button", { name: "Imprimir ou salvar em PDF" }).click();
     expect(await view.evaluate(() => (window as unknown as { printed: number }).printed)).toBe(1);
 
     await view.emulateMedia({ media: "print" });
@@ -124,9 +124,9 @@ test.describe("rules page builder", () => {
     await expect(view.locator("nav.tabs:visible")).toHaveCount(0);
     await view.emulateMedia({ media: "screen" });
 
-    await view.getByRole("button", { name: "Make an editable copy" }).click();
+    await view.getByRole("button", { name: "Fazer uma cópia editável" }).click();
     await expect(view).toHaveURL(/\/kingdom\/rules\/\?doc=/);
-    await expect(view.locator("[data-editor-title]")).toHaveText("Editing: K1234 rules");
+    await expect(view.locator("[data-editor-title]")).toHaveText("Editando: K1234 rules");
     const all = await storedDocs(view);
     expect(all).toHaveLength(2);
     expect(new Set(all.map((d) => d.id)).size).toBe(2);
@@ -136,9 +136,9 @@ test.describe("rules page builder", () => {
 
   test("new kingdom charter starts with the starter sections", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/rules/");
-    await page.getByRole("button", { name: "New kingdom charter" }).click();
+    await page.getByRole("button", { name: "Nova carta do reino" }).click();
     await expect(page.locator("[data-section]")).toHaveCount(7);
-    await expect(page.getByLabel("Title", { exact: true })).toHaveValue("Kingdom charter");
+    await expect(page.getByLabel("Título", { exact: true })).toHaveValue("Kingdom charter");
     await expect(page.locator("[data-prompts-left]")).toBeVisible();
   });
 
@@ -147,30 +147,30 @@ test.describe("rules page builder", () => {
     await seed(page, [DOC]);
     await gotoHydrated(page, "/kingdom/rules/?doc=r1");
     await expect(page.locator("[data-section]")).toHaveCount(2);
-    await page.getByRole("button", { name: 'Delete "MGE policy"' }).click();
-    await page.getByRole("button", { name: "Yes, delete" }).click();
+    await page.getByRole("button", { name: 'Apagar "MGE policy"' }).click();
+    await page.getByRole("button", { name: "Sim, apagar" }).click();
     await expect(page.locator("[data-section]")).toHaveCount(1);
-    await expect(page.locator("[data-save-status]")).toHaveText("All changes saved on this device.");
-    await page.getByRole("button", { name: "All rules pages" }).click();
+    await expect(page.locator("[data-save-status]")).toHaveText("Todas as alterações foram salvas neste aparelho.");
+    await page.getByRole("button", { name: "Todas as páginas de regras" }).click();
     await expect(page.locator("[data-rules-item]")).toHaveCount(1);
-    await page.getByRole("button", { name: "Delete K1234 rules" }).click();
-    await page.getByRole("button", { name: "Yes, delete" }).click();
-    await expect(page.getByText("No rules pages saved on this device yet.")).toBeVisible();
+    await page.getByRole("button", { name: "Apagar K1234 rules" }).click();
+    await page.getByRole("button", { name: "Sim, apagar" }).click();
+    await expect(page.getByText("Nenhuma página de regras salva neste aparelho ainda.")).toBeVisible();
     expect(await storedDocs(page)).toEqual([]);
     expect(errors).toEqual([]);
   });
 
   test("unknown ?doc= shows a message", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/rules/?doc=missing");
-    await expect(page.getByRole("alert")).toContainText("not saved on this device");
+    await expect(page.getByRole("alert")).toContainText("não está salva neste aparelho");
   });
 
   test("warns when the link is too long for one Discord message", async ({ page }) => {
     const big = { ...RULES, sections: Array.from({ length: 6 }, (_, i) => ({ id: `n${i}`, heading: `Part ${i}`, body: noise(300, i + 7) })) };
     await seed(page, [{ ...DOC, data: big }]);
     await gotoHydrated(page, "/kingdom/rules/?doc=r1");
-    await page.getByRole("button", { name: "Share view-only link" }).click();
-    await expect(page.locator("[data-link-long]")).toContainText("Discord cuts messages at 2,000 characters");
+    await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
+    await expect(page.locator("[data-link-long]")).toContainText("O Discord corta mensagens com 2.000 caracteres");
   });
 
   for (const theme of ["dark", "light"] as const) {
@@ -182,9 +182,9 @@ test.describe("rules page builder", () => {
         await expect(page.locator(state === "filled" ? "[data-rules-editor]" : "[data-rules-list]")).toBeVisible();
         await expectAxeClean(page);
         if (state === "filled") {
-          await page.getByRole("button", { name: "Share view-only link" }).click();
+          await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
           await expect(page.locator("#kq-link")).toBeVisible();
-          await page.getByRole("button", { name: "Preview" }).click();
+          await page.getByRole("button", { name: "Visualizar" }).click();
           await expect(page.locator("[data-preview]")).toBeVisible();
           await expectAxeClean(page);
         }
@@ -197,21 +197,21 @@ test.describe("rules view page", () => {
   async function viewLink(page: Page): Promise<string> {
     await seed(page, [DOC]);
     await gotoHydrated(page, "/kingdom/rules/?doc=r1");
-    await page.getByRole("button", { name: "Share view-only link" }).click();
+    await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
     return page.locator("#kq-link").inputValue();
   }
 
   test("static HTML shows a loading line before the link is decoded", async ({ request }) => {
     const html = await (await request.get("/kingdom/rules/view/")).text();
-    expect(html).toContain("Loading the rules…");
+    expect(html).toContain("Carregando as regras…");
   });
 
   test("a corrupted link shows the error and a way back", async ({ page }) => {
     const errors = trackErrors(page);
     await gotoHydrated(page, "/kingdom/rules/view/#d=1zAB$$broken");
-    await expect(page.locator("h1")).toHaveText("This rules link cannot be opened");
+    await expect(page.locator("h1")).toHaveText("Este link de regras não pode ser aberto");
     await expect(page.getByRole("alert")).toContainText("This link is damaged");
-    await expect(page.getByRole("link", { name: "Go to the rules page builder" })).toHaveAttribute("href", "/kingdom/rules/");
+    await expect(page.getByRole("link", { name: "Ir ao montador da página de regras" })).toHaveAttribute("href", "/kingdom/rules/");
     await gotoHydrated(page, "/kingdom/rules/view/");
     await expect(page.getByRole("alert")).toContainText("This link has no document in it");
     expect(errors).toEqual([]);
@@ -223,7 +223,7 @@ test.describe("rules view page", () => {
     const i = link.indexOf("#d=") + 3 + 40;
     const tampered = link.slice(0, i) + (link[i] === "A" ? "B" : "A") + link.slice(i + 1);
     await gotoHydrated(page, tampered);
-    await expect(page.locator("h1")).toHaveText("This rules link cannot be opened");
+    await expect(page.locator("h1")).toHaveText("Este link de regras não pode ser aberto");
     await expect(page.getByRole("alert")).toContainText("This link is damaged");
   });
 
@@ -255,44 +255,44 @@ test.describe("rules in more than one language", () => {
     await page.setViewportSize({ width: 360, height: 780 });
     await seed(page, [DOC]);
     await gotoHydrated(page, "/kingdom/rules/?doc=r1");
-    await page.getByLabel("Language of the original").fill("English");
-    await page.getByLabel("Code of the original language (optional)").fill("en");
+    await page.getByLabel("Idioma do original", { exact: true }).fill("English");
+    await page.getByLabel("Código do idioma do original (opcional)").fill("en");
 
-    await page.getByRole("button", { name: "Add a language" }).click();
-    await expect(page.getByLabel("Language name")).toBeFocused();
-    await page.getByLabel("Language name").fill("Español");
-    const code = page.getByLabel("Language code (optional)");
+    await page.getByRole("button", { name: "Adicionar um idioma" }).click();
+    await expect(page.getByLabel("Nome do idioma")).toBeFocused();
+    await page.getByLabel("Nome do idioma").fill("Español");
+    const code = page.getByLabel("Código do idioma (opcional)");
     await code.fill("es_ES");
     await expect(code).toHaveAttribute("aria-invalid", "true");
-    await expect(page.locator("#kq-t-lang-error")).toContainText("short code of a real language");
+    await expect(page.locator("#kq-t-lang-error")).toContainText("código curto de um idioma real");
     await expect(code).toHaveAttribute("aria-describedby", /kq-t-lang-error/);
     await code.fill("es");
     await expect(page.locator("#kq-t-lang-error")).toHaveCount(0);
 
-    await expect(page.locator("[data-untranslated-count]")).toHaveText("3 of 3 parts not translated yet.");
-    await page.getByLabel("Translated title").fill("Reglas de K1234");
-    await page.getByLabel("Translated introduction").fill("Lee esto primero.");
+    await expect(page.locator("[data-untranslated-count]")).toHaveText("3 de 3 partes ainda não traduzidas.");
+    await page.getByLabel("Título traduzido", { exact: true }).fill("Reglas de K1234");
+    await page.getByLabel("Introdução traduzida").fill("Lee esto primero.");
     await page.locator("#kq-th-a").fill("Política de MGE");
     await page.locator("#kq-tb-a").fill("Rotación.\n\n- Top 10 [fijo]");
     await expect(page.locator("[data-prompts-left-lang]")).toBeVisible();
     await expect(page.locator("[data-prompts-left]")).toContainText("(Español)");
     await page.locator("#kq-tb-a").fill("Rotación.\n\n- Top 10 fijo");
     await expect(page.locator("[data-prompts-left]")).toHaveCount(0);
-    await expect(page.locator("[data-untranslated-count]")).toHaveText("1 of 3 parts not translated yet.");
-    await expect(page.locator("[data-untranslated-summary]")).toContainText("Español: 1 part not translated yet");
+    await expect(page.locator("[data-untranslated-count]")).toHaveText("1 de 3 partes ainda não traduzidas.");
+    await expect(page.locator("[data-untranslated-summary]")).toContainText("Español: 1 parte ainda não traduzida");
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
 
     // Preview follows the version being edited.
-    await page.getByRole("button", { name: "Preview" }).click();
+    await page.getByRole("button", { name: "Visualizar" }).click();
     await expect(page.locator("[data-preview] [data-rules-doc]")).toHaveAttribute("lang", "es");
     await expect(page.locator("[data-preview] h2").first()).toHaveText("Reglas de K1234");
-    await page.getByRole("button", { name: "Preview" }).click();
-    await expect(page.locator("[data-save-status]")).toHaveText("All changes saved on this device.");
+    await page.getByRole("button", { name: "Visualizar" }).click();
+    await expect(page.locator("[data-save-status]")).toHaveText("Todas as alterações foram salvas neste aparelho.");
     const stored = await storedDocs(page);
     expect((stored[0]!.data.translations as unknown[]).length).toBe(1);
 
-    await page.getByRole("button", { name: "Share view-only link" }).click();
+    await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
     const link = await page.locator("#kq-link").inputValue();
     await expect(page.locator("[data-link-partial]")).toHaveCount(0);
 
@@ -304,7 +304,7 @@ test.describe("rules in more than one language", () => {
     // English reader: the original first.
     await expect(view.locator("h1")).toHaveText("K1234 rules");
     await expect(doc).toHaveAttribute("lang", "en");
-    const switcher = view.getByRole("group", { name: "Language" });
+    const switcher = view.getByRole("group", { name: "Idioma" });
     await expect(switcher.getByRole("button", { name: "English (original)" })).toHaveAttribute("aria-pressed", "true");
     await expect(view.locator("[data-original-note]")).toBeVisible();
 
@@ -313,14 +313,14 @@ test.describe("rules in more than one language", () => {
     await expect(view.locator("h1")).toHaveText("Reglas de K1234");
     await expect(doc).toHaveAttribute("lang", "es");
     await expect(view.locator("[data-translation-note]")).toHaveText("Translation by the council. If it differs, the original prevails.");
-    await expect(view.locator("[data-translation-note]")).toHaveAttribute("lang", "en");
+    await expect(view.locator("[data-translation-note]")).toHaveAttribute("lang", "pt-BR");
     await expect(doc.locator("h2").first()).toHaveText("Política de MGE");
     const untranslated = doc.locator("section[data-untranslated]");
     await expect(untranslated).toHaveCount(1);
     await expect(untranslated.locator("h2")).toHaveText("Farms & alt accounts");
     await expect(untranslated.locator("h2")).toHaveAttribute("lang", "en");
     await expect(untranslated.locator("[data-untranslated-note]")).toHaveText("Not translated yet. Shown in the original language.");
-    await expect(view.locator("[data-byline]")).toHaveAttribute("lang", "en");
+    await expect(view.locator("[data-byline]")).toHaveAttribute("lang", "pt-BR");
     await expect(view).toHaveURL(/&lang=es$/);
     await expect(view).toHaveTitle(/Reglas de K1234/);
     await expectNoSidewaysScroll(view);
@@ -347,7 +347,7 @@ test.describe("rules in more than one language", () => {
     const link = await (async () => {
       await seed(page, [DOC]);
       await gotoHydrated(page, "/kingdom/rules/?doc=r1");
-      await page.getByRole("button", { name: "Share view-only link" }).click();
+      await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
       return page.locator("#kq-link").inputValue();
     })();
     await gotoHydrated(page, link);
@@ -361,16 +361,16 @@ test.describe("rules in more than one language", () => {
     await gotoHydrated(page, "/kingdom/rules/?doc=r1");
     await page.getByRole("button", { name: "Español" }).click();
     await expect(page.locator("[data-translation-editor]")).toBeVisible();
-    await expect(page.getByLabel("Translated title")).toHaveValue("Reglas de K1234");
-    await page.getByRole("button", { name: "Remove the Español version" }).click();
-    await page.getByRole("button", { name: "No, keep it" }).click();
+    await expect(page.getByLabel("Título traduzido", { exact: true })).toHaveValue("Reglas de K1234");
+    await page.getByRole("button", { name: "Remover a versão Español" }).click();
+    await page.getByRole("button", { name: "Não, manter" }).click();
     await expect(page.locator("[data-translation-editor]")).toBeVisible();
-    await page.getByRole("button", { name: "Remove the Español version" }).click();
-    await page.getByRole("button", { name: "Yes, remove" }).click();
+    await page.getByRole("button", { name: "Remover a versão Español" }).click();
+    await page.getByRole("button", { name: "Sim, remover" }).click();
     await expect(page.locator("[data-translation-editor]")).toHaveCount(0);
     await expect(page.locator("#kq-langs-h")).toBeFocused();
-    await expect(page.getByLabel("Title", { exact: true })).toHaveValue("K1234 rules");
-    await expect(page.locator("[data-save-status]")).toHaveText("All changes saved on this device.");
+    await expect(page.getByLabel("Título", { exact: true })).toHaveValue("K1234 rules");
+    await expect(page.locator("[data-save-status]")).toHaveText("Todas as alterações foram salvas neste aparelho.");
     expect((await storedDocs(page))[0]!.data.translations).toEqual([]);
   });
 
@@ -383,21 +383,21 @@ test.describe("rules in more than one language", () => {
     }));
     await seed(page, [{ ...DOC, data: { ...RULES, intro: "", sections, originalLabel: "English", originalLang: "en", translations } }]);
     await gotoHydrated(page, "/kingdom/rules/?doc=r1");
-    await expect(page.getByRole("button", { name: "Add a language" })).toHaveCount(0);
-    await page.getByRole("button", { name: "Share view-only link" }).click();
+    await expect(page.getByRole("button", { name: "Adicionar um idioma" })).toHaveCount(0);
+    await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
     const box = page.locator("[data-too-large]");
-    await expect(box).toContainText("links stop at 24,000");
+    await expect(box).toContainText("os links param em 24.000");
     await expect(page.locator("#kq-link")).toHaveCount(0);
-    await expect(page.getByLabel("Language to include")).toBeFocused();
-    await page.getByLabel("Language to include").selectOption("t1");
-    await page.getByRole("button", { name: "Share only this language" }).click();
-    await expect(page.locator("[data-link-partial]")).toHaveText("This link carries only: English (original) and Lang pt-BR. Readers of the other languages need their own link.");
+    await expect(page.getByLabel("Idioma a incluir")).toBeFocused();
+    await page.getByLabel("Idioma a incluir").selectOption("t1");
+    await page.getByRole("button", { name: "Compartilhar só este idioma" }).click();
+    await expect(page.locator("[data-link-partial]")).toHaveText("Este link leva só: English (original) e Lang pt-BR. Os leitores dos outros idiomas precisam do próprio link.");
     const link = await page.locator("#kq-link").inputValue();
     expect(link.length).toBeLessThan(24_000);
 
     const view = await context.newPage();
     await gotoHydrated(view, link);
-    const buttons = view.getByRole("group", { name: "Language" }).getByRole("button");
+    const buttons = view.getByRole("group", { name: "Idioma" }).getByRole("button");
     await expect(buttons).toHaveText(["English (original)", "Lang pt-BR"]);
     await buttons.nth(1).click();
     await expect(view.locator("h1")).toHaveText("Title pt-BR");
@@ -412,14 +412,14 @@ test.describe("rules in more than one language", () => {
       await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
       await page.getByRole("button", { name: "Español" }).click();
       await expect(page.locator("[data-translation-editor]")).toBeVisible();
-      await page.getByLabel("Language code (optional)").fill("x_y");
+      await page.getByLabel("Código do idioma (opcional)").fill("x_y");
       await expect(page.locator("#kq-t-lang-error")).toBeVisible();
       await expectAxeClean(page);
-      await page.getByLabel("Language code (optional)").fill("es");
-      await page.getByRole("button", { name: "Preview" }).click();
+      await page.getByLabel("Código do idioma (opcional)").fill("es");
+      await page.getByRole("button", { name: "Visualizar" }).click();
       await expect(page.locator("[data-preview] [data-rules-doc]")).toHaveAttribute("lang", "es");
       await expectAxeClean(page);
-      await page.getByRole("button", { name: "Share view-only link" }).click();
+      await page.getByRole("button", { name: "Compartilhar link só de leitura" }).click();
       const link = await page.locator("#kq-link").inputValue();
       await gotoHydrated(page, `${link}&lang=es`);
       await expect(page.locator("[data-rules-doc]")).toHaveAttribute("lang", "es");

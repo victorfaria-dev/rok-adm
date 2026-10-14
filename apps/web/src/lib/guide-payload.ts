@@ -50,20 +50,20 @@ const CARD_RE = /\b(?:A\d{2}|B\d{2}|C\d{2})-\d{4}\b/g;
  * get mono. GFM task lists become plain list items with a decorative marker: there is no
  * persisted checklist yet, so no fake (disabled) checkboxes.
  */
-export function renderMarkdown(text: string, label = "Table"): string {
+export function renderMarkdown(text: string, label = "Tabela"): string {
   const html = md.parse(text, { async: false }) as string;
   const tables = (html.match(/<table>/g) ?? []).length;
   let n = 0;
   return html
     .replace(/<table>/g, () => {
       n += 1;
-      const name = `${label}${tables > 1 ? `, table ${n}` : ", table"} (scrolls sideways)`;
+      const name = `${label}${tables > 1 ? `, tabela ${n}` : ", tabela"} (rola para os lados)`;
       return `<div class="ko-table" tabindex="0" role="region" aria-label="${escapeAttr(name)}"><table>`;
     })
     .replace(/<\/table>/g, "</table></div>")
     .replace(/<li>(<p>)?<input (checked="" )?disabled="" type="checkbox">\s?/g, (_m, p: string | undefined, on: string | undefined) =>
       on
-        ? `<li class="ko-task ko-task-done">${p ?? ""}<span class="visually-hidden">Done: </span>`
+        ? `<li class="ko-task ko-task-done">${p ?? ""}<span class="visually-hidden">Feito: </span>`
         : `<li class="ko-task">${p ?? ""}`)
     .replace(CARD_RE, (id) => `<span class="ko-ref">${id}</span>`)
     .trim();
@@ -76,9 +76,9 @@ function escapeAttr(s: string): string {
 /** "VIP by KvK1" sentence; one statement when both routes reach the same level. */
 export function vipByKvk1Text(chestOnly: number, withGems: number): string {
   if (chestOnly === withGems) {
-    return `VIP ${chestOnly} either way: the daily chest alone and putting every guaranteed gem into VIP reach the same level`;
+    return `VIP ${chestOnly} de qualquer jeito: só o baú diário e pôr todas as gemas garantidas no VIP chegam ao mesmo nível`;
   }
-  return `VIP ${chestOnly} with the daily chest only, VIP ${withGems} if every guaranteed gem goes to VIP`;
+  return `VIP ${chestOnly} só com o baú diário, VIP ${withGems} se todas as gemas garantidas forem para o VIP`;
 }
 
 export function patchBadge(b: GuideBlock): PatchBadge {
@@ -91,7 +91,7 @@ export function patchBadge(b: GuideBlock): PatchBadge {
 
 export function cardBadge(id: string): CardBadge {
   const f = getFact(id);
-  if (!f) return { title: id, label: "Card not in the dataset", confidence: "pending", usable: false, sources: [] };
+  if (!f) return { title: id, label: "Ficha fora da base de dados", confidence: "pending", usable: false, sources: [] };
   const b = factBadge(f);
   return {
     title: f.title,
@@ -143,10 +143,10 @@ function toPayloadBlock(b: GuideBlock): PayloadBlock {
     why_md: "",
     bodyHtml,
     gist: gistOf(bodyHtml),
-    whyHtml: renderMarkdown(b.why_md, `${b.title}, why`),
-    uncertain_notes: opt(b.uncertain_notes, "uncertain"),
-    low_spender_note: opt(b.low_spender_note, "low spender note"),
-    split_views: typeof b.split_views === "string" && b.split_views !== "" ? renderMarkdown(b.split_views, `${b.title}, split views`) : null,
+    whyHtml: renderMarkdown(b.why_md, `${b.title}, por quê`),
+    uncertain_notes: opt(b.uncertain_notes, "incerto"),
+    low_spender_note: opt(b.low_spender_note, "nota para quem gasta pouco"),
+    split_views: typeof b.split_views === "string" && b.split_views !== "" ? renderMarkdown(b.split_views, `${b.title}, duas visões`) : null,
     patch: patchBadge(b),
   };
 }
@@ -187,29 +187,29 @@ export function buildBudgetPayload(): BudgetPayload {
     asOf: rc.asOf,
     kvk1Day: { value: startDay, unit: k.startDay.unit, ...lean(k.startDay) },
     targets: [
-      { label: "City Hall", value: `CH ${k.cityHall.value.workableMin}+ is workable; CH ${k.cityHall.value.notExpected} is not expected`, ...lean(k.cityHall) },
-      { label: "Troop tier", value: `T4, usually around day ${k.t4Day.value}`, ...lean(k.t4Day) },
-      { label: "Power", value: `${k.power.value.minMillions}M to ${k.power.value.maxMillions}M`, ...lean(k.power) },
+      { label: "Prefeitura", value: `Pref. ${k.cityHall.value.workableMin}+ é viável; Pref. ${k.cityHall.value.notExpected} não é esperada`, ...lean(k.cityHall) },
+      { label: "Nível de tropa", value: `T4, geralmente por volta do dia ${k.t4Day.value}`, ...lean(k.t4Day) },
+      { label: "Poder", value: `${k.power.value.minMillions}M a ${k.power.value.maxMillions}M`, ...lean(k.power) },
       {
-        label: `VIP by day ${startDay}`,
+        label: `VIP até o dia ${startDay}`,
         value: vipByKvk1Text(highestBy(chest), highestBy(gems)),
         facts: vipFacts,
         confidence: gems.confidence,
         derived: true,
-        note: "Upper bound on days: gem and VIP sources that are not guaranteed are not counted.",
+        note: "Limite máximo de dias: fontes de gemas e VIP que não são garantidas não entram na conta.",
       },
-      { label: "VIP targets", value: rc.vipTargets.value.map((v) => `VIP ${v}`).join(", then "), ...lean(rc.vipTargets) },
-      { label: "Lost Kingdom entry", value: `CH ${k.lostKingdomEntryCH.value}`, ...lean(k.lostKingdomEntryCH) },
+      { label: "Metas de VIP", value: rc.vipTargets.value.map((v) => `VIP ${v}`).join(", depois "), ...lean(rc.vipTargets) },
+      { label: "Entrada no Reino Perdido", value: `Pref. ${k.lostKingdomEntryCH.value}`, ...lean(k.lostKingdomEntryCH) },
     ],
     income: [
-      { label: "Guaranteed gems", value: `${rc.guaranteedGemsPerDay.value} gems a day`, ...lean(rc.guaranteedGemsPerDay) },
+      { label: "Gemas garantidas", value: `${rc.guaranteedGemsPerDay.value} gemas por dia`, ...lean(rc.guaranteedGemsPerDay) },
       {
-        label: "Daily VIP chest",
-        value: `${i.vipDailyStart.value} VIP points, +${i.vipDailyIncrement.value} each day in a row, up to ${i.vipDailyCap.value} a day`,
+        label: "Baú diário de VIP",
+        value: `${i.vipDailyStart.value} pontos de VIP, +${i.vipDailyIncrement.value} a cada dia seguido, até ${i.vipDailyCap.value} por dia`,
         facts: chestRow.facts, confidence: confidenceOf(chestRow.facts, index), derived: false,
       },
-      { label: "Gems to VIP", value: `1 gem = ${i.gemToVip.value} VIP point`, facts: i.gemToVip.facts, confidence: confidenceOf(i.gemToVip.facts, index), derived: false },
-      { label: "Speedups", value: `${rc.speedupMinutesPerDay.value} minutes a day`, ...lean(rc.speedupMinutesPerDay) },
+      { label: "Gemas para VIP", value: `1 gema = ${i.gemToVip.value} ponto de VIP`, facts: i.gemToVip.facts, confidence: confidenceOf(i.gemToVip.facts, index), derived: false },
+      { label: "Acelerações", value: `${rc.speedupMinutesPerDay.value} minutos por dia`, ...lean(rc.speedupMinutesPerDay) },
     ],
     vip: {
       rows: chest.milestones.map((m, n) => ({ vip: m.vip, threshold: m.threshold, chestOnly: m.day, withGems: gems.milestones[n]?.day ?? null })),
@@ -224,16 +224,16 @@ export function buildBudgetPayload(): BudgetPayload {
     oneTimeGems: rc.oneTimeGems.map((g) => ({ id: g.id, label: g.label, gems: g.value, unlockCityHall: g.unlockCityHall, confidence: g.confidence, facts: g.facts })),
     assumptions: rc.assumptions,
     unchanged: [
-      { text: `KvK1 still starts around kingdom day ${startDay}. The kingdom calendar is the same for every account.`, ...unchangedFacts(k.startDay.facts) },
+      { text: `O KvK1 continua começando por volta do dia ${startDay} do reino. O calendário do reino é o mesmo para todas as contas.`, ...unchangedFacts(k.startDay.facts) },
       {
-        text: `Daily Objectives still pay ${rc.guaranteedGemsPerDay.value} gems a day only when you reach 100 points, which takes play time every day.`,
+        text: `Os Objetivos Diários continuam pagando ${rc.guaranteedGemsPerDay.value} gemas por dia só quando você chega a 100 pontos, o que exige jogar todo dia.`,
         ...unchangedFacts(rc.guaranteedGemsPerDay.facts),
       },
       {
-        text: `The daily VIP chest still grows from ${i.vipDailyStart.value} to ${i.vipDailyCap.value} points a day only with an unbroken login streak.`,
+        text: `O baú diário de VIP continua crescendo de ${i.vipDailyStart.value} a ${i.vipDailyCap.value} pontos por dia só com uma sequência de logins sem falhas.`,
         ...unchangedFacts(i.vipDailyStart.facts),
       },
-      { text: `Lost Kingdom entry still needs City Hall ${k.lostKingdomEntryCH.value}.`, ...unchangedFacts(k.lostKingdomEntryCH.facts) },
+      { text: `A entrada no Reino Perdido continua exigindo Prefeitura ${k.lostKingdomEntryCH.value}.`, ...unchangedFacts(k.lostKingdomEntryCH.facts) },
     ],
     researched: [...BUDGET_DATA.researchedProfiles],
   };

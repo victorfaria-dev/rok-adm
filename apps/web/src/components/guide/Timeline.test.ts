@@ -43,12 +43,12 @@ describe("Timeline", () => {
     expect([...container.querySelectorAll(".tl-lane")].map((l) => l.getAttribute("data-lane"))).toEqual(["day0-3", "day4-14", "day15-40", "any"]);
     const b = container.querySelector('[data-node="b"]')!;
     expect(b.querySelector("summary [data-confidence]")!.getAttribute("data-confidence")).toBe("low");
-    expect(b.querySelector("summary")!.textContent).toContain("CH 8–12");
+    expect(b.querySelector("summary")!.textContent).toContain("Pref. 8–12");
     expect(b.querySelector(".tl-gist")!.textContent).toBe("Gist of b.");
-    expect(b.querySelector(".tl-meta")!.textContent).toContain("Sources: fandom, rkg");
-    expect(b.querySelector(".tl-meta")!.textContent).toContain("1 fact card");
+    expect(b.querySelector(".tl-meta")!.textContent).toContain("Fontes: fandom, rkg");
+    expect(b.querySelector(".tl-meta")!.textContent).toContain("1 ficha de fato");
     expect(b.querySelector("a.tl-more")!.getAttribute("href")).toBe("#b-b");
-    expect(container.querySelector('[data-lane="day15-40"] [data-you-are-here]')!.textContent).toContain("Kingdom day 20");
+    expect(container.querySelector('[data-lane="day15-40"] [data-you-are-here]')!.textContent).toContain("Dia 20 do reino");
   });
 
   it("folds a phase whose steps are all probably done", () => {
@@ -57,7 +57,7 @@ describe("Timeline", () => {
     v.alreadyDone = [item(block("a", "day0-3"))];
     const { container } = mount(v);
     const lane = container.querySelector('[data-lane="day0-3"]')!;
-    expect(lane.querySelector("details.tl-fold > summary")!.textContent).toBe("Show 1 step (probably done)");
+    expect(lane.querySelector("details.tl-fold > summary")!.textContent).toBe("Mostrar 1 passo (provavelmente já feitos)");
     expect(lane.querySelector('[data-node="a"]')!.hasAttribute("data-done")).toBe(true);
   });
 

@@ -170,8 +170,8 @@ export interface SaveDocInput {
 export function saveDoc(input: SaveDocInput, st: StorageLike | null = storage(), now: Date = new Date()): { store: KingdomStoreV1; doc: StoredDoc } {
   const doc = parseStoredDoc({ ...input, updatedAt: now.toISOString() });
   if (!doc) {
-    if (!sizeOk(input.data)) throw new Error("This document is too large to save. Shorten it first.");
-    throw new Error("This document could not be saved.");
+    if (!sizeOk(input.data)) throw new Error("Este documento é grande demais para salvar. Encurte-o primeiro.");
+    throw new Error("Não foi possível salvar este documento.");
   }
   const s = readKingdom(st);
   const i = s.docs.findIndex((d) => d.id === doc.id);
@@ -179,7 +179,7 @@ export function saveDoc(input: SaveDocInput, st: StorageLike | null = storage(),
   if (i >= 0) docs[i] = doc;
   else {
     if (docs.filter((d) => d.kind === doc.kind).length >= MAX_DOCS_PER_KIND) {
-      throw new Error(`You can keep up to ${MAX_DOCS_PER_KIND} of these. Delete an old one first.`);
+      throw new Error(`Você pode guardar até ${MAX_DOCS_PER_KIND} destes. Apague um antigo primeiro.`);
     }
     docs.push(doc);
   }
@@ -240,7 +240,7 @@ export function forgetWebhook(st: StorageLike | null = storage()): void {
 // ---------------------------------------------------------------------------
 // Export / import
 
-const NOT_EXPORT = "This file is not a KingdomOps council export. Pick the .json file you exported from the Kingdom council page.";
+const NOT_EXPORT = "Este arquivo não é uma exportação do conselho do KingdomOps. Escolha o arquivo .json que você exportou da página do conselho do Reino.";
 
 export function exportKingdom(s: KingdomStoreV1): string {
   return JSON.stringify({ app: KINGDOM_EXPORT_APP, ...s }, null, 2);
@@ -255,7 +255,7 @@ export function parseKingdomExport(text: string): KingdomStoreV1 {
     throw new Error(NOT_EXPORT);
   }
   if (!isRecord(data) || data.app !== KINGDOM_EXPORT_APP) throw new Error(NOT_EXPORT);
-  if (data.v !== 1) throw new Error("This council export has a version this app cannot read.");
+  if (data.v !== 1) throw new Error("Esta exportação do conselho tem uma versão que o app não consegue ler.");
   return normalise(data);
 }
 

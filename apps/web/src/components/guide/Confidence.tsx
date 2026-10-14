@@ -2,10 +2,10 @@ import { Fragment } from "preact";
 import type { Confidence as Level } from "@rokadm/core";
 
 const TEXT: Record<Level, string> = {
-  high: "High confidence",
-  medium: "Medium confidence",
-  low: "Low confidence",
-  pending: "Pending measurement",
+  high: "Confiança alta",
+  medium: "Confiança média",
+  low: "Confiança baixa",
+  pending: "Medição pendente",
 };
 
 /** Confidence in words (never colour alone). Low and pending get a visible label. */
@@ -24,7 +24,7 @@ export function FactIds({ ids }: { ids: readonly string[] }) {
   if (ids.length === 0) return null;
   return (
     <span class="g-facts">
-      <span class="visually-hidden">Fact cards: </span>
+      <span class="visually-hidden">Fichas de fatos: </span>
       {ids.map((id, n) => (
         <Fragment key={id}>
           {n > 0 && ", "}

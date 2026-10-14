@@ -10,8 +10,8 @@ interface Props {
   hint?: string;
 }
 
-/** Read-only output with a Copy button. Falls back to selecting the text when the clipboard is blocked. */
-export default function CopyText({ id, label, text, variant = "text", copyLabel = "Copy", hint }: Props) {
+/** Saída só de leitura com botão Copiar. Falls back to selecting the text when the clipboard is blocked. */
+export default function CopyText({ id, label, text, variant = "text", copyLabel = "Copiar", hint }: Props) {
   const ref = useRef<HTMLTextAreaElement & HTMLInputElement>(null);
   const [status, setStatus] = useState("");
   const hintId = hint ? `${id}-hint` : undefined;
@@ -19,11 +19,11 @@ export default function CopyText({ id, label, text, variant = "text", copyLabel 
   async function copy() {
     try {
       await navigator.clipboard.writeText(text);
-      setStatus("Copied.");
+      setStatus("Copiado.");
     } catch {
       ref.current?.focus();
       ref.current?.select();
-      setStatus("Your browser blocked copying. The text is selected: press Ctrl+C (or long-press → Copy).");
+      setStatus("Seu navegador bloqueou a cópia. O texto está selecionado: aperte Ctrl+C (ou segure o dedo e toque em Copiar).");
     }
   }
 

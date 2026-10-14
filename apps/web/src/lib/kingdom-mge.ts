@@ -55,8 +55,8 @@ export function addCandidatesFromText(doc: MgeDoc, text: string, makeId: () => s
 
 /** Header spellings accepted when importing governors from a spreadsheet. */
 export const MGE_CSV_COLUMNS = {
-  name: ["name", "governor", "governor name", "player"],
-  score: ["score", "dkp", "points"],
+  name: ["name", "governor", "governor name", "player", "nome", "governador", "jogador"],
+  score: ["score", "dkp", "points", "pontuação", "pontuacao", "pontos"],
 } as const;
 
 /**
@@ -71,12 +71,12 @@ export function addCandidatesFromCsv(doc: MgeDoc, text: string, makeId: () => st
   for (const { line, values } of t.records) {
     const raw = `${values.name}${values.score ? `, ${values.score}` : ""}`;
     const name = cleanLine(values.name, MGE_LIMITS.name + 1);
-    if (!name) { errors.push({ line, text: raw, message: "No name on this row." }); continue; }
-    if (name.length > MGE_LIMITS.name) { errors.push({ line, text: raw, message: `Name is longer than ${MGE_LIMITS.name} characters.` }); continue; }
+    if (!name) { errors.push({ line, text: raw, message: "Nenhum nome nesta linha." }); continue; }
+    if (name.length > MGE_LIMITS.name) { errors.push({ line, text: raw, message: `O nome tem mais de ${MGE_LIMITS.name} caracteres.` }); continue; }
     let score: number | null = null;
     if (values.score) {
       const r = parseMgeScore(values.score);
-      if (!r.ok) { errors.push({ line, text: raw, message: r.tooBig ? r.message : "The score is not a number (use 4200000, 4,200,000 or 4.2m)." }); continue; }
+      if (!r.ok) { errors.push({ line, text: raw, message: r.tooBig ? r.message : "A pontuação não é um número (use 4200000, 4,200,000 ou 4.2m)." }); continue; }
       score = r.score;
     }
     rows.push({ name, score });
@@ -118,9 +118,9 @@ export function localDay(d: Date): string {
   return `${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}`;
 }
 
-/** "Thu, Oct 1, 2026" for YYYY-MM-DD. */
+/** "qui., 1 de out. de 2026" para AAAA-MM-DD. */
 export function longDay(day: string): string {
-  return new Date(`${day}T00:00:00Z`).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  return new Date(`${day}T00:00:00Z`).toLocaleDateString("pt-BR", { weekday: "short", month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
 }
 
 export interface PublishedLink {

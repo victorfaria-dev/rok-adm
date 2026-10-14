@@ -20,22 +20,22 @@ export interface MilestoneSpec {
 }
 
 export const MILESTONES: readonly MilestoneSpec[] = [
-  { id: "pelagius", title: "Legendary Pelagius event opens", day: [5, 5], approx: false, kind: "event", facts: ["C04-0005"], evidence: "day 5" },
-  { id: "pioneer", title: "Pioneer / Road to Revival", day: [20, 23], approx: true, kind: "event", facts: ["A11-0510"], evidence: "day 20–23" },
-  { id: "more-than-gems", title: "More Than Gems can start (kingdoms older than ~21 days)", day: [21, 21], approx: true, kind: "event", facts: ["A11-0502"], evidence: "older than ~21 days" },
-  { id: "first-wheel", title: "First Wheel of Fortune", day: [24, 24], approx: true, kind: "event", facts: ["A11-0503"], evidence: "24" },
-  { id: "t4", title: "T4 usually reached (player reports)", day: [30, 30], approx: true, kind: "checkpoint", facts: ["B01-0700"], evidence: "~day 30" },
-  { id: "pre-kvk", title: "Pre-KvK: Eve of the Crusade", day: [85, 95], approx: true, kind: "kvk", facts: ["B01-0500"], evidence: "day 85–95" },
-  { id: "ysg-wheel", title: "Yi Seong-Gye on the Wheel of Fortune", day: [94, 94], approx: true, kind: "event", facts: ["A06-0502"], evidence: "day 94" },
-  { id: "kvk1", title: "KvK1 (Season 1) starts", day: [100, 100], approx: true, kind: "kvk", facts: ["B01-0500"], evidence: "day 100" },
+  { id: "pelagius", title: "Abre o evento do lendário Pelágio", day: [5, 5], approx: false, kind: "event", facts: ["C04-0005"], evidence: "day 5" },
+  { id: "pioneer", title: "Pioneiro / Caminho do Renascimento", day: [20, 23], approx: true, kind: "event", facts: ["A11-0510"], evidence: "day 20–23" },
+  { id: "more-than-gems", title: "More Than Gems pode começar (reinos com mais de ~21 dias)", day: [21, 21], approx: true, kind: "event", facts: ["A11-0502"], evidence: "older than ~21 days" },
+  { id: "first-wheel", title: "Primeira Roda da Fortuna", day: [24, 24], approx: true, kind: "event", facts: ["A11-0503"], evidence: "24" },
+  { id: "t4", title: "T4 geralmente alcançado (relatos de jogadores)", day: [30, 30], approx: true, kind: "checkpoint", facts: ["B01-0700"], evidence: "~day 30" },
+  { id: "pre-kvk", title: "Pré-KvK: Véspera da Cruzada", day: [85, 95], approx: true, kind: "kvk", facts: ["B01-0500"], evidence: "day 85–95" },
+  { id: "ysg-wheel", title: "Yi Seong-Gye na Roda da Fortuna", day: [94, 94], approx: true, kind: "event", facts: ["A06-0502"], evidence: "day 94" },
+  { id: "kvk1", title: "Começa o KvK1 (Temporada 1)", day: [100, 100], approx: true, kind: "kvk", facts: ["B01-0500"], evidence: "day 100" },
   {
-    id: "kvk1-length", title: "KvK1 runs about 60 days", day: [100, 160], approx: true, kind: "kvk", facts: ["B01-0502"], evidence: "~60 days",
-    note: "Sources disagree: one says 60 days, a 2026 player says 50.",
+    id: "kvk1-length", title: "O KvK1 dura cerca de 60 dias", day: [100, 160], approx: true, kind: "kvk", facts: ["B01-0502"], evidence: "~60 days",
+    note: "As fontes divergem: uma diz 60 dias, um jogador de 2026 diz 50.",
   },
-  { id: "monument", title: "Kingdom Chronicles (Monument) stage dates", day: null, approx: false, kind: "checkpoint", facts: ["B01-0505"], evidence: null, gaps: ["L-B01-01"] },
-  { id: "event-firsts", title: "First day of each recurring event (MGE, Ark of Osiris, Lohar…)", day: null, approx: false, kind: "event", facts: ["A11-0512"], evidence: null, gaps: ["L-A11-01"] },
-  { id: "lost-kingdom", title: "Lost Kingdom entry and Eve timing in Season 1", day: null, approx: false, kind: "kvk", facts: ["B01-0503"], evidence: null, gaps: ["L-B01-03"] },
-  { id: "barbarians", title: "Barbarian level unlocks", day: null, approx: false, kind: "checkpoint", facts: ["A09-0004"], evidence: null, gaps: ["L-A09-05"] },
+  { id: "monument", title: "Datas das etapas das Crônicas do Reino (Monumento)", day: null, approx: false, kind: "checkpoint", facts: ["B01-0505"], evidence: null, gaps: ["L-B01-01"] },
+  { id: "event-firsts", title: "Primeiro dia de cada evento recorrente (MGE, Arca de Osíris, Lohar…)", day: null, approx: false, kind: "event", facts: ["A11-0512"], evidence: null, gaps: ["L-A11-01"] },
+  { id: "lost-kingdom", title: "Entrada no Reino Perdido e horário da Véspera na Temporada 1", day: null, approx: false, kind: "kvk", facts: ["B01-0503"], evidence: null, gaps: ["L-B01-03"] },
+  { id: "barbarians", title: "Desbloqueio dos níveis de bárbaros", day: null, approx: false, kind: "checkpoint", facts: ["A09-0004"], evidence: null, gaps: ["L-A09-05"] },
 ];
 
 /** True when a card may date a milestone: it exists, cites a source and is not outdated. */

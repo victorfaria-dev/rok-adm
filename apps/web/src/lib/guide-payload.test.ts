@@ -56,16 +56,16 @@ describe("guide payload (build time)", () => {
       expect(html).not.toContain("<input");
       expect(html.match(/<li class="ko-task[^"]*">/g)).toHaveLength(2);
       expect(html).toContain('<li class="ko-task ko-task-done">');
-      expect(html).toContain('<span class="visually-hidden">Done: </span>');
+      expect(html).toContain('<span class="visually-hidden">Feito: </span>');
     }
   });
 
   it("names each table region after its block, uniquely across the guide", () => {
     const one = renderMarkdown("| a | b |\n|---|---|\n| 1 | 2 |", "Daily 15 minutes");
-    expect(one).toContain('aria-label="Daily 15 minutes, table (scrolls sideways)"');
+    expect(one).toContain('aria-label="Daily 15 minutes, tabela (rola para os lados)"');
     const two = renderMarkdown("| a |\n|---|\n| 1 |\n\ntext\n\n| b |\n|---|\n| 2 |", "X");
-    expect(two).toContain('aria-label="X, table 1 (scrolls sideways)"');
-    expect(two).toContain('aria-label="X, table 2 (scrolls sideways)"');
+    expect(two).toContain('aria-label="X, tabela 1 (rola para os lados)"');
+    expect(two).toContain('aria-label="X, tabela 2 (rola para os lados)"');
     for (const set of Object.keys(BLOCK_SETS)) {
       const html = buildGuidePayload(set).blocks.flatMap((b) => [b.bodyHtml, b.whyHtml, b.uncertain_notes ?? "", b.low_spender_note ?? "", b.split_views ?? ""]).join("");
       const labels = [...html.matchAll(/role="region" aria-label="([^"]*)"/g)].map((m) => m[1]);
@@ -76,10 +76,10 @@ describe("guide payload (build time)", () => {
   });
 
   it("VIP by KvK1: one sentence when both routes reach the same level", () => {
-    expect(vipByKvk1Text(7, 7)).toMatch(/^VIP 7 either way/);
+    expect(vipByKvk1Text(7, 7)).toMatch(/^VIP 7 de qualquer jeito/);
     expect(vipByKvk1Text(7, 7).match(/VIP \d+/g)).toHaveLength(1);
-    expect(vipByKvk1Text(6, 8)).toBe("VIP 6 with the daily chest only, VIP 8 if every guaranteed gem goes to VIP");
-    const row = buildBudgetPayload().targets.find((t) => t.label.startsWith("VIP by day"))!;
+    expect(vipByKvk1Text(6, 8)).toBe("VIP 6 só com o baú diário, VIP 8 se todas as gemas garantidas forem para o VIP");
+    const row = buildBudgetPayload().targets.find((t) => t.label.startsWith("VIP até o dia"))!;
     const levels = row.value.match(/VIP (\d+)/g)!;
     expect(new Set(levels).size).toBe(levels.length);
   });

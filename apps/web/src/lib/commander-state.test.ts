@@ -24,7 +24,7 @@ describe("commander choices", () => {
     expect(ids.at(-1)).toBe(OTHER_ID);
     const names = COMMANDER_CHOICES.slice(0, -1).map((c) => c.name);
     expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, "en")));
-    expect(commanderName(OTHER_ID)).toBe("Another commander");
+    expect(commanderName(OTHER_ID)).toBe("Outro comandante");
   });
 
   it("reads the commander from the URL hash and ignores anything else", () => {

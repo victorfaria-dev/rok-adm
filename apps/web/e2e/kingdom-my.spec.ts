@@ -27,8 +27,8 @@ test.describe("my requirements (F-30)", () => {
     expect(res?.status()).toBe(200);
     await expect(page.locator("h1")).toHaveCount(1);
     await expect(page.locator("[data-guardrail]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
-    await expect(page.locator("[data-explainer]")).toContainText("DKP isn't a game number: each kingdom sets its own formula");
-    await expect(page.locator("[data-explainer]")).toContainText("250% of power");
+    await expect(page.locator("[data-explainer]")).toContainText("DKP não é um número do jogo: cada reino define a própria fórmula");
+    await expect(page.locator("[data-explainer]")).toContainText("250% do poder");
     await expect(page.locator("[data-self]")).toBeVisible();
     await expect(page.locator('[data-explain="km-preset"]')).toContainText("Each T4 kill = 10 points");
     await expectNoSidewaysScroll(page);
@@ -41,10 +41,10 @@ test.describe("my requirements (F-30)", () => {
     await page.setViewportSize({ width: 360, height: 780 });
     await openCard(page);
     const card = page.locator("[data-card]");
-    await expect(card).toContainText("K1234 requirements");
+    await expect(card).toContainText("Requisitos de K1234");
     await expect(card).toContainText("KvK2");
     await expect(card).toContainText("Each T4 kill = 10 points, each T5 kill = 30 points, each dead = 80 points.");
-    await expect(card).toContainText("0 to under 20,000,000 power: 250% of power");
+    await expect(card).toContainText("0 a menos de 20,000,000 de poder: 250% do poder");
     await expect(page.locator("[data-basis]")).toHaveText("Highest power before KvK");
     await expect(card).toContainText("Zeroed days count as 0 deads.");
     await expect(page.locator("[data-byline]")).toBeVisible();
@@ -53,20 +53,20 @@ test.describe("my requirements (F-30)", () => {
     await expect(page.locator("#km-deads")).toBeVisible();
     await expect(page.locator("#km-kp")).toHaveCount(0);
     await expect(page.locator("#km-t1")).toHaveCount(0);
-    await expect(page.getByLabel("My power (Highest power before KvK)")).toBeVisible();
+    await expect(page.getByLabel("Meu poder (Highest power before KvK)")).toBeVisible();
 
-    await page.getByLabel(/^My power/).fill("10.5m");
-    await expect(page.locator("[data-summary]")).toContainText("You have 0 DKP of 26,250,000 (0%)");
+    await page.getByLabel(/^Meu poder/).fill("10.5m");
+    await expect(page.locator("[data-summary]")).toContainText("Você tem 0 de 26,250,000 de DKP (0%)");
     await page.locator("#km-deads").fill("300k");
     await page.locator("#km-t4").fill("abc");
     await expect(page.locator("#km-t4")).toHaveAttribute("aria-invalid", "true");
-    await expect(page.locator("[data-summary]")).toHaveText("Fix the highlighted fields to see your progress.");
+    await expect(page.locator("[data-summary]")).toHaveText("Corrija os campos destacados para ver o seu progresso.");
     await page.locator("#km-t4").fill("226,000");
-    await expect(page.locator("[data-summary]")).toContainText("You have 26,260,000 DKP: you meet the target of 26,250,000.");
+    await expect(page.locator("[data-summary]")).toContainText("Você tem 26,260,000 de DKP: cumpre a meta de 26,250,000.");
     await expect(page.getByRole("progressbar")).toHaveAttribute("aria-valuenow", "100");
     await expect(page.locator("[data-ways]")).toHaveCount(0);
     await page.locator("#km-t4").fill("0");
-    await expect(page.locator("[data-ways]")).toContainText("about 28,125 more deads or 75,000 more T5 kills or 225,000 more T4 kills");
+    await expect(page.locator("[data-ways]")).toContainText("cerca de 28,125 deads a mais ou 75,000 T5 kills a mais ou 225,000 T4 kills a mais");
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
     expect(errors).toEqual([]);
@@ -78,22 +78,22 @@ test.describe("my requirements (F-30)", () => {
     await seed(page, []);
     await openCard(page, { ...CARD, requirement: { mode: "fixed", target: 10_000_000 }, excludedDeads: { enabled: true, label: "zeroed in a 'terrible trade'" } });
     await expect(page.locator("[data-excluded-rule]")).toHaveText("Deads on days you were zeroed in a 'terrible trade' don't count: they are taken off your deads before your DKP is worked out.");
-    const ex = page.getByLabel("Deads on excluded days");
+    const ex = page.getByLabel("Mortos em dias excluídos");
     await expect(ex).toBeVisible();
-    await page.getByLabel(/^My power/).fill("10m");
+    await page.getByLabel(/^Meu poder/).fill("10m");
     await page.locator("#km-deads").fill("100k");
     await ex.fill("150k");
     await expect(ex).toHaveAttribute("aria-invalid", "true");
     await expect(page.locator("#km-excluded-deads-error")).toHaveText("This can't be more than your deads (100,000).");
-    await expect(page.locator("[data-summary]")).toHaveText("Fix the highlighted fields to see your progress.");
+    await expect(page.locator("[data-summary]")).toHaveText("Corrija os campos destacados para ver o seu progresso.");
     await ex.fill("25k");
     await expect(ex).not.toHaveAttribute("aria-invalid", "true");
     // (100,000 - 25,000) deads × 80 = 6,000,000
-    await expect(page.locator("[data-summary]")).toContainText("You have 6,000,000 DKP of 10,000,000 (60%)");
+    await expect(page.locator("[data-summary]")).toContainText("Você tem 6,000,000 de 10,000,000 de DKP (60%)");
     await expect(page.locator('[data-row="counted-deads"]')).toContainText("75,000");
-    await page.getByRole("button", { name: "Save on this device" }).click();
+    await page.getByRole("button", { name: "Salvar neste aparelho" }).click();
     await gotoHydrated(page, "/kingdom/my/");
-    await expect(page.getByLabel("Deads on excluded days")).toHaveValue("25k");
+    await expect(page.getByLabel("Mortos em dias excluídos")).toHaveValue("25k");
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
     expect(errors).toEqual([]);
@@ -105,18 +105,18 @@ test.describe("my requirements (F-30)", () => {
     await seed(page, []);
     // Group names and percents are test values typed as if by a council.
     await openCard(page, { ...CARD, groups: [{ id: "young", name: "Accounts under 6 months", percent: 80 }, { id: "seed", name: "Seed group", percent: 150 }] });
-    await expect(page.locator("[data-card]")).toContainText("Requirement groups (set by your council)");
+    await expect(page.locator("[data-card]")).toContainText("Grupos de requisito (definidos pelo seu conselho)");
     await expect(page.locator("[data-groups] li")).toHaveText(["Accounts under 6 months: 80% of the normal target", "Seed group: 150% of the normal target"]);
-    const pick = page.getByLabel("My group");
+    const pick = page.getByLabel("Meu grupo");
     await expect(pick).toHaveValue("");
-    await page.getByLabel(/^My power/).fill("10.5m");
-    await expect(page.locator('[data-row="target"]')).toContainText("26,250,000 (250% of 10,500,000)");
+    await page.getByLabel(/^Meu poder/).fill("10.5m");
+    await expect(page.locator('[data-row="target"]')).toContainText("26,250,000 (250% de 10,500,000)");
     await pick.selectOption("young");
-    await expect(page.locator('[data-row="target"]')).toContainText("21,000,000 (250% of 10,500,000 × 80% for Accounts under 6 months)");
-    await expect(page.locator("[data-summary]")).toContainText("of 21,000,000");
-    await page.getByRole("button", { name: "Save on this device" }).click();
+    await expect(page.locator('[data-row="target"]')).toContainText("21,000,000 (250% de 10,500,000 × 80% para Accounts under 6 months)");
+    await expect(page.locator("[data-summary]")).toContainText("de 21,000,000 de DKP");
+    await page.getByRole("button", { name: "Salvar neste aparelho" }).click();
     await gotoHydrated(page, "/kingdom/my/");
-    await expect(page.getByLabel("My group")).toHaveValue("young");
+    await expect(page.getByLabel("Meu grupo")).toHaveValue("young");
     await expectNoSidewaysScroll(page);
     await expectTargets44(page);
     expect(errors).toEqual([]);
@@ -125,15 +125,15 @@ test.describe("my requirements (F-30)", () => {
   test("old links without the new fields still open (rule off, no group picker)", async ({ page }) => {
     await openCard(page);
     await expect(page.locator("[data-excluded-rule]")).toHaveCount(0);
-    await expect(page.getByLabel("Deads on excluded days")).toHaveCount(0);
+    await expect(page.getByLabel("Mortos em dias excluídos")).toHaveCount(0);
     await expect(page.locator("#km-group")).toHaveCount(0);
   });
 
   test("non-linear formula: no 'close the gap' sentence", async ({ page }) => {
     await openCard(page, { ...CARD, formula: "max(t4, deads * 10)", requirement: { mode: "fixed", target: 1000 } });
-    await page.getByLabel(/^My power/).fill("1m");
+    await page.getByLabel(/^Meu poder/).fill("1m");
     await page.locator("#km-t4").fill("10");
-    await expect(page.locator("[data-summary]")).toContainText("of 1,000");
+    await expect(page.locator("[data-summary]")).toContainText("de 1,000 de DKP");
     await expect(page.locator("[data-ways]")).toHaveCount(0);
   });
 
@@ -156,32 +156,32 @@ test.describe("my requirements (F-30)", () => {
   test("save on this device; reopening without a hash loads the last card", async ({ page }) => {
     await seed(page, []);
     await openCard(page);
-    await page.getByLabel(/^My power/).fill("10m");
+    await page.getByLabel(/^Meu poder/).fill("10m");
     await page.locator("#km-deads").fill("1k");
-    await page.getByRole("button", { name: "Save on this device" }).click();
-    await expect(page.getByRole("status").filter({ hasText: "Saved on this device" })).toBeVisible();
+    await page.getByRole("button", { name: "Salvar neste aparelho" }).click();
+    await expect(page.getByRole("status").filter({ hasText: "Salvo neste aparelho" })).toBeVisible();
     const stored = await page.evaluate((k) => JSON.parse(localStorage.getItem(k)!), KINGDOM_KEY);
     expect(stored.docs[0].kind).toBe("my-requirements");
     await gotoHydrated(page, "/kingdom/my/");
     await expect(page.locator("[data-card]")).toContainText("K1234");
-    await expect(page.getByLabel(/^My power/)).toHaveValue("10m");
+    await expect(page.getByLabel(/^Meu poder/)).toHaveValue("10m");
     await expect(page.locator("#km-deads")).toHaveValue("1k");
   });
 
   test("self setup: custom formula and percent", async ({ page }) => {
     await seed(page, []);
     await gotoHydrated(page, "/kingdom/my/");
-    await page.getByLabel("Formula", { exact: true }).selectOption("custom");
-    const f = page.getByLabel("Your kingdom's formula");
+    await page.getByLabel("Fórmula", { exact: true }).selectOption("custom");
+    const f = page.getByLabel("Fórmula do seu reino");
     await f.fill("t4 *");
     await expect(f).toHaveAttribute("aria-invalid", "true");
     await f.fill("kp + deads * 5");
     await expect(page.locator("#km-kp")).toBeVisible();
     await expect(page.locator("#km-t4")).toHaveCount(0);
-    await page.getByLabel("Your requirement (% of power)").fill("100");
-    await page.getByLabel(/^My power/).fill("1m");
+    await page.getByLabel("Seu requisito (% do poder)").fill("100");
+    await page.getByLabel(/^Meu poder/).fill("1m");
     await page.locator("#km-kp").fill("500k");
-    await expect(page.locator("[data-summary]")).toContainText("You have 500,000 DKP of 1,000,000 (50%)");
+    await expect(page.locator("[data-summary]")).toContainText("Você tem 500,000 de 1,000,000 de DKP (50%)");
     await expect(page.locator("[data-byline]")).toHaveCount(0);
   });
 
@@ -191,13 +191,13 @@ test.describe("my requirements (F-30)", () => {
         await seed(page, [], theme);
         if (state === "filled") {
           await openCard(page, { ...CARD, excludedDeads: { enabled: true, label: "zeroed in a 'terrible trade'" }, groups: [{ id: "young", name: "Accounts under 6 months", percent: 80 }] });
-          await page.getByLabel(/^My power/).fill("10m");
+          await page.getByLabel(/^Meu poder/).fill("10m");
           await page.locator("#km-deads").fill("100k");
-          await page.getByLabel("My group").selectOption("young");
-          await page.getByLabel("Deads on excluded days").fill("200k"); // error state
-          await expect(page.getByLabel("Deads on excluded days")).toHaveAttribute("aria-invalid", "true");
+          await page.getByLabel("Meu grupo").selectOption("young");
+          await page.getByLabel("Mortos em dias excluídos").fill("200k"); // error state
+          await expect(page.getByLabel("Mortos em dias excluídos")).toHaveAttribute("aria-invalid", "true");
           await expectAxeClean(page);
-          await page.getByLabel("Deads on excluded days").fill("20k");
+          await page.getByLabel("Mortos em dias excluídos").fill("20k");
           await expect(page.getByRole("progressbar")).toBeVisible();
         } else {
           await gotoHydrated(page, "/kingdom/my/");
