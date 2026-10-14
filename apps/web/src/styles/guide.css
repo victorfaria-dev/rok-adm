@@ -49,7 +49,7 @@
   padding: var(--ko-space-4); border: 1px solid var(--ko-error); border-radius: var(--ko-radius-md);
   color: var(--ko-text);
 }
-.g-error p::before { content: "Error: "; font-weight: var(--ko-weight-semibold); color: var(--ko-error); }
+.g-error p::before { content: "Erro: "; font-weight: var(--ko-weight-semibold); color: var(--ko-error); }
 .g-error a { min-height: 44px; display: inline-flex; align-items: center; }
 /* Honest notices: fallback to the closest researched stage, or nothing applies. */
 .g-notice {

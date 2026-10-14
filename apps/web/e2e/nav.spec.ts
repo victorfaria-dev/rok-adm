@@ -66,7 +66,7 @@ test("leader: the Eu switch swaps to Reino · Membros · Eventos · Eu at once",
   await expect(mainNav(page, isMobile).getByRole("link", { name: "Membros", exact: true })).toHaveAttribute("aria-current", "page");
   await page.goto("/tools/kvk/");
   await expect(mainNav(page, isMobile).getByRole("link", { name: "Eventos", exact: true })).toHaveAttribute("aria-current", "page");
-  await expect(page.getByRole("navigation", { name: "Events pages" })).toBeVisible();
+  await expect(page.getByRole("navigation", { name: "Páginas de Eventos" })).toBeVisible();
 });
 
 test("a returning visitor skips the landing page; /?about still shows it", async ({ page }) => {
