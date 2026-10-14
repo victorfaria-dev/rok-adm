@@ -78,10 +78,12 @@ test.describe("rules page builder", () => {
     await page.getByLabel("Signed by").fill("Ana\nBo");
     await page.getByLabel("Last reviewed").fill("2026-10-10");
     await expect(page.locator("[data-save-status]")).toHaveText("All changes saved on this device.");
+    // The status can read "saved" from an earlier field while the last edit's save is still pending
+    // under load: wait for the stored document itself.
+    await expect.poll(async () => ((await storedDocs(page))[0]?.data.charter as { signers?: string[] } | undefined)?.signers).toEqual(["Ana", "Bo"]);
     const docs = await storedDocs(page);
     expect(docs).toHaveLength(1);
     expect(docs[0]!.kind).toBe("rules");
-    expect((docs[0]!.data.charter as { signers: string[] }).signers).toEqual(["Ana", "Bo"]);
 
     await page.getByRole("button", { name: "Preview" }).click();
     await expect(page.locator("[data-preview] h2").first()).toHaveText("K1234 rules");
