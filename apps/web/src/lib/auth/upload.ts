@@ -13,6 +13,7 @@ import { STORE_KEY, parseStore } from "../store";
 import type { KoSupabase } from "./client";
 import type { CityKind, Database, Json } from "./database.types";
 import { dbError, currentUserId } from "./profile-api";
+import { LOCAL_ID_ACTIVE, localIdForFarm, localIdForSavedProfile } from "./account-banners";
 
 export const UPLOAD_CHOICES_KEY = "ko:auth:upload:v1";
 
@@ -52,9 +53,9 @@ export function accountsFromDevice(st: StorageLike | null): AccountInsert[] {
   const farms = parseFarmsStore(read(FARMS_KEY));
   const out: AccountInsert[] = [];
   const saved = store.savedProfiles.length > 0
-    ? store.savedProfiles.map((p) => ({ localId: `profile:${p.id}`, name: p.name, code: p.code }))
+    ? store.savedProfiles.map((p) => ({ localId: localIdForSavedProfile(p.id), name: p.name, code: p.code }))
     : store.profileCode
-      ? [{ localId: "profile:active", name: "Main", code: store.profileCode }]
+      ? [{ localId: LOCAL_ID_ACTIVE, name: "Main", code: store.profileCode }]
       : [];
   // The active profile is the main city when it is not a farm; otherwise the first non-farm one.
   const decoded = saved.map((s) => {
@@ -77,7 +78,7 @@ export function accountsFromDevice(st: StorageLike | null): AccountInsert[] {
   });
   farms.farms.forEach((f, i) => {
     out.push({
-      kind: "farm", name: clip(f.name, 40), local_id: `farm:${f.id}`, city_hall: f.levels.cityHall ?? null,
+      kind: "farm", name: clip(f.name, 40), local_id: localIdForFarm(f.id), city_hall: f.levels.cityHall ?? null,
       commanders: {} as Json, sort_order: decoded.length + i,
     });
   });

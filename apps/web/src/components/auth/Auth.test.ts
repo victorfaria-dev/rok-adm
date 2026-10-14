@@ -24,7 +24,7 @@ afterEach(() => {
 describe("not configured (CI, previews today)", () => {
   it("login, profile and verify pages say accounts are off; the /me/ panel renders nothing", async () => {
     setSupabaseForTests(null);
-    const { container } = render(h("div", null, h(Login, {}), h(ProfileView, { handle: "bob" }), h(ProfileEdit, {}), h(VerifyAccount, {}), h(AccountPanel, {})));
+    const { container } = render(h("div", null, h(Login, null), h(ProfileView, { handle: "bob" }), h(ProfileEdit, null), h(VerifyAccount, null), h(AccountPanel, null)));
     await waitFor(() => expect(container.querySelectorAll("[data-auth-off]")).toHaveLength(4));
     expect(container.querySelector("[data-account-panel]")).toBeNull();
   });
@@ -48,7 +48,7 @@ describe("login", () => {
   });
   it("shows the error instead of moving on", async () => {
     setSupabaseForTests(fakeSupabase({ auth: { signInWithOtp: { message: "rate limit", status: 429 } } }).client);
-    render(h(Login, {}));
+    render(h(Login, null));
     fireEvent.input(await screen.findByLabelText("E-mail"), { target: { value: "p@example.test" } });
     fireEvent.click(screen.getByText("E-mail me a sign-in link"));
     expect((await screen.findByRole("alert")).textContent).toMatch(/Too many tries/);
@@ -98,7 +98,7 @@ describe("profile editor", () => {
   it("saves a valid profile and refuses links in the bio", async () => {
     const f = fakeSupabase({ session: { user: { id: ME } }, tables: { profiles: [{ id: ME, handle: null, display_name: null, bio: null, kingdom_number: null, avatar_path: null, banner_path: null, visibility: "private", verified_level: 1 }] } });
     setSupabaseForTests(f.client);
-    render(h(ProfileEdit, {}));
+    render(h(ProfileEdit, null));
     fireEvent.input(await screen.findByLabelText(/^Handle/), { target: { value: "Alice" } });
     fireEvent.input(screen.getByLabelText(/^Bio/), { target: { value: "see https://spam.test" } });
     fireEvent.click(screen.getByText("Save profile"));
@@ -114,7 +114,7 @@ describe("profile editor", () => {
     localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: "dark", profileCode: "1.0.1.0.12.30.....0" }));
     const f = fakeSupabase({ session: { user: { id: ME } }, tables: { profiles: [{ id: ME, visibility: "private", verified_level: 1 }] }, rpc: { claim_site_achievement: () => ({ data: false }) } });
     setSupabaseForTests(f.client);
-    render(h(ProfileEdit, {}));
+    render(h(ProfileEdit, null));
     fireEvent.click(await screen.findByText("Upload to my account"));
     await screen.findByText(/Your data on this device is unchanged/);
     expect(f.tables.local_imports).toHaveLength(1);

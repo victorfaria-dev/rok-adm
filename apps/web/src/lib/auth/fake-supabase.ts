@@ -120,6 +120,11 @@ export function fakeSupabase(opts: FakeOptions = {}): FakeSupabase {
           }
           return { data: [...seen.values()], error: null };
         },
+        async createSignedUrl(path: string, seconds: number) {
+          rec(`storage.${bucket}.createSignedUrl`, path, seconds);
+          if (!files.has(`${bucket}/${path}`)) return { data: null, error: { message: "Object not found" } };
+          return { data: { signedUrl: `https://fake.supabase.test/storage/v1/object/sign/${bucket}/${path}?token=t` }, error: null };
+        },
         getPublicUrl(path: string) {
           return { data: { publicUrl: `https://fake.supabase.test/storage/v1/object/public/${bucket}/${path}` } };
         },

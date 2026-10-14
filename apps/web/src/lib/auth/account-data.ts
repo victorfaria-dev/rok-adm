@@ -4,7 +4,7 @@ import type { KoSupabase } from "./client";
 import { dbError, currentUserId } from "./profile-api";
 
 /** Buckets holding the player's files: public profile images and private verification screenshots. */
-export const USER_BUCKETS = ["avatars", "banners", "verification"] as const;
+export const USER_BUCKETS = ["avatars", "banners", "account_banners", "verification"] as const;
 type Bucket = (typeof USER_BUCKETS)[number];
 const PUBLIC_BUCKETS: readonly Bucket[] = ["avatars", "banners"];
 

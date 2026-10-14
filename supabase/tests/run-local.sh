@@ -11,3 +11,4 @@ for m in "$here"/../migrations/*.sql; do set -- "$@" -f "$m"; done
 psql "$@"
 psql -q -d "$db" -f "$here/rls.sql"
 psql -q -d "$db" -f "$here/verification.sql"
+psql -q -d "$db" -f "$here/account_banners.sql"

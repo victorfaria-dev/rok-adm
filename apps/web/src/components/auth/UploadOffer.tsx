@@ -1,7 +1,8 @@
 // First-login offer: copy this device's data to the account. Nothing is uploaded without a yes and
 // nothing on the device is deleted. Used by /auth/callback/ and by the profile page.
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import type { KoSupabase } from "../../lib/auth/client";
+import { loadLocalBanners, uploadLocalBanners, type LocalBanner } from "../../lib/auth/account-banners";
 import { claimSiteAchievements } from "../../lib/auth/profile-api";
 import { deviceLabel, performUpload, rememberChoice, type UploadPlan } from "../../lib/auth/upload";
 import { localStore } from "../../lib/auth/session";
@@ -15,9 +16,13 @@ interface Props {
   onDone: (result: "uploaded" | "later" | "kept_local") => void;
   /** Heading level context: the callback page uses h1, the profile page h2. */
   headingLevel?: 1 | 2;
+  /** The device's custom city banners (City Hall track); tests pass a fake. */
+  loadBanners?: () => Promise<LocalBanner[]>;
 }
 
-export function UploadOffer({ client, userId, plan, onDone, headingLevel = 2 }: Props) {
+export function UploadOffer({ client, userId, plan, onDone, headingLevel = 2, loadBanners = loadLocalBanners }: Props) {
+  const [banners, setBanners] = useState<LocalBanner[]>([]);
+  useEffect(() => { loadBanners().then(setBanners).catch(() => setBanners([])); }, []);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [done, setDone] = useState<string | null>(null);
@@ -33,10 +38,13 @@ export function UploadOffer({ client, userId, plan, onDone, headingLevel = 2 }: 
       setError(r.message);
       return;
     }
+    const b = await uploadLocalBanners(client, userId, banners);
     rememberChoice(localStore(), userId, "uploaded", plan.fingerprint);
     await claimSiteAchievements(client);
     setBusy(false);
-    setDone(`Uploaded. ${r.cities === 1 ? "1 city" : `${r.cities} cities`} added to your account. Your data on this device is unchanged.`);
+    const bannerNote = b.uploaded > 0 ? ` ${b.uploaded === 1 ? "1 city banner" : `${b.uploaded} city banners`} uploaded.` : "";
+    const bannerFail = b.failed.length > 0 ? ` ${b.failed.length === 1 ? "1 banner" : `${b.failed.length} banners`} could not be uploaded and stay on this device: ${b.failed[0]}` : "";
+    setDone(`Uploaded. ${r.cities === 1 ? "1 city" : `${r.cities} cities`} added to your account.${bannerNote} Your data on this device is unchanged.${bannerFail}`);
     onDone("uploaded");
   };
   const keep = () => {
@@ -55,6 +63,7 @@ export function UploadOffer({ client, userId, plan, onDone, headingLevel = 2 }: 
           <li key={s.label}><strong>{s.label}</strong>: {s.detail}</li>
         ))}
       </ul>
+      {banners.length > 0 && <p class="au-note">{banners.length === 1 ? "1 custom city banner" : `${banners.length} custom city banners`} will be uploaded too.</p>}
       {cities > 0 && <p class="au-note">{cities === 1 ? "1 city" : `${cities} cities`} (main, farms and alts) will show in your account.</p>}
       <p class="au-note">Nothing is deleted from this device either way. The Discord webhook is never uploaded.</p>
       <div class="au-actions">
