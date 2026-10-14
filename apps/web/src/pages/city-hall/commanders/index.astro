@@ -4,6 +4,9 @@
 // /commanders/ under Guides. Stage 1 reuses the existing evaluator; an owned-commanders list comes later.
 import Shell from "../../../layouts/Shell.astro";
 import Commanders from "../../../components/commanders/Commanders";
+import { buildPickerRoster } from "../../../lib/commander-roster";
+
+const roster = buildPickerRoster();
 
 const S = {
   title: "My commanders",
@@ -23,7 +26,7 @@ const S = {
     <p class="acct" data-account-name hidden>{S.account} <strong></strong></p>
     <p>{S.guide} <a href="/commanders/">{S.guideLink}</a>.</p>
   </section>
-  <Commanders client:load />
+  <Commanders roster={roster} client:load />
 </Shell>
 
 <style>
