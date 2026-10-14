@@ -19,7 +19,7 @@ export const TOOLS: readonly ToolEntry[] = [
   { href: "/tools/migration/", title: "Migration checker", blurb: "Can you migrate, and what is missing, for the current rules.", features: ["F-31"], group: "plan" },
   { href: "/tools/kvk/", title: "KvK readiness", blurb: "A checklist for your first KvK, with a plain season explainer.", features: ["F-26"], group: "plan" },
   { href: "/tools/hoard/", title: "Hoard advisor", blurb: "What to save for which event, without guessing dates.", features: ["F-25"], group: "plan" },
-  { href: "/tools/screenshot/", title: "Read my screenshot (experimental)", blurb: "City Hall, power and VIP from your own profile screenshot, read on your device.", features: ["F-54"], group: "plan" },
+  { href: "/tools/screenshot/", title: "Read my screenshots (experimental)", blurb: "Suggested power, kill points, City Hall and VIP from screenshots of your own account, read on your device. You check every value.", features: ["F-54"], group: "plan" },
   { href: "/tools/zeroed/", title: "Zeroed? Recovery plan", blurb: "A 30-second log-off checklist and what to rebuild first.", features: ["F-13"], group: "plan" },
   { href: "/tools/safety/", title: "Play it safe", blurb: "What gets accounts banned, and a support ticket builder.", features: ["F-32", "F-82"], group: "learn" },
   { href: "/glossary/", title: "Glossary", blurb: "DKP, MGE, seed, T4 and more in two lines each.", features: ["F-88"], group: "learn" },

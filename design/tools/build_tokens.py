@@ -81,9 +81,69 @@ def solve_fill(hue: float, sat: float, lum_lo: float, lum_hi: float) -> str:
 kit = json.loads(KIT.read_text())
 THEMES = ("dark", "light")
 
+# Elevation ("layers" look): three surface levels for sections and cards, plus the panel header strip.
+# 0 = page, 1 = section panel, 2 = elevated card. Light: level 1 is a slightly darker tray under
+# white cards, so the white level 2 reads as raised (shadows do the rest). Dark: higher = lighter,
+# because shadows barely show on a dark page. The kit's bronze accent caps how light a card can get
+# (accent text needs 4.5:1 on it), which leaves about 1.33:1 between page and card. The panel takes
+# the larger share (PANEL_STEP over the page, the prototype had 1.12), so sections read clearly;
+# the card takes the rest and relies on its border and shadow too.
+# Every level is a text background: domain colors below are solved against levels 0-2 and the
+# contrast report checks text on each of them.
+PANEL_STEP = 1.2   # dark: surface-1 over surface-0
+CARD_STEP = 1.1    # dark: surface-2 over surface-1 (floor, checked in the report)
+
+
+def lighten_to(base: str, ref: str, target: float) -> str:
+    """base's hue/saturation at the lowest lightness whose contrast against the darker ref >= target."""
+    hh, _, ss = colorsys.rgb_to_hls(*hex_to_rgb(base))
+    for i in range(1001):
+        c = rgb_to_hex(colorsys.hls_to_rgb(hh, i / 1000, ss))
+        if luminance(c) > luminance(ref) and contrast(c, ref) >= target:
+            return c
+    raise ValueError(f"no lighter level for {base}")
+
+
+def lightest_for_text(base: str, texts: list[str], target: float) -> str:
+    """base's hue/saturation at the highest lightness where every text color still reaches target."""
+    hh, _, ss = colorsys.rgb_to_hls(*hex_to_rgb(base))
+    best = None
+    for i in range(1001):
+        c = rgb_to_hex(colorsys.hls_to_rgb(hh, i / 1000, ss))
+        if min(contrast(x, c) for x in texts) >= target:
+            best = c
+        elif best is not None:
+            break
+    if best is None:
+        raise ValueError(f"no level for {base}")
+    return best
+
+
+def mix(a: str, b: str, w: float) -> str:
+    """w of a over (1 - w) of b, in sRGB."""
+    return rgb_to_hex(tuple(w * x + (1 - w) * y for x, y in zip(hex_to_rgb(a), hex_to_rgb(b))))
+
+
+_dk = kit["dark"]
+_dark_text = [_dk["text"], _dk["text-muted"], _dk["accent"], *kit["status-dark"].values()]
+ELEVATION = {
+    "dark": {"surface-0": _dk["background"],
+             "surface-1": lighten_to(_dk["surface"], _dk["background"], PANEL_STEP),
+             # small margin over 4.5 so rounding to hex never lands on the edge
+             "surface-2": lightest_for_text(_dk["surface-raised"], _dark_text, TEXT_AA + .05)},
+    "light": {"surface-0": kit["light"]["background"], "surface-1": "#EBE6DE", "surface-2": kit["light"]["surface"]},
+}
+# Header strip on a level-1 panel: a recessed, accent-tinted band, a touch darker than the panel in
+# both themes, so the card that overlaps it reads as raised. Light: level 1 with 5% accent (8% drops
+# muted text below 4.5:1). Dark: the page with 8% accent, warm and just under level 1.
+# It only carries titles, notes, links and the focus ring, so it is checked for those in the report
+# and left out of the domain-color solving.
+SURFACE_HEAD = {"light": mix(kit["light"]["accent"], ELEVATION["light"]["surface-1"], .05),
+                "dark": mix(kit["dark"]["accent"], ELEVATION["dark"]["surface-0"], .08)}
+
 def surfaces(theme: str) -> list[str]:
     t = kit[theme]
-    return [t["background"], t["surface"], t["surface-raised"]]
+    return [t["background"], t["surface"], t["surface-raised"], *ELEVATION[theme].values()]
 
 # Spending profiles: hue walks green -> crimson as spending grows (order matters, not "good/bad").
 PROFILES = {"f2p": (150, .45), "low": (190, .50), "medium": (215, .55),
@@ -108,6 +168,7 @@ colors: dict[str, dict[str, str]] = {t: {} for t in THEMES}
 for t in THEMES:
     for k, v in kit[t].items():
         colors[t][k] = v
+    colors[t].update(ELEVATION[t], **{"surface-head": SURFACE_HEAD[t]})
     for k, v in kit[f"status-{t}"].items():
         colors[t][k] = v
     # Confidence reuses status hues so the app has one color language.
@@ -251,7 +312,8 @@ def report() -> tuple[str, int]:
 
     for t in THEMES:
         tc = colors[t]
-        bgs = {"background": tc["background"], "surface": tc["surface"], "surface-raised": tc["surface-raised"]}
+        bgs = {"background": tc["background"], "surface": tc["surface"], "surface-raised": tc["surface-raised"],
+               "surface-1": tc["surface-1"], "surface-2": tc["surface-2"]}
         text_keys = ["text", "text-muted", "accent", "success", "warning", "error", "info"]
         text_keys += [k for k in tc if k.startswith(("confidence-", "profile-", "rarity-"))]
         for k in text_keys:
@@ -262,9 +324,17 @@ def report() -> tuple[str, int]:
             add(t, "focus", tc["focus"], bn, bv, UI_AA)
         for bn, bv in bgs.items():
             add(t, "control-border", tc["control-border"], bn, bv, UI_AA)
+        # The header strip only ever carries titles, notes, links and the focus ring.
+        for k, need in (("text", TEXT_AA), ("text-muted", TEXT_AA), ("accent", TEXT_AA), ("focus", UI_AA)):
+            add(t, k, tc[k], "surface-head", tc["surface-head"], need)
         for k, v in alliance.items():
             for bn, bv in bgs.items():
                 add(t, f"alliance-{k} (border)", v, bn, bv, UI_AA)
+    # Elevation steps (non-text floors): in dark each level must stand out from the one below.
+    for t in THEMES:
+        tc = colors[t]
+        for below, above, need in (("surface-0", "surface-1", PANEL_STEP), ("surface-1", "surface-2", CARD_STEP)):
+            add(t, f"{above} (level step)", tc[above], below, tc[below], need if t == "dark" else 1.0)
     for k, v in alliance.items():
         add("both", "alliance-ink", ALLIANCE_INK, f"alliance-{k}", v, TEXT_AA)
 

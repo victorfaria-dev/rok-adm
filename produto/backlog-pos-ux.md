@@ -41,3 +41,8 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 - Limite: prints podem ser editados; nível 3 prova controle da conta, não autenticidade de cada número. Moderador revisa por amostragem e em denúncias.
 - Achado de OCR com prints reais (4 contas do Victor, cliente em PT): o Tesseract lê bem ID, poder e pontos de abate, mas a tela de perfil não mostra nível da prefeitura e o VIP fica parcialmente coberto; o parser atual (rótulos em inglês) não serve. Reescrita em andamento (trilha OCR). Prints reais ficam fora do repositório (IDs e foto pessoal).
 - Decidido (Victor, 2026-10-13): os 3 níveis aprovados. Fluxo de prints: Perfil do Governador (ID, nome, poder, abates, civilização) + cidade com a prefeitura tocada ("Prefeitura · Nível N", VIP e poder no HUD) + Álbum com o código (posse da conta, ligada ao ID pelo nome). Código: validade de 1 hora e válido só para a requisição que o gerou (uso único; nova tentativa = novo código).
+
+## Leitura de inventário (adiado, Victor 2026-10-14)
+- Ideia: somar aceleradores e pacotes de recursos a partir de prints do inventário.
+- Dificuldade: identificar itens exige reconhecer ícones (comparação com biblioteca de referência); quantidades já são legíveis.
+- Próximo passo quando retomar: 2–3 prints (abas de aceleradores e recursos) para avaliar viabilidade antes de construir.
