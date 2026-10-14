@@ -92,7 +92,7 @@ export function effectiveView(p: AccountProfile, override: SpendingProfile | nul
   return { result, declared: profileName(result.declared), lifetime, effective };
 }
 
-const RULE_PREFIX = /^Product rule, not a game fact:\s*/;
+const RULE_PREFIX = /^[^:]*:\s*/;
 
 /** The rule text without its "Product rule, not a game fact:" lead (the page shows that as a label). */
 export const RULE_BODY = ((s: string) => s.charAt(0).toUpperCase() + s.slice(1))(EFFECTIVE_PROFILE_RULE.replace(RULE_PREFIX, ""));

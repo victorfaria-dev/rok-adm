@@ -24,7 +24,7 @@ describe("MGE governors from CSV", () => {
   });
 
   it("throws a readable message without a name column", () => {
-    expect(() => addCandidatesFromCsv(emptyMgeDoc("p"), "who,score\nA,1")).toThrow(/Missing: "name"/);
+    expect(() => addCandidatesFromCsv(emptyMgeDoc("p"), "who,score\nA,1")).toThrow(/Faltando: "name"/);
   });
 });
 

@@ -70,7 +70,7 @@ describe("public link", () => {
     const r = await readMgeLink(new URL(link.url).hash);
     expect(r.ok).toBe(true);
     if (r.ok) {
-      expect(r.data.events[0]!.slots).toEqual([{ slot: 1, name: "Alpha", reason: "score rank 1" }]);
+      expect(r.data.events[0]!.slots).toEqual([{ slot: 1, name: "Alpha", reason: "posição 1 por pontuação" }]);
       expect(r.data.publishedOn).toBe("2026-10-13");
     }
     const withScores = await publishMge(d, planMge(d), true, "2026-10-13", "https://x.test");
@@ -108,10 +108,10 @@ describe("CSV downloads", () => {
     const save = (f: string, t: string, ty: string) => void calls.push([f, t, ty]);
     downloadMgeCsv("ledger", d, planMge(d), false, "2026-10-13", save);
     expect(calls[0]![0]).toBe("kingdomops-mge-ledger-k1-2026-10-13.csv");
-    expect(calls[0]![1]).toBe("\uFEFFdate,commander,slot,governor,reason,locked\r\n2026-10-01,,1,Alpha,score rank 1,no\r\n");
+    expect(calls[0]![1]).toBe("\uFEFFdate,commander,slot,governor,reason,locked\r\n2026-10-01,,1,Alpha,posição 1 por pontuação,no\r\n");
     expect(calls[0]![2]).toBe("text/csv;charset=utf-8");
     downloadMgeCsv("ledger", d, planMge(d), true, "2026-10-13", save);
-    expect(calls[1]![1]).toContain("score rank 1 (4,200,000)\",no,4200000");
+    expect(calls[1]![1]).toContain("posição 1 por pontuação (4.200.000),no,4200000");
     const g = downloadMgeCsv("governors", d, planMge(d), false, "2026-10-13", save);
     expect(g.text).toBe("\uFEFFname,score,tags\r\nAlpha,4200000,rally lead\r\n");
   });

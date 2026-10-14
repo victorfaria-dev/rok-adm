@@ -37,23 +37,23 @@ describe("profileRows", () => {
 
   it("says each answer in words: options, numbers with units, yes/no and not answered", () => {
     const rows = profileRows(profile("1.0.1.0.12.30.....0"));
-    expect(valueOf(rows, "spending")).toBe("F2P — $0 per month");
-    expect(valueOf(rows, "role")).toBe("Farm account");
-    expect(valueOf(rows, "kingdomStage")).toBe("Before the first KvK");
+    expect(valueOf(rows, "spending")).toBe("F2P — $0 por mês");
+    expect(valueOf(rows, "role")).toBe("Conta farm");
+    expect(valueOf(rows, "kingdomStage")).toBe("Antes da primeira KvK");
     expect(valueOf(rows, "cityHall")).toBe("12");
     expect(valueOf(rows, "minutesPerDay")).toBe("30 min");
     expect(valueOf(rows, "sessionsPerDay")).toBe("Não respondido");
     expect(valueOf(rows, "kingdomDay")).toBe("Não respondido");
     expect(valueOf(rows, "lifetimeSpendUsd")).toBe("Não respondido");
-    expect(valueOf(rows, "civilization")).toBe("Not chosen yet / not sure");
+    expect(valueOf(rows, "civilization")).toBe("Ainda não escolhi / não sei");
     expect(valueOf(rows, "returningPlayer")).toBe("Não");
   });
 
   it("formats large numbers and filled optional answers", () => {
     const rows = profileRows(profile("1.5.4.4.25.1440.24.5000.10000000.china.1"));
-    expect(valueOf(rows, "spending")).toBe("Kraken — $5,000+ per month");
+    expect(valueOf(rows, "spending")).toBe("Kraken — $5.000+ por mês");
     expect(valueOf(rows, "lifetimeSpendUsd")).toBe("10.000.000 USD");
-    expect(valueOf(rows, "kingdomDay")).toBe("5.000 days");
+    expect(valueOf(rows, "kingdomDay")).toBe("5.000 dias");
     expect(valueOf(rows, "sessionsPerDay")).toBe("24");
     expect(valueOf(rows, "civilization")).toBe("China");
     expect(valueOf(rows, "returningPlayer")).toBe("Sim");
@@ -78,13 +78,13 @@ describe("effectiveView (F-72)", () => {
   it("a manual pick wins and says so", () => {
     const v = effectiveView(profile("1.0.0.0.12.30...10000..0"), "low");
     expect(v.effective).toBe("Low (definido à mão)");
-    expect(v.result.explanation).toContain("by hand");
+    expect(v.result.explanation).toContain("à mão");
   });
 
   it("rule body drops the label the page shows separately", () => {
-    expect(EFFECTIVE_PROFILE_RULE.startsWith("Product rule, not a game fact")).toBe(true);
-    expect(RULE_BODY.startsWith("Past spending counts as one year")).toBe(true);
-    expect(RULE_BODY).not.toContain("not a game fact");
+    expect(EFFECTIVE_PROFILE_RULE.startsWith("Regra do produto, não um fato do jogo")).toBe(true);
+    expect(RULE_BODY.startsWith("O gasto passado conta como um ano")).toBe(true);
+    expect(RULE_BODY).not.toContain("não um fato do jogo");
   });
 });
 
@@ -92,7 +92,7 @@ describe("override choices", () => {
   it("Automatic first, then the six profiles with their monthly bands", () => {
     expect(OVERRIDE_CHOICES.map((c) => c.value)).toEqual(["auto", "f2p", "low", "medium", "high", "whale", "kraken"]);
     expect(OVERRIDE_CHOICES[0]!.label).toBe("Automático (recomendado)");
-    expect(OVERRIDE_CHOICES[2]!.label).toBe("Low spender — $5–$100 per month");
+    expect(OVERRIDE_CHOICES[2]!.label).toBe("Low (gasta pouco) — $5–$100 por mês");
   });
 
   it("round-trips radio values and stored overrides", () => {

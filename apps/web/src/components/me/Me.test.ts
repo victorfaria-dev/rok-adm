@@ -38,9 +38,9 @@ describe("You island: profile", () => {
 
   it("shows the saved answers in words", () => {
     setup({ profileCode: CODE });
-    expect(screen.getByText("Farm account")).toBeTruthy();
+    expect(screen.getByText("Conta farm")).toBeTruthy();
     expect(screen.getByText("30 min")).toBeTruthy();
-    expect(screen.getByText("Before the first KvK")).toBeTruthy();
+    expect(screen.getByText("Antes da primeira KvK")).toBeTruthy();
   });
 
   it("Edit answers clears the draft before opening the questionnaire", () => {
@@ -84,11 +84,11 @@ describe("Me island: playing as, details, share card (UX stage 1)", () => {
 
   it("shows only the 5 onboarding answers above; optional details are edited below", () => {
     setup({ profileCode: CODE });
-    expect(screen.getByText("How much do you spend on Rise of Kingdoms per month?")).toBeTruthy();
-    const kd = screen.getByLabelText("How many days old is your kingdom?") as HTMLInputElement;
+    expect(screen.getByText("Quanto você gasta por mês em Rise of Kingdoms?")).toBeTruthy();
+    const kd = screen.getByLabelText("Quantos dias tem o seu reino?") as HTMLInputElement;
     expect(kd.value).toBe("");
     fireEvent.input(kd, { target: { value: "45" } });
-    fireEvent.change(screen.getByLabelText("Which civilization do you play?"), { target: { value: "china" } });
+    fireEvent.change(screen.getByLabelText("Qual civilização você joga?"), { target: { value: "china" } });
     fireEvent.click(screen.getByRole("button", { name: "Salvar detalhes" }));
     expect(screen.getByText("Salvo.")).toBeTruthy();
     const saved = readStore().profileCode!;
@@ -97,9 +97,9 @@ describe("Me island: playing as, details, share card (UX stage 1)", () => {
 
   it("a detail that breaks a core rule shows a how-to-fix error and saves nothing", () => {
     setup({ profileCode: "1.0.0.1.12.30.....0" }); // KvK 1
-    fireEvent.input(screen.getByLabelText("How many days old is your kingdom?"), { target: { value: "3" } });
+    fireEvent.input(screen.getByLabelText("Quantos dias tem o seu reino?"), { target: { value: "3" } });
     fireEvent.click(screen.getByRole("button", { name: "Salvar detalhes" }));
-    expect(screen.getByText(/cannot be past pre-KvK/)).toBeTruthy();
+    expect(screen.getByText(/ainda não pode ter passado da pré-KvK/)).toBeTruthy();
     expect(readStore().profileCode).toBe("1.0.0.1.12.30.....0");
   });
 

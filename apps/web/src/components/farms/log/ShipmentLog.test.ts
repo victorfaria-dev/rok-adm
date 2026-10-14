@@ -91,7 +91,7 @@ describe("ShipmentLog", () => {
     expect(document.querySelector("[data-warning]")).toBeNull();
     fireEvent.change(screen.getByLabelText("Recurso"), { target: { value: "gold" } });
     const w = document.querySelector("[data-warning='gold_pending_t0']")!;
-    expect(w.textContent).toContain("not yet confirmed in game");
+    expect(w.textContent).toContain("ainda não foi confirmado no jogo");
     expect(w.textContent).toContain("A03-0027");
   });
 

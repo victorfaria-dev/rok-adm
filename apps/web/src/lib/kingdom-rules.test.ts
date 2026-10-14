@@ -13,7 +13,7 @@ describe("rules store glue", () => {
     expect(saved.updatedAt).toBe(NOW.toISOString());
     const list = listRules(st);
     expect(list).toHaveLength(1);
-    expect(list[0]!.title).toBe("K1234 rules");
+    expect(list[0]!.title).toBe("Regras do reino K1234");
     expect(list[0]!.doc.kingdom).toBe("K1234");
 
     const id = saveRulesCopy(saved, st, NOW, "copy-1");

@@ -23,8 +23,8 @@ describe("CommanderPicker", () => {
   it("shows every commander under its period header, with a portrait or initials and the credit", () => {
     single();
     expect(tiles()).toHaveLength(roster.commanders.length);
-    expect(screen.getByRole("group", { name: "From kingdom start" })).toBeTruthy();
-    expect(screen.getByRole("group", { name: "Season 3 (KvK3)" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Desde o início do reino" })).toBeTruthy();
+    expect(screen.getByRole("group", { name: "Temporada 3 (KvK3)" })).toBeTruthy();
     const img = tile("Sun Tzu").querySelector("img")!;
     expect(img.getAttribute("width")).toBe("56");
     expect(img.getAttribute("height")).toBe("56");
@@ -53,7 +53,7 @@ describe("CommanderPicker", () => {
     single({ stage: "pre_kvk" });
     fireEvent.click(screen.getByRole("checkbox", { name: /Só o que posso conseguir agora/ }));
     expect(tiles().some((t) => t.hasAttribute("data-future"))).toBe(false);
-    expect(screen.queryByRole("group", { name: /Season 3/ })).toBeNull();
+    expect(screen.queryByRole("group", { name: /Temporada 3/ })).toBeNull();
   });
 
   it("single select reports the id; the picked tile is pressed", () => {
@@ -69,10 +69,10 @@ describe("CommanderPicker", () => {
     const guan = tile("Guan Yu");
     expect(guan.getAttribute("aria-disabled")).toBe("true");
     expect(guan.textContent).toContain("Temporada 3");
-    expect(screen.getByRole("group", { name: /Season 3 \(KvK3\) Chega depois/ })).toBeTruthy();
+    expect(screen.getByRole("group", { name: /Temporada 3 \(KvK3\) Chega depois/ })).toBeTruthy();
     fireEvent.click(guan);
     expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByRole("status").textContent).toBe("Guan Yu chega em Season 3 (KvK3). Ainda não há o que decidir.");
+    expect(screen.getByRole("status").textContent).toBe("Guan Yu chega em Temporada 3 (KvK3). Ainda não há o que decidir.");
   });
 
   it("multi select toggles ids", () => {

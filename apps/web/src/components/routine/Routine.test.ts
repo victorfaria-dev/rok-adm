@@ -48,7 +48,7 @@ describe("routine island", () => {
   it("lifetime spend raises the plan to the effective profile (F-72)", () => {
     setup({ profileCode: "1.0.0.0.12.30...2000..0" });
     expect(screen.getByText("Medium (perfil efetivo, pelo seu gasto total) · CH 12")).toBeTruthy();
-    expect(screen.getByText(/not researched yet/)).toBeTruthy();
+    expect(screen.getByText(/ainda não foram pesquisadas/)).toBeTruthy();
   });
 
   it("check-off is saved for today; yesterday's marks start empty", () => {

@@ -148,6 +148,6 @@ describe("text", () => {
     expect(initials("Yi Seong-Gye")).toBe("YG");
     expect(initials("Achilles")).toBe("AC");
     expect(initials("Casimir III")).toBe("CI");
-    expect(arrivesText("Guan Yu", roster.periods.find((p) => p.id === "kvk3"))).toBe("Guan Yu chega em Season 3 (KvK3). Ainda não há o que decidir.");
+    expect(arrivesText("Guan Yu", roster.periods.find((p) => p.id === "kvk3"))).toBe("Guan Yu chega em Temporada 3 (KvK3). Ainda não há o que decidir.");
   });
 });

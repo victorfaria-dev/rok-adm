@@ -145,7 +145,7 @@ describe("questionnaire island: chat", () => {
 
   it("a tap on a quick reply answers and moves on in one go", () => {
     setup({ draft: { step: stepOf("spending"), answers: {} } });
-    const radio = screen.getByRole("radio", { name: /Medium spender/ });
+    const radio = screen.getByRole("radio", { name: /Medium \(gasta médio\)/ });
     fireEvent.pointerDown(radio.closest("label")!);
     fireEvent.click(radio);
     expect(title().textContent).toBe(label(stepOf("minutesPerDay")));
@@ -224,7 +224,7 @@ describe("questionnaire island: summary", () => {
     });
     expect(title().textContent).toBe("Confira suas respostas");
     expect(document.querySelector(".st-stage")!.getAttribute("data-state")).toBe("victory");
-    expect(screen.getByText(/Under 15 minutes a day/)).toBeTruthy();
+    expect(screen.getByText(/Menos de 15 minutos por dia/)).toBeTruthy();
     expect(screen.getByText(/são opcionais: adicione quando quiser na aba Eu/)).toBeTruthy();
     fireEvent.click(screen.getByRole("button", { name: "Abrir minha Prefeitura" }));
     const code = readStore().profileCode!;

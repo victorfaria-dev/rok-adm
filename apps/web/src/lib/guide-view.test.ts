@@ -136,7 +136,7 @@ describe("stage-aware guide (KvK2, KvK3, SoC)", () => {
 
   it("uses the late-game chapter titles for the late sections", () => {
     const sel = selectGuideWithFallback(payload, make({ kingdomStage: "kvk2", cityHall: 25 }), late);
-    expect(sel.view.sections.find((s) => s.id === "plan")!.title).toMatch(/Late-game plan/);
+    expect(sel.view.sections.find((s) => s.id === "plan")!.title).toMatch(/Plano da fase tardia/);
   });
 
   it("Low at KvK3 gets the Low-only late block; F2P does not", () => {

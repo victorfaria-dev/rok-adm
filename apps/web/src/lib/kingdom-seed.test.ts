@@ -32,6 +32,6 @@ describe("seedSummary", () => {
   });
 
   it("formats power", () => {
-    expect(powerText(23_500_000_000)).toBe("23.5B (23,500,000,000)");
+    expect(powerText(23_500_000_000)).toBe("23.5B (23.500.000.000)");
   });
 });

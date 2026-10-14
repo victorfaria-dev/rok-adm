@@ -72,7 +72,7 @@ describe("message builders", () => {
     expect(r.ok).toBe(true);
     if (!r.ok) return;
     expect(r.content).toBe([
-      "**Resultados do MGE: K1 \\*MGE\\***\nRegra: Score, 2 vagas por evento.",
+      "**Resultados do MGE: K1 \\*MGE\\***\nRegra: Pontuação, 2 vagas por evento.",
       "**qui., 1 de out. de 2026, Cao Cao** (final)\n1. @​everyone — score rank 1\n2. não preenchida",
       "Registro completo: https://x.test/kingdom/mge/view/#d=1",
     ].join("\n\n"));

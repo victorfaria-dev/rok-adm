@@ -44,14 +44,14 @@ export function blocksForPage(page: GuidePage, blocks: readonly GuideBlock[] = F
     .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 }
 
-/** Unsourced heuristics are written with a title starting "Hypothesis:" (data, in English). */
+/** Unsourced heuristics are written with a title starting "Hipótese:" (data, in pt-BR; English prefix also accepted). */
 export function isHypothesis(b: Pick<GuideBlock, "title">): boolean {
-  return /^hypothesis\s*:/i.test(b.title);
+  return /^(hypothesis|hip[óo]tese)\s*:/i.test(b.title);
 }
 
 /** Title without the "Hypothesis:" prefix (the page shows a label instead). */
 export function displayTitle(b: Pick<GuideBlock, "title">): string {
-  const t = b.title.replace(/^hypothesis\s*:\s*/i, "");
+  const t = b.title.replace(/^(hypothesis|hip[óo]tese)\s*:\s*/i, "");
   return t.charAt(0).toUpperCase() + t.slice(1);
 }
 

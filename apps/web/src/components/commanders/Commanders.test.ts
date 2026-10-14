@@ -39,20 +39,20 @@ describe("commanders island", () => {
     expect(screen.getByRole("heading", { level: 2, name: "Sun Tzu" })).toBeTruthy();
     expect(screen.getByText("Útil até o KvK1: perde valor depois")).toBeTruthy();
     expect(screen.getByText(/A06-0501, A06-0509, A14-0001/)).toBeTruthy();
-    const purpose = group(/What job will this commander do/);
+    const purpose = group(/Que função este comandante terá/);
     expect(within(purpose).getByText("Sugerida")).toBeTruthy();
-    expect((within(purpose).getByRole("radio", { name: /Open-field fighting/ }) as HTMLInputElement).checked).toBe(true);
+    expect((within(purpose).getByRole("radio", { name: /Lutar em campo aberto/ }) as HTMLInputElement).checked).toBe(true);
     expect(readStore().commanders).toEqual({}); // suggestions are not saved until the player acts
   });
 
   it("answering changes the verdict, saves the answer and drops the Suggested mark", () => {
     setup({ hash: "#lohar" });
     expect(verdictWord()).toBe("Espere");
-    fireEvent.click(within(group(/What are you about to spend/)).getByRole("radio", { name: /Universal legendary/ }));
+    fireEvent.click(within(group(/O que você está prestes a gastar/)).getByRole("radio", { name: /Esculturas lendárias universais/ }));
     expect(verdictWord()).toBe("Evite");
     expect(readStore().commanders.lohar).toEqual({ sculptureType: "universal_gold" });
-    fireEvent.click(within(group(/What job will this commander do/)).getByRole("radio", { name: /Barbarians/ }));
-    expect(within(group(/What job will this commander do/)).queryByText("Sugerida")).toBeNull();
+    fireEvent.click(within(group(/Que função este comandante terá/)).getByRole("radio", { name: /bárbaros/ }));
+    expect(within(group(/Que função este comandante terá/)).queryByText("Sugerida")).toBeNull();
     expect(readStore().commanders.lohar).toEqual({ sculptureType: "universal_gold", purpose: "pve_barbarians" });
   });
 
@@ -114,12 +114,12 @@ describe("commanders island", () => {
     const tile = screen.getByRole("button", { name: /^Guan Yu, Lendário, chega em Temporada 3/ });
     expect(tile.getAttribute("aria-disabled")).toBe("true");
     fireEvent.click(tile);
-    expect(screen.getByText("Guan Yu chega em Season 3 (KvK3). Ainda não há o que decidir.")).toBeTruthy();
+    expect(screen.getByText("Guan Yu chega em Temporada 3 (KvK3). Ainda não há o que decidir.")).toBeTruthy();
     expect(location.hash).toBe("");
     cleanup();
     setup({ stage: "pre_kvk", hash: "#guan-yu" });
     expect(screen.getByRole("heading", { level: 2, name: "Guan Yu" })).toBeTruthy();
-    expect(screen.getByText("Este comandante chega em Season 3 (KvK3); ainda não há o que decidir.")).toBeTruthy();
+    expect(screen.getByText("Este comandante chega em Temporada 3 (KvK3); ainda não há o que decidir.")).toBeTruthy();
     expect(screen.queryAllByRole("radio", { name: /Open-field/ })).toHaveLength(0);
     expect(document.querySelector(".cmd-verdict")).toBeNull();
   });

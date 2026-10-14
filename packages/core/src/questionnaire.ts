@@ -156,7 +156,7 @@ export const QUESTIONS: readonly Question[] = [
     options: STAGE_OPTIONS,
   },
   {
-    id: "kingdomDay", type: "number", nullable: true, default: null, min: 0, max: 5000, integer: true, unit: "days",
+    id: "kingdomDay", type: "number", nullable: true, default: null, min: 0, max: 5000, integer: true, unit: "dias",
     label: "Quantos dias tem o seu reino?",
     help: "Opcional. As fases que você já passou vão para uma lista \"Já feito?\".",
   },

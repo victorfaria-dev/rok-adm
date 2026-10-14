@@ -4,11 +4,11 @@ import { describe, expect, it } from "vitest";
 import { USER_DATA_KEYS } from "./storage-keys";
 
 const md = readFileSync(new URL("../../../../content/legal/trust-and-privacy.md", import.meta.url), "utf8");
-const section = md.slice(md.indexOf("## 1. What data we store"), md.indexOf("## 2."));
+const section = md.slice(md.indexOf("## 1. Quais dados guardamos"), md.indexOf("## 2. "));
 
 describe("trust page data list", () => {
   it("keeps the legal-review banner", () => {
-    expect(md).toContain("**DRAFT — needs legal review before monetization.**");
+    expect(md).toContain("**RASCUNHO — precisa de revisão jurídica antes de qualquer monetização.**");
   });
 
   it("names every store from lib/storage-keys.ts, each under its own heading", () => {
@@ -17,11 +17,11 @@ describe("trust page data list", () => {
 
   it("covers Discord, on-device OCR, the offline copy, other players' data and how to delete", () => {
     expect(section).toMatch(/Discord/);
-    expect(section).toMatch(/OCR\) runs \*\*on your device\*\*/);
-    expect(section).toMatch(/image never leaves your browser/);
-    expect(section).toMatch(/Offline copy/);
-    expect(section).toMatch(/other players' governor names and scores/);
-    expect(section).toContain("Delete all data");
-    expect(section).toContain("Back up everything");
+    expect(section).toMatch(/OCR\) roda \*\*no seu dispositivo\*\*/);
+    expect(section).toMatch(/A imagem nunca sai do seu navegador/);
+    expect(section).toMatch(/Cópia offline/);
+    expect(section).toMatch(/nomes de governadores e pontuações de outros jogadores/);
+    expect(section).toContain("Apagar todos os dados");
+    expect(section).toContain("Fazer backup de tudo");
   });
 });

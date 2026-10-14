@@ -45,14 +45,14 @@ describe("new card and form round trip", () => {
   it("reports field and band errors", () => {
     const f = cardToForm(newCard());
     f.bands = [{ ...emptyBand("0"), max: "20m", pct: "250" }, { ...emptyBand("10m"), pct: "300" }];
-    expect(formToCard(f).bandIssues[0]!.message).toMatch(/overlaps/);
-    expect(formToCard(f).errors).toEqual({ "band-1-min": "Band 2 overlaps band 1: start it at or above where band 1 ends." });
+    expect(formToCard(f).bandIssues[0]!.message).toMatch(/se sobrepõe/);
+    expect(formToCard(f).errors).toEqual({ "band-1-min": "A faixa 2 se sobrepõe à faixa 1: comece-a no ponto em que a faixa 1 termina ou acima." });
     f.bands = [{ ...emptyBand("x"), pct: "" }];
     const r = formToCard(f);
     expect(r.errors["band-0-min"]).toMatch(/número inteiro/);
     expect(r.errors["band-0-pct"]).toMatch(/porcentagem/);
     f.bands = [];
-    expect(formToCard(f).bandIssues[0]!.message).toMatch(/at least one/);
+    expect(formToCard(f).bandIssues[0]!.message).toMatch(/pelo menos uma faixa/);
     f.mode = "fixed";
     expect(formToCard(f).errors.fixed).toBe("Digite a meta de DKP.");
     f.fixed = "5m";
@@ -131,7 +131,7 @@ describe("requirement groups", () => {
     expect(r.errors["group-0-name"]).toBe("Digite um nome para este grupo.");
     expect(r.errors["group-0-pct"]).toBe("Digite a porcentagem da meta normal.");
     expect(r.errors["group-1-pct"]).toBe("Digite uma porcentagem como 80.");
-    expect(r.errors["group-2-name"]).toBe("Group 3 has the same name as group 2.");
+    expect(r.errors["group-2-name"]).toBe("O grupo 3 tem o mesmo nome do grupo 2.");
     expect(r.errors["group-3-name"]).toBeUndefined();
   });
 
@@ -146,14 +146,14 @@ describe("excluded deads", () => {
   it("form round trip keeps the rule and its label", () => {
     const f = cardToForm(newCard());
     expect(f.excludedOn).toBe(false);
-    expect(f.excludedLabel).toBe("zeroed in a 'terrible trade'");
+    expect(f.excludedLabel).toBe("zerado em uma 'troca terrível'");
     f.excludedOn = true;
     f.excludedLabel = "zeroed by a bad trade";
     const c = formToCard(f).card;
     expect(c.excludedDeads).toEqual({ enabled: true, label: "zeroed by a bad trade" });
     expect(cardToForm(c)).toMatchObject({ excludedOn: true, excludedLabel: "zeroed by a bad trade" });
     f.excludedLabel = "  ";
-    expect(formToCard(f).card.excludedDeads.label).toBe("zeroed in a 'terrible trade'");
+    expect(formToCard(f).card.excludedDeads.label).toBe("zerado em uma 'troca terrível'");
   });
 
   it("parseExcluded: empty, bad text, more than deads", () => {
@@ -161,8 +161,8 @@ describe("excluded deads", () => {
     expect(parseExcluded("50", 100)).toEqual({ ok: true, value: 50 });
     expect(parseExcluded("1k", 1000)).toEqual({ ok: true, value: 1000 });
     expect(parseExcluded("x", 100)).toMatchObject({ ok: false, error: expect.stringMatching(/número inteiro/) });
-    expect(parseExcluded("101", 100)).toEqual({ ok: false, error: "This can't be more than your deads (100)." });
-    expect(parseExcluded("1", null)).toEqual({ ok: false, error: "This can't be more than your deads (0)." });
+    expect(parseExcluded("101", 100)).toEqual({ ok: false, error: "Isso não pode ser maior que as suas mortes (100)." });
+    expect(parseExcluded("1", null)).toEqual({ ok: false, error: "Isso não pode ser maior que as suas mortes (0)." });
   });
 
   it("my doc keeps the excluded deads text", () => {

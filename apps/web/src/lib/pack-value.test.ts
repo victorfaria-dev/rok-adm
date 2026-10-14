@@ -28,7 +28,7 @@ describe("pack value (A12-0618 method)", () => {
     const v = packValue({ price: 5, gems: 1050, vipPoints: 525 })!;
     expect(compareGems(v, refs, "other")).toBeNull();
     const c = compareGems(v, refs, "usd")!;
-    expect(c.fewerGemsThan.some((l) => /Gem Supply/.test(l))).toBe(true);
+    expect(c.fewerGemsThan.some((l) => /Suprimento de Gemas/.test(l))).toBe(true);
     expect(c.moreGemsThan).not.toContain(refs.find((r) => r.id === "growth-fund")!.label);
     expect(compareGems({ gemsPerUnit: 0, vipPerUnit: 10 }, refs, "usd")).toBeNull();
   });

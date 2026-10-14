@@ -159,7 +159,7 @@ describe("static guide pages", () => {
       expect(view.meta.shownBlocks, g.set).toBe(BLOCK_SETS[g.set]!.length);
     }
     const ret = fullGuide(buildGuidePayload("returning"), GUIDE_SETS.find((s) => s.id === "returning")!.sectionTitles);
-    expect(ret.sections[0]!.title).toBe("1. What changed while you were away");
+    expect(ret.sections[0]!.title).toBe("1. O que mudou enquanto você estava fora");
   });
 
   it("counts blocks by confidence, high to pending, without empty levels", () => {

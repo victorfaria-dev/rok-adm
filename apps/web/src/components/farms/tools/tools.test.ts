@@ -99,7 +99,7 @@ describe("BuildPathTool", () => {
     expect(input("Entreposto Comercial").value).toBe("15");
     expect((screen.getByLabelText(/^Foco/) as HTMLSelectElement).value).toBe("food");
     // Goldmine 12 < 15 is the first step to do.
-    expect(summary()).toContain("Próximo passo: Goldmine at the same level");
+    expect(summary()).toContain("Próximo passo: Mina de Ouro no mesmo nível");
     expect(document.querySelector('[data-step="ch11"] [data-step-status]')!.textContent).toContain("Concluído");
     expect(document.querySelector('[data-step="goldmine"] [data-step-status]')!.textContent).toContain("A fazer");
     expect(document.querySelector('[data-step="academy-foodwood-15"] [data-step-status]')!.textContent).toContain("Informe seu nível para conferir");

@@ -194,7 +194,7 @@ describe("finish", () => {
 
   it("answer text uses core labels", () => {
     expect(answerText(getQuestion("spending"), "f2p")).toBe(QUESTIONS[0]!.type === "choice" ? QUESTIONS[0]!.options[0]!.label : "");
-    expect(answerText(getQuestion("civilization"), null)).toBe("Not chosen yet / not sure");
+    expect(answerText(getQuestion("civilization"), null)).toBe("Ainda não escolhi / não sei");
     expect(answerText(getQuestion("lifetimeSpendUsd"), 10_000_000)).toBe("10.000.000 USD");
     expect(answerText(getQuestion("kingdomDay"), null)).toBe("Pulada");
     expect(answerText(getQuestion("returningPlayer"), true)).toBe("Sim");

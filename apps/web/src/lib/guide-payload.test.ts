@@ -129,7 +129,7 @@ describe("Low spender targets payload (wave J)", () => {
   });
 
   it("every purchase row has a price, confidence and fact ids; ratios cite the A12-0618 method", () => {
-    expect(low.priceWarning).toMatch(/region/);
+    expect(low.priceWarning).toMatch(/região/);
     for (const p of low.purchases) {
       expect(p.priceUsd.value, p.id).toBeGreaterThan(0);
       expect(p.facts.length, p.id).toBeGreaterThan(0);

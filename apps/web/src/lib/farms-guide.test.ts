@@ -34,17 +34,17 @@ describe("block selection", () => {
     expect(pairs.map((b) => b.id)).toEqual(["farms-pair-food-wood"]);
     const p = pairs[0]!;
     expect(isHypothesis(p)).toBe(true);
-    expect(p.body_md.startsWith("Hypothesis:")).toBe(true);
+    expect(p.body_md.startsWith("Hipótese:")).toBe(true);
     expect(["low", "pending"]).toContain(p.confidence);
     expect(p.gaps).toContain("L-A13-03");
-    expect(displayTitle(p)).toBe("A food + wood farm");
+    expect(displayTitle(p)).toBe("Uma farm de comida + madeira");
     expect(blocksForPage("food").map((b) => b.id)).toContain("farms-pair-food-wood");
     expect(blocksForPage("stone").map((b) => b.id)).not.toContain("farms-pair-food-wood");
-    // No other pair is mentioned anywhere ("food + wood" is the only one).
-    const PAIR = /\b(food|wood|stone|gold)\s*\+\s*(food|wood|stone|gold)\b/gi;
+    // No other pair is mentioned anywhere ("comida + madeira" is the only one).
+    const PAIR = /\b(comida|madeira|pedra|ouro)\s*\+\s*(comida|madeira|pedra|ouro)\b/gi;
     for (const b of FARM_BLOCKS) {
       for (const m of `${b.title} ${b.body_md} ${b.why_md}`.matchAll(PAIR)) {
-        expect([m[1]!.toLowerCase(), m[2]!.toLowerCase()].sort(), `${b.id}: ${m[0]}`).toEqual(["food", "wood"]);
+        expect([m[1]!.toLowerCase(), m[2]!.toLowerCase()].sort(), `${b.id}: ${m[0]}`).toEqual(["comida", "madeira"]);
       }
     }
   });

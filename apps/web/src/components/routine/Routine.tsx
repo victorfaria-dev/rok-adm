@@ -52,7 +52,7 @@ function skipText(s: SkippedTask): string {
 
 /** Plan notes not already shown elsewhere on the page (estimate notice, must-do list). */
 const extraNotes = (notes: readonly Note[]): Note[] =>
-  notes.filter((n) => !n.text.startsWith(ESTIMATE_LABEL) && !n.text.startsWith("Budget too small for must-do"));
+  notes.filter((n) => !n.text.startsWith(ESTIMATE_LABEL) && !n.text.startsWith("Tempo insuficiente para as tarefas obrigatórias"));
 
 function NoteList({ notes }: { notes: readonly Note[] }) {
   if (!notes.length) return null;

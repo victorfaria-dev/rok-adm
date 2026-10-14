@@ -13,7 +13,7 @@ describe("recruit store glue", () => {
     expect(doc).toEqual({ ...input, id: "d1", updatedAt: NOW.toISOString() });
     const list = listRecruit(st);
     expect(list).toHaveLength(1);
-    expect(list[0]!.title).toBe("Post de recrutamento do Kingdom 1234");
+    expect(list[0]!.title).toBe("Post de recrutamento do Reino 1234");
     expect(draftInput(list[0]!.doc)).toEqual(input);
   });
 

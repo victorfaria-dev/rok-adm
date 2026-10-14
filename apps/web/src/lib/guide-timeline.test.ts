@@ -16,7 +16,7 @@ describe("timeline lanes (wave VG)", () => {
       const last = PHASE_LAST_DAY[l.id as keyof typeof PHASE_LAST_DAY];
       if (last !== undefined) expect(l.days![1], l.id).toBe(last);
     }
-    expect(LANES.find((l) => l.id === "day4-14")).toMatchObject({ title: "Days 4–14", sub: "about CH8 → CH12" });
+    expect(LANES.find((l) => l.id === "day4-14")).toMatchObject({ title: "Dias 4–14", sub: "Prefeitura 8 → 12, aproximadamente" });
   });
 
   it("puts undated phases in the start and any-day lanes", () => {
@@ -109,7 +109,7 @@ describe("kingdom calendar", () => {
       }
     }
     expect(cal.find((m) => m.id === "kvk1")?.day).toEqual([100, 100]);
-    expect(cal.find((m) => m.id === "kvk1-length")?.label).toBe("Disputed");
+    expect(cal.find((m) => m.id === "kvk1-length")?.label).toBe("Contestado");
   });
 
   it("a card without a source, or outdated, never dates a milestone", () => {
