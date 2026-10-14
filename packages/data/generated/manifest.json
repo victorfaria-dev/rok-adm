@@ -1,15 +1,15 @@
 {
-  "builtAt": "2026-10-13T14:15:14.054Z",
+  "builtAt": "2026-10-13T23:31:05.594Z",
   "counts": {
     "blocks": 43,
-    "facts": 354,
+    "facts": 362,
     "factsByDomain": {
       "A01": 11,
       "A02": 8,
       "A03": 36,
       "A04": 17,
       "A05": 9,
-      "A06": 29,
+      "A06": 37,
       "A07": 12,
       "A08": 16,
       "A09": 8,
@@ -32,13 +32,13 @@
       "C04": 36
     },
     "patches": 26,
-    "tableRows": 663,
-    "tables": 23,
-    "usableFacts": 145
+    "tableRows": 764,
+    "tables": 24,
+    "usableFacts": 151
   },
-  "datasetVersion": "297fe0d3f5dca679",
-  "gitCommit": "67badc0bac348dc478b62e71d8f48c7415e550e3",
-  "inputs": 379,
+  "datasetVersion": "6deea5f8fd0b6645",
+  "gitCommit": "73ab849babd1d7d5b7689cb0341eceaad638468d",
+  "inputs": 388,
   "latestKnownPatch": {
     "confidence": "baixa",
     "date": "2026-09-22",
@@ -86,6 +86,7 @@
     "A03-resource-buildings",
     "A03-trading-post",
     "A04-vip-shop",
-    "A05-vip-levels"
+    "A05-vip-levels",
+    "A06-rkg-commander-season"
   ]
 }
