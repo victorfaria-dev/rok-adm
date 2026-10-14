@@ -1,24 +1,31 @@
 ---
-// F-54 (experimental): read City Hall, power and VIP from the player's own profile screenshot,
-// with Tesseract running in the browser. The reader (~4 MB) loads only after "Read the screenshot".
+// F-54 (experimental): read the player's own game screenshots (Governor Profile, city view with the
+// City Hall tapped, VIP screen, Album) with Tesseract running in the browser. The reader (~4 MB) loads
+// only after "Read". Values are suggestions the player checks; nothing is checked against the game.
 import Shell from "../../../layouts/Shell.astro";
 import ScreenshotReader from "../../../components/tools/ocr/ScreenshotReader";
+import { getTable } from "@rokadm/data";
 import "../../../components/tools/kit/tools.css";
 import "../../../components/tools/ocr/ocr.css";
+
+const vipLevels = getTable("A05-vip-levels").rows
+  .map((r) => ({ vip: Number(r.vip_level), threshold: Number(r.vip_points_threshold) }))
+  .filter((l) => Number.isFinite(l.vip) && Number.isFinite(l.threshold));
 ---
-<Shell title="Read my screenshot" description="Experimental: read City Hall level, power and VIP from a screenshot of your own Rise of Kingdoms profile, on your device. The image is never uploaded." mode="operate">
+<Shell title="Read my screenshots" description="Experimental: suggest your power, kill points, City Hall level and VIP from screenshots of your own Rise of Kingdoms account, read on your device. The images are never uploaded." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Read my profile screenshot <span class="ocr-badge">Experimental</span></h1>
-      <p class="t-lead">Pick a screenshot of your own governor profile. Your phone or computer reads the text and suggests your City Hall level, power and VIP level. You check and fix them before using them anywhere.</p>
+      <h1>Read my screenshots <span class="ocr-badge">Experimental</span></h1>
+      <p class="t-lead">Pick screenshots of your own account. Your phone or computer reads them and suggests your ID, power, kill points, City Hall level and VIP. You check and fix every value before using it anywhere.</p>
       <ul class="t-note" data-ocr-promises>
-        <li>The image never leaves this device: no upload, no server, no account.</li>
-        <li>Nothing loads until you press "Read the screenshot". Then the text reader (about 4 MB) downloads from this site, not from anyone else.</li>
+        <li>The images never leave this device: no upload, no server, no account.</li>
+        <li>Nothing loads until you press "Read". Then the text reader (about 4 MB) downloads from this site, not from anyone else.</li>
+        <li>Reading text from an image makes mistakes, and nothing here is checked against the game: the values are suggestions only.</li>
         <li>Suggestions are never saved on their own.</li>
         <li>Only your own screens. Reading other players' data or the game's files is not what this is for.</li>
       </ul>
     </header>
-    <ScreenshotReader client:load />
+    <ScreenshotReader client:load vipLevels={vipLevels} />
     <noscript><p class="t-note">This tool needs JavaScript. You can type your values in the <a href="/tools/migration/">migration checker</a> or the <a href="/tools/vip/">VIP calculator</a> instead.</p></noscript>
   </div>
 </Shell>
