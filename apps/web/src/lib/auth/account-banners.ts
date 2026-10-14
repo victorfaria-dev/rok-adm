@@ -12,13 +12,17 @@ import { dbError } from "./profile-api";
 
 /**
  * City banners are 3:4 portrait on every screen size (owner, 2026-10-13): one stored variant per
- * city, center-cropped to 3:4 and scaled to at most 960×1280. Bucket limit 768 KB (migration 08).
+ * city, center-cropped to 3:4 and scaled to at most 768×1024 (the largest default). Bucket limit
+ * 512 KB (migration 08).
  */
-export const ACCOUNT_BANNER = { bucket: "account_banners", maxBytes: 768 * 1024, width: 960, height: 1280 } as const;
+export const ACCOUNT_BANNER = { bucket: "account_banners", maxBytes: 512 * 1024, width: 768, height: 1024 } as const;
 
-/** Static default: main and alt use the main banner, farms the farm banner (files owned by the City Hall track). */
-export function defaultBannerSrc(kind: CityKind, size: 640 | 1280 = 1280): string {
-  return `/banners/${kind === "farm" ? "farm" : "main"}-${size}.webp`;
+/**
+ * Static default (apps/web/public/banners/README.md): the main city uses the main banner; farms
+ * and alts use the farm one. Widths 480 and 768.
+ */
+export function defaultBannerSrc(kind: CityKind, width: 480 | 768 = 768): string {
+  return `/banners/${kind === "main" ? "main" : "farm"}-portrait-${width}.webp`;
 }
 
 /** accounts.local_id of a saved account from /me (lib/store.ts SavedProfile.id). */
@@ -40,7 +44,7 @@ export interface LocalBanner {
  */
 export const loadLocalBanners = async (): Promise<LocalBanner[]> => [];
 
-/** Browser only: center-crop to 3:4, scale to at most 960×1280, re-encode (drops metadata), ≤ 768 KB. */
+/** Browser only: center-crop to 3:4, scale to at most 768×1024, re-encode (drops metadata), ≤ 512 KB. */
 export async function prepareAccountBanner(file: Blob): Promise<Blob> {
   const bitmap = await createImageBitmap(file);
   try {
@@ -64,7 +68,7 @@ export async function prepareAccountBanner(file: Blob): Promise<Blob> {
 export async function setAccountBanner(
   client: KoSupabase, userId: string, accountId: string, blob: Blob, previousPath: string | null, now: number = Date.now(),
 ): Promise<{ ok: true; path: string } | { ok: false; message: string }> {
-  if (blob.size > ACCOUNT_BANNER.maxBytes) return { ok: false, message: "Banner is over the 768 KB limit." };
+  if (blob.size > ACCOUNT_BANNER.maxBytes) return { ok: false, message: "Banner is over the 512 KB limit." };
   const path = `${userId}/${accountId}-${now}.${extensionOf(blob.type)}`;
   const bucket = client.storage.from(ACCOUNT_BANNER.bucket);
   const up = await bucket.upload(path, blob, { contentType: blob.type, upsert: false, cacheControl: "31536000" });
@@ -87,7 +91,7 @@ export async function removeAccountBanner(client: KoSupabase, accountId: string,
 }
 
 /** A short-lived URL for a custom banner (the bucket is private), or the static default. */
-export async function accountBannerSrc(client: KoSupabase | null, kind: CityKind, path: string | null, width: 640 | 1280 = 1280): Promise<string> {
+export async function accountBannerSrc(client: KoSupabase | null, kind: CityKind, path: string | null, width: 480 | 768 = 768): Promise<string> {
   if (!client || !path) return defaultBannerSrc(kind, width);
   const { data, error } = await client.storage.from(ACCOUNT_BANNER.bucket).createSignedUrl(path, 3600);
   return error || !data?.signedUrl ? defaultBannerSrc(kind, width) : data.signedUrl;

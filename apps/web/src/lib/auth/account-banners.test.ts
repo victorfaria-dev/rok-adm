@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { ACCOUNT_BANNER, LOCAL_ID_ACTIVE, accountBannerSrc, defaultBannerSrc, localIdForFarm, localIdForSavedProfile, removeAccountBanner, setAccountBanner, uploadLocalBanners } from "./account-banners";
 import { fakeSupabase } from "./fake-supabase";
@@ -9,17 +9,20 @@ const sql = readFileSync(new URL("../../../../../supabase/migrations/20261013200
 const webp = (n = 100) => new Blob([new Uint8Array(n)], { type: "image/webp" });
 
 describe("city banners", () => {
-  it("default follows the account type (alts use main)", () => {
-    expect(defaultBannerSrc("main", 640)).toBe("/banners/main-640.webp");
-    expect(defaultBannerSrc("farm")).toBe("/banners/farm-1280.webp");
-    expect(defaultBannerSrc("alt", 1280)).toBe("/banners/main-1280.webp");
+  it("default follows the account type (farms and alts use the farm banner)", () => {
+    expect(defaultBannerSrc("main", 480)).toBe("/banners/main-portrait-480.webp");
+    expect(defaultBannerSrc("farm")).toBe("/banners/farm-portrait-768.webp");
+    expect(defaultBannerSrc("alt", 768)).toBe("/banners/farm-portrait-768.webp");
+    for (const kind of ["main", "farm", "alt"] as const) {
+      for (const w of [480, 768] as const) expect(existsSync(new URL(`../../../public${defaultBannerSrc(kind, w)}`, import.meta.url)), `${kind} ${w}`).toBe(true);
+    }
   });
   it("limits match the private bucket", () => {
     expect(sql).toContain(`('account_banners', 'account_banners', false, ${ACCOUNT_BANNER.maxBytes}`);
     expect(sql).toContain("account_type public.city_kind generated always as (kind) stored");
     // One 3:4 portrait variant per city.
     expect(ACCOUNT_BANNER.width / ACCOUNT_BANNER.height).toBe(3 / 4);
-    expect(planCrop(4000, 3000, ACCOUNT_BANNER.width, ACCOUNT_BANNER.height)).toMatchObject({ sw: 2250, sh: 3000, width: 960, height: 1280 });
+    expect(planCrop(4000, 3000, ACCOUNT_BANNER.width, ACCOUNT_BANNER.height)).toMatchObject({ sw: 2250, sh: 3000, width: 768, height: 1024 });
   });
   it("local ids are the ones the first-login upload gives cities", () => {
     expect(localIdForSavedProfile("p1")).toBe("profile:p1");
@@ -32,8 +35,8 @@ describe("city banners", () => {
     expect(r).toEqual({ ok: true, path: `${U}/c1-7.webp` });
     expect(f.tables.accounts![0]!.banner_path).toBe(`${U}/c1-7.webp`);
     expect(await accountBannerSrc(f.client, "farm", `${U}/c1-7.webp`)).toMatch(/\/object\/sign\/account_banners\/user-1\/c1-7\.webp/);
-    expect(await accountBannerSrc(f.client, "farm", null)).toBe("/banners/farm-1280.webp");
-    expect(await accountBannerSrc(null, "main", "x")).toBe("/banners/main-1280.webp");
+    expect(await accountBannerSrc(f.client, "farm", null)).toBe("/banners/farm-portrait-768.webp");
+    expect(await accountBannerSrc(null, "main", "x")).toBe("/banners/main-portrait-768.webp");
     expect(await removeAccountBanner(f.client, "c1", `${U}/c1-7.webp`)).toEqual({ ok: true });
     expect(f.tables.accounts![0]!.banner_path).toBeNull();
     expect(f.files.size).toBe(0);

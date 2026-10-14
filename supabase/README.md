@@ -18,7 +18,7 @@ credentials.
 | `migrations/20261013200005_reports.sql` | `reports` with a copy of the reported profile; players only see their own reports |
 | `migrations/20261013200006_storage.sql` | Buckets `avatars` (512 KB) and `banners` (1.5 MB): public read, owner-only write in `<user id>/` |
 | `migrations/20261013200007_verification.sql` | Verification levels, `moderators`, `verification_requests`, one-time 1-hour codes, private bucket `verification` (3 MB) |
-| `migrations/20261013200008_account_banners.sql` | `accounts.banner_path`, `accounts.account_type`, private bucket `account_banners` (768 KB; one 3:4 portrait image per city, 960×1280) |
+| `migrations/20261013200008_account_banners.sql` | `accounts.banner_path`, `accounts.account_type`, private bucket `account_banners` (512 KB; one 3:4 portrait image per city, 768×1024) |
 | `migrations/20261013200009_review_from_dashboard.sql` | `review_verification_as()` so a moderator can review from the SQL editor |
 | `tests/` | RLS and trigger checks that run on a plain local Postgres (see the end of this file) |
 
