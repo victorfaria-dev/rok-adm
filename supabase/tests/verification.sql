@@ -163,6 +163,29 @@ do $$ begin
   end;
 end $$;
 
+-- Dashboard review (SQL editor, no signed-in user) through review_verification_as.
+select public.submit_verification((select id from ids where name = 'ben2'), '{}'::jsonb,
+  array['bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb/' || (select id from ids where name = 'ben2') || '/album.jpg'],
+  (select code from ids where name = 'ben2'));
+do $$ begin
+  begin
+    perform public.review_verification_as('cccccccc-cccc-cccc-cccc-cccccccccccc', (select id from ids where name = 'ben2'), false, 3::smallint, '{}'::jsonb, 'x');
+    raise exception 'player called review_verification_as';
+  exception when insufficient_privilege then null;
+  end;
+end $$;
+reset role;
+do $$ begin
+  begin
+    perform public.review_verification_as('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', (select id from ids where name = 'ben2'), false, 3::smallint, '{}'::jsonb, 'x');
+    raise exception 'non-moderator id accepted';
+  exception when insufficient_privilege then null;
+  end;
+  perform public.review_verification_as('cccccccc-cccc-cccc-cccc-cccccccccccc', (select id from ids where name = 'ben2'), false, 3::smallint, '{}'::jsonb, 'Album screenshot is blurry');
+  assert (select status from public.verification_requests where id = (select id from ids where name = 'ben2')) = 'rejected', 'dashboard review failed';
+  assert (select reviewer_id from public.verification_requests where id = (select id from ids where name = 'ben2')) = 'cccccccc-cccc-cccc-cccc-cccccccccccc', 'reviewer not recorded';
+end $$;
+
 -- Case: expired. Move Ann's main request 2 hours into the past (as the table owner).
 reset role;
 update public.verification_requests
