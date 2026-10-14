@@ -164,17 +164,26 @@ test.describe("City Hall hub", () => {
     expect(s.savedProfiles.find((a: { id: string }) => a.id === "main").commanders).toEqual({ minamoto: { q1: "a" } });
   });
 
-  test("banner: default by account type; own image per account, cropped on the device; reset to default", async ({ page }) => {
+  test("banner: default 3:4 art by account type; own image per account with a focal-point crop; reset to default", async ({ page }) => {
     await store(page, accounts);
     await page.goto("/city-hall/");
     await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
     await expect(page.locator('[data-city-card="main"]')).toHaveAttribute("data-kind", "main");
     await expect(page.locator('[data-city-card="farm"]')).toHaveAttribute("data-kind", "farm");
+    await expect(page.locator('[data-city-card="main"] img.ch-card-img')).toHaveAttribute("src", "/banners/main-portrait-480.webp");
+    await expect(page.locator('[data-city-card="farm"] img.ch-card-img')).toHaveAttribute("src", "/banners/farm-portrait-480.webp");
+    const ratio = await page.locator('[data-city-card="main"]').evaluate((el) => el.clientWidth / el.clientHeight);
+    expect(ratio).toBeCloseTo(0.75, 1);
     const toggle = page.locator("[data-banner-toggle]");
     await toggle.click();
     await expect(toggle).toHaveAttribute("aria-expanded", "true");
     const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==", "base64");
     await page.locator("[data-banner-file]").setInputFiles({ name: "city.png", mimeType: "image/png", buffer: png });
+    // The cropper never needs a drag: the two sliders move the focal point too.
+    await expect(page.locator("[data-cropper]")).toBeVisible();
+    await page.getByLabel("Left to right").fill("20");
+    await expect(page.locator(".ch-crop-frame img")).toHaveAttribute("style", /object-position: 20% 50%/);
+    await page.getByRole("button", { name: "Save banner" }).click();
     await expect(page.getByText("Banner saved on this device.")).toBeVisible();
     await expect(page.locator('[data-city-card="main"]')).toHaveAttribute("data-custom-banner", "");
     await expect(page.locator('[data-city-card="farm"]')).not.toHaveAttribute("data-custom-banner", "");
@@ -186,4 +195,16 @@ test.describe("City Hall hub", () => {
     await page.getByRole("button", { name: "Reset to default" }).click();
     await expect(page.locator('[data-city-card="main"]')).not.toHaveAttribute("data-custom-banner", "");
   });
+});
+
+test("City Hall at 390x844: the sheet handle and the first tile row are above the fold", async ({ page, isMobile }) => {
+  test.skip(!isMobile, "phone layout");
+  await page.setViewportSize({ width: 390, height: 844 });
+  await store(page, { profileCode: PROFILE, activeAccountId: "main", savedProfiles: [{ id: "main", name: "Main", code: PROFILE, override: null }, { id: "farm", name: "Farm 1", code: "1.0.1.0.9.15.....0", override: null }] });
+  await page.goto("/city-hall/");
+  const tabsTop = (await page.locator("nav.tabs:visible").boundingBox())!.y;
+  const handle = (await page.locator("[data-sheet-toggle]").boundingBox())!;
+  const firstTile = (await page.locator(".ch-tile").first().boundingBox())!;
+  expect(handle.y + handle.height).toBeLessThanOrEqual(tabsTop);
+  expect(firstTile.y + firstTile.height).toBeLessThanOrEqual(tabsTop);
 });

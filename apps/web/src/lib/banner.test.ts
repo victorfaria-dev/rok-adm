@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BANNERS_KEY, BANNER_MAX_CHARS, accountKind, cropTo16x9, defaultBanner, localBannerStore, parseBanners } from "./banner";
+import { BANNERS_KEY, BANNER_MAX_CHARS, accountKind, cropAt, defaultBanner, localBannerStore, parseBanners } from "./banner";
 
 class Mem {
   m = new Map<string, string>();
@@ -10,8 +10,8 @@ const IMG = "data:image/webp;base64,AAAA";
 
 describe("city card banners", () => {
   it("default banner by account type", () => {
-    expect(defaultBanner("main")).toEqual({ src: "/banners/main-640.webp", srcHd: "/banners/main-1280.webp" });
-    expect(defaultBanner("farm").src).toBe("/banners/farm-640.webp");
+    expect(defaultBanner("main")).toEqual({ src: "/banners/main-portrait-480.webp", srcset: "/banners/main-portrait-480.webp 480w, /banners/main-portrait-768.webp 768w" });
+    expect(defaultBanner("farm").src).toBe("/banners/farm-portrait-480.webp");
   });
 
   it("account type: own field, else a farm profile role, else main for the first account", () => {
@@ -42,9 +42,12 @@ describe("city card banners", () => {
     expect(parseBanners(JSON.stringify({ v: 1, banners: { a: IMG, b: "javascript:1" } }))).toEqual({ a: IMG });
   });
 
-  it("crops any picture to 16:9 around its centre", () => {
-    expect(cropTo16x9(1920, 1080)).toEqual({ sx: 0, sy: 0, sw: 1920, sh: 1080 });
-    expect(cropTo16x9(1000, 1000)).toEqual({ sx: 0, sy: 219, sw: 1000, sh: 563 });
-    expect(cropTo16x9(4000, 1000)).toEqual({ sx: 1111, sy: 0, sw: 1778, sh: 1000 });
+  it("crops any picture to 3:4, centred by default and moved by the focal point", () => {
+    expect(cropAt(600, 800)).toEqual({ sx: 0, sy: 0, sw: 600, sh: 800 });
+    expect(cropAt(1920, 1080)).toEqual({ sx: 555, sy: 0, sw: 810, sh: 1080 });
+    expect(cropAt(1920, 1080, 0, 0.5)).toEqual({ sx: 0, sy: 0, sw: 810, sh: 1080 });
+    expect(cropAt(1920, 1080, 1, 0.5)).toEqual({ sx: 1110, sy: 0, sw: 810, sh: 1080 });
+    expect(cropAt(1000, 2000, 0.5, 0)).toEqual({ sx: 0, sy: 0, sw: 1000, sh: 1333 });
+    expect(cropAt(1000, 2000, 0.5, 2)).toEqual({ sx: 0, sy: 667, sw: 1000, sh: 1333 });
   });
 });
