@@ -91,10 +91,10 @@
 :root .g-foryou { padding-block: var(--d-pad); }
 
 /* ---------------------------------------------------------------------------
-   Level 2: cards. Guide steps (blocks) and budget groups, the profile bar and the section index;
+   Level 2: cards. Guide steps (blocks), the profile bar and the section index;
    tool forms and results; farm and council cards; the farm tools' live answer. */
 :root:root :where(
-  .g-block, .g-bar, .g-toc details, .g-budget .g-sub,
+  .g-block, .g-bar, .g-toc details,
   .t-form, .t-results,
   .fm-card, .ft-live, .kg-card
 ) {
@@ -106,7 +106,8 @@
 :root .g-toc details { padding-block: 0; box-shadow: var(--ko-shadow-1); }
 :root :is(.g-block + .g-block, .g-phase-title + .g-block) { margin-top: var(--ko-space-3); }
 :root .g-block:last-child { margin-bottom: 0; }
-:root .g-budget .g-sub { margin-top: 0; }
+/* Budget groups are reference tables, not steps: flat, split by a rule under the section strip. */
+:root .g-budget .g-sub { margin-top: 0; padding-top: var(--ko-space-4); border-top: 1px solid var(--ko-border); }
 :root .fg-hypothesis { border-style: dashed; }
 :root .ft-next { border-color: var(--ko-accent); border-width: 2px; }
 :root .ft-live { border-inline-start: 3px solid var(--ko-accent); }
