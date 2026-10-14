@@ -31,7 +31,7 @@ describe("readQuantity (shared number parser, Q2 P2-3)", () => {
 
 describe("format", () => {
   it("formats integers and compact numbers", () => {
-    expect(formatInt(12345678.4)).toBe("12,345,678");
+    expect(formatInt(12345678.4)).toBe("12.345.678");
     expect(formatInt(NaN)).toBe("—");
     expect(formatCompact(10_500_000)).toBe("10.5M");
     expect(formatCompact(300_000)).toBe("300K");

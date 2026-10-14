@@ -5,101 +5,101 @@
   "questions": [
     {
       "id": "sculptureType",
-      "text": "What are you about to spend?",
+      "text": "O que você está prestes a gastar?",
       "required": true,
       "options": [
-        { "id": "universal_gold", "label": "Universal legendary (gold) sculptures" },
-        { "id": "commander_specific", "label": "This commander's own sculptures (e.g. Expedition medals, event)" },
-        { "id": "epic_or_xp", "label": "Epic sculptures / XP tomes only" }
+        { "id": "universal_gold", "label": "Esculturas lendárias universais (douradas)" },
+        { "id": "commander_specific", "label": "Esculturas próprias deste comandante (p. ex., medalhas da Expedição, evento)" },
+        { "id": "epic_or_xp", "label": "Apenas esculturas épicas / tomos de EXP" }
       ],
       "facts": ["A06-0510"]
     },
     {
       "id": "purpose",
-      "text": "What job will this commander do?",
+      "text": "Que função este comandante terá?",
       "required": true,
       "options": [
-        { "id": "field_main", "label": "Open-field fighting in my main march" },
-        { "id": "gatherer", "label": "Gathering" },
-        { "id": "pve_barbarians", "label": "Barbarians / PvE only" },
-        { "id": "rally_garrison", "label": "Rally or garrison lead" }
+        { "id": "field_main", "label": "Lutar em campo aberto na minha marcha principal" },
+        { "id": "gatherer", "label": "Coleta" },
+        { "id": "pve_barbarians", "label": "Apenas bárbaros / PvE" },
+        { "id": "rally_garrison", "label": "Líder de rally ou de guarnição" }
       ],
       "facts": ["A06-0512", "A06-0505", "A06-0506"]
     },
     {
       "id": "mainMarch",
-      "text": "Is your main march (primary + secondary) complete, or is this commander part of it?",
+      "text": "Sua marcha principal (principal + secundário) está completa, ou este comandante faz parte dela?",
       "required": true,
       "options": [
-        { "id": "part_of_main", "label": "This commander is part of my main march" },
-        { "id": "main_complete", "label": "My main march is already complete" },
-        { "id": "main_incomplete_other", "label": "My main march is not complete and this is a different commander" }
+        { "id": "part_of_main", "label": "Este comandante faz parte da minha marcha principal" },
+        { "id": "main_complete", "label": "Minha marcha principal já está completa" },
+        { "id": "main_incomplete_other", "label": "Minha marcha principal não está completa e este é outro comandante" }
       ],
       "facts": ["A06-0500"]
     },
     {
       "id": "roleNeed",
-      "text": "Does it fill a troop type or role your account does not cover yet?",
+      "text": "Ele preenche um tipo de tropa ou função que sua conta ainda não cobre?",
       "required": true,
       "options": [
-        { "id": "yes", "label": "Yes" },
-        { "id": "no", "label": "No, I already have a commander for this" },
-        { "id": "unsure", "label": "Not sure" }
+        { "id": "yes", "label": "Sim" },
+        { "id": "no", "label": "Não, já tenho um comandante para isso" },
+        { "id": "unsure", "label": "Não tenho certeza" }
       ],
       "facts": ["A06-0500"]
     },
     {
       "id": "pairing",
-      "text": "Do you have a pair (primary/secondary) for it?",
+      "text": "Você tem uma dupla (principal/secundário) para ele?",
       "required": true,
       "options": [
-        { "id": "owned", "label": "Yes, I own a pair" },
-        { "id": "free_pair", "label": "A free pair is reachable (e.g. Aethelflaed via Expedition)" },
-        { "id": "none", "label": "No pair" }
+        { "id": "owned", "label": "Sim, tenho uma dupla" },
+        { "id": "free_pair", "label": "Dá para conseguir uma dupla grátis (p. ex., Aethelflaed pela Expedição)" },
+        { "id": "none", "label": "Sem dupla" }
       ],
       "facts": ["A06-0513", "A06-0504"]
     },
     {
       "id": "shelfLife",
-      "text": "How long will it stay useful (by season)?",
+      "text": "Por quanto tempo ele continuará útil (por temporada)?",
       "required": true,
       "options": [
-        { "id": "long_term", "label": "Past KvK1 / into SoC (consensus long-term pick)" },
-        { "id": "kvk1_only", "label": "Strong early / KvK1, loses value later" },
-        { "id": "no_priority", "label": "Flagged 'no priority' for F2P" },
-        { "id": "unknown", "label": "Don't know" }
+        { "id": "long_term", "label": "Além da KvK1 / até a SoC (escolha de longo prazo por consenso)" },
+        { "id": "kvk1_only", "label": "Forte no início / na KvK1, perde valor depois" },
+        { "id": "no_priority", "label": "Marcado como \"sem prioridade\" para o F2P" },
+        { "id": "unknown", "label": "Não sei" }
       ],
       "facts": ["A06-0502", "A06-0503", "A06-0507", "A06-0509", "A06-0515"]
     },
     {
       "id": "availability",
-      "text": "How can a F2P get its sculptures?",
+      "text": "Como um F2P consegue as esculturas dele?",
       "required": false,
       "options": [
-        { "id": "free_route", "label": "Free route (Expedition store, starting commander, VIP 10+ chest)" },
-        { "id": "gold_only", "label": "Only with universal gold sculptures" },
-        { "id": "paid_or_wheel", "label": "Mostly Wheel of Fortune / paid offers" }
+        { "id": "free_route", "label": "Via gratuita (loja da Expedição, comandante inicial, baú do VIP 10+)" },
+        { "id": "gold_only", "label": "Só com esculturas universais douradas" },
+        { "id": "paid_or_wheel", "label": "Principalmente Roda da Fortuna / ofertas pagas" }
       ],
       "facts": ["A06-0504", "A10-0004", "A05-0006", "A11-0503"]
     },
     {
       "id": "swap",
-      "text": "If this turns out wrong, can a Legendary Commander Swap move the investment?",
+      "text": "Se der errado, uma Troca de Comandante Lendário consegue mover o investimento?",
       "required": false,
       "options": [
-        { "id": "eligible", "label": "Yes, it is a swappable legendary" },
-        { "id": "not_eligible", "label": "No (epic, or excluded like the Season 2 commanders)" },
-        { "id": "unknown", "label": "Don't know" }
+        { "id": "eligible", "label": "Sim, é um lendário que pode ser trocado" },
+        { "id": "not_eligible", "label": "Não (épico, ou excluído como os comandantes da Temporada 2)" },
+        { "id": "unknown", "label": "Não sei" }
       ],
       "facts": ["C04-0023", "C04-0021"]
     },
     {
       "id": "cheaperSoon",
-      "text": "Is a free or cheaper route coming soon (e.g. Legendary Pelagius event from day 5, More Than Gems)?",
+      "text": "Vem uma via grátis ou mais barata em breve (p. ex., evento do Pelagius Lendário a partir do dia 5, Mais que Gemas)?",
       "required": false,
       "options": [
-        { "id": "yes", "label": "Yes" },
-        { "id": "no", "label": "No / not that I know" }
+        { "id": "yes", "label": "Sim" },
+        { "id": "no", "label": "Não / que eu saiba, não" }
       ],
       "facts": ["C04-0005", "A11-0502"]
     }
@@ -109,7 +109,7 @@
       "id": "gold-on-gatherer",
       "when": { "sculptureType": ["universal_gold"], "purpose": ["gatherer", "pve_barbarians"] },
       "effect": "avoid",
-      "text": "Never spend universal gold sculptures on gatherers or PvE-only commanders; bank them for one long-term legendary.",
+      "text": "Nunca gaste esculturas universais douradas em coletores ou comandantes só de PvE; guarde-as para um lendário de longo prazo.",
       "facts": ["A06-0510", "A06-0505"],
       "split": false
     },
@@ -117,7 +117,7 @@
       "id": "concentrate",
       "when": { "mainMarch": ["main_incomplete_other"] },
       "effect": "wait",
-      "text": "Finish one complete march first; partially built commanders give little value.",
+      "text": "Termine primeiro uma marcha completa; comandantes pela metade dão pouco valor.",
       "facts": ["A06-0500"],
       "split": false
     },
@@ -125,7 +125,7 @@
       "id": "duplicate-role",
       "when": { "roleNeed": ["no", "unsure"] },
       "effect": "wait",
-      "text": "It does not clearly fill a missing role: spreading sculptures over overlapping commanders is the common F2P regret.",
+      "text": "Ele não preenche claramente uma função que falta: espalhar esculturas por comandantes que se sobrepõem é o arrependimento mais comum do F2P.",
       "facts": ["A06-0500"],
       "split": false
     },
@@ -133,7 +133,7 @@
       "id": "no-pair",
       "when": { "pairing": ["none"] },
       "effect": "wait",
-      "text": "No pair yet. Suggested F2P KvK1 pairs differ between sources (Sun Tzu + Aethelflaed, Aethelflaed + Baibars, YSG + flexible).",
+      "text": "Ainda sem dupla. As duplas F2P sugeridas para a KvK1 variam conforme a fonte (Sun Tzu + Aethelflaed, Aethelflaed + Baibars, YSG + flexível).",
       "facts": ["A06-0513"],
       "split": true
     },
@@ -141,7 +141,7 @@
       "id": "gold-on-short-shelf-life",
       "when": { "sculptureType": ["universal_gold"], "shelfLife": ["kvk1_only"] },
       "effect": "wait",
-      "text": "Gold sculptures on a KvK1-only legendary (Richard I, Charles Martel, Cao Cao, Minamoto): community is divided; they lose value from SoC.",
+      "text": "Esculturas douradas em um lendário só de KvK1 (Richard I, Charles Martel, Cao Cao, Minamoto): a comunidade está dividida; eles perdem valor a partir da SoC.",
       "facts": ["A06-0503", "A06-0507"],
       "split": true
     },
@@ -149,7 +149,7 @@
       "id": "shelf-life-unknown",
       "when": { "shelfLife": ["unknown"] },
       "effect": "wait",
-      "text": "Shelf-life unknown. Tier lists disagree mostly about time horizon; check a dated 2026 list first.",
+      "text": "Validade desconhecida. As tier lists discordam principalmente sobre o horizonte de tempo; confira primeiro uma lista datada de 2026.",
       "facts": ["A06-0509"],
       "split": true
     },
@@ -157,7 +157,7 @@
       "id": "no-priority",
       "when": { "shelfLife": ["no_priority"] },
       "effect": "wait",
-      "text": "Flagged 'no priority' for F2P in one 2026 tier list (single source).",
+      "text": "Marcado como \"sem prioridade\" para o F2P em uma tier list de 2026 (fonte única).",
       "facts": ["A06-0515"],
       "split": true
     },
@@ -165,7 +165,7 @@
       "id": "rally-garrison-gold",
       "when": { "purpose": ["rally_garrison"], "sculptureType": ["universal_gold"] },
       "effect": "wait",
-      "text": "Rally/garrison leads are usually spender roles; one source says F2P should favour open-field AoE commanders.",
+      "text": "Líderes de rally/guarnição costumam ser funções de quem gasta; uma fonte diz que o F2P deve preferir comandantes de AoE em campo aberto.",
       "facts": ["A06-0512"],
       "split": true
     },
@@ -173,7 +173,7 @@
       "id": "cheaper-soon",
       "when": { "cheaperSoon": ["yes"] },
       "effect": "wait",
-      "text": "A free or cheaper route is coming (e.g. Legendary Pelagius from kingdom day 5; buy VIP/sculptures during More Than Gems).",
+      "text": "Vem uma via grátis ou mais barata (p. ex., Pelagius Lendário a partir do dia 5 do reino; compre VIP/esculturas durante o Mais que Gemas).",
       "facts": ["C04-0005", "A11-0502"],
       "split": false
     },
@@ -181,7 +181,7 @@
       "id": "short-and-not-swappable",
       "when": { "sculptureType": ["universal_gold"], "shelfLife": ["kvk1_only"], "swap": ["not_eligible"] },
       "effect": "wait",
-      "text": "Gold sculptures, short shelf-life and no swap option: the investment cannot be moved later (Season 2 commanders are excluded from the swap).",
+      "text": "Esculturas douradas, validade curta e sem opção de troca: o investimento não poderá ser movido depois (os comandantes da Temporada 2 ficam fora da troca).",
       "facts": ["C04-0023", "C04-0021"],
       "split": false
     },
@@ -189,7 +189,7 @@
       "id": "wheel-only",
       "when": { "availability": ["paid_or_wheel"], "sculptureType": ["universal_gold"] },
       "effect": "wait",
-      "text": "Mostly Wheel/paid: F2P consensus is 10 Wheel spins on a planned target only after VIP 10; Wheel gem math is outdated where Spin Tickets apply.",
+      "text": "Principalmente Roda/pago: o consenso F2P é 10 giros da Roda, só com um alvo planejado e depois do VIP 10; a conta de gemas da Roda está desatualizada onde valem os Tíquetes de Giro.",
       "facts": ["A11-0503"],
       "split": true
     },
@@ -197,7 +197,7 @@
       "id": "field-main",
       "when": { "purpose": ["field_main"] },
       "effect": "go",
-      "text": "Open-field commander for your main march: the investment F2P guides favour.",
+      "text": "Comandante de campo aberto para sua marcha principal: o investimento que os guias F2P preferem.",
       "facts": ["A06-0500", "A06-0512"],
       "split": false
     },
@@ -205,7 +205,7 @@
       "id": "long-term",
       "when": { "shelfLife": ["long_term"] },
       "effect": "go",
-      "text": "Long-term pick (YSG is the most cited F2P legendary target).",
+      "text": "Escolha de longo prazo (o YSG é o alvo lendário F2P mais citado).",
       "facts": ["A06-0502", "A06-0510"],
       "split": false
     },
@@ -213,7 +213,7 @@
       "id": "free-route",
       "when": { "availability": ["free_route"] },
       "effect": "go",
-      "text": "Sculptures come from a free route (Expedition store: 1,500 medals per legendary sculpture; VIP 10+ daily chest).",
+      "text": "As esculturas vêm de uma via gratuita (loja da Expedição: 1.500 medalhas por escultura lendária; baú diário do VIP 10+).",
       "facts": ["A06-0504", "A10-0004", "A05-0006"],
       "split": false
     },
@@ -221,7 +221,7 @@
       "id": "epic-no-gold",
       "when": { "sculptureType": ["epic_or_xp", "commander_specific"], "purpose": ["field_main"] },
       "effect": "go",
-      "text": "No gold sculptures at risk (e.g. Sun Tzu, the safest early F2P investment).",
+      "text": "Nenhuma escultura dourada em risco (p. ex., Sun Tzu, o investimento F2P inicial mais seguro).",
       "facts": ["A06-0501"],
       "split": false
     },
@@ -229,7 +229,7 @@
       "id": "has-pair",
       "when": { "pairing": ["owned", "free_pair"] },
       "effect": "go",
-      "text": "You have, or can get for free, a pair for it.",
+      "text": "Você tem, ou consegue de graça, uma dupla para ele.",
       "facts": ["A06-0504", "A06-0513"],
       "split": false
     },
@@ -237,7 +237,7 @@
       "id": "swap-safety-net",
       "when": { "swap": ["eligible"] },
       "effect": "info",
-      "text": "Legendary Commander Swap (around the end of Season 2, once per character) can move levels/skills/stars later: lowers regret, not a reason by itself.",
+      "text": "A Troca de Comandante Lendário (por volta do fim da Temporada 2, uma vez por personagem) pode mover níveis/habilidades/estrelas depois: reduz o arrependimento, mas não é motivo por si só.",
       "facts": ["C04-0023"],
       "split": false
     },
@@ -245,7 +245,7 @@
       "id": "bank-gold",
       "when": { "sculptureType": ["universal_gold"] },
       "effect": "info",
-      "text": "Gold sculptures are scarce for F2P: bank them for one long-term legendary; free channels are alliance gift chests, VIP 10+ chest, Expedition medals.",
+      "text": "Esculturas douradas são escassas para o F2P: guarde-as para um lendário de longo prazo; os canais gratuitos são os baús de presente da aliança, o baú do VIP 10+ e as medalhas da Expedição.",
       "facts": ["A06-0510", "A06-0516", "A05-0006"],
       "split": false
     }

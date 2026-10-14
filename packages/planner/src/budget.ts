@@ -128,7 +128,7 @@ export function vipTimeline(index: FactIndex, horizonDays = 3650, data: BudgetDa
     const facts = ["A05-0001", "A05-0003", "A05-0007", ...(withGems ? ["A04-0001", "A05-0004", "A05-0008"] : [])];
     return {
       id,
-      label: withGems ? "Daily VIP chest + all 100 guaranteed gems/day converted to VIP" : "Daily VIP chest only",
+      label: withGems ? "Baú VIP diário + todas as 100 gemas garantidas por dia convertidas em VIP" : "Só o baú VIP diário",
       income,
       milestones: VIP_LEVELS.map((l) => ({ vip: l.vip, threshold: l.threshold, day: dayToReach(l.threshold, income, horizonDays) })),
       facts,
@@ -136,8 +136,8 @@ export function vipTimeline(index: FactIndex, horizonDays = 3650, data: BudgetDa
       split: withGems,
       pendingGaps: ["L-A05-01", "L-A04-01", "L-A05-03"],
       note: withGems
-        ? "Majority advice is gems → VIP 6 then VIP 10 (A05-0008); AllClash dissents, and buying during More Than Gems (A11-0502) shifts timing. Upper bound on days: other gem/VIP sources are not counted."
-        : "Upper bound on days: alliance gifts, caves, events and quest gems are not counted (A05-0007).",
+        ? "O conselho da maioria é gemas → VIP 6 e depois VIP 10 (A05-0008); AllClash discorda, e comprar durante o Mais que Gemas (A11-0502) muda o prazo. Limite superior de dias: outras fontes de gemas/VIP não são contadas."
+        : "Limite superior de dias: presentes da aliança, cavernas, eventos e gemas de missões não são contados (A05-0007).",
     };
   };
   return [make("chest_only", false), make("chest_plus_daily_gems", true)];
@@ -224,7 +224,7 @@ export function realityCheck(
       ...base,
       researched: false,
       status: "not_researched_yet",
-      message: `Targets for the "${profile.spending}" profile are not researched yet. Only F2P has fact-backed numbers (see research/perfis.md).`,
+      message: `As metas do perfil "${profile.spending}" ainda não foram pesquisadas. Só o F2P tem números com base em fichas (veja research/perfis.md).`,
       guaranteedGemsPerDay: null,
       speedupMinutesPerDay: null,
       vipTargets: null,
@@ -234,7 +234,7 @@ export function realityCheck(
       kvk1: null,
       oneTimeGems: [],
       unquantified: null,
-      assumptions: [{ text: `Profile "${profile.spending}" not researched yet; nothing is estimated for it.`, facts: [], gaps: ["L-A12-01"] }],
+      assumptions: [{ text: `Perfil "${profile.spending}" ainda não pesquisado; nada é estimado para ele.`, facts: [], gaps: ["L-A12-01"] }],
       placeholders: [...NOT_RESEARCHED_FIELDS],
       warnings: [],
     };
@@ -244,9 +244,9 @@ export function realityCheck(
   const cited = new Set<string>();
   const track = <T>(s: Sourced<T>) => { s.facts.forEach((f) => cited.add(f)); return s; };
 
-  const guaranteedGemsPerDay = track(sourced(i.dailyObjectivesGems, index, { note: "Only guaranteed, level-independent daily gem source; needs 100 Daily Objective points every day." }));
+  const guaranteedGemsPerDay = track(sourced(i.dailyObjectivesGems, index, { note: "Única fonte diária de gemas garantida e independente de nível; exige 100 pontos dos Objetivos Diários todos os dias." }));
   const speedupMinutesPerDay = track(sourced(i.dailyObjectivesSpeedupMinutes, index));
-  const vipTargets = track(sourced(i.vipTargets, index, { note: "VIP 6 = permanent 2nd builder (A01-0006); VIP 10 = 1 legendary sculpture/day (A05-0006). AllClash dissents on spending gems on VIP." }));
+  const vipTargets = track(sourced(i.vipTargets, index, { note: "VIP 6 = 2º construtor permanente (A01-0006); VIP 10 = 1 escultura lendária/dia (A05-0006). AllClash discorda de gastar gemas em VIP." }));
   const timeline = vipTimeline(index, opts.horizonDays, data);
   timeline.forEach((s) => s.facts.forEach((f) => cited.add(f)));
 
@@ -258,10 +258,10 @@ export function realityCheck(
 
   const kvk1: KvK1Targets = {
     startDay,
-    cityHall: track(sourced(i.chAtKvK1F2P, index, { note: "Player reports: CH21+ workable for KvK1; CH25 not expected for F2P." })),
-    t4Day: track(sourced(i.t4Day, index, { note: "T4 'usually around the 30 day mark' (player report)." })),
+    cityHall: track(sourced(i.chAtKvK1F2P, index, { note: "Relatos de jogadores: Prefeitura 21+ é viável para a KvK1; Prefeitura 25 não é esperada para o F2P." })),
+    t4Day: track(sourced(i.t4Day, index, { note: "T4 \"geralmente por volta do dia 30\" (relato de jogador)." })),
     power: track(sourced(i.powerAtKvK1F2P, index)),
-    lostKingdomEntryCH: track(sourced(i.lostKingdomEntryCH, index, { note: "Single T3 source; card partially obsolete." })),
+    lostKingdomEntryCH: track(sourced(i.lostKingdomEntryCH, index, { note: "Fonte T3 única; ficha parcialmente obsoleta." })),
     daysUntilStart: profile.kingdomDay !== null ? Math.max(0, startDay.value - profile.kingdomDay) : null,
   };
 
@@ -270,7 +270,7 @@ export function realityCheck(
     if (g.confidenceCap) c = minConfidence(c, g.confidenceCap);
     g.facts.forEach((f) => cited.add(f));
     return {
-      id: g.id, label: g.label, value: g.value, unit: "gems (once)", facts: [...g.facts], confidence: c, derived: false, pendingGaps: [],
+      id: g.id, label: g.label, value: g.value, unit: "gemas (uma vez)", facts: [...g.facts], confidence: c, derived: false, pendingGaps: [],
       unlockCityHall: g.unlockCityHall,
       reached: g.unlockCityHall === null ? null : profile.cityHall >= g.unlockCityHall,
     };
@@ -280,14 +280,14 @@ export function realityCheck(
   u.facts.forEach((f) => cited.add(f));
 
   const assumptions: Assumption[] = [
-    { text: "Daily Objectives reach 100 points every day (100 gems/day).", facts: ["A04-0001", "A10-0001"], gaps: ["L-A10-02"] },
-    { text: "The daily VIP streak is never broken (40 → +20/day → 200/day cap).", facts: ["A05-0003"], gaps: [] },
-    { text: "VIP thresholds are cumulative totals (T4-supported, T0 pending).", facts: ["A05-0001"], gaps: ["L-A05-01"] },
-    { text: "In the gems scenario every guaranteed gem goes to VIP at 1 gem = 1 VIP point, on the day it is earned.", facts: ["A05-0004", "A05-0008"], gaps: [] },
-    { text: "No other gem or VIP source is counted (alliance gifts, caves, events, quests, barbarians): day counts are upper bounds.", facts: ["A04-0006", "A05-0007"], gaps: ["L-A04-01", "L-A05-03"] },
-    { text: "One-time gems (CH16/CH21/CH25, account binding) are listed separately and not added to the timeline.", facts: ["A04-0005", "A01-0002"], gaps: [] },
-    { text: "KvK1 starts around kingdom day 100.", facts: ["B01-0500"], gaps: ["L-B01-02"] },
-    { text: "Speedups/day come from the 2020 wiki chest contents; the task list changed in 1.1.09.", facts: ["A04-0010", "A10-0001"], gaps: ["L-A04-04"] },
+    { text: "Os Objetivos Diários chegam a 100 pontos todos os dias (100 gemas/dia).", facts: ["A04-0001", "A10-0001"], gaps: ["L-A10-02"] },
+    { text: "A sequência diária do VIP nunca é quebrada (40 → +20/dia → teto de 200/dia).", facts: ["A05-0003"], gaps: [] },
+    { text: "Os limiares de VIP são totais acumulados (apoiado por T4, T0 pendente).", facts: ["A05-0001"], gaps: ["L-A05-01"] },
+    { text: "No cenário com gemas, toda gema garantida vai para o VIP na proporção 1 gema = 1 ponto VIP, no dia em que é ganha.", facts: ["A05-0004", "A05-0008"], gaps: [] },
+    { text: "Nenhuma outra fonte de gemas ou VIP é contada (presentes da aliança, cavernas, eventos, missões, bárbaros): as contagens de dias são limites superiores.", facts: ["A04-0006", "A05-0007"], gaps: ["L-A04-01", "L-A05-03"] },
+    { text: "As gemas únicas (Prefeitura 16/21/25, vinculação de conta) são listadas à parte e não entram na linha do tempo.", facts: ["A04-0005", "A01-0002"], gaps: [] },
+    { text: "A KvK1 começa por volta do dia 100 do reino.", facts: ["B01-0500"], gaps: ["L-B01-02"] },
+    { text: "As acelerações por dia vêm do conteúdo dos baús da wiki de 2020; a lista de tarefas mudou na 1.1.09.", facts: ["A04-0010", "A10-0001"], gaps: ["L-A04-04"] },
   ];
   assumptions.forEach((a) => a.facts.forEach((f) => cited.add(f)));
 
@@ -296,7 +296,7 @@ export function realityCheck(
     ...base,
     researched: true,
     status: "researched",
-    message: "Realistic F2P targets from fact cards. Confidence is the weakest card behind each number.",
+    message: "Metas realistas do F2P a partir das fichas de fatos. A confiança é a da ficha mais fraca por trás de cada número.",
     guaranteedGemsPerDay,
     speedupMinutesPerDay,
     vipTargets,
@@ -308,6 +308,6 @@ export function realityCheck(
     unquantified: { text: u.text, facts: [...u.facts], gaps: [...u.gaps] },
     assumptions,
     placeholders: [],
-    warnings: missing.length ? [`Facts not found in the provided index (confidence shown as pending): ${missing.join(", ")}`] : [],
+    warnings: missing.length ? [`Fatos não encontrados no índice fornecido (confiança exibida como pendente): ${missing.join(", ")}`] : [],
   };
 }

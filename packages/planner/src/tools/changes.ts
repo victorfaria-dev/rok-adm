@@ -53,7 +53,7 @@ export function compareVersion(a: string, b: string): number {
  */
 export function relativeToStop(patchDate: string | null, stop: string): "after" | "before" | "same" {
   const p = parseYmd(patchDate), s = parseYmd(stop);
-  if (!s) throw new RangeError(`Not a date: ${stop}`);
+  if (!s) throw new RangeError(`Não é uma data: ${stop}`);
   if (!p) return "same";
   const pm = p.y * 12 + p.m, sm = s.y * 12 + s.m;
   if (pm !== sm) return pm > sm ? "after" : "before";
@@ -87,25 +87,25 @@ export function groupBySource<P extends PatchRow>(items: readonly ChangeItem<P>[
 }
 
 export const PATCH_CONFIDENCE_WORDS: Record<PatchConfidence, string> = {
-  alta: "Official patch notes",
-  media: "Medium confidence: no official notes found, reported by other sources",
-  baixa: "Low confidence: third-party reports only, not confirmed",
+  alta: "Notas oficiais de patch",
+  media: "Confiança média: nenhuma nota oficial encontrada, relatado por outras fontes",
+  baixa: "Baixa confiança: apenas relatos de terceiros, não confirmado",
 };
 
-const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-const MONTHS_LONG = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+const MONTHS = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+const MONTHS_LONG = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
 
 /** "2025-01-07" → "7 Jan 2025"; "2023-03" → "Mar 2023"; null → "Date unknown". */
 export function formatPatchDate(date: string | null): string {
   const p = parseYmd(date);
-  if (!p) return "Date unknown";
+  if (!p) return "Data desconhecida";
   return p.d === null ? `${MONTHS[p.m - 1]} ${p.y}` : `${p.d} ${MONTHS[p.m - 1]} ${p.y}`;
 }
 
 /** "2024-05" → "May 2024". */
 export function formatMonth(ym: string): string {
   const p = parseYmd(ym);
-  return p ? `${MONTHS_LONG[p.m - 1]} ${p.y}` : ym;
+  return p ? `${MONTHS_LONG[p.m - 1]} de ${p.y}` : ym;
 }
 
 /** Months from `to` back to `from` inclusive, newest first, as "YYYY-MM" (for the stop-month picker). */

@@ -75,7 +75,7 @@ export function isCalendarDay(x: unknown): x is string {
   return Number.isFinite(d.getTime()) && d.toISOString().slice(0, 10) === x;
 }
 
-export const DEFAULT_LANGUAGE_NOTE = "Written in English; translations are informal, the original prevails.";
+export const DEFAULT_LANGUAGE_NOTE = "Escrito em português; as traduções são informais, o original prevalece.";
 
 export function emptyRulesDoc(id: string, now: Date = new Date()): RulesDoc {
   return {
@@ -204,7 +204,7 @@ export function emptyTranslation(id: string, label = "", lang = ""): RulesTransl
 
 /** Name to show for a translation: the council's label, else the code, else "Language N". */
 export function translationName(t: Pick<RulesTranslation, "label" | "lang">, index: number): string {
-  return t.label || t.lang || `Language ${index + 2}`;
+  return t.label || t.lang || `Idioma ${index + 2}`;
 }
 
 /** Name to show for the original: its label, else its code, else "Original". */
@@ -260,8 +260,8 @@ export interface ResolvedRules {
 }
 
 export const ORIGINAL_KEY = "original";
-export const TRANSLATION_NOTE = "Translation by the council. If it differs, the original prevails.";
-export const UNTRANSLATED_NOTE = "Not translated yet. Shown in the original language.";
+export const TRANSLATION_NOTE = "Tradução feita pelo conselho. Se houver diferença, o original prevalece.";
+export const UNTRANSLATED_NOTE = "Ainda não traduzido. Mostrado no idioma original.";
 
 /**
  * A document as one language version reads it. A section counts as translated only when every field
@@ -380,8 +380,8 @@ export function parseRulesDoc(input: unknown): RulesDoc | null {
 /** Title to show: the council's title, else "<kingdom> rules", else "Kingdom rules". */
 export function rulesDisplayTitle(doc: Pick<RulesDoc, "title" | "kingdom">): string {
   if (doc.title) return doc.title;
-  if (doc.kingdom) return `${doc.kingdom} rules`;
-  return "Kingdom rules";
+  if (doc.kingdom) return `Regras do reino ${doc.kingdom}`;
+  return "Regras do reino";
 }
 
 /** Move the section at index `from` by `delta` (−1 up, +1 down). Out-of-range moves return the same list. */
@@ -464,121 +464,121 @@ export interface RulesTemplate {
 export const RULES_TEMPLATES: readonly RulesTemplate[] = [
   {
     key: "leadership",
-    heading: "Leadership & council",
+    heading: "Liderança e conselho",
     body: [
-      "The kingdom is run by [a council of the top alliances / the king and a council].",
+      "O reino é conduzido por [um conselho das principais alianças / o rei e um conselho].",
       "",
-      "- King: [name or 'chosen by ...']",
-      "- Council members: [alliance tags and their seats]",
-      "- How someone joins or leaves the council: [rule]",
-      "- How the king is chosen and for how long: [rule]",
+      "- Rei: [nome ou 'escolhido por ...']",
+      "- Membros do conselho: [tags das alianças e seus assentos]",
+      "- Como alguém entra ou sai do conselho: [regra]",
+      "- Como o rei é escolhido e por quanto tempo: [regra]",
     ].join("\n"),
   },
   {
     key: "decisions",
-    heading: "How decisions are made",
+    heading: "Como as decisões são tomadas",
     body: [
-      "Decisions are made by [majority vote of council seats / consensus / the king after council advice].",
+      "As decisões são tomadas por [voto da maioria dos assentos do conselho / consenso / o rei, depois de ouvir o conselho].",
       "",
-      "- Who can propose a change: [rule]",
-      "- How long a vote stays open: [days]",
-      "- Where decisions are logged so members can read them: [channel or document]",
-      "- When these rules are reviewed: [for example, before each KvK]",
+      "- Quem pode propor uma mudança: [regra]",
+      "- Por quanto tempo uma votação fica aberta: [dias]",
+      "- Onde as decisões ficam registradas para os membros lerem: [canal ou documento]",
+      "- Quando estas regras são revisadas: [por exemplo, antes de cada KvK]",
     ].join("\n"),
   },
   {
     key: "kvk",
-    heading: "KvK requirements & DKP",
+    heading: "Requisitos da KvK e DKP",
     body: [
-      "Every account above [power] is expected to meet the KvK requirement.",
+      "Toda conta acima de [poder] deve cumprir o requisito da KvK.",
       "",
-      "- DKP formula: [kill points tier 4 × ..., tier 5 × ..., deaths × ...]",
-      "- Requirement: [DKP target by power band]",
-      "- Where to check your own target: [link to the council's requirements card, made at /kingdom/requirements/]",
-      "- What happens when the requirement is missed: [rule]",
+      "- Fórmula do DKP: [pontos de abate T4 × ..., T5 × ..., mortes × ...]",
+      "- Requisito: [meta de DKP por faixa de poder]",
+      "- Onde conferir a sua meta: [link para o cartão de requisitos do conselho, feito em /kingdom/requirements/]",
+      "- O que acontece quando o requisito não é cumprido: [regra]",
     ].join("\n"),
   },
   {
     key: "mge",
-    heading: "MGE policy",
+    heading: "Política de MGE",
     body: [
-      "MGE in this kingdom is [fixed / on rotation / free-for-all].",
+      "O MGE neste reino é [fixo / em rodízio / livre para todos].",
       "",
-      "- Who may take the top ranks: [rule, for example by DKP or rotation order]",
-      "- How the list is published: [channel or link]",
-      "- Points cap for everyone else: [number or 'none']",
-      "- What happens when someone overtakes a fixed rank: [rule]",
+      "- Quem pode ficar com as primeiras posições: [regra, por exemplo por DKP ou ordem do rodízio]",
+      "- Como a lista é publicada: [canal ou link]",
+      "- Teto de pontos para todos os outros: [número ou 'nenhum']",
+      "- O que acontece quando alguém passa uma posição fixa: [regra]",
     ].join("\n"),
   },
   {
     key: "migration",
-    heading: "Migration & new members",
+    heading: "Migração e novos membros",
     body: [
-      "Migration into the kingdom is [open / by application / closed].",
+      "A migração para o reino é [aberta / por candidatura / fechada].",
       "",
-      "- Minimums for migrants: [power, kill points, City Hall level, other]",
-      "- How to apply: [who to contact and where]",
-      "- Alliance placement after arrival: [rule]",
-      "- First days: [what new members should read or do]",
+      "- Mínimos para migrantes: [poder, pontos de abate, nível da Prefeitura, outros]",
+      "- Como se candidatar: [com quem falar e onde]",
+      "- Colocação em aliança depois da chegada: [regra]",
+      "- Primeiros dias: [o que os novos membros devem ler ou fazer]",
     ].join("\n"),
   },
   {
     key: "farms",
-    heading: "Farms & alt accounts",
+    heading: "Farms e contas alternativas",
     body: [
-      "Farm and alt accounts are [allowed / allowed with registration / not allowed].",
+      "Farms e contas alternativas são [permitidas / permitidas com registro / proibidas].",
       "",
-      "- Where farms live: [alliance or zone]",
-      "- Registration: [how to register a farm with the council]",
-      "- Farms in KvK and MGE: [rule]",
+      "- Onde ficam as farms: [aliança ou zona]",
+      "- Registro: [como registrar uma farm no conselho]",
+      "- Farms na KvK e no MGE: [regra]",
     ].join("\n"),
   },
   {
     key: "warnings",
-    heading: "Warnings, exit notice and appeals",
+    heading: "Advertências, aviso de saída e recursos",
     body: [
-      "Breaking these rules leads to [a warning, then ...].",
+      "Quebrar estas regras leva a [uma advertência, depois ...].",
       "",
-      "1. First time: [action]",
-      "2. Second time: [action]",
-      "3. After that: [action]",
+      "1. Primeira vez: [ação]",
+      "2. Segunda vez: [ação]",
+      "3. Depois disso: [ação]",
       "",
-      "- How to appeal: [who to contact, within how many days]",
-      "- Leaving the kingdom: [notice period and how to tell the council]",
+      "- Como recorrer: [com quem falar, em quantos dias]",
+      "- Sair do reino: [prazo de aviso e como avisar o conselho]",
     ].join("\n"),
   },
   {
     key: "activity",
-    heading: "Activity expectations",
+    heading: "Expectativas de atividade",
     body: [
-      "Members are expected to [take part in ...].",
+      "Espera-se que os membros [participem de ...].",
       "",
-      "- Events everyone joins: [list]",
-      "- Inactive accounts: [after how many days, and what happens]",
-      "- Telling the council you will be away: [how]",
+      "- Eventos de que todos participam: [lista]",
+      "- Contas inativas: [depois de quantos dias, e o que acontece]",
+      "- Avisar o conselho de que você vai se ausentar: [como]",
     ].join("\n"),
   },
   {
     key: "communication",
-    heading: "Communication & languages",
+    heading: "Comunicação e idiomas",
     body: [
-      "Official announcements are posted in [kingdom chat / Discord channel / other].",
+      "Os comunicados oficiais são publicados em [chat do reino / canal do Discord / outro].",
       "",
-      "- Languages used: [list]",
-      "- Translators or language contacts: [names or roles]",
-      "- Respect between language groups: [rule]",
-      "- Links: share them on Discord or other outside channels, not in in-game chat.",
+      "- Idiomas usados: [lista]",
+      "- Tradutores ou contatos por idioma: [nomes ou funções]",
+      "- Respeito entre os grupos de idiomas: [regra]",
+      "- Links: compartilhe-os no Discord ou em outros canais fora do jogo, não no chat do jogo.",
     ].join("\n"),
   },
   {
     key: "conflicts",
-    heading: "Conflicts with other kingdoms and alliances",
+    heading: "Conflitos com outros reinos e alianças",
     body: [
-      "Agreements with other kingdoms (NAPs, borders, zones) are made by [who].",
+      "Os acordos com outros reinos (NAPs, fronteiras, zonas) são feitos por [quem].",
       "",
-      "- Current agreements are listed in: [channel or document]",
-      "- Attacking a protected target: [rule]",
-      "- Disputes between our own alliances: [who decides, how]",
+      "- Os acordos atuais estão listados em: [canal ou documento]",
+      "- Atacar um alvo protegido: [regra]",
+      "- Disputas entre as nossas próprias alianças: [quem decide, como]",
     ].join("\n"),
   },
 ];
@@ -591,12 +591,12 @@ export function sectionFromTemplate(key: string, id: string): RulesSection | nul
   return t ? { id, heading: t.heading, body: t.body } : null;
 }
 
-export const CHARTER_INTRO = "This charter is agreed by the council of [kingdom]. It explains how the kingdom is run and what every member can expect.";
+export const CHARTER_INTRO = "Esta carta é acordada pelo conselho de [reino]. Ela explica como o reino é conduzido e o que todo membro pode esperar.";
 
 /** A new charter: starter sections plus an intro prompt; the council fills in the [brackets]. */
 export function newCharterDoc(id: string, now: Date = new Date(), sectionId: (i: number) => string = (i) => `s${i + 1}`): RulesDoc {
   const doc = emptyRulesDoc(id, now);
-  doc.title = "Kingdom charter";
+  doc.title = "Carta do reino";
   doc.intro = CHARTER_INTRO;
   doc.sections = CHARTER_STARTER_KEYS.map((k, i) => sectionFromTemplate(k, sectionId(i))!);
   return doc;
@@ -621,7 +621,7 @@ export function rulesToPlainText(doc: RulesDoc, opts: { version?: string; all?: 
 
 function versionText(doc: RulesDoc, v: ResolvedRules, labelled: boolean): string {
   const out: string[] = [];
-  if (labelled || !v.isOriginal) out.push(`Language: ${v.name}${v.isOriginal ? " (original)" : ""}`, "");
+  if (labelled || !v.isOriginal) out.push(`Idioma: ${v.name}${v.isOriginal ? " (original)" : ""}`, "");
   out.push(v.title);
   if (doc.kingdom && doc.title) out.push(doc.kingdom);
   if (!v.isOriginal) out.push(TRANSLATION_NOTE);
@@ -632,17 +632,17 @@ function versionText(doc: RulesDoc, v: ResolvedRules, labelled: boolean): string
     out.push(v.intro);
   }
   for (const s of v.sections) {
-    out.push("", s.heading || "Untitled section");
+    out.push("", s.heading || "Seção sem título");
     if (s.fallback) out.push(`(${UNTRANSLATED_NOTE})`);
     if (s.body) out.push(s.body);
   }
   const { agreedOn, signers } = doc.charter;
   if (agreedOn || signers.length) {
-    out.push("", "Charter");
-    if (agreedOn) out.push(`Agreed on ${agreedOn}`);
-    if (signers.length) out.push(`Signed by: ${signers.join(", ")}`);
+    out.push("", "Carta");
+    if (agreedOn) out.push(`Acordada em ${agreedOn}`);
+    if (signers.length) out.push(`Assinada por: ${signers.join(", ")}`);
   }
-  if (doc.lastReviewed) out.push("", `Last reviewed: ${doc.lastReviewed}`);
+  if (doc.lastReviewed) out.push("", `Última revisão: ${doc.lastReviewed}`);
   return out.join("\n") + "\n";
 }
 

@@ -79,10 +79,10 @@ describe("allPatches and groupBySource", () => {
 
 describe("formatting", () => {
   it("formats dates and months", () => {
-    expect(formatPatchDate("2025-01-07")).toBe("7 Jan 2025");
-    expect(formatPatchDate("2023-03")).toBe("Mar 2023");
-    expect(formatPatchDate(null)).toBe("Date unknown");
-    expect(formatMonth("2024-05")).toBe("May 2024");
+    expect(formatPatchDate("2025-01-07")).toBe("7 jan 2025");
+    expect(formatPatchDate("2023-03")).toBe("mar 2023");
+    expect(formatPatchDate(null)).toBe("Data desconhecida");
+    expect(formatMonth("2024-05")).toBe("maio de 2024");
   });
   it("lists months newest first, inclusive", () => {
     expect(monthsBetween("2024-11", "2025-02")).toEqual(["2025-02", "2025-01", "2024-12", "2024-11"]);

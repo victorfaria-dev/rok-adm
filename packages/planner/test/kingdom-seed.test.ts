@@ -121,7 +121,7 @@ describe("pasted list", () => {
       { id: "L6", name: "Beta", power: 150_000_000 },
     ]);
     expect(r.errors.map((e) => e.line)).toEqual([7, 8, 9]);
-    expect(r.errors[2]!.message).toMatch(/higher than any governor/);
+    expect(r.errors[2]!.message).toMatch(/maior que o de qualquer governador/);
     expect(r.truncated).toBe(false);
   });
 
@@ -169,7 +169,7 @@ describe("stored simulation", () => {
 
 describe("freshness and sources", () => {
   it("flags the passed check date", () => {
-    expect(seedRuleFreshness("2026-10-13")).toEqual({ stale: true, text: "Last verified for patch 1.0.95; check date passed, may be outdated." });
+    expect(seedRuleFreshness("2026-10-13")).toEqual({ stale: true, text: "Última verificação no patch 1.0.95; a data de conferência passou, pode estar desatualizado." });
     expect(seedRuleFreshness("2026-01-01").stale).toBe(false);
   });
 

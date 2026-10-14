@@ -25,20 +25,20 @@ describe("bands", () => {
   });
 
   it("flags empty, too many, overlap, unsorted, open middle, bad percent and bounds", () => {
-    expect(validateBands([])[0]!.message).toMatch(/at least one/);
+    expect(validateBands([])[0]!.message).toMatch(/pelo menos uma/);
     const many = Array.from({ length: REQ_MAX_BANDS + 1 }, (_, i) => ({ minPower: i * 10, maxPower: i * 10 + 10, percent: 100 }));
     expect(validateBands(many).some((x) => x.index === -1)).toBe(true);
-    expect(validateBands([{ minPower: 0, maxPower: 30, percent: 1 }, { minPower: 20, maxPower: null, percent: 1 }])[0]).toMatchObject({ index: 1, field: "min", message: expect.stringMatching(/overlaps band 1/) });
-    expect(validateBands([{ minPower: 50, maxPower: 60, percent: 1 }, { minPower: 0, maxPower: 10, percent: 1 }])[0]!.message).toMatch(/sort/);
-    expect(validateBands([{ minPower: 0, maxPower: null, percent: 1 }, { minPower: 10, maxPower: null, percent: 1 }]).map((x) => x.message).join(" ")).toMatch(/only the last band/);
-    expect(validateBands([{ minPower: 0, maxPower: null, percent: 0 }])[0]!.message).toMatch(/percent/);
-    expect(validateBands([{ minPower: 0, maxPower: null, percent: 20_000 }])[0]!.message).toMatch(/percent/);
-    expect(validateBands([{ minPower: 10, maxPower: 10, percent: 1 }])[0]!.message).toMatch(/upper limit/);
-    expect(validateBands([{ minPower: -1, maxPower: null, percent: 1 }])[0]!.message).toMatch(/lowest power/);
+    expect(validateBands([{ minPower: 0, maxPower: 30, percent: 1 }, { minPower: 20, maxPower: null, percent: 1 }])[0]).toMatchObject({ index: 1, field: "min", message: expect.stringMatching(/se sobrepõe à faixa 1/) });
+    expect(validateBands([{ minPower: 50, maxPower: 60, percent: 1 }, { minPower: 0, maxPower: 10, percent: 1 }])[0]!.message).toMatch(/ordene/);
+    expect(validateBands([{ minPower: 0, maxPower: null, percent: 1 }, { minPower: 10, maxPower: null, percent: 1 }]).map((x) => x.message).join(" ")).toMatch(/só a última faixa/);
+    expect(validateBands([{ minPower: 0, maxPower: null, percent: 0 }])[0]!.message).toMatch(/percentual/);
+    expect(validateBands([{ minPower: 0, maxPower: null, percent: 20_000 }])[0]!.message).toMatch(/percentual/);
+    expect(validateBands([{ minPower: 10, maxPower: 10, percent: 1 }])[0]!.message).toMatch(/limite superior/);
+    expect(validateBands([{ minPower: -1, maxPower: null, percent: 1 }])[0]!.message).toMatch(/menor poder/);
   });
 
   it("each band issue names the field at fault; list-level issues have none", () => {
-    expect(validateBands([])[0]).toEqual({ index: -1, message: "Add at least one power band." });
+    expect(validateBands([])[0]).toEqual({ index: -1, message: "Adicione pelo menos uma faixa de poder." });
     const fields = (b: PowerBand[]) => validateBands(b).map((x) => `${x.index}:${x.field}`);
     expect(fields([{ minPower: -1, maxPower: null, percent: 1 }])).toEqual(["0:min"]);
     expect(fields([{ minPower: 10, maxPower: 5, percent: 1 }])).toEqual(["0:max"]);
@@ -197,10 +197,10 @@ describe("requirement groups (B08-0002: adjusted by account age, seed or player 
 
   it("validateGroups: names required and distinct, percent in range", () => {
     expect(validateGroups(G)).toEqual([]);
-    expect(validateGroups([{ name: " ", percent: 80 }])).toEqual([{ index: 0, field: "name", message: "Group 1: enter a name." }]);
-    expect(validateGroups([{ name: "A", percent: 80 }, { name: " a ", percent: 90 }])).toEqual([{ index: 1, field: "name", message: "Group 2 has the same name as group 1." }]);
+    expect(validateGroups([{ name: " ", percent: 80 }])).toEqual([{ index: 0, field: "name", message: "Grupo 1: digite um nome." }]);
+    expect(validateGroups([{ name: "A", percent: 80 }, { name: " a ", percent: 90 }])).toEqual([{ index: 1, field: "name", message: "O grupo 2 tem o mesmo nome do grupo 1." }]);
     for (const percent of [0, -5, REQ_GROUP_MAX_PERCENT + 1, Number.NaN]) {
-      expect(validateGroups([{ name: "A", percent }])).toEqual([{ index: 0, field: "pct", message: "Group 1: the percent must be more than 0 and at most 1,000." }]);
+      expect(validateGroups([{ name: "A", percent }])).toEqual([{ index: 0, field: "pct", message: "Grupo 1: o percentual deve ser maior que 0 e no máximo 1.000." }]);
     }
   });
 
@@ -240,7 +240,7 @@ describe("requirement groups (B08-0002: adjusted by account age, seed or player 
   });
 
   it("plain text and share round trip", async () => {
-    expect(groupText(G[0]!)).toBe("Accounts under 6 months: 80% of the normal target");
+    expect(groupText(G[0]!)).toBe("Accounts under 6 months: 80% da meta normal");
     const c = card({ groups: G });
     const back = await decodeShare(await encodeShare("requirements", cardSharePayload(c)), "requirements", parseRequirementsCard);
     expect(back.ok && back.data.groups).toEqual(G);
@@ -250,7 +250,7 @@ describe("requirement groups (B08-0002: adjusted by account age, seed or player 
 describe("excluded deads (K2779 rule, B08-0001)", () => {
   const on = { enabled: true, label: EXCLUDED_DEADS_DEFAULT_LABEL };
   it("default is off with the K2779 wording; the wording matches the fact card", () => {
-    expect(defaultRequirementsCard().excludedDeads).toEqual({ enabled: false, label: "zeroed in a 'terrible trade'" });
+    expect(defaultRequirementsCard().excludedDeads).toEqual({ enabled: false, label: "zerado em uma 'troca terrível'" });
     const fact = readFileSync(join(__dirname, "../../../research/facts/B08/B08-0001.md"), "utf8");
     expect(fact).toContain("zeroed in a 'terrible trade'");
     expect(EXCLUDED_DEADS_FACT_ID).toBe("B08-0001");
@@ -265,16 +265,16 @@ describe("excluded deads (K2779 rule, B08-0001)", () => {
   });
 
   it("plain-language rule", () => {
-    expect(excludedDeadsText(on)).toBe("Deads on days you were zeroed in a 'terrible trade' don't count: they are taken off your deads before your DKP is worked out.");
-    expect(excludedDeadsText({ enabled: true, label: "" })).toContain("terrible trade");
+    expect(excludedDeadsText(on)).toBe("As mortes dos dias em que você foi zerado em uma 'troca terrível' não contam: elas são descontadas das suas mortes antes de calcular o seu DKP.");
+    expect(excludedDeadsText({ enabled: true, label: "" })).toContain("troca terrível");
   });
 
   it("validates excluded deads against deads", () => {
     expect(excludedDeadsIssue(100, 0)).toBeNull();
     expect(excludedDeadsIssue(100, 100)).toBeNull();
-    expect(excludedDeadsIssue(100, 101)).toBe("This can't be more than your deads (100).");
-    expect(excludedDeadsIssue(Number.NaN, 1)).toBe("This can't be more than your deads (0).");
-    expect(excludedDeadsIssue(100, -1)).toBe("Enter 0 or more.");
+    expect(excludedDeadsIssue(100, 101)).toBe("Isso não pode ser maior que as suas mortes (100).");
+    expect(excludedDeadsIssue(Number.NaN, 1)).toBe("Isso não pode ser maior que as suas mortes (0).");
+    expect(excludedDeadsIssue(100, -1)).toBe("Digite 0 ou mais.");
   });
 
   it("subtracts excluded deads before the formula only when the rule is on", () => {

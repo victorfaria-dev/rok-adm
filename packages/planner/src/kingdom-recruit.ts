@@ -28,38 +28,38 @@ export const REDDIT_TITLE_LIMIT = 300;
 export const REDDIT_BODY_LIMIT = 40_000;
 
 export const RECRUIT_STAGES = [
-  { value: "", label: "Not stated" },
+  { value: "", label: "Não informado" },
   { value: "pre-kvk", label: "Pre-KvK" },
   { value: "kvk1", label: "KvK1" },
   { value: "kvk2", label: "KvK2" },
   { value: "kvk3", label: "KvK3" },
-  { value: "soc", label: "Season of Conquest" },
-  { value: "other", label: "Other" },
+  { value: "soc", label: "Temporada de Conquista" },
+  { value: "other", label: "Outro" },
 ] as const;
 export type RecruitStage = (typeof RECRUIT_STAGES)[number]["value"];
 
 export const RECRUIT_OFFERS = [
-  { key: "mge-rules", label: "Transparent MGE rules" },
-  { key: "dkp-rules", label: "Published DKP rules" },
-  { key: "written-rules", label: "Written kingdom rules" },
-  { key: "returners", label: "Returning players welcome" },
-  { key: "farm-friendly", label: "Farm-friendly" },
-  { key: "discord", label: "Active Discord" },
-  { key: "beginners", label: "Help for beginners" },
-  { key: "languages", label: "Players of several languages welcome" },
+  { key: "mge-rules", label: "Regras de MGE transparentes" },
+  { key: "dkp-rules", label: "Regras de DKP publicadas" },
+  { key: "written-rules", label: "Regras do reino por escrito" },
+  { key: "returners", label: "Quem volta ao jogo é bem-vindo" },
+  { key: "farm-friendly", label: "Aceita farms" },
+  { key: "discord", label: "Discord ativo" },
+  { key: "beginners", label: "Ajuda para iniciantes" },
+  { key: "languages", label: "Jogadores de vários idiomas são bem-vindos" },
 ] as const;
 export type RecruitOffer = (typeof RECRUIT_OFFERS)[number]["key"];
 
 export const RECRUIT_ROLES = [
-  { key: "rally-leader", label: "Rally leader" },
-  { key: "garrison-leader", label: "Garrison leader" },
-  { key: "scout", label: "Scout / map officer" },
-  { key: "event-officer", label: "Event / MGE officer" },
-  { key: "data-officer", label: "Data officer" },
-  { key: "translator", label: "Translator" },
-  { key: "alliance-leader", label: "Alliance leader" },
-  { key: "farmers", label: "Farmers / new players" },
-  { key: "other", label: "Other" },
+  { key: "rally-leader", label: "Líder de rally" },
+  { key: "garrison-leader", label: "Líder de guarnição" },
+  { key: "scout", label: "Oficial de exploração / mapa" },
+  { key: "event-officer", label: "Oficial de eventos / MGE" },
+  { key: "data-officer", label: "Oficial de dados" },
+  { key: "translator", label: "Tradutor" },
+  { key: "alliance-leader", label: "Líder de aliança" },
+  { key: "farmers", label: "Farmers / jogadores novos" },
+  { key: "other", label: "Outro" },
 ] as const;
 export type RecruitRoleKey = (typeof RECRUIT_ROLES)[number]["key"];
 
@@ -165,13 +165,13 @@ export function parseRoleCount(text: string): number | null {
 
 /** Message for a role count the post cannot use (empty is fine: the count is optional). */
 export function roleCountError(text: string): string | undefined {
-  return text.trim() && parseRoleCount(text) === null ? `Write a whole number from 1 to ${RECRUIT_LIMITS.roleCount}, or leave it empty.` : undefined;
+  return text.trim() && parseRoleCount(text) === null ? `Escreva um número inteiro de 1 a ${RECRUIT_LIMITS.roleCount}, ou deixe em branco.` : undefined;
 }
 
 export function recruitErrors(input: RecruitInput): RecruitErrors {
   const e: RecruitErrors = {};
-  if (input.minPower.trim() && parseQuantity(input.minPower) === null) e.minPower = "Write the power as a number, for example 30m, 30,000,000 or 500k.";
-  if (input.minCityHall.trim() && parseCityHall(input.minCityHall) === null) e.minCityHall = "Write a City Hall level from 1 to 25.";
+  if (input.minPower.trim() && parseQuantity(input.minPower) === null) e.minPower = "Escreva o poder como número, por exemplo 30m, 30.000.000 ou 500k.";
+  if (input.minCityHall.trim() && parseCityHall(input.minCityHall) === null) e.minCityHall = "Escreva um nível de Prefeitura de 1 a 25.";
   return e;
 }
 
@@ -225,7 +225,7 @@ const offerLabel = (k: RecruitOffer): string => RECRUIT_OFFERS.find((o) => o.key
 /** "Kingdom 1234" for a bare number, else the council's own text ("K1234", "Kingdom of X"). */
 export function kingdomLabel(kingdom: string): string {
   const k = kingdom.trim();
-  return /^\d+$/.test(k) ? `Kingdom ${k}` : k;
+  return /^\d+$/.test(k) ? `Reino ${k}` : k;
 }
 
 function roleLine(r: RecruitRole, esc: (s: string) => string): string {
@@ -238,19 +238,19 @@ function roleLine(r: RecruitRole, esc: (s: string) => string): string {
 function factRows(i: RecruitInput, esc: (s: string) => string): Array<[string, string]> {
   const rows: Array<[string, string]> = [];
   const stage = stageLabel(i);
-  if (stage) rows.push(["Stage", esc(stage)]);
+  if (stage) rows.push(["Etapa", esc(stage)]);
   if (i.seed) rows.push(["Seed", esc(i.seed)]);
-  if (i.languages) rows.push(["Languages", esc(i.languages)]);
-  if (i.timezones) rows.push(["Timezones", esc(i.timezones)]);
+  if (i.languages) rows.push(["Idiomas", esc(i.languages)]);
+  if (i.timezones) rows.push(["Fusos horários", esc(i.timezones)]);
   return rows;
 }
 
 function requirementLines(i: RecruitInput, esc: (s: string) => string): string[] {
   const out: string[] = [];
   const power = parseQuantity(i.minPower);
-  if (i.minPower.trim() && power !== null) out.push(`Power: ${formatCompact(power)}+`);
+  if (i.minPower.trim() && power !== null) out.push(`Poder: ${formatCompact(power)}+`);
   const ch = parseCityHall(i.minCityHall);
-  if (ch !== null) out.push(`City Hall: ${ch}+`);
+  if (ch !== null) out.push(`Prefeitura: ${ch}+`);
   // Lines the council already wrote as a list ("- 30 KP") lose their own marker: the post adds one.
   for (const line of i.otherReq.split("\n").map((l) => l.trim().replace(/^[-*•]\s+/, "")).filter(Boolean)) out.push(esc(line));
   return out;
@@ -258,7 +258,7 @@ function requirementLines(i: RecruitInput, esc: (s: string) => string): string[]
 
 /** Short headline used by Discord and plain text. */
 function headline(i: RecruitInput, esc: (s: string) => string): string {
-  return i.kingdom ? `${esc(kingdomLabel(i.kingdom))} is recruiting` : "We are recruiting";
+  return i.kingdom ? `${esc(kingdomLabel(i.kingdom))} está recrutando` : "Estamos recrutando";
 }
 
 function fullRedditTitle(i: RecruitInput): string {
@@ -266,7 +266,7 @@ function fullRedditTitle(i: RecruitInput): string {
   const tag = k ? (/^\d+$/.test(k) ? `[K${k}] ` : `[${k}] `) : "";
   const stage = stageLabel(i);
   const roles = [...new Set(i.roles.map((r) => roleLabel(r.role)))];
-  return `${tag}${stage ? `${stage} kingdom` : "Kingdom"} recruiting${roles.length ? `: ${roles.join(", ")}` : ""}`;
+  return `${tag}${stage ? `Reino ${stage}` : "Reino"} recrutando${roles.length ? `: ${roles.join(", ")}` : ""}`;
 }
 
 /** Reddit title: "[K1234] KvK2 kingdom recruiting: Rally leader, Translator", cut to 300 characters. */
@@ -296,12 +296,12 @@ export function recruitPost(input: RecruitInput, format: RecruitFormat): Recruit
     const lines = items.map((x) => `- ${x}`);
     parts.push(format === "reddit" ? [bold(heading), "", ...lines] : [md ? bold(heading) : `${heading}:`, ...lines]);
   };
-  list("Open roles", input.roles.map((r) => roleLine(r, esc)));
-  list("Requirements", requirementLines(input, esc));
-  list("What we offer", input.offers.map(offerLabel));
+  list("Vagas abertas", input.roles.map((r) => roleLine(r, esc)));
+  list("Requisitos", requirementLines(input, esc));
+  list("O que oferecemos", input.offers.map(offerLabel));
 
-  if (input.migrationNote) parts.push([md ? bold("Migration") : "Migration:", esc(input.migrationNote)]);
-  if (input.contact) parts.push([`${md ? bold("Contact:") : "Contact:"} ${esc(input.contact)}`]);
+  if (input.migrationNote) parts.push([md ? bold("Migração") : "Migração:", esc(input.migrationNote)]);
+  if (input.contact) parts.push([`${md ? bold("Contato:") : "Contato:"} ${esc(input.contact)}`]);
 
   const body = parts.map((p) => p.join("\n")).join("\n\n");
   const limit = format === "discord" ? DISCORD_LIMIT : format === "reddit" ? REDDIT_BODY_LIMIT : null;

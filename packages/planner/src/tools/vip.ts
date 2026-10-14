@@ -79,16 +79,16 @@ export interface VipPlan {
 export function vipPlan(input: VipPlanInput, levels: readonly VipThreshold[], rule: ChestRule, perGem: number, cites: { thresholds: string[]; chest: string[]; gems: string[] }): VipPlan {
   const pointsNeeded = vipPointsToTarget(input.currentPoints, input.targetVip, levels);
   const both = (...xs: string[][]) => [...new Set(xs.flat())].sort();
-  const streak = "streak never broken (missing a day resets it, A05-0003)";
+  const streak = "sequência nunca quebrada (perder um dia a reinicia, A05-0003)";
   return {
     currentVip: vipLevelAt(nonNeg(input.currentPoints), levels),
     pointsNeeded,
-    gemsIfAllNow: { value: gemsForPoints(pointsNeeded, perGem), facts: both(cites.thresholds, cites.gems), assumptions: ["thresholds read as cumulative totals"], pending: [] },
+    gemsIfAllNow: { value: gemsForPoints(pointsNeeded, perGem), facts: both(cites.thresholds, cites.gems), assumptions: ["limiares lidos como totais acumulados"], pending: [] },
     daysChestOnly: { value: daysToPoints(pointsNeeded, rule, input.streakDay, 0).days, facts: both(cites.thresholds, cites.chest), assumptions: [streak], pending: [] },
     daysWithGems: {
       value: daysToPoints(pointsNeeded, rule, input.streakDay, nonNeg(input.gemsPerDay) * perGem).days,
       facts: both(cites.thresholds, cites.chest, cites.gems),
-      assumptions: [streak, "every one of those gems goes to VIP"],
+      assumptions: [streak, "todas essas gemas vão para o VIP"],
       pending: ["gems per day"],
     },
   };

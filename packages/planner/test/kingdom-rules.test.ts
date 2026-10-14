@@ -127,16 +127,16 @@ describe("templates", () => {
       expect(t.body.length).toBeLessThanOrEqual(RULES_LIMITS.body);
     }
     expect(RULES_TEMPLATES.find((t) => t.key === "kvk")!.body).toContain("/kingdom/requirements/");
-    expect(RULES_TEMPLATES.find((t) => t.key === "mge")!.body).toMatch(/fixed \/ on rotation \/ free-for-all/);
+    expect(RULES_TEMPLATES.find((t) => t.key === "mge")!.body).toMatch(/fixo \/ em rodízio \/ livre para todos/);
   });
 
   it("builds sections and a charter starter pack", () => {
-    expect(sectionFromTemplate("farms", "z")).toEqual({ id: "z", heading: "Farms & alt accounts", body: RULES_TEMPLATES.find((t) => t.key === "farms")!.body });
+    expect(sectionFromTemplate("farms", "z")).toEqual({ id: "z", heading: "Farms e contas alternativas", body: RULES_TEMPLATES.find((t) => t.key === "farms")!.body });
     expect(sectionFromTemplate("nope", "z")).toBeNull();
     const c = newCharterDoc("c1", NOW);
     expect(c.sections.map((s) => s.heading)).toEqual(CHARTER_STARTER_KEYS.map((k) => RULES_TEMPLATES.find((t) => t.key === k)!.heading));
     expect(new Set(c.sections.map((s) => s.id)).size).toBe(c.sections.length);
-    expect(c.title).toBe("Kingdom charter");
+    expect(c.title).toBe("Carta do reino");
     expect(parseRulesDoc(c)).toEqual(c);
   });
 
@@ -156,20 +156,20 @@ describe("helpers", () => {
 
   it("picks a display title", () => {
     expect(rulesDisplayTitle({ title: "T", kingdom: "K1" })).toBe("T");
-    expect(rulesDisplayTitle({ title: "", kingdom: "K1" })).toBe("K1 rules");
-    expect(rulesDisplayTitle({ title: "", kingdom: "" })).toBe("Kingdom rules");
+    expect(rulesDisplayTitle({ title: "", kingdom: "K1" })).toBe("Regras do reino K1");
+    expect(rulesDisplayTitle({ title: "", kingdom: "" })).toBe("Regras do reino");
   });
 
   it("exports plain text with charter and review date", () => {
     const t = rulesToPlainText(sample());
     expect(t).toContain("K1234 rules\nK1234\n");
     expect(t).toContain("MGE policy\nRotation.");
-    expect(t).toContain("Agreed on 2026-10-01");
-    expect(t).toContain("Signed by: Ana, Bo");
-    expect(t).toContain("Last reviewed: 2026-10-10");
+    expect(t).toContain("Acordada em 2026-10-01");
+    expect(t).toContain("Assinada por: Ana, Bo");
+    expect(t).toContain("Última revisão: 2026-10-10");
     const bare = rulesToPlainText(emptyRulesDoc("e", NOW));
-    expect(bare).not.toContain("Charter");
-    expect(bare).not.toContain("Last reviewed");
+    expect(bare).not.toContain("Carta");
+    expect(bare).not.toContain("Última revisão");
   });
 });
 
@@ -287,7 +287,7 @@ describe("language versions", () => {
 
   it("names versions and picks the reader's language", () => {
     expect(translationName({ label: "", lang: "uk" }, 0)).toBe("uk");
-    expect(translationName({ label: "", lang: "" }, 1)).toBe("Language 3");
+    expect(translationName({ label: "", lang: "" }, 1)).toBe("Idioma 3");
     expect(originalName({ originalLabel: "", originalLang: "" })).toBe("Original");
     const d = { ...multi(), translations: [...multi().translations, emptyTranslation("br", "Português", "pt-BR")] };
     expect(pickVersion(d, ["es-MX", "en"])).toBe("es");
@@ -310,11 +310,11 @@ describe("language versions", () => {
 
   it("exports one version or all versions as plain text", () => {
     const es = rulesToPlainText(multi(), { version: "es" });
-    expect(es).toContain("Language: Español\n\nReglas de K1234");
+    expect(es).toContain("Idioma: Español\n\nReglas de K1234");
     expect(es).toContain(TRANSLATION_NOTE);
     expect(es).toContain(`Farms\n(${UNTRANSLATED_NOTE})\nRegister farms.`);
     const all = rulesToPlainText(multi(), { all: true });
-    expect(all.startsWith("Language: English (original)\n\nK1234 rules")).toBe(true);
+    expect(all.startsWith("Idioma: English (original)\n\nK1234 rules")).toBe(true);
     expect(all).toContain("----------------------------------------");
     expect(rulesToPlainText(sample())).not.toContain("Language:");
   });

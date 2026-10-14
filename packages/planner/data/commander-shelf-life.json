@@ -7,118 +7,118 @@
       "shelfLife": "kvk1_only", "usefulStages": ["pre_kvk", "kvk1"],
       "suggested": { "sculptureType": "epic_or_xp", "purpose": "field_main", "availability": "free_route", "swap": "not_eligible", "shelfLife": "kvk1_only" },
       "facts": ["A06-0501", "A06-0509", "A14-0001"], "split": true,
-      "note": "Safest early F2P investment (no gold sculptures); long-term value of epics is divided (A06-0509)."
+      "note": "Investimento F2P inicial mais seguro (sem esculturas douradas); o valor de longo prazo dos épicos é dividido (A06-0509)."
     },
     {
       "id": "aethelflaed", "name": "Aethelflaed", "rarity": "legendary",
       "shelfLife": "kvk1_only", "usefulStages": ["pre_kvk", "kvk1"],
       "suggested": { "sculptureType": "commander_specific", "availability": "free_route" },
       "facts": ["A06-0504", "A10-0004"], "split": false,
-      "note": "Main free legendary (Expedition store); rated A for KvK1. Value after KvK1 not researched."
+      "note": "Principal lendário gratuito (loja da Expedição); nota A para a KvK1. Valor depois da KvK1 não pesquisado."
     },
     {
       "id": "yi-seong-gye", "name": "Yi Seong-Gye", "rarity": "legendary",
       "shelfLife": "long_term", "usefulStages": ["kvk1", "kvk2", "kvk3", "soc"],
       "suggested": { "shelfLife": "long_term", "purpose": "field_main", "availability": "gold_only" },
       "facts": ["A06-0502"], "split": true,
-      "note": "Consensus long-term F2P target; some 2026 players say pure F2P should skip him for KvK1. Wheel around kingdom day 94 (per one source)."
+      "note": "Alvo F2P de longo prazo por consenso; alguns jogadores de 2026 dizem que o F2P puro deve pular o YSG na KvK1. Roda por volta do dia 94 do reino (segundo uma fonte)."
     },
     {
       "id": "richard-i", "name": "Richard I", "rarity": "legendary",
       "shelfLife": "kvk1_only", "usefulStages": ["kvk1"],
       "suggested": { "shelfLife": "kvk1_only" },
-      "facts": ["A06-0503"], "split": true, "note": "Mid-tier legendary: divided."
+      "facts": ["A06-0503"], "split": true, "note": "Lendário de nível médio: dividido."
     },
     {
       "id": "charles-martel", "name": "Charles Martel", "rarity": "legendary",
       "shelfLife": "kvk1_only", "usefulStages": ["kvk1"],
       "suggested": { "shelfLife": "kvk1_only" },
-      "facts": ["A06-0503"], "split": true, "note": "Mid-tier legendary: divided."
+      "facts": ["A06-0503"], "split": true, "note": "Lendário de nível médio: dividido."
     },
     {
       "id": "cao-cao", "name": "Cao Cao", "rarity": "legendary",
       "shelfLife": "kvk1_only", "usefulStages": ["kvk1"],
       "suggested": { "shelfLife": "kvk1_only" },
-      "facts": ["A06-0503"], "split": true, "note": "Mid-tier legendary: divided."
+      "facts": ["A06-0503"], "split": true, "note": "Lendário de nível médio: dividido."
     },
     {
       "id": "minamoto", "name": "Minamoto no Yoshitsune", "rarity": "legendary",
       "shelfLife": "kvk1_only", "usefulStages": ["pre_kvk", "kvk1"],
       "suggested": { "shelfLife": "kvk1_only" },
-      "facts": ["A06-0507"], "split": true, "note": "Cheapest legendary to max; good only before SoC (baixa). Acquisition route not captured (L-A06-02)."
+      "facts": ["A06-0507"], "split": true, "note": "Lendário mais barato de maximizar; bom só antes da SoC (baixa). Via de obtenção não registrada (L-A06-02)."
     },
     {
       "id": "pelagius", "name": "Pelagius", "rarity": "legendary",
       "shelfLife": "unknown", "usefulStages": ["pre_kvk"],
       "suggested": { "shelfLife": "unknown" },
       "facts": ["A06-0508", "C04-0005"], "split": true,
-      "note": "'Early-server monster' vs KvK1 B-tier. Legendary Pelagius upgrade event from kingdom day 5 (1.1.09)."
+      "note": "\"Monstro de servidor novo\" contra tier B na KvK1. Evento de melhoria do Pelagius Lendário a partir do dia 5 do reino (1.1.09)."
     },
     {
       "id": "boudica", "name": "Boudica", "rarity": null,
       "shelfLife": "kvk1_only", "usefulStages": ["pre_kvk"],
       "suggested": { "purpose": "pve_barbarians" },
-      "facts": ["A06-0505"], "split": false, "note": "Level only one of Boudica or Lohar for PvE; no gold sculptures."
+      "facts": ["A06-0505"], "split": false, "note": "Evolua apenas um entre Boudica ou Lohar para PvE; sem esculturas douradas."
     },
     {
       "id": "lohar", "name": "Lohar", "rarity": null,
       "shelfLife": "kvk1_only", "usefulStages": ["pre_kvk"],
       "suggested": { "purpose": "pve_barbarians" },
-      "facts": ["A06-0505"], "split": false, "note": "Do not invest universal sculptures in Lohar."
+      "facts": ["A06-0505"], "split": false, "note": "Não invista esculturas universais no Lohar."
     },
     {
       "id": "takeda", "name": "Takeda Shingen", "rarity": "legendary",
       "shelfLife": "unknown", "usefulStages": ["kvk2"],
       "suggested": { "swap": "not_eligible" },
-      "facts": ["C04-0021"], "split": false, "note": "Season 2 commander since 1.0.94; excluded from Legendary Commander Swap."
+      "facts": ["C04-0021"], "split": false, "note": "Comandante da Temporada 2 desde a 1.0.94; excluído da Troca de Comandante Lendário."
     },
     {
       "id": "cyrus", "name": "Cyrus the Great", "rarity": "legendary",
       "shelfLife": "no_priority", "usefulStages": ["kvk2"],
       "suggested": { "swap": "not_eligible", "shelfLife": "no_priority" },
-      "facts": ["C04-0021", "A06-0515"], "split": true, "note": "Season 2 commander, not swappable; flagged 'no priority' for F2P by one source."
+      "facts": ["C04-0021", "A06-0515"], "split": true, "note": "Comandante da Temporada 2, não pode ser trocado; marcado como \"sem prioridade\" para o F2P por uma fonte."
     },
     {
       "id": "cheok-jun-gyeong", "name": "Cheok Jun-gyeong", "rarity": "legendary",
       "shelfLife": "unknown", "usefulStages": ["kvk2"],
       "suggested": { "swap": "not_eligible" },
-      "facts": ["C04-0021"], "split": false, "note": "Season 2 commander since 1.0.94; excluded from swap."
+      "facts": ["C04-0021"], "split": false, "note": "Comandante da Temporada 2 desde a 1.0.94; excluído da troca."
     },
     {
       "id": "bertrand", "name": "Bertrand du Guesclin", "rarity": "legendary",
       "shelfLife": "unknown", "usefulStages": ["kvk2"],
       "suggested": { "swap": "not_eligible" },
-      "facts": ["C04-0021"], "split": false, "note": "Season 2 commander since 1.0.94; excluded from swap."
+      "facts": ["C04-0021"], "split": false, "note": "Comandante da Temporada 2 desde a 1.0.94; excluído da troca."
     },
     {
       "id": "henry", "name": "Henry", "rarity": "legendary",
       "shelfLife": "no_priority", "usefulStages": [],
       "suggested": { "shelfLife": "no_priority" },
-      "facts": ["A06-0515"], "split": true, "note": "'No priority' for F2P (single 2026 tier list)."
+      "facts": ["A06-0515"], "split": true, "note": "\"Sem prioridade\" para o F2P (uma única tier list de 2026)."
     },
     {
       "id": "pakal-ii", "name": "Pakal II", "rarity": "legendary",
       "shelfLife": "no_priority", "usefulStages": [],
       "suggested": { "shelfLife": "no_priority" },
-      "facts": ["A06-0515"], "split": true, "note": "'No priority' for F2P (single 2026 tier list)."
+      "facts": ["A06-0515"], "split": true, "note": "\"Sem prioridade\" para o F2P (uma única tier list de 2026)."
     },
     {
       "id": "tomyris", "name": "Tomyris", "rarity": "legendary",
       "shelfLife": "no_priority", "usefulStages": [],
       "suggested": { "shelfLife": "no_priority" },
-      "facts": ["A06-0515"], "split": true, "note": "'No priority' for F2P (single 2026 tier list)."
+      "facts": ["A06-0515"], "split": true, "note": "\"Sem prioridade\" para o F2P (uma única tier list de 2026)."
     },
     {
       "id": "harald", "name": "Harald Sigurdsson", "rarity": "legendary",
       "shelfLife": "no_priority", "usefulStages": [],
       "suggested": { "shelfLife": "no_priority" },
-      "facts": ["A06-0515"], "split": true, "note": "'No priority' for F2P (single 2026 tier list)."
+      "facts": ["A06-0515"], "split": true, "note": "\"Sem prioridade\" para o F2P (uma única tier list de 2026)."
     },
     {
       "id": "gilgamesh", "name": "Gilgamesh", "rarity": "legendary",
       "shelfLife": "no_priority", "usefulStages": [],
       "suggested": { "shelfLife": "no_priority" },
-      "facts": ["A06-0515"], "split": true, "note": "'No priority' for F2P (single 2026 tier list)."
+      "facts": ["A06-0515"], "split": true, "note": "\"Sem prioridade\" para o F2P (uma única tier list de 2026)."
     }
   ]
 }

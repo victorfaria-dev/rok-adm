@@ -23,10 +23,10 @@ describe("rotation policy", () => {
     const d = doc({ slotsPerEvent: 2, cooldownEvents: 0, candidates: FIVE, events: [ev("e1", "2026-10-01"), ev("e2", "2026-10-15"), ev("e3", "2026-10-29")] });
     const p = planMge(d);
     expect(names(p, 0)).toEqual(["Alpha", "Bravo"]);
-    expect(p.events[0]!.assignments[0]!.reason).toBe("rotation: longest wait since last slot (never had one)");
+    expect(p.events[0]!.assignments[0]!.reason).toBe("rodízio: maior espera desde a última vaga (nunca teve uma)");
     expect(names(p, 1)).toEqual(["Charlie", "Delta"]);
     expect(names(p, 2)).toEqual(["Echo", "Alpha"]);
-    expect(p.events[2]!.assignments[1]!.reason).toBe("rotation: longest wait since last slot (2 events ago, on 2026-10-01)");
+    expect(p.events[2]!.assignments[1]!.reason).toBe("rodízio: maior espera desde a última vaga (há 2 eventos, em 2026-10-01)");
   });
 
   it("cooldown keeps recent winners out even when slots stay empty", () => {
@@ -62,10 +62,10 @@ describe("score policy", () => {
     const d = doc({ policy: "score", slotsPerEvent: 3, candidates: [...FIVE, cand("z", "Zulu")], events: [ev("e1", "2026-10-01")] });
     const p = planMge(d);
     expect(names(p, 0)).toEqual(["Alpha", "Bravo", "Charlie"]);
-    expect(p.events[0]!.assignments[2]!.reason).toBe("score rank 3 (300)");
-    expect(p.events[0]!.assignments[2]!.publicReason).toBe("score rank 3");
+    expect(p.events[0]!.assignments[2]!.reason).toBe("posição 3 por pontuação (300)");
+    expect(p.events[0]!.assignments[2]!.publicReason).toBe("posição 3 por pontuação");
     expect(p.warnings.filter((w) => w.code === "no_score").map((w) => w.candidateId)).toEqual(["z"]);
-    expect(planMge({ ...d, candidates: [cand("x", "X", 4_200_000)] }).events[0]!.assignments[0]!.reason).toBe("score rank 1 (4,200,000)");
+    expect(planMge({ ...d, candidates: [cand("x", "X", 4_200_000)] }).events[0]!.assignments[0]!.reason).toBe("posição 1 por pontuação (4.200.000)");
   });
 
   it("says exactly who the rank is counted among (applicants, governors not placed by hand)", () => {
@@ -73,11 +73,11 @@ describe("score policy", () => {
     const reasons = (d: MgeDoc) => planMge(d).events[0]!.assignments.map((a) => [a.name, a.reason, a.publicReason]);
     const d = doc({ policy: "score", slotsPerEvent: 2, candidates: FIVE, events: [ev("e1", "2026-10-01", { overrides: over })] });
     // Alpha (top score) is placed by hand, so Bravo is first among the rest, not first overall.
-    expect(reasons(d)).toEqual([["Alpha", "manual: Rally lead", "manual: Rally lead"], ["Bravo", "score rank 1 among governors not placed by hand (400)", "score rank 1 among governors not placed by hand"]]);
+    expect(reasons(d)).toEqual([["Alpha", "manual: Rally lead", "manual: Rally lead"], ["Bravo", "posição 1 por pontuação entre os governadores não colocados à mão (400)", "posição 1 por pontuação entre os governadores não colocados à mão"]]);
     const apps = { ...d, applicationsRequired: true, events: [ev("e1", "2026-10-01", { applicants: ["c", "e"] })] };
-    expect(reasons(apps)[0]).toEqual(["Charlie", "score rank 1 among applicants (300)", "score rank 1 among applicants"]);
+    expect(reasons(apps)[0]).toEqual(["Charlie", "posição 1 por pontuação entre os candidatos (300)", "posição 1 por pontuação entre os candidatos"]);
     const both = { ...apps, events: [ev("e1", "2026-10-01", { applicants: ["c", "e"], overrides: over })] };
-    expect(reasons(both)[1]).toEqual(["Charlie", "score rank 1 among applicants not placed by hand (300)", "score rank 1 among applicants not placed by hand"]);
+    expect(reasons(both)[1]).toEqual(["Charlie", "posição 1 por pontuação entre os candidatos não colocados à mão (300)", "posição 1 por pontuação entre os candidatos não colocados à mão"]);
     expect(scoreRankScope(false, false)).toBe("");
   });
 
@@ -205,7 +205,7 @@ describe("empty and limits", () => {
     const d = parseMgeDoc({
       id: "p", slotsPerEvent: 20, policy: "score", cooldownEvents: 10, applicationsRequired: true,
       candidates: [{ id: "a", name: "A".repeat(60), score: 12.6, tags: ["Rally Lead", "rally lead", "x".repeat(40), 5, "a", "b", "c", "d"] }],
-      events: [{ id: "e", date: "2026-10-01", commander: "C".repeat(60), applicants: ["a", "ghost", "a"], overrides: [{ slot: 1, candidateId: "a", reason: "" }, { slot: 2, candidateId: "a", reason: "ok" }, { slot: 3, candidateId: "ghost", reason: "x" }], locked: true, result: [{ slot: 1, candidateId: "a", name: "A", source: "score", reason: "score rank 1 (13)", publicReason: "score rank 1", score: 13 }, { slot: 1, candidateId: "a", name: "dup", source: "score" }] }],
+      events: [{ id: "e", date: "2026-10-01", commander: "C".repeat(60), applicants: ["a", "ghost", "a"], overrides: [{ slot: 1, candidateId: "a", reason: "" }, { slot: 2, candidateId: "a", reason: "ok" }, { slot: 3, candidateId: "ghost", reason: "x" }], locked: true, result: [{ slot: 1, candidateId: "a", name: "A", source: "score", reason: "posição 1 por pontuação (13)", publicReason: "posição 1 por pontuação", score: 13 }, { slot: 1, candidateId: "a", name: "dup", source: "score" }] }],
     });
     expect(d.slotsPerEvent).toBe(20);
     expect(d.cooldownEvents).toBe(10);
@@ -241,9 +241,9 @@ describe("pasted candidate list", () => {
     const r = parseCandidateLines("Alpha, 4,200,000\n\nBravo\n, 5\nCharlie, lots\n" + "L".repeat(41) + ", 1");
     expect(r.rows).toEqual([{ name: "Alpha", score: 4_200_000 }, { name: "Bravo", score: null }]);
     expect(r.errors.map((e) => e.line)).toEqual([4, 5, 6]);
-    expect(r.errors[1]!.message).toMatch(/not a score/);
+    expect(r.errors[1]!.message).toMatch(/não é uma pontuação/);
     const bad = parseCandidateLines("Delta, 1.5");
-    expect(bad.errors[0]!.message).toMatch(/not a number/);
+    expect(bad.errors[0]!.message).toMatch(/não é um número/);
   });
 });
 
@@ -269,14 +269,14 @@ describe("public ledger", () => {
 
   it("leaves scores out by default", () => {
     const pub = mgePublicPayload(base, false, "2026-10-13");
-    expect(pub.events[0]!.slots).toEqual([{ slot: 1, name: "Alpha", reason: "score rank 1" }, { slot: 2, name: "Bravo", reason: "score rank 2" }]);
+    expect(pub.events[0]!.slots).toEqual([{ slot: 1, name: "Alpha", reason: "posição 1 por pontuação" }, { slot: 2, name: "Bravo", reason: "posição 2 por pontuação" }]);
     expect(JSON.stringify(pub)).not.toContain("500");
     expect(pub.events[0]!.commander).toBe("Ramesses II");
   });
 
   it("includes scores only when asked", () => {
     const pub = mgePublicPayload(base, true, "2026-10-13");
-    expect(pub.events[0]!.slots[0]).toEqual({ slot: 1, name: "Alpha", reason: "score rank 1 (500)", score: 500 });
+    expect(pub.events[0]!.slots[0]).toEqual({ slot: 1, name: "Alpha", reason: "posição 1 por pontuação (500)", score: 500 });
   });
 
   it("round-trips through parseMgePublic and rejects junk", () => {
@@ -289,8 +289,8 @@ describe("public ledger", () => {
   });
 
   it("describes the rules in plain language", () => {
-    expect(describeMgeRules({ policy: "rotation", slotsPerEvent: 10, cooldownEvents: 2, applicationsRequired: true })).toMatch(/10 slots per event, set by the council\..*Cooldown: 2 events.*Only governors who applied/);
-    expect(describeMgeRules({ policy: "rotation", slotsPerEvent: 1, cooldownEvents: 0, applicationsRequired: false })).toMatch(/1 slot per event.*No cooldown/);
+    expect(describeMgeRules({ policy: "rotation", slotsPerEvent: 10, cooldownEvents: 2, applicationsRequired: true })).toMatch(/10 vagas por evento \(definição do conselho\)\..*Período de espera: 2 eventos.*Só governadores que se candidataram/);
+    expect(describeMgeRules({ policy: "rotation", slotsPerEvent: 1, cooldownEvents: 0, applicationsRequired: false })).toMatch(/1 vaga por evento.*Sem período de espera/);
   });
 });
 
@@ -328,7 +328,7 @@ describe("typed governor fields", () => {
       expect(r.ok, big).toBe(false);
       if (!r.ok) {
         expect(r.tooBig, big).toBe(true);
-        expect(r.message).toContain("9,007,199,254,740,991");
+        expect(r.message).toContain("9.007.199.254.740.991");
       }
     }
     for (const bad of ["lots", "-5", "1.5", "1,00"]) {
@@ -341,13 +341,13 @@ describe("typed governor fields", () => {
   it("pasted lists refuse scores above the safe limit too", () => {
     const r = parseCandidateLines("Big, 9,007,199,254,740,992\nOk, 5");
     expect(r.rows).toEqual([{ name: "Ok", score: 5 }]);
-    expect(r.errors[0]!.message).toMatch(/too large/);
+    expect(r.errors[0]!.message).toMatch(/grande demais/);
   });
 
   it("parseMgeTagsText lower-cases, drops duplicates and refuses too many or too long", () => {
     expect(parseMgeTagsText(" Rally Lead, rally lead ,, garrison lead")).toEqual({ tags: ["rally lead", "garrison lead"] });
-    expect(parseMgeTagsText("a,b,c,d,e,f").error).toMatch(/at most 5 tags/);
-    expect(parseMgeTagsText("x".repeat(25)).error).toMatch(/at most 24 characters/);
+    expect(parseMgeTagsText("a,b,c,d,e,f").error).toMatch(/no máximo 5 tags/);
+    expect(parseMgeTagsText("x".repeat(25)).error).toMatch(/no máximo 24 caracteres/);
     expect(parseMgeTagsText("")).toEqual({ tags: [] });
   });
 
@@ -356,7 +356,7 @@ describe("typed governor fields", () => {
     expect(r.ok).toBe(false);
     if (!r.ok) expect(Object.keys(r.errors).sort()).toEqual(["name", "score", "tags"]);
     const long = readCandidateInput({ name: "N".repeat(41), score: "", tags: "" });
-    expect(!long.ok && long.errors.name).toMatch(/at most 40/);
+    expect(!long.ok && long.errors.name).toMatch(/no máximo 40/);
   });
 });
 
@@ -403,7 +403,7 @@ describe("updateCandidate (inline edit)", () => {
     expect(r.ok && r.candidate.score).toBeNull();
     const bad = updateCandidate(base(), "a", { name: "Alpha", score: "9007199254740992", tags: "" });
     expect(bad.ok).toBe(false);
-    if (!bad.ok) expect(bad.errors.score).toMatch(/too large/);
+    if (!bad.ok) expect(bad.errors.score).toMatch(/grande demais/);
     const gone = updateCandidate(base(), "zzz", { name: "X", score: "", tags: "" });
     expect(gone.ok).toBe(false);
   });
@@ -461,10 +461,10 @@ describe("CSV export", () => {
     expect(rows[0]).toEqual([...MGE_LEDGER_CSV_HEADER]);
     expect(rows.slice(1)).toEqual([
       ["2026-10-01", "'+Ramesses", "1", "Bravo, Jr", "manual: Garrison, Kingsland", "no"],
-      ["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "score rank 1 among governors not placed by hand", "no"],
+      ["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "posição 1 por pontuação entre os governadores não colocados à mão", "no"],
       ["2026-10-01", "'+Ramesses", "3", "", "not filled", "no"],
-      ["2026-10-15", '"Cao" Cao', "1", "'=HYPERLINK(\"x\")", "score rank 1", "no"],
-      ["2026-10-15", '"Cao" Cao', "2", "Bravo, Jr", "score rank 2", "no"],
+      ["2026-10-15", '"Cao" Cao', "1", "'=HYPERLINK(\"x\")", "posição 1 por pontuação", "no"],
+      ["2026-10-15", '"Cao" Cao', "2", "Bravo, Jr", "posição 2 por pontuação", "no"],
       ["2026-10-15", '"Cao" Cao', "3", "", "not filled", "no"],
     ]);
     expect(csv).not.toContain("500");
@@ -476,7 +476,7 @@ describe("CSV export", () => {
     const rows = readCsv(mgeLedgerCsv(planMge(locked), true));
     expect(rows[0]).toEqual([...MGE_LEDGER_CSV_HEADER, "score"]);
     expect(rows[1]).toEqual(["2026-10-01", "'+Ramesses", "1", "Bravo, Jr", "manual: Garrison, Kingsland", "yes", ""]);
-    expect(rows[2]).toEqual(["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "score rank 1 among governors not placed by hand (500)", "yes", "500"]);
+    expect(rows[2]).toEqual(["2026-10-01", "'+Ramesses", "2", "'=HYPERLINK(\"x\")", "posição 1 por pontuação entre os governadores não colocados à mão (500)", "yes", "500"]);
     expect(rows[4]![5]).toBe("no");
     expect(rows[4]![6]).toBe("500");
   });

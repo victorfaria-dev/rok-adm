@@ -17,14 +17,14 @@
 
 Tudo abaixo fica no armazenamento do seu navegador, neste dispositivo. Só você pode ver, a menos que você mesmo exporte um arquivo ou compartilhe um link. A página **Eu** (`/me/`) tem **Fazer backup de tudo** (um arquivo com todas as linhas marcadas "sim" abaixo) e **Apagar todos os dados** (remove todas as linhas abaixo, inclusive o webhook do Discord, e também pode remover a cópia offline).
 
-#### Perfil e respostas, contas, marcações da rotina, conferências de comandantes, "jogando como" e tema
+#### Perfil e respostas, contas, marcações da rotina, checagens de comandantes, modo de uso (jogador/líder) e tema
 
 - **O que há nele:** suas respostas do questionário (gasto, função, minutos por dia, etapa do reino, nível da Prefeitura, civilização), qualquer questionário inacabado, suas contas (principal, farms, alternativas), cada uma com as marcações da rotina de hoje e as respostas da lista de comandantes, configurações da rotina, se você usa o site como jogador ou como líder, o seu tema
 - **Em "Fazer backup de tudo":** Sim
 - **Outras formas de exportar:** página Eu: **Exportar arquivo de perfil**
 - **Como apagar:** **Apagar todos os dados** na página Eu (as marcações da rotina também são zeradas a cada dia; uma conta salva pode ser removida sozinha)
 
-#### Cartão de governador
+#### Cartão do governador
 
 - **O que há nele:** o nome, a tag e as cores que você digitou para o seu cartão
 - **Em "Fazer backup de tudo":** Sim
@@ -38,7 +38,7 @@ Tudo abaixo fica no armazenamento do seu navegador, neste dispositivo. Só você
 - **Outras formas de exportar:** página do Brasão: salvar como SVG ou PNG
 - **Como apagar:** sem botão separado; **Apagar todos os dados** na página Eu remove junto com todo o resto
 
-#### Entradas das ferramentas (calculadoras, inventário compartilhado, listas)
+#### Dados das ferramentas (calculadoras, inventário compartilhado, checklists)
 
 - **O que há nele:** os números que você digitou nas calculadoras, o inventário que elas compartilham e as marcações das listas
 - **Em "Fazer backup de tudo":** Sim
@@ -52,14 +52,14 @@ Tudo abaixo fica no armazenamento do seu navegador, neste dispositivo. Só você
 - **Outras formas de exportar:** página de Farms: **Exportar farms (JSON)**; registro de envios: **Exportar CSV**
 - **Como apagar:** página de Farms: apagar uma farm, ou **Apagar todos os dados de farms**; registro de envios: apagar um envio
 
-#### Documentos do conselho do reino (regras, requisitos, registro de MGE, post de recrutamento, planos de seed)
+#### Documentos do conselho do reino (regras, requisitos, registro do MGE, anúncio de recrutamento, planos de seed)
 
 - **O que há nele:** o que o conselho digita: regras, faixas de requisitos, o registro de MGE, posts de recrutamento, planos de seed. **Isso pode incluir nomes de governadores e pontuações de outros jogadores que o conselho digita.**
 - **Em "Fazer backup de tudo":** Sim
 - **Outras formas de exportar:** página do kit do conselho (`/kingdom/`): **Exportar (.json)**; cada ferramenta: link de compartilhamento ou CSV
 - **Como apagar:** em cada ferramenta: apagar um documento; página do kit do conselho: **Apagar todos os dados do conselho** (também esquece o webhook)
 
-#### Banners do cartão da cidade
+#### Banners dos cartões das cidades
 
 - **O que há nele:** imagens que você escolheu como banner do cartão da cidade de uma conta, recortadas e reduzidas no seu dispositivo (os banners padrão não são guardados)
 - **Em "Fazer backup de tudo":** **Não** (imagens são grandes; escolha-as de novo depois de restaurar)

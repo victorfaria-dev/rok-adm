@@ -38,11 +38,13 @@ export interface QuantityOptions {
 
 /**
  * The one number parser for what players type (Q2 P2-3: farms log, tools, council inputs):
- * "1500000", "1,500,000", "1 500 000", "1.5m", "300k", "2.4B", ".5m". Commas must be en-US thousands
+ * "1500000", "1,500,000", "1.500.000", "1 500 000", "1.5m", "300k", "2.4B", ".5m". Commas must be en-US thousands
  * groups. No negatives, no scientific notation ("1e6"), no NaN. Spaces and "_" are ignored.
  */
 export function readQuantity(text: string, opts: QuantityOptions = {}): QuantityResult {
-  const s = text.trim().toLowerCase().replace(/[\s_]/g, "");
+  let s = text.trim().toLowerCase().replace(/[\s_]/g, "");
+  // pt-BR habit: "1.500.000" (dot thousands, whole numbers only).
+  if (!opts.decimals && /^\d{1,3}(?:\.\d{3})+$/.test(s)) s = s.replace(/\./g, "");
   if (!s) return { ok: false, error: "empty" };
   if (/^-/.test(s)) return { ok: false, error: "negative" };
   const m = /^(\d{1,3}(?:,\d{3})+|\d*)(?:\.(\d+))?([kmb])?$/.exec(s);
@@ -64,11 +66,11 @@ export function readQuantity(text: string, opts: QuantityOptions = {}): Quantity
 
 /** Plain-language fix for each QuantityError (UI copy). */
 export const QUANTITY_ERROR_TEXT: Readonly<Record<QuantityError, string>> = {
-  empty: "Enter a number.",
-  negative: "Enter 0 or more.",
-  format: "Enter a number like 1,500,000, 1.5m or 300k.",
-  fraction: "Use a whole number.",
-  too_large: "That number is too large.",
+  empty: "Digite um número.",
+  negative: "Digite 0 ou mais.",
+  format: "Digite um número como 1.500.000, 1.5m ou 300k.",
+  fraction: "Use um número inteiro.",
+  too_large: "Esse número é grande demais.",
 };
 
 /**
@@ -80,10 +82,10 @@ export function parseQuantity(text: string): number | null {
   return r.ok ? r.value : null;
 }
 
-/** "12,345,678" (en-US grouping, rounded to an integer). */
+/** "12.345.678" (agrupamento pt-BR, arredondado para inteiro). */
 export function formatInt(n: number): string {
   if (!Number.isFinite(n)) return "—";
-  return Math.round(n).toLocaleString("en-US");
+  return Math.round(n).toLocaleString("pt-BR");
 }
 
 /** "10.5M", "300K", "2.35B" — short form for cards and posts. */

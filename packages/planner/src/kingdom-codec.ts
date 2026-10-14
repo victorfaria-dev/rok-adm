@@ -18,13 +18,13 @@ export type DecodeResult<T> = { ok: true; data: T } | { ok: false; error: ShareE
 
 /** Plain-language text for each decode error (UI copy). */
 export const SHARE_ERROR_TEXT: Readonly<Record<ShareError, string>> = {
-  empty: "This link has no document in it. Ask your council for the full link.",
-  too_long: "This link is too long to read. Ask your council to shorten the document.",
-  bad_version: "This link was made by a newer or older version of KingdomOps that this page cannot read.",
-  bad_encoding: "This link is damaged (some characters are missing or changed). Copy the whole link again.",
-  bad_json: "This link is damaged (the document inside cannot be read). Copy the whole link again.",
-  wrong_kind: "This link is for a different KingdomOps tool.",
-  too_big: "The document in this link is too large to open.",
+  empty: "Este link não tem nenhum documento. Peça o link completo ao seu conselho.",
+  too_long: "Este link é longo demais para ser lido. Peça ao seu conselho para encurtar o documento.",
+  bad_version: "Este link foi feito por uma versão do KingdomOps mais nova ou mais antiga que esta página não consegue ler.",
+  bad_encoding: "Este link está danificado (faltam ou mudaram alguns caracteres). Copie o link inteiro de novo.",
+  bad_json: "Este link está danificado (o documento dentro dele não pode ser lido). Copie o link inteiro de novo.",
+  wrong_kind: "Este link é de outra ferramenta do KingdomOps.",
+  too_big: "O documento deste link é grande demais para abrir.",
 };
 
 // ---------------------------------------------------------------------------
@@ -107,7 +107,7 @@ export function shareChecksum(text: string): string {
 /** Thrown by encodeShare when the result would be refused by decodeShare (link or document too large). */
 export class ShareTooLargeError extends Error {
   constructor(readonly chars: number) {
-    super(`This document is too large for a link (${chars.toLocaleString("en-US")} characters; the limit is ${MAX_SHARE_CHARS.toLocaleString("en-US")}). Shorten it, or export it as a file instead.`);
+    super(`Este documento é grande demais para um link (${chars.toLocaleString("pt-BR")} caracteres; o limite é ${MAX_SHARE_CHARS.toLocaleString("pt-BR")}). Encurte-o ou exporte como arquivo.`);
     this.name = "ShareTooLargeError";
   }
 }

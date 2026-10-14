@@ -80,14 +80,14 @@ function src(value: number, unit: string, facts: string[], index: FactIndex, ext
 function ratio(num: Sourced<number> | null, price: Sourced<number>, unit: string, index: FactIndex): Sourced<number> | null {
   if (!num || price.value <= 0) return null;
   const facts = [...new Set([...num.facts, ...price.facts, VALUE_METHOD_FACT])];
-  return { value: round(num.value / price.value), unit, facts, confidence: confidenceOf(facts, index), derived: true, pendingGaps: [], note: "Raw ratio (A12-0618); items not priced." };
+  return { value: round(num.value / price.value), unit, facts, confidence: confidenceOf(facts, index), derived: true, pendingGaps: [], note: "Razão bruta (A12-0618); itens não precificados." };
 }
 
 export function lowPurchases(index: FactIndex = indexFacts(), data: LowData = LOW_SPENDER_DATA): LowPurchase[] {
   return data.purchases.map((p) => {
     const price = src(p.priceUsd, "USD", p.priceFacts, index, { derived: p.derived ?? false, pendingGaps: [...p.pendingGaps], note: data.priceWarning });
     const gems = p.gems === null ? null : src(p.gems, "gems", p.gemFacts, index);
-    const vipPoints = p.vipPoints === null ? null : src(p.vipPoints, "VIP points", p.gemFacts, index);
+    const vipPoints = p.vipPoints === null ? null : src(p.vipPoints, "pontos VIP", p.gemFacts, index);
     return {
       id: p.id,
       label: p.label,
@@ -98,8 +98,8 @@ export function lowPurchases(index: FactIndex = indexFacts(), data: LowData = LO
       price,
       gems,
       vipPoints,
-      gemsPerUsd: ratio(gems, price, "gems per USD", index),
-      vipPerUsd: ratio(vipPoints, price, "VIP points per USD", index),
+      gemsPerUsd: ratio(gems, price, "gemas por USD", index),
+      vipPerUsd: ratio(vipPoints, price, "pontos VIP por USD", index),
       confidence: confidenceOf(p.facts, index),
       facts: [...p.facts],
     };
@@ -158,7 +158,7 @@ export function lowTier(id: LowTierId, index: FactIndex = indexFacts(), data: Lo
   const monthly = lines.filter((l) => l.timesPerMonth > 0);
   const once = lines.filter((l) => l.purchase.kind === "one-time");
   const times = (l: LowTierLine, s: Sourced<number> | null) => (s ? [{ value: s.value * l.timesPerMonth, facts: s.facts }] : []);
-  const monthlyUsd = sumSourced(monthly.flatMap((l) => times(l, l.purchase.price)), "USD per 30 days", index, t.facts, gaps);
+  const monthlyUsd = sumSourced(monthly.flatMap((l) => times(l, l.purchase.price)), "USD por 30 dias", index, t.facts, gaps);
   const lo = data.profileRangeUsdPerMonth;
   return {
     id: t.id,
@@ -166,10 +166,10 @@ export function lowTier(id: LowTierId, index: FactIndex = indexFacts(), data: Lo
     note: t.note,
     lines,
     monthlyUsd,
-    monthlyGems: sumSourced(monthly.flatMap((l) => times(l, l.purchase.gems)), "gems per 30 days (floor)", index, [], gaps),
-    monthlyVipPoints: sumSourced(monthly.flatMap((l) => times(l, l.purchase.vipPoints)), "VIP points per 30 days (from packs)", index, [], gaps),
-    oneTimeUsd: sumSourced(once.map((l) => ({ value: l.purchase.price.value, facts: l.purchase.price.facts })), "USD once", index, [], gaps),
-    oneTimeGems: sumSourced(once.flatMap((l) => (l.purchase.gems ? [{ value: l.purchase.gems.value, facts: l.purchase.gems.facts }] : [])), "gems once", index, [], gaps),
+    monthlyGems: sumSourced(monthly.flatMap((l) => times(l, l.purchase.gems)), "gemas por 30 dias (piso)", index, [], gaps),
+    monthlyVipPoints: sumSourced(monthly.flatMap((l) => times(l, l.purchase.vipPoints)), "pontos VIP por 30 dias (dos pacotes)", index, [], gaps),
+    oneTimeUsd: sumSourced(once.map((l) => ({ value: l.purchase.price.value, facts: l.purchase.price.facts })), "USD uma vez", index, [], gaps),
+    oneTimeGems: sumSourced(once.flatMap((l) => (l.purchase.gems ? [{ value: l.purchase.gems.value, facts: l.purchase.gems.facts }] : [])), "gemas uma vez", index, [], gaps),
     withinLowRange: monthlyUsd.value >= lo.min && monthlyUsd.value <= lo.max,
     pendingGaps: monthlyUsd.pendingGaps,
   };
@@ -209,13 +209,13 @@ export function lowVipTimeline(index: FactIndex = indexFacts(), horizonDays = 36
   const facts = ["A05-0001", "A05-0003", "A05-0007", "A04-0001", "A05-0004", "A05-0008", "A12-0601"];
   return {
     id: "chest_plus_daily_gems_plus_supply",
-    label: "Daily VIP chest + 100 guaranteed gems/day + 650 Gem Supply gems/day, all converted to VIP",
+    label: "Baú VIP diário + 100 gemas garantidas/dia + 650 gemas/dia do Suprimento de Gemas, tudo convertido em VIP",
     income,
     milestones: VIP_LEVELS.map((l) => ({ vip: l.vip, threshold: l.threshold, day: dayToReach(l.threshold, income, horizonDays) })),
     facts,
     confidence: confidenceOf(facts, index),
     pendingGaps: ["L-A05-01", "L-A04-01", "L-A05-03", "L-A12-05"],
-    note: "Upper bound on days: VIP points from packs (Lucerne, bundles), the supply's upfront gems and event gems are not counted. Assumes the supply is renewed every 30 days and claimed every day.",
+    note: "Limite superior de dias: pontos VIP de pacotes (Lucerna, pacotes promocionais), as gemas iniciais do suprimento e as gemas de eventos não são contados. Supõe que o suprimento é renovado a cada 30 dias e coletado todo dia.",
   };
 }
 
@@ -242,10 +242,10 @@ export function lowSpenderTargets(profile: AccountProfile, facts: readonly FactM
   const index = indexFacts(facts);
   const d = LOW_SPENDER_DATA;
   const tiers = d.tiers.map((t) => lowTier(t.id, index, d));
-  const ch25 = src(40000, "gems at the City Hall 25 milestone", ["A12-0605"], index, { pendingGaps: ["L-A12-02"] });
+  const ch25 = src(40000, "gemas no marco da Prefeitura 25", ["A12-0605"], index, { pendingGaps: ["L-A12-02"] });
   return {
     asOf: d.asOf,
-    message: "Low spender targets from fact cards: what common low-cost purchases give, in raw gems and VIP points per dollar. Prices are list prices; check your store.",
+    message: "Metas para quem gasta pouco (Low), a partir das fichas de fatos: o que as compras baratas comuns rendem, em gemas e pontos VIP brutos por dólar. Os preços são de tabela; confira a sua loja.",
     priceWarning: d.priceWarning,
     rangeUsdPerMonth: { ...d.profileRangeUsdPerMonth },
     purchases: lowPurchases(index, d),
@@ -253,7 +253,7 @@ export function lowSpenderTargets(profile: AccountProfile, facts: readonly FactM
     growthFund: {
       ch25Gems: ch25,
       reachedCH25: profile.cityHall >= 25,
-      note: "About half of the ~81,000 gems is paid only at City Hall 25 (player reports).",
+      note: "Cerca de metade das ~81.000 gemas só é paga na Prefeitura 25 (relatos de jogadores).",
     },
     vipTimeline: lowVipTimeline(index),
     recharge: { text: d.recharge.text, facts: [...d.recharge.facts], confidence: confidenceOf(d.recharge.facts, index), pendingGaps: [...d.recharge.pendingGaps] },

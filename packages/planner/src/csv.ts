@@ -57,7 +57,7 @@ export function detectDelimiter(text: string): "," | ";" | "\t" {
  * breaks, CRLF/LF/CR line ends and a missing final newline. Blank lines are skipped. Never throws.
  */
 export function parseCsv(input: string, delimiter?: "," | ";" | "\t"): CsvParse {
-  if (input.length > CSV_MAX_CHARS) return { ok: false, error: "This file is too large (over 1 MB of text)." };
+  if (input.length > CSV_MAX_CHARS) return { ok: false, error: "Este arquivo é grande demais (mais de 1 MB de texto)." };
   const text = input.replace(/^﻿/, "");
   const d = delimiter ?? detectDelimiter(text);
   const rows: string[][] = [];
@@ -89,11 +89,11 @@ export function parseCsv(input: string, delimiter?: "," | ";" | "\t"): CsvParse 
     else if (ch === d) endField();
     else if (ch === "\r" || ch === "\n") {
       if (ch === "\r" && text[i + 1] === "\n") i++;
-      if (!endRow()) return { ok: false, error: `This file has more than ${CSV_MAX_ROWS.toLocaleString("en-US")} rows.` };
+      if (!endRow()) return { ok: false, error: `Este arquivo tem mais de ${CSV_MAX_ROWS.toLocaleString("pt-BR")} linhas.` };
     } else field += ch;
   }
-  if (quoted) return { ok: false, error: "A quoted cell is never closed: the file looks cut off." };
-  if ((field !== "" || row.length > 0) && !endRow()) return { ok: false, error: `This file has more than ${CSV_MAX_ROWS.toLocaleString("en-US")} rows.` };
+  if (quoted) return { ok: false, error: "Uma célula entre aspas nunca é fechada: o arquivo parece cortado." };
+  if ((field !== "" || row.length > 0) && !endRow()) return { ok: false, error: `Este arquivo tem mais de ${CSV_MAX_ROWS.toLocaleString("pt-BR")} linhas.` };
   return { ok: true, rows };
 }
 
@@ -121,7 +121,7 @@ export function readCsvTable<C extends Readonly<Record<string, readonly string[]
   type Key = keyof C & string;
   const p = parseCsv(text);
   if (!p.ok) return p;
-  if (p.rows.length === 0) return { ok: false, error: "This file is empty." };
+  if (p.rows.length === 0) return { ok: false, error: "Este arquivo está vazio." };
   const header = p.rows[0]!.map(normHeader);
   const index = {} as Record<Key, number>;
   const found: Key[] = [];
@@ -132,8 +132,8 @@ export function readCsvTable<C extends Readonly<Record<string, readonly string[]
   }
   const missing = required.filter((k) => index[k] < 0);
   if (missing.length) {
-    const want = missing.map((k) => `"${columns[k]?.[0] ?? k}"`).join(" and ");
-    return { ok: false, error: `The first row must name the columns. Missing: ${want}.` };
+    const want = missing.map((k) => `"${columns[k]?.[0] ?? k}"`).join(" e ");
+    return { ok: false, error: `A primeira linha deve nomear as colunas. Faltando: ${want}.` };
   }
   const records = p.rows.slice(1).map((r, i) => {
     const values = {} as Record<Key, string>;

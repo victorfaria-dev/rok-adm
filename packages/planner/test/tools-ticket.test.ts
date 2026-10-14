@@ -33,7 +33,7 @@ describe("buildTicket", () => {
   });
   it("marks missing required fields and leaves out empty optional ones", () => {
     const t = buildTicket("report", { governorId: " " });
-    expect(t.missing).toEqual(["Your governor ID", "Kingdom number", "Their governor ID or name", "When you saw it", "What you saw"]);
+    expect(t.missing).toEqual(["Seu ID de governador", "Número do reino", "ID ou nome do governador dele", "Quando você viu", "O que você viu"]);
     expect(t.body).toContain("Your governor ID: [missing]");
     expect(t.body).not.toContain("Screenshots attached");
   });

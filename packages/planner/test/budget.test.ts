@@ -127,7 +127,7 @@ describe("realityCheck", () => {
       const r = realityCheck(profile({ spending: p }));
       expect(r.researched).toBe(false);
       expect(r.status).toBe("not_researched_yet");
-      expect(r.message).toMatch(/not researched yet/);
+      expect(r.message).toMatch(/ainda não foram pesquisadas/);
       expect(r.guaranteedGemsPerDay).toBeNull();
       expect(r.kvk1).toBeNull();
       expect(r.vipTimeline).toEqual([]);

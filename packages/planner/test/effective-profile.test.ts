@@ -21,13 +21,13 @@ describe("effectiveProfile", () => {
   it("uses the declared profile when lifetime is unknown", () => {
     const e = effectiveProfile(profile({ spending: "low", lifetimeSpendUsd: null }));
     expect(e).toMatchObject({ effective: "low", source: "declared", lifetimeTier: null });
-    expect(e.explanation).toMatch(/Add your total spend/);
+    expect(e.explanation).toMatch(/Informe o gasto total/);
   });
 
   it("raises a former spender who is F2P now", () => {
     const e = effectiveProfile(profile({ spending: "f2p", lifetimeSpendUsd: 10_000 }));
     expect(e).toMatchObject({ effective: "high", declared: "f2p", source: "lifetime" });
-    expect(e.explanation).toContain("$10,000");
+    expect(e.explanation).toContain("$10.000");
   });
 
   it("never lowers the declared profile", () => {

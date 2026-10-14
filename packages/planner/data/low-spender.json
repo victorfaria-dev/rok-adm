@@ -1,18 +1,18 @@
 {
   "_about": "Low spender (F-14 Budget Reality Check, profile `low`, $5–100/month per research/perfis.md). Every number has an `evidence` substring that scripts/build-data.ts checks word for word in its card. Prices are USD list prices quoted by guides, sellers or players (2022–2026); stores in other currencies differ (EUR stores show the same digits in euros, A12-0602/A12-0607). Value per dollar follows the A12-0618 method: raw gems and VIP points per USD only; items are never priced in gems here.",
   "asOf": "2026-10-13",
-  "profileRangeUsdPerMonth": { "min": 5, "max": 100, "note": "Project convention (research/perfis.md), not a game value." },
-  "priceWarning": "Prices are list prices quoted by guides, sellers and players between 2022 and 2026, in USD. Your store's price depends on region, currency, taxes and date; check it in-game before you plan with it.",
+  "profileRangeUsdPerMonth": { "min": 5, "max": 100, "note": "Convenção do projeto (research/perfis.md), não um valor do jogo." },
+  "priceWarning": "Os preços são de tabela citados por guias, vendedores e jogadores entre 2022 e 2026, em USD. O preço na sua loja depende de região, moeda, impostos e data; confira no jogo antes de planejar com ele.",
   "purchases": [
     {
       "id": "growth-fund",
-      "label": "Growth Fund (one-time)",
+      "label": "Fundo de Crescimento (única vez)",
       "kind": "one-time",
       "periodDays": null,
       "priceUsd": 15,
       "gems": 81000,
       "vipPoints": null,
-      "items": "Gems paid at City Hall milestones; the City Hall 25 milestone alone pays 40,000 gems (player reports).",
+      "items": "Gemas pagas nos marcos da Prefeitura; só o marco da Prefeitura 25 paga 40.000 gemas (relatos de jogadores).",
       "facts": ["A12-0001", "A12-0605", "A12-0606", "A12-0607"],
       "priceFacts": ["A12-0001", "A12-0607"],
       "gemFacts": ["A12-0001"],
@@ -22,17 +22,17 @@
         "A12-0607": "US$14.99 in a 2025 player post and 17.99 EUR"
       },
       "pendingGaps": ["L-A12-01", "L-A12-02", "L-A12-06"],
-      "note": "Full value needs City Hall 24–25 (A12-0001). Whether a late purchase still pays milestones already passed is disputed (A12-0606)."
+      "note": "O valor total exige Prefeitura 24–25 (A12-0001). Se uma compra tardia ainda paga os marcos já passados é disputado (A12-0606)."
     },
     {
       "id": "gem-supply-30d",
-      "label": "30-day Gem Supply (Supply Depot)",
+      "label": "Suprimento de Gemas de 30 dias (Depósito de Suprimentos)",
       "kind": "recurring",
       "periodDays": 30,
       "priceUsd": 9.99,
       "gems": 19500,
       "vipPoints": null,
-      "items": "650 gems a day for 30 days; players also report about 2,200 gems on purchase (not counted here).",
+      "items": "650 gemas por dia durante 30 dias; jogadores também relatam cerca de 2.200 gemas na compra (não contadas aqui).",
       "facts": ["A12-0601", "A12-0602", "A12-0603", "A12-0002"],
       "priceFacts": ["A12-0602"],
       "gemFacts": ["A12-0601", "A12-0002"],
@@ -42,17 +42,17 @@
         "A12-0603": "Missed days are gone"
       },
       "pendingGaps": ["L-A12-01", "L-A12-05", "L-A12-08"],
-      "note": "19,500 is the floor (daily part only). One seller says unclaimed days are lost (A12-0603), so claim every day."
+      "note": "19.500 é o piso (só a parte diária). Um vendedor diz que os dias não coletados se perdem (A12-0603), então colete todo dia."
     },
     {
       "id": "gem-supply-30d-half-price",
-      "label": "30-day Gem Supply at 50% off (one-time coupon)",
+      "label": "Suprimento de Gemas de 30 dias com 50% de desconto (cupom único)",
       "kind": "one-time",
       "periodDays": 30,
       "priceUsd": 5,
       "gems": 19500,
       "vipPoints": null,
-      "items": "Same supply as above, once, with a half-price coupon players report around City Hall 7.",
+      "items": "O mesmo suprimento de cima, uma vez, com um cupom de meio preço que jogadores relatam por volta da Prefeitura 7.",
       "facts": ["A12-0602", "A12-0601"],
       "priceFacts": ["A12-0602"],
       "gemFacts": ["A12-0601"],
@@ -61,17 +61,17 @@
         "A12-0601": "pays 650 gems per day for 30 days (19,500)"
       },
       "pendingGaps": ["L-A12-01", "L-A12-08"],
-      "note": "One player at City Hall 7 did not see the coupon (A12-0602)."
+      "note": "Um jogador na Prefeitura 7 não viu o cupom (A12-0602)."
     },
     {
       "id": "lucerne-scrolls-paid",
-      "label": "Lucerne Scrolls, paid track ($5 tier)",
+      "label": "Pergaminhos de Lucerna, trilha paga (faixa de $5)",
       "kind": "per-edition",
       "periodDays": null,
       "priceUsd": 5,
       "gems": 3300,
       "vipPoints": 5500,
-      "items": "About 145 h of speedups plus items (seller snapshot). The full unlock with the legendary pattern needs the $20 bundle.",
+      "items": "Cerca de 145 h de acelerações mais itens (retrato de vendedor). O desbloqueio completo com o padrão lendário exige o pacote de $20.",
       "facts": ["A12-0609"],
       "priceFacts": ["A12-0609"],
       "gemFacts": ["A12-0609"],
@@ -79,17 +79,17 @@
         "A12-0609": "LootBar lists the $5 tier as ~3,300 gems, 145 h speedups and 5,500 VIP"
       },
       "pendingGaps": ["L-A12-07"],
-      "note": "How often Lucerne Scrolls runs is not known (L-A12-07); one player pays it 'a month'."
+      "note": "Com que frequência os Pergaminhos de Lucerna acontecem não se sabe (L-A12-07); um jogador diz pagar \"por mês\"."
     },
     {
       "id": "writer-of-history",
-      "label": "Writer of History pop-up (each new legendary commander)",
+      "label": "Pop-up Writer of History (cada novo comandante lendário)",
       "kind": "per-trigger",
       "periodDays": null,
       "priceUsd": 5,
       "gems": 1050,
       "vipPoints": 525,
-      "items": "10 sculptures of the new legendary commander (plus EXP and stars).",
+      "items": "10 esculturas do novo comandante lendário (mais EXP e estrelas).",
       "facts": ["A12-0613"],
       "priceFacts": ["A12-0613"],
       "gemFacts": ["A12-0613"],
@@ -97,17 +97,17 @@
         "A12-0613": "and costs $5; LootBar lists 1,050 gems, 600,000 EXP, 10 legendary stars, 525 VIP and 10 legendary sculptures"
       },
       "pendingGaps": ["L-A12-01"],
-      "note": "Appears only when you acquire a new legendary commander; the seller's own multi-pack lines imply 1,100 gems and 500 VIP (A12-0613)."
+      "note": "Aparece só quando você obtém um novo comandante lendário; as próprias linhas de multipacote do vendedor sugerem 1.100 gemas e 500 VIP (A12-0613)."
     },
     {
       "id": "material-supply-7d",
-      "label": "7-day Material Supply",
+      "label": "Suprimento de Materiais de 7 dias",
       "kind": "recurring",
       "periodDays": 7,
       "priceUsd": 5,
       "gems": 1000,
       "vipPoints": null,
-      "items": "Two legendary materials per pack (riseofkingdomsguides); a seller lists other contents.",
+      "items": "Dois materiais lendários por pacote (riseofkingdomsguides); um vendedor lista outros conteúdos.",
       "facts": ["A12-0612"],
       "priceFacts": ["A12-0612"],
       "gemFacts": ["A12-0612"],
@@ -118,17 +118,17 @@
         "A12-0612": "described as 1,000 gems plus two legendary materials"
       },
       "pendingGaps": ["L-A12-01"],
-      "note": "Sources disagree on gems per pack (1,000 vs ~1,050 vs ~700, A12-0612)."
+      "note": "As fontes discordam sobre as gemas por pacote (1.000 contra ~1.050 contra ~700, A12-0612)."
     },
     {
       "id": "super-value-5",
-      "label": "Super-value bundle, $5 tier (e.g. Call of the Ancients)",
+      "label": "Pacote super valor, faixa de $5 (p. ex., Chamado dos Antigos)",
       "kind": "recurring",
       "periodDays": 7,
       "priceUsd": 5,
       "gems": 1050,
       "vipPoints": 525,
-      "items": "Bundle-specific items. Call of the Ancients resets every Sunday.",
+      "items": "Itens específicos do pacote. O Chamado dos Antigos reinicia todo domingo.",
       "facts": ["A12-0608"],
       "priceFacts": ["A12-0608"],
       "gemFacts": ["A12-0608"],
@@ -139,17 +139,17 @@
         "A12-0608": "Call of the Ancients resets every Sunday"
       },
       "pendingGaps": ["L-A12-01"],
-      "note": "Higher tiers of the same ladder give fewer VIP points per dollar (105 VIP/$ at $5, 60 at $100; A12-0608)."
+      "note": "Faixas mais altas da mesma escada dão menos pontos VIP por dólar (105 VIP/$ em $5, 60 em $100; A12-0608)."
     },
     {
       "id": "vip-privileges-0-6",
-      "label": "VIP Special Privileges packs, VIP 0–6 (one-time each)",
+      "label": "Pacotes de Privilégios Especiais do VIP, VIP 0–6 (cada um uma única vez)",
       "kind": "one-time",
       "periodDays": null,
       "priceUsd": 23.93,
       "gems": null,
       "vipPoints": null,
-      "items": "Minamoto no Yoshitsune sculptures (170 across VIP 0–6) and other items; each pack is bought once.",
+      "items": "Esculturas de Minamoto no Yoshitsune (170 no VIP 0–6) e outros itens; cada pacote é comprado uma vez.",
       "facts": ["A05-0600"],
       "priceFacts": ["A05-0600"],
       "gemFacts": [],
@@ -161,17 +161,17 @@
         "A05-0600": "$0.99 at VIP 0-3, $4.99 at VIP 4-5, $9.99 at VIP 6"
       },
       "pendingGaps": ["L-A05-04"],
-      "note": "Sum of the per-level prices (derived). The wiki table predates the 1.0.87 VIP bundle update (A05-0600)."
+      "note": "Soma dos preços por nível (derivada). A tabela da wiki é anterior à atualização de pacotes de VIP da 1.0.87 (A05-0600)."
     },
     {
       "id": "daily-special-offers",
-      "label": "Daily Special Offers, all three every day",
+      "label": "Ofertas Especiais Diárias, as três todo dia",
       "kind": "recurring",
       "periodDays": 30,
       "priceUsd": 90,
       "gems": 36000,
       "vipPoints": 21750,
-      "items": "Sculptures of a commander you choose, keys and speedups. From about kingdom day 43 (official note, scope unclear).",
+      "items": "Esculturas de um comandante que você escolhe, chaves e acelerações. A partir de cerca do dia 43 do reino (nota oficial, alcance pouco claro).",
       "facts": ["A12-0611", "A12-0610"],
       "priceFacts": ["A12-0611"],
       "gemFacts": ["A12-0611"],
@@ -179,13 +179,13 @@
         "A12-0611": "LootBar lists 30 days as $90 for ~36,000 gems and 21,750 VIP"
       },
       "pendingGaps": ["L-A12-01"],
-      "note": "About $3 a day per players; at ~$90 a month it uses almost the whole Low range, so it is shown as the ceiling, not a recommendation."
+      "note": "Cerca de $3 por dia segundo jogadores; com ~$90 por mês usa quase toda a faixa Low, então é mostrado como o teto, não como recomendação."
     }
   ],
   "tiers": [
     {
       "id": "pass-only",
-      "label": "Pass-only (about $10–25 a month)",
+      "label": "Só passes (cerca de $10–25 por mês)",
       "purchaseIds": ["growth-fund", "gem-supply-30d", "lucerne-scrolls-paid"],
       "monthlyAssumptions": { "lucerne-scrolls-paid": 1 },
       "facts": ["A12-0614", "A12-0615"],
@@ -194,11 +194,11 @@
         "A12-0615": "Growth Fund first (one-time), then the 30-day Gem Supply, then Lucerne Scrolls"
       },
       "pendingGaps": ["L-A12-07"],
-      "note": "Community order: Growth Fund, then the 30-day supply, then Lucerne Scrolls (A12-0615). Lucerne counted once a month is an assumption: its cadence is unknown."
+      "note": "Ordem da comunidade: Fundo de Crescimento, depois o suprimento de 30 dias, depois Pergaminhos de Lucerna (A12-0615). Contar Lucerna uma vez por mês é uma suposição: a periodicidade dela é desconhecida."
     },
     {
       "id": "low-full",
-      "label": "Low, fuller budget (up to about $100 a month)",
+      "label": "Low, orçamento mais completo (até cerca de $100 por mês)",
       "purchaseIds": ["growth-fund", "gem-supply-30d", "lucerne-scrolls-paid", "writer-of-history", "material-supply-7d", "super-value-5", "vip-privileges-0-6"],
       "monthlyAssumptions": { "lucerne-scrolls-paid": 1, "writer-of-history": 1 },
       "facts": ["A12-0614", "A12-0615"],
@@ -206,11 +206,11 @@
         "A12-0614": "others say low spenders spend ~$100/month"
       },
       "pendingGaps": ["L-A12-07"],
-      "note": "Adds pop-ups and weekly packs after the pass-only core. Writer of History once a month is an assumption: it appears only when you get a new legendary commander. Daily Special Offers (~$90/month) are listed separately as the ceiling."
+      "note": "Acrescenta pop-ups e pacotes semanais depois do núcleo só passes. Writer of History uma vez por mês é uma suposição: ele só aparece quando você obtém um novo comandante lendário. As Ofertas Especiais Diárias (~$90/mês) são listadas à parte como o teto."
     }
   ],
   "recharge": {
-    "text": "Renew passes inside a recharge event: players report the gem supply, material supply and daily offers count toward recharge thresholds (the Growth Fund reportedly does not); the common daily recharge event asks for 2,500 purchased gems a day.",
+    "text": "Renove os passes dentro de um evento de recarga: jogadores relatam que o suprimento de gemas, o suprimento de materiais e as ofertas diárias contam para os limiares de recarga (o Fundo de Crescimento, segundo relatos, não); o evento de recarga diária comum pede 2.500 gemas compradas por dia.",
     "facts": ["A11-0602", "A11-0601", "A11-0600", "A12-0005"],
     "evidence": {
       "A11-0601": "asks for 2,500 purchased"
@@ -218,7 +218,7 @@
     "pendingGaps": ["L-A11-07", "L-A11-08"]
   },
   "valueMethod": {
-    "text": "Value per dollar = raw gems ÷ price and VIP points ÷ price only. Pricing speedups, sculptures or materials in gems changes rankings by up to about 5× depending on the basis, and the store's '% value' labels use undiscounted prices.",
+    "text": "Valor por dólar = apenas gemas brutas ÷ preço e pontos VIP ÷ preço. Precificar acelerações, esculturas ou materiais em gemas muda os rankings em até cerca de 5× conforme a base, e os rótulos de \"% de valor\" da loja usam preços sem desconto.",
     "facts": ["A12-0618", "A12-0616", "A12-0617"],
     "evidence": {
       "A12-0618": "Only raw gems (and VIP points) per USD can be computed defensibly from the cards"
