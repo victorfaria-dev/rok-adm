@@ -55,7 +55,7 @@ export function accountsFromDevice(st: StorageLike | null): AccountInsert[] {
   const saved = store.savedProfiles.length > 0
     ? store.savedProfiles.map((p) => ({ localId: localIdForSavedProfile(p.id), name: p.name, code: p.code }))
     : store.profileCode
-      ? [{ localId: LOCAL_ID_ACTIVE, name: "Main", code: store.profileCode }]
+      ? [{ localId: LOCAL_ID_ACTIVE, name: "Principal", code: store.profileCode }]
       : [];
   // The active profile is the main city when it is not a farm; otherwise the first non-farm one.
   const decoded = saved.map((s) => {
@@ -69,7 +69,7 @@ export function accountsFromDevice(st: StorageLike | null): AccountInsert[] {
   decoded.forEach((d, i) => {
     const kind: CityKind = i === mainIdx ? "main" : d.profile?.role === "farm" ? "farm" : "alt";
     out.push({
-      kind, name: clip(d.name.trim() || "City", 40), local_id: d.localId, profile_code: d.code,
+      kind, name: clip(d.name.trim() || "Cidade", 40), local_id: d.localId, profile_code: d.code,
       city_hall: d.profile?.cityHall ?? null, kingdom_stage: d.profile?.kingdomStage ?? null, spending: d.profile?.spending ?? null,
       // Commander checklists are per device today; they belong to the main city until per-city lists exist.
       commanders: (i === mainIdx ? store.commanders : {}) as Json,
@@ -135,9 +135,9 @@ export function pendingOffer(st: StorageLike | null, userId: string): UploadPlan
 
 /** "Chrome on Android" style label, from the user agent; nothing identifying. */
 export function deviceLabel(ua: string): string {
-  const browser = /Edg\//.test(ua) ? "Edge" : /Firefox\//.test(ua) ? "Firefox" : /Chrome\//.test(ua) ? "Chrome" : /Safari\//.test(ua) ? "Safari" : "Browser";
-  const os = /Android/.test(ua) ? "Android" : /iPhone|iPad|iPod/.test(ua) ? "iOS" : /Windows/.test(ua) ? "Windows" : /Mac OS X/.test(ua) ? "macOS" : /Linux/.test(ua) ? "Linux" : "a device";
-  return `${browser} on ${os}`;
+  const browser = /Edg\//.test(ua) ? "Edge" : /Firefox\//.test(ua) ? "Firefox" : /Chrome\//.test(ua) ? "Chrome" : /Safari\//.test(ua) ? "Safari" : "Navegador";
+  const os = /Android/.test(ua) ? "Android" : /iPhone|iPad|iPod/.test(ua) ? "iOS" : /Windows/.test(ua) ? "Windows" : /Mac OS X/.test(ua) ? "macOS" : /Linux/.test(ua) ? "Linux" : "um aparelho";
+  return `${browser} no ${os}`;
 }
 
 /**
@@ -146,17 +146,17 @@ export function deviceLabel(ua: string): string {
  */
 export async function performUpload(client: KoSupabase, plan: UploadPlan, label: string): Promise<{ ok: true; cities: number } | { ok: false; message: string }> {
   const userId = await currentUserId(client);
-  if (!userId) return { ok: false, message: "You are signed out. Sign in again to upload." };
+  if (!userId) return { ok: false, message: "Você saiu da conta. Entre de novo para enviar." };
   const imp = await client.from("local_imports").insert({ user_id: userId, device_label: label.slice(0, 80), payload: plan.backup as unknown as Json });
   if (imp.error) return { ok: false, message: dbError(imp.error) };
   if (plan.accounts.length === 0) return { ok: true, cities: 0 };
   // The database allows one main city: if the account already has one from another device, upload this one as an alt.
   const existing = await client.from("accounts").select("id, kind, local_id");
-  if (existing.error) return { ok: false, message: `Your data was saved, but the cities were not: ${dbError(existing.error)}` };
+  if (existing.error) return { ok: false, message: `Seus dados foram salvos, mas as cidades não: ${dbError(existing.error)}` };
   const rows = (existing.data ?? []) as { kind: CityKind; local_id: string | null }[];
   const otherMain = rows.some((r) => r.kind === "main" && !plan.accounts.some((a) => a.local_id === r.local_id));
   const accounts = plan.accounts.map((a) => ({ ...a, user_id: userId, kind: a.kind === "main" && otherMain ? ("alt" as const) : a.kind }));
   const up = await client.from("accounts").upsert(accounts, { onConflict: "user_id,local_id" });
-  if (up.error) return { ok: false, message: `Your data was saved, but the cities were not: ${dbError(up.error)}` };
+  if (up.error) return { ok: false, message: `Seus dados foram salvos, mas as cidades não: ${dbError(up.error)}` };
   return { ok: true, cities: accounts.length };
 }

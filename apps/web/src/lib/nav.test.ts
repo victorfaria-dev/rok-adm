@@ -7,12 +7,12 @@ import { profileFromCode, profileSummary } from "./profile";
 import { defaultProfile, encodeProfile } from "@rokadm/core";
 
 describe("nav (UX stage 1)", () => {
-  it("player tabs: City Hall · Tools · Me", () => {
-    expect(PLAYER_NAV.map((d) => d.label)).toEqual(["City Hall", "Tools", "Me"]);
+  it("player tabs: Prefeitura · Ferramentas · Eu", () => {
+    expect(PLAYER_NAV.map((d) => d.label)).toEqual(["Prefeitura", "Ferramentas", "Eu"]);
   });
 
-  it("leader tabs: Kingdom · Members · Events · Me (at most 5, each with an icon)", () => {
-    expect(LEADER_NAV.map((d) => d.label)).toEqual(["Kingdom", "Members", "Events", "Me"]);
+  it("leader tabs: Reino · Membros · Eventos · Eu (at most 5, each with an icon)", () => {
+    expect(LEADER_NAV.map((d) => d.label)).toEqual(["Reino", "Membros", "Eventos", "Eu"]);
     for (const nav of [PLAYER_NAV, LEADER_NAV]) {
       expect(nav.length).toBeLessThanOrEqual(5);
       for (const d of nav) expect(d.icon).toBeTruthy();

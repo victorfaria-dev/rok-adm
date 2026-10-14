@@ -93,7 +93,7 @@ describe("verification api (fake client)", () => {
     expect(await startVerification(f.client, "a1", 3)).toEqual({ ok: true, request: req });
     expect(f.calls[0]).toEqual({ op: "rpc.start_verification", args: [{ p_account_id: "a1", p_level: 3 }] });
     const busy = fakeSupabase({ rpc: { start_verification: () => ({ error: { message: "This city already has a verification in progress.", code: "23505" } }) } });
-    expect(await startVerification(busy.client, "a1", 3)).toEqual({ ok: false, message: "This city already has a verification in progress." });
+    expect(await startVerification(busy.client, "a1", 3)).toEqual({ ok: false, message: "Esta cidade já tem uma verificação em andamento." });
   });
   it("screenshots go to the private bucket under user/request/slot", async () => {
     const f = fakeSupabase();
@@ -107,9 +107,9 @@ describe("verification api (fake client)", () => {
     expect(await submitVerification(f.client, "r1", { a: 1 }, ["u1/r1/album.jpg"], "042719")).toEqual({ ok: true });
     expect(f.calls[0]!.args[0]).toEqual({ p_request_id: "r1", p_claimed: { a: 1 }, p_paths: ["u1/r1/album.jpg"], p_album_code: "042719" });
     for (const [message, want] of [
-      ["This code has expired. Start again.", /expired/],
-      ["The code in the Album screenshot does not match this verification's code.", /does not match/],
-      ["This code was already used. Start again.", /already used/],
+      ["This code has expired. Start again.", /expirou/],
+      ["The code in the Album screenshot does not match this verification's code.", /não confere/],
+      ["This code was already used. Start again.", /já foi usado/],
     ] as const) {
       const g = fakeSupabase({ rpc: { submit_verification: () => ({ error: { message, code: "22023" } }) } });
       const r = await submitVerification(g.client, "r1", {}, ["p"], "1");

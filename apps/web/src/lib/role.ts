@@ -3,7 +3,7 @@
 import { HOME_FOR } from "./nav";
 import { PLAYING_AS, readStore, writeStore, type PlayingAs } from "./store";
 
-export const ROLE_LABEL: Readonly<Record<PlayingAs, string>> = { player: "Player", leader: "Leader" };
+export const ROLE_LABEL: Readonly<Record<PlayingAs, string>> = { player: "Jogador", leader: "Líder" };
 
 export const isPlayingAs = (x: unknown): x is PlayingAs => PLAYING_AS.includes(x as PlayingAs);
 

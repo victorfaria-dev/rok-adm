@@ -31,16 +31,16 @@ export function Accounts({ store, now, onChange }: Props) {
     }
     setError("");
     setName("");
-    setStatus(`Saved "${name.trim().replace(/\s+/g, " ")}".`);
+    setStatus(`"${name.trim().replace(/\s+/g, " ")}" salva.`);
     onChange(writeStore({ savedProfiles: r.list, activeAccountId: active }), false);
   };
 
   return (
     <section class="me-section" aria-labelledby="me-acc-h">
-      <h2 id="me-acc-h">Accounts</h2>
+      <h2 id="me-acc-h">Contas</h2>
       <p class="me-note">
-        Play a main and farms? Save each profile here and switch which one City Hall, the guide and the routine use.
-        Each account keeps its own routine checks and commander answers. You can also switch by swiping the cards on City Hall.
+        Joga com uma conta principal e farms? Salve cada perfil aqui e troque qual deles a Prefeitura, o guia e a rotina usam.
+        Cada conta guarda as próprias marcações da rotina e respostas de comandantes. Você também pode trocar deslizando os cartões na Prefeitura.
       </p>
 
       {list.length > 0 && (
@@ -51,33 +51,33 @@ export function Accounts({ store, now, onChange }: Props) {
             return (
               <li class="me-account" key={p.id}>
                 <div class="me-account-text">
-                  <span class="me-account-name">{p.name}{inUse && <span class="me-badge">In use</span>}</span>
-                  <span class="me-note mono">{prof ? profileSummary(prof) : "Saved answers could not be read"}</span>
+                  <span class="me-account-name">{p.name}{inUse && <span class="me-badge">Em uso</span>}</span>
+                  <span class="me-note mono">{prof ? profileSummary(prof) : "Não foi possível ler as respostas salvas"}</span>
                 </div>
                 <div class="me-actions">
                   {!inUse && prof && (
                     <button
                       type="button"
                       class="btn btn-secondary"
-                      aria-label={`Use ${p.name}`}
+                      aria-label={`Usar ${p.name}`}
                       onClick={() => {
                         setError("");
-                        setStatus(`Now using "${p.name}".`);
+                        setStatus(`Agora usando "${p.name}".`);
                         const patch = switchAccountPatch(store, p.id);
                         if (patch) onChange(writeStore(patch), true);
                       }}
-                    >Use</button>
+                    >Usar</button>
                   )}
                   <button
                     type="button"
                     class="btn btn-secondary"
-                    aria-label={`Remove ${p.name}`}
+                    aria-label={`Remover ${p.name}`}
                     onClick={() => {
                       setError("");
-                      setStatus(`Removed "${p.name}". Your current profile was not changed.`);
+                      setStatus(`"${p.name}" removida. Seu perfil atual não mudou.`);
                       onChange(writeStore({ savedProfiles: removeAccount(list, p.id), activeAccountId: active }), false);
                     }}
-                  >Remove</button>
+                  >Remover</button>
                 </div>
               </li>
             );
@@ -87,7 +87,7 @@ export function Accounts({ store, now, onChange }: Props) {
 
       {store.profileCode ? (
         <form class="me-save" onSubmit={save} noValidate>
-          <label class="me-label" for="me-acc-name">Save the current profile as</label>
+          <label class="me-label" for="me-acc-name">Salvar o perfil atual como</label>
           <div class="me-save-row">
             <input
               id="me-acc-name"
@@ -95,18 +95,18 @@ export function Accounts({ store, now, onChange }: Props) {
               type="text"
               maxLength={NAME_MAX + 10}
               autoComplete="off"
-              placeholder="Main, Farm 1…"
+              placeholder="Principal, Farm 1…"
               value={name}
               aria-invalid={error ? "true" : undefined}
               aria-describedby={error ? "me-acc-error" : undefined}
               onInput={(e) => setName((e.currentTarget as HTMLInputElement).value)}
             />
-            <button type="submit" class="btn btn-secondary">Save</button>
+            <button type="submit" class="btn btn-secondary">Salvar</button>
           </div>
           {error && <p id="me-acc-error" class="me-error" role="alert">{error}</p>}
         </form>
       ) : (
-        <p class="me-note">Build a profile first, then save it here.</p>
+        <p class="me-note">Monte um perfil primeiro e depois salve aqui.</p>
       )}
       <p class="me-status" aria-live="polite">{status}</p>
     </section>

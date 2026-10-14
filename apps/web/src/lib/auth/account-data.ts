@@ -45,7 +45,7 @@ type OwnTable = "profiles" | "accounts" | "achievements" | "blocks" | "reports" 
 export async function exportAccountData(client: KoSupabase, now: Date = new Date()): Promise<AccountExport> {
   const { data: s } = await client.auth.getSession();
   const user = s.session?.user;
-  if (!user) throw new Error("You are signed out. Sign in again to export.");
+  if (!user) throw new Error("Você saiu da conta. Entre de novo para exportar.");
   const q = async (table: OwnTable, col: string) => {
     const { data, error } = await client.from(table).select("*").eq(col, user.id);
     if (error) throw new Error(dbError(error));
@@ -77,11 +77,11 @@ export function accountExportFileName(d: Date): string {
 /**
  * Delete the account: images and verification screenshots first (Storage files do not cascade),
  * then every row (delete_my_account), then the session on this device. This device's local data is
- * not touched here; the page offers "Delete all data" for that separately.
+ * not touched here; the page offers "Apagar todos os dados" for that separately.
  */
 export async function deleteAccount(client: KoSupabase): Promise<{ ok: true } | { ok: false; message: string }> {
   const userId = await currentUserId(client);
-  if (!userId) return { ok: false, message: "You are signed out. Sign in again to delete your account." };
+  if (!userId) return { ok: false, message: "Você saiu da conta. Entre de novo para apagar a sua conta." };
   for (const bucket of USER_BUCKETS) {
     let paths: string[];
     try {

@@ -56,11 +56,11 @@ export async function prepareAccountBanner(file: Blob): Promise<Blob> {
     canvas.width = plan.width;
     canvas.height = plan.height;
     const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("This browser cannot resize images.");
+    if (!ctx) throw new Error("Este navegador não consegue redimensionar imagens.");
     ctx.imageSmoothingQuality = "high";
     ctx.drawImage(bitmap, plan.sx, plan.sy, plan.sw, plan.sh, 0, 0, plan.width, plan.height);
     const blob = await encodeToFit((type, q) => new Promise((res) => canvas.toBlob(res, type, q)), ACCOUNT_BANNER.maxBytes);
-    if (!blob) throw new Error("This banner is too big even after resizing.");
+    if (!blob) throw new Error("Este banner continua grande demais mesmo depois de redimensionado.");
     return blob;
   } finally {
     bitmap.close();
@@ -71,7 +71,7 @@ export async function prepareAccountBanner(file: Blob): Promise<Blob> {
 export async function setAccountBanner(
   client: KoSupabase, userId: string, accountId: string, blob: Blob, previousPath: string | null, now: number = Date.now(),
 ): Promise<{ ok: true; path: string } | { ok: false; message: string }> {
-  if (blob.size > ACCOUNT_BANNER.maxBytes) return { ok: false, message: "Banner is over the 512 KB limit." };
+  if (blob.size > ACCOUNT_BANNER.maxBytes) return { ok: false, message: "O banner passa do limite de 512 KB." };
   const path = `${userId}/${accountId}-${now}.${extensionOf(blob.type)}`;
   const bucket = client.storage.from(ACCOUNT_BANNER.bucket);
   const up = await bucket.upload(path, blob, { contentType: blob.type, upsert: false, cacheControl: "31536000" });

@@ -1,24 +1,24 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { ACCOUNT_KINDS, ACCOUNT_KIND_LABEL, prepareBanner, type AccountKind, type BannerStore } from "../../lib/banner";
 
-// Every user-facing string of the banner editor, in one place (i18n later).
+// Every user-facing string of the banner editor, in one place (pt-BR).
 const S = {
-  edit: "Edit banner",
-  close: "Done",
-  h: (name: string) => `City card: ${name}`,
-  kind: "Account type",
-  kindHelp: "Picks the default banner.",
-  pick: "Choose an image",
-  pickHelp: "Your own picture, shown upright (3:4). Do not use game art you have no right to share.",
-  frame: "Drag the picture to choose what shows on the card",
-  x: "Left to right",
-  y: "Top to bottom",
-  save: "Save banner",
-  cancel: "Cancel",
-  reset: "Reset to default",
-  saving: "Saving…",
-  saved: "Banner saved on this device.",
-  resetDone: "Back to the default banner.",
+  edit: "Editar banner",
+  close: "Concluir",
+  h: (name: string) => `Cartão da cidade: ${name}`,
+  kind: "Tipo de conta",
+  kindHelp: "Define o banner padrão.",
+  pick: "Escolher uma imagem",
+  pickHelp: "Uma imagem sua, exibida em pé (3:4). Não use arte do jogo que você não tenha direito de compartilhar.",
+  frame: "Arraste a imagem para escolher o que aparece no cartão",
+  x: "Da esquerda para a direita",
+  y: "De cima para baixo",
+  save: "Salvar banner",
+  cancel: "Cancelar",
+  reset: "Voltar ao padrão",
+  saving: "Salvando…",
+  saved: "Banner salvo neste aparelho.",
+  resetDone: "De volta ao banner padrão.",
 } as const;
 
 /** The small button on the card that opens the editor (lives inside the active card). */
@@ -66,7 +66,7 @@ export function BannerPanel({ open, accountId, accountName, kind, hasCustom, sto
     setError("");
     setStatus("");
     if (!f.type.startsWith("image/")) {
-      setError("Pick an image file (JPEG, PNG or WebP).");
+      setError("Escolha um arquivo de imagem (JPEG, PNG ou WebP).");
       return;
     }
     setFile(f);
@@ -88,7 +88,7 @@ export function BannerPanel({ open, accountId, accountName, kind, hasCustom, sto
       setStatus(S.saved);
     } catch (e) {
       setStatus("");
-      setError(e instanceof Error ? e.message : "This image could not be used.");
+      setError(e instanceof Error ? e.message : "Não foi possível usar esta imagem.");
     }
   };
 

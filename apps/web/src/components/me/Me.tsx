@@ -86,9 +86,9 @@ function syncProfileChips(code: string | null): void {
       text.textContent = profileSummary(profile);
       chip.href = "/me/";
       chip.removeAttribute("data-empty");
-      chip.setAttribute("aria-label", `Your profile: ${profileSummary(profile)}`);
+      chip.setAttribute("aria-label", `Seu perfil: ${profileSummary(profile)}`);
     } else {
-      text.textContent = "Set up profile";
+      text.textContent = "Configurar perfil";
       chip.href = "/start/";
       chip.setAttribute("data-empty", "");
       chip.removeAttribute("aria-label");
@@ -98,32 +98,32 @@ function syncProfileChips(code: string | null): void {
 
 // User-facing strings added in UX stage 1 (role switch, short onboarding, share card), in one place.
 const S = {
-  title: "Me",
-  lead: "Your profile, how you use KingdomOps, theme and data. Everything here is stored only in this browser: no account, no server.",
-  playingH: "Playing as",
-  playingNote: "Player shows City Hall, Tools and Me. Leader shows Kingdom, Members, Events and Me. Guides stay one tap away, in the first row below.",
-  empty: "No profile yet. Answer 5 quick questions and KingdomOps sets up your City Hall, daily routine and guide.",
-  start: "Start",
-  editAnswers: "Edit answers",
-  defaultName: "Governor",
-  noProfileLine: "No profile yet",
-  groupMain: "You and your accounts",
-  groupSettings: "Settings",
-  groupAbout: "Trust and about",
+  title: "Eu",
+  lead: "Seu perfil, como você usa o KingdomOps, tema e dados. Tudo aqui fica guardado só neste navegador: sem conta, sem servidor.",
+  playingH: "Jogando como",
+  playingNote: "Jogador mostra Prefeitura, Ferramentas e Eu. Líder mostra Reino, Membros, Eventos e Eu. Os guias ficam a um toque, na primeira linha abaixo.",
+  empty: "Ainda sem perfil. Responda a 5 perguntas rápidas e o KingdomOps monta a sua Prefeitura, a rotina diária e o guia.",
+  start: "Começar",
+  editAnswers: "Editar respostas",
+  defaultName: "Governador",
+  noProfileLine: "Ainda sem perfil",
+  groupMain: "Você e suas contas",
+  groupSettings: "Configurações",
+  groupAbout: "Confiança e sobre",
   rows: {
-    guides: "Guides",
-    profile: "Profile and accounts",
-    share: "Share card",
-    theme: "Appearance",
-    data: "Your data",
+    guides: "Guias",
+    profile: "Perfil e contas",
+    share: "Cartão para compartilhar",
+    theme: "Aparência",
+    data: "Seus dados",
     backup: "Backup",
-    trust: "Trust & privacy",
-    about: "About KingdomOps",
-    brand: "Brand",
+    trust: "Confiança e privacidade",
+    about: "Sobre o KingdomOps",
+    brand: "Marca",
   },
 } as const;
 
-/** "Main" → "MA", "Farm 1" → "F1". */
+/** "Principal" → "PR", "Farm 1" → "F1". */
 const initials = (name: string): string => {
   const w = name.trim().split(/\s+/).filter(Boolean);
   return (w.length > 1 ? `${w[0]![0]}${w[1]![0]}` : (w[0] ?? "?").slice(0, 2)).toUpperCase();
@@ -231,7 +231,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
   const exportData = (): void => {
     const fileName = exportFileName(now());
     download(fileName, exportStore(readStore()));
-    say(`Exported ${fileName}. Check your downloads.`);
+    say(`Exportado: ${fileName}. Confira seus downloads.`);
   };
 
   const importFile = async (file: File): Promise<void> => {
@@ -243,7 +243,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
       skipped = r.skippedProfiles;
     } catch (e) {
       setStatus({ at: "data", text: "" });
-      setImportError(e instanceof Error ? e.message : "This file could not be read.");
+      setImportError(e instanceof Error ? e.message : "Não foi possível ler este arquivo.");
       return;
     }
     const { v: _v, ...rest } = imported;
@@ -317,7 +317,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
       <LinkRow href="/guides/" icon="guide" label={S.rows.guides} />
       <Row id="profile" icon="user" label={S.rows.profile}>
       <section class="me-section" aria-labelledby="me-profile-h">
-        <h2 id="me-profile-h">Profile</h2>
+        <h2 id="me-profile-h">Perfil</h2>
         {!store ? (
           <div class="me-skeleton" aria-hidden="true"><span /><span /><span /></div>
         ) : profile ? (
@@ -357,19 +357,19 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
 
       {store && profile && eff && (
         <section class="me-section" aria-labelledby="me-eff-h">
-          <h2 id="me-eff-h">Spending profile used</h2>
+          <h2 id="me-eff-h">Perfil de gastos usado</h2>
           <dl class="me-answers">
-            <div class="me-row"><dt>Monthly spending (your answer)</dt><dd>{eff.declared}</dd></div>
-            <div class="me-row"><dt>Total spend tier</dt><dd>{eff.lifetime}</dd></div>
-            <div class="me-row me-row-strong"><dt>Profile the guide and routine use</dt><dd>{eff.effective}</dd></div>
+            <div class="me-row"><dt>Gasto mensal (sua resposta)</dt><dd>{eff.declared}</dd></div>
+            <div class="me-row"><dt>Faixa de gasto total</dt><dd>{eff.lifetime}</dd></div>
+            <div class="me-row me-row-strong"><dt>Perfil que o guia e a rotina usam</dt><dd>{eff.effective}</dd></div>
           </dl>
           <p aria-live="polite">{eff.result.explanation}</p>
           <div class="me-rule">
-            <p class="me-rule-label">Product rule, not a game fact</p>
+            <p class="me-rule-label">Regra do produto, não um fato do jogo</p>
             <p>{RULE_BODY}</p>
           </div>
           <fieldset class="me-choices">
-            <legend>Choose the profile by hand</legend>
+            <legend>Escolher o perfil à mão</legend>
             {OVERRIDE_CHOICES.map((c) => (
               <label class="me-choice" key={c.value}>
                 <input
@@ -383,7 +383,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
               </label>
             ))}
           </fieldset>
-          <p class="me-note">Your spending answers stay on this device. KingdomOps never sends them anywhere.</p>
+          <p class="me-note">Suas respostas sobre gastos ficam neste aparelho. O KingdomOps nunca as envia para lugar nenhum.</p>
         </section>
       )}
       </Row>
@@ -393,9 +393,9 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
       <ul class="me-group" aria-label={S.groupSettings}>
       <Row id="theme" icon="theme" label={S.rows.theme}>
       <section class="me-section" aria-labelledby="me-theme-h">
-        <h2 id="me-theme-h">Theme</h2>
+        <h2 id="me-theme-h">Tema</h2>
         <fieldset class="me-choices me-choices-row">
-          <legend class="visually-hidden">Theme</legend>
+          <legend class="visually-hidden">Tema</legend>
           {THEME_CHOICES.map((t) => (
             <label class="me-choice" key={t.value}>
               <input
@@ -409,22 +409,23 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
             </label>
           ))}
         </fieldset>
-        <p class="me-note">System follows your device's light or dark setting.</p>
+        <p class="me-note">Sistema segue a configuração clara ou escura do seu aparelho.</p>
       </section>
       </Row>
 
       <Row id="data" icon="data" label={S.rows.data}>
       <section class="me-section" aria-labelledby="me-data-h">
-        <h2 id="me-data-h">Your data</h2>
+        <h2 id="me-data-h">Seus dados</h2>
         <p>
-          The profile file holds only your profile answers (including what you spend), saved accounts, any questionnaire
-          draft, routine ticks and settings, commander checks and your theme. Think before you share it. Your card, crest,
-          tool inputs, farms and council documents are not in it: use <a href="#me-backup-h">Back up everything</a> for those.
+          O arquivo de perfil guarda só as respostas do seu perfil (inclusive quanto você gasta), as contas salvas, o rascunho
+          do questionário, as marcações e configurações da rotina, as checagens de comandantes e o seu tema. Pense bem antes
+          de compartilhá-lo. Seu cartão, brasão, dados das ferramentas, farms e documentos do conselho não estão nele: para
+          esses, use <a href="#me-backup-h">Fazer backup de tudo</a>.
         </p>
         <div class="me-actions">
-          <button type="button" class="btn btn-secondary" onClick={exportData}>Export profile file</button>
+          <button type="button" class="btn btn-secondary" onClick={exportData}>Exportar arquivo de perfil</button>
           <label class="btn btn-secondary me-file">
-            Import profile file
+            Importar arquivo de perfil
             <input
               class="visually-hidden"
               type="file"
@@ -437,16 +438,16 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
             />
           </label>
         </div>
-        <p class="me-note">Importing replaces your profile, saved accounts, routine, commander checks and theme with the file's contents. Nothing else changes.</p>
+        <p class="me-note">Importar substitui o seu perfil, as contas salvas, a rotina, as checagens de comandantes e o tema pelo conteúdo do arquivo. Mais nada muda.</p>
         <p class="me-status" role="status">{status.at === "data" ? status.text : ""}</p>
         <p class="me-error" role="alert">{importError}</p>
 
         <div class="me-danger">
-          <h3>Delete local data</h3>
-          <p>Removes everything KingdomOps saved in this browser. Back up everything first if you may want it back.</p>
+          <h3>Apagar dados locais</h3>
+          <p>Remove tudo o que o KingdomOps salvou neste navegador. Faça backup de tudo antes, se pode querer recuperar.</p>
           {!confirming ? (
             <button type="button" class="btn me-btn-danger-outline" ref={deleteButton} onClick={openConfirm}>
-              Delete all data
+              Apagar todos os dados
             </button>
           ) : (
             <div
@@ -461,21 +462,21 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
                 }
               }}
             >
-              <h4 id="me-confirm-h" tabIndex={-1} ref={confirmHeading}>Delete everything?</h4>
+              <h4 id="me-confirm-h" tabIndex={-1} ref={confirmHeading}>Apagar tudo?</h4>
               <div id="me-confirm-text">
-                <p>This deletes from this browser:</p>
+                <p>Isto apaga deste navegador:</p>
                 <ul class="me-delete-list" data-delete-list>
                   {USER_DATA_KEYS.map((k) => <li key={k.key}>{k.name}</li>)}
                 </ul>
-                <p>It cannot be undone.</p>
+                <p>Não dá para desfazer.</p>
               </div>
               <label class="me-check">
                 <input type="checkbox" checked={alsoOffline} onChange={(e) => setAlsoOffline(e.currentTarget.checked)} />
-                <span>Also remove the offline copy of the site (pages saved for offline use; it holds nothing about you)</span>
+                <span>Remover também a cópia offline do site (páginas salvas para uso offline; não guarda nada sobre você)</span>
               </label>
               <div class="me-actions">
-                <button type="button" class="btn me-btn-danger" onClick={() => void deleteAll()}>Delete everything</button>
-                <button type="button" class="btn btn-secondary" onClick={cancelConfirm}>Cancel</button>
+                <button type="button" class="btn me-btn-danger" onClick={() => void deleteAll()}>Apagar tudo</button>
+                <button type="button" class="btn btn-secondary" onClick={cancelConfirm}>Cancelar</button>
               </div>
             </div>
           )}

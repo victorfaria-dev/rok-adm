@@ -26,14 +26,14 @@ describe("routine island", () => {
   it("without a profile: default plan, one h1 and a set-up banner", () => {
     setup();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole("link", { name: "Set up your profile" }).getAttribute("href")).toBe("/start/");
+    expect(screen.getByRole("link", { name: "Configurar seu perfil" }).getAttribute("href")).toBe("/start/");
     const expected = planRoutine(ROUTINE_TASKS, defaultProfile(), defaultProfile().minutesPerDay, { weekday: 2 });
     expect(taskBoxes()).toHaveLength(expected.included.length);
   });
 
   it("with a profile: planned-for line links to /me/ and the list follows the budget", () => {
     setup({ profileCode: CODE });
-    expect(screen.queryByText("Set up your profile")).toBeNull();
+    expect(screen.queryByText("Configurar seu perfil")).toBeNull();
     expect(screen.getByRole("link", { name: "F2P · CH 12" }).getAttribute("href")).toBe("/me/");
     const p = withEffectiveSpending(PROFILE);
     const at = (m: number) => planRoutine(ROUTINE_TASKS, p, m, { weekday: 2 }).included.length;
@@ -41,13 +41,13 @@ describe("routine island", () => {
     fireEvent.click(screen.getByRole("radio", { name: "15 min" }));
     expect(taskBoxes()).toHaveLength(at(15));
     expect(readStore().routinePrefs).toEqual({ minutes: 15, breakMode: false });
-    fireEvent.click(screen.getByRole("radio", { name: /My usual/ }));
+    fireEvent.click(screen.getByRole("radio", { name: /Meu padrão/ }));
     expect(readStore().routinePrefs?.minutes).toBeNull();
   });
 
   it("lifetime spend raises the plan to the effective profile (F-72)", () => {
     setup({ profileCode: "1.0.0.0.12.30...2000..0" });
-    expect(screen.getByText("Medium (effective profile, from your total spend) · CH 12")).toBeTruthy();
+    expect(screen.getByText("Medium (perfil efetivo, pelo seu gasto total) · CH 12")).toBeTruthy();
     expect(screen.getByText(/not researched yet/)).toBeTruthy();
   });
 
@@ -55,29 +55,29 @@ describe("routine island", () => {
     setup({ profileCode: CODE, routine: { date: "2026-10-12", done: ["vip-claim", "queues"] } });
     expect(taskBoxes().every((b) => !b.checked)).toBe(true);
     const total = taskBoxes().length;
-    expect(screen.getByText(/done$/).textContent).toBe(`0 of ${total} done`);
+    expect(screen.getByText(/concluídas$/).textContent).toBe(`0 de ${total} concluídas`);
     fireEvent.click(taskBoxes()[0]!);
     expect(readStore().routine).toEqual({ date: TODAY, done: [taskBoxes()[0]!.id.replace("rt-task-", "")] });
-    expect(screen.getByText(/done$/).textContent).toBe(`1 of ${total} done`);
+    expect(screen.getByText(/concluídas$/).textContent).toBe(`1 de ${total} concluídas`);
   });
 
-  it("estimates are labelled pending measurement", () => {
+  it("estimates are labelled medição pendente", () => {
     setup({ profileCode: CODE });
-    expect(screen.getAllByText(/pending measurement/).length).toBeGreaterThan(0);
+    expect(screen.getAllByText(/medição pendente/).length).toBeGreaterThan(0);
   });
 
   it("Break Mode shows the daily minimal set and is saved", () => {
     setup({ profileCode: CODE });
-    fireEvent.click(screen.getByRole("switch", { name: /Break Mode/ }));
+    fireEvent.click(screen.getByRole("switch", { name: /Modo Pausa/ }));
     expect(readStore().routinePrefs?.breakMode).toBe(true);
     const bm = breakMode(ROUTINE_TASKS, { profile: withEffectiveSpending(PROFILE) });
     // Q2 P2-9: streak + loss-prevention tasks (queues incl. healing, gatherers), and the Planned line stays.
     expect(taskBoxes()).toHaveLength(bm.daily.length + bm.beforePause.length);
     expect(taskBoxes().map((b) => b.id.replace("rt-task-", ""))).toEqual(expect.arrayContaining(["vip-claim", "queues", "gathering"]));
-    expect(screen.getByText(/does not cover shields or resource protection/)).toBeTruthy();
-    const mins = Math.round((bm.dailyMinutes + bm.beforePauseMinutes) * 10) / 10;
-    expect(screen.getByText(/^Planned:/).textContent).toMatch(new RegExp(`^Planned: ${mins} of \\d+(\\.\\d)? min \\(Break Mode\\)\\.$`));
-    expect(screen.getByText(/Safe to drop while paused/)).toBeTruthy();
+    expect(screen.getByText(/Não cobre escudos nem proteção de recursos/)).toBeTruthy();
+    const mins = (Math.round((bm.dailyMinutes + bm.beforePauseMinutes) * 10) / 10).toLocaleString("pt-BR");
+    expect(screen.getByText(/^Planejado:/).textContent).toMatch(new RegExp(`^Planejado: ${mins} de \\d+(,\\d)? min \\(Modo Pausa\\)\\.$`));
+    expect(screen.getByText(/Pode largar durante a pausa/)).toBeTruthy();
     expect(screen.queryByRole("radio")).toBeNull();
   });
 });

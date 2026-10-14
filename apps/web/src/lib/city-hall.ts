@@ -30,7 +30,7 @@ export function todayTop(included: readonly PlannedTask[], n = 3): PlannedTask[]
 export interface NextLevel {
   from: number;
   to: number;
-  /** Resource lines with an amount above zero, e.g. ["Food 1,200,000", ...]. */
+  /** Resource lines with an amount above zero, e.g. ["Comida 1.200.000", ...]. */
   resources: string[];
   items: string[];
   time: string | null;
@@ -39,7 +39,7 @@ export interface NextLevel {
   unreadable: boolean;
 }
 
-const fmt = (n: number): string => n.toLocaleString("en-US");
+const fmt = (n: number): string => n.toLocaleString("pt-BR");
 
 /** The next City Hall level's cost and requirement, or null at the top level or off the table. */
 export function nextLevel(rows: readonly ChRow[], cityHall: number): NextLevel | null {
@@ -53,7 +53,7 @@ export function nextLevel(rows: readonly ChRow[], cityHall: number): NextLevel |
     return null;
   }
   const resources = (
-    [["Food", cost.food], ["Wood", cost.wood], ["Stone", cost.stone], ["Gold", cost.gold]] as const
+    [["Comida", cost.food], ["Madeira", cost.wood], ["Pedra", cost.stone], ["Ouro", cost.gold]] as const
   ).filter(([, v]) => v > 0).map(([k, v]) => `${k} ${fmt(v)}`);
   return {
     from: cityHall,
@@ -93,17 +93,17 @@ export function cityAlerts(o: {
   unreadableNext: boolean;
 }): CityAlert[] {
   const out: CityAlert[] = [];
-  if (!o.hasProfile) out.push({ kind: "setup", text: "These are default answers. Answer 5 quick questions so the plan fits your account.", href: "/start/", link: "Start" });
+  if (!o.hasProfile) out.push({ kind: "setup", text: "Estas são respostas padrão. Responda a 5 perguntas rápidas para o plano combinar com a sua conta.", href: "/start/", link: "Começar" });
   if (o.mustDoMissing > 0) {
     out.push({
       kind: "mustdo",
-      text: `${o.mustDoMissing} must-do ${o.mustDoMissing === 1 ? "task does" : "tasks do"} not fit in ${o.budgetMinutes} min today.`,
-      href: "/city-hall/today/", link: "Pick more time",
+      text: `${o.mustDoMissing} ${o.mustDoMissing === 1 ? "tarefa essencial não cabe" : "tarefas essenciais não cabem"} em ${o.budgetMinutes} min hoje.`,
+      href: "/city-hall/today/", link: "Escolher mais tempo",
     });
   }
   for (const w of o.warnings) out.push({ kind: "warning", text: w });
-  if (o.kingdomDay !== null && o.kingdomDay > o.kvk1Day) out.push({ kind: "late", text: "Your kingdom is past KvK1: the KvK1 targets below are behind you.", href: "/guides/late-game/", link: "Late game guide" });
-  if (o.unreadableNext) out.push({ kind: "data", text: "The source table row for your next City Hall is garbled: check its cost in game." });
+  if (o.kingdomDay !== null && o.kingdomDay > o.kvk1Day) out.push({ kind: "late", text: "Seu reino já passou da KvK1: as metas da KvK1 abaixo ficaram para trás.", href: "/guides/late-game/", link: "Guia da fase final" });
+  if (o.unreadableNext) out.push({ kind: "data", text: "A linha da tabela de origem da sua próxima Prefeitura está ilegível: confira o custo no jogo." });
   return out;
 }
 
@@ -114,18 +114,18 @@ export interface StageTool {
 }
 
 const T = {
-  pack: { href: "/tools/pack-value/", title: "Pack value", why: "Check a pack's gems per dollar before you buy." },
-  buildings: { href: "/tools/buildings/", title: "Building costs", why: "Resources and time for the next levels." },
-  speedups: { href: "/tools/speedups/", title: "Speedups and time", why: "Add up your speedups against a long upgrade." },
-  vip: { href: "/tools/vip/", title: "Gems to VIP", why: "Days and gems to your next VIP level." },
-  kvk: { href: "/tools/kvk/", title: "KvK readiness", why: "A checklist before your kingdom's first KvK." },
-  healing: { href: "/tools/healing/", title: "Healing planner", why: "What one full hospital costs to heal." },
-  migration: { href: "/tools/migration/", title: "Migration checker", why: "Can you move, and what is missing." },
+  pack: { href: "/tools/pack-value/", title: "Valor de pacotes", why: "Confira as gemas por dólar de um pacote antes de comprar." },
+  buildings: { href: "/tools/buildings/", title: "Custo de construções", why: "Recursos e tempo para os próximos níveis." },
+  speedups: { href: "/tools/speedups/", title: "Acelerações e tempo", why: "Some suas acelerações contra uma melhoria longa." },
+  vip: { href: "/tools/vip/", title: "Gemas para VIP", why: "Dias e gemas até o seu próximo nível de VIP." },
+  kvk: { href: "/tools/kvk/", title: "Preparo para a KvK", why: "Uma checklist antes da primeira KvK do seu reino." },
+  healing: { href: "/tools/healing/", title: "Planejador de cura", why: "Quanto custa curar um hospital cheio." },
+  migration: { href: "/tools/migration/", title: "Verificador de migração", why: "Se você pode migrar e o que falta." },
 } satisfies Record<string, StageTool>;
 
 /**
  * The tools that matter at this stage (at most 3): growth tools before KvK, fight tools after;
- * spenders get Pack value first. "My commanders" is its own tile on the City Hall sheet.
+ * spenders get Pack value first. "Meus comandantes" is its own tile on the City Hall sheet.
  */
 export function stageTools(p: AccountProfile): StageTool[] {
   const early = p.kingdomStage === "pre_kvk";

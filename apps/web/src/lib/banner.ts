@@ -7,7 +7,7 @@ import type { SavedProfile } from "./store";
 
 export type AccountKind = "main" | "farm";
 export const ACCOUNT_KINDS: readonly AccountKind[] = ["main", "farm"];
-export const ACCOUNT_KIND_LABEL: Readonly<Record<AccountKind, string>> = { main: "Main account", farm: "Farm or alt" };
+export const ACCOUNT_KIND_LABEL: Readonly<Record<AccountKind, string>> = { main: "Conta principal", farm: "Farm ou alt" };
 
 export const BANNERS_KEY = "ko:banners:v1";
 /** Output size of a custom banner (3:4) and the most a stored data URL may take. */
@@ -73,14 +73,14 @@ export function localBannerStore(st: StorageLike | null = storage()): BannerStor
       return read()[id] ?? null;
     },
     async setBanner(id, image) {
-      if (image !== null && !isImage(image)) throw new Error("This image is too large or not a picture. Try a smaller one.");
+      if (image !== null && !isImage(image)) throw new Error("Esta imagem é grande demais ou não é uma figura. Tente uma menor.");
       const all = read();
       if (image === null) delete all[id];
       else all[id] = image;
       try {
         st?.setItem(BANNERS_KEY, JSON.stringify({ v: 1, banners: all }));
       } catch {
-        throw new Error("This browser has no room left for the image. Remove a custom banner or use a smaller image.");
+        throw new Error("Este navegador não tem mais espaço para a imagem. Remova um banner personalizado ou use uma imagem menor.");
       }
     },
   };
@@ -102,12 +102,12 @@ export function cropAt(w: number, h: number, fx = 0.5, fy = 0.5, aspect = BANNER
  * Browser only (canvas). Throws a message the user can act on.
  */
 export async function prepareBanner(file: File, fx = 0.5, fy = 0.5): Promise<string> {
-  if (!file.type.startsWith("image/")) throw new Error("Pick an image file (JPEG, PNG or WebP).");
+  if (!file.type.startsWith("image/")) throw new Error("Escolha um arquivo de imagem (JPEG, PNG ou WebP).");
   let bitmap: ImageBitmap;
   try {
     bitmap = await createImageBitmap(file);
   } catch {
-    throw new Error("This image could not be read. Try another file.");
+    throw new Error("Não foi possível ler esta imagem. Tente outro arquivo.");
   }
   const c = cropAt(bitmap.width, bitmap.height, fx, fy);
   for (const [w, q] of [[BANNER_WIDTH, 0.82], [BANNER_WIDTH, 0.65], [480, 0.6]] as const) {
@@ -119,7 +119,7 @@ export async function prepareBanner(file: File, fx = 0.5, fy = 0.5): Promise<str
     if (!url.startsWith("data:image/webp")) url = canvas.toDataURL("image/jpeg", q);
     if (url.length <= BANNER_MAX_CHARS) return url;
   }
-  throw new Error("This image is too detailed to store on this device. Try a simpler or smaller image.");
+  throw new Error("Esta imagem é detalhada demais para guardar neste aparelho. Tente uma imagem mais simples ou menor.");
 }
 
 /**

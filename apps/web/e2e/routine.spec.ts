@@ -30,25 +30,25 @@ const localDay = (page: Page, offset = 0) =>
 test("renders the plan for a saved profile", async ({ page }) => {
   await seed(page, { profileCode: CODE });
   await open(page);
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Today's routine");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Rotina de hoje");
   await expect(page.getByRole("link", { name: "F2P · CH 12" })).toHaveAttribute("href", "/me/");
-  await expect(page.getByText("Set up your profile")).toHaveCount(0);
-  await expect(page.getByRole("radio", { name: "My usual (30 min)" })).toBeChecked();
+  await expect(page.getByText("Configurar seu perfil")).toHaveCount(0);
+  await expect(page.getByRole("radio", { name: "Meu padrão (30 min)" })).toBeChecked();
   expect(await tasks(page).count()).toBeGreaterThan(0);
-  await expect(page.getByText(/pending measurement/).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Reality check" })).toBeVisible();
+  await expect(page.getByText(/medição pendente/).first()).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Checagem de realidade" })).toBeVisible();
 });
 
 test("without a profile: default plan and a set-up banner", async ({ page }) => {
   await open(page);
-  await expect(page.getByRole("link", { name: "Set up your profile" })).toHaveAttribute("href", "/start/");
+  await expect(page.getByRole("link", { name: "Configurar seu perfil" })).toHaveAttribute("href", "/start/");
   expect(await tasks(page).count()).toBeGreaterThan(0);
 });
 
 test("budget change changes the list and is saved", async ({ page }) => {
   await seed(page, { profileCode: CODE });
   await open(page);
-  await expect(page.getByRole("radio", { name: "My usual (30 min)" })).toBeChecked();
+  await expect(page.getByRole("radio", { name: "Meu padrão (30 min)" })).toBeChecked();
   const at30 = await tasks(page).count();
   await page.getByRole("radio", { name: "15 min" }).check();
   await expect(tasks(page)).not.toHaveCount(at30);
@@ -67,12 +67,12 @@ test("check-off persists after reload and resets on a new day", async ({ page })
   await seed(page, { profileCode: CODE, routine: { date: yesterday, done: ["vip-claim", "queues", "daily-ap-claim"] } });
   await open(page);
   const total = await tasks(page).count();
-  await expect(progress(page)).toHaveText(`0 of ${total} done`);
+  await expect(progress(page)).toHaveText(`0 de ${total} concluídas`);
   for (let i = 0; i < total; i++) await expect(tasks(page).nth(i)).not.toBeChecked();
 
   await tasks(page).first().check();
   await tasks(page).nth(1).check();
-  await expect(progress(page)).toHaveText(`2 of ${total} done`);
+  await expect(progress(page)).toHaveText(`2 de ${total} concluídas`);
   const s = await stored(page);
   expect(s.routine.date).toBe(await localDay(page));
   expect(s.routine.done).toHaveLength(2);
@@ -81,54 +81,54 @@ test("check-off persists after reload and resets on a new day", async ({ page })
   await expect(page.locator(".rt[data-ready]")).toBeAttached();
   await expect(tasks(page).first()).toBeChecked();
   await expect(tasks(page).nth(1)).toBeChecked();
-  await expect(progress(page)).toHaveText(`2 of ${total} done`);
+  await expect(progress(page)).toHaveText(`2 de ${total} concluídas`);
 });
 
 test("Break Mode shows the minimal set and persists", async ({ page }) => {
   await seed(page, { profileCode: CODE });
   await open(page);
-  const sw = page.getByRole("switch", { name: /Break Mode/ });
+  const sw = page.getByRole("switch", { name: /Modo Pausa/ });
   await sw.check();
-  await expect(page.getByRole("heading", { name: "Break Mode: the minimum" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Modo Pausa: o mínimo" })).toBeVisible();
   await expect(page.locator("#rt-task-queues")).toBeAttached();
   await expect(page.locator("#rt-task-gathering")).toBeAttached();
-  await expect(page.getByText(/^Planned: .* min \(Break Mode\)\.$/)).toBeVisible();
-  await expect(page.getByText(/Safe to drop while paused/)).toBeVisible();
-  await expect(page.getByText(/Pending research:/).first()).toBeVisible();
+  await expect(page.getByText(/^Planejado: .* min \(Modo Pausa\)\.$/)).toBeVisible();
+  await expect(page.getByText(/Pode largar durante a pausa/)).toBeVisible();
+  await expect(page.getByText(/Pesquisa pendente:/).first()).toBeVisible();
   await expect(page.getByRole("radio")).toHaveCount(0);
   const daily = await tasks(page).count();
   expect(daily).toBeGreaterThan(0);
   expect((await stored(page)).routinePrefs.breakMode).toBe(true);
   await page.reload();
   await expect(page.locator(".rt[data-ready]")).toBeAttached();
-  await expect(page.getByRole("switch", { name: /Break Mode/ })).toBeChecked();
+  await expect(page.getByRole("switch", { name: /Modo Pausa/ })).toBeChecked();
   await expect(tasks(page)).toHaveCount(daily);
-  await page.getByRole("switch", { name: /Break Mode/ }).uncheck();
+  await page.getByRole("switch", { name: /Modo Pausa/ }).uncheck();
   await expect(page.getByRole("radio", { name: "15 min" })).toBeVisible();
 });
 
 test("calendar file downloads with a daily event", async ({ page }) => {
   await seed(page, { profileCode: CODE });
   await open(page);
-  await page.getByLabel("Reminder time").fill("07:30");
+  await page.getByLabel("Horário do lembrete").fill("07:30");
   const [download] = await Promise.all([
     page.waitForEvent("download"),
-    page.getByRole("button", { name: "Download calendar file" }).click(),
+    page.getByRole("button", { name: "Baixar arquivo de calendário" }).click(),
   ]);
   expect(download.suggestedFilename()).toBe("kingdomops-routine.ics");
   const text = readFileSync((await download.path())!, "utf8");
   expect(text.startsWith("BEGIN:VCALENDAR\r\n")).toBe(true);
   expect(text).toContain("RRULE:FREQ=DAILY");
   expect(text).toMatch(/DTSTART:\d{8}T073000\r\n/);
-  expect(text).toContain("SUMMARY:KingdomOps routine (");
-  await expect(page.getByText("Saved kingdomops-routine.ics", { exact: false })).toBeVisible();
+  expect(text).toContain("SUMMARY:Rotina do KingdomOps (");
+  await expect(page.getByText("kingdomops-routine.ics salvo", { exact: false })).toBeVisible();
 
   // Q2 P2-9 / P3: in Break Mode the file follows the Break Mode list, and DURATION matches its minutes.
-  await page.getByRole("switch", { name: /Break Mode/ }).check();
-  const planned = Number(/Planned: ([\d.]+) of/.exec((await page.getByText(/^Planned:/).textContent()) ?? "")![1]);
-  const [second] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Download calendar file" }).click()]);
+  await page.getByRole("switch", { name: /Modo Pausa/ }).check();
+  const planned = Number(/Planejado: ([\d,]+) de/.exec((await page.getByText(/^Planejado:/).textContent()) ?? "")![1]!.replace(",", "."));
+  const [second] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Baixar arquivo de calendário" }).click()]);
   const ics = readFileSync((await second.path())!, "utf8").replace(/\r\n /g, "");
-  expect(ics).toContain(`SUMMARY:KingdomOps routine (${planned} min)`);
+  expect(ics).toContain(`SUMMARY:Rotina do KingdomOps (${String(planned).replace(".", "\\,")} min)`);
   expect(ics).toContain(`DURATION:PT${Math.max(1, Math.ceil(planned))}M`);
   expect(ics).toContain("Refill queues");
 });

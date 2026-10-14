@@ -38,20 +38,20 @@ describe("login", () => {
     render(h(Login, { navigate }));
     const email = await screen.findByLabelText("E-mail");
     fireEvent.input(email, { target: { value: "p@example.test" } });
-    fireEvent.click(screen.getByText("E-mail me a sign-in link"));
-    const code = await screen.findByLabelText("Code from the e-mail");
+    fireEvent.click(screen.getByText("Receber um link de login por e-mail"));
+    const code = await screen.findByLabelText("Código do e-mail");
     expect(f.calls[0]!.op).toBe("auth.signInWithOtp");
     fireEvent.input(code, { target: { value: "123456" } });
-    fireEvent.click(screen.getByText("Sign in"));
+    fireEvent.click(screen.getByText("Entrar"));
     await waitFor(() => expect(navigate).toHaveBeenCalledWith("/auth/callback/?next=%2Fme%2F"));
-    expect(screen.getByText(/never asks for your Rise of Kingdoms or Lilith account/)).toBeTruthy();
+    expect(screen.getByText(/nunca pede a sua conta ou senha do Rise of Kingdoms ou da Lilith/)).toBeTruthy();
   });
   it("shows the error instead of moving on", async () => {
     setSupabaseForTests(fakeSupabase({ auth: { signInWithOtp: { message: "rate limit", status: 429 } } }).client);
     render(h(Login, null));
     fireEvent.input(await screen.findByLabelText("E-mail"), { target: { value: "p@example.test" } });
-    fireEvent.click(screen.getByText("E-mail me a sign-in link"));
-    expect((await screen.findByRole("alert")).textContent).toMatch(/Too many tries/);
+    fireEvent.click(screen.getByText("Receber um link de login por e-mail"));
+    expect((await screen.findByRole("alert")).textContent).toMatch(/Muitas tentativas/);
   });
 });
 
@@ -65,11 +65,11 @@ describe("public profile view", () => {
     }).client);
     render(h(ProfileView, { handle: "bob" }));
     expect(await screen.findByRole("heading", { level: 1, name: "Bob" })).toBeTruthy();
-    expect(screen.getByText("Ownership proven")).toBeTruthy();
-    expect(screen.getByText("Unverified (self-declared)")).toBeTruthy();
+    expect(screen.getByText("Posse comprovada")).toBeTruthy();
+    expect(screen.getByText("Não verificada (autodeclarada)")).toBeTruthy();
     // Signed out: no report/block, a sign-in link instead.
-    expect(screen.queryByText("Report")).toBeNull();
-    expect(screen.getByText("Sign in to report or block")).toBeTruthy();
+    expect(screen.queryByText("Denunciar")).toBeNull();
+    expect(screen.getByText("Entrar para denunciar ou bloquear")).toBeTruthy();
   });
   it("missing or private profile", async () => {
     setSupabaseForTests(fakeSupabase().client);
@@ -80,16 +80,16 @@ describe("public profile view", () => {
     const f = fakeSupabase({ session: { user: { id: ME } }, tables: { profiles: [bob] } });
     setSupabaseForTests(f.client);
     render(h(ProfileView, { handle: "bob" }));
-    fireEvent.click(await screen.findByText("Report"));
-    fireEvent.click(screen.getByText("Send report"));
-    expect((await screen.findByRole("alert")).textContent).toMatch(/Pick what is wrong/);
-    fireEvent.click(screen.getByLabelText("A child may be at risk"));
-    fireEvent.click(screen.getByText("Send report"));
-    await screen.findByText(/The report was sent/);
+    fireEvent.click(await screen.findByText("Denunciar"));
+    fireEvent.click(screen.getByText("Enviar denúncia"));
+    expect((await screen.findByRole("alert")).textContent).toMatch(/Escolha o que há de errado/);
+    fireEvent.click(screen.getByLabelText("Uma criança pode estar em risco"));
+    fireEvent.click(screen.getByText("Enviar denúncia"));
+    await screen.findByText(/A denúncia foi enviada/);
     expect(f.tables.reports![0]).toMatchObject({ target_id: BOB, reason: "minor_safety" });
-    fireEvent.click(screen.getByText("Block"));
-    fireEvent.click(screen.getAllByText("Block").at(-1)!);
-    await screen.findByText(/You blocked this player/);
+    fireEvent.click(screen.getByText("Bloquear"));
+    fireEvent.click(screen.getAllByText("Bloquear").at(-1)!);
+    await screen.findByText(/Você bloqueou este jogador/);
     expect(f.tables.blocks![0]).toMatchObject({ blocked_id: BOB });
   });
 });
@@ -99,15 +99,15 @@ describe("profile editor", () => {
     const f = fakeSupabase({ session: { user: { id: ME } }, tables: { profiles: [{ id: ME, handle: null, display_name: null, bio: null, kingdom_number: null, avatar_path: null, banner_path: null, visibility: "private", verified_level: 1 }] } });
     setSupabaseForTests(f.client);
     render(h(ProfileEdit, null));
-    fireEvent.input(await screen.findByLabelText(/^Handle/), { target: { value: "Alice" } });
+    fireEvent.input(await screen.findByLabelText(/^Identificador/), { target: { value: "Alice" } });
     fireEvent.input(screen.getByLabelText(/^Bio/), { target: { value: "see https://spam.test" } });
-    fireEvent.click(screen.getByText("Save profile"));
-    expect(await screen.findByText("Links are not allowed in the bio.")).toBeTruthy();
+    fireEvent.click(screen.getByText("Salvar perfil"));
+    expect(await screen.findByText("Links não são permitidos na bio.")).toBeTruthy();
     expect(f.calls.some((c) => c.op === "profiles.upsert")).toBe(false);
     fireEvent.input(screen.getByLabelText(/^Bio/), { target: { value: "Farmer" } });
-    fireEvent.click(screen.getByLabelText(/Anyone with the link/));
-    fireEvent.click(screen.getByText("Save profile"));
-    await screen.findByText("Profile saved.");
+    fireEvent.click(screen.getByLabelText(/Qualquer pessoa com o link/));
+    fireEvent.click(screen.getByText("Salvar perfil"));
+    await screen.findByText("Perfil salvo.");
     expect(f.tables.profiles![0]).toMatchObject({ handle: "alice", bio: "Farmer", visibility: "public" });
   });
   it("offers this device's data once signed in, and the upload keeps it on the device", async () => {
@@ -115,20 +115,20 @@ describe("profile editor", () => {
     const f = fakeSupabase({ session: { user: { id: ME } }, tables: { profiles: [{ id: ME, visibility: "private", verified_level: 1 }] }, rpc: { claim_site_achievement: () => ({ data: false }) } });
     setSupabaseForTests(f.client);
     render(h(ProfileEdit, null));
-    fireEvent.click(await screen.findByText("Upload to my account"));
-    await screen.findByText(/Your data on this device is unchanged/);
+    fireEvent.click(await screen.findByText("Enviar para a minha conta"));
+    await screen.findByText(/Seus dados neste aparelho não mudaram/);
     expect(f.tables.local_imports).toHaveLength(1);
     expect(localStorage.getItem("ko:v1")).toContain("profileCode");
   });
-  it("delete account needs DELETE typed", async () => {
+  it("delete account needs APAGAR typed", async () => {
     const f = fakeSupabase({ session: { user: { id: ME } }, tables: { profiles: [{ id: ME, visibility: "private", verified_level: 1 }] }, rpc: { delete_my_account: () => ({ data: null }) } });
     setSupabaseForTests(f.client);
     const navigate = vi.fn();
     render(h(ProfileEdit, { navigate }));
-    fireEvent.click(await screen.findByText("Delete my account"));
-    expect(await screen.findByText("Type DELETE to confirm.")).toBeTruthy();
-    fireEvent.input(screen.getByLabelText("Type DELETE to confirm"), { target: { value: "delete" } });
-    fireEvent.click(screen.getByText("Delete my account"));
+    fireEvent.click(await screen.findByText("Apagar minha conta"));
+    expect(await screen.findByText("Digite APAGAR para confirmar.")).toBeTruthy();
+    fireEvent.input(screen.getByLabelText("Digite APAGAR para confirmar"), { target: { value: "apagar" } });
+    fireEvent.click(screen.getByText("Apagar minha conta"));
     await waitFor(() => expect(navigate).toHaveBeenCalledWith("/?account=deleted"));
     expect(f.calls.some((c) => c.op === "rpc.delete_my_account")).toBe(true);
   });
@@ -145,14 +145,14 @@ describe("verify this account", () => {
     });
     setSupabaseForTests(f.client);
     const { container } = render(h(VerifyAccount, { now: () => now }));
-    fireEvent.click(await screen.findByRole("button", { name: "Verify this account" }));
+    fireEvent.click(await screen.findByRole("button", { name: "Verificar esta conta" }));
     await waitFor(() => expect(container.querySelector('[data-code-card="042719"]'), container.textContent ?? "").toBeTruthy());
     expect(container.querySelector("[data-countdown]")!.textContent).toContain("60:00");
-    expect(screen.getByText(/Governor Profile → Album → add a photo/)).toBeTruthy();
-    expect(screen.getByText(/delete the photo from your Album/)).toBeTruthy();
+    expect(screen.getByText(/Perfil do Governador → Álbum → adicionar foto/)).toBeTruthy();
+    expect(screen.getByText(/apagar a foto do seu Álbum/)).toBeTruthy();
     // Sending without screenshots is refused on the page.
-    fireEvent.click(screen.getByText("Send for review"));
-    expect((await screen.findByText(/Upload all 3 screenshots first/)).textContent).toBeTruthy();
+    fireEvent.click(screen.getByText("Enviar para análise"));
+    expect((await screen.findByText(/Envie primeiro os 3 prints/)).textContent).toBeTruthy();
     expect(f.calls.some((c) => c.op === "rpc.submit_verification")).toBe(false);
   });
 });

@@ -33,11 +33,11 @@ export const PLAYING_AS_QUESTION: PlayingAsQuestion = {
   type: "choice",
   nullable: false,
   default: "player",
-  label: "How will you use KingdomOps?",
-  help: "Picks your tabs. You can switch any time on the Me tab.",
+  label: "Como você vai usar o KingdomOps?",
+  help: "Define as suas abas. Você pode trocar quando quiser na aba Eu.",
   options: [
-    { value: "player", label: "As a player", help: "Your City Hall, today's must-dos, guides and tools." },
-    { value: "leader", label: "As a kingdom or alliance leader", help: "Kingdom rules, members, recruitment and events, plus the guides." },
+    { value: "player", label: "Como jogador", help: "Sua Prefeitura, o essencial de hoje, guias e ferramentas." },
+    { value: "leader", label: "Como líder de reino ou de aliança", help: "Regras do reino, membros, recrutamento e eventos, além dos guias." },
   ],
 };
 
@@ -97,31 +97,32 @@ export function setAnswer(s: FlowState, value: unknown): FlowState {
   return { ...s, answers: { ...s.answers, [q.id]: value }, error: null };
 }
 
-const fmt = (n: number): string => n.toLocaleString("en-US");
+const fmt = (n: number): string => n.toLocaleString("pt-BR");
 
-/** "from 1 to 25", "from 0 to 10,000,000 USD". */
+/** "de 1 a 25", "de 0 a 10.000.000 USD". */
 export function rangeText(q: NumberQuestion): string {
-  return `from ${fmt(q.min)} to ${fmt(q.max)}${q.unit ? ` ${q.unit}` : ""}`;
+  return `de ${fmt(q.min)} a ${fmt(q.max)}${q.unit ? ` ${q.unit}` : ""}`;
 }
 
-/** Text typed in a number field: spaces, commas and underscores are digit grouping. */
+/** Text typed in a number field: spaces, commas and underscores are digit grouping, and so is a pt-BR dot ("1.200"). */
 export function cleanNumberText(raw: string): string {
-  return raw.replace(/[\s,_]/g, "");
+  const s = raw.replace(/[\s,_]/g, "");
+  return /^-?\d{1,3}(\.\d{3})+$/.test(s) ? s.replace(/\./g, "") : s;
 }
 
 /** Parse one number answer; errors say how to fix it. */
 export function parseNumberAnswer(q: NumberQuestion, raw: unknown): { value: number | null } | { error: string } {
   if (raw === null || raw === undefined || (typeof raw === "string" && cleanNumberText(raw) === "")) {
     if (q.nullable) return { value: null };
-    return { error: `Enter a number ${rangeText(q)}.` };
+    return { error: `Digite um número ${rangeText(q)}.` };
   }
   const n = typeof raw === "number" ? raw : typeof raw === "string" ? Number(cleanNumberText(raw)) : NaN;
   if (typeof raw === "string" && !/^-?\d*\.?\d*$/.test(cleanNumberText(raw))) {
-    return { error: `Use digits only: a whole number ${rangeText(q)}.` };
+    return { error: `Use só dígitos: um número inteiro ${rangeText(q)}.` };
   }
-  if (!Number.isFinite(n)) return { error: `Use digits only: a whole number ${rangeText(q)}.` };
-  if (q.integer && !Number.isInteger(n)) return { error: `Use a whole number ${rangeText(q)}.` };
-  if (n < q.min || n > q.max) return { error: `${fmt(n)} is out of range. Enter a number ${rangeText(q)}.` };
+  if (!Number.isFinite(n)) return { error: `Use só dígitos: um número inteiro ${rangeText(q)}.` };
+  if (q.integer && !Number.isInteger(n)) return { error: `Use um número inteiro ${rangeText(q)}.` };
+  if (n < q.min || n > q.max) return { error: `${fmt(n)} está fora do intervalo. Digite um número ${rangeText(q)}.` };
   return { value: n };
 }
 
@@ -129,10 +130,10 @@ export function parseNumberAnswer(q: NumberQuestion, raw: unknown): { value: num
 export function parseStep(q: FlowQuestion, raw: unknown): { value: unknown } | { error: string } {
   if (q.type === "number") return parseNumberAnswer(q, raw);
   if (q.type === "boolean") {
-    return typeof raw === "boolean" ? { value: raw } : { error: "Pick Yes or No." };
+    return typeof raw === "boolean" ? { value: raw } : { error: "Escolha Sim ou Não." };
   }
   if (raw === null && q.nullable) return { value: null };
-  return (q.options as ReadonlyArray<QuestionOption<unknown>>).some((o) => o.value === raw) ? { value: raw } : { error: "Pick one of the options." };
+  return (q.options as ReadonlyArray<QuestionOption<unknown>>).some((o) => o.value === raw) ? { value: raw } : { error: "Escolha uma das opções." };
 }
 
 /** Profile answers as typed values for validateAnswers: number text parsed, unanswered and "playingAs" left out. */
@@ -157,7 +158,7 @@ export function normalizeAnswers(answers: Answers): Record<string, unknown> {
  */
 export function validateStep(s: FlowState): { value: unknown } | { error: string } {
   const q = questionAt(s.step);
-  if (!q) return { error: "No question at this step." };
+  if (!q) return { error: "Não há pergunta neste passo." };
   const r = parseStep(q, currentValue(s, q));
   if ("error" in r || q.id === "playingAs") return r;
   const all = validateAnswers({ ...normalizeAnswers(s.answers), [q.id]: r.value });
@@ -287,7 +288,7 @@ export function finish(answers: Answers): Outcome {
       errors: r.errors.map((e) => ({ step: Math.max(0, STEPS.findIndex((q) => q.id === e.field)), message: e.message })),
     };
   }
-  const notes = cleared.map((f) => `${QUESTIONS.find((q) => q.id === f)?.label ?? f} Your old answer no longer fits, so it was cleared. Add it again on the Me tab.`);
+  const notes = cleared.map((f) => `${QUESTIONS.find((q) => q.id === f)?.label ?? f} Sua resposta antiga deixou de combinar e foi apagada. Informe-a de novo na aba Eu.`);
   return { ok: true, profile: r.profile, warnings: [...notes, ...r.warnings], code: encodeProfile(r.profile), playingAs };
 }
 
@@ -303,8 +304,8 @@ export function guideUrl(code: string): string {
 /** Answer text for the summary. Option and preset labels come from the core. */
 export function answerText(q: FlowQuestion, value: unknown): string {
   const options = q.type === "choice" ? (q.options as ReadonlyArray<QuestionOption<unknown>>) : [];
-  if (value === null) return q.type === "choice" ? (options.find((o) => o.value === null)?.label ?? "Skipped") : "Skipped";
-  if (q.type === "boolean") return value ? "Yes" : "No";
+  if (value === null) return q.type === "choice" ? (options.find((o) => o.value === null)?.label ?? "Pulada") : "Pulada";
+  if (q.type === "boolean") return value ? "Sim" : "Não";
   if (q.type === "choice") return options.find((o) => o.value === value)?.label ?? String(value);
   const n = typeof value === "number" ? value : Number(cleanNumberText(String(value)));
   if (!Number.isFinite(n)) return String(value);

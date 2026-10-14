@@ -1,6 +1,6 @@
 // Site navigation (UX stage 1, produto/roadmap-autonomo.md "Etapa UX 1"): two tab sets, one per
 // "Playing as" choice. Both are rendered on every page; <html data-role> (set before paint by
-// ROLE_BOOT_SCRIPT in lib/role.ts) shows one of them. Labels are English and live here only.
+// ROLE_BOOT_SCRIPT in lib/role.ts) shows one of them. Labels are in pt-BR and live here only.
 import type { PlayingAs } from "./store";
 
 export type IconName = "cityhall" | "tools" | "you" | "kingdom" | "members" | "events";
@@ -23,17 +23,17 @@ export const GUIDE_PATHS: readonly string[] = ["/guides/", "/guide/", "/commande
 
 /** Player: City Hall · Tools · Me. */
 export const PLAYER_NAV: readonly NavItem[] = [
-  { href: "/city-hall/", label: "City Hall", short: "City Hall", icon: "cityhall", match: ["/city-hall/", "/routine/"] },
-  { href: "/tools/", label: "Tools", short: "Tools", icon: "tools", match: ["/tools/", "/farms/"] },
-  { href: "/me/", label: "Me", short: "Me", icon: "you", match: ["/me/", "/start/", "/card/", "/crest/", ...GUIDE_PATHS] },
+  { href: "/city-hall/", label: "Prefeitura", short: "Prefeitura", icon: "cityhall", match: ["/city-hall/", "/routine/"] },
+  { href: "/tools/", label: "Ferramentas", short: "Ferramentas", icon: "tools", match: ["/tools/", "/farms/"] },
+  { href: "/me/", label: "Eu", short: "Eu", icon: "you", match: ["/me/", "/start/", "/card/", "/crest/", ...GUIDE_PATHS] },
 ];
 
 /** Leader: Kingdom · Members · Events · Me. */
 export const LEADER_NAV: readonly NavItem[] = [
-  { href: "/kingdom/", label: "Kingdom", short: "Kingdom", icon: "kingdom", match: ["/kingdom/", "/crest/"] },
-  { href: "/kingdom/requirements/", label: "Members", short: "Members", icon: "members", match: ["/kingdom/requirements/", "/kingdom/recruit/", "/kingdom/my/"] },
-  { href: "/kingdom/mge/", label: "Events", short: "Events", icon: "events", match: ["/kingdom/mge/", "/tools/kvk/"] },
-  { href: "/me/", label: "Me", short: "Me", icon: "you", match: ["/me/", "/start/", "/card/", ...GUIDE_PATHS] },
+  { href: "/kingdom/", label: "Reino", short: "Reino", icon: "kingdom", match: ["/kingdom/", "/crest/"] },
+  { href: "/kingdom/requirements/", label: "Membros", short: "Membros", icon: "members", match: ["/kingdom/requirements/", "/kingdom/recruit/", "/kingdom/my/"] },
+  { href: "/kingdom/mge/", label: "Eventos", short: "Eventos", icon: "events", match: ["/kingdom/mge/", "/tools/kvk/"] },
+  { href: "/me/", label: "Eu", short: "Eu", icon: "you", match: ["/me/", "/start/", "/card/", ...GUIDE_PATHS] },
 ];
 
 export const NAVS: Readonly<Record<PlayingAs, readonly NavItem[]>> = { player: PLAYER_NAV, leader: LEADER_NAV };
@@ -43,9 +43,9 @@ export const HOME_FOR: Readonly<Record<PlayingAs, string>> = { player: "/city-ha
 
 /** Off-nav pages, linked once from the footer. */
 export const FOOTER_LINKS: readonly { href: string; label: string }[] = [
-  { href: "/?about", label: "About KingdomOps" },
-  { href: "/trust/", label: "Trust & privacy" },
-  { href: "/brand/", label: "Brand" },
+  { href: "/?about", label: "Sobre o KingdomOps" },
+  { href: "/trust/", label: "Confiança e privacidade" },
+  { href: "/brand/", label: "Marca" },
 ];
 
 const norm = (p: string): string => (p.endsWith("/") ? p : `${p}/`);

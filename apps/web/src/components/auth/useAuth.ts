@@ -31,7 +31,7 @@ export function useAuth(): AuthState {
         unsubscribe = () => sub.data.subscription.unsubscribe();
       })
       .catch(() => {
-        if (alive) setState({ status: "error", message: "The sign-in service could not load. Check your connection and reload." });
+        if (alive) setState({ status: "error", message: "O serviço de login não carregou. Verifique sua conexão e recarregue a página." });
       });
     return () => {
       alive = false;

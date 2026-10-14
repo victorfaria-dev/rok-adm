@@ -52,7 +52,7 @@ describe("first-login upload plan", () => {
   it("the backup never carries the Discord webhook", () => {
     const plan = planUpload(device())!;
     expect(JSON.stringify(plan.backup)).not.toContain("webhooks/secret");
-    expect(plan.summary.map((s) => s.label)).toContain("Farms & shipment log");
+    expect(plan.summary.map((s) => s.label)).toContain("Farms e registro de envios");
   });
   it("asks again only when the device data changed", () => {
     const st = device();
@@ -67,8 +67,8 @@ describe("first-login upload plan", () => {
     expect(fingerprint("a")).not.toBe(fingerprint("b"));
   });
   it("labels the device without identifying it", () => {
-    expect(deviceLabel("Mozilla/5.0 (Linux; Android 14) AppleWebKit Chrome/120 Mobile Safari/537")).toBe("Chrome on Android");
-    expect(deviceLabel("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) AppleWebKit Version/17 Mobile Safari/604")).toBe("Safari on iOS");
+    expect(deviceLabel("Mozilla/5.0 (Linux; Android 14) AppleWebKit Chrome/120 Mobile Safari/537")).toBe("Chrome no Android");
+    expect(deviceLabel("Mozilla/5.0 (iPhone; CPU iPhone OS 17_0) AppleWebKit Version/17 Mobile Safari/604")).toBe("Safari no iOS");
   });
 });
 
@@ -78,13 +78,13 @@ describe("performUpload (fake client)", () => {
     const before = JSON.stringify([...st.m]);
     const f = fakeSupabase({ session: { user: { id: U } } });
     const plan = planUpload(st)!;
-    expect(await performUpload(f.client, plan, "Chrome on Android")).toEqual({ ok: true, cities: 3 });
+    expect(await performUpload(f.client, plan, "Chrome no Android")).toEqual({ ok: true, cities: 3 });
     const ops = f.calls.map((c) => c.op);
     expect(ops.indexOf("local_imports.insert")).toBeLessThan(ops.indexOf("accounts.upsert"));
-    expect(f.tables.local_imports![0]).toMatchObject({ user_id: U, device_label: "Chrome on Android" });
+    expect(f.tables.local_imports![0]).toMatchObject({ user_id: U, device_label: "Chrome no Android" });
     expect(f.calls.find((c) => c.op === "accounts.upsert")!.args[1]).toEqual({ onConflict: "user_id,local_id" });
     // Second upload updates, does not duplicate.
-    await performUpload(f.client, plan, "Chrome on Android");
+    await performUpload(f.client, plan, "Chrome no Android");
     expect(f.tables.accounts).toHaveLength(3);
     expect(JSON.stringify([...st.m])).toBe(before);
   });

@@ -12,7 +12,7 @@ test("app areas open without sign-in and carry no route guard", async ({ page })
   }
   // No account panel and no dev notice in the production build.
   await page.goto("/me/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Me: Governor");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Eu: Governador");
   await expect(page.locator("[data-account-panel]")).toHaveCount(0);
   await expect(page.locator("[data-auth-dev-notice]")).toHaveCount(0);
 });
@@ -27,10 +27,10 @@ test("the landing page does not load Supabase", async ({ page }) => {
 });
 
 for (const [path, text] of [
-  ["/login/", "Accounts are not switched on yet"],
-  ["/u/?h=bob", "Player profiles are not switched on yet."],
-  ["/me/profile/", "Accounts are not switched on yet, so there is no public profile to edit"],
-  ["/me/verify/", "Accounts are not switched on yet, so there is nothing to verify."],
+  ["/login/", "As contas ainda não estão ativadas"],
+  ["/u/?h=bob", "Os perfis de jogadores ainda não estão ativados."],
+  ["/me/profile/", "As contas ainda não estão ativadas, então não há perfil público para editar"],
+  ["/me/verify/", "As contas ainda não estão ativadas, então não há nada para verificar."],
 ] as const) {
   test(`${path} says accounts are off and passes axe`, async ({ page }) => {
     await page.goto(path);

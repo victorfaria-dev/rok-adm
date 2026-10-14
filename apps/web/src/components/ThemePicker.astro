@@ -3,18 +3,18 @@ import Icon from "./Icon.astro";
 interface Props { id: string; placement?: "down" | "up" }
 const { id, placement = "down" } = Astro.props;
 const options = [
-  { value: "dark", label: "Dark" },
-  { value: "light", label: "Light" },
-  { value: "system", label: "System" },
+  { value: "dark", label: "Escuro" },
+  { value: "light", label: "Claro" },
+  { value: "system", label: "Sistema" },
 ];
 ---
 <details class:list={["theme", placement]} data-theme-picker>
-  <summary aria-label="Theme">
+  <summary aria-label="Tema">
     <Icon name="theme" />
-    <span class="label">Theme</span>
+    <span class="label">Tema</span>
   </summary>
   <fieldset>
-    <legend class="visually-hidden">Theme</legend>
+    <legend class="visually-hidden">Tema</legend>
     {options.map((o) => (
       <label>
         <input type="radio" name={`theme-${id}`} id={`theme-${id}-${o.value}`} value={o.value} />

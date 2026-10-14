@@ -23,14 +23,14 @@ test("export holds every section but never the webhook; restore shows the diff a
   await seedAll(page);
   await page.goto("/me/#me-row-backup"); // UX stage 1: the Backup row opens from its link
   await hydrated(page);
-  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Back up everything" }).click()]);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: "Fazer backup de tudo" }).click()]);
   expect(download.suggestedFilename()).toMatch(/^kingdomops-backup-\d{4}-\d{2}-\d{2}\.json$/);
   const file = JSON.parse(readFileSync((await download.path())!, "utf8"));
   expect(file.app).toBe("kingdomops-backup");
   expect(file.v).toBe(1);
   expect(Object.keys(file.keys).sort()).toEqual(["ko:card:v1", "ko:farms:v1", "ko:v1"]);
   expect(JSON.stringify(file)).not.toContain("webhooks");
-  await expect(page.locator("[data-backup-status]")).toContainText("3 sections");
+  await expect(page.locator("[data-backup-status]")).toContainText("3 seções");
 
   // Change the device, then restore: the plan lists the differences and writes nothing yet.
   file.keys["ko:farms:v1"].showHypotheses = true;
@@ -38,15 +38,15 @@ test("export holds every section but never the webhook; restore shows the diff a
   await page.evaluate(() => localStorage.setItem("ko:card:v1", JSON.stringify({ v: 1, name: "Bo", tag: "", color: "jade", reduceMotion: null })));
   await page.locator("[data-backup-file]").setInputFiles({ name: "b.json", mimeType: "application/json", buffer: Buffer.from(JSON.stringify(file)) });
   const plan = page.locator("[data-restore-plan]");
-  await expect(plan.getByRole("heading", { name: "Restore this backup?" })).toBeFocused();
+  await expect(plan.getByRole("heading", { name: "Restaurar este backup?" })).toBeFocused();
   await expect(plan.locator('[data-restore-row="ko:card:v1"]')).toHaveAttribute("data-change", "replace");
-  await expect(plan.locator('[data-restore-row="ko:card:v1"]')).toContainText("Here now: Bo");
-  await expect(plan.locator('[data-restore-row="ko:card:v1"]')).toContainText("In the file: Ana [K1]");
+  await expect(plan.locator('[data-restore-row="ko:card:v1"]')).toContainText("Aqui agora: Bo");
+  await expect(plan.locator('[data-restore-row="ko:card:v1"]')).toContainText("No arquivo: Ana [K1]");
   await expect(plan.locator('[data-restore-row="ko:v1"]')).toHaveAttribute("data-change", "same");
   await expect(plan.locator('[data-restore-row="ko:tools:v1"]')).toHaveAttribute("data-change", "add");
   expect(await page.evaluate(() => localStorage.getItem("ko:tools:v1"))).toBeNull();
 
-  await plan.getByRole("button", { name: "Restore 3 sections" }).click();
+  await plan.getByRole("button", { name: "Restaurar 3 seções" }).click();
   await page.waitForLoadState("load");
   await hydrated(page);
   const after = await page.evaluate(() => ({
@@ -66,14 +66,14 @@ test("a wrong file is refused with a message; cancel leaves the device as it was
   await hydrated(page);
   const input = page.locator("[data-backup-file]");
   await input.setInputFiles({ name: "x.json", mimeType: "application/json", buffer: Buffer.from('{"app":"kingdomops","v":1}') });
-  await expect(page.getByRole("alert").filter({ hasText: "not a KingdomOps backup" })).toBeVisible();
+  await expect(page.getByRole("alert").filter({ hasText: "não é um backup do KingdomOps" })).toBeVisible();
   await input.setInputFiles({
     name: "b.json", mimeType: "application/json",
     buffer: Buffer.from(JSON.stringify({ app: "kingdomops-backup", v: 1, keys: { "ko:card:v1": { v: 1, name: "Zed", tag: "", color: "jade", reduceMotion: null } } })),
   });
-  await page.locator("[data-restore-plan]").getByRole("button", { name: "Cancel" }).click();
+  await page.locator("[data-restore-plan]").getByRole("button", { name: "Cancelar" }).click();
   await expect(page.locator("[data-restore-plan]")).toHaveCount(0);
-  await expect(page.locator("[data-backup-status]")).toHaveText("Restore cancelled.");
+  await expect(page.locator("[data-backup-status]")).toHaveText("Restauração cancelada.");
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem("ko:card:v1")!).name)).toBe("Ana");
 });
 

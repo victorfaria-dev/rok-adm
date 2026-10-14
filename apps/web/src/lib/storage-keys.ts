@@ -17,19 +17,19 @@ export interface StorageKeyInfo {
 }
 
 export const STORAGE_KEYS: readonly StorageKeyInfo[] = [
-  { key: "ko:v1", area: "local", name: "Profile & answers, accounts, routine ticks, commander checks, playing as and theme", backup: true },
-  { key: "ko:card:v1", area: "local", name: "Governor card", backup: true },
-  { key: "ko:crest:v1", area: "local", name: "Alliance crest", backup: true },
-  { key: "ko:tools:v1", area: "local", name: "Tool inputs (calculators, shared inventory, checklists)", backup: true },
-  { key: "ko:farms:v1", area: "local", name: "Farms & shipment log", backup: true },
-  { key: "ko:kingdom:v1", area: "local", name: "Kingdom council documents (rules, requirements, MGE ledger, recruiting post, seed plans)", backup: true },
-  { key: "ko:banners:v1", area: "local", name: "City card banners", backup: false, note: "Images: large; pick them again after a restore." },
-  { key: "ko:kingdom:webhook:v1", area: "local", name: "Discord webhook URL", backup: false, note: "A secret: anyone with it can post in that channel." },
-  { key: "ko:auth:v1", area: "local", name: "Sign-in session", backup: false, note: "A secret: it keeps you signed in on this device." },
-  { key: "ko:auth:upload:v1", area: "local", name: "Account upload choices", backup: false, note: "About this device only: what you already uploaded to your account or chose to keep here." },
-  { key: "ko:farms:probe", area: "local", name: "Storage check (written and removed at once)", backup: false, note: "Throwaway." },
-  { key: "ko:kingdom:probe", area: "local", name: "Storage check (written and removed at once)", backup: false, note: "Throwaway." },
-  { key: "ko:sting", area: "session", name: "Logo animation already played (this tab only)", backup: false, note: "Throwaway." },
+  { key: "ko:v1", area: "local", name: "Perfil e respostas, contas, marcações da rotina, checagens de comandantes, modo de uso (jogador/líder) e tema", backup: true },
+  { key: "ko:card:v1", area: "local", name: "Cartão do governador", backup: true },
+  { key: "ko:crest:v1", area: "local", name: "Brasão da aliança", backup: true },
+  { key: "ko:tools:v1", area: "local", name: "Dados das ferramentas (calculadoras, inventário compartilhado, checklists)", backup: true },
+  { key: "ko:farms:v1", area: "local", name: "Farms e registro de envios", backup: true },
+  { key: "ko:kingdom:v1", area: "local", name: "Documentos do conselho do reino (regras, requisitos, registro do MGE, anúncio de recrutamento, planos de seed)", backup: true },
+  { key: "ko:banners:v1", area: "local", name: "Banners dos cartões das cidades", backup: false, note: "Imagens: são grandes; escolha-as de novo depois de restaurar." },
+  { key: "ko:kingdom:webhook:v1", area: "local", name: "URL do webhook do Discord", backup: false, note: "Um segredo: quem o tiver pode postar nesse canal." },
+  { key: "ko:auth:v1", area: "local", name: "Sessão de login", backup: false, note: "Um segredo: mantém você conectado neste aparelho." },
+  { key: "ko:auth:upload:v1", area: "local", name: "Escolhas de envio para a conta", backup: false, note: "Só sobre este aparelho: o que você já enviou para a sua conta ou escolheu manter aqui." },
+  { key: "ko:farms:probe", area: "local", name: "Teste de armazenamento (gravado e removido na hora)", backup: false, note: "Descartável." },
+  { key: "ko:kingdom:probe", area: "local", name: "Teste de armazenamento (gravado e removido na hora)", backup: false, note: "Descartável." },
+  { key: "ko:sting", area: "session", name: "Animação do logo já tocada (só nesta aba)", backup: false, note: "Descartável." },
 ];
 
 /** "ko:" strings that are DOM event names, not storage keys. */
@@ -41,7 +41,7 @@ export const OFFLINE_CACHE_PREFIX = "ko-";
 export const BACKUP_KEYS: readonly string[] = STORAGE_KEYS.filter((k) => k.backup).map((k) => k.key);
 
 /** The keys a person would recognise as their data (no throwaway probes or session flags). */
-export const USER_DATA_KEYS: readonly StorageKeyInfo[] = STORAGE_KEYS.filter((k) => k.note !== "Throwaway.");
+export const USER_DATA_KEYS: readonly StorageKeyInfo[] = STORAGE_KEYS.filter((k) => k.note !== "Descartável.");
 
 type Removable = Pick<Storage, "getItem" | "removeItem" | "key" | "length">;
 

@@ -30,6 +30,6 @@ const targets: CityHallTargets = {
     .map((g) => ({ label: g.label, gems: g.value, cityHall: g.unlockCityHall })),
 };
 ---
-<Shell title="City Hall" description="Your account at a glance: today's must-dos, your next City Hall level and its cost, and how far you are from the KvK1 targets." mode="operate">
+<Shell title="Prefeitura" description="Sua conta num relance: o que não pode faltar hoje, o próximo nível da Prefeitura e o custo dele, e quanto falta para as metas da KvK1." mode="operate">
   <CityHall client:load rows={rows} targets={targets} />
 </Shell>

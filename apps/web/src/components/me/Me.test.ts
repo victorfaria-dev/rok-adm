@@ -28,12 +28,12 @@ beforeEach(() => {
 afterEach(cleanup);
 
 describe("You island: profile", () => {
-  it("one h1 (Me); no profile shows the empty state with Start", () => {
+  it("one h1 (Eu); no profile shows the empty state with Start", () => {
     setup();
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
-    expect(screen.getByRole("link", { name: "Start" }).getAttribute("href")).toBe("/start/");
-    expect(screen.queryByRole("button", { name: "Edit answers" })).toBeNull();
-    expect(screen.queryByRole("radio", { name: "Automatic (recommended)" })).toBeNull();
+    expect(screen.getByRole("link", { name: "Começar" }).getAttribute("href")).toBe("/start/");
+    expect(screen.queryByRole("button", { name: "Editar respostas" })).toBeNull();
+    expect(screen.queryByRole("radio", { name: "Automático (recomendado)" })).toBeNull();
   });
 
   it("shows the saved answers in words", () => {
@@ -45,7 +45,7 @@ describe("You island: profile", () => {
 
   it("Edit answers clears the draft before opening the questionnaire", () => {
     const { navigate } = setup({ profileCode: CODE, draft: { step: 2, answers: { spending: "low" } } });
-    fireEvent.click(screen.getByRole("button", { name: "Edit answers" }));
+    fireEvent.click(screen.getByRole("button", { name: "Editar respostas" }));
     expect(readStore().draft).toBeNull();
     expect(readStore().profileCode).toBe(CODE);
     expect(navigate).toHaveBeenCalledWith("/start/");
@@ -55,18 +55,18 @@ describe("You island: profile", () => {
 describe("You island: effective profile (F-72)", () => {
   it("shows declared, lifetime and effective profile with the product rule", () => {
     setup({ profileCode: RICH });
-    expect(screen.getByText("High (about $10,000 in total)")).toBeTruthy();
-    expect(screen.getByText("High (raised by total spend)")).toBeTruthy();
-    expect(screen.getByText("Product rule, not a game fact")).toBeTruthy();
-    expect((screen.getByRole("radio", { name: "Automatic (recommended)" }) as HTMLInputElement).checked).toBe(true);
+    expect(screen.getByText("High (cerca de US$ 10.000 no total)")).toBeTruthy();
+    expect(screen.getByText("High (elevado pelo gasto total)")).toBeTruthy();
+    expect(screen.getByText("Regra do produto, não um fato do jogo")).toBeTruthy();
+    expect((screen.getByRole("radio", { name: "Automático (recomendado)" }) as HTMLInputElement).checked).toBe(true);
   });
 
   it("a manual pick is saved and Automatic clears it", () => {
     setup({ profileCode: RICH });
     fireEvent.click(screen.getByRole("radio", { name: /^Whale/ }));
     expect(readStore().profileOverride).toBe("whale");
-    expect(screen.getByText("Whale (set by hand)")).toBeTruthy();
-    fireEvent.click(screen.getByRole("radio", { name: "Automatic (recommended)" }));
+    expect(screen.getByText("Whale (definido à mão)")).toBeTruthy();
+    fireEvent.click(screen.getByRole("radio", { name: "Automático (recomendado)" }));
     expect(readStore().profileOverride).toBeNull();
   });
 });
@@ -74,11 +74,11 @@ describe("You island: effective profile (F-72)", () => {
 describe("Me island: playing as, details, share card (UX stage 1)", () => {
   it("the role switch saves the choice and swaps the tabs at once", () => {
     setup({ profileCode: CODE });
-    expect((screen.getByRole("radio", { name: "Player" }) as HTMLInputElement).checked).toBe(true);
-    fireEvent.click(screen.getByRole("radio", { name: "Leader" }));
+    expect((screen.getByRole("radio", { name: "Jogador" }) as HTMLInputElement).checked).toBe(true);
+    fireEvent.click(screen.getByRole("radio", { name: "Líder" }));
     expect(readStore().playingAs).toBe("leader");
     expect(document.documentElement.getAttribute("data-role")).toBe("leader");
-    fireEvent.click(screen.getByRole("radio", { name: "Player" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Jogador" }));
     expect(readStore().playingAs).toBe("player");
   });
 
@@ -89,8 +89,8 @@ describe("Me island: playing as, details, share card (UX stage 1)", () => {
     expect(kd.value).toBe("");
     fireEvent.input(kd, { target: { value: "45" } });
     fireEvent.change(screen.getByLabelText("Which civilization do you play?"), { target: { value: "china" } });
-    fireEvent.click(screen.getByRole("button", { name: "Save details" }));
-    expect(screen.getByText("Saved.")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Salvar detalhes" }));
+    expect(screen.getByText("Salvo.")).toBeTruthy();
     const saved = readStore().profileCode!;
     expect(saved).toBe("1.0.1.0.12.30..45..china.0");
   });
@@ -98,18 +98,18 @@ describe("Me island: playing as, details, share card (UX stage 1)", () => {
   it("a detail that breaks a core rule shows a how-to-fix error and saves nothing", () => {
     setup({ profileCode: "1.0.0.1.12.30.....0" }); // KvK 1
     fireEvent.input(screen.getByLabelText("How many days old is your kingdom?"), { target: { value: "3" } });
-    fireEvent.click(screen.getByRole("button", { name: "Save details" }));
+    fireEvent.click(screen.getByRole("button", { name: "Salvar detalhes" }));
     expect(screen.getByText(/cannot be past pre-KvK/)).toBeTruthy();
     expect(readStore().profileCode).toBe("1.0.0.1.12.30.....0");
   });
 
   it("the hub rows: Guides near the top, Share card, then settings and trust rows", () => {
     setup();
-    expect(screen.getByRole("link", { name: "Guides" }).getAttribute("href")).toBe("/guides/");
-    expect(screen.getByRole("link", { name: "Share card" }).getAttribute("href")).toBe("/card/");
-    expect(screen.getByRole("link", { name: "Trust & privacy" }).getAttribute("href")).toBe("/trust/");
+    expect(screen.getByRole("link", { name: "Guias" }).getAttribute("href")).toBe("/guides/");
+    expect(screen.getByRole("link", { name: "Cartão para compartilhar" }).getAttribute("href")).toBe("/card/");
+    expect(screen.getByRole("link", { name: "Confiança e privacidade" }).getAttribute("href")).toBe("/trust/");
     const groups = [...document.querySelectorAll(".me-group")].map((g) => g.getAttribute("aria-label"));
-    expect(groups).toEqual(["You and your accounts", "Settings", "Trust and about"]);
+    expect(groups).toEqual(["Você e suas contas", "Configurações", "Confiança e sobre"]);
     expect(document.querySelector(".me-group a")?.getAttribute("href")).toBe("/guides/");
   });
 
@@ -117,7 +117,7 @@ describe("Me island: playing as, details, share card (UX stage 1)", () => {
     setup({ profileCode: CODE, savedProfiles: [{ id: "f1", name: "Farm One", code: CODE, override: null }], activeAccountId: "f1" });
     expect(document.querySelector(".me-avatar")?.textContent).toBe("FO");
     expect(screen.getByRole("heading", { level: 1 }).textContent).toContain("Farm One");
-    expect(document.querySelector(".me-hero-line")?.textContent).toBe("Player · F2P · CH 12");
+    expect(document.querySelector(".me-hero-line")?.textContent).toBe("Jogador · F2P · CH 12");
   });
 });
 
@@ -128,11 +128,11 @@ describe("You island: theme", () => {
       `<details data-theme-picker id="hp"><input type="radio" name="theme-top" value="dark" checked><input type="radio" name="theme-top" value="light"></details>`,
     );
     setup();
-    fireEvent.click(screen.getByRole("radio", { name: "Light" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Claro" }));
     expect(readStore().theme).toBe("light");
     expect(document.documentElement.getAttribute("data-theme")).toBe("light");
     expect((document.querySelector("#hp input[value=light]") as HTMLInputElement).checked).toBe(true);
-    fireEvent.click(screen.getByRole("radio", { name: "System" }));
+    fireEvent.click(screen.getByRole("radio", { name: "Sistema" }));
     expect(document.documentElement.hasAttribute("data-theme")).toBe(false);
     document.getElementById("hp")!.remove();
   });
@@ -141,12 +141,12 @@ describe("You island: theme", () => {
 describe("You island: export and import", () => {
   it("exports the whole store under a dated file name", () => {
     const { download } = setup({ profileCode: CODE, theme: "light" });
-    fireEvent.click(screen.getByRole("button", { name: "Export profile file" }));
+    fireEvent.click(screen.getByRole("button", { name: "Exportar arquivo de perfil" }));
     expect(download).toHaveBeenCalledTimes(1);
     const [name, text] = download.mock.calls[0]!;
     expect(name).toBe("kingdomops-2026-10-13.json");
     expect(importStore(text)).toMatchObject({ profileCode: CODE, theme: "light" });
-    expect(screen.getByText(/Exported kingdomops-2026-10-13\.json/)).toBeTruthy();
+    expect(screen.getByText(/Exportado: kingdomops-2026-10-13\.json/)).toBeTruthy();
   });
 
   it("a valid file replaces the state and applies its theme", async () => {
@@ -158,7 +158,7 @@ describe("You island: export and import", () => {
     await waitFor(() => expect(screen.getByText(IMPORTED_MESSAGE)).toBeTruthy());
     expect(readStore()).toMatchObject({ profileCode: RICH, profileOverride: null, theme: "light", commanders: {} });
     expect(document.documentElement.getAttribute("data-theme")).toBe("light");
-    expect(screen.getByText("High (raised by total spend)")).toBeTruthy();
+    expect(screen.getByText("High (elevado pelo gasto total)")).toBeTruthy();
   });
 
   it("says how many saved accounts were skipped for a damaged code (Q2 P2-5)", async () => {
@@ -170,7 +170,7 @@ describe("You island: export and import", () => {
     const input = document.querySelector("input[type=file]") as HTMLInputElement;
     Object.defineProperty(input, "files", { value: [fileWith(file)], configurable: true });
     fireEvent.change(input);
-    await waitFor(() => expect(screen.getByText(/1 saved account in the file had a damaged profile code and was skipped/)).toBeTruthy());
+    await waitFor(() => expect(screen.getByText(/1 conta salva no arquivo tinha um código de perfil danificado e foi ignorada/)).toBeTruthy());
     expect(readStore().savedProfiles.map((p) => p.name)).toEqual(["Main"]);
   });
 
@@ -181,7 +181,7 @@ describe("You island: export and import", () => {
     Object.defineProperty(input, "files", { value: [fileWith("{\"hello\":1}")], configurable: true });
     fireEvent.change(input);
     const alert = await screen.findByRole("alert");
-    await waitFor(() => expect(alert.textContent).toMatch(/not a KingdomOps export/));
+    await waitFor(() => expect(alert.textContent).toMatch(/não é uma exportação do KingdomOps/));
     expect(localStorage.getItem(STORE_KEY)).toBe(before);
   });
 });
@@ -189,33 +189,33 @@ describe("You island: export and import", () => {
 describe("You island: delete", () => {
   it("asks in the page; Escape cancels and focus returns", () => {
     setup({ profileCode: CODE });
-    const trigger = screen.getByRole("button", { name: "Delete all data" });
+    const trigger = screen.getByRole("button", { name: "Apagar todos os dados" });
     fireEvent.click(trigger);
-    const heading = screen.getByRole("heading", { name: "Delete everything?" });
+    const heading = screen.getByRole("heading", { name: "Apagar tudo?" });
     expect(document.activeElement).toBe(heading);
-    expect(screen.getByText(/cannot be undone/)).toBeTruthy();
+    expect(screen.getByText(/Não dá para desfazer/)).toBeTruthy();
     fireEvent.keyDown(heading, { key: "Escape" });
-    expect(screen.queryByRole("button", { name: "Delete everything" })).toBeNull();
-    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Delete all data" }));
+    expect(screen.queryByRole("button", { name: "Apagar tudo" })).toBeNull();
+    expect(document.activeElement).toBe(screen.getByRole("button", { name: "Apagar todos os dados" }));
     expect(readStore().profileCode).toBe(CODE);
   });
 
   it("Cancel keeps the data", () => {
     setup({ profileCode: CODE });
-    fireEvent.click(screen.getByRole("button", { name: "Delete all data" }));
-    fireEvent.click(screen.getByRole("button", { name: "Cancel" }));
+    fireEvent.click(screen.getByRole("button", { name: "Apagar todos os dados" }));
+    fireEvent.click(screen.getByRole("button", { name: "Cancelar" }));
     expect(localStorage.getItem(STORE_KEY)).not.toBeNull();
   });
 
   it("confirm clears the store, resets to dark and shows the empty state", () => {
     setup({ profileCode: CODE, theme: "light" });
     document.documentElement.setAttribute("data-theme", "light");
-    fireEvent.click(screen.getByRole("button", { name: "Delete all data" }));
-    fireEvent.click(screen.getByRole("button", { name: "Delete everything" }));
+    fireEvent.click(screen.getByRole("button", { name: "Apagar todos os dados" }));
+    fireEvent.click(screen.getByRole("button", { name: "Apagar tudo" }));
     expect(localStorage.getItem(STORE_KEY)).toBeNull();
     expect(document.documentElement.getAttribute("data-theme")).toBe("dark");
     expect(screen.getByText(DELETED_MESSAGE)).toBeTruthy();
-    expect(screen.getByRole("link", { name: "Start" })).toBeTruthy();
-    expect((screen.getByRole("radio", { name: "Dark" }) as HTMLInputElement).checked).toBe(true);
+    expect(screen.getByRole("link", { name: "Começar" })).toBeTruthy();
+    expect((screen.getByRole("radio", { name: "Escuro" }) as HTMLInputElement).checked).toBe(true);
   });
 });

@@ -6,18 +6,18 @@ interface Props {
   onEdit: (step: number) => void;
 }
 
-/** Final step: every answer with "Change", plus core warnings (profileWarnings) or errors. */
+/** Final step: every answer with "Alterar", plus core warnings (profileWarnings) or errors. */
 export function Summary({ answers, outcome, onEdit }: Props) {
   return (
     <div class="q-body">
       {!outcome.ok && (
         <section class="q-notes q-notes-error" aria-labelledby="q-errors-h">
-          <h2 id="q-errors-h">Fix before you continue</h2>
+          <h2 id="q-errors-h">Corrija antes de continuar</h2>
           <ul>
             {outcome.errors.map((e, i) => (
               <li key={i}>
                 <p>{e.message}</p>
-                <button type="button" class="q-change" onClick={() => onEdit(e.step)}>Fix this answer</button>
+                <button type="button" class="q-change" onClick={() => onEdit(e.step)}>Corrigir esta resposta</button>
               </li>
             ))}
           </ul>
@@ -25,7 +25,7 @@ export function Summary({ answers, outcome, onEdit }: Props) {
       )}
       {outcome.ok && outcome.warnings.length > 0 && (
         <section class="q-notes" aria-labelledby="q-warn-h">
-          <h2 id="q-warn-h">Worth checking</h2>
+          <h2 id="q-warn-h">Vale conferir</h2>
           <ul>
             {outcome.warnings.map((w, i) => <li key={i}><p>{w}</p></li>)}
           </ul>
@@ -40,7 +40,7 @@ export function Summary({ answers, outcome, onEdit }: Props) {
               <dt>{q.label}</dt>
               <dd>
                 <span class={q.type === "number" && shown !== null ? "q-answer mono" : "q-answer"}>{answerText(q, shown)}</span>
-                <button type="button" class="q-change" aria-label={`Change answer: ${q.label}`} onClick={() => onEdit(i)}>Change</button>
+                <button type="button" class="q-change" aria-label={`Alterar resposta: ${q.label}`} onClick={() => onEdit(i)}>Alterar</button>
               </dd>
             </div>
           );

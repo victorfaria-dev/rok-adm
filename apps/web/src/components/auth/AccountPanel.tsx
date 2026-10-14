@@ -19,24 +19,24 @@ export default function AccountPanel({ navigate = navigateTo }: Props) {
   if (auth.status === "signed_out") {
     const here = typeof window === "undefined" ? "/me/" : window.location.pathname;
     return (
-      <section class="au-account" aria-label="Account">
-        <p>You are not signed in.</p>
-        <a class="btn btn-primary" href={here === LOGIN_PATH ? LOGIN_PATH : loginHref(here)}>Sign in</a>
+      <section class="au-account" aria-label="Conta">
+        <p>Você não está conectado.</p>
+        <a class="btn btn-primary" href={here === LOGIN_PATH ? LOGIN_PATH : loginHref(here)}>Entrar</a>
       </section>
     );
   }
   return (
-    <section class="au-account" aria-label="Account" data-account-panel>
-      <p>Signed in as <strong>{auth.email ?? "your account"}</strong></p>
+    <section class="au-account" aria-label="Conta" data-account-panel>
+      <p>Conectado como <strong>{auth.email ?? "sua conta"}</strong></p>
       <div class="au-actions">
-        <a class="btn btn-secondary" href={PROFILE_EDIT_PATH}>Public profile</a>
+        <a class="btn btn-secondary" href={PROFILE_EDIT_PATH}>Perfil público</a>
         <SignOutButton onDone={() => navigate("/")} />
       </div>
     </section>
   );
 }
 
-/** Sign out on this device. Device data is kept (use "Delete all data" on /me/ to clear it). */
+/** Sign out on this device. Device data is kept (use "Apagar todos os dados" em /me/ para limpar). */
 export function SignOutButton({ onDone }: { onDone?: () => void }) {
   const auth = useAuth();
   if (auth.status !== "signed_in") return null;
@@ -44,6 +44,6 @@ export function SignOutButton({ onDone }: { onDone?: () => void }) {
     <button type="button" class="btn btn-secondary" data-sign-out onClick={async () => {
       await signOut(auth.client);
       onDone?.();
-    }}>Sign out</button>
+    }}>Sair</button>
   );
 }

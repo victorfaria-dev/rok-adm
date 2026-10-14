@@ -104,22 +104,22 @@ describe("buildRoutineIcs", () => {
   });
 
   it("DURATION matches the listed task minutes (Q2 P3)", () => {
-    expect(lines).toContain("SUMMARY:KingdomOps routine (4 min)");
+    expect(lines).toContain("SUMMARY:Rotina do KingdomOps (4 min)");
     expect(lines).toContain("DURATION:PT4M");
     const one = unfold(buildRoutineIcs({ ...BASE, tasks: [BASE.tasks[0]!], totalMinutes: 99 }));
-    expect(one).toContain("SUMMARY:KingdomOps routine (1 min)");
+    expect(one).toContain("SUMMARY:Rotina do KingdomOps (1 min)");
     expect(one).toContain("DURATION:PT1M");
     const long = unfold(buildRoutineIcs({ ...BASE, tasks: [...BASE.tasks, { title: "Gather", minutes: 23.5, isEstimate: false }] }));
-    expect(long).toContain("SUMMARY:KingdomOps routine (27.5 min)");
+    expect(long).toContain("SUMMARY:Rotina do KingdomOps (27\\,5 min)");
     expect(long).toContain("DURATION:PT28M");
   });
 
   it("lists the tasks with estimates marked, escaped", () => {
-    const desc = lines.find((l) => l.startsWith("DESCRIPTION:Today"))!;
-    expect(desc).toContain("- Claim VIP points + VIP daily chest (~1 min\\, pending measurement)");
+    const desc = lines.find((l) => l.startsWith("DESCRIPTION:Rotina de hoje"))!;
+    expect(desc).toContain("- Claim VIP points + VIP daily chest (~1 min\\, medição pendente)");
     expect(desc).toContain("- Refill queues: both builders\\, research\\; training (3 min)");
     expect(desc).toContain("\\n");
-    expect(desc).toContain("pending measurement are estimates");
+    expect(desc).toContain("medição pendente são estimativas");
   });
 
   it("folds every line to 75 octets", () => {

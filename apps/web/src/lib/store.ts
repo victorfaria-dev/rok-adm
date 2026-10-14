@@ -221,10 +221,10 @@ export function importStoreReport(text: string): { store: StoreV1; skippedProfil
   try {
     data = JSON.parse(text);
   } catch {
-    throw new Error("This file is not a KingdomOps export. Pick the .json file you exported from the Me page.");
+    throw new Error("Este arquivo não é uma exportação do KingdomOps. Escolha o arquivo .json que você exportou na página Eu.");
   }
   if (!isRecord(data) || data.app !== "kingdomops") {
-    throw new Error("This file is not a KingdomOps export. Pick the .json file you exported from the Me page.");
+    throw new Error("Este arquivo não é uma exportação do KingdomOps. Escolha o arquivo .json que você exportou na página Eu.");
   }
   const { app: _app, ...rest } = data;
   return parseStoreReport(JSON.stringify(rest));

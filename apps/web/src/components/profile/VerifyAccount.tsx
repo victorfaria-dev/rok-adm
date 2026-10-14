@@ -30,8 +30,8 @@ export default function VerifyAccount(props: Props) {
   if (auth.status === "off") {
     return (
       <div class="pf">
-        <h1 class="pf-title">Verify this account</h1>
-        <p class="pf-empty" data-auth-off>Accounts are not switched on yet, so there is nothing to verify.</p>
+        <h1 class="pf-title">Verificar esta conta</h1>
+        <p class="pf-empty" data-auth-off>As contas ainda não estão ativadas, então não há nada para verificar.</p>
       </div>
     );
   }
@@ -39,8 +39,8 @@ export default function VerifyAccount(props: Props) {
   if (auth.status === "signed_out") {
     return (
       <div class="pf">
-        <h1 class="pf-title">Verify this account</h1>
-        <p><a class="btn btn-primary" href={loginHref("/me/verify/")}>Sign in to verify</a></p>
+        <h1 class="pf-title">Verificar esta conta</h1>
+        <p><a class="btn btn-primary" href={loginHref("/me/verify/")}>Entrar para verificar</a></p>
       </div>
     );
   }
@@ -84,16 +84,16 @@ function Verify({ client, userId, prepare = prepareScreenshot, loadOcr = loadVer
   return (
     <div class="pf" data-verify>
       <header class="pf-head">
-        <h1 class="pf-title">Verify this account</h1>
-        <p class="pf-muted">Show other players that a governor is really yours. KingdomOps cannot read game data, so you send screenshots and a moderator checks them. Your screenshots are private: only you and the moderators can see them.</p>
+        <h1 class="pf-title">Verificar esta conta</h1>
+        <p class="pf-muted">Mostre a outros jogadores que um governador é mesmo seu. O KingdomOps não consegue ler dados do jogo, então você envia prints e um moderador os confere. Seus prints são privados: só você e os moderadores podem vê-los.</p>
       </header>
 
       <section class="pf-section pf-pad" aria-labelledby="vf-levels">
-        <h2 id="vf-levels" class="pf-h">Levels</h2>
+        <h2 id="vf-levels" class="pf-h">Níveis</h2>
         <ol class="pf-list">
-          <li><strong>{LEVEL_LABEL[1]}</strong>: what you typed. Everyone starts here.</li>
-          <li><strong>{LEVEL_LABEL[2]}</strong>: a moderator compared your values with your Governor Profile and City Hall screenshots.</li>
-          <li><strong>{LEVEL_LABEL[3]}</strong>: your in-game Album showed this site's one-time code under the same governor name and ID.</li>
+          <li><strong>{LEVEL_LABEL[1]}</strong>: o que você digitou. Todo mundo começa aqui.</li>
+          <li><strong>{LEVEL_LABEL[2]}</strong>: um moderador comparou seus valores com os prints do Perfil do Governador e da Prefeitura.</li>
+          <li><strong>{LEVEL_LABEL[3]}</strong>: o Álbum do seu jogo mostrou o código de uso único deste site com o mesmo nome e ID de governador.</li>
         </ol>
       </section>
 
@@ -104,15 +104,15 @@ function Verify({ client, userId, prepare = prepareScreenshot, loadOcr = loadVer
           onChanged={async () => { setActive(null); await reload(); }} />
       ) : (
         <section class="pf-section pf-pad" aria-labelledby="vf-cities">
-          <h2 id="vf-cities" class="pf-h">Your cities</h2>
-          {cities === null ? <p class="pf-muted">Loading…</p> : cities.length === 0 ? (
-            <p class="pf-muted">No cities in your account yet. Add one below, or upload this device's data from your profile page.</p>
+          <h2 id="vf-cities" class="pf-h">Suas cidades</h2>
+          {cities === null ? <p class="pf-muted">Carregando…</p> : cities.length === 0 ? (
+            <p class="pf-muted">Ainda não há cidades na sua conta. Adicione uma abaixo ou envie os dados deste aparelho pela sua página de perfil.</p>
           ) : (
             <>
               <fieldset class="pf-choices">
-                <legend>What to prove</legend>
-                <label class="pf-choice"><input type="radio" name="vf-level" checked={level === 3} onChange={() => setLevel(3)} /><span><strong>{LEVEL_LABEL[3]}</strong> (3 screenshots, uses the Album)</span></label>
-                <label class="pf-choice"><input type="radio" name="vf-level" checked={level === 2} onChange={() => setLevel(2)} /><span><strong>{LEVEL_LABEL[2]}</strong> (2 screenshots)</span></label>
+                <legend>O que comprovar</legend>
+                <label class="pf-choice"><input type="radio" name="vf-level" checked={level === 3} onChange={() => setLevel(3)} /><span><strong>{LEVEL_LABEL[3]}</strong> (3 prints, usa o Álbum)</span></label>
+                <label class="pf-choice"><input type="radio" name="vf-level" checked={level === 2} onChange={() => setLevel(2)} /><span><strong>{LEVEL_LABEL[2]}</strong> (2 prints)</span></label>
               </fieldset>
               <ul class="vf-cities">
                 {cities.map((c) => {
@@ -123,12 +123,12 @@ function Verify({ client, userId, prepare = prepareScreenshot, loadOcr = loadVer
                       <div>
                         <strong>{c.name}</strong> <span class="pf-muted">({c.kind}{c.city_hall ? `, CH ${c.city_hall}` : ""})</span>
                         <br /><span class="pf-badge" data-kind={c.verification_level > 1 ? "site" : "unverified"}>{LEVEL_LABEL[c.verification_level]}</span>
-                        {last && <span class="pf-muted"> · Last request: {STATUS_LABEL[last.status]}{last.review_note ? ` — ${last.review_note}` : ""}</span>}
+                        {last && <span class="pf-muted"> · Última solicitação: {STATUS_LABEL[last.status]}{last.review_note ? ` — ${last.review_note}` : ""}</span>}
                       </div>
                       {open?.status === "pending_review" ? (
-                        <button type="button" class="btn btn-secondary" onClick={async () => { await cancelVerification(client, open.id); await reload(); }}>Cancel request</button>
+                        <button type="button" class="btn btn-secondary" onClick={async () => { await cancelVerification(client, open.id); await reload(); }}>Cancelar solicitação</button>
                       ) : (
-                        <button type="button" class="btn btn-primary" data-start-verify onClick={() => start(c.id)}>Verify this account</button>
+                        <button type="button" class="btn btn-primary" data-start-verify onClick={() => start(c.id)}>Verificar esta conta</button>
                       )}
                     </li>
                   );
@@ -156,14 +156,14 @@ function AddCity({ client, onAdded }: { client: KoSupabase; onAdded: () => Promi
       setMsg(null);
       await onAdded();
     }}>
-      <h3 class="pf-h3">Add a city</h3>
-      <label class="pf-field"><span>Name</span><input name="city_name" maxLength={40} value={name} onInput={(e) => setName((e.target as HTMLInputElement).value)} /></label>
-      <label class="pf-field"><span>Kind</span>
+      <h3 class="pf-h3">Adicionar uma cidade</h3>
+      <label class="pf-field"><span>Nome</span><input name="city_name" maxLength={40} value={name} onInput={(e) => setName((e.target as HTMLInputElement).value)} /></label>
+      <label class="pf-field"><span>Tipo</span>
         <select class="pf-select" value={kind} onChange={(e) => setKind((e.target as HTMLSelectElement).value as CityKind)}>
-          <option value="main">Main</option><option value="farm">Farm</option><option value="alt">Alt</option>
+          <option value="main">Principal</option><option value="farm">Farm</option><option value="alt">Alt</option>
         </select>
       </label>
-      <div class="au-actions"><button type="submit" class="btn btn-secondary">Add city</button></div>
+      <div class="au-actions"><button type="submit" class="btn btn-secondary">Adicionar cidade</button></div>
       {msg && <p class="au-error" role="alert">{msg}</p>}
     </form>
   );
@@ -195,25 +195,25 @@ function ActiveRequest({ client, userId, request, prepare, loadOcr, now, onChang
     input.value = "";
     if (!file) return;
     if (!ACCEPTED_IMAGE_TYPES.includes(file.type) || file.size > MAX_INPUT_BYTES) {
-      setSlotMsg((m) => ({ ...m, [slot]: { ok: false, text: "Use the PNG or JPEG screenshot your phone saved (up to 15 MB)." } }));
+      setSlotMsg((m) => ({ ...m, [slot]: { ok: false, text: "Use o print em PNG ou JPEG que o seu celular salvou (até 15 MB)." } }));
       return;
     }
-    setSlotMsg((m) => ({ ...m, [slot]: { ok: true, text: "Uploading…" } }));
+    setSlotMsg((m) => ({ ...m, [slot]: { ok: true, text: "Enviando…" } }));
     try {
       const blob = await prepare(file);
       const up = await uploadScreenshot(client, userId, request.id, slot, blob);
       if (!up.ok) throw new Error(up.message);
       setPaths((p) => ({ ...p, [slot]: up.path }));
-      let note = "Uploaded.";
+      let note = "Enviado.";
       const ocr = await loadOcr().catch(() => null);
       if (ocr) {
         const want = SLOTS.find((s) => s.slot === slot)!.screen;
         const seen = await ocr.detectScreen(blob).catch(() => "unknown" as const);
-        if (seen !== want && seen !== "unknown") note = "Uploaded, but this does not look like the right screen. Check it.";
+        if (seen !== want && seen !== "unknown") note = "Enviado, mas esta não parece ser a tela certa. Confira.";
         const values = slot === "profile" ? await ocr.readGovernorProfile(blob) : slot === "city_hall" ? await ocr.readCityHall(blob) : await ocr.readAlbum(blob);
         setForm((f) => mergeOcr(f, slot, values));
         setOcrUsed(true);
-        if (note === "Uploaded.") note = "Uploaded. Values read from the screenshot: check them below.";
+        if (note === "Enviado.") note = "Enviado. Valores lidos do print: confira abaixo.";
       }
       setSlotMsg((m) => ({ ...m, [slot]: { ok: true, text: note } }));
     } catch (err) {
@@ -226,12 +226,12 @@ function ActiveRequest({ client, userId, request, prepare, loadOcr, now, onChang
     setMsg(null);
     const list = slots.map((s) => paths[s.slot]).filter((p): p is string => !!p);
     if (list.length < slots.length) {
-      setMsg({ ok: false, text: `Upload all ${slots.length} screenshots first.` });
+      setMsg({ ok: false, text: `Envie primeiro os ${slots.length} prints.` });
       return;
     }
     const failed = checks.filter((c) => !c.ok);
     if (failed.length > 0) {
-      setMsg({ ok: false, text: `Fix before sending: ${failed.map((c) => c.label).join("; ")}.` });
+      setMsg({ ok: false, text: `Corrija antes de enviar: ${failed.map((c) => c.label).join("; ")}.` });
       return;
     }
     setBusy(true);
@@ -241,7 +241,7 @@ function ActiveRequest({ client, userId, request, prepare, loadOcr, now, onChang
       setMsg({ ok: false, text: r.message });
       return;
     }
-    setMsg({ ok: true, text: "Sent. A moderator will check your screenshots. After approval you can delete the code photo from your Album." });
+    setMsg({ ok: true, text: "Enviado. Um moderador vai conferir seus prints. Depois da aprovação, você pode apagar a foto do código do seu Álbum." });
     await onChanged();
   };
 
@@ -254,18 +254,18 @@ function ActiveRequest({ client, userId, request, prepare, loadOcr, now, onChang
 
   return (
     <section class="pf-section pf-pad" aria-labelledby="vf-active" data-verify-request={request.id}>
-      <h2 id="vf-active" class="pf-h">Verification in progress</h2>
+      <h2 id="vf-active" class="pf-h">Verificação em andamento</h2>
       <p role="timer" aria-live="off" class={left.over ? "au-error" : undefined} data-countdown>
-        {left.over ? "This code has expired. Cancel and start again for a new code." : <>Time left for this code: <strong class="mono">{left.text}</strong></>}
+        {left.over ? "Este código expirou. Cancele e comece de novo para receber um código novo." : <>Tempo restante deste código: <strong class="mono">{left.text}</strong></>}
       </p>
 
       {level === 3 && <CodeCard code={request.code} />}
 
-      <h3 class="pf-h3">Screenshots</h3>
+      <h3 class="pf-h3">Prints</h3>
       {slots.map((s) => (
         <div class="pf-slot" key={s.slot}>
           <label class="btn btn-secondary pf-file">
-            {paths[s.slot] ? `Replace: ${s.label}` : `Upload: ${s.label}`}
+            {paths[s.slot] ? `Trocar: ${s.label}` : `Enviar: ${s.label}`}
             <input type="file" accept={ACCEPTED_IMAGE_TYPES.join(",")} onChange={(e) => pick(s.slot, e)} disabled={left.over} data-shot={s.slot} />
           </label>
           <p class="pf-muted pf-fine">{s.help}</p>
@@ -274,22 +274,22 @@ function ActiveRequest({ client, userId, request, prepare, loadOcr, now, onChang
       ))}
 
       <form class="pf-form" onSubmit={submit} noValidate>
-        <h3 class="pf-h3">Values (check them against your screenshots)</h3>
-        {field("governorId", "Governor ID", "numeric")}
-        {field("name", "Governor name")}
-        {field("power", "Power", "numeric")}
-        {field("killPoints", "Kill points", "numeric")}
-        {field("civilization", "Civilization")}
-        {field("cityHall", "City Hall level", "numeric")}
-        {field("vip", "VIP level", "numeric")}
-        {level === 3 && field("albumName", "Governor name shown in the Album")}
-        {level === 3 && field("albumCode", "Code shown in the Album", "numeric")}
+        <h3 class="pf-h3">Valores (confira com os seus prints)</h3>
+        {field("governorId", "ID do governador", "numeric")}
+        {field("name", "Nome do governador")}
+        {field("power", "Poder", "numeric")}
+        {field("killPoints", "Pontos de abate", "numeric")}
+        {field("civilization", "Civilização")}
+        {field("cityHall", "Nível da Prefeitura", "numeric")}
+        {field("vip", "Nível de VIP", "numeric")}
+        {level === 3 && field("albumName", "Nome do governador mostrado no Álbum")}
+        {level === 3 && field("albumCode", "Código mostrado no Álbum", "numeric")}
         <ul class="vf-checks">
           {checks.map((c) => <li key={c.id} data-ok={c.ok ? "" : undefined}>{c.ok ? "✓" : "✗"} {c.label}</li>)}
         </ul>
         <div class="au-actions">
-          <button type="submit" class="btn btn-primary" disabled={busy || left.over}>{busy ? "Sending…" : "Send for review"}</button>
-          <button type="button" class="btn btn-secondary" onClick={async () => { await cancelVerification(client, request.id); await onChanged(); }}>Cancel</button>
+          <button type="submit" class="btn btn-primary" disabled={busy || left.over}>{busy ? "Enviando…" : "Enviar para análise"}</button>
+          <button type="button" class="btn btn-secondary" onClick={async () => { await cancelVerification(client, request.id); await onChanged(); }}>Cancelar</button>
         </div>
         {msg && <p class={msg.ok ? "au-ok" : "au-error"} role={msg.ok ? "status" : "alert"}>{msg.text}</p>}
       </form>
@@ -319,24 +319,24 @@ export function CodeCard({ code }: { code: string }) {
   return (
     <div class="vf-card" data-code-card={code}>
       <div class="vf-card-img">
-        {url ? <img src={url} alt={`Verification code ${code.split("").join(" ")}`} width={1200} height={900} data-code-image /> : err ? <p class="au-error" role="alert">{err}</p> : <p class="pf-muted">Drawing the code image…</p>}
+        {url ? <img src={url} alt={`Código de verificação ${code.split("").join(" ")}`} width={1200} height={900} data-code-image /> : err ? <p class="au-error" role="alert">{err}</p> : <p class="pf-muted">Desenhando a imagem do código…</p>}
       </div>
       <div class="vf-steps">
-        <p class="vf-code">Your code: <strong class="mono">{code}</strong></p>
+        <p class="vf-code">Seu código: <strong class="mono">{code}</strong></p>
         <div class="au-actions">
-          {url && <a class="btn btn-primary" href={url} download={codeCardFileName(code)} data-download-code>Download image</a>}
+          {url && <a class="btn btn-primary" href={url} download={codeCardFileName(code)} data-download-code>Baixar imagem</a>}
           {canShare && (
-            <button type="button" class="btn btn-secondary" onClick={() => { void navigator.share({ files: [file!], title: "KingdomOps code" }).catch(() => undefined); }}>Save to Photos / Share</button>
+            <button type="button" class="btn btn-secondary" onClick={() => { void navigator.share({ files: [file!], title: "Código do KingdomOps" }).catch(() => undefined); }}>Salvar em Fotos / Compartilhar</button>
           )}
         </div>
-        <p class="pf-muted pf-fine">Download does not work on your phone? Press and hold the image, then "Save image".</p>
+        <p class="pf-muted pf-fine">O download não funciona no seu celular? Pressione e segure a imagem e escolha "Salvar imagem".</p>
         <ol class="pf-list">
-          <li>Save the image to your phone's photos.</li>
-          <li>In the game, open your Governor Profile → Album → add a photo, and pick this image.</li>
-          <li>Take a screenshot of the Album showing the code and your governor name.</li>
-          <li>Upload that screenshot below, with your Governor Profile and City Hall screenshots.</li>
+          <li>Salve a imagem nas fotos do seu celular.</li>
+          <li>No jogo, abra o Perfil do Governador → Álbum → adicionar foto e escolha esta imagem.</li>
+          <li>Tire um print do Álbum mostrando o código e o nome do seu governador.</li>
+          <li>Envie esse print abaixo, junto com os prints do Perfil do Governador e da Prefeitura.</li>
         </ol>
-        <p class="pf-muted pf-fine">This code works only for this request and only for 1 hour. After approval you can delete the photo from your Album.</p>
+        <p class="pf-muted pf-fine">Este código vale só para esta solicitação e só por 1 hora. Depois da aprovação, você pode apagar a foto do seu Álbum.</p>
       </div>
     </div>
   );

@@ -78,7 +78,7 @@ export function parseTime(time: string): { h: number; m: number } {
   return { h: 20, m: 0 };
 }
 
-const fmtMinutes = (n: number): string => String(Math.round(n * 10) / 10);
+const fmtMinutes = (n: number): string => (Math.round(n * 10) / 10).toLocaleString("pt-BR");
 
 /** Duration in whole minutes: the tasks' total rounded up (at least 1), so it matches the checklist (Q2 P3). */
 export function eventMinutes(totalMinutes: number): number {
@@ -87,10 +87,10 @@ export function eventMinutes(totalMinutes: number): number {
 }
 
 export function routineDescription(tasks: readonly IcsTask[]): string {
-  const lines = tasks.map((t) => `- ${t.title} (${t.isEstimate ? `~${fmtMinutes(t.minutes)} min, pending measurement` : `${fmtMinutes(t.minutes)} min`})`);
-  const parts = [tasks.length ? `Today's routine:\n${lines.join("\n")}` : "No tasks planned."];
-  if (tasks.some((t) => t.isEstimate)) parts.push("Times marked pending measurement are estimates, not measured in game yet.");
-  parts.push("Made on your device by KingdomOps. Delete this event any time.");
+  const lines = tasks.map((t) => `- ${t.title} (${t.isEstimate ? `~${fmtMinutes(t.minutes)} min, medição pendente` : `${fmtMinutes(t.minutes)} min`})`);
+  const parts = [tasks.length ? `Rotina de hoje:\n${lines.join("\n")}` : "Nenhuma tarefa planejada."];
+  if (tasks.some((t) => t.isEstimate)) parts.push("Os tempos marcados como medição pendente são estimativas, ainda não medidas no jogo.");
+  parts.push("Feito no seu aparelho pelo KingdomOps. Você pode apagar este evento quando quiser.");
   return parts.join("\n\n");
 }
 
@@ -106,7 +106,7 @@ export function buildRoutineIcs(input: RoutineIcsInput): string {
   const n = input.now;
   const start = `${n.getFullYear()}${pad(n.getMonth() + 1)}${pad(n.getDate())}T${pad(h)}${pad(m)}00`;
   const total = taskMinutes(input);
-  const summary = `KingdomOps routine (${fmtMinutes(total)} min)`;
+  const summary = `Rotina do KingdomOps (${fmtMinutes(total)} min)`;
   const lines = [
     "BEGIN:VCALENDAR",
     "VERSION:2.0",

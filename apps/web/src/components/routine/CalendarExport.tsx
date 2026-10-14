@@ -37,22 +37,22 @@ export function CalendarExport({ tasks, totalMinutes, now }: Props) {
       now: at,
       uid: makeUid(at),
     });
-    setStatus(download(ics, ICS_FILENAME) ? `Saved ${ICS_FILENAME}. Open it to add the event.` : "This browser cannot save files.");
+    setStatus(download(ics, ICS_FILENAME) ? `${ICS_FILENAME} salvo. Abra-o para adicionar o evento.` : "Este navegador não consegue salvar arquivos.");
   };
 
   return (
     <section class="rt-section" aria-labelledby="rt-cal-title">
-      <h2 id="rt-cal-title">Add to calendar</h2>
+      <h2 id="rt-cal-title">Adicionar ao calendário</h2>
       <p class="rt-help">
-        One event every day with this checklist. Your calendar app will remind you; you can delete the event any time.
-        The file is made on this device and nothing is sent anywhere.
+        Um evento por dia com esta checklist. O seu app de calendário vai lembrar você; dá para apagar o evento quando quiser.
+        O arquivo é feito neste aparelho e nada é enviado para lugar nenhum.
       </p>
       <div class="rt-cal">
         <div class="rt-field">
-          <label for="rt-time">Reminder time</label>
+          <label for="rt-time">Horário do lembrete</label>
           <input id="rt-time" type="time" value={time} required onInput={(e) => setTime((e.currentTarget as HTMLInputElement).value)} />
         </div>
-        <button type="button" class="btn btn-primary" onClick={onDownload}>Download calendar file</button>
+        <button type="button" class="btn btn-primary" onClick={onDownload}>Baixar arquivo de calendário</button>
       </div>
       <p class="rt-status" role="status" aria-live="polite">{status}</p>
     </section>

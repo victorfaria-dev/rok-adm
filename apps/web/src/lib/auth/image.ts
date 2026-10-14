@@ -16,7 +16,7 @@ export interface CropPlan {
 
 /** Center-crop (cover) a w×h source to the target aspect and scale it down to at most target size. */
 export function planCrop(w: number, h: number, targetW: number, targetH: number): CropPlan {
-  if (!(w > 0 && h > 0)) throw new Error("Image has no size.");
+  if (!(w > 0 && h > 0)) throw new Error("A imagem não tem tamanho.");
   const target = targetW / targetH;
   let sw = w, sh = h;
   if (w / h > target) sw = Math.round(h * target);
@@ -49,7 +49,7 @@ export const extensionOf = (type: string): string => (type === "image/webp" ? "w
 export async function prepareImage(file: Blob, kind: ImageKind): Promise<Blob> {
   const spec = IMAGE_KINDS[kind];
   const bitmap = await createImageBitmap(file).catch(() => {
-    throw new Error("This image could not be read. Try a JPEG or PNG.");
+    throw new Error("Não foi possível ler esta imagem. Tente um JPEG ou PNG.");
   });
   try {
     const plan = planCrop(bitmap.width, bitmap.height, spec.width, spec.height);
@@ -57,11 +57,11 @@ export async function prepareImage(file: Blob, kind: ImageKind): Promise<Blob> {
     canvas.width = plan.width;
     canvas.height = plan.height;
     const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("This browser cannot resize images.");
+    if (!ctx) throw new Error("Este navegador não consegue redimensionar imagens.");
     ctx.imageSmoothingQuality = "high";
     ctx.drawImage(bitmap, plan.sx, plan.sy, plan.sw, plan.sh, 0, 0, plan.width, plan.height);
     const blob = await encodeToFit((type, q) => new Promise((res) => canvas.toBlob(res, type, q)), spec.maxBytes);
-    if (!blob) throw new Error("This image is still too big after resizing. Try a simpler picture.");
+    if (!blob) throw new Error("Esta imagem continua grande demais depois de redimensionada. Tente uma figura mais simples.");
     return blob;
   } finally {
     bitmap.close();

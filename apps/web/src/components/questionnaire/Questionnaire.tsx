@@ -87,7 +87,7 @@ function BotMessage(props: { current: boolean; typing: boolean; grumble?: number
   );
 }
 
-/** The player's answer as they picked it: the quick-reply label ("2–3 times"), else the value. */
+/** The player's answer as they picked it: the quick-reply label ("2–3 vezes"), else the value. */
 function ReplyText({ q, value }: { q: FlowQuestion; value: unknown }) {
   const preset = q.type === "number" ? q.presets?.find((p) => p.value === value) : undefined;
   if (preset) return <span>{preset.label}</span>;
@@ -96,17 +96,17 @@ function ReplyText({ q, value }: { q: FlowQuestion; value: unknown }) {
 
 // User-facing strings of the onboarding frame (the questions come from questionnaire-flow).
 const S = {
-  close: "Close",
-  review: "Review",
-  question: "Question ",
-  of: (n: number, total: number) => `${n} of ${total}`,
-  summaryTitle: "Check your answers",
-  summaryHelp: "Your answers stay in this browser. More details (kingdom age, civilization and others) are optional: add them any time on the Me tab.",
-  back: "Back",
-  skip: "Skip",
-  next: "Next",
-  reviewAnswers: "Review answers",
-  finish: { player: "Open my City Hall", leader: "Open my Kingdom" },
+  close: "Fechar",
+  review: "Revisão",
+  question: "Pergunta ",
+  of: (n: number, total: number) => `${n} de ${total}`,
+  summaryTitle: "Confira suas respostas",
+  summaryHelp: "Suas respostas ficam neste navegador. Mais detalhes (idade do reino, civilização e outros) são opcionais: adicione quando quiser na aba Eu.",
+  back: "Voltar",
+  skip: "Pular",
+  next: "Avançar",
+  reviewAnswers: "Revisar respostas",
+  finish: { player: "Abrir minha Prefeitura", leader: "Abrir meu Reino" },
 } as const;
 
 /**
@@ -303,13 +303,13 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
         <span style={{ transform: `scaleX(${shown / TOTAL})` }} />
       </div>
 
-      <div class="q-log" role="log" aria-live="polite" aria-label={`Chat with ${MASCOT_NAME}`}>
+      <div class="q-log" role="log" aria-live="polite" aria-label={`Conversa com ${MASCOT_NAME}`}>
         {!summary && <BotMessage key="hello" current={false} typing={false} lead={GREETING} />}
         {history.flatMap((hq, i) => [
           <BotMessage key={`bot-${i}`} current={false} typing={false} title={hq.label} />,
           <div class="q-msg q-msg-user" key={`you-${i}`}>
             <p class="q-bubble q-bubble-user">
-              <span class="visually-hidden">You: </span>
+              <span class="visually-hidden">Você: </span>
               <ReplyText q={hq} value={currentValue(state, hq)} />
             </p>
           </div>,

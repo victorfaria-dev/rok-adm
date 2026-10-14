@@ -46,8 +46,8 @@ async function enter(page: Page, times = 1) {
 test("keyboard only: answer the 5 questions and land on City Hall, not the long guide", async ({ page }) => {
   await open(page);
   await expect(title(page)).toHaveText(STEPS[0]!.label);
-  await expect(page.getByText("1 of 5")).toBeVisible();
-  await expect(page.getByRole("radio", { name: /As a player/ })).toBeFocused(); // first load: the picked option
+  await expect(page.getByText("1 de 5")).toBeVisible();
+  await expect(page.getByRole("radio", { name: /Como jogador/ })).toBeFocused(); // first load: the picked option
   await enter(page); // player
 
   await expectFocusInReply(page);
@@ -59,7 +59,7 @@ test("keyboard only: answer the 5 questions and land on City Hall, not the long 
   await tabTo(page, "#q-input"); // minutes per day: "Other"
   await page.keyboard.type("45");
   await enter(page);
-  await expect(page.getByText("4 of 5")).toBeVisible();
+  await expect(page.getByText("4 de 5")).toBeVisible();
 
   await expect(title(page)).toHaveText(STEPS[stepOf("cityHall")]!.label);
   await tabTo(page, "#q-input");
@@ -67,7 +67,7 @@ test("keyboard only: answer the 5 questions and land on City Hall, not the long 
   await page.keyboard.type("12");
   await enter(page, 2); // City Hall, kingdom stage (default)
 
-  await expect(title(page)).toHaveText("Check your answers");
+  await expect(title(page)).toHaveText("Confira suas respostas");
   await expect(title(page)).toBeFocused(); // the summary has no options: its heading
   await page.keyboard.press("Enter");
   await page.waitForURL(/\/city-hall\/$/);
@@ -80,22 +80,22 @@ test("keyboard only: answer the 5 questions and land on City Hall, not the long 
 test("a leader lands on Kingdom with the leader tabs", async ({ page, isMobile }) => {
   await seed(page, { draft: { step: 5, answers: { playingAs: "leader" } } });
   await open(page);
-  await page.getByRole("button", { name: "Open my Kingdom" }).click();
+  await page.getByRole("button", { name: "Abrir meu Reino" }).click();
   await page.waitForURL(/\/kingdom\/$/);
   const labels = isMobile ? page.locator("nav.tabs:visible a span") : page.locator("nav.rail ul.dest:visible a .long");
-  await expect(labels).toHaveText(["Kingdom", "Members", "Events", "Me"]);
+  await expect(labels).toHaveText(["Reino", "Membros", "Eventos", "Eu"]);
 });
 
 test("reload resumes on the same step with the answers kept", async ({ page }) => {
   await open(page);
-  await page.getByRole("radio", { name: /As a player/ }).click(); // a tap on a quick reply sends it
-  await expect(page.getByText("2 of 5")).toBeVisible();
+  await page.getByRole("radio", { name: /Como jogador/ }).click(); // a tap on a quick reply sends it
+  await expect(page.getByText("2 de 5")).toBeVisible();
   await page.getByRole("radio", { name: /Medium spender/ }).click();
-  await expect(page.getByText("3 of 5")).toBeVisible();
+  await expect(page.getByText("3 de 5")).toBeVisible();
   await page.reload();
   await expect(title(page)).toHaveText(STEPS[2]!.label);
-  await expect(page.getByText("3 of 5")).toBeVisible();
-  await page.getByRole("button", { name: "Back" }).click();
+  await expect(page.getByText("3 de 5")).toBeVisible();
+  await page.getByRole("button", { name: "Voltar" }).click();
   await expect(page.getByRole("radio", { name: /Medium spender/ })).toBeChecked();
 });
 
@@ -108,7 +108,7 @@ test("Sun Tzu asks in a live log; the reply is ready at once and focus skips the
   // Typing dots never hold the reply back: the new options take focus within ~400 ms.
   await expect(page.getByRole("radio").first()).toBeFocused({ timeout: 400 });
   await expectFocusInReply(page);
-  await expect(log).toContainText("You: As a player");
+  await expect(log).toContainText("Você: Como jogador");
   // Every option explains why it matters; no option is marked Recommended (QC-1).
   for (const r of await page.getByRole("radio").all()) await expect(r).toHaveAttribute("aria-describedby", /help/);
   await expect(page.locator("main")).not.toContainText(/recommended/i);
@@ -140,8 +140,8 @@ test.describe("Sun Tzu's stage", () => {
     expect(box.height).toBeLessThanOrEqual(240);
     expect(await page.locator(".q-msg-bot:not([data-current]) img").count()).toBeGreaterThan(0);
     // Advancing keeps a single video (the talk clip plays on the new stage).
-    await page.getByRole("button", { name: "Next" }).click();
-    await expect(page.getByText("4 of 5")).toBeVisible();
+    await page.getByRole("button", { name: "Avançar" }).click();
+    await expect(page.getByText("4 de 5")).toBeVisible();
     await expect(page.locator("video")).toHaveCount(1);
   });
 
@@ -149,7 +149,7 @@ test.describe("Sun Tzu's stage", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
     await open(page);
     await page.keyboard.press("Enter");
-    await expect(page.getByText("2 of 5")).toBeVisible();
+    await expect(page.getByText("2 de 5")).toBeVisible();
     await expect(page.locator("video")).toHaveCount(0);
     await expect(page.locator(".st-stage img")).toHaveAttribute("src", /poster\.webp$/);
   });
@@ -199,8 +199,8 @@ test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }
       if (document.querySelector(".q-msg-bot[data-current] .st-avatar[data-state=grumble]")) w.grumbled = true;
     }).observe(document.querySelector(".q-log")!, { subtree: true, childList: true, attributes: true });
   });
-  await page.getByRole("button", { name: "Next" }).click();
-  await expect(page.getByText("30 is out of range. Enter a number from 1 to 25.")).toBeVisible();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await expect(page.getByText("30 está fora do intervalo. Digite um número de 1 a 25.")).toBeVisible();
   await expect.poll(() => page.evaluate(() => (window as unknown as { grumbled: boolean }).grumbled)).toBe(true);
   await expect(field).toHaveAttribute("aria-invalid", "true");
   await expect(field).toBeFocused();
@@ -213,15 +213,15 @@ test("an invalid City Hall shows how to fix it and blocks Next", async ({ page }
 
 test("Close keeps the draft and returns to the previous page", async ({ page }) => {
   await open(page); // direct load: referrer is empty, Close goes home
-  await page.getByRole("button", { name: "Next" }).click();
-  await expect(page.getByText("2 of 5")).toBeVisible();
+  await page.getByRole("button", { name: "Avançar" }).click();
+  await expect(page.getByText("2 de 5")).toBeVisible();
   await page.keyboard.press("Escape");
   await page.waitForURL((u) => u.pathname === "/");
   await page.goto("/me/");
   await page.locator("a[href='/start/']").first().evaluate((a: HTMLAnchorElement) => a.click());
   await page.waitForURL(/\/start\/$/);
-  await expect(page.getByText("2 of 5")).toBeVisible();
-  await page.getByRole("link", { name: "Close" }).click();
+  await expect(page.getByText("2 de 5")).toBeVisible();
+  await page.getByRole("link", { name: "Fechar" }).click();
   await page.waitForURL(/\/me\/$/);
 });
 
@@ -234,7 +234,7 @@ test("worst case answers fit 360 px on every step and the summary", async ({ pag
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, `step ${step}`).toBeLessThanOrEqual(0);
   }
-  await expect(page.getByText("1,440 min")).toBeVisible();
+  await expect(page.getByText("1.440 min")).toBeVisible();
   await expect(page.getByText("Season of Conquest (SoC)")).toBeVisible();
 });
 
@@ -252,7 +252,7 @@ test.describe("accessibility", () => {
         await open(page);
         await expect(title(page)).toBeVisible();
         if (c.submit) {
-          await page.getByRole("button", { name: "Next" }).click();
+          await page.getByRole("button", { name: "Avançar" }).click();
           await expect(page.locator("#q-error")).toBeVisible();
         }
         await expect(page.locator("[data-typing]")).toHaveCount(0); // typing dots done: text fully shown

@@ -28,6 +28,7 @@ interface Section {
 
 const isRecord = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
 const n = (count: number, one: string, many = `${one}s`): string => `${count} ${count === 1 ? one : many}`;
+const THEME_WORD: Record<string, string> = { dark: "tema escuro", light: "tema claro", system: "tema do sistema" };
 /** Parsers fall back to defaults on garbage; a section only counts when the raw value is a v1 object. */
 const v1 = (raw: string): boolean => {
   try {
@@ -44,40 +45,40 @@ export const BACKUP_SECTIONS: readonly Section[] = [
     key: STORE_KEY, label: nameOf(STORE_KEY), parse: guard(parseStore),
     describe: (v) => {
       const s = v as ReturnType<typeof parseStore>;
-      return [s.profileCode ? "profile" : "no profile", n(s.savedProfiles.length, "saved account"), n(Object.keys(s.commanders).length, "commander checklist"), `${s.theme} theme`].join(", ");
+      return [s.profileCode ? "perfil" : "sem perfil", n(s.savedProfiles.length, "conta salva", "contas salvas"), n(Object.keys(s.commanders).length, "lista de comandantes", "listas de comandantes"), THEME_WORD[s.theme] ?? s.theme].join(", ");
     },
   },
   {
     key: CARD_KEY, label: nameOf(CARD_KEY), parse: guard(parseCard),
     describe: (v) => {
       const c = v as ReturnType<typeof parseCard>;
-      return c.name ? `${c.name}${c.tag ? ` [${c.tag}]` : ""}` : "no name yet";
+      return c.name ? `${c.name}${c.tag ? ` [${c.tag}]` : ""}` : "sem nome ainda";
     },
   },
   {
     key: CREST_KEY, label: nameOf(CREST_KEY), parse: (raw) => parseCrest(raw),
     describe: (v) => {
       const c = v as NonNullable<ReturnType<typeof parseCrest>>;
-      return `${c.shape} shield, ${c.emblem}${c.tag ? `, [${c.tag}]` : ""}`;
+      return `escudo ${c.shape}, ${c.emblem}${c.tag ? `, [${c.tag}]` : ""}`;
     },
   },
   {
     key: TOOLS_KEY, label: nameOf(TOOLS_KEY), parse: guard(parseToolsStore),
     describe: (v) => {
       const t = v as ReturnType<typeof parseToolsStore>;
-      return [n(Object.keys(t.inputs).length, "calculator"), n(Object.keys(t.inventory).length, "inventory value"), n(Object.keys(t.checks).length, "checklist")].join(", ");
+      return [n(Object.keys(t.inputs).length, "calculadora", "calculadoras"), n(Object.keys(t.inventory).length, "valor de inventário", "valores de inventário"), n(Object.keys(t.checks).length, "checklist", "checklists")].join(", ");
     },
   },
   {
     key: FARMS_KEY, label: nameOf(FARMS_KEY), parse: guard(parseFarmsStore),
     describe: (v) => {
       const f = v as ReturnType<typeof parseFarmsStore>;
-      return `${n(f.farms.length, "farm")}, ${n(f.shipments.length, "shipment")}`;
+      return `${n(f.farms.length, "farm", "farms")}, ${n(f.shipments.length, "envio", "envios")}`;
     },
   },
   {
     key: KINGDOM_KEY, label: nameOf(KINGDOM_KEY), parse: guard(parseKingdomStore),
-    describe: (v) => n((v as ReturnType<typeof parseKingdomStore>).docs.length, "document"),
+    describe: (v) => n((v as ReturnType<typeof parseKingdomStore>).docs.length, "documento", "documentos"),
   },
 ];
 
@@ -138,7 +139,7 @@ export interface RestorePlan {
   writes: Record<string, string>;
 }
 
-const NOT_BACKUP = "This file is not a KingdomOps backup. Pick the kingdomops-backup-….json file made with \"Back up everything\".";
+const NOT_BACKUP = "Este arquivo não é um backup do KingdomOps. Escolha o arquivo kingdomops-backup-….json feito com \"Fazer backup de tudo\".";
 
 /**
  * Read a backup file and compare it with this device. Nothing is written. Sections missing from the
@@ -153,7 +154,7 @@ export function planRestore(text: string, st: StorageLike | null): RestorePlan {
     throw new Error(NOT_BACKUP);
   }
   if (!isRecord(data) || data.app !== BACKUP_APP || !isRecord(data.keys)) throw new Error(NOT_BACKUP);
-  if (data.v !== BACKUP_VERSION) throw new Error("This backup was made by a newer version of KingdomOps. Update the page (reload) and try again.");
+  if (data.v !== BACKUP_VERSION) throw new Error("Este backup foi feito por uma versão mais nova do KingdomOps. Atualize a página (recarregue) e tente de novo.");
   const rows: PlanRow[] = [];
   const writes: Record<string, string> = {};
   for (const s of BACKUP_SECTIONS) {

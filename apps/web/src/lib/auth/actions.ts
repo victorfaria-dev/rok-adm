@@ -21,16 +21,16 @@ export function callbackUrl(origin: string, next: string): string {
 export function friendlyError(e: unknown): string {
   const msg = typeof e === "object" && e !== null && "message" in e ? String((e as { message: unknown }).message) : String(e ?? "");
   const status = typeof e === "object" && e !== null && "status" in e ? Number((e as { status: unknown }).status) : 0;
-  if (status === 429 || /rate limit|too many/i.test(msg)) return "Too many tries. Wait a minute and try again.";
-  if (/expired|invalid.*(token|otp|code)|token.*(expired|invalid)/i.test(msg)) return "That code or link has expired or was already used. Ask for a new one.";
-  if (/code verifier|both auth code and code verifier/i.test(msg)) return "Open the sign-in link in the same browser you asked for it from, or type the 6-digit code instead.";
-  if (/failed to fetch|network|load failed/i.test(msg)) return "No connection to the sign-in service. Check your internet and try again.";
-  if (/provider is not enabled|unsupported provider/i.test(msg)) return "This sign-in option is not switched on yet.";
-  return msg ? `Sign-in failed: ${msg}` : "Sign-in failed. Try again.";
+  if (status === 429 || /rate limit|too many/i.test(msg)) return "Muitas tentativas. Espere um minuto e tente de novo.";
+  if (/expired|invalid.*(token|otp|code)|token.*(expired|invalid)/i.test(msg)) return "Esse código ou link expirou ou já foi usado. Peça um novo.";
+  if (/code verifier|both auth code and code verifier/i.test(msg)) return "Abra o link de login no mesmo navegador em que você o pediu ou digite o código de 6 dígitos.";
+  if (/failed to fetch|network|load failed/i.test(msg)) return "Sem conexão com o serviço de login. Verifique sua internet e tente de novo.";
+  if (/provider is not enabled|unsupported provider/i.test(msg)) return "Esta opção de login ainda não está ativada.";
+  return msg ? `O login falhou: ${msg}` : "O login falhou. Tente de novo.";
 }
 
 export async function sendEmailSignIn(client: KoSupabase, email: string, next: string, origin: string): Promise<ActionResult> {
-  if (!isEmail(email)) return { ok: false, message: "Type a valid e-mail address." };
+  if (!isEmail(email)) return { ok: false, message: "Digite um e-mail válido." };
   try {
     const { error } = await client.auth.signInWithOtp({
       email: email.trim(),
@@ -45,7 +45,7 @@ export async function sendEmailSignIn(client: KoSupabase, email: string, next: s
 /** The 6-digit code from the same e-mail; works on any device (the link needs the same browser). */
 export async function verifyEmailCode(client: KoSupabase, email: string, code: string): Promise<ActionResult> {
   const token = code.replace(/\s+/g, "");
-  if (!/^\d{6,10}$/.test(token)) return { ok: false, message: "Type the code from the e-mail (numbers only)." };
+  if (!/^\d{6,10}$/.test(token)) return { ok: false, message: "Digite o código do e-mail (só números)." };
   try {
     const { error } = await client.auth.verifyOtp({ email: email.trim(), token, type: "email" });
     return error ? { ok: false, message: friendlyError(error) } : { ok: true };
@@ -81,7 +81,7 @@ export async function completeCallback(client: KoSupabase, href: string): Promis
       return { ok: true, next };
     }
     const { data } = await client.auth.getSession();
-    return data.session ? { ok: true, next } : { ok: false, message: "This sign-in link is incomplete. Start again from the sign-in page.", next };
+    return data.session ? { ok: true, next } : { ok: false, message: "Este link de login está incompleto. Comece de novo pela página de login.", next };
   } catch (e) {
     return { ok: false, message: friendlyError(e), next };
   }
