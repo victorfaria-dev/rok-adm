@@ -8,14 +8,16 @@
 .cmd-h3 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); }
 .cmd-h4 { font: var(--ko-weight-semibold) var(--ko-text-md)/var(--ko-leading-md) var(--ko-font-body); margin: 0; }
 
-/* Picker: label above a native select (keyboard and screen reader support for free). */
-.cmd-picker { display: grid; gap: var(--ko-space-2); max-width: 480px; }
-.cmd-label { font-weight: var(--ko-weight-semibold); }
-.cmd-select {
-  width: 100%; min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
-  color: var(--ko-text); background: var(--ko-surface); accent-color: var(--ko-accent);
+/* Picker extras (the portrait grid itself lives in picker.css). */
+.cmd-other-btn {
+  justify-self: start; min-height: 44px; padding: var(--ko-space-2) var(--ko-space-4);
+  color: var(--ko-text); font: inherit; background: var(--ko-surface-2); cursor: pointer;
   border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
 }
+.cmd-other-btn[aria-pressed="true"] { border: 2px solid var(--ko-accent); background: var(--ko-surface-raised); }
+.cmd-stage-hint { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.cmd-stage-hint a { color: var(--ko-accent); text-underline-offset: 3px; }
+.cmd-later { border-inline-start: 3px solid var(--ko-info); padding: var(--ko-space-1) 0 var(--ko-space-1) var(--ko-space-4); max-width: 65ch; }
 .cmd-empty { color: var(--ko-text-muted); max-width: 65ch; }
 
 .cmd-detail { display: grid; gap: var(--ko-space-4); min-width: 0; }

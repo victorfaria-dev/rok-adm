@@ -56,6 +56,9 @@ export interface KingdomProgress {
   offseason?: boolean;
 }
 
+/** The fields timing needs, so a lean client list (no facts or sources) can be passed instead of the full rows. */
+export type CommanderTimingInput = Pick<CommanderRelease, "id" | "period" | "offseasonUnlock" | "fromDay">;
+
 /** past = its period is earlier than the player's; current = same period; future = not reached yet. */
 export type CommanderTiming = "past" | "current" | "future";
 
@@ -80,7 +83,7 @@ export function progressFromProfile(
 }
 
 /** Timing of one commander relative to the player's kingdom. */
-export function commanderTiming(commander: CommanderRelease, progress: KingdomProgress): CommanderTiming {
+export function commanderTiming(commander: CommanderTimingInput, progress: KingdomProgress): CommanderTiming {
   const own = stageIndex(periodStage(commander.period));
   const player = stageIndex(progress.stage);
   if (own < player) return "past";
@@ -101,9 +104,9 @@ export function getCommanderRelease(id: string, list: readonly CommanderRelease[
 export function commanderTimingById(
   id: string,
   progress: KingdomProgress,
-  list: readonly CommanderRelease[] = COMMANDER_RELEASES,
+  list: readonly CommanderTimingInput[] = COMMANDER_RELEASES,
 ): CommanderTiming | "unknown" {
-  const c = getCommanderRelease(id, list);
+  const c = list.find((x) => x.id === id);
   return c ? commanderTiming(c, progress) : "unknown";
 }
 
@@ -114,7 +117,7 @@ export function commanderTimingById(
 export function shouldAskAboutCommander(
   id: string,
   progress: KingdomProgress,
-  list: readonly CommanderRelease[] = COMMANDER_RELEASES,
+  list: readonly CommanderTimingInput[] = COMMANDER_RELEASES,
 ): boolean {
   return commanderTimingById(id, progress, list) !== "future";
 }
