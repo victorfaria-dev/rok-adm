@@ -59,6 +59,13 @@ Everything below lives in your browser's storage on this device. Only you can se
 - **Other ways to export:** Council kit page (`/kingdom/`): **Export (.json)**; each tool: share link or CSV
 - **How to delete it:** Each tool: delete a document; council kit page: **Delete all council data** (also forgets the webhook)
 
+#### City card banners
+
+- **What is in it:** Images you picked as the banner of an account's city card, cropped and shrunk on your device (the default banners are not stored)
+- **In "Back up everything":** **No** (images are large; pick them again after a restore)
+- **Other ways to export:** None
+- **How to delete it:** **Reset to default** under **Edit banner** on the City Hall card, or **Delete all data** on the Me page
+
 #### Discord webhook URL
 
 - **What is in it:** The Discord webhook the council pasted to post from KingdomOps

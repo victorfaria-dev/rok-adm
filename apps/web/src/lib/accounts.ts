@@ -41,7 +41,7 @@ export function accountsOf(s: AccountsStore): AccountsView {
   let id: string = FIRST_ACCOUNT.id;
   for (let n = 2; list.some((a) => a.id === id); n++) id = `${FIRST_ACCOUNT.id}${n}`;
   const name = list.some((a) => a.name.toLowerCase() === FIRST_ACCOUNT.name.toLowerCase()) ? `${FIRST_ACCOUNT.name} (current)` : FIRST_ACCOUNT.name;
-  const first: SavedProfile = { id, name, code: s.profileCode, override: s.profileOverride };
+  const first: SavedProfile = { id, name, code: s.profileCode, override: s.profileOverride, kind: list.length ? "farm" : "main" };
   return { accounts: [first, ...list], activeId: id, migrated: true };
 }
 

@@ -56,6 +56,7 @@ test("player by default: City Hall · Tools · Me, with the current tab marked; 
 test("leader: the Me switch swaps to Kingdom · Members · Events · Me at once", async ({ page, isMobile }) => {
   await store(page, { profileCode: PROFILE });
   await page.goto("/me/");
+  await expect(page.locator("astro-island[ssr]")).toHaveCount(0); // hydrated: the change is not lost
   await page.getByRole("radio", { name: "Leader" }).check();
   const nav = mainNav(page, isMobile);
   await expect(tabLabels(page, isMobile)).toHaveText(LEADER_NAV.map((d) => d.label));
@@ -161,5 +162,28 @@ test.describe("City Hall hub", () => {
     const s = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1")!));
     expect(s.commanders).toEqual({});
     expect(s.savedProfiles.find((a: { id: string }) => a.id === "main").commanders).toEqual({ minamoto: { q1: "a" } });
+  });
+
+  test("banner: default by account type; own image per account, cropped on the device; reset to default", async ({ page }) => {
+    await store(page, accounts);
+    await page.goto("/city-hall/");
+    await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
+    await expect(page.locator('[data-city-card="main"]')).toHaveAttribute("data-kind", "main");
+    await expect(page.locator('[data-city-card="farm"]')).toHaveAttribute("data-kind", "farm");
+    const toggle = page.locator("[data-banner-toggle]");
+    await toggle.click();
+    await expect(toggle).toHaveAttribute("aria-expanded", "true");
+    const png = Buffer.from("iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==", "base64");
+    await page.locator("[data-banner-file]").setInputFiles({ name: "city.png", mimeType: "image/png", buffer: png });
+    await expect(page.getByText("Banner saved on this device.")).toBeVisible();
+    await expect(page.locator('[data-city-card="main"]')).toHaveAttribute("data-custom-banner", "");
+    await expect(page.locator('[data-city-card="farm"]')).not.toHaveAttribute("data-custom-banner", "");
+    const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:banners:v1")!));
+    expect(Object.keys(saved.banners)).toEqual(["main"]);
+    expect(saved.banners.main).toMatch(/^data:image\/(webp|jpeg);base64,/);
+    await page.getByLabel("Account type").selectOption("farm");
+    await expect(page.locator('[data-city-card="main"]')).toHaveAttribute("data-kind", "farm");
+    await page.getByRole("button", { name: "Reset to default" }).click();
+    await expect(page.locator('[data-city-card="main"]')).not.toHaveAttribute("data-custom-banner", "");
   });
 });

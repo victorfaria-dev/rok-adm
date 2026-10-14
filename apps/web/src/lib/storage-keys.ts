@@ -23,6 +23,7 @@ export const STORAGE_KEYS: readonly StorageKeyInfo[] = [
   { key: "ko:tools:v1", area: "local", name: "Tool inputs (calculators, shared inventory, checklists)", backup: true },
   { key: "ko:farms:v1", area: "local", name: "Farms & shipment log", backup: true },
   { key: "ko:kingdom:v1", area: "local", name: "Kingdom council documents (rules, requirements, MGE ledger, recruiting post, seed plans)", backup: true },
+  { key: "ko:banners:v1", area: "local", name: "City card banners", backup: false, note: "Images: large; pick them again after a restore." },
   { key: "ko:kingdom:webhook:v1", area: "local", name: "Discord webhook URL", backup: false, note: "A secret: anyone with it can post in that channel." },
   { key: "ko:farms:probe", area: "local", name: "Storage check (written and removed at once)", backup: false, note: "Throwaway." },
   { key: "ko:kingdom:probe", area: "local", name: "Storage check (written and removed at once)", backup: false, note: "Throwaway." },

@@ -11,6 +11,8 @@ import { countDone, doneToday, gameWeekday, setDone } from "../../lib/routine-da
 import { readStore, writeStore, type SavedProfile, type StoreV1 } from "../../lib/store";
 import { encodeShare } from "../../lib/tools-store";
 import { TileIcon, type TileIconName } from "./TileIcon";
+import { BannerEditor } from "./BannerEditor";
+import { accountKind, localBannerStore, type AccountKind, type BannerStore } from "../../lib/banner";
 import "./cityhall.css";
 
 // Every user-facing string of this island, in one place (i18n later).
@@ -68,7 +70,11 @@ interface Props {
   targets: CityHallTargets;
   /** Clock; tests inject a fixed day. */
   now?: () => Date;
+  /** Where custom banners live (this browser until sign-in; swappable). */
+  banners?: BannerStore;
 }
+
+const LOCAL_BANNERS = localBannerStore();
 
 const stageLabel = (p: AccountProfile): string => {
   const q = getQuestion("kingdomStage");
@@ -85,11 +91,15 @@ function Bar({ g, label, unit }: { g: Gauge; label: string; unit: string }) {
   );
 }
 
-/** The hero card for one account. Banner art is a token-drawn pattern (swap via --ch-card-art). */
-function HeroCard({ card, active, profile, index, total, defaults }: { card: SavedProfile | null; active: boolean; profile: AccountProfile; index: number; total: number; defaults: boolean }) {
+/**
+ * The hero card for one account. Banner: the user's own image, else the default for the account
+ * type (/banners/<kind>-640|1280.webp), over a token-drawn pattern that shows while either is missing.
+ */
+function HeroCard({ card, active, profile, index, total, defaults, kind, image }: { card: SavedProfile | null; active: boolean; profile: AccountProfile; index: number; total: number; defaults: boolean; kind: AccountKind; image: string | null }) {
   const name = card?.name ?? S.yourCity;
   return (
-    <article class="ch-card-hero" data-layer="2" data-city-card={card?.id ?? "default"} data-active={active ? "" : undefined}
+    <article class="ch-card-hero" data-layer="2" data-city-card={card?.id ?? "default"} data-active={active ? "" : undefined} data-kind={kind}
+      data-custom-banner={image ? "" : undefined} style={image ? { "--ch-card-img": `url("${image}")` } : undefined}
       aria-roledescription="slide" aria-label={S.slide(index + 1, total, name)}>
       <div class="ch-card-art" aria-hidden="true" />
       <div class="ch-card-body">
@@ -108,8 +118,9 @@ function HeroCard({ card, active, profile, index, total, defaults }: { card: Sav
  * needs dragging: a button expands it (drag is a shortcut); reduced motion and wide screens show it
  * expanded and static.
  */
-export default function CityHall({ rows, targets: t, now = () => new Date() }: Props) {
+export default function CityHall({ rows, targets: t, now = () => new Date(), banners = LOCAL_BANNERS }: Props) {
   const [store, setStore] = useState<StoreV1 | null>(null);
+  const [images, setImages] = useState<Record<string, string>>({});
   // Server render (no JS yet) shows everything; a phone with motion allowed starts collapsed.
   const [expanded, setExpanded] = useState(true);
   const [toggleable, setToggleable] = useState(false);
@@ -138,6 +149,24 @@ export default function CityHall({ rows, targets: t, now = () => new Date() }: P
   const saved = store ? profileFromCode(store.profileCode) : null;
   const base = saved ?? defaultProfile();
   const profile = withEffectiveSpending(base, store?.profileOverride ?? null);
+
+  // Custom banners load after the store (async: the store behind the interface may be remote later).
+  const ids = cards.map((c) => c.id).join("|");
+  useEffect(() => {
+    let live = true;
+    void Promise.all(cards.map(async (c) => [c.id, await banners.getBanner(c.id)] as const)).then((pairs) => {
+      if (live) setImages(Object.fromEntries(pairs.filter((x): x is readonly [string, string] => x[1] !== null)));
+    });
+    return () => { live = false; };
+  }, [ids]);
+
+  const kindOf = (c: SavedProfile, i: number): AccountKind => accountKind(c, i, profileFromCode(c.code)?.role);
+  const activeCard = cards.find((c) => c.id === accounts.activeId) ?? null;
+  const setKind = (k: AccountKind): void => {
+    const s = readStore();
+    const v = accountsOf(s);
+    setStore(writeStore({ savedProfiles: v.accounts.map((a) => (a.id === v.activeId ? { ...a, kind: k } : a)), activeAccountId: v.activeId }));
+  };
 
   const use = (i: number): void => {
     const target = cards[i];
@@ -220,8 +249,8 @@ export default function CityHall({ rows, targets: t, now = () => new Date() }: P
         <div class="ch-cards" ref={track} role="group" aria-roledescription="carousel" aria-label={S.accounts} data-cards={cards.length}>
           {cards.length ? cards.map((c, i) => {
             const p = profileFromCode(c.code)!;
-            return <HeroCard key={c.id} card={c} active={c.id === accounts.activeId} profile={withEffectiveSpending(p, c.override)} index={i} total={cards.length} defaults={false} />;
-          }) : <HeroCard card={null} active profile={profile} index={0} total={1} defaults={!!store} />}
+            return <HeroCard key={c.id} card={c} active={c.id === accounts.activeId} profile={withEffectiveSpending(p, c.override)} index={i} total={cards.length} defaults={false} kind={kindOf(c, i)} image={images[c.id] ?? null} />;
+          }) : <HeroCard card={null} active profile={profile} index={0} total={1} defaults={!!store} kind="main" image={null} />}
         </div>
         {cards.length > 1 && (
           <div class="ch-dots">
@@ -231,6 +260,23 @@ export default function CityHall({ rows, targets: t, now = () => new Date() }: P
               </button>
             ))}
           </div>
+        )}
+        {activeCard && (
+          <BannerEditor
+            key={activeCard.id}
+            accountId={activeCard.id}
+            accountName={activeCard.name}
+            kind={kindOf(activeCard, cards.indexOf(activeCard))}
+            hasCustom={!!images[activeCard.id]}
+            store={banners}
+            onKind={setKind}
+            onBanner={(img) => setImages((m) => {
+              const next = { ...m };
+              if (img) next[activeCard.id] = img;
+              else delete next[activeCard.id];
+              return next;
+            })}
+          />
         )}
       </section>
 

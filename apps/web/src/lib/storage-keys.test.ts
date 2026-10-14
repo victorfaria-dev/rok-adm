@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { BACKUP_SECTIONS } from "./backup";
 import { CARD_KEY } from "./card";
+import { BANNERS_KEY } from "./banner";
 import { CREST_KEY } from "./crest";
 import { FARMS_KEY } from "./farms-store";
 import { KINGDOM_KEY, WEBHOOK_KEY } from "./kingdom-store";
@@ -47,7 +48,7 @@ describe("storage key manifest", () => {
 
   it("matches the stores' own key constants and the backup sections", () => {
     const keys = STORAGE_KEYS.map((k) => k.key);
-    for (const k of [STORE_KEY, CARD_KEY, CREST_KEY, TOOLS_KEY, FARMS_KEY, KINGDOM_KEY, WEBHOOK_KEY]) expect(keys).toContain(k);
+    for (const k of [STORE_KEY, CARD_KEY, CREST_KEY, TOOLS_KEY, FARMS_KEY, KINGDOM_KEY, WEBHOOK_KEY, BANNERS_KEY]) expect(keys).toContain(k);
     expect(BACKUP_SECTIONS.map((s) => s.key).sort()).toEqual([...BACKUP_KEYS].sort());
     expect(BACKUP_KEYS).not.toContain(WEBHOOK_KEY);
     expect(new Set(keys).size).toBe(keys.length);

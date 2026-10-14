@@ -37,6 +37,8 @@ export interface SavedProfile {
   code: string;
   /** F-72 hand-picked profile for this account, or null. */
   override: SpendingProfile | null;
+  /** Account type: picks the default city card banner. Missing in older saves (lib/banner.ts infers it). */
+  kind?: "main" | "farm";
   /** "My commanders" answers of this account while it is not the active one. */
   commanders?: CommanderAnswersMap;
   /** Today's routine ticks of this account while it is not the active one. */
@@ -157,6 +159,7 @@ export function parseStoreReport(raw: string | null | undefined): { store: Store
       ids.add(x.id);
       const o = SPENDING_PROFILES.includes(x.override as SpendingProfile) ? (x.override as SpendingProfile) : null;
       const entry: SavedProfile = { id: x.id, name: x.name.trim().slice(0, 40), code: x.code, override: o };
+      if (x.kind === "main" || x.kind === "farm") entry.kind = x.kind;
       if (isRecord(x.commanders)) entry.commanders = parseCommanders(x.commanders);
       if (x.routine !== undefined) entry.routine = parseRoutine(x.routine);
       s.savedProfiles.push(entry);

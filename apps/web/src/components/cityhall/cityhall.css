@@ -26,7 +26,17 @@
   border-radius: var(--ko-radius-lg); box-shadow: var(--ko-shadow-2); color: var(--ko-ivory);
   border: 1px solid color-mix(in srgb, var(--ko-bronze) 40%, transparent);
 }
-.ch-card-art { position: absolute; inset: 0; background: var(--ch-card-art); }
+/* Banner: the user's image (--ch-card-img), else the default for the account type, over the pattern
+   (shown while a file is missing). The left third stays dark for the text. */
+.ch-card-hero[data-kind="main"] { --ch-card-default: image-set(url("/banners/main-640.webp") 1x, url("/banners/main-1280.webp") 2x); }
+.ch-card-hero[data-kind="farm"] { --ch-card-default: image-set(url("/banners/farm-640.webp") 1x, url("/banners/farm-1280.webp") 2x); }
+.ch-card-art {
+  position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--ko-graphite) 78%, transparent) 0%, color-mix(in srgb, var(--ko-graphite) 35%, transparent) 45%, transparent 75%),
+    var(--ch-card-img, var(--ch-card-default, none)) center / cover no-repeat,
+    var(--ch-card-art);
+}
 .ch-card-body { position: relative; display: grid; align-content: space-between; gap: var(--ko-space-2); height: 100%; padding: var(--ko-space-5); }
 .ch-card-tag {
   justify-self: start; padding: 2px var(--ko-space-2); border-radius: var(--ko-radius-pill);
@@ -133,3 +143,25 @@
   .ch-sheet-more { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--ko-space-8); }
   .ch-sheet-more > [data-today] { grid-column: 2; grid-row: 1 / span 2; }
 }
+
+/* Edit banner (account settings for the card). */
+.ch-banner-edit { display: grid; justify-items: center; gap: var(--ko-space-3); }
+.ch-banner-btn { min-height: 44px; }
+.ch-banner-panel {
+  display: grid; gap: var(--ko-space-4); width: 100%; padding: var(--ko-space-4);
+  background: var(--ko-surface-raised); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); box-shadow: var(--ko-shadow-1);
+}
+.ch-banner-panel[hidden] { display: none; }
+.ch-banner-h { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); }
+.ch-field { display: grid; gap: var(--ko-space-1); }
+.ch-field label { font-weight: var(--ko-weight-semibold); }
+.ch-select {
+  min-height: 48px; max-width: 320px; padding: var(--ko-space-2) var(--ko-space-3); font: inherit; font-size: 16px;
+  color: var(--ko-text); background: var(--ko-surface); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+}
+.ch-select:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.ch-banner-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
+.ch-file { position: relative; cursor: pointer; }
+.ch-file:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 3px; }
+.ch-error { color: var(--ko-error); }
+.ch-error:empty, .ch-banner-panel p[role="status"]:empty { display: none; }

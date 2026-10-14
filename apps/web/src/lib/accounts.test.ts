@@ -12,7 +12,7 @@ describe("accounts (UX stage 1)", () => {
     const s = parseStore(JSON.stringify({ v: 1, profileCode: A }));
     expect(s.activeAccountId).toBeNull();
     const v = accountsOf(s);
-    expect(v).toEqual({ accounts: [{ id: "main", name: "Main", code: A, override: null }], activeId: "main", migrated: true });
+    expect(v).toEqual({ accounts: [{ id: "main", name: "Main", code: A, override: null, kind: "main" }], activeId: "main", migrated: true });
     expect(migrationPatch(s)).toEqual({ savedProfiles: v.accounts, activeAccountId: "main" });
     expect(migrationPatch(make({ ...s, ...migrationPatch(s)! }))).toBeNull();
   });
