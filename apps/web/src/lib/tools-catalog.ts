@@ -23,7 +23,7 @@ export const TOOLS: readonly ToolEntry[] = [
   { href: "/tools/kvk/", title: "KvK readiness", blurb: "A checklist for your first KvK, with a plain season explainer.", features: ["F-26"], group: "kingdom" },
   { href: "/tools/migration/", title: "Migration checker", blurb: "Can you migrate, and what is missing, for the current rules.", features: ["F-31"], group: "kingdom" },
   { href: "/farms/", title: "Farm hub", blurb: "Your farms, a daily checklist and shipment log, plus which farm to build, its build path and the Trading Post calculator.", features: ["F-04", "F-65", "F-66", "F-68"], group: "farms" },
-  { href: "/tools/screenshot/", title: "Read my screenshot", blurb: "City Hall, power and VIP from your own profile screenshot, read on your device.", features: ["F-54"], group: "experimental" },
+  { href: "/tools/screenshot/", title: "Read my screenshots", blurb: "Suggested power, kill points, City Hall and VIP from screenshots of your own account, read on your device. You check every value.", features: ["F-54"], group: "experimental" },
 ];
 
 export const GROUPS: readonly { id: ToolGroup; title: string }[] = [

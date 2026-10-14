@@ -114,7 +114,7 @@ export interface CardData {
   f2pAchiever: boolean;
   /** No saved profile: the card shows sample numbers and says so. */
   example: boolean;
-  /** Screenshot verification (F-54) is not built yet, so every card is self-reported. */
+  /** Every card is self-reported. The screenshot reader (F-54) only suggests values the player confirms; it checks nothing. */
   proof: "self-reported";
 }
 
