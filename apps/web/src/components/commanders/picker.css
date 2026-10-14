@@ -125,3 +125,6 @@ button.ckt { cursor: pointer; transition: border-color var(--ko-duration-fast) v
 }
 button.ckt:not([data-future]):active { background: var(--ko-surface-raised); }
 @media (prefers-reduced-motion: reduce) { button.ckt { transition: none; } }
+
+.ckp-more > summary { min-height: 44px; padding-block: var(--ko-space-2); cursor: pointer; font-weight: var(--ko-weight-semibold); }
+.ckp-more[open] > summary { margin-bottom: var(--ko-space-2); }

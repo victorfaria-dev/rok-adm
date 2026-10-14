@@ -12,9 +12,9 @@ const S = {
   title: "My commanders",
   description: "Your commander checks for the account in use: main, farm or alt each keep their own answers.",
   crumb: "City Hall",
-  lead: "Check a commander before this account spends sculptures on it. Each account keeps its own answers.",
+  lead: "Check a commander before this account spends sculptures on it.",
   account: "Account:",
-  guide: "Which commanders are worth it in general? Read the",
+  guide: "General picks:",
   guideLink: "commander guide",
 };
 ---
@@ -22,9 +22,8 @@ const S = {
   <nav class="crumb" aria-label="Breadcrumb"><a href="/city-hall/">{S.crumb}</a> <span aria-hidden="true">/</span> <span aria-current="page">{S.title}</span></nav>
   <section class="intro" aria-labelledby="mc-h">
     <h1 id="mc-h">{S.title}</h1>
-    <p>{S.lead}</p>
+    <p>{S.lead} {S.guide} <a href="/commanders/">{S.guideLink}</a>.</p>
     <p class="acct" data-account-name hidden>{S.account} <strong></strong></p>
-    <p>{S.guide} <a href="/commanders/">{S.guideLink}</a>.</p>
   </section>
   <Commanders roster={roster} client:load />
 </Shell>

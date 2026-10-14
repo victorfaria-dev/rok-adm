@@ -91,6 +91,7 @@ test("future commanders are dimmed and ask no questions", async ({ page }) => {
   await expect(page.getByRole("group", { name: /What job will this commander do/ })).toHaveCount(0);
 
   // "Only what I can get now" hides the later seasons.
+  await page.getByText("Filters", { exact: true }).click();
   await page.getByRole("checkbox", { name: "Only what I can get now" }).check();
   await expect(picker(page).getByRole("group", { name: /Season 3/ })).toHaveCount(0);
   await expect(picker(page).locator("button.ckt[data-future]")).toHaveCount(0);

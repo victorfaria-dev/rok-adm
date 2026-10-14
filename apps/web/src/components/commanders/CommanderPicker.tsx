@@ -125,19 +125,22 @@ export function CommanderPicker(props: CommanderPickerProps) {
       <h2 id={titleId} class="ckp-title">{title}</h2>
       <div class="ckp-tools">
         <div class="ckp-search">
-          <label for={`${idPrefix}-q`} class="ckp-label">Search by name</label>
+          <label for={`${idPrefix}-q`} class="visually-hidden">Search by name</label>
           <input
             id={`${idPrefix}-q`}
             class="ckp-input"
             type="search"
             autoComplete="off"
             spellcheck={false}
+            placeholder="Search commanders"
             value={query}
             onInput={(e) => setQuery(e.currentTarget.value)}
           />
         </div>
         {filters && (
-          <div class="ckp-filters">
+          <details class="ckp-more">
+            <summary>Filters</summary>
+            <div class="ckp-filters">
             <fieldset class="ckp-seg">
               <legend class="visually-hidden">Rarity</legend>
               {RARITY_OPTIONS.map((o) => (
@@ -153,10 +156,11 @@ export function CommanderPicker(props: CommanderPickerProps) {
                 <span>Only what I can get now</span>
               </label>
             )}
-          </div>
+            </div>
+          </details>
         )}
         <p id={hintId} class="ckp-hint">
-          {count === 1 ? "1 commander" : `${count} commanders`}, in the order they arrive in a new kingdom. Arrow keys move between portraits.
+          {count === 1 ? "1 commander" : `${count} commanders`} in arrival order. Arrow keys move.
         </p>
       </div>
       <p class="ckp-note" role="status">{note}</p>
