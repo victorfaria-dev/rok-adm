@@ -6261,6 +6261,585 @@
     "values": []
   },
   {
+    "confidence": "baixa",
+    "domain": "A06",
+    "id": "A06-0700",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": null,
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "Commanders Overall Rating Open Field Rallying Objectives Defending Objectives Season Troop Type Rarity",
+        "url": "https://riseofkingdomsguides.com/guides/commander-tier-lists/"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "Gonzalo de Cordoba B S C C Season 3 Siege Legendary",
+        "url": "https://riseofkingdomsguides.com/guides/commander-tier-lists/"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "ROK Best Commanders Tier List October 2026",
+        "url": "https://riseofkingdomsguides.com/guides/commander-tier-lists/"
+      }
+    ],
+    "stages": [
+      "pre_kvk",
+      "kvk1",
+      "kvk2",
+      "kvk3",
+      "soc"
+    ],
+    "statement": "The riseofkingdomsguides.com tier list (headed \"October 2026\") gives a \"Season\" column in 101 rows (100 commanders; Gonzalo de Córdoba appears twice, both \"Season 3\"): 36 are \"Season 0\" (available before KvK1), 8 are \"Season 2\" and 57 are \"Season 3\". The list has no \"Season 1\" and no separate Season of Conquest label, so \"Season 3\" reads as \"Season 3 or later\". The full table is in data/rkg-commander-season.csv.",
+    "status": "verificado",
+    "table": "facts/A06/data/rkg-commander-season.csv",
+    "title": "Season in which each commander becomes available, per the rkg tier list (Season 0 / 2 / 3) — table",
+    "validUntil": "2026-10-01",
+    "values": [
+      {
+        "key": "season_0",
+        "unit": "commanders",
+        "value": "36"
+      },
+      {
+        "key": "season_2",
+        "unit": "commanders",
+        "value": "8"
+      },
+      {
+        "key": "season_3",
+        "unit": "commanders",
+        "value": "57"
+      }
+    ]
+  },
+  {
+    "confidence": "alta",
+    "domain": "A06",
+    "id": "A06-0701",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": "1.0.55",
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Yi Seong-Gye will become available when a Kingdom enters the offseason before Season 1.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1241934/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Saladin, Genghis Khan, Edward of Woodstock, and Tomyris will become available when a Kingdom enters the offseason before Season 2 (previously 140 days after Kingdom launch).",
+        "url": "https://forum-global.lilithgame.com/rok/post/1241934/?lang=en_US"
+      }
+    ],
+    "stages": [
+      "pre_kvk",
+      "kvk1",
+      "kvk2"
+    ],
+    "statement": "The 1.0.55 notes (March 2022) tie commander availability to the kingdom's Lost Kingdom season instead of kingdom age. Yi Seong-Gye becomes available when the kingdom enters the offseason before Season 1. Saladin, Genghis Khan, Edward of Woodstock and Tomyris become available when the kingdom enters the offseason before Season 2; before 1.0.55 they unlocked 140 days after kingdom launch.",
+    "status": "verificado",
+    "table": null,
+    "title": "Since 1.0.55: Yi Seong-Gye unlocks in the offseason before Season 1; Saladin, Genghis Khan, Edward of Woodstock and Tomyris in the offseason before Season 2",
+    "validUntil": "2022-03-01",
+    "values": [
+      {
+        "key": "yi-seong-gye",
+        "unit": null,
+        "value": "offseason before Season 1"
+      },
+      {
+        "key": "saladin",
+        "unit": null,
+        "value": "offseason before Season 2"
+      },
+      {
+        "key": "genghis-khan",
+        "unit": null,
+        "value": "offseason before Season 2"
+      },
+      {
+        "key": "edward-of-woodstock",
+        "unit": null,
+        "value": "offseason before Season 2"
+      },
+      {
+        "key": "tomyris",
+        "unit": null,
+        "value": "offseason before Season 2"
+      },
+      {
+        "key": "rule_before_1.0.55",
+        "unit": "days after kingdom launch",
+        "value": "140"
+      }
+    ]
+  },
+  {
+    "confidence": "alta",
+    "domain": "A06",
+    "id": "A06-0702",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": "1.0.96",
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Added two new engineering commanders: Archimedes and Mary I. They can be obtained from the Wheel of Fortune in Season 2 and the Legendary Tavern in subsequent seasons.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2081453/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "The relics of commanders Mary I, Archimedes, Takeda Shingen, and Siyaj K'ak' can now be purchased during Season 3.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2197960/?lang=en_US"
+      }
+    ],
+    "stages": [
+      "kvk2",
+      "kvk3",
+      "soc"
+    ],
+    "statement": "The 1.0.96 notes (July 2025) added the engineering commanders Archimedes and Mary I. They can be obtained from the Wheel of Fortune in Season 2 and from the Legendary Tavern in the seasons after it. Since 1.1.03 their Museum relics can be bought during Season 3.",
+    "status": "verificado",
+    "table": null,
+    "title": "Archimedes and Mary I (1.0.96): Wheel of Fortune in Season 2, Legendary Tavern in later seasons",
+    "validUntil": "2026-01-13",
+    "values": [
+      {
+        "key": "archimedes",
+        "unit": null,
+        "value": "Season 2 (Wheel of Fortune)"
+      },
+      {
+        "key": "mary-i",
+        "unit": null,
+        "value": "Season 2 (Wheel of Fortune)"
+      }
+    ]
+  },
+  {
+    "confidence": "alta",
+    "domain": "A06",
+    "id": "A06-0703",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": "1.1.01",
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Golden Chests and Commander Sculpture Chests now also contain Pepin III, Casimir III, and their sculptures.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2161435/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Added Achilles and Hector to the Legendary Tavern.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2161435/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "After a kingdom enters Season of Conquest, a new Legendary Tavern event will take place, in which Governors have a chance to gain sculptures for any commander their kingdom can already access.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1055096/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Increased the chance to draw the four commanders in the Legendary Tavern.",
+        "url": "https://forum-global.lilithgame.com/rok/post/2030530/?lang=en_US"
+      }
+    ],
+    "stages": [
+      "todos"
+    ],
+    "statement": "The 1.1.01 notes (November 2025) say Golden Chests and Commander Sculpture Chests now also contain the gathering commanders Pepin III and Casimir III, and that Achilles and Hector were added to the Legendary Tavern. The Legendary Tavern was introduced in 1.0.44 (March 2021) as an event that runs after a kingdom enters Season of Conquest; later notes also use it for Season 2 commanders (1.0.94) and for \"subsequent seasons\" after Season 2 (1.0.96), so the season in which it first runs is not stated in one place.",
+    "status": "verificado",
+    "table": null,
+    "title": "Golden Chests gained Pepin III and Casimir III (1.1.01); Achilles and Hector joined the Legendary Tavern, a Season of Conquest event since 1.0.44",
+    "validUntil": "2025-11-08",
+    "values": [
+      {
+        "key": "pepin-iii",
+        "unit": null,
+        "value": "Golden Chests"
+      },
+      {
+        "key": "casimir-iii",
+        "unit": null,
+        "value": "Golden Chests"
+      },
+      {
+        "key": "achilles",
+        "unit": null,
+        "value": "Legendary Tavern"
+      },
+      {
+        "key": "hector",
+        "unit": null,
+        "value": "Legendary Tavern"
+      }
+    ]
+  },
+  {
+    "confidence": "alta",
+    "domain": "A06",
+    "id": "A06-0704",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": "1.0.87",
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "A8: He can only be used in the Season of Conquest.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1801215/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "He can be obtained outside the KVK storyline, although he will not be available in the Wheel of Fortune or Mightiest Governor events.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1801215/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Prime Ragnar Lodbrok will soon be added to Daily Special Offer bundles (only in Season of Conquest kingdoms, specific launch time TBA).",
+        "url": "https://forum-global.lilithgame.com/rok/post/1935973/?lang=en_US"
+      }
+    ],
+    "stages": [
+      "soc"
+    ],
+    "statement": "The developers said in September 2024 that Prime Ragnar Lodbrok can only be used in the Season of Conquest and is not in the Wheel of Fortune or Mightiest Governor events. The 1.0.91 notes (February 2025) add his sculptures to Daily Special Offer bundles only in Season of Conquest kingdoms.",
+    "status": "verificado",
+    "table": null,
+    "title": "Prime Ragnar Lodbrok is a Season of Conquest commander: usable only in SoC, sold only in SoC kingdoms",
+    "validUntil": "2025-02-06",
+    "values": []
+  },
+  {
+    "confidence": "alta",
+    "domain": "A06",
+    "id": "A06-0705",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": "1.0.71",
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Pericles: Can be acquired through Silver Chests, Golden Chests, and the Expedition Shop.",
+        "url": "https://forum-global.lilithgame.com/rok/post/1497163/?lang=en_US"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:lilith-forum",
+        "quote": "Pyrrhus: Can be acquired through Golden Chests, the Expedition Shop, Daily Special Offers, and Card King (Daily Special Offers and Card King will be available starting on day 43 of your kingdom's Preparation Season).",
+        "url": "https://forum-global.lilithgame.com/rok/post/1497163/?lang=en_US"
+      }
+    ],
+    "stages": [
+      "pre_kvk"
+    ],
+    "statement": "The 1.0.71 notes (July 2023, Greek civilization) say Pericles can be acquired through Silver Chests, Golden Chests and the Expedition Shop, and Pyrrhus can be acquired through Golden Chests, the Expedition Shop, Daily Special Offers and Card King, and that Daily Special Offers and Card King are available from day 43 of the kingdom's Preparation Season.",
+    "status": "verificado",
+    "table": null,
+    "title": "Pyrrhus and Pericles (1.0.71): Golden Chests and Expedition Shop (Pericles also Silver Chests); Pyrrhus Daily Special Offers from day 43",
+    "validUntil": "2023-07-04",
+    "values": [
+      {
+        "key": "daily_special_offers_from_day",
+        "unit": "day of Preparation Season",
+        "value": "43"
+      }
+    ]
+  },
+  {
+    "confidence": "media",
+    "domain": "A06",
+    "id": "A06-0706",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": null,
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "He is obtained through gold chests primarily.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Cao_Cao"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "He is obtained from gold chests, and the second round of",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Charles_Martel"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "He is obtained through gold chests and as a reward in the first",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Julius_Caesar"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "He is available through gold chests, and the third round of",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/El_Cid"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "from gold chests, and legendary gathering commander choice sculpture chests from events.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Cleopatra_VII"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "chests in levels 10-14.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Hannibal_Barca"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "This commander is exclusively obtained in the Wheel of Fortune.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Cyrus_the_Great"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "He is obtained from the Wheel of Fortune.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Alexander_the_Great"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "He is obtained from the Wheel of Fortune.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Genghis_Khan"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "He will become available instead through Wheel of Fortune events in new kingdoms.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Yi_Seong-Gye"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "This commander is now featured in early Wheels of Fortune in new kingdoms.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Richard_I"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "This commander is exclusively available for kingdoms over 140 days.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Saladin"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "This commander is only available for kingdoms over 140 days old.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Wu_Zetian"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:fandom",
+        "quote": "This commander is exclusively available for kingdoms over 240 days.",
+        "url": "https://riseofkingdoms.fandom.com/wiki/Commanders/Takeda_Shingen"
+      }
+    ],
+    "stages": [
+      "pre_kvk",
+      "kvk1",
+      "kvk2",
+      "kvk3"
+    ],
+    "statement": "The Fandom commander pages give these routes. Gold chests: Cao Cao, Charles Martel (also round 2 of The Mightiest Governor), Julius Caesar (also the first Mightiest Governor), El Cid (also round 3) and Cleopatra VII. VIP chests (VIP 10–14): Hannibal Barca. Wheel of Fortune only: Cyrus the Great, Alexander the Great and Genghis Khan. Yi Seong-Gye and Richard I are not in chests on kingdoms #1032 and later and come from (early) Wheels of Fortune in new kingdoms. \"Kingdoms over 140 days\" only: Constantine I, Edward of Woodstock, Saladin, Tomyris and Wu Zetian (Wu Zetian \"obtained in Lost Kingdom season 2\"). \"Kingdoms over 240 days\": Takeda Shingen.",
+    "status": "verificado",
+    "table": null,
+    "title": "How Fandom says early and Season 2 legendaries are obtained: gold chests, VIP chests, Wheel of Fortune, \"kingdoms over 140/240 days\"",
+    "validUntil": "2026-01-03",
+    "values": [
+      {
+        "key": "gold_chests",
+        "unit": null,
+        "value": "Cao Cao; Charles Martel; Julius Caesar; El Cid; Cleopatra VII"
+      },
+      {
+        "key": "vip_chests",
+        "unit": "VIP 10-14",
+        "value": "Hannibal Barca"
+      },
+      {
+        "key": "wheel_of_fortune",
+        "unit": null,
+        "value": "Cyrus the Great; Alexander the Great; Genghis Khan; Yi Seong-Gye; Richard I"
+      },
+      {
+        "key": "over_140_days",
+        "unit": null,
+        "value": "Constantine I; Edward of Woodstock; Saladin; Tomyris; Wu Zetian"
+      },
+      {
+        "key": "over_240_days",
+        "unit": null,
+        "value": "Takeda Shingen"
+      }
+    ]
+  },
+  {
+    "confidence": "baixa",
+    "domain": "A06",
+    "id": "A06-0707",
+    "invalidatedBy": null,
+    "kind": "mecanica",
+    "patch": null,
+    "profiles": [
+      "todos"
+    ],
+    "roles": [
+      "todas"
+    ],
+    "sources": [
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "Using your kingdom age and our table, you can estimate when the Wheel of Fortune will appear in your kingdom.",
+        "url": "https://riseofkingdomsguides.com/wheel-of-fortune-guide-in-rise-of-kingdoms/"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "Unfortunately, there is no set schedule for when the Rise of Kingdoms Wheel of Fortune will appear in your kingdom.",
+        "url": "https://riseofkingdomsguides.com/wheel-of-fortune-guide-in-rise-of-kingdoms/"
+      },
+      {
+        "accessedAt": "2026-10-13",
+        "id": "src:rkg",
+        "quote": "94 Days Yi Seong-Gye",
+        "url": "https://riseofkingdomsguides.com/wheel-of-fortune-guide-in-rise-of-kingdoms/"
+      }
+    ],
+    "stages": [
+      "pre_kvk",
+      "kvk1",
+      "kvk2",
+      "kvk3"
+    ],
+    "statement": "A 2022 rkg guide gives an estimated Wheel of Fortune order by kingdom age, alternating a random commander and a fixed one: day 38 Richard, 94 Yi Seong-Gye, 150 Genghis Khan, 206 Alexander, 262 Edward of Woodstock, 318 Takeda Shingen, 374 Guan Yu, 430 Ramesses, 496 Yi Sun-sin, 552 William I, 608 Harald Sigurdsson (random commanders on days 24, 80, 136, 192, 248, 304, 360, 416, 472, 538, 594). The guide says there is no set schedule.",
+    "status": "verificado",
+    "table": null,
+    "title": "Wheel of Fortune commander order by kingdom age (rkg, 2022): Richard day 38, Yi Seong-Gye day 94, Genghis Khan day 150 …",
+    "validUntil": "2022-01-25",
+    "values": [
+      {
+        "key": "richard-i",
+        "unit": "kingdom day",
+        "value": "38"
+      },
+      {
+        "key": "yi-seong-gye",
+        "unit": "kingdom day",
+        "value": "94"
+      },
+      {
+        "key": "genghis-khan",
+        "unit": "kingdom day",
+        "value": "150"
+      },
+      {
+        "key": "alexander-the-great",
+        "unit": "kingdom day",
+        "value": "206"
+      },
+      {
+        "key": "edward-of-woodstock",
+        "unit": "kingdom day",
+        "value": "262"
+      },
+      {
+        "key": "takeda",
+        "unit": "kingdom day",
+        "value": "318"
+      },
+      {
+        "key": "guan-yu",
+        "unit": "kingdom day",
+        "value": "374"
+      },
+      {
+        "key": "ramesses-ii",
+        "unit": "kingdom day",
+        "value": "430"
+      },
+      {
+        "key": "yi-sun-sin",
+        "unit": "kingdom day",
+        "value": "496"
+      },
+      {
+        "key": "william-i",
+        "unit": "kingdom day",
+        "value": "552"
+      },
+      {
+        "key": "harald",
+        "unit": "kingdom day",
+        "value": "608"
+      }
+    ]
+  },
+  {
     "confidence": "media",
     "domain": "A07",
     "id": "A07-0500",

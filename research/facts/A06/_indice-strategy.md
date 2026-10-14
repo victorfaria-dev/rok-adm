@@ -88,3 +88,18 @@ Collected by worker J1. Status of all cards: `organizado`. Raw notes: `research/
 | [A06-0609](A06-0609.md) | SoC changes legendary acquisition: Legendary Chest with Sovereign Keys; SoC daily chest gives a Sovereign Key | mecanica | n/a | alta | soc |
 | [A06-0610](A06-0610.md) | How far a pure F2P gets in SoC: divided (1 expertised + a few 5511 vs one maxed commander per KvK cycle) | estrategia | dividido | baixa | soc |
 | [A06-0611](A06-0611.md) | Why advice goes stale: new commander generations every ~7 months (stated) and design intent to keep old ones relevant | mecanica | n/a | media | kvk2, kvk3, soc |
+
+## Períodos de lançamento (trilha COMMANDER DATA, 2026-10-13)
+
+When each commander first becomes obtainable in a new kingdom. Feeds `packages/planner/data/commander-periods.json`. Raw downloads were parsed locally (official forum API, Fandom MediaWiki API, rkg via curl); quotes rechecked literally against them.
+
+| ID | Title | Type | Consensus | Confidence | Stages |
+|---|---|---|---|---|---|
+| [A06-0700](A06-0700.md) | Season in which each commander becomes available, per the rkg tier list (Season 0 / 2 / 3) — table | mecanica | n/a | baixa | pre_kvk, kvk1, kvk2, kvk3, soc |
+| [A06-0701](A06-0701.md) | Since 1.0.55: Yi Seong-Gye unlocks in the offseason before Season 1; Saladin, Genghis Khan, Edward of Woodstock and Tomyris before Season 2 | mecanica | n/a | alta | pre_kvk, kvk1, kvk2 |
+| [A06-0702](A06-0702.md) | Archimedes and Mary I (1.0.96): Wheel of Fortune in Season 2, Legendary Tavern in later seasons | mecanica | n/a | alta | kvk2, kvk3, soc |
+| [A06-0703](A06-0703.md) | Golden Chests gained Pepin III and Casimir III (1.1.01); Achilles and Hector joined the Legendary Tavern | mecanica | n/a | alta | todos |
+| [A06-0704](A06-0704.md) | Prime Ragnar Lodbrok is a Season of Conquest commander | mecanica | n/a | alta | soc |
+| [A06-0705](A06-0705.md) | Pyrrhus and Pericles (1.0.71): Golden Chests and Expedition Shop | mecanica | n/a | alta | pre_kvk |
+| [A06-0706](A06-0706.md) | How Fandom says early and Season 2 legendaries are obtained | mecanica | n/a | media | pre_kvk, kvk1, kvk2, kvk3 |
+| [A06-0707](A06-0707.md) | Wheel of Fortune commander order by kingdom age (rkg, 2022) | mecanica | n/a | baixa | pre_kvk, kvk1, kvk2, kvk3 |

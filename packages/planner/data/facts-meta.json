@@ -552,6 +552,106 @@
       "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
     },
     {
+      "id": "A06-0600",
+      "title": "Commander pools are season-gated: Season 3 Mightiest Governor/Wheel of Fortune include all commanders",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-05",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.91 (2025-02-10); history 2021–2023"
+    },
+    {
+      "id": "A06-0601",
+      "title": "King Arthur: free via King's Trials only after the kingdom completes Season 2",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-02-24",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.90 (2025-01-07)"
+    },
+    {
+      "id": "A06-0700",
+      "title": "Season in which each commander becomes available, per the rkg tier list (Season 0 / 2 / 3) — table",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page modified 2026-10-01, first published 2022-03-29)"
+    },
+    {
+      "id": "A06-0701",
+      "title": "Since 1.0.55: Yi Seong-Gye unlocks in the offseason before Season 1; Saladin, Genghis Khan, Edward of Woodstock and Tomyris in the offseason before Season 2",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2022-03-01",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.55 (2022-03)"
+    },
+    {
+      "id": "A06-0702",
+      "title": "Archimedes and Mary I (1.0.96): Wheel of Fortune in Season 2, Legendary Tavern in later seasons",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-13",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.96 (2025-07)"
+    },
+    {
+      "id": "A06-0703",
+      "title": "Golden Chests gained Pepin III and Casimir III (1.1.01); Achilles and Hector joined the Legendary Tavern, a Season of Conquest event since 1.0.44",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-11-08",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.01 (2025-11); 1.0.44 (2021-03)"
+    },
+    {
+      "id": "A06-0704",
+      "title": "Prime Ragnar Lodbrok is a Season of Conquest commander: usable only in SoC, sold only in SoC kingdoms",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-02-06",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.87 (2024-10) – 1.0.91 (2025-02)"
+    },
+    {
+      "id": "A06-0705",
+      "title": "Pyrrhus and Pericles (1.0.71): Golden Chests and Expedition Shop (Pericles also Silver Chests); Pyrrhus Daily Special Offers from day 43",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2023-07-04",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.71 (2023-07)"
+    },
+    {
+      "id": "A06-0706",
+      "title": "How Fandom says early and Season 2 legendaries are obtained: gold chests, VIP chests, Wheel of Fortune, \"kingdoms over 140/240 days\"",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-03",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revisions 2020-09 to 2026-01)"
+    },
+    {
+      "id": "A06-0707",
+      "title": "Wheel of Fortune commander order by kingdom age (rkg, 2022): Richard day 38, Yi Seong-Gye day 94, Genghis Khan day 150 …",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2022-01-25",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (before 1.0.55)"
+    },
+    {
       "id": "A09-0001",
       "title": "Action Points: cap 1,500 (raised from 1,000 in 1.0.41, Dec 2020) plus a claimable 500 AP/day; base regeneration rate NOT found",
       "confidence": "alta",
