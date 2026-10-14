@@ -1,0 +1,136 @@
+/* Community profile (/u/ and /me/profile/). Only --ko-* tokens. "Layers" depth (Victor, 2026-10-13):
+   the section is a level-1 panel and the profile header card is a level-2 card that overlaps the
+   banner at the top of the section. --ko-surface-1/2 come from the depth tokens when they land;
+   until then the existing surface tokens stand in. */
+
+.pf { max-width: 760px; margin-inline: auto; display: grid; gap: var(--ko-space-6); min-width: 0; }
+.pf-head { display: grid; gap: var(--ko-space-2); }
+.pf-title { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); overflow-wrap: anywhere; }
+.pf-h { font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl); letter-spacing: .04em; text-transform: uppercase; }
+.pf-h3 { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); }
+.pf-muted { color: var(--ko-text-muted); }
+.pf-fine { font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.pf-empty {
+  padding: var(--ko-space-5); background: var(--ko-surface-1, var(--ko-surface));
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); box-shadow: var(--ko-shadow-1);
+}
+
+/* Level 1: the section panel. */
+.pf-section {
+  display: grid; gap: var(--ko-space-4); min-width: 0; overflow: hidden;
+  background: var(--ko-surface-1, var(--ko-surface)); box-shadow: var(--ko-shadow-1);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-lg);
+}
+.pf-pad { padding: var(--ko-space-5); }
+
+.pf-banner { aspect-ratio: 3 / 1; background: var(--ko-surface-head, var(--ko-background)); }
+.pf-banner img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.pf-banner[data-empty] {
+  background:
+    linear-gradient(135deg, transparent 0 46%, var(--ko-border) 46% 54%, transparent 54% 100%) 0 0 / 24px 24px,
+    var(--ko-surface-head, var(--ko-background));
+}
+
+/* Level 2: the header card, pulled up over the banner. */
+.pf-card {
+  position: relative; display: grid; gap: var(--ko-space-3); align-items: center;
+  grid-template-columns: auto 1fr;
+  margin: calc(-1 * var(--ko-space-10)) var(--ko-space-4) 0; padding: var(--ko-space-4);
+  background: var(--ko-surface-2, var(--ko-surface-raised)); box-shadow: var(--ko-shadow-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); min-width: 0;
+}
+.pf-avatar {
+  width: 72px; height: 72px; border-radius: var(--ko-radius-md); overflow: hidden;
+  display: grid; place-items: center; background: var(--ko-background); border: 2px solid var(--ko-accent);
+  font: var(--ko-weight-bold) var(--ko-text-xl)/1 var(--ko-font-display); color: var(--ko-accent);
+}
+.pf-avatar img { width: 100%; height: 100%; object-fit: cover; }
+.pf-id { min-width: 0; display: grid; gap: var(--ko-space-1); }
+.pf-name { font-size: var(--ko-text-2xl); line-height: 1.15; overflow-wrap: anywhere; }
+.pf-meta { display: flex; flex-wrap: wrap; gap: var(--ko-space-1) var(--ko-space-3); color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.pf-bio { grid-column: 1 / -1; white-space: pre-line; overflow-wrap: anywhere; }
+.pf-actions { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
+
+.pf-body { display: grid; gap: var(--ko-space-3); padding: 0 var(--ko-space-5) var(--ko-space-5); }
+.pf-achievements { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--ko-space-2); }
+.pf-achievement {
+  display: grid; gap: var(--ko-space-1); padding: var(--ko-space-3);
+  background: var(--ko-background); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+.pf-ach-title { font-weight: var(--ko-weight-semibold); overflow-wrap: anywhere; }
+.pf-ach-detail { color: var(--ko-text-muted); font-size: var(--ko-text-sm); overflow-wrap: anywhere; }
+.pf-badge {
+  justify-self: start; padding: 2px var(--ko-space-2); border-radius: var(--ko-radius-pill);
+  font-size: var(--ko-text-xs); font-weight: var(--ko-weight-semibold); border: 1px solid currentColor;
+}
+.pf-badge[data-kind="site"] { color: var(--ko-success); }
+.pf-badge[data-kind="unverified"] { color: var(--ko-warning); }
+
+.pf-form { display: grid; gap: var(--ko-space-4); }
+.pf-field { display: grid; gap: var(--ko-space-1); font-weight: var(--ko-weight-semibold); min-width: 0; }
+.pf-field input, .pf-field textarea {
+  min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3); width: 100%;
+  background: var(--ko-background); color: var(--ko-text); font-weight: var(--ko-weight-regular);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+}
+.pf-field textarea { resize: vertical; }
+.pf-field [aria-invalid="true"] { border-color: var(--ko-error); }
+
+.pf-choices { margin: 0; padding: 0; border: 0; display: grid; gap: var(--ko-space-2); min-width: 0; }
+.pf-choices legend { padding: 0; margin-bottom: var(--ko-space-2); font-weight: var(--ko-weight-semibold); }
+.pf-choice {
+  display: flex; align-items: center; gap: var(--ko-space-3); min-height: 48px; padding: var(--ko-space-2) var(--ko-space-4);
+  background: var(--ko-background); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+  cursor: pointer; min-width: 0; overflow-wrap: anywhere;
+}
+.pf-choice:has(input:checked) { border-color: var(--ko-accent); }
+.pf-choice:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.pf-choice input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); }
+
+.pf-slot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-2); }
+.pf-file { position: relative; overflow: hidden; }
+.pf-file input { position: absolute; inset: 0; opacity: 0; cursor: pointer; font-size: 0; }
+.pf-file:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 3px; }
+.pf-slot p { flex-basis: 100%; }
+
+.pf-list { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); overflow-wrap: anywhere; }
+.pf-small { min-height: 36px; padding-block: var(--ko-space-1); font-size: var(--ko-text-sm); }
+
+.pf-report, .pf-confirm { grid-column: 1 / -1; flex-basis: 100%; display: grid; gap: var(--ko-space-3); }
+.pf-blocked { display: grid; gap: var(--ko-space-3); justify-items: start; }
+.pf-danger { padding-top: var(--ko-space-4); border-top: 1px solid var(--ko-border); }
+
+.pf-skeleton span { display: block; height: var(--ko-space-24); background: var(--ko-surface); border-radius: var(--ko-radius-md); }
+
+/* Verification (/me/verify/). The code card image is fixed white/red artwork drawn on a canvas, not themed. */
+.pf-select {
+  min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3); width: 100%;
+  background: var(--ko-background); color: var(--ko-text); font-weight: var(--ko-weight-regular);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+}
+.vf-cities { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--ko-space-3); }
+.vf-city {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ko-space-3);
+  padding: var(--ko-space-4); background: var(--ko-surface-2, var(--ko-surface-raised)); box-shadow: var(--ko-shadow-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); overflow-wrap: anywhere;
+}
+.vf-card {
+  display: grid; gap: var(--ko-space-4); padding: var(--ko-space-4);
+  background: var(--ko-surface-2, var(--ko-surface-raised)); box-shadow: var(--ko-shadow-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+}
+.vf-card-img img { display: block; width: 100%; height: auto; border-radius: var(--ko-radius-sm); -webkit-touch-callout: default; }
+.vf-steps { display: grid; gap: var(--ko-space-3); }
+.vf-code { font-size: var(--ko-text-lg); }
+.vf-checks { margin: 0; padding: 0; list-style: none; display: grid; gap: var(--ko-space-1); color: var(--ko-error); }
+.vf-checks [data-ok] { color: var(--ko-success); }
+.pf-verified { justify-self: start; }
+
+@media (min-width: 768px) {
+  .vf-card { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: start; }
+}
+
+@media (min-width: 640px) {
+  .pf-card { margin-inline: var(--ko-space-6); grid-template-columns: auto 1fr; }
+  .pf-avatar { width: 96px; height: 96px; }
+}

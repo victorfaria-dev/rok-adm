@@ -25,6 +25,8 @@ export const STORAGE_KEYS: readonly StorageKeyInfo[] = [
   { key: "ko:kingdom:v1", area: "local", name: "Kingdom council documents (rules, requirements, MGE ledger, recruiting post, seed plans)", backup: true },
   { key: "ko:banners:v1", area: "local", name: "City card banners", backup: false, note: "Images: large; pick them again after a restore." },
   { key: "ko:kingdom:webhook:v1", area: "local", name: "Discord webhook URL", backup: false, note: "A secret: anyone with it can post in that channel." },
+  { key: "ko:auth:v1", area: "local", name: "Sign-in session", backup: false, note: "A secret: it keeps you signed in on this device." },
+  { key: "ko:auth:upload:v1", area: "local", name: "Account upload choices", backup: false, note: "About this device only: what you already uploaded to your account or chose to keep here." },
   { key: "ko:farms:probe", area: "local", name: "Storage check (written and removed at once)", backup: false, note: "Throwaway." },
   { key: "ko:kingdom:probe", area: "local", name: "Storage check (written and removed at once)", backup: false, note: "Throwaway." },
   { key: "ko:sting", area: "session", name: "Logo animation already played (this tab only)", backup: false, note: "Throwaway." },

@@ -73,15 +73,42 @@ Everything below lives in your browser's storage on this device. Only you can se
 - **Other ways to export:** None, on purpose
 - **How to delete it:** **Forget webhook** next to any Discord post button, or **Delete all council data**
 
+#### Sign-in session
+
+- **What is in it:** Only when accounts are switched on and you signed in: the sign-in token that keeps you signed in on this device, and your account's e-mail and id
+- **In "Back up everything":** **No** (it is a secret: it keeps you signed in)
+- **Other ways to export:** None, on purpose
+- **How to delete it:** **Sign out**, or **Delete all data** on the You page
+
+#### Account upload choices
+
+- **What is in it:** Only when accounts are switched on: whether you already uploaded this device's data to your account or chose to keep it only here, so you are not asked twice about the same data
+- **In "Back up everything":** No (it is about this device only)
+- **Other ways to export:** None
+- **How to delete it:** **Delete all data** on the You page (you will be asked again at the next sign-in)
+
 
 - **Discord.** Nothing is posted to Discord unless you press a post button after pasting a webhook URL. Then the post you see (for example an MGE ledger or the rules link) goes straight from your browser to Discord, and Discord's own terms and privacy policy apply to it. KingdomOps has no server in between.
 - **Screenshot reader (experimental).** When you pick a screenshot of your own profile at `/tools/screenshot/`, the text recognition (OCR) runs **on your device**. The image never leaves your browser and is not saved; only the numbers you choose to use are carried in a calculator link.
 - **Offline copy.** After your first visit, a service worker keeps a copy of the site's pages and data files in your browser so it opens offline. It holds nothing about you. Remove it with the option in **Delete all data**, or in your browser's site settings.
 - **Small flags.** A tab-only flag remembers that the logo animation already played; it disappears when you close the tab.
-- **No account, no login, no server-side database.** The guides are static pages; filtering happens in your browser.
+- **No account, no login, no server-side database** until accounts are switched on (see "Accounts" below). The guides are static pages; filtering happens in your browser.
 - **No game data leaves your device** unless you export a file, copy a link or post to Discord yourself. If you clear the site's data, or use a private window, it is gone.
 - **Hosting logs:** the company that hosts the static files may keep standard technical logs (IP address, time, page requested) for security. *[Legal review: name the host and its retention period before launch.]*
 - **Analytics and ads:** none in the MVP. If that changes, this page changes first and we will ask for consent where the law requires it.
+
+### Accounts (built, switched off until reviewed)
+
+Sign-in with e-mail or Google and a community profile are built but not switched on. When they are:
+
+- **No game login, ever.** There is no Lilith / Rise of Kingdoms sign-in and KingdomOps never asks for your game password.
+- **Your account holds:** your e-mail (from the sign-in provider), your cities (main, farms, alts: City Hall level, kingdom stage, spending profile, commander checklist), your profile (handle, display name, kingdom number, bio, photo, banner, achievements, who can see it), the players you blocked, reports you filed, and copies of this device's data **only if you choose "Upload to my account"** at your first sign-in. Nothing on the device is deleted by that upload.
+- **Your profile starts private.** You choose: only you, signed-in players, or anyone with the link. There is no player search and no messaging.
+- **Achievements:** the game's data cannot be read. Achievements you type are shown as "Unverified (self-declared)"; only "Earned on KingdomOps" ones are checked by the site.
+- **Photos:** resized on your device before upload, which also removes hidden photo data such as location. Image files are public to anyone who has their address, like any profile picture.
+- **Report and block** are on every profile. Reports keep a copy of the profile as it was. Reports about a child's safety are reviewed first.
+- **Your rights:** "Download my account data" gives you a copy of everything above; "Delete my account" erases it (reports you filed stay, without your name). Both are on the profile page (`/me/profile/`).
+- **Minors** play this game. If you are under 18, ask a parent or guardian before you make an account. *[Legal review: LGPD art. 14 (children and adolescents), minimum age, parental consent flow, and the data processor (Supabase) and its region before switching accounts on.]*
 
 ### Later releases (planned, not live)
 

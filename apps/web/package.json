@@ -19,6 +19,7 @@
     "@rokadm/core": "workspace:*",
     "@rokadm/data": "workspace:*",
     "@rokadm/planner": "workspace:*",
+    "@supabase/supabase-js": "2.117.2",
     "@tesseract.js-data/eng": "1.0.0",
     "astro": "5.18.2",
     "preact": "10.29.8",
