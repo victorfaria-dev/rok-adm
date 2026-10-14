@@ -17,7 +17,7 @@ export const RTL_LANGUAGES: readonly GlossaryLanguage[] = ["ar"];
 export interface GlossaryCell {
   text: string;
   status: GlossaryStatus;
-  /** URL, or "owner screenshot YYYY-MM-DD". Null only when status is "unverified". */
+  /** https URL, or an in-client screenshot note ("owner screenshot YYYY-MM-DD", "reviewer <id> screenshot YYYY-MM-DD"). Null only when status is "unverified". */
   source: string | null;
   date: string;
   note: string;
@@ -44,7 +44,8 @@ export const MIN_TERMS = 150;
 export const MAX_TERMS = 300;
 const ID_RE = /^[a-z0-9]+(-[a-z0-9]+)*$/;
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
-const OWNER_RE = /^owner screenshot \d{4}-\d{2}-\d{2}$/;
+/** In-client screenshots count as official text: the owner's, or a named native reviewer's ("reviewer ko-1 screenshot 2026-11-02"). */
+const SCREENSHOT_RE = /^(owner|reviewer [a-z0-9-]+) screenshot \d{4}-\d{2}-\d{2}$/;
 
 function validDate(s: unknown): boolean {
   if (typeof s !== "string" || !DATE_RE.test(s)) return false;
@@ -100,8 +101,8 @@ export function validateGlossary(doc: GlossaryDoc, enGlossaryIds?: ReadonlySet<s
       if (!validDate(c.date)) errors.push(`${at}: bad date ${c.date}`);
       if (c.status === "verified-official" || c.status === "community") {
         if (!nonEmpty(c.source)) errors.push(`${at}: ${c.status} needs a source`);
-        else if (!/^https:\/\//.test(c.source) && !(c.status === "verified-official" && OWNER_RE.test(c.source))) {
-          errors.push(`${at}: source must be an https URL${c.status === "verified-official" ? " or 'owner screenshot YYYY-MM-DD'" : ""}`);
+        else if (!/^https:\/\//.test(c.source) && !(c.status === "verified-official" && SCREENSHOT_RE.test(c.source))) {
+          errors.push(`${at}: source must be an https URL${c.status === "verified-official" ? " or an in-client screenshot note" : ""}`);
         }
       }
       if (c.status === "unverified" && !nonEmpty(c.note)) errors.push(`${at}: unverified needs a note`);
