@@ -46,3 +46,10 @@ Nada aqui entra antes de terminar a fase de experiência do usuário. Decisões 
 - Ideia: somar aceleradores e pacotes de recursos a partir de prints do inventário.
 - Dificuldade: identificar itens exige reconhecer ícones (comparação com biblioteca de referência); quantidades já são legíveis.
 - Próximo passo quando retomar: 2–3 prints (abas de aceleradores e recursos) para avaliar viabilidade antes de construir.
+
+## Uso pessoal, português, sem servidor de OCR (Victor, 2026-10-14)
+
+- **Uso só do Victor.** Some a meta de comunidade por enquanto.
+- **Idioma: só português (pt-BR).** A interface passa a ser escrita em português direto no código, sem camada de i18n. O plano de 13 idiomas (`produto/i18n-plano.md`) fica arquivado; o glossário (`packages/data/i18n/glossary.json`) continua como fonte dos termos do jogo em pt-BR.
+- **Login, perfil público, verificação por Álbum e Supabase: desligados e congelados.** O código fica no repositório; sem as variáveis de ambiente nada disso aparece (comportamento que já existe). Dados ficam no navegador + backup. Não configurar Supabase por agora.
+- **RokVision não será usado.** É um servidor (C# + Python/PaddleOCR em Docker), sem CORS, e no inventário só lê XP e Pontos de Ação. Seguimos com o nosso leitor de prints no navegador (tesseract.js). Pesquisa: `research/integracao-jogo-github.md`.
