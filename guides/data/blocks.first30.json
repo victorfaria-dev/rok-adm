@@ -1,7 +1,7 @@
 [
   {
     "id": "f30-overview",
-    "title": "Your first 30 days: what they are for",
+    "title": "Seus primeiros 30 dias: para que servem",
     "phase": "overview",
     "section": "overview",
     "order": 10,
@@ -22,8 +22,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "A new kingdom spends roughly its first 85–100 days preparing for its first KvK: guides put pre-KvK (Eve of the Crusade) around day 85–95 and KvK1 around day 100 [B01-0500]. One unconfirmed report says that since 1.1.12 Eve of the Crusade opens together with the Lost Kingdom instead of before it [C04-0002] (L-B01-03). Your first 30 days are the first third of that runway. You do not need to master the game in them. You need three things:\n\n1. **Habits that add up**: daily streaks and full queues, started from day 1.\n2. **A safe home**: an active alliance [A06-0516].\n3. **Understanding**: one concept per stretch, so the menus stop being noise.\n\n**How this guide is laid out.** Five stretches: days 1–3, 4–7, 8–14, 15–21 and 22–30. Each has a *Goals* block (3–5 goals) and a *Concept* block (one idea, explained). The stretch boundaries are a pacing aid for learning, not game timings. No source says which City Hall level a new player reaches on a given day (gap PROPOSED-CH-BY-KINGDOM-DAY), so goals are tied to City Hall levels or to dated kingdom events, never to \"be CH X by day Y\". If you are faster or slower, follow your City Hall, not the calendar.\n\n**Safe to ignore for now** (each with its reason):\n- Buildings that are not on the City Hall chain, such as extra resource buildings or the Watchtower [A01-0007].\n- Using gems to finish buildings or research instantly [A04-0009].\n- Spreading sculptures across many commanders: finish one first [A06-0500], and keep universal (gold) legendary sculptures for one long-term legendary [A06-0510].\n\nThis guide is shorter than the F2P guide and does not repeat it. Where a topic goes deeper, it says *see the F2P guide* and gives the block id.",
-    "why_md": "A brand-new player meets dozens of menus in the first hour, and most of them can wait. Anchoring the month to KvK1 [B01-0500] explains both why the early days matter (they are the cheapest time to start streaks and join an alliance) and why they don't need to be perfect (about two thirds of the preparation time is still ahead when this guide ends).",
+    "body_md": "Um reino novo passa aproximadamente os primeiros 85–100 dias se preparando para a primeira KvK: os guias colocam a pré-KvK (Véspera da Cruzada) por volta do dia 85–95 e a KvK1 por volta do dia 100 [B01-0500]. Um relato não confirmado diz que, desde a 1.1.12, a Véspera da Cruzada abre junto com o Reino Perdido, e não antes dele [C04-0002] (L-B01-03). Seus primeiros 30 dias são o primeiro terço dessa pista. Você não precisa dominar o jogo neles. Você precisa de três coisas:\n\n1. **Hábitos que se acumulam**: sequências diárias e filas cheias, começando no dia 1.\n2. **Uma casa segura**: uma aliança ativa [A06-0516].\n3. **Compreensão**: um conceito por etapa, para os menus deixarem de ser ruído.\n\n**Como este guia está organizado.** Cinco etapas: dias 1–3, 4–7, 8–14, 15–21 e 22–30. Cada uma tem um bloco de *Metas* (3–5 metas) e um bloco de *Conceito* (uma ideia, explicada). Os limites das etapas são um auxílio de ritmo para aprender, não tempos do jogo. Nenhuma fonte diz que nível de Prefeitura um jogador novo alcança em determinado dia (lacuna PROPOSED-CH-BY-KINGDOM-DAY), então as metas se ligam a níveis de Prefeitura ou a eventos do reino com data, nunca a \"esteja na Prefeitura X no dia Y\". Se você for mais rápido ou mais lento, siga a sua Prefeitura, não o calendário.\n\n**Pode ignorar por enquanto** (cada item com o seu motivo):\n- Edifícios fora da cadeia da Prefeitura, como edifícios de recursos extras ou a Torre de Vigia [A01-0007].\n- Usar gemas para terminar construções ou pesquisas na hora [A04-0009].\n- Espalhar esculturas por muitos comandantes: termine um primeiro [A06-0500] e guarde as esculturas lendárias universais (douradas) para um lendário de longo prazo [A06-0510].\n\nEste guia é mais curto que o guia F2P e não o repete. Onde um tema se aprofunda, ele diz *veja o guia F2P* e dá o id do bloco.",
+    "why_md": "Um jogador novo encontra dezenas de menus na primeira hora, e a maioria pode esperar. Ancorar o mês na KvK1 [B01-0500] explica tanto por que os primeiros dias importam (é a hora mais barata de começar sequências e entrar em uma aliança) quanto por que não precisam ser perfeitos (cerca de dois terços do tempo de preparação ainda estão à frente quando este guia termina).",
     "cards": [
       "A01-0007",
       "A04-0009",
@@ -35,7 +35,7 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "C04-0002 (Eve of the Crusade opening with the Lost Kingdom since 1.1.12) is a single commercial T3 source, bruto/baixa; the day-85–95 pre-KvK timing in B01-0500 comes from guides that predate it. We deliberately give no City Hall or troop-tier target for day 30. The only source for one is a weak 2026 player report, not used here; see the F2P guide's budget block for it.",
+    "uncertain_notes": "C04-0002 (Véspera da Cruzada abrindo com o Reino Perdido desde a 1.1.12) é uma única fonte T3 comercial, bruto/baixa; o momento da pré-KvK nos dias 85–95 em B01-0500 vem de guias anteriores a ela. Deliberadamente não damos meta de Prefeitura nem de nível de tropa para o dia 30. A única fonte para isso é um relato fraco de jogador de 2026, não usado aqui; veja o bloco de orçamento do guia F2P.",
     "gaps": [
       "PROPOSED-CH-BY-KINGDOM-DAY",
       "L-A01-03",
@@ -44,11 +44,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-1-3-goals",
-    "title": "Days 1–3 goals: alliance, civilization, City Hall, two streaks",
+    "title": "Metas dos dias 1–3: aliança, civilização, Prefeitura, duas sequências",
     "phase": "day0-3",
     "section": "day0",
     "order": 20,
@@ -72,8 +72,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**Goals**\n1. **Join an active alliance** as soon as one accepts you. Its members' helps shorten your construction, research and healing timers [A10-0006], and alliance gift chests generated by spenders are a major source of sculptures, keys and VIP points for non-spenders [A06-0516]. How to pick one: see the New Kingdom guide (`nk-pick-alliance-checklist`).\n2. **Pick a civilization without agonising.** Most of the guides we found recommend starting as China (+5% building speed, +5% AP recovery, Sun Tzu as starting commander); Britain (Boudica, strong against barbarians) is the cited alternative, and one older guide leans to it [A14-0003]. The choice is not final: reaching City Hall 10 gives one free Civilization Change [A14-0002].\n3. **Upgrade City Hall and only the buildings it requires**; everything else waits [A01-0007]. The concept block for this stretch explains why.\n4. **Start two daily streaks today.** Claim the free VIP points every day: 40 on day 1, +20 per consecutive day, up to 200 a day; a missed day resets the streak to 40 [A05-0003]. And reach 100 points in Daily Objectives for the chest with 100 gems; it resets daily at 00:00 UTC [A04-0001]. The task list changed in 1.1.09 (resource-boost tasks replaced by login and alliance-donation tasks) [C04-0004]; the current tasks and point values are not yet recorded (L-A10-02).\n5. **Keep nothing worth stealing when you log off.** Resources kept as items cannot be plundered, and gems cannot be plundered in any form [A03-0007]. More in the F2P guide (`d0-day1-survival`). Beginner protection and shield numbers are still pending in-game measurement (see `nk-day1-protection-pending`).",
-    "why_md": "The alliance and the two streaks are the goals that get worse the later you start: the VIP streak restarts at 40 when a day is missed [A05-0003], and the 100-gem chest is the only daily, guaranteed gem source that sources found [A04-0001]. The civilization goal is here only to stop new players from stalling on it, because a free change comes at City Hall 10 [A14-0002].",
+    "body_md": "**Metas**\n1. **Entre em uma aliança ativa** assim que uma aceitar você. As ajudas dos membros encurtam seus cronômetros de construção, pesquisa e cura [A10-0006], e os baús de presente da aliança gerados por quem gasta são uma grande fonte de esculturas, chaves e pontos VIP para quem não gasta [A06-0516]. Como escolher uma: veja o guia do Reino Novo (`nk-pick-alliance-checklist`).\n2. **Escolha uma civilização sem sofrer.** A maioria dos guias que encontramos recomenda começar como China (+5% de velocidade de construção, +5% de recuperação de PA, Sun Tzu como comandante inicial); a Grã-Bretanha (Boudica, forte contra bárbaros) é a alternativa citada, e um guia mais antigo pende para ela [A14-0003]. A escolha não é definitiva: chegar à Prefeitura 10 dá uma Troca de Civilização grátis [A14-0002].\n3. **Melhore a Prefeitura e só os edifícios que ela exige**; todo o resto espera [A01-0007]. O bloco de conceito desta etapa explica o porquê.\n4. **Comece duas sequências diárias hoje.** Colete os pontos VIP grátis todos os dias: 40 no dia 1, +20 por dia consecutivo, até 200 por dia; um dia perdido volta a sequência para 40 [A05-0003]. E chegue a 100 pontos nos Objetivos Diários para pegar o baú com 100 gemas; ele reinicia todo dia às 00:00 UTC [A04-0001]. A lista de tarefas mudou na 1.1.09 (tarefas de impulso de recursos trocadas por tarefas de login e de doação à aliança) [C04-0004]; as tarefas atuais e seus valores em pontos ainda não foram registrados (L-A10-02).\n5. **Não deixe nada que valha a pena roubar quando sair.** Recursos guardados como itens não podem ser saqueados, e gemas não podem ser saqueadas de forma alguma [A03-0007]. Mais no guia F2P (`d0-day1-survival`). Os números de proteção de iniciante e de escudos ainda estão pendentes de medição no jogo (veja `nk-day1-protection-pending`).",
+    "why_md": "A aliança e as duas sequências são as metas que pioram quanto mais tarde você começa: a sequência do VIP recomeça em 40 quando um dia é perdido [A05-0003], e o baú de 100 gemas é a única fonte de gemas diária e garantida que as fontes encontraram [A04-0001]. A meta da civilização está aqui só para os jogadores novos não travarem nela, porque uma troca grátis chega na Prefeitura 10 [A14-0002].",
     "cards": [
       "A01-0007",
       "A03-0007",
@@ -89,7 +89,7 @@
       "C04-0004"
     ],
     "confidence": "medium",
-    "uncertain_notes": "C04-0004 is a patch-state card (official 1.1.09 note, status bruto). The China recommendation is a majority of guides (two of three sources), not a consensus.",
+    "uncertain_notes": "C04-0004 é uma ficha de estado de patch (nota oficial da 1.1.09, status bruto). A recomendação da China é a maioria dos guias (duas de três fontes), não um consenso.",
     "gaps": [
       "L-A10-01",
       "L-A10-02",
@@ -97,11 +97,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-1-3-concept",
-    "title": "Concept for days 1–3: City Hall is the gate",
+    "title": "Conceito dos dias 1–3: a Prefeitura é o portão",
     "phase": "day0-3",
     "section": "day0",
     "order": 30,
@@ -122,8 +122,8 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "**One rule explains most of the city screen:** no building can be upgraded above your City Hall level [A01-0003]. City Hall level is the ceiling of your whole city.\n\n**City Hall has its own requirements.** City Hall level N needs the Wall at level N−1, and from CH5 also one other building at N−1 (two at CH14). That other building rotates: Hospital, Scout Camp, Storehouse, Barracks, Alliance Center, Academy, Archery Range, Trading Post, Stable, Siege Workshop [A01-0001]. Some of those have prerequisites of their own. For example, from level 5 the Wall needs the Tavern at the same level, and at higher levels the Tavern needs the Quarry [A01-0004].\n\n**What City Hall gives you in a first month's range** [A01-0001, A01-0002, A01-0011]:\n- **CH5:** a 2nd march.\n- **CH8:** Tier 2 troops and the queue dashboard; upgrade reward 2× 8h universal speedups.\n- **CH9:** upgrade reward 1× 24h universal speedup.\n- **CH10:** Lyceum of Wisdom; upgrade reward one Civilization Change.\n- **CH11:** a 3rd march.\n\n**The habit to build:** before you start any upgrade, ask \"is this on the path to my next City Hall?\" If not, it can wait [A01-0007].",
-    "why_md": "Beginners lose builder time on buildings that look important but don't raise the ceiling. Once the gate rule is clear, the build menu shrinks to one chain. Raw build times grow quickly (the wiki table lists CH10 at 22h raw, other sources 24h or 1d, and CH16 at 4d) [A01-0001], so builder time becomes the scarcest early resource.",
+    "body_md": "**Uma regra explica a maior parte da tela da cidade:** nenhum edifício pode ser melhorado acima do nível da sua Prefeitura [A01-0003]. O nível da Prefeitura é o teto de toda a sua cidade.\n\n**A Prefeitura tem os seus próprios requisitos.** A Prefeitura nível N exige a Muralha no nível N−1 e, a partir da Prefeitura 5, também outro edifício no nível N−1 (dois na Prefeitura 14). Esse outro edifício rotaciona: Hospital, Acampamento de Batedores, Depósito, Quartel, Centro da Aliança, Academia, Campo de Arquearia, Entreposto Comercial, Estábulo, Oficina de Cerco [A01-0001]. Alguns deles têm pré-requisitos próprios. Por exemplo, a partir do nível 5 a Muralha exige a Taverna no mesmo nível, e em níveis maiores a Taverna exige a Pedreira [A01-0004].\n\n**O que a Prefeitura dá no intervalo do primeiro mês** [A01-0001, A01-0002, A01-0011]:\n- **Prefeitura 5:** uma 2ª marcha.\n- **Prefeitura 8:** tropas de Nível 2 e o painel de filas; recompensa de melhoria 2× aceleração universal de 8h.\n- **Prefeitura 9:** recompensa de melhoria 1× aceleração universal de 24h.\n- **Prefeitura 10:** Liceu da Sabedoria; recompensa de melhoria uma Troca de Civilização.\n- **Prefeitura 11:** uma 3ª marcha.\n\n**O hábito a construir:** antes de começar qualquer melhoria, pergunte \"isso está no caminho da minha próxima Prefeitura?\" Se não, pode esperar [A01-0007].",
+    "why_md": "Iniciantes perdem tempo de construtor em edifícios que parecem importantes mas não elevam o teto. Quando a regra do portão fica clara, o menu de construção encolhe para uma só cadeia. Os tempos brutos crescem rápido (a tabela da wiki lista a Prefeitura 10 com 22h brutas, outras fontes 24h ou 1d, e a Prefeitura 16 com 4d) [A01-0001], então o tempo de construtor vira o recurso mais escasso no início.",
     "cards": [
       "A01-0001",
       "A01-0002",
@@ -134,7 +134,7 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "Raw times come from the Fandom developer dataset and have no in-game confirmation yet (L-A01-02); real times depend on your buffs (L-A01-03). Some early unlock levels are disputed between sources (L-A01-01), so this block lists only the uncontested ones.",
+    "uncertain_notes": "Os tempos brutos vêm do conjunto de dados de desenvolvedor do Fandom e ainda não têm confirmação no jogo (L-A01-02); os tempos reais dependem dos seus bônus (L-A01-03). Alguns níveis de desbloqueio iniciais são disputados entre as fontes (L-A01-01), então este bloco lista só os incontestados.",
     "gaps": [
       "L-A01-01",
       "L-A01-02",
@@ -142,11 +142,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-4-7-goals",
-    "title": "Days 4–7 goals: second builder, barbarians, the Pelagius decision",
+    "title": "Metas dos dias 4–7: segundo construtor, bárbaros, a decisão do Pelagius",
     "phase": "day4-14",
     "section": "plan",
     "order": 40,
@@ -170,8 +170,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**Goals**\n1. **Keep a second builder running.** You start with one building queue. Builder Recruitment items open a second one for 2 days each, and they stack; VIP 6 makes it permanent [A01-0006]. Point both builders at the City Hall chain.\n2. **Fight barbarians with your regenerating AP every day.** They give commander EXP, resources and Daily Objective tasks [A09-0007]. At kingdom opening only barbarians Lv1–6 exist; higher levels unlock kingdom-wide over the following days, and you must beat each level before you can attack the next [A09-0004].\n3. **Decide about Legendary Pelagius before spending anything on him.** Since 1.1.09 an event lets you upgrade Pelagius from Epic to Legendary, available from day 5 in new kingdoms [C04-0005]. Opinion on his value is divided [A06-0508]; see the F2P guide (`d4-pelagius-day5`).\n4. **Use the 2nd march as soon as City Hall 5 unlocks it** [A03-0023], for example to keep a gatherer on the map. Resources for the City Hall path come from gathering [A01-0007].\n5. **Help your allies every day.** Helping 20 times is worth 10 Daily Objective points on the pre-1.1.09 task list [A10-0006]; the current list is not yet recorded (L-A10-02).",
-    "why_md": "Builder time and AP are both use-it-or-lose-it: an empty queue and AP sitting at the cap are progress you never get back [A09-0007]. Pelagius is an early dated decision in a new kingdom [C04-0005], and the first place a beginner can spend heavily on something the sources disagree about [A06-0508].",
+    "body_md": "**Metas**\n1. **Mantenha um segundo construtor trabalhando.** Você começa com uma fila de construção. Os itens de Recrutamento de Construtor abrem uma segunda por 2 dias cada, e são acumuláveis; o VIP 6 a torna permanente [A01-0006]. Aponte os dois construtores para a cadeia da Prefeitura.\n2. **Lute contra bárbaros com o seu PA que regenera todo dia.** Eles dão EXP de comandante, recursos e tarefas dos Objetivos Diários [A09-0007]. Na abertura do reino só existem bárbaros Nv1–6; os níveis maiores são liberados em todo o reino nos dias seguintes, e você precisa vencer cada nível antes de poder atacar o próximo [A09-0004].\n3. **Decida sobre o Pelagius Lendário antes de gastar qualquer coisa nele.** Desde a 1.1.09 um evento permite melhorar o Pelagius de Épico para Lendário, disponível a partir do dia 5 em reinos novos [C04-0005]. A opinião sobre o valor dele está dividida [A06-0508]; veja o guia F2P (`d4-pelagius-day5`).\n4. **Use a 2ª marcha assim que a Prefeitura 5 a liberar** [A03-0023], por exemplo para manter um coletor no mapa. Os recursos do caminho da Prefeitura vêm da coleta [A01-0007].\n5. **Ajude seus aliados todo dia.** Ajudar 20 vezes vale 10 pontos dos Objetivos Diários na lista de tarefas anterior à 1.1.09 [A10-0006]; a lista atual ainda não foi registrada (L-A10-02).",
+    "why_md": "O tempo de construtor e o PA são \"use ou perca\": uma fila vazia e PA parado no limite são progresso que você nunca recupera [A09-0007]. O Pelagius é uma decisão com data logo no início de um reino novo [C04-0005], e o primeiro lugar em que um iniciante pode gastar pesado em algo sobre o qual as fontes discordam [A06-0508].",
     "cards": [
       "A01-0006",
       "A01-0007",
@@ -186,7 +186,7 @@
       "C04-0005"
     ],
     "confidence": "medium",
-    "uncertain_notes": "A06-0508 (Pelagius value) is low confidence and the sources are divided. C04-0005 is a patch-state card (official 1.1.09 note, status bruto). The kingdom-wide barbarian unlock schedule by day is unknown (L-A09-05).",
+    "uncertain_notes": "A06-0508 (valor do Pelagius) é de baixa confiança e as fontes estão divididas. C04-0005 é uma ficha de estado de patch (nota oficial da 1.1.09, status bruto). O cronograma de liberação de bárbaros em todo o reino, dia a dia, é desconhecido (L-A09-05).",
     "gaps": [
       "L-A09-05",
       "L-A06-02",
@@ -194,11 +194,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-4-7-concept",
-    "title": "Concept for days 4–7: Action Points (AP)",
+    "title": "Conceito dos dias 4–7: Pontos de Ação (PA)",
     "phase": "day4-14",
     "section": "plan",
     "order": 50,
@@ -219,8 +219,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**What AP is.** Action Points are the fuel for attacking barbarians. One attack costs 50 AP, and 2 AP less for each consecutive attack by the same commander without returning to the city, down to 40 [A09-0002].\n\n**The cap.** You hold at most 1,500 AP without buffs, and AP regenerates over time [A09-0001]. Regeneration you don't spend is wasted at the cap, so the first rule is: **spend regenerating AP every day** [A09-0007].\n\n**Free AP and AP items.** Every day you can claim a Daily Action Points bonus: 500 AP according to the official notes of 2020; the amount has not been restated since and is unconfirmed for 2026 (L-A09-02). Since 1.1.02 the claim can push you above the cap [A09-0001, C04-0032]. A 2020 wiki table also lists one 100-AP item a day in the 60-point Daily Objectives chest [A09-0006]; the chest contents have not been rechecked since the 1.1.09 task change (PROPOSED-DO-CHEST-CONTENTS). Items can be kept for later, so the second rule is: **save AP items for events that pay more per AP**, Lohar's Trial first and, much later, Eve of the Crusade before KvK1 [A11-0505, A09-0007].\n\n**Automation.** The game has a built-in auto-peacekeeping feature that hunts barbarians for you; third-party scripts are penalised through the Conduct Score [A09-0008]. Use the built-in one, never a bot.",
-    "why_md": "AP is the first resource a beginner sees run out, and the first one wasted without notice. Two rules (never sit at the cap; save the items) cover most of it. The F2P guide has the deeper version (`d0-ap-discipline`).",
+    "body_md": "**O que é o PA.** Os Pontos de Ação são o combustível para atacar bárbaros. Um ataque custa 50 PA, e 2 PA a menos para cada ataque consecutivo do mesmo comandante sem voltar à cidade, até 40 [A09-0002].\n\n**O limite.** Você guarda no máximo 1.500 PA sem bônus, e o PA regenera com o tempo [A09-0001]. A regeneração que você não gasta é desperdiçada no limite, então a primeira regra é: **gaste o PA que regenera todo dia** [A09-0007].\n\n**PA grátis e itens de PA.** Todo dia você pode coletar um bônus de Pontos de Ação diários: 500 PA segundo as notas oficiais de 2020; o valor não foi reafirmado desde então e não está confirmado para 2026 (L-A09-02). Desde a 1.1.02 a coleta pode levar você acima do limite [A09-0001, C04-0032]. Uma tabela da wiki de 2020 também lista um item de 100 PA por dia no baú de 60 pontos dos Objetivos Diários [A09-0006]; o conteúdo do baú não foi reconferido desde a mudança de tarefas da 1.1.09 (PROPOSED-DO-CHEST-CONTENTS). Os itens podem ser guardados para depois, então a segunda regra é: **guarde os itens de PA para eventos que pagam mais por PA**, a Provação de Lohar primeiro e, bem mais tarde, a Véspera da Cruzada antes da KvK1 [A11-0505, A09-0007].\n\n**Automação.** O jogo tem uma função nativa de pacificação automática que caça bárbaros por você; scripts de terceiros são punidos pela Pontuação de Conduta [A09-0008]. Use a nativa, nunca um bot.",
+    "why_md": "O PA é o primeiro recurso que um iniciante vê acabar, e o primeiro desperdiçado sem perceber. Duas regras (nunca ficar no limite; guardar os itens) cobrem a maior parte. O guia F2P tem a versão mais profunda (`d0-ap-discipline`).",
     "cards": [
       "A09-0001",
       "A09-0002",
@@ -234,7 +234,7 @@
       "C04-0032"
     ],
     "confidence": "medium",
-    "uncertain_notes": "C04-0032 is a patch-state card (official 1.1.02 note, status bruto). The 500 AP daily claim is the 2020 value; the 2026 amount is unconfirmed (L-A09-02). The base regeneration rate per hour is unknown (L-A09-01), and so is the auto-peacekeeping unlock level (L-A09-04). The 60-point chest contents in A09-0006 come from a 2020 wiki revision.",
+    "uncertain_notes": "C04-0032 é uma ficha de estado de patch (nota oficial da 1.1.02, status bruto). A coleta diária de 500 PA é o valor de 2020; o valor de 2026 não está confirmado (L-A09-02). A taxa base de regeneração por hora é desconhecida (L-A09-01), assim como o nível de liberação da pacificação automática (L-A09-04). O conteúdo do baú de 60 pontos em A09-0006 vem de uma revisão da wiki de 2020.",
     "gaps": [
       "L-A09-01",
       "L-A09-02",
@@ -243,11 +243,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-8-14-goals",
-    "title": "Days 8–14 goals: dashboard, Academy, gathering, the CH10 choices",
+    "title": "Metas dos dias 8–14: painel, Academia, coleta, as escolhas da Prefeitura 10",
     "phase": "day4-14",
     "section": "plan",
     "order": 60,
@@ -271,8 +271,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**Goals** (tied to City Hall levels; which day you reach them is not measured, PROPOSED-CH-BY-KINGDOM-DAY)\n1. **From City Hall 8, refill everything from the queue dashboard at every login**: construction, training, research, healing, scouting and alliance donations from one screen [A01-0011].\n2. **Academy: economy and speed techs first** (Writing, Masonry, Engineering, Mathematics), before military ones [A02-0500]. For the later order, see the F2P guide (`d4-research-economy`, `d15-research-military`).\n3. **Gather inside alliance territory** (+25% speed) [A03-0009]. When online, use the nearest node; before logging off, send marches to large nodes so they don't come home early [A03-0016].\n4. **At City Hall 10, two new things.** The free Civilization Change arrives as an upgrade reward [A01-0002]: use it only if you planned a switch [A14-0002]. And the Lyceum of Wisdom opens Peerless Scholar: one mock exam each weekday, plus a preliminary and a final every two weeks whose passers split a gem pool [A10-0005].\n5. **Claim the free Tavern chests daily**: 3 silver chests a day at Tavern 1–4, more as the Tavern levels up, and a free golden chest every 3 days at Tavern 1, shortening at higher levels [A10-0003].",
-    "why_md": "From CH8 the game hands you a tool that saves time at every login (the dashboard [A01-0011]), and from CH10 one that pays gems (Peerless Scholar [A10-0005]). Economy research early shortens every later timer [A02-0500], and gathering in territory is a free 25% [A03-0009].",
+    "body_md": "**Metas** (ligadas a níveis de Prefeitura; em que dia você os alcança não foi medido, PROPOSED-CH-BY-KINGDOM-DAY)\n1. **A partir da Prefeitura 8, reabasteça tudo pelo painel de filas em todo login**: construção, treinamento, pesquisa, cura, exploração e doações à aliança em uma só tela [A01-0011].\n2. **Academia: primeiro as tecnologias de economia e velocidade** (Escrita, Alvenaria, Engenharia, Matemática), antes das militares [A02-0500]. Para a ordem posterior, veja o guia F2P (`d4-research-economy`, `d15-research-military`).\n3. **Colete dentro do território da aliança** (+25% de velocidade) [A03-0009]. Online, use o nó mais próximo; antes de sair, envie marchas para nós grandes para que não voltem para casa cedo [A03-0016].\n4. **Na Prefeitura 10, duas coisas novas.** A Troca de Civilização grátis chega como recompensa de melhoria [A01-0002]: use só se você planejava trocar [A14-0002]. E o Liceu da Sabedoria abre o Erudito Incomparável: um simulado por dia útil, mais uma preliminar e uma final a cada duas semanas cujos aprovados dividem um pool de gemas [A10-0005].\n5. **Colete os baús grátis da Taverna todo dia**: 3 baús de prata por dia na Taverna 1–4, mais conforme a Taverna sobe de nível, e um baú dourado grátis a cada 3 dias na Taverna 1, encurtando nos níveis maiores [A10-0003].",
+    "why_md": "A partir da Prefeitura 8 o jogo entrega uma ferramenta que poupa tempo em todo login (o painel [A01-0011]) e, a partir da Prefeitura 10, uma que paga gemas (Erudito Incomparável [A10-0005]). Pesquisa de economia cedo encurta todo cronômetro posterior [A02-0500], e coletar no território é um bônus grátis de 25% [A03-0009].",
     "cards": [
       "A01-0002",
       "A01-0011",
@@ -285,7 +285,7 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "The ordered research path with times is a known gap (L-A02-01). The size of the Peerless Scholar gem pool is unknown (L-A04-05).",
+    "uncertain_notes": "O caminho de pesquisa ordenado com tempos é uma lacuna conhecida (L-A02-01). O tamanho do pool de gemas do Erudito Incomparável é desconhecido (L-A04-05).",
     "gaps": [
       "PROPOSED-CH-BY-KINGDOM-DAY",
       "L-A02-01",
@@ -294,11 +294,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-8-14-concept",
-    "title": "Concept for days 8–14: what the alliance actually does for you",
+    "title": "Conceito dos dias 8–14: o que a aliança realmente faz por você",
     "phase": "day4-14",
     "section": "plan",
     "order": 70,
@@ -319,8 +319,8 @@
     "civ": [],
     "consensus": "unanimous",
     "split_views": null,
-    "body_md": "**Help = time.** Allies can help your construction, research and healing; each help fills 1% of the progress bar. How many helps one job can receive depends on your Alliance Center level: 5 at level 1, 18 at level 14, 30 at level 25. Troop training cannot be helped [A10-0006].\n\n**Territory = gathering speed.** Gathering at normal resource points inside your alliance's territory is 25% faster and also adds resources to the alliance storehouse [A03-0009].\n\n**Gifts = free items.** Alliance gift chests generated by spenders are a major non-spender source of sculptures, keys and VIP points [A06-0516]; their VIP items range from 10 to 1,000 points [A05-0004].\n\n**Your side of the deal:** press help on other members' jobs every day [A10-0006], and gather inside the territory [A03-0009].",
-    "why_md": "New players often treat the alliance as a chat room. Mechanically it is a time saving on every timer that can be helped, a gathering bonus and a stream of free items. That is why the early guides we found all say to join an active one first [A06-0516].",
+    "body_md": "**Ajuda = tempo.** Os aliados podem ajudar sua construção, pesquisa e cura; cada ajuda preenche 1% da barra de progresso. Quantas ajudas uma tarefa pode receber depende do nível do seu Centro da Aliança: 5 no nível 1, 18 no nível 14, 30 no nível 25. O treinamento de tropas não pode ser ajudado [A10-0006].\n\n**Território = velocidade de coleta.** Coletar em pontos de recurso normais dentro do território da aliança é 25% mais rápido e também acrescenta recursos ao depósito da aliança [A03-0009].\n\n**Presentes = itens grátis.** Os baús de presente da aliança gerados por quem gasta são uma grande fonte de esculturas, chaves e pontos VIP para quem não gasta [A06-0516]; os itens de VIP deles variam de 10 a 1.000 pontos [A05-0004].\n\n**Sua parte no acordo:** aperte ajudar nas tarefas dos outros membros todo dia [A10-0006] e colete dentro do território [A03-0009].",
+    "why_md": "Jogadores novos costumam tratar a aliança como uma sala de bate-papo. Mecanicamente ela é uma economia de tempo em todo cronômetro que pode ser ajudado, um bônus de coleta e um fluxo de itens grátis. Por isso os primeiros guias que encontramos dizem para entrar primeiro em uma ativa [A06-0516].",
     "cards": [
       "A03-0009",
       "A05-0004",
@@ -333,11 +333,11 @@
     "gaps": [],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-15-21-goals",
-    "title": "Days 15–21 goals: streaks, gems to VIP, the VIP Shop, one commander",
+    "title": "Metas dos dias 15–21: sequências, gemas para o VIP, a Loja VIP, um comandante",
     "phase": "day15-40",
     "section": "plan",
     "order": 80,
@@ -361,8 +361,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**Goals**\n1. **Keep the VIP streak unbroken.** From streak day 9 it pays the maximum of 200 points a day [A05-0003].\n2. **Put free gems into VIP points, not into finishing timers.** The majority advice is VIP 6 first (permanent second builder), then VIP 10; one source disagrees and says not to spend gems on VIP at all [A05-0008, A04-0009].\n3. **Visit the VIP Shop every week** (Shop building, CH5, weekly restock). From VIP 2 it sells 100-AP items for 12,000 food (30 per restock); from VIP 3, 5-minute universal speedups for 7,000 food (50 per restock) [A04-0007]. These cost food, not gems.\n4. **Pick one commander and finish him before starting others** [A06-0500]. Most guides call Sun Tzu the safest early choice because he needs no legendary (gold) sculptures; one 2026 tier list rates him low for the long term [A06-0501]. Details: F2P guide (`d4-early-commanders`).\n5. **Feed that commander from Daily Objectives**: besides the 100 gems, a 2020 wiki table lists 3 Epic Commander Sculptures and a Golden Key in the 100-point chest [A04-0001]. Recent guides confirm the gems but not the sculptures, and the current contents after 1.1.09 are unchecked (PROPOSED-DO-CHEST-CONTENTS).",
-    "why_md": "By now the daily routine exists; this stretch turns it into investment. VIP and one finished commander are where small daily inputs add up, while half-built commanders give little value [A06-0500].",
+    "body_md": "**Metas**\n1. **Mantenha a sequência do VIP ininterrupta.** A partir do dia 9 da sequência ela paga o máximo de 200 pontos por dia [A05-0003].\n2. **Ponha as gemas grátis em pontos VIP, não em terminar cronômetros.** O conselho da maioria é VIP 6 primeiro (segundo construtor permanente), depois VIP 10; uma fonte discorda e diz para não gastar gemas em VIP de jeito nenhum [A05-0008, A04-0009].\n3. **Visite a Loja VIP toda semana** (edifício Loja, Prefeitura 5, reposição semanal). A partir do VIP 2 ela vende itens de 100 PA por 12.000 de comida (30 por reposição); a partir do VIP 3, acelerações universais de 5 minutos por 7.000 de comida (50 por reposição) [A04-0007]. Elas custam comida, não gemas.\n4. **Escolha um comandante e termine-o antes de começar outros** [A06-0500]. A maioria dos guias chama o Sun Tzu de escolha inicial mais segura porque ele não precisa de esculturas lendárias (douradas); uma tier list de 2026 o avalia mal no longo prazo [A06-0501]. Detalhes: guia F2P (`d4-early-commanders`).\n5. **Alimente esse comandante com os Objetivos Diários**: além das 100 gemas, uma tabela da wiki de 2020 lista 3 Esculturas de Comandante Épicas e uma Chave de Ouro no baú de 100 pontos [A04-0001]. Guias recentes confirmam as gemas, mas não as esculturas, e o conteúdo atual depois da 1.1.09 não foi conferido (PROPOSED-DO-CHEST-CONTENTS).",
+    "why_md": "A essa altura a rotina diária existe; esta etapa a transforma em investimento. O VIP e um comandante terminado são onde pequenas entradas diárias se acumulam, enquanto comandantes pela metade dão pouco valor [A06-0500].",
     "cards": [
       "A04-0001",
       "A04-0007",
@@ -374,18 +374,18 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "Weekly sculpture income for a non-spender is unknown (L-A06-03), so we give no date for a finished commander. The 100-point chest items other than gems rest on a 2020 wiki revision (A04-0001).",
+    "uncertain_notes": "A renda semanal de esculturas de quem não gasta é desconhecida (L-A06-03), então não damos data para um comandante terminado. Os itens do baú de 100 pontos além das gemas se apoiam em uma revisão da wiki de 2020 (A04-0001).",
     "gaps": [
       "L-A06-03",
       "PROPOSED-DO-CHEST-CONTENTS"
     ],
-    "low_spender_note": "A Low spender reaches VIP 6 sooner, which frees the Builder Recruitment items; the commander advice does not change.",
+    "low_spender_note": "Quem gasta pouco chega ao VIP 6 mais cedo, o que libera os itens de Recrutamento de Construtor; o conselho sobre comandantes não muda.",
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-15-21-concept",
-    "title": "Concept for days 15–21: VIP",
+    "title": "Conceito dos dias 15–21: VIP",
     "phase": "day15-40",
     "section": "plan",
     "order": 90,
@@ -406,8 +406,8 @@
     "civ": [],
     "consensus": "mechanic",
     "split_views": null,
-    "body_md": "**What VIP is.** An account level bought with VIP points. Each level has a threshold: VIP 1 needs 200 points, VIP 6 needs 11,500, VIP 10 needs 150,000 [A05-0001].\n\n**Where points come from without paying:** the daily VIP chest streak (40 → 200 a day) [A05-0003]; gems at 1 gem = 1 point; the Alliance Shop; alliance gift chests; Mysterious Caves [A05-0004].\n\n**What it gives that matters early.** VIP 6 makes the second builder permanent [A01-0006]. Each VIP level also has a free daily chest that grows with the level; from VIP 10 it holds one Legendary Commander Sculpture a day [A05-0006].\n\n**How long it takes (derived, uncertain).** Assuming an unbroken streak and nothing else, the daily chest alone reaches VIP 6 around day 62; adding the 100 daily gems converted 1:1 brings it to around day 41 [A05-0007]. These are upper-bound estimates from one derived card, not measurements. If they hold, a pure non-spender **probably reaches VIP 6 after this guide's 30 days**: keep using Builder Recruitment items until then [A01-0006]. One-time gems (City Hall rewards, events, alliance-gift VIP items) bring the date forward by unmeasured amounts [A05-0007].",
-    "why_md": "VIP is the menu beginners most often misread: either as a pay-only feature or as something to ignore. It is a slow, permanent account upgrade that a non-spender also climbs, and its first big step (VIP 6) removes the second-builder chore [A01-0006].",
+    "body_md": "**O que é o VIP.** Um nível de conta comprado com pontos VIP. Cada nível tem um limiar: o VIP 1 exige 200 pontos, o VIP 6 exige 11.500, o VIP 10 exige 150.000 [A05-0001].\n\n**De onde vêm os pontos sem pagar:** a sequência do baú VIP diário (40 → 200 por dia) [A05-0003]; gemas na proporção 1 gema = 1 ponto; a Loja da Aliança; os baús de presente da aliança; as Cavernas Misteriosas [A05-0004].\n\n**O que ele dá que importa no início.** O VIP 6 torna o segundo construtor permanente [A01-0006]. Cada nível de VIP também tem um baú diário grátis que cresce com o nível; a partir do VIP 10 ele contém uma Escultura de Comandante Lendária por dia [A05-0006].\n\n**Quanto tempo leva (derivado, incerto).** Supondo uma sequência ininterrupta e mais nada, só o baú diário chega ao VIP 6 por volta do dia 62; somando as 100 gemas diárias convertidas 1:1, chega por volta do dia 41 [A05-0007]. São estimativas de limite superior de uma única ficha derivada, não medições. Se valerem, um jogador que não gasta **provavelmente chega ao VIP 6 depois dos 30 dias deste guia**: continue usando os itens de Recrutamento de Construtor até lá [A01-0006]. Gemas únicas (recompensas da Prefeitura, eventos, itens de VIP dos presentes da aliança) antecipam a data em quantidades não medidas [A05-0007].",
+    "why_md": "O VIP é o menu que os iniciantes mais interpretam mal: ou como um recurso só para quem paga, ou como algo a ignorar. É uma melhoria de conta lenta e permanente que quem não gasta também sobe, e o seu primeiro grande passo (VIP 6) acaba com a tarefa do segundo construtor [A01-0006].",
     "cards": [
       "A01-0006",
       "A05-0001",
@@ -418,19 +418,19 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A05-0007 is a derived estimate (low confidence) that assumes cumulative VIP thresholds (L-A05-01) and no other VIP sources. VIP point income from alliance gifts and caves is unmeasured (L-A05-03).",
+    "uncertain_notes": "A05-0007 é uma estimativa derivada (baixa confiança) que pressupõe limiares de VIP acumulados (L-A05-01) e nenhuma outra fonte de VIP. A renda de pontos VIP dos presentes da aliança e das cavernas não foi medida (L-A05-03).",
     "gaps": [
       "L-A05-01",
       "L-A05-03",
       "L-A12-02"
     ],
-    "low_spender_note": "Spenders also get VIP points from purchases; the official points-per-dollar table is not verified (L-A12-02).",
+    "low_spender_note": "Quem gasta também recebe pontos VIP com as compras; a tabela oficial de pontos por dólar não foi verificada (L-A12-02).",
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-22-30-goals",
-    "title": "Days 22–30 goals: the event calendar starts to matter",
+    "title": "Metas dos dias 22–30: o calendário de eventos começa a importar",
     "phase": "day15-40",
     "section": "plan",
     "order": 100,
@@ -454,8 +454,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**Goals**\n1. **Open the in-game event calendar at every login.** Events don't follow a fixed schedule; the calendar shows upcoming events a few days ahead [A11-0512].\n2. **Watch for More Than Gems.** Players report it about monthly, lasting 2 days; one player recalls that only kingdoms at least about 21 days old get it [A11-0502]. It is the best window to spend gems, with an exception for players still below VIP 6 [A11-0502, A04-0009].\n3. **Pioneer / Road to Revival (uncertain):** a single guide says it appears around day 20–23, and to buy the four gold keys first, then epic sculptures [A11-0510].\n4. **Mightiest Governor (MGE):** take the individual milestone rewards; for a non-spender in a new kingdom the ranking is generally out of reach [A11-0500].\n5. **Start a small hoard.** The majority advice is to save speedups, resource items and AP items for scored events and KvK instead of using them as they arrive [A11-0501]; Lohar's Trial is the event to save your first AP potions for [A11-0505]. The debate on speedups is in the F2P guide (`d41-speedups-spend-vs-hoard`).",
-    "why_md": "Around the fourth week, events that reportedly need an older kingdom may start to appear (one player report puts More Than Gems after about day 21 [A11-0502]), and the value of what you saved begins to depend on timing. The calendar is the only reliable schedule [A11-0512].",
+    "body_md": "**Metas**\n1. **Abra o calendário de eventos do jogo em todo login.** Os eventos não seguem um cronograma fixo; o calendário mostra os próximos eventos com alguns dias de antecedência [A11-0512].\n2. **Fique de olho no Mais que Gemas.** Jogadores o relatam cerca de mensal, durando 2 dias; um jogador lembra que só reinos com pelo menos uns 21 dias o recebem [A11-0502]. É a melhor janela para gastar gemas, com uma exceção para quem ainda está abaixo do VIP 6 [A11-0502, A04-0009].\n3. **Pioneiro / Caminho do Renascimento (incerto):** um único guia diz que aparece por volta do dia 20–23, e para comprar primeiro as quatro chaves de ouro, depois esculturas épicas [A11-0510].\n4. **Governador Mais Poderoso (MGE):** pegue as recompensas individuais de marcos; para quem não gasta em um reino novo, o ranking geralmente está fora de alcance [A11-0500].\n5. **Comece um pequeno estoque.** O conselho da maioria é guardar acelerações, itens de recurso e itens de PA para eventos pontuados e para a KvK em vez de usá-los conforme chegam [A11-0501]; a Provação de Lohar é o evento para guardar suas primeiras poções de PA [A11-0505]. O debate sobre acelerações está no guia F2P (`d41-speedups-spend-vs-hoard`).",
+    "why_md": "Por volta da quarta semana, eventos que segundo relatos exigem um reino mais velho podem começar a aparecer (um relato de jogador coloca o Mais que Gemas depois de cerca do dia 21 [A11-0502]), e o valor do que você guardou passa a depender do momento. O calendário é o único cronograma confiável [A11-0512].",
     "cards": [
       "A04-0009",
       "A11-0500",
@@ -467,7 +467,7 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "A11-0510 (Pioneer timing and key advice) is a single low-confidence source. The More Than Gems cadence is a player-report working assumption, and the ~21-day minimum kingdom age is one hedged player comment (see A11-0502). The first day each event appears in a new kingdom is unmeasured (L-A11-01), and the current MGE format is a gap (L-A11-04).",
+    "uncertain_notes": "A11-0510 (momento do Pioneiro e conselho sobre as chaves) é uma única fonte de baixa confiança. A periodicidade do Mais que Gemas é uma suposição de trabalho de relatos de jogadores, e a idade mínima de ~21 dias do reino é um comentário cauteloso de um jogador (veja A11-0502). O primeiro dia em que cada evento aparece em um reino novo não foi medido (L-A11-01), e o formato atual do MGE é uma lacuna (L-A11-04).",
     "gaps": [
       "L-A11-01",
       "L-A11-04",
@@ -475,11 +475,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-days-22-30-concept",
-    "title": "Concept for days 22–30: events reward what you saved",
+    "title": "Conceito dos dias 22–30: os eventos recompensam o que você guardou",
     "phase": "day15-40",
     "section": "plan",
     "order": 110,
@@ -500,8 +500,8 @@
     "civ": [],
     "consensus": "majority",
     "split_views": null,
-    "body_md": "**One idea behind most events:** they pay for actions, at milestones or by score. Lohar's Trial pays for killing ordinary barbarians [A11-0505]; More Than Gems has daily milestones for gems spent [A11-0502]; MGE has individual milestone rewards [A11-0500].\n\n**So timing changes value.** The same AP item or speedup is worth more when used inside the right event than on an ordinary day. That is the reason behind the hoarding rule [A11-0501] and the AP rule from days 4–7 [A09-0007].\n\n**Calendar, not memory.** Event dates differ between kingdoms by age and Monument progress [A11-0512]. Don't rely on another kingdom's dates or on an old guide's day list.\n\n**What comes after day 30.** The big cash-in of the hoard is Eve of the Crusade [A09-0007], which guides place as the pre-KvK stage around day 85–95 [B01-0500]. One unconfirmed report says that since 1.1.12 it opens together with the Lost Kingdom instead [C04-0002] (L-B01-03). See the F2P guide (`pk-eve-of-crusade`).",
-    "why_md": "Beginners spend items as soon as they get them because the reward is immediate. Explaining that events multiply the value of the same item makes the hoarding advice understandable instead of arbitrary.",
+    "body_md": "**Uma ideia por trás da maioria dos eventos:** eles pagam por ações, em marcos ou por pontuação. A Provação de Lohar paga por matar bárbaros comuns [A11-0505]; o Mais que Gemas tem marcos diários de gemas gastas [A11-0502]; o MGE tem recompensas individuais de marcos [A11-0500].\n\n**Então o momento muda o valor.** O mesmo item de PA ou a mesma aceleração vale mais quando usado dentro do evento certo do que em um dia comum. É a razão da regra do estoque [A11-0501] e da regra de PA dos dias 4–7 [A09-0007].\n\n**Calendário, não memória.** As datas dos eventos variam entre reinos conforme a idade e o progresso do Monumento [A11-0512]. Não dependa das datas de outro reino nem da lista de dias de um guia antigo.\n\n**O que vem depois do dia 30.** A grande realização do estoque é a Véspera da Cruzada [A09-0007], que os guias colocam como a etapa pré-KvK por volta do dia 85–95 [B01-0500]. Um relato não confirmado diz que, desde a 1.1.12, ela abre junto com o Reino Perdido [C04-0002] (L-B01-03). Veja o guia F2P (`pk-eve-of-crusade`).",
+    "why_md": "Iniciantes gastam os itens assim que os recebem porque a recompensa é imediata. Explicar que os eventos multiplicam o valor do mesmo item faz o conselho de acumular ser compreensível em vez de arbitrário.",
     "cards": [
       "A09-0007",
       "A11-0500",
@@ -514,7 +514,7 @@
     ],
     "patch_cards": [],
     "confidence": "medium",
-    "uncertain_notes": "C04-0002 (Eve of the Crusade timing since 1.1.12) is a single commercial T3 source, bruto/baixa.",
+    "uncertain_notes": "C04-0002 (momento da Véspera da Cruzada desde a 1.1.12) é uma única fonte T3 comercial, bruto/baixa.",
     "gaps": [
       "L-A11-01",
       "L-A11-02",
@@ -522,11 +522,11 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   },
   {
     "id": "f30-open-pending",
-    "title": "Open questions for the 30-day path (pending research)",
+    "title": "Perguntas em aberto do caminho de 30 dias (pesquisa pendente)",
     "phase": "anytime",
     "section": "open",
     "order": 120,
@@ -547,12 +547,12 @@
     "civ": [],
     "consensus": "n/a",
     "split_views": null,
-    "body_md": "**Pending in-game measurement (T0) or research.** This guide avoids these numbers until they are measured:\n- Which City Hall level a new player typically reaches on days 3, 7, 14, 21 and 30 (PROPOSED-CH-BY-KINGDOM-DAY).\n- Minutes each daily task costs (L-A10-01).\n- The current Daily Objectives task list after 1.1.09 (L-A10-02) and the current chest contents (PROPOSED-DO-CHEST-CONTENTS).\n- Whether Eve of the Crusade still comes before KvK1 or opens with the Lost Kingdom since 1.1.12 (L-B01-03).\n- The daily AP claim amount in 2026 (L-A09-02).\n- Beginner protection and shield durations and prices (PROPOSED-SHIELDS).\n- The day-by-day barbarian unlock schedule (L-A09-05) and the auto-peacekeeping unlock level (L-A09-04).\n- The first day each event appears in a new kingdom (L-A11-01).\n- Whether VIP thresholds are cumulative (L-A05-01), which changes the VIP date estimates.",
-    "why_md": "A beginner cannot tell a measured number from a guess. Listing what is unknown keeps the guide honest and tells the research side what to measure first.",
+    "body_md": "**Pendente de medição no jogo (T0) ou de pesquisa.** Este guia evita esses números até serem medidos:\n- Que nível de Prefeitura um jogador novo costuma alcançar nos dias 3, 7, 14, 21 e 30 (PROPOSED-CH-BY-KINGDOM-DAY).\n- Quantos minutos cada tarefa diária custa (L-A10-01).\n- A lista atual de tarefas dos Objetivos Diários depois da 1.1.09 (L-A10-02) e o conteúdo atual do baú (PROPOSED-DO-CHEST-CONTENTS).\n- Se a Véspera da Cruzada ainda vem antes da KvK1 ou se abre com o Reino Perdido desde a 1.1.12 (L-B01-03).\n- O valor da coleta diária de PA em 2026 (L-A09-02).\n- Duração e preços da proteção de iniciante e dos escudos (PROPOSED-SHIELDS).\n- O cronograma dia a dia de liberação de bárbaros (L-A09-05) e o nível de liberação da pacificação automática (L-A09-04).\n- O primeiro dia em que cada evento aparece em um reino novo (L-A11-01).\n- Se os limiares de VIP são acumulados (L-A05-01), o que muda as estimativas de data do VIP.",
+    "why_md": "Um iniciante não consegue distinguir um número medido de um palpite. Listar o que não se sabe mantém o guia honesto e diz ao lado da pesquisa o que medir primeiro.",
     "cards": [],
     "patch_cards": [],
     "confidence": "pending",
-    "uncertain_notes": "No cards: this block only lists gaps.",
+    "uncertain_notes": "Sem fichas: este bloco apenas lista lacunas.",
     "gaps": [
       "PROPOSED-CH-BY-KINGDOM-DAY",
       "L-A10-01",
@@ -568,6 +568,6 @@
     ],
     "low_spender_note": null,
     "as_of": "2026-10-13",
-    "patch_ref": "1.1.09 (latest official EN notes); 1.1.12 reported live (T3)"
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
   }
 ]

@@ -29,14 +29,14 @@ const ALIASES: Readonly<Record<string, FormulaVar>> = (() => {
 
 /** Singular / plural nouns for plain-language text. */
 export const VAR_NOUN: Readonly<Record<FormulaVar, { one: string; many: string }>> = {
-  t1: { one: "T1 kill", many: "T1 kills" },
-  t2: { one: "T2 kill", many: "T2 kills" },
-  t3: { one: "T3 kill", many: "T3 kills" },
-  t4: { one: "T4 kill", many: "T4 kills" },
-  t5: { one: "T5 kill", many: "T5 kills" },
-  deads: { one: "dead", many: "deads" },
-  kp: { one: "kill point", many: "kill points" },
-  power: { one: "point of power", many: "points of power" },
+  t1: { one: "abate de T1", many: "abates de T1" },
+  t2: { one: "abate de T2", many: "abates de T2" },
+  t3: { one: "abate de T3", many: "abates de T3" },
+  t4: { one: "abate de T4", many: "abates de T4" },
+  t5: { one: "abate de T5", many: "abates de T5" },
+  deads: { one: "morte", many: "mortes" },
+  kp: { one: "ponto de abate", many: "pontos de abate" },
+  power: { one: "ponto de poder", many: "pontos de poder" },
 };
 
 const FUNCS = { min: 2, max: 2, round: 1, floor: 1, ceil: 1, abs: 1 } as const;
@@ -65,8 +65,8 @@ export interface FormulaError {
 export type ParseResult = { ok: true; ast: FormulaNode } | { ok: false; error: FormulaError };
 export type EvalResult = { ok: true; value: number } | { ok: false; error: FormulaError };
 
-const VAR_HINT = "Use t1–t5, deads, kp or power.";
-const at = (pos: number) => `at character ${pos}`;
+const VAR_HINT = "Use t1–t5, deads, kp ou power.";
+const at = (pos: number) => `no caractere ${pos}`;
 const err = (code: FormulaErrorCode, pos: number, message: string): { ok: false; error: FormulaError } => ({ ok: false, error: { code, pos, message } });
 
 // ---------------------------------------------------------------------------
@@ -99,13 +99,13 @@ function tokenize(src: string): Tok[] {
     if (/\s/.test(c)) { i++; continue; }
     if (/[0-9.]/.test(c)) {
       const m = /^(?:\d+(?:\.\d+)?|\.\d+)/.exec(src.slice(i));
-      if (!m) fail("bad_number", pos, `This number is not complete ${at(pos)}. Write numbers like 10 or 0.5.`);
+      if (!m) fail("bad_number", pos, `Este número não está completo ${at(pos)}. Escreva números como 10 ou 0.5.`);
       const text = m![0];
       const next = src[i + text.length];
-      if (next === "." || (next !== undefined && /[0-9]/.test(next))) fail("bad_number", pos, `This number is not complete ${at(pos)}. Write numbers like 10 or 0.5.`);
+      if (next === "." || (next !== undefined && /[0-9]/.test(next))) fail("bad_number", pos, `Este número não está completo ${at(pos)}. Escreva números como 10 ou 0.5.`);
       const v = Number(text);
       if (v > Number.MAX_SAFE_INTEGER) {
-        fail("number_too_large", pos, `The number ${at(pos)} is too large. Use numbers up to ${Number.MAX_SAFE_INTEGER.toLocaleString("en-US")}.`);
+        fail("number_too_large", pos, `O número ${at(pos)} é grande demais. Use números de até ${Number.MAX_SAFE_INTEGER.toLocaleString("pt-BR")}.`);
       }
       out.push({ t: "num", v, pos, text });
       i += text.length;
@@ -122,7 +122,7 @@ function tokenize(src: string): Tok[] {
     if (c === "÷") { out.push({ t: "op", v: "/", pos }); i++; continue; }
     if (c === "−") { out.push({ t: "op", v: "-", pos }); i++; continue; }
     if (c === "(" || c === ")" || c === ",") { out.push({ t: c, pos }); i++; continue; }
-    fail("bad_char", pos, `The character '${c}' ${at(pos)} cannot be used. Use numbers, names, + - * / and parentheses.`);
+    fail("bad_char", pos, `O caractere '${c}' ${at(pos)} não pode ser usado. Use números, nomes, + - * / e parênteses.`);
   }
   out.push({ t: "end", pos: src.length + 1 });
   return out;
@@ -145,11 +145,11 @@ class Parser {
   private next(): Tok { return this.toks[this.i++]!; }
 
   private node<T extends FormulaNode>(n: T): T {
-    if (++this.nodes > FORMULA_MAX_NODES) fail("too_many_nodes", n.pos, `This formula is too long (more than ${FORMULA_MAX_NODES} parts). Simplify it.`);
+    if (++this.nodes > FORMULA_MAX_NODES) fail("too_many_nodes", n.pos, `Esta fórmula é longa demais (mais de ${FORMULA_MAX_NODES} partes). Simplifique-a.`);
     return n;
   }
   private enter(pos: number): void {
-    if (++this.depth > FORMULA_MAX_DEPTH) fail("too_deep", pos, `This formula is nested too deeply ${at(pos)} (at most ${FORMULA_MAX_DEPTH} levels). Simplify it.`);
+    if (++this.depth > FORMULA_MAX_DEPTH) fail("too_deep", pos, `Esta fórmula tem parênteses aninhados demais ${at(pos)} (no máximo ${FORMULA_MAX_DEPTH} níveis). Simplifique-a.`);
   }
   private leave(): void { this.depth--; }
 
@@ -161,14 +161,14 @@ class Parser {
   }
 
   private unexpected(t: Tok, wanted: "value" | "operator"): never {
-    if (t.t === ")" && wanted === "value") return fail("expected_value", t.pos, `Expected a number or a name before the ')' ${at(t.pos)}.`);
-    if (t.t === ")") return fail("extra_paren", t.pos, `There is a ')' ${at(t.pos)} without a matching '('.`);
+    if (t.t === ")" && wanted === "value") return fail("expected_value", t.pos, `Esperava um número ou um nome antes do ')' ${at(t.pos)}.`);
+    if (t.t === ")") return fail("extra_paren", t.pos, `Há um ')' ${at(t.pos)} sem o '(' correspondente.`);
     if (t.t === ",") {
-      return fail("thousands", t.pos, `Unexpected ',' ${at(t.pos)}. Write numbers without thousands separators (1000, not 1,000); commas only separate the values inside min( ) and max( ).`);
+      return fail("thousands", t.pos, `Vírgula ',' inesperada ${at(t.pos)}. Escreva números sem separador de milhar (1000, não 1,000); vírgulas só separam os valores dentro de min( ) e max( ).`);
     }
-    if (t.t === "end") return fail("expected_value", t.pos, `The formula ends too early ${at(t.pos)}: a number or name is missing.`);
-    if (wanted === "operator") return fail("expected_operator", t.pos, `Expected + - * or / ${at(t.pos)}. Write t4 * 10, not t4 10 or 10t4.`);
-    return fail("expected_value", t.pos, `Expected a number, a name or '(' ${at(t.pos)}.`);
+    if (t.t === "end") return fail("expected_value", t.pos, `A fórmula termina cedo demais ${at(t.pos)}: falta um número ou nome.`);
+    if (wanted === "operator") return fail("expected_operator", t.pos, `Esperava + - * ou / ${at(t.pos)}. Escreva t4 * 10, não t4 10 nem 10t4.`);
+    return fail("expected_value", t.pos, `Esperava um número, um nome ou '(' ${at(t.pos)}.`);
   }
 
   private expr(): FormulaNode {
@@ -215,7 +215,7 @@ class Parser {
       const e = this.expr();
       const close = this.next();
       if (close.t !== ")") {
-        if (close.t === "end") fail("missing_paren", t.pos, `The '(' ${at(t.pos)} is never closed. Add a ')'.`);
+        if (close.t === "end") fail("missing_paren", t.pos, `O '(' ${at(t.pos)} nunca é fechado. Acrescente um ')'.`);
         this.i--;
         this.unexpected(close, "operator");
       }
@@ -225,7 +225,7 @@ class Parser {
     if (t.t === "id") {
       const name = t.v.toLowerCase();
       if (this.peek().t === "(") {
-        if (!isFn(name)) return fail("unknown_function", t.pos, `Unknown function '${t.v}' ${at(t.pos)}. Use min, max, round, floor, ceil or abs.`);
+        if (!isFn(name)) return fail("unknown_function", t.pos, `Função desconhecida '${t.v}' ${at(t.pos)}. Use min, max, round, floor, ceil ou abs.`);
         const open = this.next();
         this.enter(open.pos);
         const args: FormulaNode[] = [];
@@ -238,21 +238,21 @@ class Parser {
         }
         const close = this.next();
         if (close.t !== ")") {
-          if (close.t === "end") fail("missing_paren", open.pos, `The '(' ${at(open.pos)} is never closed. Add a ')'.`);
+          if (close.t === "end") fail("missing_paren", open.pos, `O '(' ${at(open.pos)} nunca é fechado. Acrescente um ')'.`);
           this.i--;
           this.unexpected(close, "operator");
         }
         this.leave();
         const want = FUNCS[name];
         if (args.length !== want) {
-          fail("arity", t.pos, `${name}( ) ${at(t.pos)} takes ${want === 1 ? "1 value" : `${want} values separated by a comma`}, not ${args.length}.`);
+          fail("arity", t.pos, `${name}( ) ${at(t.pos)} recebe ${want === 1 ? "1 valor" : `${want} valores separados por vírgula`}, não ${args.length}.`);
         }
         return this.node({ type: "call", fn: name, args, pos: t.pos });
       }
       const v = Object.prototype.hasOwnProperty.call(ALIASES, name) ? ALIASES[name] : undefined;
       if (!v) {
-        if (isFn(name)) return fail("arity", t.pos, `${name} ${at(t.pos)} needs parentheses, like ${name}(t4 * 10${FUNCS[name] === 2 ? ", 0" : ""}).`);
-        return fail("unknown_name", t.pos, `Unknown name '${t.v}' ${at(t.pos)}. ${VAR_HINT}`);
+        if (isFn(name)) return fail("arity", t.pos, `${name} ${at(t.pos)} precisa de parênteses, como ${name}(t4 * 10${FUNCS[name] === 2 ? ", 0" : ""}).`);
+        return fail("unknown_name", t.pos, `Nome desconhecido '${t.v}' ${at(t.pos)}. ${VAR_HINT}`);
       }
       return this.node({ type: "var", name: v, pos: t.pos });
     }
@@ -264,13 +264,13 @@ class Parser {
 /** Parse formula text into an AST, or a typed error. Never throws. */
 export function parseFormula(text: string): ParseResult {
   const src = typeof text === "string" ? text : "";
-  if (!src.trim()) return err("empty", 0, `Write a formula, for example t4 * 10 + t5 * 20 + deads * 50. ${VAR_HINT}`);
-  if (src.length > FORMULA_MAX_CHARS) return err("too_long", FORMULA_MAX_CHARS + 1, `This formula is ${src.length} characters long. Keep it to ${FORMULA_MAX_CHARS}.`);
+  if (!src.trim()) return err("empty", 0, `Escreva uma fórmula, por exemplo t4 * 10 + t5 * 20 + deads * 50. ${VAR_HINT}`);
+  if (src.length > FORMULA_MAX_CHARS) return err("too_long", FORMULA_MAX_CHARS + 1, `Esta fórmula tem ${src.length} caracteres. Mantenha em até ${FORMULA_MAX_CHARS}.`);
   try {
     return { ok: true, ast: new Parser(tokenize(src)).parse() };
   } catch (e) {
     if (e instanceof FormulaFail) return { ok: false, error: e.error };
-    return err("bad_char", 0, "This formula could not be read.");
+    return err("bad_char", 0, "Não foi possível ler esta fórmula.");
   }
 }
 
@@ -290,7 +290,7 @@ function evalNode(n: FormulaNode, vars: FormulaVars): number {
     case "bin": {
       const a = evalNode(n.left, vars);
       const b = evalNode(n.right, vars);
-      if (n.op === "/" && b === 0) fail("div_zero", n.pos, `Division by zero ${at(n.pos)}: the value after '/' is 0 for these numbers.`);
+      if (n.op === "/" && b === 0) fail("div_zero", n.pos, `Divisão por zero ${at(n.pos)}: o valor depois de '/' é 0 para esses números.`);
       v = n.op === "+" ? a + b : n.op === "-" ? a - b : n.op === "*" ? a * b : a / b;
       break;
     }
@@ -301,7 +301,7 @@ function evalNode(n: FormulaNode, vars: FormulaVars): number {
       break;
     }
   }
-  if (!Number.isFinite(v)) fail("not_finite", n.pos, `The result is too large to compute ${at(n.pos)}. Check the numbers you entered.`);
+  if (!Number.isFinite(v)) fail("not_finite", n.pos, `O resultado é grande demais para calcular ${at(n.pos)}. Confira os números que você digitou.`);
   return v === 0 ? 0 : v; // no -0
 }
 
@@ -311,7 +311,7 @@ export function evaluate(ast: FormulaNode, vars: FormulaVars = {}): EvalResult {
     return { ok: true, value: evalNode(ast, vars) };
   } catch (e) {
     if (e instanceof FormulaFail) return { ok: false, error: e.error };
-    return err("not_finite", 0, "This formula could not be computed.");
+    return err("not_finite", 0, "Não foi possível calcular esta fórmula.");
   }
 }
 
@@ -427,14 +427,14 @@ export function plainNumber(n: number): string {
   return m[1] + body;
 }
 
-/** "Each T4 kill = 10 points, each T5 kill = 20 points, each dead = 50 points." or null when not linear. */
+/** "Cada abate de T4 = 10 pontos, cada abate de T5 = 20 pontos, cada morte = 50 pontos." ou null quando não é linear. */
 export function explainLinear(lin: LinearForm): string {
   const parts = FORMULA_VARS.filter((v) => lin.weights[v] !== undefined).map((v) => {
     const k = lin.weights[v]!;
-    return `each ${VAR_NOUN[v].one} = ${formatWeight(k)} point${Math.abs(k) === 1 ? "" : "s"}`;
+    return `cada ${VAR_NOUN[v].one} = ${formatWeight(k)} ponto${Math.abs(k) === 1 ? "" : "s"}`;
   });
-  if (lin.constant !== 0) parts.push(`${lin.constant > 0 ? "plus" : "minus"} ${formatWeight(Math.abs(lin.constant))} point${Math.abs(lin.constant) === 1 ? "" : "s"} for everyone`);
-  if (parts.length === 0) return "This formula gives everyone the same score, whatever they do.";
+  if (lin.constant !== 0) parts.push(`${lin.constant > 0 ? "mais" : "menos"} ${formatWeight(Math.abs(lin.constant))} ponto${Math.abs(lin.constant) === 1 ? "" : "s"} para todos`);
+  if (parts.length === 0) return "Esta fórmula dá a todos a mesma pontuação, não importa o que façam.";
   const s = parts.join(", ");
   return `${s[0]!.toUpperCase()}${s.slice(1)}.`;
 }
@@ -444,10 +444,10 @@ export function explainFormula(ast: FormulaNode): string {
   const lin = linearWeights(ast);
   if (lin) return explainLinear(lin);
   const vars = usedVariables(ast).map((v) => VAR_NOUN[v].many);
-  return `Your score is ${formatFormula(ast)}. It uses ${vars.length ? listText(vars) : "no player numbers"}; because of min, max, rounding or multiplying numbers together, each extra unit is not always worth the same.`;
+  return `Sua pontuação é ${formatFormula(ast)}. Ela usa ${vars.length ? listText(vars) : "nenhum número de jogador"}; por causa de min, max, arredondamento ou da multiplicação de números entre si, cada unidade extra nem sempre vale o mesmo.`;
 }
 
-export function listText(items: string[], joiner = "and"): string {
+export function listText(items: string[], joiner = "e"): string {
   if (items.length <= 1) return items.join("");
   return `${items.slice(0, -1).join(", ")} ${joiner} ${items[items.length - 1]}`;
 }
@@ -503,9 +503,9 @@ export const FORMULA_PRESETS: readonly FormulaPreset[] = [
   { id: "k2708-kvk1", label: "K2708 (KvK1)", factKey: "K2708 KvK1", factId: DKP_FACT_ID, confidence: "medium", stage: "KvK1", formula: "t4 * 10 + t5 * 20 + deads * 50" },
   {
     id: "k2779-kvk2", label: "K2779 (KvK2)", factKey: "K2779 KvK2", factId: DKP_FACT_ID, confidence: "medium", stage: "KvK2", formula: "t4 * 10 + t5 * 30 + deads * 80",
-    ruleNote: "K2779 also counts your deads as 0 on a day you were zeroed in a 'terrible trade'. That rule is decided by the council per day; it is not part of the formula.",
+    ruleNote: "O K2779 também conta as suas mortes como 0 em um dia em que você foi zerado em uma 'troca terrível'. Essa regra é decidida pelo conselho dia a dia; não faz parte da fórmula.",
   },
-  { id: "rok-steward", label: "ROK Steward example", factKey: "ROK Steward example", factId: DKP_FACT_ID, confidence: "medium", stage: "other", formula: "t4 * 1 + t5 * 2 + deads * 10" },
+  { id: "rok-steward", label: "Exemplo do ROK Steward", factKey: "ROK Steward example", factId: DKP_FACT_ID, confidence: "medium", stage: "other", formula: "t4 * 1 + t5 * 2 + deads * 10" },
 ];
 
 export function presetById(id: string | null | undefined): FormulaPreset | undefined {
@@ -513,4 +513,4 @@ export function presetById(id: string | null | undefined): FormulaPreset | undef
 }
 
 export const WEIGHTS_NOT_COMPARABLE =
-  "Weights are not comparable across kingdoms: in these examples one dead is worth 2.5 to 5 T5 kills.";
+  "Os pesos não são comparáveis entre reinos: nesses exemplos uma morte vale de 2,5 a 5 abates de T5.";

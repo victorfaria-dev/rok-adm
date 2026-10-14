@@ -20,9 +20,9 @@ export interface KingdomSource {
 
 /** Cards the MGE planner page cites. */
 export const MGE_SOURCES: readonly KingdomSource[] = [
-  { id: "B05-0002", confidence: "media", text: "Many kingdoms publish a fixed list of who may take the top MGE ranks (often 10), by DKP, role or rotation." },
-  { id: "B05-0003", confidence: "baixa", text: "Governors who break a fixed MGE are punished (kicked, zeroed or fined)." },
-  { id: "B05-0004", confidence: "media", text: "Some kingdoms auction MGE ranks for DKP." },
+  { id: "B05-0002", confidence: "media", text: "Muitos reinos publicam uma lista fixa de quem pode ficar com as primeiras posições do MGE (geralmente 10), por DKP, função ou rodízio." },
+  { id: "B05-0003", confidence: "baixa", text: "Governadores que quebram um MGE fixo são punidos (expulsos, zerados ou multados)." },
+  { id: "B05-0004", confidence: "media", text: "Alguns reinos leiloam as posições do MGE por DKP." },
 ];
 
 export type MgePolicy = "rotation" | "score" | "manual";
@@ -139,16 +139,16 @@ export interface MgePlan {
 /** Plain-language explanation of each policy (UI and public ledger). */
 export const MGE_POLICY_TEXT: Readonly<Record<MgePolicy, { label: string; text: string }>> = {
   rotation: {
-    label: "Rotation",
-    text: "Slots go to the governors who have waited longest since their last slot. Governors who never had one come first. After getting a slot, a governor sits out the cooldown before being eligible again.",
+    label: "Rodízio",
+    text: "As vagas vão para os governadores que esperam há mais tempo desde a última vaga. Quem nunca teve uma vem primeiro. Depois de receber uma vaga, o governador fica de fora durante o período de espera antes de poder ser escolhido de novo.",
   },
   score: {
-    label: "Score",
-    text: "Slots go to the highest scores, using the number your council keeps (for example DKP). Governors with no score entered are not placed.",
+    label: "Pontuação",
+    text: "As vagas vão para as maiores pontuações, usando o número que o seu conselho mantém (por exemplo, DKP). Governadores sem pontuação informada não são colocados.",
   },
   manual: {
     label: "Manual",
-    text: "The council places every slot by hand and writes the reason for each one.",
+    text: "O conselho coloca cada vaga à mão e escreve o motivo de cada uma.",
   },
 };
 
@@ -156,7 +156,7 @@ export function emptyMgeDoc(id: string, now: Date = new Date()): MgeDoc {
   return {
     id,
     updatedAt: now.toISOString(),
-    title: "MGE plan",
+    title: "Plano de MGE",
     slotsPerEvent: MGE_LIMITS.slotsDefault,
     policy: "rotation",
     cooldownEvents: 1,
@@ -315,14 +315,14 @@ export function splitNameAndNumber(line: string): { name: string; number: string
     if (at < 0) return { name: "", number: cells[0] ?? null };
     const score = cells.slice(at + 1).find(looksNumeric) ?? null;
     const rest = cells.slice(at + 1);
-    if (score === null && rest.length > 0) return { name: cells[at]!, number: null, problem: "The columns after the name have no score. Put the score in the second column (for example Dave<TAB>4.2m)." };
+    if (score === null && rest.length > 0) return { name: cells[at]!, number: null, problem: "As colunas depois do nome não têm pontuação. Ponha a pontuação na segunda coluna (por exemplo Dave<TAB>4.2m)." };
     return { name: cells[at]!, number: score };
   }
   const semi = s.lastIndexOf(";");
   if (semi >= 0) {
     const name = s.slice(0, semi).trim(), num = s.slice(semi + 1).trim();
     if (!num) return { name, number: null };
-    if (!looksNumeric(num)) return { name: s, number: null, problem: "The part after \";\" is not a score (use 4200000, 4,200,000 or 4.2m)." };
+    if (!looksNumeric(num)) return { name: s, number: null, problem: "A parte depois de \";\" não é uma pontuação (use 4200000, 4.200.000 ou 4.2m)." };
     return { name, number: num };
   }
   const comma = /^(.*?)\s*,\s*(\d[\d.,\s]*[kmb]?)\s*$/i.exec(s);
@@ -330,7 +330,7 @@ export function splitNameAndNumber(line: string): { name: string; number: string
   if (comma) return { name: "", number: comma[2]!.trim() };
   if (s.includes(",")) {
     const after = s.slice(s.lastIndexOf(",") + 1).trim();
-    if (after) return { name: s, number: null, problem: "The part after the last comma is not a score (use 4200000, 4,200,000 or 4.2m)." };
+    if (after) return { name: s, number: null, problem: "A parte depois da última vírgula não é uma pontuação (use 4200000, 4.200.000 ou 4.2m)." };
     return { name: s.slice(0, s.lastIndexOf(",")).trim(), number: null };
   }
   const space = /^(.*\S)\s+(\d[\d.,]*[kmb]?)$/i.exec(s);
@@ -351,12 +351,12 @@ export function parseCandidateLines(text: string): { rows: Array<{ name: string;
     const text = raw.trim().replace(/\t/g, " ");
     if (problem) return void errors.push({ line: i + 1, text, message: problem });
     const clean = cleanLine(name, MGE_LIMITS.name + 1);
-    if (!clean) return void errors.push({ line: i + 1, text, message: "No name on this line." });
-    if (clean.length > MGE_LIMITS.name) return void errors.push({ line: i + 1, text, message: `Name is longer than ${MGE_LIMITS.name} characters.` });
+    if (!clean) return void errors.push({ line: i + 1, text, message: "Não há nome nesta linha." });
+    if (clean.length > MGE_LIMITS.name) return void errors.push({ line: i + 1, text, message: `O nome tem mais de ${MGE_LIMITS.name} caracteres.` });
     let score: number | null = null;
     if (number !== null) {
       const r = parseMgeScore(number);
-      if (!r.ok) return void errors.push({ line: i + 1, text, message: r.tooBig ? r.message : "The score is not a number (use 4200000, 4,200,000 or 4.2m)." });
+      if (!r.ok) return void errors.push({ line: i + 1, text, message: r.tooBig ? r.message : "A pontuação não é um número (use 4200000, 4.200.000 ou 4.2m)." });
       score = r.score;
     }
     rows.push({ name: clean, score });
@@ -367,7 +367,7 @@ export function parseCandidateLines(text: string): { rows: Array<{ name: string;
 // ---------------------------------------------------------------------------
 // Typed governor fields (add form and inline edit)
 
-export const MGE_SCORE_HELP = "Enter a whole number, for example 4200000, 4,200,000 or 4.2m.";
+export const MGE_SCORE_HELP = "Digite um número inteiro, por exemplo 4200000, 4.200.000 ou 4.2m.";
 
 /**
  * A score typed by the council. Empty = no score. Anything that is not a whole number, or is above
@@ -375,10 +375,10 @@ export const MGE_SCORE_HELP = "Enter a whole number, for example 4200000, 4,200,
  */
 export function parseMgeScore(text: string): { ok: true; score: number | null } | { ok: false; tooBig: boolean; message: string } {
   if (!text.trim()) return { ok: true, score: null };
-  // readQuantity only reports "too_large" for well-formed numbers: "1,5m" (decimal comma) is a format error.
+  // readQuantity only reports "too_large" for well-formed numbers: "1.5m" (decimal comma) is a format error.
   const r = readQuantity(text);
   if (r.ok) return { ok: true, score: r.value };
-  if (r.error === "too_large") return { ok: false, tooBig: true, message: `The score is too large (at most ${formatInt(Number.MAX_SAFE_INTEGER)}).` };
+  if (r.error === "too_large") return { ok: false, tooBig: true, message: `A pontuação é grande demais (no máximo ${formatInt(Number.MAX_SAFE_INTEGER)}).` };
   return { ok: false, tooBig: false, message: MGE_SCORE_HELP };
 }
 
@@ -388,10 +388,10 @@ export function parseMgeTagsText(text: string): { tags: string[]; error?: string
   for (const t of text.split(",")) {
     const s = cleanLine(t, 1000).toLowerCase();
     if (!s) continue;
-    if (s.length > MGE_LIMITS.tag) return { tags, error: `Each tag can have at most ${MGE_LIMITS.tag} characters ("${s.slice(0, MGE_LIMITS.tag)}…").` };
+    if (s.length > MGE_LIMITS.tag) return { tags, error: `Cada tag pode ter no máximo ${MGE_LIMITS.tag} caracteres ("${s.slice(0, MGE_LIMITS.tag)}…").` };
     if (!tags.includes(s)) tags.push(s);
   }
-  if (tags.length > MGE_LIMITS.tags) return { tags: tags.slice(0, MGE_LIMITS.tags), error: `Use at most ${MGE_LIMITS.tags} tags.` };
+  if (tags.length > MGE_LIMITS.tags) return { tags: tags.slice(0, MGE_LIMITS.tags), error: `Use no máximo ${MGE_LIMITS.tags} tags.` };
   return { tags };
 }
 
@@ -407,8 +407,8 @@ export type MgeCandidateErrors = Partial<Record<keyof MgeCandidateInput, string>
 export function readCandidateInput(input: MgeCandidateInput): { ok: true; name: string; score: number | null; tags: string[] } | { ok: false; errors: MgeCandidateErrors } {
   const errors: MgeCandidateErrors = {};
   const name = cleanLine(input.name, MGE_LIMITS.name + 1);
-  if (!name) errors.name = "Enter the governor's name.";
-  else if (name.length > MGE_LIMITS.name) errors.name = `Use at most ${MGE_LIMITS.name} characters.`;
+  if (!name) errors.name = "Digite o nome do governador.";
+  else if (name.length > MGE_LIMITS.name) errors.name = `Use no máximo ${MGE_LIMITS.name} caracteres.`;
   const score = parseMgeScore(input.score);
   if (!score.ok) errors.score = score.message;
   const tags = parseMgeTagsText(input.tags);
@@ -428,7 +428,7 @@ export type UpdateCandidateResult =
  */
 export function updateCandidate(doc: MgeDoc, candidateId: string, input: MgeCandidateInput): UpdateCandidateResult {
   const i = doc.candidates.findIndex((c) => c.id === candidateId);
-  if (i < 0) return { ok: false, errors: { name: "This governor is no longer in the plan." } };
+  if (i < 0) return { ok: false, errors: { name: "Este governador não está mais no plano." } };
   const r = readCandidateInput(input);
   if (!r.ok) return r;
   const previousName = doc.candidates[i]!.name;
@@ -460,12 +460,12 @@ function plural(n: number, one: string, many = `${one}s`): string {
 
 /**
  * Who a score rank is counted among, written out so the ledger is exact: "" when every listed
- * governor competes, else " among applicants", " among governors not placed by hand" or both.
+ * governor competes, else " entre os candidatos", " entre os governadores não colocados à mão" or both.
  */
 export function scoreRankScope(applicationsRequired: boolean, someoneManual: boolean): string {
-  if (applicationsRequired && someoneManual) return " among applicants not placed by hand";
-  if (applicationsRequired) return " among applicants";
-  if (someoneManual) return " among governors not placed by hand";
+  if (applicationsRequired && someoneManual) return " entre os candidatos não colocados à mão";
+  if (applicationsRequired) return " entre os candidatos";
+  if (someoneManual) return " entre os governadores não colocados à mão";
   return "";
 }
 
@@ -483,11 +483,11 @@ export function planMge(doc: MgeDoc): MgePlan {
     names.set(k, [...(names.get(k) ?? []), c]);
   }
   for (const list of names.values()) {
-    if (list.length > 1) warnings.push({ code: "duplicate_name", message: `${plural(list.length, "candidate")} share the name "${list[0]!.name}". Rename one so the ledger is clear.`, candidateId: list[1]!.id });
+    if (list.length > 1) warnings.push({ code: "duplicate_name", message: `${plural(list.length, "candidato")} com o nome "${list[0]!.name}". Renomeie um deles para o registro ficar claro.`, candidateId: list[1]!.id });
   }
   if (doc.policy === "score") {
     for (const c of doc.candidates) {
-      if (c.score === null) warnings.push({ code: "no_score", message: `${c.name} has no score, so the score policy cannot place them.`, candidateId: c.id });
+      if (c.score === null) warnings.push({ code: "no_score", message: `${c.name} não tem pontuação, então a política por pontuação não consegue colocá-lo.`, candidateId: c.id });
     }
   }
 
@@ -516,18 +516,18 @@ export function planMge(doc: MgeDoc): MgePlan {
       for (const o of ev.overrides) {
         const c = byId.get(o.candidateId);
         if (!c) {
-          ew.push({ code: "override_unknown", message: `A manual placement points to a removed candidate and was ignored.`, eventId: ev.id });
+          ew.push({ code: "override_unknown", message: `Uma colocação manual aponta para um candidato removido e foi ignorada.`, eventId: ev.id });
           continue;
         }
         if (o.slot > slots || usedSlots.has(o.slot) || taken.has(c.id)) {
-          ew.push({ code: "override_conflict", message: `Manual placement of ${c.name} in slot ${o.slot} was ignored (slot ${o.slot > slots ? "is past the slot count" : "already used"}${taken.has(c.id) ? ", or governor already placed" : ""}).`, eventId: ev.id, candidateId: c.id });
+          ew.push({ code: "override_conflict", message: `A colocação manual de ${c.name} na vaga ${o.slot} foi ignorada (a vaga ${o.slot > slots ? "passa do número de vagas" : "já está em uso"}${taken.has(c.id) ? ", ou o governador já foi colocado" : ""}).`, eventId: ev.id, candidateId: c.id });
           continue;
         }
         if (doc.policy === "rotation" && onCooldown(c.id, index)) {
-          ew.push({ code: "override_on_cooldown", message: `${c.name} is on cooldown (last slot on ${last.get(c.id)!.date}) but was placed by hand: ${o.reason}`, eventId: ev.id, candidateId: c.id });
+          ew.push({ code: "override_on_cooldown", message: `${c.name} está no período de espera (última vaga em ${last.get(c.id)!.date}), mas foi colocado à mão: ${o.reason}`, eventId: ev.id, candidateId: c.id });
         }
         if (doc.applicationsRequired && !ev.applicants.includes(c.id)) {
-          ew.push({ code: "override_not_applicant", message: `${c.name} did not apply for this event but was placed by hand.`, eventId: ev.id, candidateId: c.id });
+          ew.push({ code: "override_not_applicant", message: `${c.name} não se candidatou a este evento, mas foi colocado à mão.`, eventId: ev.id, candidateId: c.id });
         }
         usedSlots.add(o.slot);
         taken.add(c.id);
@@ -551,8 +551,8 @@ export function planMge(doc: MgeDoc): MgePlan {
         for (const c of eligible) {
           const l = last.get(c.id);
           const reason = l === undefined
-            ? "rotation: longest wait since last slot (never had one)"
-            : `rotation: longest wait since last slot (${plural(index - l.index, "event")} ago, on ${l.date})`;
+            ? "rodízio: maior espera desde a última vaga (nunca teve uma)"
+            : `rodízio: maior espera desde a última vaga (há ${plural(index - l.index, "evento")}, em ${l.date})`;
           queue.push({ c, reason, publicReason: reason, score: null });
         }
       } else if (doc.policy === "score") {
@@ -560,7 +560,7 @@ export function planMge(doc: MgeDoc): MgePlan {
         // The rank is among the pool only (applicants, minus governors placed by hand): say so.
         const among = scoreRankScope(doc.applicationsRequired, taken.size > 0);
         ranked.forEach((c, i) => {
-          const rank = `score rank ${i + 1}${among}`;
+          const rank = `posição ${i + 1} por pontuação${among}`;
           queue.push({ c, reason: `${rank} (${formatInt(c.score!)})`, publicReason: rank, score: c.score });
         });
       }
@@ -579,7 +579,7 @@ export function planMge(doc: MgeDoc): MgePlan {
     const unfilled: number[] = [];
     for (let s = 1; s <= slots; s++) if (!filled.has(s)) unfilled.push(s);
     if (unfilled.length > 0) {
-      ew.push({ code: "unfilled", message: `${plural(unfilled.length, "slot")} not filled: ${unfilled.join(", ")}.`, eventId: ev.id });
+      ew.push({ code: "unfilled", message: `${plural(unfilled.length, "vaga")} sem preencher: ${unfilled.join(", ")}.`, eventId: ev.id });
     }
     for (const a of assignments) last.set(a.candidateId, { index, date: ev.date });
     out.push({ eventId: ev.id, date: ev.date, commander: ev.commander, locked: ev.locked && ev.result !== null, assignments, unfilled, warnings: ew });
@@ -698,7 +698,7 @@ export function parseMgePublic(x: unknown): MgePublic | null {
     events.push({ date: e.date, commander: cleanLine(e.commander, MGE_LIMITS.commander), locked: e.locked === true, slots, unfilled });
   }
   return {
-    title: cleanLine(x.title, MGE_LIMITS.title) || "MGE plan",
+    title: cleanLine(x.title, MGE_LIMITS.title) || "Plano de MGE",
     policy: x.policy as MgePolicy,
     slotsPerEvent,
     cooldownEvents: intIn(x.cooldownEvents, 0, MGE_LIMITS.cooldownMax, 0),
@@ -711,11 +711,11 @@ export function parseMgePublic(x: unknown): MgePublic | null {
 
 /** One sentence describing the rules a ledger used (view page and plan summary). */
 export function describeMgeRules(p: Pick<MgeDoc, "policy" | "slotsPerEvent" | "cooldownEvents" | "applicationsRequired">): string {
-  const parts = [`${plural(p.slotsPerEvent, "slot")} per event, set by the council.`, MGE_POLICY_TEXT[p.policy].text];
+  const parts = [`${plural(p.slotsPerEvent, "vaga")} por evento (definição do conselho).`, MGE_POLICY_TEXT[p.policy].text];
   if (p.policy === "rotation") {
-    parts.push(p.cooldownEvents === 0 ? "No cooldown: a governor can get slots in back-to-back events." : `Cooldown: ${plural(p.cooldownEvents, "event")} after a slot.`);
+    parts.push(p.cooldownEvents === 0 ? "Sem período de espera: um governador pode receber vagas em eventos seguidos." : `Período de espera: ${plural(p.cooldownEvents, "evento")} depois de uma vaga.`);
   }
-  parts.push(p.applicationsRequired ? "Only governors who applied for an event can get a slot in it." : "Every listed governor is considered; no application needed.");
+  parts.push(p.applicationsRequired ? "Só governadores que se candidataram a um evento podem receber uma vaga nele." : "Todo governador da lista é considerado; não é preciso candidatura.");
   return parts.join(" ");
 }
 

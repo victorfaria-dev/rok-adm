@@ -93,8 +93,8 @@ export function civsByResource(opts: FarmFactsOption = {}): Record<Resource, Civ
 
 function farmCountAdvice(input: FarmRecommendationInput, lotsOfTime: boolean, index: ReturnType<typeof farmIndex>): FarmCountAdvice {
   const owned = input.farmsOwned;
-  const ownedNote = owned > 0 ? ` You already have ${owned}.` : "";
-  const overNote = owned > MAX_FARMS_SUGGESTED ? ` The planner never suggests more than ${MAX_FARMS_SUGGESTED}.` : "";
+  const ownedNote = owned > 0 ? ` Você já tem ${owned}.` : "";
+  const overNote = owned > MAX_FARMS_SUGGESTED ? ` O planejador nunca sugere mais que ${MAX_FARMS_SUGGESTED}.` : "";
   const d = FARMS_DATA.farmCount;
   // The count rule itself is planner reasoning (no data per tier, gap L-A13-04): always a hypothesis.
   if (input.minutesPerDay !== null && input.minutesPerDay < MIN_FARM_MINUTES) {
@@ -135,13 +135,13 @@ export function recommendFarms(input: FarmRecommendationInput, opts: FarmFactsOp
       case "single-resource":
         status = lotsOfTime ? "possible" : "not_recommended";
         why += lotsOfTime
-          ? ` Weak evidence. Shown because you declared ${LOTS_OF_TIME_MINUTES}+ minutes a day (the planner's threshold for "a lot of time" is a hypothesis).`
-          : ` Weak evidence. Only shown as possible from ${LOTS_OF_TIME_MINUTES} minutes a day (planner threshold, a hypothesis).`;
+          ? ` Evidência fraca. Mostrado porque você declarou ${LOTS_OF_TIME_MINUTES}+ minutos por dia (o limite do planejador para "muito tempo" é uma hipótese).`
+          : ` Evidência fraca. Só aparece como possível a partir de ${LOTS_OF_TIME_MINUTES} minutos por dia (limite do planejador, uma hipótese).`;
         hypothesis = hypothesis || lotsOfTime;
         break;
       case "gold":
         status = lowSpender ? "not_recommended" : "possible";
-        why += lowSpender ? " Not recommended for F2P and low spenders until an in-game check confirms transfer and yield." : "";
+        why += lowSpender ? "Não recomendado para F2P nem para quem gasta pouco até uma verificação no jogo confirmar a transferência e o rendimento." : "";
         break;
       case "pair-food-wood":
         status = "hidden";

@@ -7,7 +7,7 @@ const step = (p: ReturnType<typeof buildPath>, id: string) => p.stages.flatMap((
 describe("FARM_BUILD_STAGES", () => {
   it("has the three stages in order", () => {
     expect(FARM_BUILD_STAGES.map((s) => s.label)).toEqual([
-      "Start: CH11 / 3 marches", "Practical minimum: CH17 / 4 marches", "Strong: CH22 / 5 marches",
+      "Início: Prefeitura 11 / 3 marchas", "Mínimo prático: Prefeitura 17 / 4 marchas", "Forte: Prefeitura 22 / 5 marchas",
     ]);
   });
 });

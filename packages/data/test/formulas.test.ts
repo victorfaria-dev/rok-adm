@@ -61,7 +61,7 @@ describe("VIP points between levels (A05-0001)", () => {
   it("flags the cumulative reading", () => {
     const r = vipPointsBetween(0, 10);
     expect(r.inputs).toEqual(["A05-0001"]);
-    expect(r.assumptions.join(" ")).toMatch(/cumulative/);
+    expect(r.assumptions.join(" ")).toMatch(/acumulados/);
     expect(() => vipPointsBetween(0, 19)).toThrow(RangeError);
   });
 });
@@ -98,6 +98,6 @@ describe("formulas only read injected data", () => {
       fact: (id) => getFact(id)!,
       table: (name) => ({ ...getTable(name), rows: [{ Level: 1, time_seconds: null }, { Level: 2, time_seconds: null }] }),
     };
-    expect(() => cityHallBuildSeconds(1, 2, data)).toThrow(/no numeric value/);
+    expect(() => cityHallBuildSeconds(1, 2, data)).toThrow(/sem valor numérico/);
   });
 });

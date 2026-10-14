@@ -3,8 +3,8 @@
   "faq": [
     {
       "id": "bots",
-      "q": "Are bots, scripts and auto-clickers allowed?",
-      "a": "No. The Terms of Service forbid cheats, bots, mods and any third-party software that gives an advantage or interferes with the game, and they forbid playing by automated means. Since patch 1.1.07 the game lowers your Conduct Score when it detects scripts or cheats, with penalties below set thresholds.",
+      "q": "Bots, scripts e auto-clickers são permitidos?",
+      "a": "Não. Os Termos de Serviço proíbem trapaças, bots, mods e qualquer software de terceiros que dê vantagem ou interfira no jogo, e proíbem jogar por meios automatizados. Desde o patch 1.1.07 o jogo reduz a sua Pontuação de Conduta quando detecta scripts ou trapaças, com punições abaixo de certos limites.",
       "facts": ["C02-0002", "C02-0004", "C04-0006"],
       "evidence": {
         "C02-0002": "Users may not use cheats, exploits, hacks, bots, mods or third-party software designed to gain an advantage",
@@ -14,8 +14,8 @@
     },
     {
       "id": "auto-hunt",
-      "q": "Is there an allowed way to hunt barbarians automatically?",
-      "a": "Yes: the game's own auto-peacekeeping sends your troops after barbarians, with batch and group attacks. Use it instead of any outside tool.",
+      "q": "Existe uma forma permitida de caçar bárbaros automaticamente?",
+      "a": "Sim: a pacificação automática do próprio jogo manda suas tropas atrás de bárbaros, com ataques em lote e em grupo. Use-a no lugar de qualquer ferramenta externa.",
       "facts": ["A09-0008"],
       "evidence": {
         "A09-0008": "The game has a built-in auto-peacekeeping feature that sends troops to fight barbarians automatically"
@@ -23,8 +23,8 @@
     },
     {
       "id": "ban-history",
-      "q": "Does Lilith actually ban for this?",
-      "a": "Yes. Lilith published numbered anti-botting reports listing accounts banned for good, naming auto-clickers and third-party payments, and the rules let it suspend or close an account at its own discretion.",
+      "q": "A Lilith realmente bane por isso?",
+      "a": "Sim. A Lilith publicou relatórios numerados contra bots listando contas banidas de vez, citando auto-clickers e pagamentos de terceiros, e as regras permitem que ela suspenda ou encerre uma conta a seu critério.",
       "facts": ["C02-0012", "C02-0011"],
       "evidence": {
         "C02-0012": "listing permanently banned accounts, targeting botting tools such as auto-clickers and third-party payments",
@@ -33,8 +33,8 @@
     },
     {
       "id": "emulator",
-      "q": "Is playing on an emulator or the PC client OK?",
-      "a": "A 2026 community guide says emulators and the PC client are fine, and that automation and modified clients are what get accounts banned. This is a community reading, not an official statement.",
+      "q": "Jogar em um emulador ou no cliente de PC é permitido?",
+      "a": "Um guia da comunidade de 2026 diz que emuladores e o cliente de PC são aceitáveis, e que automação e clientes modificados é que levam ao banimento de contas. É uma leitura da comunidade, não uma declaração oficial.",
       "facts": ["C02-0014"],
       "evidence": {
         "C02-0014": "playing on emulators or the PC client is fine, while third-party automation and modified clients are what get accounts banned"
@@ -42,8 +42,8 @@
     },
     {
       "id": "sharing",
-      "q": "Can a friend, a pilot or an account sitter play my account?",
-      "a": "No. Sharing an account, including giving out your username and password so someone else can log in, is against the Terms of Service, and that covers paid pilots for MGE or KvK. Keep your login to yourself.",
+      "q": "Um amigo, um piloto ou um \"cuidador\" de conta pode jogar a minha conta?",
+      "a": "Não. Compartilhar uma conta, inclusive passar seu usuário e senha para outra pessoa entrar, vai contra os Termos de Serviço, e isso vale para pilotos pagos de MGE ou KvK. Mantenha o seu login só com você.",
       "facts": ["C02-0005"],
       "evidence": {
         "C02-0005": "Account sharing, including sharing username and password for others to log in, is prohibited"
@@ -51,8 +51,8 @@
     },
     {
       "id": "selling",
-      "q": "Can I buy or sell an account, gems or items?",
-      "a": "No. Under the Terms you don't own your account or its virtual items, and you may not sell or transfer them for money. Third-party payments also appear in Lilith's ban reports.",
+      "q": "Posso comprar ou vender uma conta, gemas ou itens?",
+      "a": "Não. Pelos Termos você não é dono da sua conta nem dos itens virtuais dela, e não pode vendê-los nem transferi-los por dinheiro. Pagamentos de terceiros também aparecem nos relatórios de banimento da Lilith.",
       "facts": ["C02-0010", "C02-0012"],
       "evidence": {
         "C02-0010": "may not sell or transfer virtual items or currency or redeem them for anything of monetary value",
@@ -61,8 +61,8 @@
     },
     {
       "id": "tools",
-      "q": "What about third-party tools that read the game?",
-      "a": "The Terms forbid tools that pull game content other than Lilith's own software or a normal browser, and forbid reverse engineering the client. KingdomOps never reads the game: you type your own numbers.",
+      "q": "E as ferramentas de terceiros que leem o jogo?",
+      "a": "Os Termos proíbem ferramentas que extraem conteúdo do jogo que não sejam o software da própria Lilith ou um navegador comum, e proíbem a engenharia reversa do cliente. O KingdomOps nunca lê o jogo: você digita os seus próprios números.",
       "facts": ["C02-0003", "C02-0006"],
       "evidence": {
         "C02-0003": "Users may not access, search or download Lilith Content from the Services using any engine, software, tool or mechanism",
@@ -71,8 +71,8 @@
     },
     {
       "id": "credentials",
-      "q": "A bot or website asks for my game login. Should I give it?",
-      "a": "No. The Terms forbid asking other players for their login details, so no legitimate service needs them. KingdomOps never asks for your login.",
+      "q": "Um bot ou site pede o meu login do jogo. Devo dar?",
+      "a": "Não. Os Termos proíbem pedir a outros jogadores os dados de login, então nenhum serviço legítimo precisa deles. O KingdomOps nunca pede o seu login.",
       "facts": ["C02-0004"],
       "evidence": {
         "C02-0004": "Users may not solicit other members' login credentials"
@@ -80,15 +80,15 @@
     },
     {
       "id": "discord-links",
-      "q": "Can I paste a Discord link in game chat?",
-      "a": "Don't. Players report being muted or banned for posting or asking for Discord links and other third-party information in game chat, so share links outside the game and never ask anyone to paste one.",
+      "q": "Posso colar um link de Discord no chat do jogo?",
+      "a": "Não. Jogadores relatam ter sido silenciados ou banidos por postar ou pedir links de Discord e outras informações de terceiros no chat do jogo, então compartilhe links fora do jogo e nunca peça a ninguém que cole um.",
       "facts": [],
       "community": true
     },
     {
       "id": "farms",
-      "q": "Are farm accounts allowed?",
-      "a": "Fan guides say a second city made with the in-game Character Management is a normal feature, usually two per kingdom. The same guides say to avoid bots, macros and automated gathering on any account; we found no official text on farms.",
+      "q": "Contas farm são permitidas?",
+      "a": "Guias de fãs dizem que uma segunda cidade criada pelo Gerenciamento de Personagens do jogo é um recurso normal, em geral duas por reino. Os mesmos guias dizem para evitar bots, macros e coleta automatizada em qualquer conta; não achamos texto oficial sobre farms.",
       "facts": ["C02-0017", "A13-0008"],
       "evidence": {
         "C02-0017": "create additional characters via Settings > Character Management",
@@ -97,8 +97,8 @@
     },
     {
       "id": "appeal",
-      "q": "I was banned or muted by mistake. What now?",
-      "a": "Contact official support from inside the game with your governor ID, the time it started and the exact notice. The Terms say a terminated account cannot be reinstated, so appeal early and stay factual.",
+      "q": "Fui banido ou silenciado por engano. E agora?",
+      "a": "Fale com o suporte oficial de dentro do jogo, com o seu ID de governador, a hora em que começou e o aviso exato. Os Termos dizem que uma conta encerrada não pode ser reativada, então recorra cedo e seja objetivo.",
       "facts": ["C02-0011"],
       "evidence": {
         "C02-0011": "terminated accounts cannot be reinstated"
@@ -108,35 +108,35 @@
   "checklist": [
     {
       "id": "bind",
-      "text": "Bind your account to a login you control.",
-      "detail": "The game offers account binding (it even pays gems for binding to Facebook). Use an email or login only you can open.",
+      "text": "Vincule a sua conta a um login que só você controla.",
+      "detail": "O jogo oferece vinculação de conta (até paga gemas por vincular ao Facebook). Use um e-mail ou login que só você consiga abrir.",
       "facts": ["A04-0005"],
       "evidence": { "A04-0005": "binding the account to Facebook" }
     },
     {
       "id": "password",
-      "text": "Never share your password or let anyone else log in.",
-      "detail": "That includes friends, alliance officers, pilots and account sitters.",
+      "text": "Nunca compartilhe sua senha nem deixe mais ninguém entrar.",
+      "detail": "Isso inclui amigos, oficiais da aliança, pilotos e cuidadores de conta.",
       "facts": ["C02-0005"],
       "evidence": { "C02-0005": "users must not disclose their password or let any third party use their account" }
     },
     {
       "id": "no-login-elsewhere",
-      "text": "Don't type your game login into bots, websites or tools.",
-      "detail": "No legitimate service needs it.",
+      "text": "Não digite o seu login do jogo em bots, sites ou ferramentas.",
+      "detail": "Nenhum serviço legítimo precisa dele.",
       "facts": ["C02-0004"],
       "evidence": { "C02-0004": "Users may not solicit other members' login credentials" }
     },
     {
       "id": "official-client",
-      "text": "Play only on the official client, with no scripts, auto-clickers or mods.",
-      "detail": "Use the built-in auto-peacekeeping for barbarians.",
+      "text": "Jogue só no cliente oficial, sem scripts, auto-clickers nem mods.",
+      "detail": "Use a pacificação automática nativa para os bárbaros.",
       "facts": ["C02-0002", "C04-0006", "A09-0008"],
       "evidence": { "C02-0002": "Users may not use cheats, exploits, hacks, bots, mods" }
     },
     {
       "id": "no-trading",
-      "text": "Don't buy or sell accounts, gems or items outside the game.",
+      "text": "Não compre nem venda contas, gemas ou itens fora do jogo.",
       "facts": ["C02-0010"],
       "evidence": { "C02-0010": "Users have no ownership interest in their Lilith Account" }
     }

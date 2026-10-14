@@ -74,7 +74,7 @@ describe("parse and evaluate", () => {
 
 describe("errors (typed, positioned, never thrown)", () => {
   it("unknown name with 1-based position and hint", () => {
-    expect(errOf("t4 + tx")).toEqual({ code: "unknown_name", pos: 6, message: "Unknown name 'tx' at character 6. Use t1–t5, deads, kp or power." });
+    expect(errOf("t4 + tx")).toEqual({ code: "unknown_name", pos: 6, message: "Nome desconhecido 'tx' no caractere 6. Use t1–t5, deads, kp ou power." });
   });
 
   it("empty, bad characters and broken numbers", () => {
@@ -106,7 +106,7 @@ describe("errors (typed, positioned, never thrown)", () => {
     expect(errOf(deep(FORMULA_MAX_DEPTH + 1)).code).toBe("too_deep");
     expect(errOf("-".repeat(40) + "1").code).toBe("too_deep");
     // Neutral wording: unary minus nests too, so the message does not talk about parentheses.
-    expect(errOf("-".repeat(FORMULA_MAX_DEPTH + 1) + "1").message).toBe(`This formula is nested too deeply at character ${FORMULA_MAX_DEPTH + 1} (at most ${FORMULA_MAX_DEPTH} levels). Simplify it.`);
+    expect(errOf("-".repeat(FORMULA_MAX_DEPTH + 1) + "1").message).toBe(`Esta fórmula tem parênteses aninhados demais no caractere ${FORMULA_MAX_DEPTH + 1} (no máximo ${FORMULA_MAX_DEPTH} níveis). Simplifique-a.`);
     expect(errOf(deep(FORMULA_MAX_DEPTH + 1)).message).not.toMatch(/parenthes/);
     expect(errOf(Array.from({ length: 60 }, () => "t4").join("+")).code).toBe("too_many_nodes");
   });
@@ -121,7 +121,7 @@ describe("errors (typed, positioned, never thrown)", () => {
   it("numbers above the safe-integer range are rejected at parse time", () => {
     expect(parseFormula(`t4 * ${Number.MAX_SAFE_INTEGER}`).ok).toBe(true);
     expect(errOf("t4 * 1000000000000000000000")).toEqual({
-      code: "number_too_large", pos: 6, message: "The number at character 6 is too large. Use numbers up to 9,007,199,254,740,991.",
+      code: "number_too_large", pos: 6, message: "O número no caractere 6 é grande demais. Use números de até 9.007.199.254.740.991.",
     });
     expect(errOf("9007199254740993.5").code).toBe("number_too_large");
   });
@@ -146,10 +146,10 @@ describe("linearWeights and explanations", () => {
   });
 
   it("plain-language explanation", () => {
-    expect(explainFormula(ast("t4*10 + t5*20 + deads*50"))).toBe("Each T4 kill = 10 points, each T5 kill = 20 points, each dead = 50 points.");
-    expect(explainLinear({ weights: { t5: 1 }, constant: -5 })).toBe("Each T5 kill = 1 point, minus 5 points for everyone.");
-    expect(explainLinear({ weights: {}, constant: 0 })).toMatch(/same score/);
-    expect(explainFormula(ast("max(t4, deads)"))).toMatch(/^Your score is max\(t4, deads\)\. It uses T4 kills and deads/);
+    expect(explainFormula(ast("t4*10 + t5*20 + deads*50"))).toBe("Cada abate de T4 = 10 pontos, cada abate de T5 = 20 pontos, cada morte = 50 pontos.");
+    expect(explainLinear({ weights: { t5: 1 }, constant: -5 })).toBe("Cada abate de T5 = 1 ponto, menos 5 pontos para todos.");
+    expect(explainLinear({ weights: {}, constant: 0 })).toMatch(/a mesma pontuação/);
+    expect(explainFormula(ast("max(t4, deads)"))).toMatch(/^Sua pontuação é max\(t4, deads\)\. Ela usa abates de T4 e mortes/);
   });
 
   it("tiny weights keep significant digits instead of reading as 0", () => {
@@ -159,8 +159,8 @@ describe("linearWeights and explanations", () => {
     expect(formatWeight(0.5)).toBe("0.5");
     expect(formatWeight(1000)).toBe("1,000");
     expect(formatWeight(12.3456789)).toBe("12.345679");
-    expect(explainFormula(ast("t4 * 0.0000001"))).toBe("Each T4 kill = 0.0000001 points.");
-    expect(explainFormula(ast("deads / 10000000"))).toBe("Each dead = 0.0000001 points.");
+    expect(explainFormula(ast("t4 * 0.0000001"))).toBe("Cada abate de T4 = 0.0000001 pontos.");
+    expect(explainFormula(ast("deads / 10000000"))).toBe("Cada morte = 0.0000001 pontos.");
   });
 
   it("formatFormula never prints exponent notation", () => {
@@ -219,9 +219,9 @@ describe("presets (B08-0001)", () => {
   });
 
   it("K2779 keeps its zeroed-day rule as a note, not in the formula", () => {
-    expect(presetById("k2779-kvk2")?.ruleNote).toMatch(/terrible trade/);
+    expect(presetById("k2779-kvk2")?.ruleNote).toMatch(/troca terrível/);
     expect(presetById("nope")).toBeUndefined();
-    expect(WEIGHTS_NOT_COMPARABLE).toMatch(/2\.5 to 5/);
+    expect(WEIGHTS_NOT_COMPARABLE).toMatch(/2,5 a 5/);
     // dead:T5 ratios in the presets: 2.5, 2.67, 5
     const ratios = FORMULA_PRESETS.map((p) => { const w = linearWeights(ast(p.formula))!.weights; return w.deads! / w.t5!; });
     expect(Math.min(...ratios)).toBe(2.5);

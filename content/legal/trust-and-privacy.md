@@ -1,183 +1,183 @@
-# Trust & Privacy
+# Confiança e privacidade
 
-> **DRAFT — needs legal review before monetization.** This page describes how the hub works in its MVP. It is not legal advice, and it must be reviewed by a lawyer (LGPD, GDPR, Lilith Terms of Service) before the hub charges money, shows ads, or stores any data on a server.
+> **RASCUNHO — precisa de revisão jurídica antes de qualquer monetização.** Esta página descreve como o hub funciona no MVP. Não é aconselhamento jurídico e precisa ser revisada por um advogado (LGPD, GDPR, Termos de Serviço da Lilith) antes de o hub cobrar dinheiro, exibir anúncios ou guardar qualquer dado em um servidor.
 >
-> Feature: F-56 Trust & Privacy Center. Sources: `research/context/competitors-and-constraints.md` (ToS cards C02-0001 … C02-0021). Last updated: 2026-10-13.
+> Funcionalidade: F-56 Central de Confiança e Privacidade. Fontes: `research/context/competitors-and-constraints.md` (fichas de ToS C02-0001 … C02-0021). Última atualização: 2026-10-13.
 
-## The short version
+## Resumo
 
-- **We store nothing about you on our servers.** In the MVP, everything you enter stays in your own browser.
-- **We are a fan project.** We are not affiliated with, endorsed by, or sponsored by Lilith Games.
-- **We will never ask for your game login**, never automate the game, and never scan kingdoms.
-- **You can delete everything** with **Delete all data** on the You page, or by clearing this site's data in your browser.
+- **Não guardamos nada sobre você em nossos servidores.** No MVP, tudo o que você digita fica no seu próprio navegador.
+- **Somos um projeto de fãs.** Não temos afiliação, aval nem patrocínio da Lilith Games.
+- **Nunca vamos pedir o seu login do jogo**, nunca vamos automatizar o jogo e nunca vamos varrer reinos.
+- **Você pode apagar tudo** com **Apagar todos os dados** na página Eu, ou limpando os dados deste site no seu navegador.
 
-## 1. What data we store
+## 1. Quais dados guardamos
 
-### MVP (now)
+### MVP (agora)
 
-Everything below lives in your browser's storage on this device. Only you can see it, unless you export a file or share a link yourself. The **Me** page (`/me/`) has **Back up everything** (one file with every row marked "yes" below) and **Delete all data** (removes every row below, the Discord webhook included, and can also remove the offline copy).
+Tudo abaixo fica no armazenamento do seu navegador, neste dispositivo. Só você pode ver, a menos que você mesmo exporte um arquivo ou compartilhe um link. A página **Eu** (`/me/`) tem **Fazer backup de tudo** (um arquivo com todas as linhas marcadas "sim" abaixo) e **Apagar todos os dados** (remove todas as linhas abaixo, inclusive o webhook do Discord, e também pode remover a cópia offline).
 
-#### Profile & answers, accounts, routine ticks, commander checks, playing as and theme
+#### Perfil e respostas, contas, marcações da rotina, checagens de comandantes, modo de uso (jogador/líder) e tema
 
-- **What is in it:** Your questionnaire answers (spending, role, minutes per day, kingdom stage, City Hall level, civilization), any unfinished questionnaire, your accounts (main, farms, alts), each with its own today's routine ticks and commander checklist answers, routine settings, whether you use the site as a player or a leader, your theme
-- **In "Back up everything":** Yes
-- **Other ways to export:** Me page: **Export profile file**
-- **How to delete it:** **Delete all data** on the Me page (routine ticks also reset each day; a saved account can be removed on its own)
+- **O que há nele:** suas respostas do questionário (gasto, função, minutos por dia, etapa do reino, nível da Prefeitura, civilização), qualquer questionário inacabado, suas contas (principal, farms, alternativas), cada uma com as marcações da rotina de hoje e as respostas da lista de comandantes, configurações da rotina, se você usa o site como jogador ou como líder, o seu tema
+- **Em "Fazer backup de tudo":** Sim
+- **Outras formas de exportar:** página Eu: **Exportar arquivo de perfil**
+- **Como apagar:** **Apagar todos os dados** na página Eu (as marcações da rotina também são zeradas a cada dia; uma conta salva pode ser removida sozinha)
 
-#### Governor card
+#### Cartão do governador
 
-- **What is in it:** The name, tag and colours you typed for your card
-- **In "Back up everything":** Yes
-- **Other ways to export:** Card page: save as PNG
-- **How to delete it:** no separate button; **Delete all data** on the You page removes it with everything else
+- **O que há nele:** o nome, a tag e as cores que você digitou para o seu cartão
+- **Em "Fazer backup de tudo":** Sim
+- **Outras formas de exportar:** página do Cartão: salvar como PNG
+- **Como apagar:** sem botão separado; **Apagar todos os dados** na página Eu remove junto com todo o resto
 
-#### Alliance crest
+#### Brasão da aliança
 
-- **What is in it:** Shield shape, colours, emblem and tag you picked
-- **In "Back up everything":** Yes
-- **Other ways to export:** Crest page: save as SVG or PNG
-- **How to delete it:** no separate button; **Delete all data** on the You page removes it with everything else
+- **O que há nele:** formato do escudo, cores, emblema e tag que você escolheu
+- **Em "Fazer backup de tudo":** Sim
+- **Outras formas de exportar:** página do Brasão: salvar como SVG ou PNG
+- **Como apagar:** sem botão separado; **Apagar todos os dados** na página Eu remove junto com todo o resto
 
-#### Tool inputs (calculators, shared inventory, checklists)
+#### Dados das ferramentas (calculadoras, inventário compartilhado, checklists)
 
-- **What is in it:** Numbers you typed in the calculators, the inventory they share, and checklist ticks
-- **In "Back up everything":** Yes
-- **Other ways to export:** Each calculator: **Copy link to these inputs** (holds the inputs only)
-- **How to delete it:** no separate button; **Delete all data** on the You page removes it with everything else
+- **O que há nele:** os números que você digitou nas calculadoras, o inventário que elas compartilham e as marcações das listas
+- **Em "Fazer backup de tudo":** Sim
+- **Outras formas de exportar:** em cada calculadora: **Copiar link com estas entradas** (contém apenas as entradas)
+- **Como apagar:** sem botão separado; **Apagar todos os dados** na página Eu remove junto com todo o resto
 
-#### Farms & shipment log
+#### Farms e registro de envios
 
-- **What is in it:** Your farm accounts (names, levels, notes) and every shipment you logged
-- **In "Back up everything":** Yes
-- **Other ways to export:** Farms page: **Export farms (JSON)**; shipment log: **Export CSV**
-- **How to delete it:** Farms page: delete a farm, or **Delete all farm data**; shipment log: delete a shipment
+- **O que há nele:** suas contas farm (nomes, níveis, anotações) e cada envio que você registrou
+- **Em "Fazer backup de tudo":** Sim
+- **Outras formas de exportar:** página de Farms: **Exportar farms (JSON)**; registro de envios: **Exportar CSV**
+- **Como apagar:** página de Farms: apagar uma farm, ou **Apagar todos os dados de farms**; registro de envios: apagar um envio
 
-#### Kingdom council documents (rules, requirements, MGE ledger, recruiting post, seed plans)
+#### Documentos do conselho do reino (regras, requisitos, registro do MGE, anúncio de recrutamento, planos de seed)
 
-- **What is in it:** What the council types: rules, requirement bands, the MGE ledger, recruiting posts, seed plans. **This can include other players' governor names and scores that the council types in.**
-- **In "Back up everything":** Yes
-- **Other ways to export:** Council kit page (`/kingdom/`): **Export (.json)**; each tool: share link or CSV
-- **How to delete it:** Each tool: delete a document; council kit page: **Delete all council data** (also forgets the webhook)
+- **O que há nele:** o que o conselho digita: regras, faixas de requisitos, o registro de MGE, posts de recrutamento, planos de seed. **Isso pode incluir nomes de governadores e pontuações de outros jogadores que o conselho digita.**
+- **Em "Fazer backup de tudo":** Sim
+- **Outras formas de exportar:** página do kit do conselho (`/kingdom/`): **Exportar (.json)**; cada ferramenta: link de compartilhamento ou CSV
+- **Como apagar:** em cada ferramenta: apagar um documento; página do kit do conselho: **Apagar todos os dados do conselho** (também esquece o webhook)
 
-#### City card banners
+#### Banners dos cartões das cidades
 
-- **What is in it:** Images you picked as the banner of an account's city card, cropped and shrunk on your device (the default banners are not stored)
-- **In "Back up everything":** **No** (images are large; pick them again after a restore)
-- **Other ways to export:** None
-- **How to delete it:** **Reset to default** under **Edit banner** on the City Hall card, or **Delete all data** on the Me page
+- **O que há nele:** imagens que você escolheu como banner do cartão da cidade de uma conta, recortadas e reduzidas no seu dispositivo (os banners padrão não são guardados)
+- **Em "Fazer backup de tudo":** **Não** (imagens são grandes; escolha-as de novo depois de restaurar)
+- **Outras formas de exportar:** nenhuma
+- **Como apagar:** **Voltar ao padrão** em **Editar banner** no cartão da Prefeitura, ou **Apagar todos os dados** na página Eu
 
-#### Discord webhook URL
+#### URL do webhook do Discord
 
-- **What is in it:** The Discord webhook the council pasted to post from KingdomOps
-- **In "Back up everything":** **No** (it is a secret: anyone with it can post in that channel)
-- **Other ways to export:** None, on purpose
-- **How to delete it:** **Forget webhook** next to any Discord post button, or **Delete all council data**
+- **O que há nele:** o webhook do Discord que o conselho colou para publicar a partir do KingdomOps
+- **Em "Fazer backup de tudo":** **Não** (é um segredo: quem o tem pode publicar naquele canal)
+- **Outras formas de exportar:** nenhuma, de propósito
+- **Como apagar:** **Esquecer webhook**, ao lado de qualquer botão de publicar no Discord, ou **Apagar todos os dados do conselho**
 
-#### Sign-in session
+#### Sessão de login
 
-- **What is in it:** Only when accounts are switched on and you signed in: the sign-in token that keeps you signed in on this device, and your account's e-mail and id
-- **In "Back up everything":** **No** (it is a secret: it keeps you signed in)
-- **Other ways to export:** None, on purpose
-- **How to delete it:** **Sign out**, or **Delete all data** on the You page
+- **O que há nele:** só quando as contas estão ativadas e você entrou: o token de login que mantém você conectado neste dispositivo, e o e-mail e o id da sua conta
+- **Em "Fazer backup de tudo":** **Não** (é um segredo: mantém você conectado)
+- **Outras formas de exportar:** nenhuma, de propósito
+- **Como apagar:** **Sair**, ou **Apagar todos os dados** na página Eu
 
-#### Account upload choices
+#### Escolhas de envio para a conta
 
-- **What is in it:** Only when accounts are switched on: whether you already uploaded this device's data to your account or chose to keep it only here, so you are not asked twice about the same data
-- **In "Back up everything":** No (it is about this device only)
-- **Other ways to export:** None
-- **How to delete it:** **Delete all data** on the You page (you will be asked again at the next sign-in)
+- **O que há nele:** só quando as contas estão ativadas: se você já enviou os dados deste dispositivo para a sua conta ou escolheu mantê-los só aqui, para não perguntarmos duas vezes sobre os mesmos dados
+- **Em "Fazer backup de tudo":** Não (diz respeito só a este dispositivo)
+- **Outras formas de exportar:** nenhuma
+- **Como apagar:** **Apagar todos os dados** na página Eu (você será perguntado de novo no próximo login)
 
 
-- **Discord.** Nothing is posted to Discord unless you press a post button after pasting a webhook URL. Then the post you see (for example an MGE ledger or the rules link) goes straight from your browser to Discord, and Discord's own terms and privacy policy apply to it. KingdomOps has no server in between.
-- **Screenshot reader (experimental).** When you pick a screenshot of your own profile at `/tools/screenshot/`, the text recognition (OCR) runs **on your device**. The image never leaves your browser and is not saved; only the numbers you choose to use are carried in a calculator link.
-- **Offline copy.** After your first visit, a service worker keeps a copy of the site's pages and data files in your browser so it opens offline. It holds nothing about you. Remove it with the option in **Delete all data**, or in your browser's site settings.
-- **Small flags.** A tab-only flag remembers that the logo animation already played; it disappears when you close the tab.
-- **No account, no login, no server-side database** until accounts are switched on (see "Accounts" below). The guides are static pages; filtering happens in your browser.
-- **No game data leaves your device** unless you export a file, copy a link or post to Discord yourself. If you clear the site's data, or use a private window, it is gone.
-- **Hosting logs:** the company that hosts the static files may keep standard technical logs (IP address, time, page requested) for security. *[Legal review: name the host and its retention period before launch.]*
-- **Analytics and ads:** none in the MVP. If that changes, this page changes first and we will ask for consent where the law requires it.
+- **Discord.** Nada é publicado no Discord a menos que você aperte um botão de publicar depois de colar uma URL de webhook. Aí a publicação que você vê (por exemplo, um registro de MGE ou o link das regras) vai direto do seu navegador para o Discord, e os termos e a política de privacidade do próprio Discord se aplicam a ela. O KingdomOps não tem servidor no meio.
+- **Leitor de capturas de tela (experimental).** Quando você escolhe uma captura de tela do seu próprio perfil em `/tools/screenshot/`, o reconhecimento de texto (OCR) roda **no seu dispositivo**. A imagem nunca sai do seu navegador e não é salva; só os números que você escolhe usar são levados em um link de calculadora.
+- **Cópia offline.** Depois da sua primeira visita, um service worker guarda no seu navegador uma cópia das páginas e dos arquivos de dados do site para ele abrir offline. Ela não contém nada sobre você. Remova-a com a opção em **Apagar todos os dados**, ou nas configurações do site no seu navegador.
+- **Pequenos sinalizadores.** Um sinalizador só da aba lembra que a animação do logotipo já tocou; ele some quando você fecha a aba.
+- **Sem conta, sem login, sem banco de dados em servidor** até as contas serem ativadas (veja "Contas" abaixo). Os guias são páginas estáticas; a filtragem acontece no seu navegador.
+- **Nenhum dado do jogo sai do seu dispositivo** a menos que você mesmo exporte um arquivo, copie um link ou publique no Discord. Se você limpar os dados do site ou usar uma janela anônima, ele some.
+- **Logs de hospedagem:** a empresa que hospeda os arquivos estáticos pode manter logs técnicos padrão (endereço IP, horário, página solicitada) por segurança. *[Revisão jurídica: nomear a hospedagem e o prazo de retenção antes do lançamento.]*
+- **Análise de uso e anúncios:** nenhum no MVP. Se isso mudar, esta página muda primeiro e pediremos consentimento onde a lei exigir.
 
-### Accounts (built, switched off until reviewed)
+### Contas (construídas, desativadas até serem revisadas)
 
-Sign-in with e-mail or Google and a community profile are built but not switched on. When they are:
+O login com e-mail ou Google e um perfil da comunidade estão construídos, mas não ativados. Quando forem:
 
-- **No game login, ever.** There is no Lilith / Rise of Kingdoms sign-in and KingdomOps never asks for your game password.
-- **Your account holds:** your e-mail (from the sign-in provider), your cities (main, farms, alts: City Hall level, kingdom stage, spending profile, commander checklist), your profile (handle, display name, kingdom number, bio, photo, banner, achievements, who can see it), the players you blocked, reports you filed, and copies of this device's data **only if you choose "Upload to my account"** at your first sign-in. Nothing on the device is deleted by that upload.
-- **Your profile starts private.** You choose: only you, signed-in players, or anyone with the link. There is no player search and no messaging.
-- **Achievements:** the game's data cannot be read. Achievements you type are shown as "Unverified (self-declared)"; only "Earned on KingdomOps" ones are checked by the site.
-- **Photos:** resized on your device before upload, which also removes hidden photo data such as location. Image files are public to anyone who has their address, like any profile picture.
-- **Report and block** are on every profile. Reports keep a copy of the profile as it was. Reports about a child's safety are reviewed first.
-- **Your rights:** "Download my account data" gives you a copy of everything above; "Delete my account" erases it (reports you filed stay, without your name). Both are on the profile page (`/me/profile/`).
-- **Minors** play this game. If you are under 18, ask a parent or guardian before you make an account. *[Legal review: LGPD art. 14 (children and adolescents), minimum age, parental consent flow, and the data processor (Supabase) and its region before switching accounts on.]*
+- **Nunca um login do jogo.** Não existe login da Lilith / Rise of Kingdoms e o KingdomOps nunca pede a sua senha do jogo.
+- **Sua conta guarda:** seu e-mail (do provedor de login), suas cidades (principal, farms, alternativas: nível da Prefeitura, etapa do reino, perfil de gasto, lista de comandantes), seu perfil (identificador, nome de exibição, número do reino, bio, foto, banner, conquistas, quem pode vê-lo), os jogadores que você bloqueou, as denúncias que você fez e cópias dos dados deste dispositivo **só se você escolher "Enviar para a minha conta"** no seu primeiro login. Nada no dispositivo é apagado por esse envio.
+- **Seu perfil começa privado.** Você escolhe: só você, jogadores logados ou qualquer pessoa com o link. Não há busca de jogadores nem mensagens.
+- **Conquistas:** os dados do jogo não podem ser lidos. As conquistas que você digita aparecem como "Não verificada (autodeclarada)"; só as "Conquistadas no KingdomOps" são conferidas pelo site.
+- **Fotos:** redimensionadas no seu dispositivo antes do envio, o que também remove dados ocultos da foto, como a localização. Os arquivos de imagem são públicos para quem tem o endereço deles, como qualquer foto de perfil.
+- **Denunciar e bloquear** estão em todo perfil. As denúncias guardam uma cópia do perfil como era. As denúncias sobre a segurança de crianças são revisadas primeiro.
+- **Seus direitos:** "Baixar os dados da minha conta" dá uma cópia de tudo o que está acima; "Excluir minha conta" apaga tudo (as denúncias que você fez ficam, sem o seu nome). Os dois ficam na página de perfil (`/me/profile/`).
+- **Menores** jogam este jogo. Se você tem menos de 18 anos, peça a um responsável antes de criar uma conta. *[Revisão jurídica: LGPD art. 14 (crianças e adolescentes), idade mínima, fluxo de consentimento dos pais e o operador de dados (Supabase) e sua região antes de ativar as contas.]*
 
-### Later releases (planned, not live)
+### Versões futuras (planejadas, ainda não no ar)
 
-Server-side features (shared kingdom pages, alliance tools) will only ship after this page is updated, reviewed and published, and you will be told **before** anything you enter leaves your device.
+Funcionalidades com servidor (páginas de reino compartilhadas, ferramentas de aliança) só serão lançadas depois que esta página for atualizada, revisada e publicada, e você será avisado **antes** de qualquer coisa que digitar sair do seu dispositivo.
 
-## 2. Not affiliated with Lilith Games
+## 2. Sem afiliação com a Lilith Games
 
-Rise of Kingdoms is a trademark of Lilith Games. This hub is an independent, fan-made planner and is **not affiliated with, endorsed by, or sponsored by Lilith Games**. Commander, event and item names are used only to describe the game. We use our own wording and our own artwork; we do not use Lilith's logos or game art.
+Rise of Kingdoms é marca registrada da Lilith Games. Este hub é um planejador independente, feito por fãs, e **não tem afiliação, aval nem patrocínio da Lilith Games**. Nomes de comandantes, eventos e itens são usados apenas para descrever o jogo. Usamos texto próprio e arte própria; não usamos logotipos nem arte do jogo da Lilith.
 
-Lilith's Terms of Service apply to your game account; nothing on this site changes them. When we describe game rules, we link the source and the patch we checked.
+Os Termos de Serviço da Lilith valem para a sua conta do jogo; nada neste site os altera. Quando descrevemos regras do jogo, indicamos a fonte e o patch que conferimos.
 
-## 3. What we will never do
+## 3. O que nunca vamos fazer
 
-These are design rules, not just promises. They follow from Lilith's Terms of Service.
+Estas são regras de projeto, não apenas promessas. Elas decorrem dos Termos de Serviço da Lilith.
 
-| We will never… | Why |
+| Nunca vamos… | Por quê |
 |---|---|
-| Ask for your game login, password, or account-binding details | Account sharing and soliciting credentials are prohibited (ToS 17.1.21, 4.4, 17.1.15). Anyone who asks for them — including people claiming to be us — is not us. |
-| Build or link bots, scripts, auto-clickers or "farming" tools | Bots and advantage-giving third-party software are prohibited (ToS 17.1.18), and the game penalises scripts through Conduct Score. |
-| Scan leaderboards or kingdoms with emulators, OCR bots or service accounts | Automated access and data-mining tools are prohibited (ToS 17.1.7, 17.1.15). |
-| Read game files, network traffic or memory | Reverse engineering and circumvention are prohibited (ToS 17.1.12, 17.1.6). |
-| Buy, sell or broker accounts or items | Accounts and virtual items are not user property and cannot be sold (ToS §4.5, §12.2). |
-| Post links to this site in game chat, or ask you to | Players report mutes and bans for sharing "third-party information" in chat. Share the hub on Reddit, Discord or YouTube instead. |
+| Pedir o seu login do jogo, a senha ou dados de vinculação da conta | Compartilhar conta e pedir credenciais é proibido (ToS 17.1.21, 4.4, 17.1.15). Quem pedir isso — inclusive quem disser que é a gente — não somos nós. |
+| Criar ou indicar bots, scripts, auto-clickers ou ferramentas de "farm" | Bots e programas de terceiros que dão vantagem são proibidos (ToS 17.1.18), e o jogo pune scripts pela Pontuação de Conduta. |
+| Varrer rankings ou reinos com emuladores, bots de OCR ou contas de serviço | Acesso automatizado e ferramentas de mineração de dados são proibidos (ToS 17.1.7, 17.1.15). |
+| Ler arquivos do jogo, tráfego de rede ou memória | Engenharia reversa e contornos são proibidos (ToS 17.1.12, 17.1.6). |
+| Comprar, vender ou intermediar contas ou itens | Contas e itens virtuais não são propriedade do usuário e não podem ser vendidos (ToS §4.5, §12.2). |
+| Postar links deste site no chat do jogo, nem pedir que você o faça | Jogadores relatam silenciamentos e banimentos por compartilhar "informação de terceiros" no chat. Divulgue o hub no Reddit, no Discord ou no YouTube. |
 
-Everything you put into the hub, you type in yourself.
+Tudo o que entra no hub, você mesmo digita.
 
-## 4. Screenshots (planned, not live)
+## 4. Capturas de tela (planejadas, ainda não no ar)
 
-A later release may let you **upload your own screenshots** (inventory, commander, city) so the hub can read the numbers for you instead of making you type them. When it ships:
+Uma versão futura pode permitir que você **envie suas próprias capturas de tela** (inventário, comandante, cidade) para o hub ler os números por você, em vez de você digitá-los. Quando isso for lançado:
 
-- **Your screens only.** Upload screens of your own account. Do not upload screens that show other players' personal details.
-- **You take the screenshot.** The hub never connects to the game.
-- **Numbers kept, image deleted.** We will process the image, keep only the numbers you confirm, and offer immediate deletion of the image. *[Legal review: set the maximum retention period and say where processing happens.]*
-- **Opt-in.** Manual input will always remain available.
+- **Apenas as suas telas.** Envie telas da sua própria conta. Não envie telas que mostrem dados pessoais de outros jogadores.
+- **Você tira a captura.** O hub nunca se conecta ao jogo.
+- **Números mantidos, imagem apagada.** Vamos processar a imagem, guardar só os números que você confirmar e oferecer a exclusão imediata da imagem. *[Revisão jurídica: definir o prazo máximo de retenção e dizer onde o processamento acontece.]*
+- **Opcional.** A entrada manual sempre continuará disponível.
 
-## 5. Kingdom data (planned for R2, not live)
+## 5. Dados de reino (planejados para a R2, ainda não no ar)
 
-Kingdom tools (rosters, DKP, kingdom pages) involve **other players' data**. Lilith's terms forbid collecting or storing other users' personal data without their express permission (ToS 17.1.13), and data-protection law applies too. Before any kingdom feature launches, these principles apply:
+Ferramentas de reino (listas de membros, DKP, páginas do reino) envolvem **dados de outros jogadores**. Os termos da Lilith proíbem coletar ou guardar dados pessoais de outros usuários sem a permissão expressa deles (ToS 17.1.13), e a lei de proteção de dados também se aplica. Antes de lançar qualquer funcionalidade de reino, valem estes princípios:
 
-1. **Import, don't scan.** We accept files that your kingdom already produces; we do not scan.
-2. **Leadership attestation.** The person who uploads kingdom data confirms that they are authorised by the kingdom's leadership and that members were told.
-3. **Member notice and opt-out.** Every member listed can ask to be hidden or removed from a kingdom page, by governor ID, without needing an account. Opt-outs are honoured in all future imports.
-4. **Data minimisation.** Only the columns a feature needs (for example governor ID, name, power, kills, deaths). No real names, emails or contact details from game data.
-5. **Retention limits.** Kingdom data is deleted after a fixed period or when the kingdom's page is deleted. *[Legal review: set the period.]*
-6. **No public ranking of individuals** unless the kingdom chooses to publish it and members were told.
+1. **Importar, não varrer.** Aceitamos arquivos que o seu reino já produz; não varremos nada.
+2. **Declaração da liderança.** Quem envia dados do reino confirma que está autorizado pela liderança do reino e que os membros foram avisados.
+3. **Aviso aos membros e recusa.** Todo membro listado pode pedir para ser ocultado ou removido de uma página de reino, pelo ID de governador, sem precisar de conta. As recusas são respeitadas em todas as importações futuras.
+4. **Minimização de dados.** Só as colunas de que uma funcionalidade precisa (por exemplo, ID de governador, nome, poder, abates, mortes). Nada de nomes reais, e-mails ou dados de contato a partir dos dados do jogo.
+5. **Limites de retenção.** Os dados do reino são apagados após um prazo fixo ou quando a página do reino for excluída. *[Revisão jurídica: definir o prazo.]*
+6. **Sem ranking público de indivíduos**, a menos que o reino escolha publicar e os membros tenham sido avisados.
 
-## 6. Your rights (LGPD and GDPR)
+## 6. Seus direitos (LGPD e GDPR)
 
-If you are in Brazil (LGPD) or the EU/EEA/UK (GDPR), you have the right to:
+Se você está no Brasil (LGPD) ou na UE/EEE/Reino Unido (GDPR), você tem o direito de:
 
-- **know** whether we hold data about you, and get a copy of it;
-- **correct** inaccurate data;
-- **delete** your data, or have it anonymised;
-- **object to** or **restrict** processing, and **withdraw consent** at any time;
-- **move** your data to another service (portability);
-- **complain** to your data-protection authority: ANPD (Brazil) or your local supervisory authority (EU/EEA/UK).
+- **saber** se guardamos dados sobre você e receber uma cópia deles;
+- **corrigir** dados incorretos;
+- **excluir** seus dados ou pedir que sejam anonimizados;
+- **se opor** ao tratamento ou **restringi-lo**, e **retirar o consentimento** a qualquer momento;
+- **levar** seus dados para outro serviço (portabilidade);
+- **reclamar** à sua autoridade de proteção de dados: a ANPD (Brasil) ou a autoridade de supervisão local (UE/EEE/Reino Unido).
 
-In the MVP we hold no personal data on our servers, so you exercise most of these rights yourself by clearing your browser's site data. For anything else, contact us: *[Legal review: add the controller's name and a contact email or form; name the data-protection contact (encarregado/DPO) if one is required.]*
+No MVP não guardamos dados pessoais em nossos servidores, então você exerce a maior parte desses direitos sozinho, limpando os dados do site no navegador. Para qualquer outra coisa, fale com a gente: *[Revisão jurídica: incluir o nome do controlador e um e-mail ou formulário de contato; indicar o contato de proteção de dados (encarregado/DPO) se for exigido.]*
 
-We will answer within the period the law sets (*[legal review: confirm 15 days LGPD / one month GDPR]*).
+Responderemos no prazo que a lei estabelecer (*[revisão jurídica: confirmar 15 dias na LGPD / um mês no GDPR]*).
 
-## 7. Children
+## 7. Crianças
 
-The hub is not aimed at children. *[Legal review: set the minimum age and check it against the game's own age rating and the applicable law.]*
+O hub não é voltado a crianças. *[Revisão jurídica: definir a idade mínima e conferir com a classificação etária do próprio jogo e com a lei aplicável.]*
 
-## 8. Changes to this page
+## 8. Mudanças nesta página
 
-We will date every change at the top of this page. A material change (for example, starting to store data on a server) will be announced on the hub **before** it takes effect.
+Vamos datar toda mudança no topo desta página. Uma mudança relevante (por exemplo, começar a guardar dados em um servidor) será anunciada no hub **antes** de entrar em vigor.
 
-## 9. Contact
+## 9. Contato
 
-*[To be completed before launch.]*
+*[A completar antes do lançamento.]*

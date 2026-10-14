@@ -43,7 +43,7 @@ describe("parseCsv", () => {
   });
 
   it("reports an unclosed quote and oversized input instead of throwing", () => {
-    expect(parseCsv('a,"b\n1,2')).toEqual({ ok: false, error: expect.stringContaining("never closed") });
+    expect(parseCsv('a,"b\n1,2')).toEqual({ ok: false, error: expect.stringContaining("nunca é fechada") });
     expect(parseCsv("x".repeat(1_000_001)).ok).toBe(false);
     expect(parseCsv("a\n".repeat(CSV_MAX_ROWS + 2)).ok).toBe(false);
     expect(parseCsv("a\n".repeat(CSV_MAX_ROWS)).ok).toBe(true);
@@ -70,7 +70,7 @@ describe("readCsvTable", () => {
 
   it("names the missing required column", () => {
     expect(readCsvTable("who,score\nAna,1", COLS, ["name"])).toEqual({ ok: false, error: expect.stringContaining('"name"') });
-    expect(readCsvTable("", COLS, ["name"])).toEqual({ ok: false, error: "This file is empty." });
+    expect(readCsvTable("", COLS, ["name"])).toEqual({ ok: false, error: "Este arquivo está vazio." });
   });
 
   it("optional columns read as empty", () => {

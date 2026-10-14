@@ -22,24 +22,27 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 GUIDES = os.path.abspath(os.path.join(HERE, ".."))
 
 SECTIONS = [
-    ("overview", "1. Overview and realistic expectations"),
-    ("day0", "2. Day 0–3 setup: civilization and first choices"),
-    ("plan", "3. Phase-by-phase plan to KvK1"),
-    ("daily", "4. Daily routine by time budget"),
-    ("events", "5. Events calendar and preparation"),
+    ("overview", "1. Visão geral e expectativas realistas"),
+    ("day0", "2. Preparação dos dias 0–3: civilização e primeiras escolhas"),
+    ("plan", "3. Plano fase a fase até a KvK1"),
+    ("daily", "4. Rotina diária por tempo disponível"),
+    ("events", "5. Calendário de eventos e preparação"),
     ("farms", "6. Farms"),
-    ("mistakes", "7. Mistakes to avoid"),
-    ("recovery", "8. If you got zeroed"),
-    ("open", "9. Open questions and pending measurements"),
+    ("mistakes", "7. Erros a evitar"),
+    ("recovery", "8. Se você foi zerado"),
+    ("open", "9. Perguntas em aberto e medições pendentes"),
 ]
 PHASE_TITLES = {
-    "day4-14": "Days 4–14 (about CH8 → CH12)",
-    "day15-40": "Days 15–40 (about CH12 → CH17, VIP 6)",
-    "day41-90": "Days 41–90 (CH17 → CH21/22, T4)",
-    "pre-kvk1": "Pre-KvK1 and KvK1 (about day 85–100+)",
+    "day4-14": "Dias 4–14 (Prefeitura 8 → 12, aproximadamente)",
+    "day15-40": "Dias 15–40 (Prefeitura 12 → 17, VIP 6, aproximadamente)",
+    "day41-90": "Dias 41–90 (Prefeitura 17 → 21/22, T4)",
+    "pre-kvk1": "Pré-KvK1 e KvK1 (aproximadamente dia 85–100+)",
 }
 PHASE_ORDER = ["overview", "day0-3", "day4-14", "day15-40", "day41-90", "pre-kvk1", "daily", "event", "anytime"]
 PROFILE_NAMES = {"f2p": "F2P", "low": "Low", "medium": "Medium", "high": "High", "whale": "Whale", "kraken": "Kraken"}
+CONFIDENCE_PT = {"high": "alta", "medium": "média", "low": "baixa", "pending": "pendente"}
+CONSENSUS_PT = {"unanimous": "unânime", "majority": "maioria", "split": "dividido", "mechanic": "mecânica",
+                "single_source": "fonte única", "single-source": "fonte única", "minority": "minoria", "n/a": "n/d"}
 
 
 def link_cards(text, cards):
@@ -60,7 +63,7 @@ def gap_descriptions():
                 if m:
                     out[m.group(1)] = (m.group(2).strip(), m.group(3).strip())
     out["PROPOSED-SHIELDS"] = ("Shield durations/costs and beginner protection rules: no fact card exists yet "
-                               "(proposed gap, to be added by the research side)", "alto (proposed)")
+                               "(proposed gap, to be added by the research side)", "alto (proposed)")  # texto da pesquisa, mantido em inglês
     return out
 
 
@@ -70,54 +73,55 @@ def applies(b, perfil):
 
 def render_block(b, cards):
     L = [f"### {b['title']}", ""]
-    meta = [f"**Confidence:** {b['confidence']}", f"**Consensus:** {b['consensus']}",
-            f"**Priority:** {b['priority']}/5"]
+    meta = [f"**Confiança:** {CONFIDENCE_PT.get(b['confidence'], b['confidence'])}",
+            f"**Consenso:** {CONSENSUS_PT.get(b['consensus'], b['consensus'])}",
+            f"**Prioridade:** {b['priority']}/5"]
     if b["recommended_for"]:
-        meta.append("**Recommended for:** " + ", ".join(PROFILE_NAMES[p] for p in b["recommended_for"]))
+        meta.append("**Recomendado para:** " + ", ".join(PROFILE_NAMES[p] for p in b["recommended_for"]))
     if b["ch_range"]:
-        meta.append(f"**CH:** {b['ch_range'][0]}–{b['ch_range'][1]}")
+        meta.append(f"**Prefeitura:** {b['ch_range'][0]}–{b['ch_range'][1]}")
     if b["hours_min_per_day"] is not None:
-        meta.append(f"**Time budget:** ≥ {int(round(b['hours_min_per_day'] * 60))} min/day")
+        meta.append(f"**Tempo disponível:** ≥ {int(round(b['hours_min_per_day'] * 60))} min/dia")
     if b["time_cost_min"] is not None:
-        meta.append(f"**Time cost:** {b['time_cost_min']} min (T0)")
+        meta.append(f"**Custo de tempo:** {b['time_cost_min']} min (T0)")
     elif b["section"] == "daily":
-        meta.append("**Time cost:** pending T0 (L-A10-01)")
+        meta.append("**Custo de tempo:** pendente de T0 (L-A10-01)")
     meta.append(f"`{b['id']}`")
     L += [" · ".join(meta), "", link_cards(b["body_md"], cards), "",
-          "**Why:** " + link_cards(b["why_md"], cards), ""]
+          "**Por quê:** " + link_cards(b["why_md"], cards), ""]
     if b["split_views"]:
-        L += ["**Both views (split):** " + link_cards(b["split_views"], cards), ""]
+        L += ["**As duas visões (dividido):** " + link_cards(b["split_views"], cards), ""]
     if b["uncertain_notes"]:
-        L += ["> **Uncertain:** " + link_cards(b["uncertain_notes"], cards).replace("\n", " "), ">"]
+        L += ["> **Incerto:** " + link_cards(b["uncertain_notes"], cards).replace("\n", " "), ">"]
     if b["patch_cards"]:
-        L += ["> **Patch state:** " + ", ".join(link_cards(c, cards) for c in b["patch_cards"]) +
-              " (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).", ">"]
+        L += ["> **Estado do patch:** " + ", ".join(link_cards(c, cards) for c in b["patch_cards"]) +
+              " (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).", ">"]
     if b["gaps"]:
-        L += ["> **Pending in-game measurement (T0):** " + ", ".join(b["gaps"]), ">"]
+        L += ["> **Pendente de medição no jogo (T0):** " + ", ".join(b["gaps"]), ">"]
     while L and L[-1] == ">":
         L.pop()
     if b["low_spender_note"]:
-        L += ["", "> **Low spender note:** " + link_cards(b["low_spender_note"], cards)]
+        L += ["", "> **Nota para quem gasta pouco (Low):** " + link_cards(b["low_spender_note"], cards)]
     L.append("")
     return "\n".join(L)
 
 
-INTRO = """# Rise of Kingdoms — F2P early-kingdom guide (new kingdom → KvK1), v1
+INTRO = """# Rise of Kingdoms — Guia F2P para o reino inicial (reino novo → KvK1), v1
 
-*As of {as_of}. Checked against official patch notes up to {patch}. Profile: **F2P**. Assembled automatically from `guides/data/blocks.f2p.json` ({n} blocks) by `guides/tools/assemble_guide.py`: edit the blocks, not this file.*
+*Atualizado em {as_of}. Conferido com as notas oficiais de patch até {patch}. Perfil: **F2P**. Montado automaticamente a partir de `guides/data/blocks.f2p.json` ({n} blocos) por `guides/tools/assemble_guide.py`: edite os blocos, não este arquivo.*
 
-## How to read this guide
+## Como ler este guia
 
-- **Every number and recommendation cites fact cards** (e.g. [A01-0001](../research/facts/A01/A01-0001.md)). Firm statements use only cards with status `verificado` and confidence `media` or `alta`.
-- **Uncertain**: the claim relies on a weaker, contested or partly outdated card; the note says why.
-- **Pending in-game measurement (T0)**: nobody has measured it yet; the gap ID points to `research/facts/<domain>/_lacunas.md` and the T0 diary (`research/protocolos/t0-medicao.md`).
-- **Patch state**: some patch-change cards (C04) come from official notes but have not yet been through the formal verification pass; they are shown as patch state.
-- **Consensus**: *unanimous* / *majority* / *split* (both views shown) / *mechanic* (a game rule, not an opinion).
-- **Recommended** marks the default option for the F2P profile. **Low spender notes** flag where spending a little changes the advice materially (a full Low-spender delta guide comes later).
-- **Time costs**: no source publishes minutes per task; they are pending the T0 stopwatch (L-A10-01).
-- Block IDs (`like-this`) are what the future questionnaire uses to filter the guide.
+- **Todo número e toda recomendação citam fichas de fatos** (p. ex. [A01-0001](../research/facts/A01/A01-0001.md)). As afirmações firmes usam apenas fichas com status `verificado` e confiança `media` ou `alta`.
+- **Incerto**: a afirmação se apoia em uma ficha mais fraca, contestada ou parcialmente desatualizada; a nota explica o motivo.
+- **Pendente de medição no jogo (T0)**: ninguém mediu ainda; o ID da lacuna aponta para `research/facts/<domínio>/_lacunas.md` e para o diário T0 (`research/protocolos/t0-medicao.md`).
+- **Estado do patch**: algumas fichas de mudança de patch (C04) vêm de notas oficiais mas ainda não passaram pela verificação formal; aparecem como estado do patch.
+- **Consenso**: *unânime* / *maioria* / *dividido* (as duas visões são mostradas) / *mecânica* (regra do jogo, não opinião).
+- **Recomendado** marca a opção padrão para o perfil F2P. As **notas para quem gasta pouco (Low)** indicam onde gastar um pouco muda bastante o conselho (um guia delta completo para o perfil Low virá depois).
+- **Custos de tempo**: nenhuma fonte publica minutos por tarefa; eles aguardam o cronômetro do T0 (L-A10-01).
+- Os IDs dos blocos (`como-este`) são o que o futuro questionário usa para filtrar o guia.
 
-## Contents
+## Sumário
 
 {toc}
 """
@@ -136,8 +140,8 @@ def main(argv):
     gaps = gap_descriptions()
     blocks.sort(key=lambda b: (PHASE_ORDER.index(b["phase"]), b["order"]))
 
-    toc = "\n".join(f"- [{t}](#{re.sub(r'[^a-z0-9 -]', '', t.lower()).replace(' ', '-')})" for _, t in SECTIONS)
-    toc += "\n- [Appendix: Sources and confidence](#appendix-sources-and-confidence)"
+    toc = "\n".join(f"- [{t}](#{re.sub(r'[^\w -]', '', t.lower()).replace(' ', '-')})" for _, t in SECTIONS)
+    toc += "\n- [Apêndice: fontes e confiança](#apêndice-fontes-e-confiança)"
     parts = [INTRO.format(as_of=blocks[0]["as_of"], patch=blocks[0]["patch_ref"], n=len(blocks), toc=toc)]
 
     for key, title in SECTIONS:
@@ -153,7 +157,7 @@ def main(argv):
                     parts.extend(render_block(b, cards).replace("### ", "#### ", 1) for b in sub)
             continue
         if key == "farms":
-            parts.append("*Brief only. The dedicated farm guide (F-03: single-resource, general and resource-pair farms) will replace this section.*\n")
+            parts.append("*Apenas um resumo. O guia dedicado a farms (F-03: farms de recurso único, gerais e de par de recursos) vai substituir esta seção.*\n")
         parts.extend(render_block(b, cards) for b in sec)
 
     # Appendix
@@ -162,39 +166,39 @@ def main(argv):
         for c in b["cards"]:
             cited.setdefault(c, []).append(b["id"])
     firm = [c for c in cited if c in cards and factlib.is_firm(cards[c])]
-    A = ["## Appendix: Sources and confidence", "",
-         f"**{len(cited)} fact cards cited**; {len(firm)} pass the firm filter (`verificado` + `media`/`alta`). "
-         "The others appear only inside *Uncertain* notes or as *Patch state*.", "",
-         "| Card | Title | Status | Confidence | Consensus | Firm? | Used in |", "|---|---|---|---|---|---|---|"]
+    A = ["## Apêndice: fontes e confiança", "",
+         f"**{len(cited)} fichas de fatos citadas**; {len(firm)} passam no filtro firme (`verificado` + `media`/`alta`). "
+         "As demais aparecem apenas dentro das notas *Incerto* ou como *Estado do patch*.", "",
+         "| Ficha | Título | Status | Confiança | Consenso | Firme? | Usada em |", "|---|---|---|---|---|---|---|"]
     for c in sorted(cited):
         m = cards[c]
         title = m["titulo"].replace("|", "/")[:90]
         A.append(f"| {link_cards(c, cards)} | {title} | {m['status']} | {m['confianca']} | {m['consenso'] or 'n/a'} | "
-                 f"{'yes' if factlib.is_firm(m) else 'no'} | {', '.join('`'+x+'`' for x in cited[c])} |")
+                 f"{'sim' if factlib.is_firm(m) else 'não'} | {', '.join('`'+x+'`' for x in cited[c])} |")
     used_gaps = {}
     for b in blocks:
         for g in b["gaps"]:
             used_gaps.setdefault(g, []).append(b["id"])
-    A += ["", "### Gaps referenced (pending measurement or research)", "",
-          "| Gap | Description | Impact | Blocks |", "|---|---|---|---|"]
+    A += ["", "### Lacunas referenciadas (medição ou pesquisa pendente)", "",
+          "| Lacuna | Descrição | Impacto | Blocos |", "|---|---|---|---|"]
     for g in sorted(used_gaps):
-        d, imp = gaps.get(g, ("(description not found)", ""))
+        d, imp = gaps.get(g, ("(descrição não encontrada)", ""))
         A.append(f"| {g} | {d.replace('|', '/')} | {imp} | {', '.join('`'+x+'`' for x in used_gaps[g])} |")
     conf = {}
     for b in blocks:
         conf[b["confidence"]] = conf.get(b["confidence"], 0) + 1
-    A += ["", "### Block confidence", "", ", ".join(f"{k}: {v}" for k, v in sorted(conf.items())), "",
-          "### Known contradictions in the research (as of this version)", "",
-          "- **Time to T4:** 2026 player reports say T4 \"around day 30\" ([B01-0700](../research/facts/B01/B01-0700.md)), "
-          "but the derived raw build budget to CH21 (T4 unlock) is about 163 builder-days "
-          "([A01-0005](../research/facts/A01/A01-0005.md)). Both are `baixa`; T0 settles it (L-A02-03).",
-          "- **Early unlock levels:** Academy and first Quarry at CH4 vs CH6, Trading Post at CH10 vs CH12 "
-          "([A01-0009](../research/facts/A01/A01-0009.md), [A03-0025](../research/facts/A03/A03-0025.md)); the Fandom CH table still lists the Trading Post at CH10.",
-          "- **KvK durations:** 60 days (2024 T3) vs 50 days (2026 T4) ([B01-0502](../research/facts/B01/B01-0502.md)).",
-          "- **Spending gems on VIP:** majority yes, AllClash (2020) no ([A05-0008](../research/facts/A05/A05-0008.md)).",
-          "- **Daily AP claim amount:** 500 AP per official 1.0.41 (2020); the 1.1.02 note does not restate it "
+    A += ["", "### Confiança dos blocos", "", ", ".join(f"{CONFIDENCE_PT.get(k, k)}: {v}" for k, v in sorted(conf.items())), "",
+          "### Contradições conhecidas na pesquisa (nesta versão)", "",
+          "- **Tempo até o T4:** relatos de jogadores de 2026 dizem que o T4 chega \"por volta do dia 30\" ([B01-0700](../research/facts/B01/B01-0700.md)), "
+          "mas o orçamento bruto derivado de construção até a Prefeitura 21 (desbloqueio do T4) é de cerca de 163 dias de construtor "
+          "([A01-0005](../research/facts/A01/A01-0005.md)). Ambos são `baixa`; o T0 resolve (L-A02-03).",
+          "- **Níveis de desbloqueio iniciais:** Academia e primeira Pedreira na Prefeitura 4 ou 6, Entreposto Comercial na 10 ou 12 "
+          "([A01-0009](../research/facts/A01/A01-0009.md), [A03-0025](../research/facts/A03/A03-0025.md)); a tabela de Prefeituras do Fandom ainda lista o Entreposto Comercial na 10.",
+          "- **Duração da KvK:** 60 dias (T3 de 2024) contra 50 dias (T4 de 2026) ([B01-0502](../research/facts/B01/B01-0502.md)).",
+          "- **Gastar gemas em VIP:** maioria diz que sim, AllClash (2020) diz que não ([A05-0008](../research/facts/A05/A05-0008.md)).",
+          "- **Valor da coleta diária de PA:** 500 PA segundo a 1.0.41 oficial (2020); a nota da 1.1.02 não o repete "
           "([A09-0006](../research/facts/A09/A09-0006.md), L-A09-02).",
-          "- **Patch-state cards** (C04) are still `bruto` although the context packs treat most of them as T1 facts.", ""]
+          "- **As fichas de estado de patch** (C04) ainda são `bruto`, embora os pacotes de contexto tratem a maioria delas como fatos T1.", ""]
     parts.append("\n".join(A))
     with open(out, "w", encoding="utf-8") as fh:
         fh.write("\n".join(parts).rstrip() + "\n")

@@ -80,7 +80,7 @@ describe("share codec", () => {
     await expect(encodeShare("rules", { title: "a".repeat(300 * 1024) })).rejects.toBeInstanceOf(ShareTooLargeError);
     // Incompressible text past the character limit.
     const noise = Array.from({ length: 20_000 }, (_, i) => ((i * 7919) % 65521).toString(36)).join("");
-    await expect(encodeShare("rules", { title: noise })).rejects.toThrow(/too large for a link/);
+    await expect(encodeShare("rules", { title: noise })).rejects.toThrow(/grande demais para um link/);
     const ok = await encodeShare("rules", { title: "a".repeat(100 * 1024) });
     expect(ok.length).toBeLessThanOrEqual(MAX_SHARE_CHARS);
     expect((await decodeShare(ok, "rules", asDoc)).ok).toBe(true);

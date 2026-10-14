@@ -16,15 +16,15 @@ import type {
 
 /** Guide chapters in display order, with the titles used by the assembled guide. */
 export const GUIDE_SECTIONS: ReadonlyArray<{ id: GuideSection; title: string }> = [
-  { id: "overview", title: "1. Overview and realistic expectations" },
-  { id: "day0", title: "2. Day 0–3 setup: civilization and first choices" },
-  { id: "plan", title: "3. Phase-by-phase plan to KvK1" },
-  { id: "daily", title: "4. Daily routine by time budget" },
-  { id: "events", title: "5. Events calendar and preparation" },
+  { id: "overview", title: "1. Visão geral e expectativas realistas" },
+  { id: "day0", title: "2. Preparação dos dias 0–3: civilização e primeiras escolhas" },
+  { id: "plan", title: "3. Plano fase a fase até a KvK1" },
+  { id: "daily", title: "4. Rotina diária por tempo disponível" },
+  { id: "events", title: "5. Calendário de eventos e preparação" },
   { id: "farms", title: "6. Farms" },
-  { id: "mistakes", title: "7. Mistakes to avoid" },
-  { id: "recovery", title: "8. If you got zeroed" },
-  { id: "open", title: "9. Open questions and pending measurements" },
+  { id: "mistakes", title: "7. Erros a evitar" },
+  { id: "recovery", title: "8. Se você foi zerado" },
+  { id: "open", title: "9. Perguntas em aberto e medições pendentes" },
 ];
 
 export const GUIDE_PHASES: readonly GuidePhase[] = [
@@ -33,10 +33,10 @@ export const GUIDE_PHASES: readonly GuidePhase[] = [
 
 /** Sub-headings of the "plan" section (by phase). */
 export const PHASE_TITLES: Partial<Record<GuidePhase, string>> = {
-  "day4-14": "Days 4–14 (about CH8 → CH12)",
-  "day15-40": "Days 15–40 (about CH12 → CH17, VIP 6)",
-  "day41-90": "Days 41–90 (CH17 → CH21/22, T4)",
-  "pre-kvk1": "Pre-KvK1 and KvK1 (about day 85–100+)",
+  "day4-14": "Dias 4–14 (Prefeitura 8 → 12, aproximadamente)",
+  "day15-40": "Dias 15–40 (Prefeitura 12 → 17, VIP 6, aproximadamente)",
+  "day41-90": "Dias 41–90 (Prefeitura 17 → 21/22, T4)",
+  "pre-kvk1": "Pré-KvK1 e KvK1 (aproximadamente dia 85–100+)",
 };
 
 /**
@@ -53,6 +53,13 @@ export const PHASE_LAST_DAY: Partial<Record<GuidePhase, number>> = {
 
 export const PROFILE_NAMES: Record<SpendingProfile, string> = {
   f2p: "F2P", low: "Low", medium: "Medium", high: "High", whale: "Whale", kraken: "Kraken",
+};
+
+/** Confidence / consensus as shown to the reader (the stored values stay English enums). */
+export const CONFIDENCE_LABELS: Record<string, string> = { high: "alta", medium: "média", low: "baixa", pending: "pendente" };
+export const CONSENSUS_LABELS: Record<string, string> = {
+  unanimous: "unânime", majority: "maioria", split: "dividido", mechanic: "mecânica",
+  single_source: "fonte única", "single-source": "fonte única", minority: "minoria", "n/a": "n/d",
 };
 
 /** Daily-routine blocks that are cumulative time tiers (each one says "everything in the lower tier, plus"). */
@@ -203,7 +210,7 @@ export function compareBlocks(a: GuideBlock, b: GuideBlock): number {
 }
 
 function fmtMinutes(hours: number): string {
-  return `${Math.round(hours * 60)} min/day`;
+  return `${Math.round(hours * 60)} min/dia`;
 }
 
 export function blockFlags(block: GuideBlock, profile: AccountProfile): BlockFlags {
@@ -249,11 +256,11 @@ export function explainSelection(
     passed: spendOk,
     detail: spendOk
       ? block.perfil.includes("todos")
-        ? "Applies to every spending profile."
+        ? "Vale para todos os perfis de gasto."
         : inherited
-          ? `Written for ${PROFILE_NAMES[fallback!]}; ${PROFILE_NAMES[profile.spending]} follows it until its own delta exists.`
-          : `Written for ${PROFILE_NAMES[profile.spending]} (${block.perfil.join(", ")}).`
-      : `Only for ${block.perfil.map((p) => (p === "todos" ? "all" : PROFILE_NAMES[p])).join(", ")}; you are ${PROFILE_NAMES[profile.spending]}.`,
+          ? `Escrito para ${PROFILE_NAMES[fallback!]}; ${PROFILE_NAMES[profile.spending]} segue esse conteúdo até existir o seu próprio delta.`
+          : `Escrito para ${PROFILE_NAMES[profile.spending]} (${block.perfil.join(", ")}).`
+      : `Só para ${block.perfil.map((p) => (p === "todos" ? "todos" : PROFILE_NAMES[p])).join(", ")}; você é ${PROFILE_NAMES[profile.spending]}.`,
   });
 
   // Role
@@ -262,8 +269,8 @@ export function explainSelection(
     criterion: "role",
     passed: roleOk,
     detail: roleOk
-      ? block.funcao.includes("todas") ? "Applies to every role." : `Applies to role ${profile.role}.`
-      : `Only for roles ${block.funcao.join(", ")}; your role is ${profile.role}.`,
+      ? block.funcao.includes("todas") ? "Vale para todas as funções." : `Vale para a função ${profile.role}.`
+      : `Só para as funções ${block.funcao.join(", ")}; a sua função é ${profile.role}.`,
   });
 
   // Kingdom stage
@@ -272,8 +279,8 @@ export function explainSelection(
     criterion: "stage",
     passed: stageOk,
     detail: stageOk
-      ? `Relevant at kingdom stage ${profile.kingdomStage}.`
-      : `Only for kingdom stages ${block.stage.join(", ")}; your kingdom is at ${profile.kingdomStage}.`,
+      ? `Relevante na etapa do reino ${profile.kingdomStage}.`
+      : `Só para as etapas do reino ${block.stage.join(", ")}; o seu reino está em ${profile.kingdomStage}.`,
   });
 
   // Time per day
@@ -284,22 +291,22 @@ export function explainSelection(
     passed: timeOk,
     detail:
       block.hours_min_per_day === null
-        ? "No minimum daily play time."
-        : `Needs ≥ ${fmtMinutes(block.hours_min_per_day)}; you play ${profile.minutesPerDay} min/day.`,
+        ? "Sem mínimo de tempo de jogo por dia."
+        : `Exige ≥ ${fmtMinutes(block.hours_min_per_day)}; você joga ${profile.minutesPerDay} min/dia.`,
   });
 
   // City Hall
   let chPast = false;
   if (block.ch_range === null) {
-    checks.push({ criterion: "cityHall", passed: true, detail: "Relevant at any City Hall level." });
+    checks.push({ criterion: "cityHall", passed: true, detail: "Relevante em qualquer nível de Prefeitura." });
   } else {
     const [lo, hi] = block.ch_range;
     chPast = profile.cityHall > hi;
     const detail = chPast
-      ? `For CH ${lo}–${hi}; you are CH${profile.cityHall}, so it is probably done already.`
+      ? `Para Prefeitura ${lo}–${hi}; você está na Prefeitura ${profile.cityHall}, então provavelmente já foi feito.`
       : profile.cityHall < lo
-        ? `For CH ${lo}–${hi}; you are CH${profile.cityHall}: an upcoming step.`
-        : `For CH ${lo}–${hi}; you are CH${profile.cityHall}.`;
+        ? `Para Prefeitura ${lo}–${hi}; você está na Prefeitura ${profile.cityHall}: um passo futuro.`
+        : `Para Prefeitura ${lo}–${hi}; você está na Prefeitura ${profile.cityHall}.`;
     checks.push({ criterion: "cityHall", passed: !chPast, detail });
   }
 
@@ -312,12 +319,12 @@ export function explainSelection(
     passed: civOk,
     detail:
       civs.length === 0
-        ? "Not civilization-specific."
+        ? "Não é específico de uma civilização."
         : civOk
-          ? `Specific to ${block.civ.join(", ")}, your civilization.`
+          ? `Específico de ${block.civ.join(", ")}, a sua civilização.`
           : myCiv === null
-            ? `Specific to ${block.civ.join(", ")}; your civilization is not set.`
-            : `Specific to ${block.civ.join(", ")}; you play ${profile.civilization}.`,
+            ? `Específico de ${block.civ.join(", ")}; a sua civilização não foi definida.`
+            : `Específico de ${block.civ.join(", ")}; você joga com ${profile.civilization}.`,
   });
 
   // Kingdom day (phase already past)
@@ -329,8 +336,8 @@ export function explainSelection(
       criterion: "kingdomDay",
       passed: !phasePast,
       detail: phasePast
-        ? `Phase ${block.phase} ends on kingdom day ${lastDay}; your kingdom is on day ${profile.kingdomDay}.`
-        : `Phase ${block.phase} runs to kingdom day ${lastDay}; your kingdom is on day ${profile.kingdomDay}.`,
+        ? `A fase ${block.phase} termina no dia ${lastDay} do reino; o seu reino está no dia ${profile.kingdomDay}.`
+        : `A fase ${block.phase} vai até o dia ${lastDay} do reino; o seu reino está no dia ${profile.kingdomDay}.`,
     });
   }
 
@@ -340,7 +347,7 @@ export function explainSelection(
     checks.push({
       criterion: "priority",
       passed: prioOk,
-      detail: `Priority ${block.priority}/5; the current view shows priority ≥ ${o.minPriority}.`,
+      detail: `Prioridade ${block.priority}/5; a visão atual mostra prioridade ≥ ${o.minPriority}.`,
     });
   }
   const confOk = !(o.hideLowConfidence && (block.confidence === "low" || block.confidence === "pending"));
@@ -349,8 +356,8 @@ export function explainSelection(
       criterion: "confidence",
       passed: confOk,
       detail: confOk
-        ? `Confidence ${block.confidence}.`
-        : `Confidence ${block.confidence}; low-confidence and pending blocks are hidden in this view.`,
+        ? `Confiança ${CONFIDENCE_LABELS[block.confidence] ?? block.confidence}.`
+        : `Confiança ${CONFIDENCE_LABELS[block.confidence] ?? block.confidence}; blocos de baixa confiança e pendentes ficam ocultos nesta visão.`,
     });
   }
 
@@ -362,10 +369,10 @@ export function explainSelection(
   else if (chPast || phasePast) placement = o.includeAlreadyDone ? "alreadyDone" : "excluded";
   else placement = "guide";
 
-  if (placement === "alreadyDone") notes.push("Moved to “Already done?”: " + failedDetails(checks).join(" "));
+  if (placement === "alreadyDone") notes.push("Movido para “Já feito?”: " + failedDetails(checks).join(" "));
   if (placement === "guide") {
-    if (block.recommended_for.includes(profile.spending)) notes.push(`Recommended for ${PROFILE_NAMES[profile.spending]}.`);
-    if (block.ch_range !== null && profile.cityHall < block.ch_range[0]) notes.push(`Upcoming: from CH${block.ch_range[0]}.`);
+    if (block.recommended_for.includes(profile.spending)) notes.push(`Recomendado para ${PROFILE_NAMES[profile.spending]}.`);
+    if (block.ch_range !== null && profile.cityHall < block.ch_range[0]) notes.push(`Em breve: a partir da Prefeitura ${block.ch_range[0]}.`);
   }
 
   return {

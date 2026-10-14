@@ -25,9 +25,9 @@ export const REQ_MAX_PERCENT = 10_000;
 /** Largest power or stat accepted (1e15; real accounts are far below). */
 export const REQ_MAX_NUMBER = 1e15;
 
-export const DEFAULT_POWER_BASIS = "Power at the start scan";
+export const DEFAULT_POWER_BASIS = "Poder na varredura inicial";
 /** How progress is measured (B08-0002): gains between the start and end scans. */
-export const MEASURED_AS = "Gains between the start scan and the end scan (delta), not lifetime totals.";
+export const MEASURED_AS = "Ganhos entre a varredura inicial e a final (delta), não totais de toda a vida.";
 
 export interface PowerBand {
   /** Inclusive lower bound. */
@@ -54,7 +54,7 @@ export interface ExcludedDeadsRule {
 
 export const EXCLUDED_DEADS_LABEL_MAX = 80;
 /** Default wording, from the K2779 card (B08-0001). */
-export const EXCLUDED_DEADS_DEFAULT_LABEL = "zeroed in a 'terrible trade'";
+export const EXCLUDED_DEADS_DEFAULT_LABEL = "zerado em uma 'troca terrível'";
 export const EXCLUDED_DEADS_FACT_ID = "B08-0001";
 
 export function defaultExcludedDeads(): ExcludedDeadsRule {
@@ -63,14 +63,14 @@ export function defaultExcludedDeads(): ExcludedDeadsRule {
 
 /** Plain-language rule for the card. */
 export function excludedDeadsText(rule: ExcludedDeadsRule): string {
-  return `Deads on days you were ${rule.label || EXCLUDED_DEADS_DEFAULT_LABEL} don't count: they are taken off your deads before your DKP is worked out.`;
+  return `As mortes dos dias em que você foi ${rule.label || EXCLUDED_DEADS_DEFAULT_LABEL} não contam: elas são descontadas das suas mortes antes de calcular o seu DKP.`;
 }
 
 /** Error text when the excluded deads are not between 0 and the player's deads, else null. */
 export function excludedDeadsIssue(deads: number, excluded: number): string | null {
-  if (!Number.isFinite(excluded) || excluded < 0) return "Enter 0 or more.";
+  if (!Number.isFinite(excluded) || excluded < 0) return "Digite 0 ou mais.";
   const d = Number.isFinite(deads) && deads > 0 ? deads : 0;
-  if (excluded > d) return `This can't be more than your deads (${d.toLocaleString("en-US")}).`;
+  if (excluded > d) return `Isso não pode ser maior que as suas mortes (${d.toLocaleString("pt-BR")}).`;
   return null;
 }
 
@@ -107,14 +107,14 @@ export function validateGroups(groups: readonly Pick<RequirementGroup, "name" | 
   groups.forEach((g, i) => {
     const n = i + 1;
     const name = g.name.replace(/\s+/g, " ").trim();
-    if (!name) out.push({ index: i, field: "name", message: `Group ${n}: enter a name.` });
+    if (!name) out.push({ index: i, field: "name", message: `Grupo ${n}: digite um nome.` });
     else {
       const key = name.toLowerCase();
       const first = seen.get(key);
-      if (first !== undefined) out.push({ index: i, field: "name", message: `Group ${n} has the same name as group ${first + 1}.` });
+      if (first !== undefined) out.push({ index: i, field: "name", message: `O grupo ${n} tem o mesmo nome do grupo ${first + 1}.` });
       else seen.set(key, i);
     }
-    if (!validGroupPercent(g.percent)) out.push({ index: i, field: "pct", message: `Group ${n}: the percent must be more than 0 and at most ${REQ_GROUP_MAX_PERCENT.toLocaleString("en-US")}.` });
+    if (!validGroupPercent(g.percent)) out.push({ index: i, field: "pct", message: `Grupo ${n}: o percentual deve ser maior que 0 e no máximo ${REQ_GROUP_MAX_PERCENT.toLocaleString("pt-BR")}.` });
   });
   return out;
 }
@@ -145,7 +145,7 @@ export function normaliseGroups(x: unknown): RequirementGroup[] {
 
 /** "Accounts under 6 months: 80% of the normal target". */
 export function groupText(g: Pick<RequirementGroup, "name" | "percent">): string {
-  return `${g.name}: ${g.percent}% of the normal target`;
+  return `${g.name}: ${g.percent}% da meta normal`;
 }
 
 export interface SampleAccount {
@@ -192,23 +192,23 @@ export interface BandIssue {
 /** Strict validation for the editor: 1..10 bands, sorted, non-overlapping, open end only last. */
 export function validateBands(bands: readonly PowerBand[]): BandIssue[] {
   const out: BandIssue[] = [];
-  if (bands.length === 0) out.push({ index: -1, message: "Add at least one power band." });
-  if (bands.length > REQ_MAX_BANDS) out.push({ index: -1, message: `Use at most ${REQ_MAX_BANDS} power bands.` });
+  if (bands.length === 0) out.push({ index: -1, message: "Adicione pelo menos uma faixa de poder." });
+  if (bands.length > REQ_MAX_BANDS) out.push({ index: -1, message: `Use no máximo ${REQ_MAX_BANDS} faixas de poder.` });
   bands.forEach((b, i) => {
     const n = i + 1;
-    if (num(b.minPower) === null) out.push({ index: i, field: "min", message: `Band ${n}: the lowest power must be 0 or more.` });
+    if (num(b.minPower) === null) out.push({ index: i, field: "min", message: `Faixa ${n}: o menor poder deve ser 0 ou mais.` });
     if (b.maxPower === null) {
-      if (i !== bands.length - 1) out.push({ index: i, field: "max", message: `Band ${n}: only the last band can have no upper limit.` });
+      if (i !== bands.length - 1) out.push({ index: i, field: "max", message: `Faixa ${n}: só a última faixa pode ficar sem limite superior.` });
     } else if (num(b.maxPower) === null || b.maxPower <= b.minPower) {
-      out.push({ index: i, field: "max", message: `Band ${n}: the upper limit must be more than the lowest power.` });
+      out.push({ index: i, field: "max", message: `Faixa ${n}: o limite superior deve ser maior que o menor poder.` });
     }
     if (!(typeof b.percent === "number" && Number.isFinite(b.percent) && b.percent > 0 && b.percent <= REQ_MAX_PERCENT)) {
-      out.push({ index: i, field: "pct", message: `Band ${n}: the percent must be more than 0 and at most ${REQ_MAX_PERCENT.toLocaleString("en-US")}.` });
+      out.push({ index: i, field: "pct", message: `Faixa ${n}: o percentual deve ser maior que 0 e no máximo ${REQ_MAX_PERCENT.toLocaleString("pt-BR")}.` });
     }
     if (i > 0) {
       const prev = bands[i - 1]!;
-      if (b.minPower < prev.minPower) out.push({ index: i, field: "min", message: `Band ${n}: sort bands from low to high power.` });
-      else if (prev.maxPower === null || b.minPower < prev.maxPower) out.push({ index: i, field: "min", message: `Band ${n} overlaps band ${i}: start it at or above where band ${i} ends.` });
+      if (b.minPower < prev.minPower) out.push({ index: i, field: "min", message: `Faixa ${n}: ordene as faixas do menor para o maior poder.` });
+      else if (prev.maxPower === null || b.minPower < prev.maxPower) out.push({ index: i, field: "min", message: `A faixa ${n} se sobrepõe à faixa ${i}: comece-a no ponto em que a faixa ${i} termina ou acima.` });
     }
   });
   return out;

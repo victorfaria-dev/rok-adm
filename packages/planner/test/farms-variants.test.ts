@@ -25,7 +25,7 @@ describe("mainBottleneck (farms.md table)", () => {
     expect(b.facts).toEqual(["A03-0021", "A03-0001"]);
     expect(b.confidence).toBe("low"); // A03-0001 is contestado
     expect(mainBottleneck(3).confidence).toBe("medium");
-    expect(b.stageLabel).toMatch(/CH10/);
+    expect(b.stageLabel).toMatch(/Prefeitura 10/);
   });
 
   it("rejects City Hall outside 1..25", () => {
@@ -45,7 +45,7 @@ describe("recommendFarms variants (evidence table)", () => {
   it("single-resource only possible with a lot of time, always with a weak-evidence note", () => {
     const few = variant(recommendFarms(base), "single-resource");
     expect(few.status).toBe("not_recommended");
-    expect(few.why).toMatch(/Weak evidence/);
+    expect(few.why).toMatch(/Evidência fraca/);
     const lots = variant(recommendFarms({ ...base, minutesPerDay: LOTS_OF_TIME_MINUTES }), "single-resource");
     expect(lots.status).toBe("possible");
     expect(lots.hypothesis).toBe(true); // the threshold is a hypothesis
@@ -99,9 +99,9 @@ describe("recommendFarms farm count (labelled hypothesis, L-A13-04)", () => {
     expect(recommendFarms({ ...base, minutesPerDay: 600 }).farmCount.value).toBe(1);
     const two = recommendFarms({ ...base, minutesPerDay: 600, wantsMany: true, farmsOwned: 5 }).farmCount;
     expect(two.value).toBe(MAX_FARMS_SUGGESTED);
-    expect(two.why).toMatch(/already have 5/);
-    expect(two.why).toMatch(/never suggests more than 2/);
-    expect(two.why).toMatch(/two cities per kingdom/);
+    expect(two.why).toMatch(/já tem 5/);
+    expect(two.why).toMatch(/nunca sugere mais que 2/);
+    expect(two.why).toMatch(/duas cidades por reino/);
   });
 
   it("unknown minutes still gives 1", () => {

@@ -29,31 +29,31 @@ describe("recruitPost discord", () => {
   it("builds a bold-labelled post with every entered field", () => {
     const p = recruitPost(filled(), "discord");
     expect(p.body).toBe([
-      "**Kingdom 1234 is recruiting**",
+      "**Reino 1234 está recrutando**",
       "",
-      "**Stage:** KvK2",
+      "**Etapa:** KvK2",
       "**Seed:** B",
-      "**Languages:** English, Portuguese",
-      "**Timezones:** UTC-3 to UTC+2",
+      "**Idiomas:** English, Portuguese",
+      "**Fusos horários:** UTC-3 to UTC+2",
       "",
-      "**Open roles**",
-      "- Rally leader ×2 — cavalry",
-      "- Translator",
+      "**Vagas abertas**",
+      "- Líder de rally ×2 — cavalry",
+      "- Tradutor",
       "",
-      "**Requirements**",
-      "- Power: 30M+",
-      "- City Hall: 25+",
+      "**Requisitos**",
+      "- Poder: 30M+",
+      "- Prefeitura: 25+",
       "- 50M kill points",
       "- Active in KvK",
       "",
-      "**What we offer**",
-      "- Transparent MGE rules",
-      "- Help for beginners",
+      "**O que oferecemos**",
+      "- Regras de MGE transparentes",
+      "- Ajuda para iniciantes",
       "",
-      "**Migration**",
+      "**Migração**",
       "Free migration for the first 10 accounts.",
       "",
-      "**Contact:** DM Ana on Discord",
+      "**Contato:** DM Ana on Discord",
     ].join("\n"));
     expect(p.chars).toBe(p.body.length);
     expect(p.limit).toBe(DISCORD_LIMIT);
@@ -67,13 +67,13 @@ describe("recruitPost discord", () => {
 
   it("omits empty fields and sections", () => {
     const p = recruitPost({ ...emptyRecruitInput(), kingdom: "K99" }, "discord");
-    expect(p.body).toBe("**K99 is recruiting**");
-    expect(recruitPost(emptyRecruitInput(), "discord").body).toBe("**We are recruiting**");
+    expect(p.body).toBe("**K99 está recrutando**");
+    expect(recruitPost(emptyRecruitInput(), "discord").body).toBe("**Estamos recrutando**");
   });
 
   it("leaves out power and City Hall that cannot be read", () => {
     const p = recruitPost({ ...emptyRecruitInput(), minPower: "lots", minCityHall: "30" }, "discord");
-    expect(p.body).not.toContain("Requirements");
+    expect(p.body).not.toContain("Requisitos");
   });
 
   it("flags posts over 2,000 characters and reports the length", () => {
@@ -84,16 +84,16 @@ describe("recruitPost discord", () => {
   });
 
   it("uses the other-stage label", () => {
-    expect(recruitPost({ ...emptyRecruitInput(), stage: "other", stageOther: "Lost Kingdom" }, "discord").body).toContain("**Stage:** Lost Kingdom");
+    expect(recruitPost({ ...emptyRecruitInput(), stage: "other", stageOther: "Lost Kingdom" }, "discord").body).toContain("**Etapa:** Lost Kingdom");
   });
 });
 
 describe("recruitPost reddit", () => {
   it("has a title and blank lines around lists", () => {
     const p = recruitPost(filled(), "reddit");
-    expect(p.title).toBe("[K1234] KvK2 kingdom recruiting: Rally leader, Translator");
-    expect(p.body.startsWith("**Stage:** KvK2  \n**Seed:** B")).toBe(true);
-    expect(p.body).toContain("**Open roles**\n\n- Rally leader ×2 — cavalry\n- Translator");
+    expect(p.title).toBe("[K1234] Reino KvK2 recrutando: Líder de rally, Tradutor");
+    expect(p.body.startsWith("**Etapa:** KvK2  \n**Seed:** B")).toBe(true);
+    expect(p.body).toContain("**Vagas abertas**\n\n- Líder de rally ×2 — cavalry\n- Tradutor");
     expect(p.over).toBe(false);
   });
 
@@ -102,8 +102,8 @@ describe("recruitPost reddit", () => {
     expect(t.length).toBeLessThanOrEqual(REDDIT_TITLE_LIMIT);
     const long = redditTitle({ ...emptyRecruitInput(), kingdom: "K".repeat(40), stage: "other", stageOther: "S".repeat(40), roles: (["rally-leader", "garrison-leader", "scout", "event-officer", "data-officer", "translator", "alliance-leader", "farmers", "other"] as const).map((role) => ({ role, count: null, note: "" })) });
     expect(long.length).toBeLessThanOrEqual(REDDIT_TITLE_LIMIT);
-    expect(redditTitle(emptyRecruitInput())).toBe("Kingdom recruiting");
-    expect(redditTitle({ ...emptyRecruitInput(), kingdom: "Avalon" })).toBe("[Avalon] Kingdom recruiting");
+    expect(redditTitle(emptyRecruitInput())).toBe("Reino recrutando");
+    expect(redditTitle({ ...emptyRecruitInput(), kingdom: "Avalon" })).toBe("[Avalon] Reino recrutando");
   });
 
   it("forces a title cut with an ellipsis when unparsed input is too long", () => {
@@ -136,7 +136,7 @@ describe("role count", () => {
     expect(roleCountError("")).toBeUndefined();
     expect(roleCountError("  ")).toBeUndefined();
     expect(roleCountError("3")).toBeUndefined();
-    expect(roleCountError("x")).toBe("Write a whole number from 1 to 99, or leave it empty.");
+    expect(roleCountError("x")).toBe("Escreva um número inteiro de 1 a 99, ou deixe em branco.");
     expect(roleCountError("0")).toBeDefined();
   });
 });
@@ -145,9 +145,9 @@ describe("recruitPost text", () => {
   it("has no markdown and keeps user text as typed", () => {
     const p = recruitPost({ ...filled(), contact: "*Ana* on Discord" }, "text");
     expect(p.body).not.toContain("**");
-    expect(p.body).toContain("Stage: KvK2");
-    expect(p.body).toContain("Open roles:\n- Rally leader ×2 — cavalry");
-    expect(p.body).toContain("Contact: *Ana* on Discord");
+    expect(p.body).toContain("Etapa: KvK2");
+    expect(p.body).toContain("Vagas abertas:\n- Líder de rally ×2 — cavalry");
+    expect(p.body).toContain("Contato: *Ana* on Discord");
     expect(p.limit).toBeNull();
     expect(p.over).toBe(false);
   });
@@ -175,7 +175,7 @@ describe("escapeMarkdown", () => {
 
   it("keeps user text from breaking the post's bold labels", () => {
     const p = recruitPost({ ...emptyRecruitInput(), kingdom: "**K1**", migrationNote: "# Header\n- item" }, "discord");
-    expect(p.body).toContain("**\\*\\*K1\\*\\* is recruiting**");
+    expect(p.body).toContain("**\\*\\*K1\\*\\* está recrutando**");
     expect(p.body).toContain("\\# Header\n\\- item");
   });
 });
@@ -211,7 +211,7 @@ describe("validation and helpers", () => {
     expect(recruitErrors(filled())).toEqual({});
     const e = recruitErrors({ ...emptyRecruitInput(), minPower: "a lot", minCityHall: "26" });
     expect(e.minPower).toMatch(/30m/);
-    expect(e.minCityHall).toMatch(/1 to 25/);
+    expect(e.minCityHall).toMatch(/1 a 25/);
   });
 
   it("parses City Hall levels", () => {
@@ -221,7 +221,7 @@ describe("validation and helpers", () => {
   });
 
   it("labels kingdoms and detects empty input", () => {
-    expect(kingdomLabel("1234")).toBe("Kingdom 1234");
+    expect(kingdomLabel("1234")).toBe("Reino 1234");
     expect(kingdomLabel("K1234")).toBe("K1234");
     expect(recruitIsEmpty(emptyRecruitInput())).toBe(true);
     expect(recruitIsEmpty({ ...emptyRecruitInput(), contact: "x" })).toBe(false);

@@ -47,14 +47,14 @@ function levelRows(t: DataTable, levelCol: string): Map<number, Record<string, s
 }
 
 function num(v: unknown, what: string): number {
-  if (typeof v !== "number" || !Number.isFinite(v)) throw new Error(`${what}: no numeric value in the data`);
+  if (typeof v !== "number" || !Number.isFinite(v)) throw new Error(`${what}: sem valor numérico nos dados`);
   return v;
 }
 
 function checkRange(from: number, to: number, levels: Map<number, unknown>, what: string, minFrom = 1): void {
   const max = Math.max(...levels.keys());
   if (!Number.isInteger(from) || !Number.isInteger(to) || from < minFrom || to > max || from > to) {
-    throw new RangeError(`${what}: need integers ${minFrom} <= from <= to <= ${max}, got ${from}..${to}`);
+    throw new RangeError(`${what}: são necessários inteiros ${minFrom} <= from <= to <= ${max}, recebido ${from}..${to}`);
   }
 }
 
@@ -68,8 +68,8 @@ export function cityHallBuildSeconds(from: number, to: number, data: FormulaData
   const rows = levelRows(data.table(CITY_HALL.table), CITY_HALL.level);
   checkRange(from, to, rows, "cityHallBuildSeconds");
   let s = 0;
-  for (let lv = from + 1; lv <= to; lv++) s += num(rows.get(lv)?.[CITY_HALL.seconds], `City Hall level ${lv} time`);
-  return result(s, [CITY_HALL.fact], data, ["raw build times, no speed buffs or helps; City Hall only (not its prerequisite buildings)"]);
+  for (let lv = from + 1; lv <= to; lv++) s += num(rows.get(lv)?.[CITY_HALL.seconds], `tempo da Prefeitura nível ${lv}`);
+  return result(s, [CITY_HALL.fact], data, ["tempos brutos de construção, sem bônus de velocidade nem ajudas; apenas a Prefeitura (não os edifícios pré-requisito)"]);
 }
 
 export interface ResourceCost { food: number; wood: number; stone: number; gold: number; extra: string[] }
@@ -83,12 +83,12 @@ export function cityHallUpgradeCost(from: number, to: number, data: FormulaData 
     const r = rows.get(lv)!;
     for (const k of ["food", "wood", "stone", "gold"] as const) {
       const v = r[k];
-      if (v !== null && v !== undefined) c[k] += num(v, `City Hall level ${lv} ${k}`);
+      if (v !== null && v !== undefined) c[k] += num(v, `Prefeitura nível ${lv} ${k}`);
     }
     const extra = r.extra_cost;
     if (typeof extra === "string" && extra !== "None") c.extra.push(`L${lv}: ${extra}`);
   }
-  return result(c, [CITY_HALL.fact], data, ["raw costs, no cost reductions"]);
+  return result(c, [CITY_HALL.fact], data, ["custos brutos, sem reduções de custo"]);
 }
 
 // ---------------------------------------------------------------- A05 VIP
@@ -100,9 +100,9 @@ export const VIP = { fact: "A05-0001", table: "A05-vip-levels", level: "vip_leve
 export function vipPointsBetween(from: number, to: number, data: FormulaData = defaultData): FormulaResult<number> {
   const rows = levelRows(data.table(VIP.table), VIP.level);
   checkRange(from, to, rows, "vipPointsBetween", 0);
-  const at = (lv: number) => (lv === 0 ? 0 : num(rows.get(lv)?.[VIP.points], `VIP ${lv} threshold`));
+  const at = (lv: number) => (lv === 0 ? 0 : num(rows.get(lv)?.[VIP.points], `limiar do VIP ${lv}`));
   return result(at(to) - at(from), [VIP.fact], data, [
-    "thresholds read as cumulative totals (A05-0001 notes: T4-supported, T0 pending)",
+    "limiares lidos como totais acumulados (notas de A05-0001: apoiado por T4, T0 pendente)",
   ]);
 }
 
@@ -116,18 +116,18 @@ export function tradingPostTaxRate(level: number, data: FormulaData = defaultDat
   checkRange(level, level, rows, "tradingPostTaxRate");
   const raw = rows.get(level)?.[TRADING_POST.tax];
   const m = typeof raw === "string" ? /^(\d+(?:\.\d+)?)%$/.exec(raw.trim()) : null;
-  if (!m?.[1]) throw new Error(`Trading Post level ${level}: tax '${String(raw)}' is not a percentage`);
+  if (!m?.[1]) throw new Error(`Entreposto Comercial nível ${level}: a taxa '${String(raw)}' não é uma porcentagem`);
   return result(Number(m[1]) / 100, [TRADING_POST.fact], data);
 }
 
 /** Resources the receiver gets when `sent` is transferred at a Trading Post level: sent × (1 − tax). */
 export function tradingPostReceived(sent: number, level: number, data: FormulaData = defaultData): FormulaResult<number> {
   const t = tradingPostTaxRate(level, data);
-  return { ...t, value: sent * (1 - t.value), assumptions: ["in-game rounding not modelled"] };
+  return { ...t, value: sent * (1 - t.value), assumptions: ["arredondamento do jogo não modelado"] };
 }
 
 /** Resources that must be sent so the receiver gets `received`: received / (1 − tax) (A03-0024 notes). */
 export function tradingPostSendFor(received: number, level: number, data: FormulaData = defaultData): FormulaResult<number> {
   const t = tradingPostTaxRate(level, data);
-  return { ...t, value: received / (1 - t.value), assumptions: ["in-game rounding not modelled"] };
+  return { ...t, value: received / (1 - t.value), assumptions: ["arredondamento do jogo não modelado"] };
 }

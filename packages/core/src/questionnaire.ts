@@ -71,114 +71,120 @@ export interface BooleanQuestion extends QuestionBase<boolean> {
 export type Question = ChoiceQuestion | NumberQuestion | BooleanQuestion;
 
 const SPENDING_OPTIONS: ReadonlyArray<QuestionOption<SpendingProfile>> = [
-  { value: "f2p", label: "F2P — $0 per month", help: "No money spent. The guide sticks to the free path." },
-  { value: "low", label: "Low spender — $5–$100 per month", help: "e.g. a monthly pass. Adds the low-spender notes to the free path." },
-  { value: "medium", label: "Medium spender — $100–$500 per month", help: "Adds the spender notes; steps written for medium spenders are tagged for you." },
-  { value: "high", label: "High spender — $500–$1,000 per month", help: "Adds the spender notes; steps written for high spenders are tagged for you." },
-  { value: "whale", label: "Whale — $1,000–$5,000 per month", help: "Adds the spender notes; steps written for whales are tagged for you." },
-  { value: "kraken", label: "Kraken — $5,000+ per month", help: "Adds the spender notes; steps written for krakens are tagged for you." },
+  { value: "f2p", label: "F2P — $0 por mês", help: "Nenhum dinheiro gasto. O guia fica no caminho gratuito." },
+  { value: "low", label: "Low (gasta pouco) — $5–$100 por mês", help: "p. ex., um passe mensal. Acrescenta ao caminho gratuito as notas para quem gasta pouco." },
+  { value: "medium", label: "Medium (gasta médio) — $100–$500 por mês", help: "Acrescenta as notas de quem gasta; os passos escritos para esse perfil ganham uma marca para você." },
+  { value: "high", label: "High (gasta muito) — $500–$1.000 por mês", help: "Acrescenta as notas de quem gasta; os passos escritos para esse perfil ganham uma marca para você." },
+  { value: "whale", label: "Whale (baleia) — $1.000–$5.000 por mês", help: "Acrescenta as notas de quem gasta; os passos escritos para baleias ganham uma marca para você." },
+  { value: "kraken", label: "Kraken — $5.000+ por mês", help: "Acrescenta as notas de quem gasta; os passos escritos para krakens ganham uma marca para você." },
 ];
 
 const ROLE_OPTIONS: ReadonlyArray<QuestionOption<Role>> = [
-  { value: "lutador", label: "Fighter", help: "Your main fights in the field. The routine keeps the fighter tasks." },
-  { value: "farm", label: "Farm account", help: "A second account that gathers for a main. The routine drops tasks only a main needs." },
-  { value: "rally", label: "Rally leader", help: "You lead rallies on forts, flags and cities. The routine keeps the rally tasks." },
-  { value: "guarnicao", label: "Garrison", help: "You defend structures and cities. The routine keeps the garrison tasks." },
-  { value: "lider", label: "Alliance / kingdom leader", help: "R4/R5 or kingdom council. Adds the kingdom administration guide." },
+  { value: "lutador", label: "Lutador", help: "Sua conta principal luta em campo. A rotina mantém as tarefas do lutador." },
+  { value: "farm", label: "Conta farm", help: "Uma segunda conta que coleta para uma principal. A rotina tira as tarefas que só uma conta principal precisa." },
+  { value: "rally", label: "Líder de rally", help: "Você lidera rallies (ataques em massa) em fortes, bandeiras e cidades. A rotina mantém as tarefas de rally." },
+  { value: "guarnicao", label: "Guarnição", help: "Você defende estruturas e cidades. A rotina mantém as tarefas de guarnição." },
+  { value: "lider", label: "Líder de aliança / reino", help: "R4/R5 ou conselho do reino. Acrescenta o guia de administração do reino." },
 ];
 
 const STAGE_OPTIONS: ReadonlyArray<QuestionOption<KingdomStage>> = [
-  { value: "pre_kvk", label: "Before the first KvK", help: "A new kingdom. The guide covers the early phases and the kingdom start." },
-  { value: "kvk1", label: "KvK 1 (Season 1)", help: "The guide adds the KvK 1 sections." },
-  { value: "kvk2", label: "KvK 2", help: "Uses the late-game plan; sections without steps for this stage show KvK 1 steps, labelled." },
-  { value: "kvk3", label: "KvK 3", help: "Uses the late-game plan; sections without steps for this stage show KvK 1 steps, labelled." },
-  { value: "soc", label: "Season of Conquest (SoC)", help: "Uses the late-game plan; sections without steps for this stage show KvK 1 steps, labelled." },
+  { value: "pre_kvk", label: "Antes da primeira KvK", help: "Um reino novo. O guia cobre as fases iniciais e o começo do reino." },
+  { value: "kvk1", label: "KvK 1 (Temporada 1)", help: "O guia acrescenta as seções da KvK 1." },
+  { value: "kvk2", label: "KvK 2", help: "Usa o plano de fase tardia; seções sem passos para esta etapa mostram passos da KvK 1, com aviso." },
+  { value: "kvk3", label: "KvK 3", help: "Usa o plano de fase tardia; seções sem passos para esta etapa mostram passos da KvK 1, com aviso." },
+  { value: "soc", label: "Temporada de Conquista (SoC)", help: "Usa o plano de fase tardia; seções sem passos para esta etapa mostram passos da KvK 1, com aviso." },
 ];
 
-const titleCase = (s: string): string => s.charAt(0).toUpperCase() + s.slice(1);
+/** Civilization names as the pt-BR game client shows them (see packages/data/i18n/glossary.json). */
+const CIVILIZATION_LABELS: Readonly<Record<string, string>> = {
+  arabia: "Arábia", britain: "Grã-Bretanha", byzantium: "Bizâncio", china: "China", egypt: "Egito",
+  france: "França", germany: "Alemanha", greece: "Grécia", japan: "Japão", korea: "Coreia",
+  maya: "Maias", ottoman: "Otomanos", rome: "Roma", spain: "Espanha", vikings: "Vikings",
+};
+const titleCase = (s: string): string => CIVILIZATION_LABELS[s] ?? s.charAt(0).toUpperCase() + s.slice(1);
 
-/** The F-01 question list, in display order. Labels are English. */
+/** The F-01 question list, in display order. Labels are Brazilian Portuguese. */
 export const QUESTIONS: readonly Question[] = [
   {
     id: "spending", type: "choice", nullable: false, default: "f2p",
-    label: "How much do you spend on Rise of Kingdoms per month?",
-    help: "Picks which advice you see and which guide steps are tagged for you. There is no right answer. Ranges are a community convention, in USD.",
+    label: "Quanto você gasta por mês em Rise of Kingdoms?",
+    help: "Define quais conselhos você vê e quais passos do guia ganham uma marca para você. Não há resposta certa. As faixas são uma convenção da comunidade, em dólares (USD).",
     options: SPENDING_OPTIONS,
   },
   {
     id: "lifetimeSpendUsd", type: "number", nullable: true, default: null, min: 0, max: 10_000_000, integer: true, unit: "USD",
-    label: "Roughly how much have you spent in total on this account?",
-    help: "Optional. Past spending changes the advice even if you are F2P today.",
+    label: "Mais ou menos quanto você já gastou, no total, nesta conta?",
+    help: "Opcional. O gasto passado muda o conselho mesmo que você seja F2P hoje.",
     presets: [
-      { value: 0, label: "Nothing", help: "Your monthly answer alone sets the profile." },
-      { value: 100, label: "About $100", help: "Counts as Low when your monthly answer is lower." },
-      { value: 1_000, label: "About $1,000", help: "Counts as Low; the summary flags it if you play F2P now." },
-      { value: 10_000, label: "$10,000 or more", help: "Counts as High or above when your monthly answer is lower." },
+      { value: 0, label: "Nada", help: "Só a sua resposta mensal define o perfil." },
+      { value: 100, label: "Cerca de $100", help: "Conta como Low quando a sua resposta mensal é menor." },
+      { value: 1_000, label: "Cerca de $1.000", help: "Conta como Low; o resumo avisa se você joga como F2P agora." },
+      { value: 10_000, label: "$10.000 ou mais", help: "Conta como High ou acima quando a sua resposta mensal é menor." },
     ],
   },
   {
     id: "minutesPerDay", type: "number", nullable: false, default: 60, min: 0, max: 1440, integer: true, unit: "min",
-    label: "How much time can you play on a typical day?",
-    help: "Sets the daily routine tier. Pick the time you really have, not the time you wish you had.",
+    label: "Quanto tempo você consegue jogar em um dia comum?",
+    help: "Define o nível da rotina diária. Escolha o tempo que você realmente tem, não o que gostaria de ter.",
     presets: [
-      { value: 15, label: "15 minutes", help: "The routine keeps only the tasks worth the most per minute." },
-      { value: 30, label: "30 minutes", help: "The routine fits the daily essentials and a few extras." },
-      { value: 60, label: "1 hour", help: "Room for most daily tasks and some event work." },
-      { value: 120, label: "2 hours or more", help: "The routine fits longer tasks that a short day leaves out." },
+      { value: 15, label: "15 minutos", help: "A rotina mantém só as tarefas que rendem mais por minuto." },
+      { value: 30, label: "30 minutos", help: "A rotina cabe nos itens essenciais do dia e em alguns extras." },
+      { value: 60, label: "1 hora", help: "Espaço para a maioria das tarefas diárias e um pouco de evento." },
+      { value: 120, label: "2 horas ou mais", help: "A rotina inclui tarefas mais longas que um dia curto deixa de fora." },
     ],
   },
   {
     id: "sessionsPerDay", type: "number", nullable: true, default: null, min: 1, max: 24, integer: true,
-    label: "How many times a day do you log in?",
-    help: "Optional. It shapes how timers and marches fit between your visits.",
+    label: "Quantas vezes por dia você entra no jogo?",
+    help: "Opcional. Define como cronômetros e marchas se encaixam entre as suas visitas.",
     presets: [
-      { value: 1, label: "Once", help: "One sitting: set long timers and marches before you leave." },
-      { value: 2, label: "2–3 times", help: "You can refill queues and marches between sittings." },
-      { value: 4, label: "4 or more", help: "Short timers and quick event tasks fit between check-ins." },
+      { value: 1, label: "Uma vez", help: "Uma sessão só: deixe cronômetros e marchas longos antes de sair." },
+      { value: 2, label: "2–3 vezes", help: "Você consegue reabastecer filas e marchas entre as sessões." },
+      { value: 4, label: "4 ou mais", help: "Cronômetros curtos e tarefas rápidas de evento cabem entre as entradas." },
     ],
   },
   {
     id: "role", type: "choice", nullable: false, default: "lutador",
-    label: "What is this account's main role?",
-    help: "Farm accounts still get the routine and safety advice that applies to every account.",
+    label: "Qual é a função principal desta conta?",
+    help: "Contas farm também recebem os conselhos de rotina e de segurança que valem para toda conta.",
     options: ROLE_OPTIONS,
   },
   {
     id: "kingdomStage", type: "choice", nullable: false, default: "pre_kvk",
-    label: "Where is your kingdom right now?",
-    help: "Shown on the kingdom's season/KvK screen.",
+    label: "Em que etapa está o seu reino agora?",
+    help: "Aparece na tela de temporada/KvK do reino.",
     options: STAGE_OPTIONS,
   },
   {
     id: "kingdomDay", type: "number", nullable: true, default: null, min: 0, max: 5000, integer: true, unit: "days",
-    label: "How many days old is your kingdom?",
-    help: "Optional. Phases already behind you are moved to an \"Already done?\" list.",
+    label: "Quantos dias tem o seu reino?",
+    help: "Opcional. As fases que você já passou vão para uma lista \"Já feito?\".",
   },
   {
     id: "cityHall", type: "number", nullable: false, default: 1, min: CITY_HALL_MIN, max: CITY_HALL_MAX, integer: true,
-    label: "What is your City Hall level?",
-    help: "Steps for lower levels go to \"Already done?\" so you can check what you missed.",
+    label: "Qual é o nível da sua Prefeitura?",
+    help: "Os passos de níveis menores vão para \"Já feito?\" para você conferir o que deixou passar.",
   },
   {
     id: "civilization", type: "choice", nullable: true, default: null,
-    label: "Which civilization do you play?",
-    help: "Leave it as \"Not chosen yet\" if you are still deciding: the guide includes the civilization choice.",
+    label: "Qual civilização você joga?",
+    help: "Deixe \"Ainda não escolhi\" se estiver decidindo: o guia inclui a escolha da civilização.",
     options: [
-      { value: null, label: "Not chosen yet / not sure", help: "The guide keeps the civilization choice in your plan." },
+      { value: null, label: "Ainda não escolhi / não sei", help: "O guia mantém a escolha da civilização no seu plano." },
       ...CIVILIZATIONS.map((c) => ({
         value: c,
         label: titleCase(c),
-        help: "Saved with your profile. The guide does not change by civilization yet.",
+        help: "Salva com o seu perfil. O guia ainda não muda conforme a civilização.",
       })),
     ],
   },
   {
     id: "returningPlayer", type: "boolean", nullable: false, default: false,
-    label: "Are you coming back after a long break?",
-    help: "Returning accounts get catch-up advice where it exists.",
+    label: "Você está voltando depois de uma longa pausa?",
+    help: "Contas que voltam recebem conselhos de reciclagem onde existirem.",
     options: [
-      { value: true, label: "Yes", help: "The guide opens with the coming-back guide and catch-up steps." },
-      { value: false, label: "No", help: "New accounts at a low City Hall also get the first-30-days path." },
+      { value: true, label: "Sim", help: "O guia abre com o guia de quem volta e com passos de reciclagem." },
+      { value: false, label: "Não", help: "Contas novas com Prefeitura baixa também recebem o caminho dos primeiros 30 dias." },
     ],
   },
 ];
@@ -215,9 +221,9 @@ function parseNumber(q: NumberQuestion, raw: unknown): { value: number | null } 
     return { value: q.default };
   }
   const n = typeof raw === "number" ? raw : typeof raw === "string" ? Number(raw.trim()) : NaN;
-  if (!Number.isFinite(n)) return { error: `${q.label} Expected a number.` };
-  if (q.integer && !Number.isInteger(n)) return { error: `${q.label} Expected a whole number.` };
-  if (n < q.min || n > q.max) return { error: `${q.label} Must be between ${q.min} and ${q.max}.` };
+  if (!Number.isFinite(n)) return { error: `${q.label} Esperava um número.` };
+  if (q.integer && !Number.isInteger(n)) return { error: `${q.label} Esperava um número inteiro.` };
+  if (n < q.min || n > q.max) return { error: `${q.label} Deve estar entre ${q.min} e ${q.max}.` };
   return { value: n };
 }
 
@@ -226,12 +232,12 @@ function parseChoice(q: ChoiceQuestion, raw: unknown): { value: string | null } 
     if (raw === null && q.nullable) return { value: null };
     return { value: q.default };
   }
-  if (typeof raw !== "string") return { error: `${q.label} Expected one of the listed options.` };
+  if (typeof raw !== "string") return { error: `${q.label} Esperava uma das opções listadas.` };
   const v = raw.trim().toLowerCase();
   const opt = q.options.find((o) => o.value === v);
   if (!opt) {
     const allowed = q.options.map((o) => o.value ?? "(none)").join(", ");
-    return { error: `${q.label} "${raw}" is not an option (${allowed}).` };
+    return { error: `${q.label} "${raw}" não é uma opção (${allowed}).` };
   }
   return { value: opt.value };
 }
@@ -245,7 +251,7 @@ function parseBoolean(q: BooleanQuestion, raw: unknown): { value: boolean } | { 
     if (["true", "1", "yes", "y", "on"].includes(v)) return { value: true };
     if (["false", "0", "no", "n", "off"].includes(v)) return { value: false };
   }
-  return { error: `${q.label} Expected yes or no.` };
+  return { error: `${q.label} Esperava sim ou não.` };
 }
 
 /**
@@ -255,20 +261,20 @@ function parseBoolean(q: BooleanQuestion, raw: unknown): { value: boolean } | { 
  */
 export function validateAnswers(raw: unknown): ValidationResult {
   if (raw === null || typeof raw !== "object" || Array.isArray(raw)) {
-    return { errors: [{ field: "_", message: "Answers must be an object keyed by question id." }] };
+    return { errors: [{ field: "_", message: "As respostas devem ser um objeto indexado pelo id da pergunta." }] };
   }
   const input = raw as Record<string, unknown>;
   const errors: ValidationError[] = [];
   const out: Record<string, unknown> = {};
 
   for (const key of Object.keys(input)) {
-    if (!QUESTIONS.some((q) => q.id === key)) errors.push({ field: "_", message: `Unknown question "${key}".` });
+    if (!QUESTIONS.some((q) => q.id === key)) errors.push({ field: "_", message: `Pergunta desconhecida "${key}".` });
   }
 
   for (const q of QUESTIONS) {
     const v = input[q.id];
     if (v === null && !q.nullable) {
-      errors.push({ field: q.id, message: `${q.label} An answer is required.` });
+      errors.push({ field: q.id, message: `${q.label} Uma resposta é obrigatória.` });
       continue;
     }
     const r = q.type === "number" ? parseNumber(q, v) : q.type === "choice" ? parseChoice(q, v) : parseBoolean(q, v);
@@ -283,7 +289,7 @@ export function validateAnswers(raw: unknown): ValidationResult {
     if (day !== null && stage !== "pre_kvk" && day < 60) {
       errors.push({
         field: "kingdomDay",
-        message: `A kingdom on day ${day} cannot be past pre-KvK yet (the first KvK starts around day 100).`,
+        message: `Um reino no dia ${day} ainda não pode ter passado da pré-KvK (a primeira KvK começa por volta do dia 100).`,
       });
     }
   }
@@ -298,14 +304,14 @@ export function profileWarnings(p: AccountProfile): string[] {
   const w: string[] = [];
   if ((p.spending === "f2p" || p.spending === "low") && p.lifetimeSpendUsd !== null && p.lifetimeSpendUsd >= 1000) {
     w.push(
-      `You spent about $${p.lifetimeSpendUsd} in the past: your account may be ahead of a typical ${p.spending.toUpperCase()} account, so some targets will be conservative.`,
+      `Você gastou cerca de $${p.lifetimeSpendUsd} no passado: sua conta pode estar à frente de uma conta ${p.spending.toUpperCase()} típica, então algumas metas serão conservadoras.`,
     );
   }
   if (p.kingdomStage === "pre_kvk" && p.kingdomDay !== null && p.kingdomDay > 150) {
-    w.push(`Kingdom day ${p.kingdomDay} is late for pre-KvK; check your kingdom stage.`);
+    w.push(`O dia ${p.kingdomDay} do reino é tarde para a pré-KvK; confira a etapa do seu reino.`);
   }
   if (p.minutesPerDay < 15) {
-    w.push("Under 15 minutes a day: the guide shows the Light days / Break Mode floor.");
+    w.push("Menos de 15 minutos por dia: o guia mostra o piso dos Dias leves / Modo Pausa.");
   }
   return w;
 }
@@ -350,11 +356,11 @@ export function encodeProfile(p: AccountProfile): string {
 /** Decode and validate a profile code. Never throws. */
 export function decodeProfile(code: string): ValidationResult {
   const fail = (message: string): ValidationResult => ({ errors: [{ field: "_", message }] });
-  if (typeof code !== "string" || code.length === 0) return fail("Empty profile code.");
-  if (code.length > 200 || !CODE_RE.test(code)) return fail("Profile code has invalid characters.");
+  if (typeof code !== "string" || code.length === 0) return fail("Código de perfil vazio.");
+  if (code.length > 200 || !CODE_RE.test(code)) return fail("O código de perfil tem caracteres inválidos.");
   const parts = code.split(".");
-  if (parts[0] !== PROFILE_CODE_VERSION) return fail(`Unsupported profile code version "${parts[0]}".`);
-  if (parts.length !== 11) return fail(`Profile code must have 11 fields, got ${parts.length}.`);
+  if (parts[0] !== PROFILE_CODE_VERSION) return fail(`Versão do código de perfil não suportada "${parts[0]}".`);
+  if (parts.length !== 11) return fail(`O código de perfil deve ter 11 campos, mas tem ${parts.length}.`);
   const [, sp, ro, st, ch, min, ses, kd, life, civ, ret] = parts as [string, ...string[]];
 
   const fromIdx = <T>(list: readonly T[], s: string | undefined): T | string => {

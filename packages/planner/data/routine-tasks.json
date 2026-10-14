@@ -1,7 +1,7 @@
 [
   {
     "id": "vip-claim",
-    "title": "Claim VIP points + VIP daily chest",
+    "title": "Coletar pontos VIP + baú diário do VIP",
     "minutes": null,
     "estimatedMinutes": 1,
     "frequency": "daily",
@@ -15,7 +15,7 @@
   },
   {
     "id": "daily-ap-claim",
-    "title": "Claim Daily Action Points",
+    "title": "Coletar os Pontos de Ação diários",
     "minutes": null,
     "estimatedMinutes": 0.5,
     "frequency": "daily",
@@ -29,7 +29,7 @@
   },
   {
     "id": "daily-objectives-100",
-    "title": "Finish Daily Objectives to 100 points and claim all chests",
+    "title": "Completar os Objetivos Diários até 100 pontos e coletar todos os baús",
     "minutes": null,
     "estimatedMinutes": 8,
     "frequency": "daily",
@@ -43,7 +43,7 @@
   },
   {
     "id": "queues",
-    "title": "Refill queues: both builders, research, training, healing",
+    "title": "Reabastecer as filas: os dois construtores, pesquisa, treinamento, cura",
     "minutes": null,
     "estimatedMinutes": 3,
     "frequency": "daily",
@@ -57,7 +57,7 @@
   },
   {
     "id": "gathering",
-    "title": "Send gatherers (alliance territory; big nodes before logging off)",
+    "title": "Enviar coletores (território da aliança; nós grandes antes de sair)",
     "minutes": null,
     "estimatedMinutes": 2,
     "frequency": "daily",
@@ -71,7 +71,7 @@
   },
   {
     "id": "alliance-help",
-    "title": "Alliance help (20 helps)",
+    "title": "Ajuda da aliança (20 ajudas)",
     "minutes": null,
     "estimatedMinutes": 1,
     "frequency": "daily",
@@ -85,7 +85,7 @@
   },
   {
     "id": "ap-spend",
-    "title": "Spend AP: barbarians (or auto-peacekeeping), fort rallies when unlocked",
+    "title": "Gastar PA: bárbaros (ou pacificação automática), rallies em fortes quando liberados",
     "minutes": null,
     "estimatedMinutes": 5,
     "frequency": "daily",
@@ -99,7 +99,7 @@
   },
   {
     "id": "city-collect",
-    "title": "Collect city resource buildings",
+    "title": "Coletar os edifícios de recursos da cidade",
     "minutes": null,
     "estimatedMinutes": 0.5,
     "frequency": "daily",
@@ -113,7 +113,7 @@
   },
   {
     "id": "tavern-chests",
-    "title": "Open free Tavern silver chests",
+    "title": "Abrir os baús de prata grátis da Taverna",
     "minutes": null,
     "estimatedMinutes": 1,
     "frequency": "daily",
@@ -127,7 +127,7 @@
   },
   {
     "id": "alliance-donate",
-    "title": "Alliance tech donation",
+    "title": "Doação para a tecnologia da aliança",
     "minutes": null,
     "estimatedMinutes": 1,
     "frequency": "daily",
@@ -141,7 +141,7 @@
   },
   {
     "id": "courier-merchant",
-    "title": "Courier Station / Mysterious Merchant: free refresh, buy with resources",
+    "title": "Estação de Correio / Mercador Misterioso: renovação grátis, comprar com recursos",
     "minutes": null,
     "estimatedMinutes": 2,
     "frequency": "daily",
@@ -155,7 +155,7 @@
   },
   {
     "id": "expedition-claim",
-    "title": "Expedition: claim 3-star rewards + free Medal Shop refresh",
+    "title": "Expedição: coletar as recompensas de 3 estrelas + renovação grátis da Loja de Medalhas",
     "minutes": null,
     "estimatedMinutes": 1,
     "frequency": "daily",
@@ -169,7 +169,7 @@
   },
   {
     "id": "sunset-canyon",
-    "title": "Sunset Canyon daily attempts",
+    "title": "Tentativas diárias no Cânion do Pôr do Sol",
     "minutes": null,
     "estimatedMinutes": 3,
     "frequency": "daily",
@@ -183,7 +183,7 @@
   },
   {
     "id": "lyceum-mock",
-    "title": "Peerless Scholar mock exam (Mon-Fri)",
+    "title": "Simulado do Erudito Incomparável (seg–sex)",
     "minutes": null,
     "estimatedMinutes": 3,
     "frequency": "daily",
@@ -197,7 +197,7 @@
   },
   {
     "id": "vip-shop-weekly",
-    "title": "VIP Shop weekly restock: food-priced 100-AP items and 5-min speedups",
+    "title": "Reposição semanal da Loja VIP: itens de 100 PA e acelerações de 5 min pagos em comida",
     "minutes": null,
     "estimatedMinutes": 2,
     "frequency": "weekly",
@@ -211,7 +211,7 @@
   },
   {
     "id": "peerless-exam",
-    "title": "Peerless Scholar Preliminary + Final (every two weeks)",
+    "title": "Erudito Incomparável: Preliminar + Final (a cada duas semanas)",
     "minutes": null,
     "estimatedMinutes": 10,
     "frequency": "weekly",
@@ -225,7 +225,7 @@
   },
   {
     "id": "events",
-    "title": "Active event actions (per in-game calendar)",
+    "title": "Ações dos eventos ativos (conforme o calendário do jogo)",
     "minutes": null,
     "estimatedMinutes": 10,
     "frequency": "event",

@@ -145,18 +145,18 @@ export function compareByValuePerMinute(a: PlannedTask, b: PlannedTask): number 
 
 function eligibility(t: RoutineTask, profile: AccountProfile, opts: PlanOptions, meta: RoutineMetaMap): { reason: SkipReason; detail: string } | null {
   if (t.unlockCityHall !== null && profile.cityHall < t.unlockCityHall) {
-    return { reason: "locked_city_hall", detail: `Unlocks at City Hall ${t.unlockCityHall} (you: CH${profile.cityHall}).` };
+    return { reason: "locked_city_hall", detail: `Liberado na Prefeitura ${t.unlockCityHall} (você: Prefeitura ${profile.cityHall}).` };
   }
-  if (!matches(t.profiles, "todos", profile.spending)) return { reason: "not_for_profile", detail: `Not relevant for ${profile.spending}.` };
-  if (!matches(t.roles, "todas", profile.role)) return { reason: "not_for_role", detail: `Not relevant for role ${profile.role}.` };
-  if (t.frequency === "weekly" && !opts.includeWeekly) return { reason: "not_today", detail: "Weekly task: plan it on its day." };
-  if (t.frequency === "event" && !opts.includeEvents) return { reason: "not_today", detail: "Only while an event is active." };
+  if (!matches(t.profiles, "todos", profile.spending)) return { reason: "not_for_profile", detail: `Não é relevante para ${profile.spending}.` };
+  if (!matches(t.roles, "todas", profile.role)) return { reason: "not_for_role", detail: `Não é relevante para a função ${profile.role}.` };
+  if (t.frequency === "weekly" && !opts.includeWeekly) return { reason: "not_today", detail: "Tarefa semanal: planeje-a no dia dela." };
+  if (t.frequency === "event" && !opts.includeEvents) return { reason: "not_today", detail: "Só enquanto um evento estiver ativo." };
   const m = meta[t.id];
   if (m?.weekdaysOnly && opts.weekday != null && (opts.weekday === 0 || opts.weekday === 6)) {
-    return { reason: "not_today", detail: "Only Monday–Friday." };
+    return { reason: "not_today", detail: "Só de segunda a sexta." };
   }
   if (m?.minVip !== undefined && opts.vipLevel != null && opts.vipLevel < m.minVip) {
-    return { reason: "below_vip", detail: `Needs VIP ${m.minVip}.` };
+    return { reason: "below_vip", detail: `Exige VIP ${m.minVip}.` };
   }
   return null;
 }
@@ -197,7 +197,7 @@ export function planRoutine(
       if (c.mustDo) mustDoSkipped.push(c.id);
       skipped.push({
         id: c.id, title: c.title, task: c.task, reason: "over_budget",
-        detail: `${round1(c.minutes)} min does not fit the ${round1(budgetMinutes - used)} min left${c.task.safeToSkip ? " — safe to skip today" : ""}.`,
+        detail: `${round1(c.minutes)} min não cabem nos ${round1(budgetMinutes - used)} min restantes${c.task.safeToSkip ? " — pode pular hoje sem problema" : ""}.`,
         safeToSkip: c.task.safeToSkip,
       });
     }
@@ -208,10 +208,10 @@ export function planRoutine(
     notes.push({ text: `${ESTIMATE_NOTICE.label}: ${ESTIMATE_NOTICE.basis}`, facts: ["A10-0002"], pending: true });
   }
   if (mustDoSkipped.length) {
-    notes.push({ text: `Budget too small for must-do tasks: ${mustDoSkipped.join(", ")}.`, facts: [], pending: false });
+    notes.push({ text: `Tempo insuficiente para as tarefas obrigatórias: ${mustDoSkipped.join(", ")}.`, facts: [], pending: false });
   }
   if (opts.vipLevel == null && included.some((c) => meta[c.id]?.minVip !== undefined)) {
-    notes.push({ text: "VIP level unknown: VIP-gated tasks were kept; check your VIP level.", facts: ["A04-0007"], pending: false });
+    notes.push({ text: "Nível de VIP desconhecido: as tarefas que exigem VIP foram mantidas; confira o seu nível de VIP.", facts: ["A04-0007"], pending: false });
   }
 
   return {

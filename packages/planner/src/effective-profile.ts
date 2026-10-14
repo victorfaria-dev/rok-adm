@@ -13,9 +13,9 @@ export const LIFETIME_TIER_FLOORS: ReadonlyArray<{ profile: SpendingProfile; min
 ];
 
 export const EFFECTIVE_PROFILE_RULE =
-  "Product rule, not a game fact: past spending counts as one year at a monthly band's floor " +
-  "(Low from $60, Medium from $1,200, High from $6,000, Whale from $12,000, Kraken from $60,000 in total). " +
-  "The higher of your monthly profile and that lifetime tier is used. City Hall and VIP level are not used yet: no sourced threshold.";
+  "Regra do produto, não um fato do jogo: o gasto passado conta como um ano no piso de uma faixa mensal " +
+  "(Low a partir de $60, Medium a partir de $1.200, High a partir de $6.000, Whale a partir de $12.000, Kraken a partir de $60.000 no total). " +
+  "Vale o maior entre o seu perfil mensal e essa faixa de toda a vida. O nível da Prefeitura e do VIP ainda não são usados: não há limiar com fonte.";
 
 export type EffectiveSource = "declared" | "lifetime" | "override";
 
@@ -56,20 +56,20 @@ export function effectiveProfile(
   if (override && SPENDING_PROFILES.includes(override)) {
     return {
       effective: override, declared, lifetimeTier: life, source: "override",
-      explanation: `You chose ${NAMES[override]} by hand (your answers say ${NAMES[declared]}).`,
+      explanation: `Você escolheu ${NAMES[override]} à mão (suas respostas indicam ${NAMES[declared]}).`,
     };
   }
   if (life && rank(life) > rank(declared)) {
     return {
       effective: life, declared, lifetimeTier: life, source: "lifetime",
-      explanation: `You spend like ${NAMES[declared]} now, but about $${p.lifetimeSpendUsd!.toLocaleString("en-US")} in total puts your account at ${NAMES[life]}.`,
+      explanation: `Você gasta como ${NAMES[declared]} agora, mas cerca de $${p.lifetimeSpendUsd!.toLocaleString("pt-BR")} no total colocam a sua conta em ${NAMES[life]}.`,
     };
   }
   return {
     effective: declared, declared, lifetimeTier: life, source: "declared",
     explanation: life === null
-      ? `Based on your monthly spending (${NAMES[declared]}). Add your total spend to check for an older, stronger account.`
-      : `Based on your monthly spending (${NAMES[declared]}); your total spend does not raise it.`,
+      ? `Com base no seu gasto mensal (${NAMES[declared]}). Informe o gasto total para conferir se a conta é mais antiga e mais forte.`
+      : `Com base no seu gasto mensal (${NAMES[declared]}); o seu gasto total não o aumenta.`,
   };
 }
 

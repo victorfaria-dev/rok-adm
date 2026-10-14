@@ -10,6 +10,8 @@ export type TicketFieldId =
 export interface TicketField {
   id: TicketFieldId;
   label: string;
+  /** English label used in the e-mail body (Lilith support reads English). */
+  en: string;
   help?: string;
   required: boolean;
   multiline?: boolean;
@@ -24,51 +26,51 @@ export interface TicketTemplate {
   fields: TicketField[];
 }
 
-const governorId: TicketField = { id: "governorId", label: "Your governor ID", help: "The number on your governor profile.", required: true };
-const governorName: TicketField = { id: "governorName", label: "Your governor name", required: false };
-const kingdom: TicketField = { id: "kingdom", label: "Kingdom number", help: "For example 2708.", required: true };
+const governorId: TicketField = { id: "governorId", label: "Seu ID de governador", en: "Your governor ID", help: "O número no perfil do seu governador.", required: true };
+const governorName: TicketField = { id: "governorName", label: "Seu nome de governador", en: "Your governor name", required: false };
+const kingdom: TicketField = { id: "kingdom", label: "Número do reino", en: "Kingdom number", help: "Por exemplo 2708.", required: true };
 const screenshots: TicketField = {
-  id: "screenshots", label: "Screenshots you will attach", multiline: true, required: false,
-  help: "One per line, for example: ban notice, profile page. Attach the images in the support chat yourself.",
+  id: "screenshots", label: "Capturas de tela que você vai anexar", en: "Screenshots you will attach", multiline: true, required: false,
+  help: "Uma por linha, por exemplo: aviso de banimento, página do perfil. Anexe as imagens no chat do suporte você mesmo.",
 };
 
 export const TICKET_TEMPLATES: readonly TicketTemplate[] = [
   {
     kind: "recovery",
-    title: "Recover my account",
-    blurb: "You can't log in, or you are on the wrong account.",
+    title: "Recuperar minha conta",
+    blurb: "Você não consegue entrar, ou está na conta errada.",
     subject: "Account recovery request",
     fields: [
       governorId, governorName, kingdom,
-      { id: "when", label: "Last time you could log in", help: "Date and time, with your time zone or UTC.", required: true },
-      { id: "binding", label: "How the account was bound", help: "For example: Lilith account email, Google, Apple, Facebook. Never your password.", required: false },
-      { id: "what", label: "What happened", multiline: true, required: true, help: "Short and factual: what you see now and what changed." },
+      { id: "when", label: "Última vez que você conseguiu entrar", en: "Last time you could log in", help: "Data e hora, com o seu fuso horário ou UTC.", required: true },
+      { id: "binding", label: "Como a conta foi vinculada", en: "How the account was bound", help: "Por exemplo: e-mail da conta Lilith, Google, Apple, Facebook. Nunca a sua senha.", required: false },
+      { id: "what", label: "O que aconteceu", en: "What happened", multiline: true, required: true, help: "Curto e objetivo: o que você vê agora e o que mudou." },
       screenshots,
     ],
   },
   {
     kind: "appeal",
-    title: "Appeal a ban or mute",
-    blurb: "You think a ban, mute or penalty was a mistake.",
+    title: "Recorrer de um banimento ou silenciamento",
+    blurb: "Você acha que um banimento, silenciamento ou punição foi um engano.",
     subject: "Appeal of a ban or mute",
     fields: [
       governorId, governorName, kingdom,
-      { id: "when", label: "When the ban or mute started", help: "Date and time, with your time zone or UTC.", required: true },
-      { id: "notice", label: "The message the game showed", help: "Copy the wording of the notice, if there was one.", required: false, multiline: true },
-      { id: "what", label: "Why you think it is a mistake", multiline: true, required: true, help: "Say what you were doing. Stay polite and factual." },
+      { id: "when", label: "Quando o banimento ou silenciamento começou", en: "When the ban or mute started", help: "Data e hora, com o seu fuso horário ou UTC.", required: true },
+      { id: "notice", label: "A mensagem que o jogo mostrou", en: "The message the game showed", help: "Copie o texto do aviso, se houve um.", required: false, multiline: true },
+      { id: "what", label: "Por que você acha que foi um engano", en: "Why you think it is a mistake", multiline: true, required: true, help: "Diga o que você estava fazendo. Seja educado e objetivo." },
       screenshots,
     ],
   },
   {
     kind: "report",
-    title: "Report a bot or cheater",
-    blurb: "Another governor seems to use bots, scripts or cheats.",
+    title: "Denunciar um bot ou trapaceiro",
+    blurb: "Outro governador parece usar bots, scripts ou trapaças.",
     subject: "Report of a suspected bot or cheat",
     fields: [
       governorId, kingdom,
-      { id: "otherGovernor", label: "Their governor ID or name", help: "The ID from their profile is the most useful.", required: true },
-      { id: "when", label: "When you saw it", help: "Date and time, with your time zone or UTC.", required: true },
-      { id: "what", label: "What you saw", multiline: true, required: true, help: "Only what you saw yourself. No guesses about who is behind it." },
+      { id: "otherGovernor", label: "ID ou nome do governador dele", en: "Their governor ID or name", help: "O ID do perfil dele é o mais útil.", required: true },
+      { id: "when", label: "Quando você viu", en: "When you saw it", help: "Data e hora, com o seu fuso horário ou UTC.", required: true },
+      { id: "what", label: "O que você viu", en: "What you saw", multiline: true, required: true, help: "Só o que você mesmo viu. Sem palpites sobre quem está por trás." },
       screenshots,
     ],
   },
@@ -106,16 +108,17 @@ export function buildTicket(kind: TicketKind, values: TicketValues): TicketText 
     if (f.id === "what" || f.id === "screenshots" || f.id === "notice") continue;
     const v = clean(values[f.id]);
     if (!v) {
-      if (f.required) { missing.push(f.label); lines.push(`${f.label}: [missing]`); }
+      if (f.required) { missing.push(f.label); lines.push(`${f.en}: [missing]`); }
       continue;
     }
-    lines.push(`${f.label}: ${v.replace(/\n+/g, " ")}`);
+    lines.push(`${f.en}: ${v.replace(/\n+/g, " ")}`);
   }
   const notice = clean(values.notice);
   if (t.fields.some((f) => f.id === "notice") && notice) lines.push("", "Message shown in the game:", notice);
   const what = clean(values.what);
-  const whatLabel = t.fields.find((f) => f.id === "what")!.label;
-  lines.push("", `${whatLabel}:`, what || "[missing]");
+  const whatField = t.fields.find((f) => f.id === "what")!;
+  const whatLabel = whatField.label;
+  lines.push("", `${whatField.en}:`, what || "[missing]");
   if (!what) missing.push(whatLabel);
   const shots = clean(values.screenshots).split("\n").map((s) => s.trim()).filter(Boolean);
   if (shots.length) lines.push("", "Screenshots attached:", ...shots.map((s) => `- ${s}`));

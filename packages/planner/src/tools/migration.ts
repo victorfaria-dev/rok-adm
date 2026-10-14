@@ -5,9 +5,9 @@ import { nonNeg } from "./types";
 export type MigrationRoute = "same-soc" | "cross-s2" | "cross-s3";
 
 export const ROUTES: readonly { id: MigrationRoute; label: string }[] = [
-  { id: "same-soc", label: "Same-season, into a Season of Conquest kingdom in its first story" },
-  { id: "cross-s2", label: "Cross-season, into a Season 2 kingdom" },
-  { id: "cross-s3", label: "Cross-season, into a Season 3 kingdom" },
+  { id: "same-soc", label: "Mesma temporada, para um reino da Temporada de Conquista em sua primeira história" },
+  { id: "cross-s2", label: "Entre temporadas, para um reino da Temporada 2" },
+  { id: "cross-s3", label: "Entre temporadas, para um reino da Temporada 3" },
 ];
 
 export const isRoute = (x: unknown): x is MigrationRoute => ROUTES.some((r) => r.id === x);
@@ -103,42 +103,42 @@ export function checkMigration(input: MigrationInput, rules: MigrationRules): Mi
   const power = nonNeg(input.powerM);
 
   add("ch", ch >= rules.chMin.value,
-    ch >= rules.chMin.value ? `City Hall ${ch} meets the minimum of ${rules.chMin.value}.` : `City Hall ${ch} is below the minimum of ${rules.chMin.value}.`,
+    ch >= rules.chMin.value ? `A Prefeitura ${ch} atende ao mínimo de ${rules.chMin.value}.` : `A Prefeitura ${ch} está abaixo do mínimo de ${rules.chMin.value}.`,
     rules.chMin);
-  add("alliance", !input.inAlliance, input.inAlliance ? "You are in an alliance: leave it before you move." : "Not in an alliance.", rules.personal);
-  add("troops", input.troopsHome, input.troopsHome ? "All troops are home." : "Troops are out of the city: bring every march home.", rules.personal);
+  add("alliance", !input.inAlliance, input.inAlliance ? "Você está em uma aliança: saia dela antes de mudar." : "Fora de aliança.", rules.personal);
+  add("troops", input.troopsHome, input.troopsHome ? "Todas as tropas estão em casa." : "Há tropas fora da cidade: traga todas as marchas para casa.", rules.personal);
   add("resources", input.resourcesProtected,
-    input.resourcesProtected ? "Resources are within storehouse protection." : "Resources above storehouse protection: spend them or move them first.",
+    input.resourcesProtected ? "Os recursos estão dentro da proteção do Depósito." : "Recursos acima da proteção do Depósito: gaste-os ou mova-os primeiro.",
     rules.personal);
   add("cooldown", !input.cooldownActive,
-    input.cooldownActive ? `Migration cooldown still active (a standard move normally starts a ${rules.cooldownDays.value}-day cooldown).` : "No migration cooldown active.",
+    input.cooldownActive ? `O tempo de espera da migração ainda está ativo (uma mudança padrão costuma iniciar uma espera de ${rules.cooldownDays.value} dias).` : "Nenhum tempo de espera de migração ativo.",
     rules.cooldownDays);
 
   const lim = rules.ageLimit[input.route];
   const gap = ageGapDays(input.characterAgeDays, input.kingdomAgeDays);
-  const gapText = gap >= 0 ? `${gap} days older than` : `${-gap} days younger than`;
-  add("age", gap <= lim.value, `Your character is ${gapText} the target kingdom; this route allows at most ${lim.value} days older.`, lim);
+  const gapText = gap >= 0 ? `${gap} dias mais velho que` : `${-gap} dias mais novo que`;
+  add("age", gap <= lim.value, `Seu personagem está ${gapText} o reino de destino; esta rota permite no máximo ${lim.value} dias a mais de idade.`, lim);
 
   if (input.route !== "same-soc") {
     const { minM, maxM } = rules.crossPower;
     add("cross-power", power >= minM && power <= maxM,
-      power < minM ? `Cross-season immigration needs at least ${fmtM(minM)} power; you have ${fmtM(power)}.`
-        : power > maxM ? `Cross-season immigration allows at most ${fmtM(maxM)} power; you have ${fmtM(power)}.`
-        : `Power ${fmtM(power)} is inside the cross-season window (${fmtM(minM)} to ${fmtM(maxM)}).`,
+      power < minM ? `A imigração entre temporadas exige pelo menos ${fmtM(minM)} de poder; você tem ${fmtM(power)}.`
+        : power > maxM ? `A imigração entre temporadas permite no máximo ${fmtM(maxM)} de poder; você tem ${fmtM(power)}.`
+        : `O poder ${fmtM(power)} está dentro da janela entre temporadas (${fmtM(minM)} a ${fmtM(maxM)}).`,
       rules.crossPower);
   }
 
   const cap = nonNeg(input.targetPowerCapM ?? 0);
   if (cap > 0) {
     add("cap", power <= cap,
-      power <= cap ? `Power ${fmtM(power)} is within the kingdom's power cap of ${fmtM(cap)}.`
-        : `Power ${fmtM(power)} is above the kingdom's power cap of ${fmtM(cap)}: only special immigration approved by the king can let you in.`,
+      power <= cap ? `O poder ${fmtM(power)} está dentro do limite de poder do reino de ${fmtM(cap)}.`
+        : `O poder ${fmtM(power)} está acima do limite de poder do reino de ${fmtM(cap)}: só uma imigração especial aprovada pelo rei pode deixar você entrar.`,
       rules.kingdom);
   }
   const min = nonNeg(input.targetMinPowerM ?? 0);
   if (min > 0) {
     add("kingdom-min", power >= min,
-      power >= min ? `Power ${fmtM(power)} meets the kingdom's own minimum of ${fmtM(min)}.` : `Power ${fmtM(power)} is below the kingdom's own minimum of ${fmtM(min)}.`,
+      power >= min ? `O poder ${fmtM(power)} atende ao mínimo do próprio reino de ${fmtM(min)}.` : `O poder ${fmtM(power)} está abaixo do mínimo do próprio reino de ${fmtM(min)}.`,
       rules.kingdom);
   }
 

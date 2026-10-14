@@ -2,27 +2,27 @@
   "_about": "Rules of the Migration checker (/tools/migration/, F-31). Each rule names its cards and the patch or source date it was checked on. Passport pages: only the data points B06-0001 gives; the page shows ranges between them, never interpolated numbers.",
   "chMin": {
     "value": 16,
-    "unit": "City Hall level",
+    "unit": "nível da Prefeitura",
     "facts": ["B06-0001"],
-    "patch": "community guide of 2026-10-09 (after 1.1.06)",
+    "patch": "guia da comunidade de 2026-10-09 (depois da 1.1.06)",
     "evidence": { "B06-0001": "To migrate a governor needs City Hall 16+" }
   },
   "cooldownDays": {
     "value": 30,
-    "unit": "days",
+    "unit": "dias",
     "facts": ["B06-0001"],
-    "patch": "community guide of 2026-10-09 (after 1.1.06)",
+    "patch": "guia da comunidade de 2026-10-09 (depois da 1.1.06)",
     "evidence": { "B06-0001": "a standard migration normally starts a 30-day cooldown" }
   },
   "personal": {
     "facts": ["B06-0001"],
-    "patch": "community guide of 2026-10-09 (after 1.1.06)",
+    "patch": "guia da comunidade de 2026-10-09 (depois da 1.1.06)",
     "evidence": { "B06-0001": "no alliance, troops home, resources within storehouse protection" }
   },
   "ageLimit": {
     "same-soc": {
       "value": 150,
-      "unit": "max days older than the target kingdom",
+      "unit": "máximo de dias mais velho que o reino de destino",
       "facts": ["B06-0003", "C04-0008"],
       "patch": "1.1.06",
       "evidence": {
@@ -32,7 +32,7 @@
     },
     "cross-s2": {
       "value": 80,
-      "unit": "max days older than the target kingdom",
+      "unit": "máximo de dias mais velho que o reino de destino",
       "facts": ["B06-0003", "C04-0008"],
       "patch": "1.1.06",
       "evidence": {
@@ -42,7 +42,7 @@
     },
     "cross-s3": {
       "value": 120,
-      "unit": "max days older than the target kingdom",
+      "unit": "máximo de dias mais velho que o reino de destino",
       "facts": ["B06-0003", "C04-0008"],
       "patch": "1.1.06",
       "evidence": {
@@ -53,13 +53,13 @@
   },
   "passport": {
     "facts": ["B06-0001"],
-    "patch": "community guide of 2026-10-09 (T3 table, in-game check pending)",
+    "patch": "guia da comunidade de 2026-10-09 (tabela T3, verificação no jogo pendente)",
     "bands": [
       {
         "fromM": 0,
         "toM": 10,
         "value": 1,
-        "unit": "Passport Pages",
+        "unit": "Páginas de Passaporte",
         "facts": ["B06-0001"],
         "evidence": { "B06-0001": "1 page at 0–10M" }
       },
@@ -67,7 +67,7 @@
         "fromM": 50,
         "toM": 55,
         "value": 25,
-        "unit": "Passport Pages",
+        "unit": "Páginas de Passaporte",
         "facts": ["B06-0001"],
         "evidence": { "B06-0001": "\"pages 50-55M\", valor: \"25\"" }
       },
@@ -75,7 +75,7 @@
         "fromM": 100,
         "toM": null,
         "value": 75,
-        "unit": "Passport Pages",
+        "unit": "Páginas de Passaporte",
         "facts": ["B06-0001"],
         "evidence": { "B06-0001": "rising to 75 pages above 100M" }
       }
@@ -90,7 +90,7 @@
   },
   "kingdom": {
     "facts": ["B06-0002", "B06-0004"],
-    "patch": "set by each kingdom (special immigration confirmed in 1.1.03)",
+    "patch": "definido por cada reino (imigração especial confirmada na 1.1.03)",
     "evidence": {
       "B06-0002": "The king controls the normal immigration power cap",
       "B06-0004": "kingdoms screen migrants with application forms and account reviews and set minimums"
@@ -99,47 +99,47 @@
   "checklist": [
     {
       "id": "ask-officer",
-      "text": "Ask the target kingdom's migration officer for their own requirements (power, kills, deads, role).",
-      "detail": "Kingdoms screen applicants on top of the game's rules, and the king sets the normal power cap.",
+      "text": "Pergunte ao oficial de migração do reino de destino quais são os requisitos dele (poder, abates, mortes, função).",
+      "detail": "Os reinos avaliam os candidatos além das regras do jogo, e o rei define o limite normal de poder.",
       "facts": ["B06-0002", "B06-0004"],
       "evidence": { "B06-0004": "screening is done by the king or migration officers through DMs/Discord" }
     },
     {
       "id": "pages",
-      "text": "Have enough Passport Pages for your power.",
-      "detail": "Pages are sold in the Alliance Shop's Weekly Limit section for Individual Credits.",
+      "text": "Tenha Páginas de Passaporte suficientes para o seu poder.",
+      "detail": "As páginas são vendidas na seção de Limite Semanal da Loja da Aliança por Créditos Individuais.",
       "facts": ["B06-0001"],
       "evidence": { "B06-0001": "the Alliance Shop has a weekly-restocked 'Weekly Limit' section of Passport Pages bought with Individual Credits" }
     },
     {
       "id": "resources",
-      "text": "Spend or use resources above your storehouse protection.",
+      "text": "Gaste ou use os recursos acima da proteção do seu Depósito.",
       "facts": ["B06-0001"],
       "evidence": { "B06-0001": "resources within storehouse protection" }
     },
     {
       "id": "troops",
-      "text": "Bring every march home and leave your alliance.",
+      "text": "Traga todas as marchas para casa e saia da sua aliança.",
       "facts": ["B06-0001"],
       "evidence": { "B06-0001": "no alliance, troops home" }
     },
     {
       "id": "age",
-      "text": "Compare your character age with the target kingdom's age for your route.",
-      "detail": "The limits were cut in 1.1.06, and players report confusing official mails about them.",
+      "text": "Compare a idade do seu personagem com a idade do reino de destino para a sua rota.",
+      "detail": "Os limites foram cortados na 1.1.06, e jogadores relatam correios oficiais confusos sobre eles.",
       "facts": ["B06-0003"],
       "evidence": { "B06-0003": "Players are confused by the age rule and by withdrawn official mails" }
     },
     {
       "id": "deposit",
-      "text": "Cross-season: keep 20,000 gems for the refundable deposit (lost if you don't use the eligibility).",
+      "text": "Entre temporadas: guarde 20.000 gemas para o depósito reembolsável (perdido se você não usar a elegibilidade).",
       "facts": ["C04-0025"],
       "evidence": { "C04-0025": "requires a refundable 20,000 Gem deposit when eligibility is granted (lost if not used)" }
     },
     {
       "id": "lost-kingdom",
-      "text": "Check the target is not inside an active Lost Kingdom.",
-      "detail": "Such destinations are generally closed to standard migration.",
+      "text": "Confira se o destino não está dentro de um Reino Perdido ativo.",
+      "detail": "Esses destinos costumam estar fechados à migração padrão.",
       "facts": ["B06-0003"],
       "evidence": { "B06-0003": "A destination inside an active Lost Kingdom is generally closed to standard migration" }
     }

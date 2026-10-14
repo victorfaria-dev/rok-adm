@@ -21,10 +21,10 @@ export interface SeedBand {
 
 /** B08-0008 bands (patch 1.0.95, 2025-06-12). */
 export const SEED_BANDS: readonly SeedBand[] = [
-  { key: "0-150M", label: "Up to 150M", from: 0, to: 150e6, rate: 1 },
-  { key: "150-300M", label: "150M to 300M", from: 150e6, to: 300e6, rate: 0.8 },
-  { key: "300-500M", label: "300M to 500M", from: 300e6, to: 500e6, rate: 0.5 },
-  { key: ">500M", label: "Above 500M", from: 500e6, to: Number.POSITIVE_INFINITY, rate: 0 },
+  { key: "0-150M", label: "Até 150M", from: 0, to: 150e6, rate: 1 },
+  { key: "150-300M", label: "150M a 300M", from: 150e6, to: 300e6, rate: 0.8 },
+  { key: "300-500M", label: "300M a 500M", from: 300e6, to: 500e6, rate: 0.5 },
+  { key: ">500M", label: "Acima de 500M", from: 500e6, to: Number.POSITIVE_INFINITY, rate: 0 },
 ];
 
 export const SEED_RULE = {
@@ -39,9 +39,9 @@ export const SEED_RULE = {
 
 /** Cards the seed simulator cites (confidence pinned to the card files by a unit test). */
 export const SEED_SOURCES: readonly KingdomSource[] = [
-  { id: "B08-0008", confidence: "alta", text: "Since 1.0.95 each governor's power counts 100% up to 150M, 80% from 150M to 300M, 50% from 300M to 500M, 0% above 500M; only the top 300 governors count; Imperium threshold 23.5B." },
-  { id: "B01-0001", confidence: "alta", text: "Season of Conquest seeds (Imperium, A, B, C, D) are set by this kingdom power." },
-  { id: "B03-0007", confidence: "alta", text: "Vacation Permit holders are not counted toward the kingdom's matchmaking score." },
+  { id: "B08-0008", confidence: "alta", text: "Desde a 1.0.95 o poder de cada governador conta 100% até 150M, 80% de 150M a 300M, 50% de 300M a 500M, 0% acima de 500M; só os 300 melhores governadores contam; limiar do Imperium 23,5B." },
+  { id: "B01-0001", confidence: "alta", text: "Os seeds da Temporada de Conquista (Imperium, A, B, C, D) são definidos por este poder do reino." },
+  { id: "B03-0007", confidence: "alta", text: "Quem tem Licença de Férias não conta para a pontuação de matchmaking do reino." },
 ];
 
 /** Most power one governor can add: 150M + 120M + 100M. */
@@ -63,8 +63,8 @@ export function seedRuleFreshness(today: string): { stale: boolean; text: string
   return {
     stale,
     text: stale
-      ? `Last verified for patch ${SEED_RULE.patch}; check date passed, may be outdated.`
-      : `Last verified for patch ${SEED_RULE.patch}; next check due ${SEED_RULE.checkBy}.`,
+      ? `Última verificação no patch ${SEED_RULE.patch}; a data de conferência passou, pode estar desatualizado.`
+      : `Última verificação no patch ${SEED_RULE.patch}; próxima conferência até ${SEED_RULE.checkBy}.`,
   };
 }
 
@@ -212,12 +212,12 @@ export function parseGovernorLines(text: string): { governors: SeedGovernor[]; e
     let power: number | null = direct;
     if (direct === null) {
       const s = splitNameAndNumber(t);
-      if (s.number === null) return void errors.push({ line: i + 1, text: t, message: "No power on this line (write 1.5m, 300k or 1,200,000)." });
+      if (s.number === null) return void errors.push({ line: i + 1, text: t, message: "Não há poder nesta linha (escreva 1.5m, 300k ou 1.200.000)." });
       power = parseQuantity(s.number);
       name = cleanLine(s.name, SEED_LIMITS.name);
-      if (power === null) return void errors.push({ line: i + 1, text: t, message: "The power is not a number (write 1.5m, 300k or 1,200,000)." });
+      if (power === null) return void errors.push({ line: i + 1, text: t, message: "O poder não é um número (escreva 1.5m, 300k ou 1.200.000)." });
     }
-    if (power! > SEED_LIMITS.power) return void errors.push({ line: i + 1, text: t, message: "This power is higher than any governor can have. Check the number." });
+    if (power! > SEED_LIMITS.power) return void errors.push({ line: i + 1, text: t, message: "Este poder é maior que o de qualquer governador. Confira o número." });
     governors.push({ id: `L${i + 1}`, name, power: power! });
   });
   return { governors, errors, truncated };
@@ -306,7 +306,7 @@ export interface SeedDoc extends KingdomDocBase {
 }
 
 export function emptySeedDoc(id: string, now: Date = new Date()): SeedDoc {
-  return { id, updatedAt: now.toISOString(), title: "Seed simulation", mode: "list", listText: "", quick: emptyQuick(), whatIf: emptyWhatIf() };
+  return { id, updatedAt: now.toISOString(), title: "Simulação de seed", mode: "list", listText: "", quick: emptyQuick(), whatIf: emptyWhatIf() };
 }
 
 const nonNeg = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x) && x >= 0;

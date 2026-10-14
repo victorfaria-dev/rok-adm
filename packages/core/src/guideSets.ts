@@ -63,7 +63,7 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
     id: "f2p",
     file: "blocks.f2p.json",
     kind: "base",
-    title: "Early-kingdom guide",
+    title: "Guia do reino inicial",
     features: ["F-02", "F-14"],
   },
   {
@@ -71,67 +71,67 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
     file: "blocks.low.json",
     kind: "profile-delta",
     deltaFor: "low",
-    title: "Low spender (pass-only) delta",
+    title: "Delta para Low (só passes)",
     features: ["F-75"],
   },
   {
     id: "newkingdom",
     file: "blocks.newkingdom.json",
     kind: "guide",
-    title: "New kingdom start and day-1 survival",
+    title: "Início em reino novo e sobrevivência no dia 1",
     features: ["F-12"],
   },
   {
     id: "first30",
     file: "blocks.first30.json",
     kind: "guide",
-    title: "Your first 30 days",
+    title: "Seus primeiros 30 dias",
     features: ["F-11"],
     sectionTitles: {
-      overview: "1. What the first 30 days are for",
-      day0: "2. Days 1–3",
-      plan: "3. Days 4–30",
-      mistakes: "4. Mistakes to avoid",
-      open: "5. Open questions and pending measurements",
+      overview: "1. Para que servem os primeiros 30 dias",
+      day0: "2. Dias 1–3",
+      plan: "3. Dias 4–30",
+      mistakes: "4. Erros a evitar",
+      open: "5. Perguntas em aberto e medições pendentes",
     },
   },
   {
     id: "returning",
     file: "blocks.returning.json",
     kind: "guide",
-    title: "Coming back to the game",
+    title: "Voltando ao jogo",
     features: ["F-29", "F-28"],
     sectionTitles: {
-      overview: "1. What changed while you were away",
-      recovery: "2. Your 14-day catch-up plan, and stay, migrate or restart",
-      mistakes: "3. Mistakes returners make",
-      open: "4. Open questions and pending measurements",
+      overview: "1. O que mudou enquanto você estava fora",
+      recovery: "2. Seu plano de 14 dias para se atualizar, e ficar, migrar ou recomeçar",
+      mistakes: "3. Erros de quem volta",
+      open: "4. Perguntas em aberto e medições pendentes",
     },
   },
   {
     id: "recovery",
     file: "blocks.recovery.json",
     kind: "guide",
-    title: "Recovering after being zeroed",
+    title: "Recuperação depois de ser zerado",
     features: ["F-13"],
     sectionTitles: {
-      recovery: "1. Recovery plan: first, don't quit today",
-      mistakes: "2. Log-off risk checklist",
-      open: "3. Open questions and pending measurements",
+      recovery: "1. Plano de recuperação: primeiro, não desista hoje",
+      mistakes: "2. Lista de risco ao sair do jogo",
+      open: "3. Perguntas em aberto e medições pendentes",
     },
   },
   {
     id: "kingdomadmin",
     file: "blocks.kingdomadmin.json",
     kind: "guide",
-    title: "Kingdom administration for kings and council",
+    title: "Administração do reino para reis e conselho",
     features: ["F-33", "F-34", "F-35"],
     sectionTitles: {
-      overview: "1. What a council does",
-      plan: "2. Running the kingdom",
-      events: "3. KvK, MGE and the event cycle",
-      mistakes: "4. Failure points",
-      open: "5. Open questions and pending measurements",
+      overview: "1. O que um conselho faz",
+      plan: "2. Tocando o reino",
+      events: "3. KvK, MGE e o ciclo de eventos",
+      mistakes: "4. Pontos de falha",
+      open: "5. Perguntas em aberto e medições pendentes",
     },
   },
   {
@@ -139,13 +139,13 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
     id: "latestage",
     file: "blocks.latestage.json",
     kind: "guide",
-    title: "Late game: KvK2, KvK3 and Season of Conquest",
+    title: "Fase tardia: KvK2, KvK3 e Temporada de Conquista",
     features: ["F-02", "F-14"],
     sectionTitles: {
-      overview: "1. What changes after KvK1",
-      plan: "2. Late-game plan: troops, healing, commanders and gear",
-      events: "3. Events after KvK1",
-      open: "4. Open questions and pending measurements",
+      overview: "1. O que muda depois da KvK1",
+      plan: "2. Plano da fase tardia: tropas, cura, comandantes e equipamento",
+      events: "3. Eventos depois da KvK1",
+      open: "4. Perguntas em aberto e medições pendentes",
     },
   },
   {
@@ -154,7 +154,7 @@ export const GUIDE_SETS: readonly GuideSetInfo[] = [
     id: "farms",
     file: "blocks.farms.json",
     kind: "guide",
-    title: "Farm accounts",
+    title: "Contas farm",
     features: ["F-03", "F-65", "F-66", "F-67", "F-71"],
   },
 ];
@@ -179,7 +179,7 @@ export function deltaSetsFor(spending: SpendingProfile): GuideSetInfo[] {
 
 export interface OfferedGuide {
   set: GuideSetInfo;
-  /** Why this guide is offered, English. */
+  /** Why this guide is offered, pt-BR. */
   reason: string;
 }
 
@@ -192,20 +192,20 @@ export function guidesForProfile(profile: AccountProfile, situation: GuideSituat
   const out: OfferedGuide[] = [];
   const add = (id: GuideSetId, reason: string) => out.push({ set: guideSetById(id), reason });
 
-  if (situation.zeroed) add("recovery", "You said you were just zeroed.");
-  if (profile.returningPlayer) add("returning", "You are coming back after a break.");
+  if (situation.zeroed) add("recovery", "Você disse que acabou de ser zerado.");
+  if (profile.returningPlayer) add("returning", "Você está voltando depois de uma pausa.");
   // Late game right after the situations the player reported (zeroed, returning): for a KvK2+ kingdom it is
   // the plan itself, since the base guide's phase plan ends at KvK1.
-  if (isLateStage(profile.kingdomStage)) add("latestage", "Your kingdom is past KvK1: the plan for KvK2, KvK3 and Season of Conquest.");
-  if (profile.role === "lider") add("kingdomadmin", "You lead an alliance or sit on the kingdom council.");
+  if (isLateStage(profile.kingdomStage)) add("latestage", "Seu reino já passou da KvK1: o plano para a KvK2, a KvK3 e a Temporada de Conquista.");
+  if (profile.role === "lider") add("kingdomadmin", "Você lidera uma aliança ou faz parte do conselho do reino.");
   if (profile.kingdomStage === "pre_kvk" && (profile.kingdomDay === null || profile.kingdomDay <= NEWKINGDOM_MAX_DAY))
     add("newkingdom", profile.kingdomDay === null
-      ? "Your kingdom is before its first KvK."
-      : `Your kingdom is on day ${profile.kingdomDay} (≤ ${NEWKINGDOM_MAX_DAY}).`);
+      ? "Seu reino está antes da primeira KvK."
+      : `Seu reino está no dia ${profile.kingdomDay} (≤ ${NEWKINGDOM_MAX_DAY}).`);
   if (!profile.returningPlayer && profile.cityHall <= FIRST30_MAX_CITY_HALL)
-    add("first30", `You are a new player (CH${profile.cityHall} ≤ ${FIRST30_MAX_CITY_HALL}).`);
+    add("first30", `Você é um jogador novo (Prefeitura ${profile.cityHall} ≤ ${FIRST30_MAX_CITY_HALL}).`);
   const deltas = deltaSetsFor(profile.spending).map((d) => d.title);
-  add("f2p", deltas.length > 0 ? `Base guide, with: ${deltas.join(", ")}.` : "Base guide.");
+  add("f2p", deltas.length > 0 ? `Guia-base, com: ${deltas.join(", ")}.` : "Guia-base.");
   return out;
 }
 

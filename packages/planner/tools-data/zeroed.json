@@ -3,22 +3,22 @@
   "logoff": [
     {
       "id": "shield",
-      "text": "Raise a peace shield if a kill event or a war is running.",
-      "detail": "Shield costs and durations: pending measurement. We have no fact card on them yet.",
+      "text": "Ative um escudo de paz se um evento de abates ou uma guerra estiver rolando.",
+      "detail": "Custos e durações do escudo: pendentes de medição. Ainda não temos ficha de fatos sobre eles.",
       "facts": [],
       "pending": true
     },
     {
       "id": "hospital",
-      "text": "Heal or clear your hospital.",
-      "detail": "Wounded troops beyond hospital capacity die.",
+      "text": "Cure ou esvazie o seu hospital.",
+      "detail": "Tropas feridas além da capacidade do hospital morrem.",
       "facts": ["A08-0502"],
       "evidence": { "A08-0502": "Wounded troops beyond hospital capacity die" }
     },
     {
       "id": "storehouse",
-      "text": "Keep raw resources at or under your storehouse protection.",
-      "detail": "Anything above it can be plundered. Keep the rest as resource items, which can't be.",
+      "text": "Mantenha os recursos brutos no limite da proteção do Depósito ou abaixo.",
+      "detail": "Tudo acima disso pode ser saqueado. Guarde o resto como itens de recurso, que não podem.",
       "facts": ["A03-0006", "A03-0007"],
       "evidence": {
         "A03-0006": "Storehouse protects raw resources from plunder up to a per-level cap",
@@ -27,15 +27,15 @@
     },
     {
       "id": "safe-gathering",
-      "text": "Leave gatherers only in your alliance resource center.",
-      "detail": "Armies gathering there cannot be attacked.",
+      "text": "Deixe os coletores só no centro de recursos da sua aliança.",
+      "detail": "Exércitos coletando ali não podem ser atacados.",
       "facts": ["A03-0012"],
       "evidence": { "A03-0012": "armies gathering there cannot be attacked" }
     },
     {
       "id": "farm-surplus",
-      "text": "On a farm during a kill event, send the surplus to your main first.",
-      "detail": "Big raw stockpiles on farms attract raids. Only the amount above storehouse protection can be sent.",
+      "text": "Em uma farm durante um evento de abates, envie primeiro o excedente à sua conta principal.",
+      "detail": "Grandes estoques brutos em farms atraem ataques. Só a quantidade acima da proteção do Depósito pode ser enviada.",
       "facts": ["A13-0005", "A03-0030"],
       "evidence": {
         "A13-0005": "transfer surplus to main and keep exposed raw resources within storehouse protection",
@@ -44,8 +44,8 @@
     },
     {
       "id": "territory",
-      "text": "In Season of Conquest, keep your city inside your alliance territory at home.",
-      "detail": "Since 1.1.03, cities inside another alliance's territory in the home kingdom can't be attacked once the kingdom is in Season of Conquest.",
+      "text": "Na Temporada de Conquista, mantenha a sua cidade dentro do território da sua aliança no Reino de Origem.",
+      "detail": "Desde a 1.1.03, cidades dentro do território de outra aliança no Reino de Origem não podem ser atacadas quando o reino está na Temporada de Conquista.",
       "facts": ["C04-0014"],
       "evidence": { "C04-0014": "governors can no longer attack cities inside other alliances' territory in the Home Kingdom" }
     }
@@ -53,49 +53,49 @@
   "steps": [
     {
       "id": "stop-the-bleeding",
-      "title": "Stop it happening again tonight",
-      "text": "Run the log-off checklist above before you close the game, even with nothing left to lose: resources keep coming in.",
+      "title": "Impeça que aconteça de novo esta noite",
+      "text": "Faça a lista de saída acima antes de fechar o jogo, mesmo sem nada a perder: os recursos continuam chegando.",
       "facts": ["A03-0006", "A03-0007"]
     },
     {
       "id": "find-out-why",
-      "title": "Find out why it happened",
-      "text": "Kingdoms use zeroing as their harshest penalty, after a kick and a deadline to migrate, for things like missed DKP or a broken MGE deal. If that is your case, talk to leadership or plan a move; if it was a war, read on.",
+      "title": "Descubra por que aconteceu",
+      "text": "Os reinos usam a zeragem como a punição mais dura, depois de uma expulsão e de um prazo para migrar, por coisas como DKP não cumprido ou um acordo de MGE quebrado. Se for o seu caso, fale com a liderança ou planeje uma mudança; se foi uma guerra, continue lendo.",
       "facts": ["B03-0005", "B06-0001"],
       "evidence": { "B03-0005": "Used for missed DKP, breaking MGE agreements, refusing orders, or unwanted power" },
-      "link": { "href": "/tools/migration/", "text": "Check if you can migrate" }
+      "link": { "href": "/tools/migration/", "text": "Veja se você pode migrar" }
     },
     {
       "id": "heal",
-      "title": "Heal before you retrain",
-      "text": "Heal the wounded still in your hospital, then keep capacity and healing speedups ready for the next fight.",
+      "title": "Cure antes de retreinar",
+      "text": "Cure os feridos que ainda estão no hospital e depois mantenha a capacidade e as acelerações de cura prontas para a próxima luta.",
       "facts": ["A08-0502"],
       "evidence": { "A08-0502": "keep hospitals large and clear before fights" }
     },
     {
       "id": "t4-core",
-      "title": "Rebuild a T4 core, not T5",
-      "text": "T5 heals cost much more than T4. Without a steady economy, fight with T4 and keep a T4 reserve.",
+      "title": "Reconstrua um núcleo T4, não T5",
+      "text": "As curas de T5 custam muito mais que as de T4. Sem uma economia estável, lute com T4 e mantenha uma reserva de T4.",
       "facts": ["A08-0505", "A08-0500"],
       "evidence": { "A08-0505": "accounts without steady economy should keep fighting with T4 and maintain a T4 reserve" }
     },
     {
       "id": "fewer-marches",
-      "title": "Field fewer, complete marches",
-      "text": "Three good marches, or even one complete march, do more than five weak ones and cost less to heal.",
+      "title": "Use menos marchas, mas completas",
+      "text": "Três marchas boas, ou até uma marcha completa, rendem mais que cinco fracas e custam menos para curar.",
       "facts": ["A08-0504"],
       "evidence": { "A08-0504": "~3 best marches or one complete march are more useful and cheaper to heal" }
     },
     {
       "id": "feed",
-      "title": "Feed the rebuild from your farm",
-      "text": "Send farm resources to your main through the Trading Post. The trip uses a march queue, takes travel time and pays a tax that falls as the Trading Post levels up.",
+      "title": "Alimente a reconstrução com a sua farm",
+      "text": "Envie recursos da farm à sua conta principal pelo Entreposto Comercial. A viagem usa uma fila de marcha, leva tempo e paga uma taxa que cai conforme o Entreposto Comercial sobe de nível.",
       "facts": ["A13-0010", "A03-0026", "A03-0024"]
     },
     {
       "id": "hoard",
-      "title": "Save for scored events",
-      "text": "Keep speedups, resource items and AP items for scored events and KvK instead of spending them as they come.",
+      "title": "Poupe para eventos pontuados",
+      "text": "Guarde acelerações, itens de recurso e itens de PA para eventos pontuados e para a KvK em vez de gastá-los conforme chegam.",
       "facts": ["A11-0501"],
       "evidence": { "A11-0501": "save speedups, resources (as items), AP potions for scoring events and KvK healing" }
     }
@@ -103,25 +103,25 @@
   "stillCounts": [
     {
       "id": "deaths-dkp",
-      "text": "Dead troops are usually the heaviest part of DKP. Your kingdom sets the rules, and some count deaths from a badly traded zeroing day as zero, so check yours.",
+      "text": "Tropas mortas costumam ser a parte mais pesada do DKP. O seu reino define as regras, e alguns contam como zero as mortes de um dia de zeragem com troca ruim, então confira o seu.",
       "facts": ["B08-0001"],
       "evidence": { "B08-0001": "deaths on a day you were zeroed in a 'terrible trade' count as 0" }
     },
     {
       "id": "acclaim",
-      "text": "In newer Season of Conquest Lost Kingdoms, troops you lose also earn Acclaim, scaled by troop level.",
+      "text": "Nos Reinos Perdidos mais novos da Temporada de Conquista, as tropas que você perde também rendem Acclaim, proporcional ao nível da tropa.",
       "facts": ["C04-0015"],
       "evidence": { "C04-0015": "earn Acclaim from severe wounds/kills inflicted and suffered" }
     },
     {
       "id": "hall-of-heroes",
-      "text": "The Hall of Heroes returns part of what you spent healing in the Lost Kingdom when it ends.",
+      "text": "O Salão dos Heróis devolve parte do que você gastou curando no Reino Perdido quando ele termina.",
       "facts": ["C04-0028"],
       "evidence": { "C04-0028": "returns part of the resources spent healing in the Lost Kingdom at its end" }
     },
     {
       "id": "unplunderable",
-      "text": "Resource items and gems were never at risk: they can't be plundered.",
+      "text": "Itens de recurso e gemas nunca estiveram em risco: não podem ser saqueados.",
       "facts": ["A03-0007"],
       "evidence": { "A03-0007": "Gems cannot be plundered in any form" }
     }
@@ -129,19 +129,19 @@
   "farm": [
     {
       "id": "farm-raids",
-      "text": "Farms with big raw stockpiles at a low City Hall attract raids, most of all during kill events. Move the surplus to your main and keep what stays within storehouse protection.",
+      "text": "Farms com grandes estoques brutos em Prefeitura baixa atraem ataques, principalmente durante eventos de abates. Passe o excedente para a conta principal e mantenha o que fica dentro da proteção do Depósito.",
       "facts": ["A13-0005"],
       "evidence": { "A13-0005": "Farms holding large raw stockpiles at low CH attract raids, especially during kill events" }
     },
     {
       "id": "farm-self-zero",
-      "text": "Some players zero their own farm for MGE or kill points. The guide that reports it advises against it unless you need it for a commander.",
+      "text": "Alguns jogadores zeram a própria farm por pontos de MGE ou de abates. O guia que relata isso desaconselha, a menos que você precise para um comandante.",
       "facts": ["A13-0005"],
       "evidence": { "A13-0005": "the guide author advises against it unless needed for a commander" }
     },
     {
       "id": "farm-close",
-      "text": "Keep the farm close to your main: Trading Post trips walk there and back.",
+      "text": "Mantenha a farm perto da conta principal: as viagens do Entreposto Comercial vão e voltam a pé.",
       "facts": ["A03-0026"],
       "evidence": { "A03-0026": "Keep farm cities close to the main to shorten trips" }
     }

@@ -88,7 +88,7 @@ export function evaluateCommanderDecision(
   for (const q of unanswered) {
     const question = checklist.questions.find((x) => x.id === q);
     reasons.push({
-      ruleId: `unanswered:${q}`, effect: "unanswered", text: `Answer first: ${question?.text ?? q}`,
+      ruleId: `unanswered:${q}`, effect: "unanswered", text: `Responda primeiro: ${question?.text ?? q}`,
       facts: [...(question?.facts ?? [])], split: false, confidence: "pending",
     });
   }
@@ -97,7 +97,7 @@ export function evaluateCommanderDecision(
   const has = (e: CommanderReason["effect"]) => reasons.some((r) => r.effect === e);
   const verdict: Verdict = has("avoid") ? "avoid" : has("wait") || has("unanswered") || !has("go") ? "wait" : "go";
   if (!has("avoid") && !has("wait") && !has("unanswered") && !has("go")) {
-    reasons.push({ ruleId: "no-go-reason", effect: "wait", text: "No reason to invest was found in your answers.", facts: [], split: false, confidence: "pending" });
+    reasons.push({ ruleId: "no-go-reason", effect: "wait", text: "Suas respostas não trouxeram nenhum motivo para investir.", facts: [], split: false, confidence: "pending" });
   }
   const deciding = reasons.filter((r) => r.effect === verdict || (verdict === "wait" && r.effect === "unanswered"));
   const facts = [...new Set(reasons.flatMap((r) => r.facts))].sort();

@@ -14,7 +14,7 @@ export interface FactBadge {
   sourceCount: number;
   /** True when the fact may back a firm statement under the policy. */
   usable: boolean;
-  /** Short English label, e.g. "Verified on patch 1.1.09 · 2026-06-30" or "Unverified". */
+  /** Short pt-BR label, e.g. "Verificado no patch 1.1.09 · 2026-06-30" or "Não verificado". */
   label: string;
 }
 
@@ -22,11 +22,11 @@ export function factBadge(fact: Fact, policy: UsabilityPolicy = DEFAULT_POLICY):
   const usable = isUsable(fact, policy);
   const sourceCount = new Set(fact.sources.map((s) => s.id)).size;
   let label: string;
-  if (fact.status === "obsoleto") label = "Outdated";
-  else if (fact.status === "contestado") label = "Disputed";
-  else if (!usable) label = "Unverified";
+  if (fact.status === "obsoleto") label = "Desatualizado";
+  else if (fact.status === "contestado") label = "Contestado";
+  else if (!usable) label = "Não verificado";
   else {
-    const parts = [fact.patch ? `Verified on patch ${fact.patch}` : "Verified (patch unknown)"];
+    const parts = [fact.patch ? `Verificado no patch ${fact.patch}` : "Verificado (patch desconhecido)"];
     if (fact.validUntil) parts.push(fact.validUntil);
     label = parts.join(" · ");
   }

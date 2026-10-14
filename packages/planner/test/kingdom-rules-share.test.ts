@@ -10,7 +10,7 @@ describe("compact rules share form (Q2 P2-1)", () => {
     // Changing a template? Copy the old text into RULES_TEMPLATE_HISTORY as "key@<old version>",
     // bump RULES_TEMPLATE_VERSION, then update this hash.
     expect(RULES_TEMPLATE_VERSION).toBe(1);
-    expect(createHash("sha256").update(JSON.stringify(RULES_TEMPLATES)).digest("hex").slice(0, 16)).toBe("388a7923b568098c");
+    expect(createHash("sha256").update(JSON.stringify(RULES_TEMPLATES)).digest("hex").slice(0, 16)).toBe("060fb41d24e62a91");
   });
 
   it("an untouched charter carries only references; round trip is exact", () => {

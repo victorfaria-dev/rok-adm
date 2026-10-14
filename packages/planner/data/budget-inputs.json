@@ -4,78 +4,78 @@
   "researchedProfiles": ["f2p"],
   "inputs": {
     "dailyObjectivesGems": {
-      "value": 100, "unit": "gems/day",
+      "value": 100, "unit": "gemas/dia",
       "facts": ["A04-0001"],
       "evidence": { "A04-0001": "contains 100 gems" }
     },
     "vipDailyStart": {
-      "value": 40, "unit": "VIP points (day 1 of streak)",
+      "value": 40, "unit": "pontos VIP (dia 1 da sequência)",
       "facts": ["A05-0003"],
       "evidence": { "A05-0003": "starting at 40 and increasing by 20" }
     },
     "vipDailyIncrement": {
-      "value": 20, "unit": "VIP points per consecutive day",
+      "value": 20, "unit": "pontos VIP por dia consecutivo",
       "facts": ["A05-0003"],
       "evidence": { "A05-0003": "increasing by 20 up to a maximum of 200 per day" }
     },
     "vipDailyCap": {
-      "value": 200, "unit": "VIP points/day",
+      "value": 200, "unit": "pontos VIP/dia",
       "facts": ["A05-0003"],
       "evidence": { "A05-0003": "up to a maximum of 200 per day" }
     },
     "gemToVip": {
-      "value": 1, "unit": "VIP points per gem",
+      "value": 1, "unit": "pontos VIP por gema",
       "facts": ["A05-0004"],
       "evidence": { "A05-0004": "1 gem = 1 VIP point" }
     },
     "dailyObjectivesSpeedupMinutes": {
-      "value": 170, "unit": "minutes/day (derived from a 2020 wiki revision)",
+      "value": 170, "unit": "minutos/dia (derivado de uma revisão da wiki de 2020)",
       "facts": ["A04-0010", "A10-0001"],
       "evidence": { "A04-0010": "= 170 min" },
       "derived": true,
       "pendingGaps": ["L-A04-04", "L-A10-02"]
     },
     "kvk1StartDay": {
-      "value": 100, "unit": "kingdom day (approximate)",
+      "value": 100, "unit": "dia do reino (aproximado)",
       "facts": ["B01-0500"],
       "evidence": { "B01-0500": "KvK1 begins around kingdom day 100" },
       "pendingGaps": ["L-B01-02"]
     },
     "chAtKvK1F2P": {
-      "value": { "workableMin": 21, "notExpected": 25 }, "unit": "City Hall level",
+      "value": { "workableMin": 21, "notExpected": 25 }, "unit": "nível da Prefeitura",
       "facts": ["B01-0700"],
       "evidence": { "B01-0700": "CH21+ workable; CH25 not expected for F2P" }
     },
     "t4Day": {
-      "value": 30, "unit": "kingdom day (reported)",
+      "value": 30, "unit": "dia do reino (relatado)",
       "facts": ["B01-0700"],
       "evidence": { "B01-0700": "~day 30" }
     },
     "powerAtKvK1F2P": {
-      "value": { "minMillions": 10, "maxMillions": 20 }, "unit": "power (millions)",
+      "value": { "minMillions": 10, "maxMillions": 20 }, "unit": "poder (milhões)",
       "facts": ["B01-0700"],
       "evidence": { "B01-0700": "10–20M" }
     },
     "lostKingdomEntryCH": {
-      "value": 17, "unit": "City Hall level",
+      "value": 17, "unit": "nível da Prefeitura",
       "facts": ["B01-0503"],
       "evidence": { "B01-0503": "requires City Hall 17" },
       "pendingGaps": ["L-B01-03"]
     },
     "vipTargets": {
-      "value": [6, 10], "unit": "VIP level (first, second target)",
+      "value": [6, 10], "unit": "nível de VIP (primeira e segunda meta)",
       "facts": ["A05-0008", "A01-0006", "A05-0006"],
       "evidence": { "A05-0008": "first VIP 6 (permanent second builder), then VIP 10" }
     }
   },
   "oneTimeGems": [
-    { "id": "ch16", "label": "City Hall 16 reward", "value": 100, "unlockCityHall": 16, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "CH16 = 7-day universal speedup + 100 gems" } },
-    { "id": "ch21", "label": "City Hall 21 reward", "value": 200, "unlockCityHall": 21, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "CH21 = 7-day universal speedup + 200 gems" } },
-    { "id": "ch25", "label": "City Hall 25 reward", "value": 500, "unlockCityHall": 25, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "+ 500 gems" } },
-    { "id": "facebook-bind", "label": "Bind account to Facebook (single T3 source)", "value": 200, "unlockCityHall": null, "facts": ["A04-0005"], "evidence": { "A04-0005": "Facebook (200)" }, "confidenceCap": "low" }
+    { "id": "ch16", "label": "Recompensa da Prefeitura 16", "value": 100, "unlockCityHall": 16, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "CH16 = 7-day universal speedup + 100 gems" } },
+    { "id": "ch21", "label": "Recompensa da Prefeitura 21", "value": 200, "unlockCityHall": 21, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "CH21 = 7-day universal speedup + 200 gems" } },
+    { "id": "ch25", "label": "Recompensa da Prefeitura 25", "value": 500, "unlockCityHall": 25, "facts": ["A01-0002", "A04-0005"], "evidence": { "A01-0002": "+ 500 gems" } },
+    { "id": "facebook-bind", "label": "Vincular a conta ao Facebook (fonte T3 única)", "value": 200, "unlockCityHall": null, "facts": ["A04-0005"], "evidence": { "A04-0005": "Facebook (200)" }, "confidenceCap": "low" }
   ],
   "unquantifiedGemSources": {
-    "text": "Barbarian gem drops (rate unknown), gem deposits, Peerless Scholar pool, events, alliance gifts, quests: not quantified, so not counted.",
+    "text": "Gemas de bárbaros (taxa desconhecida), depósitos de gemas, pool do Erudito Incomparável, eventos, presentes da aliança, missões: não quantificados, por isso não contados.",
     "facts": ["A04-0006", "A04-0002", "A04-0003", "A04-0004", "A10-0005"],
     "gaps": ["L-A04-01", "L-A04-02", "L-A04-03", "L-A04-05", "L-A01-04"]
   },

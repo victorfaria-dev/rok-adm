@@ -76,7 +76,7 @@ describe("per-dollar ratios follow the A12-0618 method", () => {
 
   it("price rows carry the regional price warning and their gaps", () => {
     for (const p of lowPurchases(index)) {
-      expect(p.price.note).toMatch(/region/);
+      expect(p.price.note).toMatch(/região/);
       expect(p.price.unit).toBe("USD");
     }
     expect(byId["gem-supply-30d"]!.price.pendingGaps).toContain("L-A12-01");
@@ -153,7 +153,7 @@ describe("lowSpenderTargets", () => {
     expect(r.recharge.facts).toContain("A11-0601");
     expect(r.valueMethod.facts).toContain(VALUE_METHOD_FACT);
     expect(r.confidence).toBe("low");
-    expect(r.priceWarning).toMatch(/region/);
+    expect(r.priceWarning).toMatch(/região/);
   });
 
   it("missing facts become pending; realityCheck for low is unchanged (F2P baseline stays unresearched)", () => {

@@ -1,94 +1,94 @@
-# Share & Discovery Kit
+# Kit de divulgação
 
-> Feature: F-57. Short English copy for sharing the hub **outside the game**. Last updated: 2026-10-13.
+> Funcionalidade: F-57. Textos curtos para divulgar o hub **fora do jogo**. Última atualização: 2026-10-13.
 >
-> Placeholders: `[HUB_NAME]` (brand, must not contain Lilith marks or the game's full name), `[URL]`, `[GUIDE_URL]` (e.g. the New Kingdom Start Guide).
+> Marcadores: `[HUB_NAME]` (marca; não pode conter marcas da Lilith nem o nome completo do jogo), `[URL]`, `[GUIDE_URL]` (p. ex., o Guia de Início em Reino Novo).
 
-## Rules before you post
+## Regras antes de postar
 
-1. **Never post or ask for the link in game chat.** Players report being muted or banned for "third-party information", even for asking for an alliance Discord (pain D-0022). Use Reddit, Discord, YouTube, or plain word of mouth.
-2. **Say it's unofficial.** Every post mentions that the hub is a fan project, not affiliated with Lilith Games.
-3. **No promises we can't keep.** Don't claim "best", "official", or exact numbers the guide marks as pending.
-4. **Follow each community's self-promotion rules.** Read the subreddit/server rules first; post in the allowed thread or channel.
-5. **Never offer bots, scripts, account services or "free gems".** The hub has none, and those words get posts removed (and look like scams).
+1. **Nunca poste nem peça o link no chat do jogo.** Jogadores relatam silenciamentos e banimentos por "informação de terceiros", até por pedir o Discord da aliança (dor D-0022). Use Reddit, Discord, YouTube ou o boca a boca.
+2. **Diga que é não oficial.** Todo post menciona que o hub é um projeto de fãs, sem afiliação com a Lilith Games.
+3. **Sem promessas que não dá para cumprir.** Não diga "o melhor", "oficial", nem cite números que o guia marca como pendentes.
+4. **Siga as regras de autopromoção de cada comunidade.** Leia primeiro as regras do subreddit/servidor; poste na thread ou no canal permitido.
+5. **Nunca ofereça bots, scripts, serviços de conta ou "gemas grátis".** O hub não tem nada disso, e essas palavras fazem posts serem removidos (e parecem golpe).
 
 ---
 
 ## Reddit
 
-Use as a text post (title + body). Fits the "guide / resource" flair where one exists.
+Use como post de texto (título + corpo). Encaixa na flair de "guia / recurso" quando existir.
 
-### Reddit — variant A (new players)
+### Reddit — variante A (jogadores novos)
 
-**Title:** Free F2P guide for new kingdoms in 2026 — every tip shows its source and patch
+**Título:** Guia F2P grátis para reinos novos em 2026 — cada dica mostra a fonte e o patch
 
-**Body:**
-Starting fresh is different now: no Beginner's Immigration since March 2025, 3 starting provinces, Legendary Pelagius from day 5. Most top search results still give pre-2025 advice.
+**Corpo:**
+Começar do zero é diferente agora: sem Imigração de Iniciante desde março de 2025, 3 províncias iniciais, Pelagius Lendário a partir do dia 5. A maioria dos primeiros resultados de busca ainda dá conselhos de antes de 2025.
 
-I've been building [HUB_NAME], a free fan-made planner. The New Kingdom Start Guide covers your first 72 hours, picking an alliance, keeping your city a bad target, and what whales and organised groups actually mean for a F2P. Every recommendation links its source and the patch it was checked on, and anything we haven't measured yet (like shield durations) is marked *pending* instead of guessed.
+Estou construindo o [HUB_NAME], um planejador grátis feito por fãs. O Guia de Início em Reino Novo cobre as suas primeiras 72 horas, como escolher uma aliança, como fazer da sua cidade um mau alvo e o que baleias (whales) e grupos organizados realmente significam para um F2P. Cada recomendação traz o link da fonte e do patch em que foi conferida, e o que ainda não foi medido (como a duração dos escudos) está marcado como *pendente* em vez de chutado.
 
-No login, no bots, nothing stored on a server. Not affiliated with Lilith. Feedback welcome, especially "this is outdated" reports: [GUIDE_URL]
+Sem login, sem bots, nada guardado em servidor. Sem afiliação com a Lilith. Feedback é bem-vindo, principalmente relatos de "isto está desatualizado": [GUIDE_URL]
 
-### Reddit — variant B (returning players)
+### Reddit — variante B (jogadores que voltam)
 
-**Title:** Coming back after a break? Here's what changed (2024 → 2026) and what the migration age limits mean
+**Título:** Voltando depois de uma pausa? Veja o que mudou (2024 → 2026) e o que os limites de idade de migração significam
 
-**Body:**
-A lot of returning-player posts ask the same things: why can't I migrate, what happened to resource boosts, is my old commander investment wasted? I put the answers in one page on [HUB_NAME], a free fan-made hub: a dated list of the changes that matter (VIP19/SVIP, Commander Swap, Spin Tickets, Conduct Score, boosts removed, age limits tightened), what the game itself checks for migration versus what kingdoms add on top, and five first actions.
+**Corpo:**
+Muitos posts de quem volta perguntam as mesmas coisas: por que não consigo migrar, o que aconteceu com os impulsos de recursos, meu investimento antigo em comandantes foi perdido? Coloquei as respostas em uma página do [HUB_NAME], um hub grátis feito por fãs: uma lista datada das mudanças que importam (VIP19/SVIP, Troca de Comandante, Tíquetes de Giro, Pontuação de Conduta, impulsos removidos, limites de idade endurecidos), o que o próprio jogo verifica na migração e o que os reinos acrescentam por cima, e cinco primeiras ações.
 
-Sources and patch numbers on every line. Unofficial, no login. [GUIDE_URL]
+Fontes e números de patch em cada linha. Não oficial, sem login. [GUIDE_URL]
 
-### Reddit — variant C (short, for weekly help threads)
+### Reddit — variante C (curta, para threads semanais de ajuda)
 
-New kingdom or coming back? [HUB_NAME] is a free fan-made guide with sources on every tip and "pending" where nobody has measured yet — no outdated jumper advice. No login, not affiliated with Lilith: [URL]
+Reino novo ou voltando? O [HUB_NAME] é um guia grátis feito por fãs, com fonte em cada dica e "pendente" onde ninguém mediu ainda — sem conselho ultrapassado de conta pulo. Sem login, sem afiliação com a Lilith: [URL]
 
 ---
 
 ## Discord
 
-For an alliance or kingdom server's #resources / #guides channel. Keep it under 3 short paragraphs so it isn't collapsed.
+Para o canal #recursos / #guias do servidor de uma aliança ou reino. Mantenha em menos de 3 parágrafos curtos para não ser recolhido.
 
-### Discord — variant A (alliance officer posting for members)
+### Discord — variante A (oficial de aliança postando para os membros)
 
-**New to the kingdom?** Read this before you build anything: [GUIDE_URL]
-It's a free fan-made guide for F2P players: first 72 hours, how to keep your city from being farmed, and what to do with your first gems. Every tip shows its source and patch. No login needed.
-Reminder: **don't post Discord or website links in game chat** — people get muted for it. Ask here instead.
+**Novo no reino?** Leia isto antes de construir qualquer coisa: [GUIDE_URL]
+É um guia grátis feito por fãs para jogadores F2P: primeiras 72 horas, como evitar que sua cidade seja farmada e o que fazer com as suas primeiras gemas. Cada dica mostra a fonte e o patch. Não precisa de login.
+Lembrete: **não poste links de Discord ou de sites no chat do jogo** — as pessoas são silenciadas por isso. Pergunte aqui.
 
-### Discord — variant B (returning members)
+### Discord — variante B (membros que voltam)
 
-**Welcome back!** If you've been away a while, this page lists what changed in the game since 2024 and what the migration age rules mean for you: [GUIDE_URL]
-Unofficial fan project, no login, nothing stored on a server.
+**Bem-vindo de volta!** Se você ficou um tempo fora, esta página lista o que mudou no jogo desde 2024 e o que as regras de idade de migração significam para você: [GUIDE_URL]
+Projeto de fãs não oficial, sem login, nada guardado em servidor.
 
-### Discord — variant C (one-liner / bot command reply)
+### Discord — variante C (uma linha / resposta de comando de bot)
 
-New-kingdom & returning-player guide (free, fan-made, sources on every tip): [URL]
-
----
-
-## YouTube (video description)
-
-Paste under a video that mentions the hub. Put the link in the first two lines so it shows above "Show more".
-
-### YouTube — variant A (new-kingdom video)
-
-Free New Kingdom Start Guide (F2P, 2026): [GUIDE_URL]
-Every tip in the guide links its source and the patch it was checked on; things nobody has measured yet are marked "pending", not guessed.
-[HUB_NAME] is a fan project and is not affiliated with, endorsed by, or sponsored by Lilith Games. No login, no bots, no account services.
-
-### YouTube — variant B (returning-player video)
-
-What changed since you left (2024 → 2026) + migration rules explained: [GUIDE_URL]
-Free fan-made hub with sources on every line. Not affiliated with Lilith Games.
-
-### YouTube — variant C (generic, any RoK video)
-
-Planning tools and guides for F2P and low spenders: [URL]
-Free, unofficial, no login. Not affiliated with Lilith Games.
+Guia para reino novo e para quem voltou (grátis, feito por fãs, fonte em cada dica): [URL]
 
 ---
 
-## How to tell a friend
+## YouTube (descrição do vídeo)
 
-Use this when someone in your alliance asks "how do I start?" — say it in voice chat or send it **outside** game chat (DM on Discord, WhatsApp, etc.).
+Cole abaixo de um vídeo que mencione o hub. Coloque o link nas duas primeiras linhas para aparecer acima de "Mostrar mais".
 
-> There's a free fan-made site called [HUB_NAME] with a start guide for new kingdoms. It tells you what to do in your first three days, how not to get farmed, and it shows where every tip comes from, so you're not following some 2021 advice that doesn't work anymore. No login, nothing to install. I'll send you the link on Discord — don't ask for links in game chat, people get muted for that.
+### YouTube — variante A (vídeo de reino novo)
+
+Guia grátis de Início em Reino Novo (F2P, 2026): [GUIDE_URL]
+Cada dica do guia traz o link da fonte e do patch em que foi conferida; o que ninguém mediu ainda está marcado como "pendente", não chutado.
+O [HUB_NAME] é um projeto de fãs e não tem afiliação, aval nem patrocínio da Lilith Games. Sem login, sem bots, sem serviços de conta.
+
+### YouTube — variante B (vídeo para quem voltou)
+
+O que mudou desde que você saiu (2024 → 2026) + regras de migração explicadas: [GUIDE_URL]
+Hub grátis feito por fãs, com fonte em cada linha. Sem afiliação com a Lilith Games.
+
+### YouTube — variante C (genérica, qualquer vídeo de RoK)
+
+Ferramentas de planejamento e guias para F2P e quem gasta pouco: [URL]
+Grátis, não oficial, sem login. Sem afiliação com a Lilith Games.
+
+---
+
+## Como indicar a um amigo
+
+Use quando alguém da sua aliança perguntar "como eu começo?" — fale no chat de voz ou mande **fora** do chat do jogo (mensagem direta no Discord, WhatsApp etc.).
+
+> Existe um site grátis feito por fãs chamado [HUB_NAME] com um guia de início para reinos novos. Ele diz o que fazer nos três primeiros dias, como não ser farmado, e mostra de onde vem cada dica, então você não segue algum conselho de 2021 que já não funciona. Sem login, nada para instalar. Eu te mando o link no Discord — não peça link no chat do jogo, as pessoas são silenciadas por isso.
