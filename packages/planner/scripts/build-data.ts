@@ -2,11 +2,13 @@
 // and validates the hand-authored planner data against the fact cards:
 //   - every cited fact ID exists;
 //   - every gap ID exists in some _lacunas.md;
+//   - commander-periods.json: known periods, unique ids, confidence no higher than its best card;
+//   - commander-portraits.json: every portrait has source, date, attribution and both WebP files in apps/web/public/commanders;
 //   - every `evidence` (or `*Evidence`) substring in budget-inputs.json, farms.json and low-spender.json is literally present in its card.
 // Usage: pnpm --filter @rokadm/planner build:data   (add --check to fail on drift without writing)
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { PLANNER_DATA_DIR, readCard, findCardPath, readGapIds, readFactsCsv, type RawCard } from "./research";
+import { PLANNER_DATA_DIR, REPO_ROOT, readCard, findCardPath, readGapIds, readFactsCsv, type RawCard } from "./research";
 
 export const AUTHORED_FILES = [
   "routine-tasks.json",
@@ -16,7 +18,73 @@ export const AUTHORED_FILES = [
   "commander-shelf-life.json",
   "farms.json",
   "low-spender.json",
+  "commander-periods.json",
 ] as const;
+
+const PERIODS = ["launch", "pre_kvk", "kvk1", "kvk2", "kvk3", "soc"];
+const CONF_RANK: Record<string, number> = { low: 1, medium: 2, high: 3, baixa: 1, media: 2, alta: 3 };
+
+/**
+ * Checks commander-periods.json: known periods, unique ids, dates, and that no commander claims more
+ * confidence than its best-supported card (a conflict caps it at low).
+ */
+export function checkCommanderPeriods(text: string, cards: ReadonlyMap<string, RawCard>): string[] {
+  const errors: string[] = [];
+  const doc = JSON.parse(text) as {
+    periods: Array<{ id: string }>;
+    commanders: Array<{ id: string; period: string; confidence: string; conflict: boolean; facts: string[]; lastConfirmed: string }>;
+  };
+  if (doc.periods.map((p) => p.id).join() !== PERIODS.join()) errors.push(`commander-periods: periods must be ${PERIODS.join(", ")} in order`);
+  const seen = new Set<string>();
+  for (const c of doc.commanders) {
+    const key = `commander-periods ${c.id}`;
+    if (seen.has(c.id)) errors.push(`${key}: duplicate id`);
+    seen.add(c.id);
+    if (!/^[a-z0-9-]+$/.test(c.id)) errors.push(`${key}: id must be kebab-case`);
+    if (!PERIODS.includes(c.period)) errors.push(`${key}: unknown period ${c.period}`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(c.lastConfirmed)) errors.push(`${key}: lastConfirmed must be YYYY-MM-DD`);
+    if (!c.facts.length) errors.push(`${key}: no facts`);
+    const best = Math.max(0, ...c.facts.map((id) => CONF_RANK[cards.get(id)?.fields["confianca"] ?? ""] ?? 0));
+    const own = CONF_RANK[c.confidence] ?? 0;
+    if (!own) errors.push(`${key}: confidence must be high, medium or low`);
+    if (own > best) errors.push(`${key}: confidence ${c.confidence} is above its best card`);
+    if (c.conflict && c.confidence !== "low") errors.push(`${key}: conflicting sources must be low confidence`);
+  }
+  return errors;
+}
+
+export const PORTRAIT_ATTRIBUTION_TEXT = "Rise of Kingdoms © Lilith Games";
+
+/**
+ * Checks commander-portraits.json against the files in apps/web/public/commanders: every portrait belongs to a
+ * commander in commander-periods.json, has a source URL, a retrieval date and the attribution, and both WebP sizes
+ * exist; no file in the folder is missing from the manifest.
+ */
+export function checkCommanderPortraits(manifestText: string, periodsText: string, dir: string): string[] {
+  const errors: string[] = [];
+  const doc = JSON.parse(manifestText) as {
+    attribution: string; sizes: number[];
+    portraits: Array<{ id: string; sourceUrl: string; sourcePage: string; retrievedOn: string; attribution: string }>;
+  };
+  const commanders = new Set((JSON.parse(periodsText) as { commanders: Array<{ id: string }> }).commanders.map((c) => c.id));
+  if (doc.attribution !== PORTRAIT_ATTRIBUTION_TEXT) errors.push(`commander-portraits: attribution must be "${PORTRAIT_ATTRIBUTION_TEXT}"`);
+  const files = new Set(existsSync(dir) ? readdirSync(dir) : []);
+  const expected = new Set<string>();
+  for (const p of doc.portraits) {
+    const key = `commander-portraits ${p.id}`;
+    if (!commanders.has(p.id)) errors.push(`${key}: not in commander-periods.json`);
+    if (!/^https:\/\//.test(p.sourceUrl) || !/^https:\/\//.test(p.sourcePage)) errors.push(`${key}: sourceUrl and sourcePage must be https URLs`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(p.retrievedOn)) errors.push(`${key}: retrievedOn must be YYYY-MM-DD`);
+    if (p.attribution !== PORTRAIT_ATTRIBUTION_TEXT) errors.push(`${key}: attribution must be "${PORTRAIT_ATTRIBUTION_TEXT}"`);
+    for (const s of doc.sizes) {
+      const f = `${p.id}-${s}.webp`;
+      expected.add(f);
+      if (!files.has(f)) errors.push(`${key}: missing apps/web/public/commanders/${f}`);
+    }
+  }
+  for (const f of files) if (!expected.has(f)) errors.push(`commander-portraits: ${f} is not in the manifest`);
+  return errors;
+}
 
 export interface FactMetaRow {
   id: string;
@@ -115,6 +183,13 @@ export function buildData(): BuildResult {
     if (!findCardPath(id)) { errors.push(`fact not found in research/facts: ${id}`); continue; }
     cards.set(id, readCard(id));
   }
+
+  errors.push(...checkCommanderPeriods(texts[AUTHORED_FILES.indexOf("commander-periods.json")] ?? "{}", cards));
+  errors.push(...checkCommanderPortraits(
+    readFileSync(join(PLANNER_DATA_DIR, "commander-portraits.json"), "utf8"),
+    texts[AUTHORED_FILES.indexOf("commander-periods.json")] ?? "{}",
+    join(REPO_ROOT, "apps", "web", "public", "commanders"),
+  ));
 
   const gapIds = readGapIds();
   for (const m of all.matchAll(GAP_ID_RE)) {
