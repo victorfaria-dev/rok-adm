@@ -91,7 +91,7 @@ Em ordem de prioridade (impacto no site × falta de fonte):
 5. **Coreano inteiro:** 28% com fonte, e o app KR é separado. Vale um revisor dedicado.
 6. **Árabe:** RTL, nomes de comandantes transliterados (só 7 vistos no anúncio oficial) e a prefeitura (قاعة المدينة na comunidade; o termo do cliente não foi confirmado).
 7. **Pontos marcados no próprio JSON:**
-   - pt-BR "Idade do Aço" ligado a Iron Age: o mapeamento é inferido pela ordem das eras.
+   - pt-BR "Idade do Aço" ligado a Iron Age: confirmado pelo dono em 2026-10-14.
    - RU "Губернатор" vs "Правитель": as fontes divergem.
    - TR "Birlik" vs "İttifak" para Aliança.
    - vi: as fontes comunitárias costumam tratar da edição Gamota.
