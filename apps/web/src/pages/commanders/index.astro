@@ -1,13 +1,17 @@
 ---
 import Shell from "../../layouts/Shell.astro";
 import Commanders from "../../components/commanders/Commanders";
+import { buildPickerRoster } from "../../lib/commander-roster";
+
+// Lean roster (id, name, rarity, period, portrait flag) as props: no facts or sources reach the client.
+const roster = buildPickerRoster();
 ---
 <Shell title="Commanders" description="A checklist before you spend sculptures on a commander: shelf-life tags, Go / Wait / Avoid and why. Your answers stay in this browser." mode="operate">
   <div class="intro">
     <h1>Commanders</h1>
     <p>Before you spend gold heads or sculptures, check the commander: how long it stays useful, whether it fills a role you need, and what the community says. Each reason shows its confidence and whether players disagree.</p>
   </div>
-  <Commanders client:load />
+  <Commanders roster={roster} client:load />
 </Shell>
 
 <style>

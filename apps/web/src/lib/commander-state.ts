@@ -30,23 +30,33 @@ export const COMMANDER_CHOICES: readonly CommanderChoice[] = [
   { id: OTHER_ID, name: OTHER_NAME },
 ];
 
-export function isCommanderId(id: unknown): id is string {
-  return typeof id === "string" && COMMANDER_CHOICES.some((c) => c.id === id);
+/**
+ * Table commanders plus every other commander the picker shows (A to Z, "Another commander" last).
+ * Commanders outside the shelf-life table get nothing prefilled, like "Another commander", but keep their name.
+ */
+export function withRoster(extra: readonly CommanderChoice[]): CommanderChoice[] {
+  const byId = new Map<string, CommanderChoice>();
+  for (const c of [...COMMANDER_CHOICES, ...extra]) if (c.id !== OTHER_ID && !byId.has(c.id)) byId.set(c.id, { id: c.id, name: c.name });
+  return [...[...byId.values()].sort((a, b) => a.name.localeCompare(b.name, "en")), { id: OTHER_ID, name: OTHER_NAME }];
 }
 
-export function commanderName(id: string): string {
-  return COMMANDER_CHOICES.find((c) => c.id === id)?.name ?? id;
+export function isCommanderId(id: unknown, choices: readonly CommanderChoice[] = COMMANDER_CHOICES): id is string {
+  return typeof id === "string" && choices.some((c) => c.id === id);
+}
+
+export function commanderName(id: string, choices: readonly CommanderChoice[] = COMMANDER_CHOICES): string {
+  return choices.find((c) => c.id === id)?.name ?? id;
 }
 
 /** "#sun-tzu" → "sun-tzu"; anything that is not a known commander → null. */
-export function commanderFromHash(hash: string): string | null {
+export function commanderFromHash(hash: string, choices: readonly CommanderChoice[] = COMMANDER_CHOICES): string | null {
   let id = hash.startsWith("#") ? hash.slice(1) : hash;
   try {
     id = decodeURIComponent(id);
   } catch {
     return null;
   }
-  return isCommanderId(id) ? id : null;
+  return isCommanderId(id, choices) ? id : null;
 }
 
 const isRecord = (x: unknown): x is Record<string, unknown> => typeof x === "object" && x !== null && !Array.isArray(x);
@@ -108,9 +118,9 @@ export interface SavedCheck {
 }
 
 /** Commanders with at least one valid saved answer, A to Z ("Another commander" last). */
-export function savedChecks(map: unknown): SavedCheck[] {
+export function savedChecks(map: unknown, choices: readonly CommanderChoice[] = COMMANDER_CHOICES): SavedCheck[] {
   if (!isRecord(map)) return [];
-  return COMMANDER_CHOICES.flatMap((c) => {
+  return choices.flatMap((c) => {
     const own = sanitizeAnswers(map[c.id]);
     const answered = Object.keys(own).length;
     return answered > 0 ? [{ id: c.id, name: c.name, answered, verdict: decide(c.id, own).verdict }] : [];

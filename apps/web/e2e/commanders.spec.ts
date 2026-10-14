@@ -18,7 +18,7 @@ test("pick a commander, see suggestions, answer, reload, clear and undo", async 
   await expect(page.locator("h1")).toHaveCount(1);
   await expect(page.getByText("Nothing saved yet.", { exact: false })).toBeVisible();
 
-  await page.getByLabel("Commander", { exact: true }).selectOption({ label: "Lohar" });
+  await page.getByRole("button", { name: /^Lohar, Epic/ }).click();
   await expect(page).toHaveURL(/#lohar$/);
   await expect(page.getByRole("heading", { level: 2, name: "Lohar" })).toBeVisible();
   await expect(page.getByText("Useful until KvK1: loses value later")).toBeVisible();
@@ -58,7 +58,7 @@ test("a link to a saved check opens that commander", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 2, name: "Lohar" })).toBeVisible();
   await page.locator(".cmd-overview").getByRole("link", { name: "Sun Tzu" }).click();
   await expect(page.getByRole("heading", { level: 2, name: "Sun Tzu" })).toBeFocused();
-  await expect(page.getByLabel("Commander", { exact: true })).toHaveValue("sun-tzu");
+  await expect(page.getByRole("button", { name: /^Sun Tzu, Epic/ })).toHaveAttribute("aria-pressed", "true");
 });
 
 test("corrupted stored answers do not break the page", async ({ page }) => {
@@ -84,7 +84,7 @@ test("worst case fits 360 px without sideways scroll", async ({ page }) => {
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow, id).toBeLessThanOrEqual(0);
   }
-  const small = await page.locator(".cmd-option, .cmd-select, .cmd-link-btn, .cmd-saved-name").evaluateAll((els) =>
+  const small = await page.locator(".cmd-option, .ckt, .cmd-other-btn, .ckp-seg-opt span, .ckp-input, .cmd-link-btn, .cmd-saved-name").evaluateAll((els) =>
     els.filter((e) => e.getBoundingClientRect().height < 44).map((e) => e.outerHTML.slice(0, 80)),
   );
   expect(small).toEqual([]);

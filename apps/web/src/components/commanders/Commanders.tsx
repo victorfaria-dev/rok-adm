@@ -1,7 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
+import { progressFromProfile, type KingdomProgress } from "@rokadm/planner";
 import {
-  COMMANDER_CHOICES,
   OTHER_ID,
+  OTHER_NAME,
   SHELF_LIFE_AS_OF,
   SHELF_LIFE_TEXT,
   VERDICT_TEXT,
@@ -15,16 +16,23 @@ import {
   savedChecks,
   setAnswer,
   stageLabel,
+  withRoster,
   type Answers,
   type AnswersMap,
 } from "../../lib/commander-state";
+import { shouldAsk, type PickerRoster } from "../../lib/commander-picker";
+import { profileFromCode } from "../../lib/profile";
+import { CommanderPicker } from "./CommanderPicker";
 import { readStore, writeStore } from "../../lib/store";
 import { Checklist } from "./Checklist";
 import { VerdictPanel } from "./VerdictPanel";
 import "./commanders.css";
 
 /** F-20 island: pick a commander, answer the checklist, see Go / Wait / Avoid. */
-export default function Commanders() {
+export default function Commanders({ roster }: { roster: PickerRoster }) {
+  const choices = useMemo(() => withRoster(roster.commanders), [roster]);
+  const nameOf = (id: string): string => commanderName(id, choices);
+  const [progress, setProgress] = useState<KingdomProgress | null>(null);
   // Server render and first client render: nothing picked, nothing saved. Storage loads before paint.
   const [selected, setSelected] = useState<string | null>(null);
   const [map, setMap] = useState<AnswersMap>({});
@@ -35,10 +43,13 @@ export default function Commanders() {
   const focusUndo = useRef(false);
 
   useLayoutEffect(() => {
-    setMap(readStore().commanders);
-    setSelected(commanderFromHash(window.location.hash));
+    const store = readStore();
+    setMap(store.commanders);
+    const profile = profileFromCode(store.profileCode);
+    setProgress(profile ? progressFromProfile(profile) : null);
+    setSelected(commanderFromHash(window.location.hash, choices));
     const onHash = (): void => {
-      const id = commanderFromHash(window.location.hash);
+      const id = commanderFromHash(window.location.hash, choices);
       if (id) {
         focusTitle.current = true;
         setSelected(id);
@@ -85,27 +96,45 @@ export default function Commanders() {
     setUndo(null);
   };
 
-  const saved = savedChecks(map);
+  const saved = savedChecks(map, choices);
+  // CMD-03: questions only once the kingdom has reached the commander's period (shouldAskAboutCommander, lean roster).
+  const later = selected && selected !== OTHER_ID && !shouldAsk(selected, roster.commanders, progress)
+    ? roster.periods.find((p) => p.id === roster.commanders.find((c) => c.id === selected)?.period)
+    : undefined;
   const tag = selected ? getShelfLife(selected) : undefined;
   const filled = selected ? prefill(selected, map[selected]) : null;
   const decision = selected ? decide(selected, map[selected]) : null;
 
   return (
     <div class="cmd">
-      <div class="cmd-picker">
-        <label class="cmd-label" for="cmd-select">Commander</label>
-        <select
-          id="cmd-select"
-          class="cmd-select"
-          value={selected ?? ""}
-          onChange={(e) => pick(e.currentTarget.value || null)}
+      <CommanderPicker
+        roster={roster}
+        progress={progress}
+        title="Choose a commander"
+        idPrefix="cmd-pick"
+        value={selected}
+        onChange={(id) => {
+          focusTitle.current = true;
+          pick(id);
+        }}
+      >
+        <button
+          type="button"
+          class="cmd-other-btn"
+          aria-pressed={selected === OTHER_ID}
+          onClick={() => {
+            focusTitle.current = true;
+            pick(OTHER_ID);
+          }}
         >
-          <option value="">Choose a commander</option>
-          {COMMANDER_CHOICES.map((c) => (
-            <option key={c.id} value={c.id}>{c.id === OTHER_ID ? "Another commander (not in our table)" : c.name}</option>
-          ))}
-        </select>
-      </div>
+          {OTHER_NAME} (not in our list)
+        </button>
+        {!progress && (
+          <p class="cmd-stage-hint">
+            <a href="/start/">Tell us your kingdom stage</a> to mark the commanders that arrive later.
+          </p>
+        )}
+      </CommanderPicker>
 
       {!selected && (
         <p class="cmd-empty">
@@ -114,9 +143,16 @@ export default function Commanders() {
         </p>
       )}
 
-      {selected && filled && decision && (
+      {selected && later && (
         <article class="cmd-detail" aria-labelledby="cmd-name">
-          <h2 id="cmd-name" class="cmd-h2" tabIndex={-1} ref={titleRef}>{commanderName(selected)}</h2>
+          <h2 id="cmd-name" class="cmd-h2" tabIndex={-1} ref={titleRef}>{nameOf(selected)}</h2>
+          <p class="cmd-later">This commander arrives in {later.label}; nothing to decide yet.</p>
+        </article>
+      )}
+
+      {selected && !later && filled && decision && (
+        <article class="cmd-detail" aria-labelledby="cmd-name">
+          <h2 id="cmd-name" class="cmd-h2" tabIndex={-1} ref={titleRef}>{nameOf(selected)}</h2>
           {tag ? (
             <div class="cmd-tag">
               <p class="cmd-shelf">
@@ -163,7 +199,7 @@ export default function Commanders() {
               }}
               onConfirm={() => save(confirmSuggestions(map, selected))}
             />
-            <VerdictPanel name={commanderName(selected)} decision={decision} />
+            <VerdictPanel name={nameOf(selected)} decision={decision} />
           </div>
         </article>
       )}
@@ -173,7 +209,7 @@ export default function Commanders() {
         <p class="cmd-status" role="status">
           {undo && (
             <>
-              Answers cleared for {commanderName(undo.id)}.{" "}
+              Answers cleared for {nameOf(undo.id)}.{" "}
               <button type="button" class="cmd-link-btn" ref={undoRef} onClick={restore}>Undo</button>
             </>
           )}
