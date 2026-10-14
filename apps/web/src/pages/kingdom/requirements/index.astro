@@ -1,7 +1,6 @@
 ---
 import Shell from "../../../layouts/Shell.astro";
 import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
-import PrivacyNote from "../../../components/kingdom/shared/PrivacyNote.astro";
 import RequirementsBuilder from "../../../components/kingdom/requirements/RequirementsBuilder";
 import "../../../components/kingdom/shared/kingdom.css";
 import "../../../components/kingdom/requirements/requirements.css";
@@ -11,10 +10,8 @@ import "../../../components/kingdom/requirements/requirements.css";
     <header class="kg-head">
       <h1>Requirements card</h1>
       <p class="kg-lead">Write your DKP formula and KvK requirement, check it on sample accounts, then publish one link every player can open to see their own target.</p>
-      <p class="kg-note" data-guardrail><strong>Planning and publishing only. No bots, no scanning, no game files. You do every in-game action yourself.</strong></p>
     </header>
-    <KingdomNav />
+    <KingdomNav section="members" />
     <RequirementsBuilder client:load />
-    <PrivacyNote thirdParty />
   </div>
 </Shell>

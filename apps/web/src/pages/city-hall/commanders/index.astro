@@ -1,0 +1,47 @@
+---
+// "My commanders" (UX stage 1): the commander checklist scoped to the account in use. Each account
+// keeps its own answers (lib/accounts.ts swaps them on a switch). The public commander guide is
+// /commanders/ under Guides. Stage 1 reuses the existing evaluator; an owned-commanders list comes later.
+import Shell from "../../../layouts/Shell.astro";
+import Commanders from "../../../components/commanders/Commanders";
+
+const S = {
+  title: "My commanders",
+  description: "Your commander checks for the account in use: main, farm or alt each keep their own answers.",
+  crumb: "City Hall",
+  lead: "Check a commander before this account spends sculptures on it. Each account keeps its own answers.",
+  account: "Account:",
+  guide: "Which commanders are worth it in general? Read the",
+  guideLink: "commander guide",
+};
+---
+<Shell title={S.title} description={S.description} mode="operate">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/city-hall/">{S.crumb}</a> <span aria-hidden="true">/</span> <span aria-current="page">{S.title}</span></nav>
+  <section class="intro" aria-labelledby="mc-h">
+    <h1 id="mc-h">{S.title}</h1>
+    <p>{S.lead}</p>
+    <p class="acct" data-account-name hidden>{S.account} <strong></strong></p>
+    <p>{S.guide} <a href="/commanders/">{S.guideLink}</a>.</p>
+  </section>
+  <Commanders client:load />
+</Shell>
+
+<style>
+  .crumb { display: flex; gap: var(--ko-space-2); align-items: center; font-size: var(--ko-text-sm); color: var(--ko-text-muted); margin-bottom: var(--ko-space-2); }
+  .crumb a { color: var(--ko-text); min-height: 44px; display: inline-flex; align-items: center; }
+  .intro { display: grid; gap: var(--ko-space-3); margin-bottom: var(--ko-space-6); }
+  h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  p { color: var(--ko-text-muted); max-width: 65ch; }
+  .acct strong { color: var(--ko-text); }
+</style>
+
+<script>
+  import { readStore } from "../../../lib/store";
+  import { activeAccount } from "../../../lib/accounts";
+  const a = activeAccount(readStore());
+  const el = document.querySelector<HTMLElement>("[data-account-name]");
+  if (a && el) {
+    el.querySelector("strong")!.textContent = a.name;
+    el.hidden = false;
+  }
+</script>

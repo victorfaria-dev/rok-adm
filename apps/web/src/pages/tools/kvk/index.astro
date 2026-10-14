@@ -1,5 +1,6 @@
 ---
 import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
 import { Checklist } from "../../../components/tools/kit/Checklist";
 import RuleList from "../../../components/tools/hoard/RuleList.astro";
 import DataStamp from "../../../components/tools/kit/DataStamp.astro";
@@ -19,6 +20,7 @@ const ids = [...kvk.groups.flatMap((g) => g.items.flatMap((i) => i.facts)), ...k
 ---
 <Shell title="KvK readiness" description="A checklist for your first Kingdom vs Kingdom in Rise of Kingdoms (City Hall, troops, hospital, speedups, commanders, alliance) and a plain season explainer. Every item cites its source." mode="operate">
   <div class="t-page">
+    <KingdomNav section="events" leaderOnly />
     <header>
       <h1>KvK readiness</h1>
       <p class="t-lead">Tick what you have ready for Kingdom vs Kingdom (KvK). Your marks stay on this device. Items without a fact card say "No consensus".</p>

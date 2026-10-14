@@ -83,7 +83,7 @@ export default function MgePlanner({ clock = realClock }: Props) {
 
   return (
     <div class="kg" data-mge>
-      {blocked && <p class="kg-error" data-blocked>This browser blocks saving. Your plan lasts until you close this page; export it from the Council kit page to keep it.</p>}
+      {blocked && <p class="kg-error" data-blocked>This browser blocks saving. Your plan lasts until you close this page; export it from the Kingdom overview to keep it.</p>}
       <section class="kg-grid" aria-labelledby="kx-plans-h">
         <h2 id="kx-plans-h">Saved plans</h2>
         {plans.length === 0 ? <p class="kg-note">No MGE plan on this device yet.</p> : (

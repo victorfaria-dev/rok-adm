@@ -1,11 +1,12 @@
 ---
+// Me tab (UX stage 1): sign-in panel (Supabase, when configured), then the profile header, "Playing as"
+// and a grouped list hub (Guides, profile and accounts, share card / appearance, data, backup /
+// trust and about). Long text sits behind the rows. "Back up everything" lives in the Backup row.
 import Shell from "../../layouts/Shell.astro";
 import Me from "../../components/me/Me";
-import BackupAll from "../../components/me/BackupAll";
 import AccountPanel from "../../components/auth/AccountPanel";
 ---
-<Shell title="You" description="Your profile, theme and data: export, import or delete. Back up everything KingdomOps keeps in this browser in one file. Everything stays in this browser." mode="operate">
+<Shell title="Me" description="How you use KingdomOps (player or leader), the guides, your profile and accounts, share card, appearance and data: export, import, back up or delete. Everything stays in this browser." mode="operate">
   <AccountPanel client:idle />
   <Me client:load />
-  <BackupAll client:load />
 </Shell>

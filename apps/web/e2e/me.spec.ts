@@ -16,20 +16,47 @@ async function seed(page: Page, store: object) {
 
 const stored = (page: Page) => page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1") ?? "null"));
 
+/** UX stage 1: Me is a grouped list hub; long content opens behind a row. */
+async function openRow(page: Page, label: string) {
+  const row = page.locator("details.me-row-item").filter({ has: page.locator("summary", { hasText: label }) });
+  await expect(row).toHaveCount(1);
+  if ((await row.getAttribute("open")) === null) await row.locator("summary").click();
+  await expect(row).toHaveAttribute("open", "");
+}
+
 test("summary shows a seeded profile in words", async ({ page }) => {
   await seed(page, { profileCode: CODE });
   await page.goto("/me/");
-  await expect(h1(page)).toHaveText("You");
-  await expect(page.getByText("Farm account")).toBeVisible();
+  await expect(h1(page)).toHaveText("Me: Main");
+  await expect(page.locator(".me-hero-line")).toHaveText("Player · F2P · CH 12");
+  await openRow(page, "Profile and accounts");
+  await expect(page.getByLabel("What is this account's main role?")).toHaveValue("farm");
   await expect(page.getByText("F2P — $0 per month").first()).toBeVisible();
   await expect(page.locator("main").getByText("30 min", { exact: true })).toBeVisible();
   await expect(page.getByText(QUESTIONS[0]!.label)).toBeVisible();
   await expect(page.locator("h1")).toHaveCount(1);
 });
 
+test("hub: header, Playing as, then grouped rows with Guides first", async ({ page }) => {
+  await seed(page, { profileCode: CODE });
+  await page.goto("/me/");
+  await expect(page.locator(".me-avatar")).toHaveText("MA");
+  await expect(page.getByRole("radio", { name: "Player" })).toBeChecked();
+  const groups = page.locator("ul.me-group");
+  await expect(groups).toHaveCount(3);
+  await expect(groups.first().locator(".me-item-label").first()).toHaveText("Guides");
+  await expect(groups.first().getByRole("link", { name: "Guides" })).toHaveAttribute("href", "/guides/");
+  await expect(page.getByRole("link", { name: "Share card" })).toHaveAttribute("href", "/card/");
+  // Long text sits behind the rows: nothing of the data section shows until its row opens.
+  await expect(page.getByRole("button", { name: "Export profile file" })).toBeHidden();
+  await openRow(page, "Your data");
+  await expect(page.getByRole("button", { name: "Export profile file" })).toBeVisible();
+});
+
 test("no profile shows the empty state", async ({ page }) => {
   await page.goto("/me/");
-  const cta = page.getByRole("link", { name: "Build my guide" });
+  await openRow(page, "Profile and accounts");
+  const cta = page.getByRole("link", { name: "Start", exact: true });
   await expect(cta).toHaveAttribute("href", "/start/");
   await expect(page.getByRole("button", { name: "Edit answers" })).toHaveCount(0);
 });
@@ -37,15 +64,18 @@ test("no profile shows the empty state", async ({ page }) => {
 test("F-72: rule shown and override persists after reload", async ({ page }) => {
   await seed(page, { profileCode: RICH });
   await page.goto("/me/");
+  await openRow(page, "Profile and accounts");
   await expect(page.getByText("High (raised by total spend)")).toBeVisible();
   await expect(page.getByText("Product rule, not a game fact")).toBeVisible();
   await page.getByRole("radio", { name: /^Whale/ }).check();
   await expect(page.getByText("Whale (set by hand)")).toBeVisible();
   await page.reload();
+  await openRow(page, "Profile and accounts");
   await expect(page.getByRole("radio", { name: /^Whale/ })).toBeChecked();
   expect((await stored(page)).profileOverride).toBe("whale");
   await page.getByRole("radio", { name: "Automatic (recommended)" }).check();
   await page.reload();
+  await openRow(page, "Profile and accounts");
   await expect(page.getByRole("radio", { name: "Automatic (recommended)" })).toBeChecked();
   expect((await stored(page)).profileOverride).toBeNull();
 });
@@ -53,21 +83,24 @@ test("F-72: rule shown and override persists after reload", async ({ page }) => 
 test("Edit answers clears the draft and opens /start/ with the saved answers", async ({ page }) => {
   await seed(page, { profileCode: CODE, draft: { step: 2, answers: { spending: "whale" } } });
   await page.goto("/me/");
+  await openRow(page, "Profile and accounts");
   await page.getByRole("button", { name: "Edit answers" }).click();
   await page.waitForURL(/\/start\/$/);
   await expect(h1(page)).toHaveText("Check your answers");
-  await expect(page.getByText("Farm account")).toBeVisible();
+  await expect(page.getByText("F2P — $0 per month")).toBeVisible();
   await expect(page.getByText("Whale")).toHaveCount(0);
 });
 
 test("theme change applies and persists", async ({ page }) => {
   await page.goto("/me/");
+  await openRow(page, "Appearance");
   const main = page.locator("main");
   await main.getByRole("radio", { name: "Light" }).check();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await expect(page.locator("[data-theme-picker] input[value=light]").first()).toBeChecked();
   await page.reload();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
+  await openRow(page, "Appearance");
   await expect(main.getByRole("radio", { name: "Light" })).toBeChecked();
   await main.getByRole("radio", { name: "System" }).check();
   await expect.poll(() => page.evaluate(() => document.documentElement.hasAttribute("data-theme"))).toBe(false);
@@ -77,6 +110,7 @@ test("theme change applies and persists", async ({ page }) => {
 test("export downloads a JSON file that import accepts", async ({ page }) => {
   await seed(page, { profileCode: CODE, theme: "light", commanders: { minamoto: { q1: "a" } } });
   await page.goto("/me/");
+  await openRow(page, "Your data");
   const [download] = await Promise.all([
     page.waitForEvent("download"),
     page.getByRole("button", { name: "Export profile file" }).click(),
@@ -90,7 +124,9 @@ test("import restores a valid file and rejects an invalid one", async ({ page })
   await seed(page, { profileCode: CODE });
   await page.goto("/me/");
   // The profile renders only after the island has hydrated and read the store: no lost change events.
+  await openRow(page, "Profile and accounts");
   await expect(page.getByRole("button", { name: "Edit answers" })).toBeVisible();
+  await openRow(page, "Your data");
   const input = page.locator("input[type=file]:not([data-backup-file])");
 
   await input.setInputFiles({ name: "bad.json", mimeType: "application/json", buffer: Buffer.from("{\"hello\":1}") });
@@ -104,6 +140,7 @@ test("import restores a valid file and rejects an invalid one", async ({ page })
   await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
   await expect(page.getByText("Kraken (set by hand)")).toBeVisible();
   await page.reload();
+  await openRow(page, "Profile and accounts");
   await expect(page.getByText("Kraken (set by hand)")).toBeVisible();
   expect(await stored(page)).toMatchObject({ profileCode: RICH, theme: "light", profileOverride: "kraken" });
 });
@@ -112,6 +149,7 @@ test("delete: cancel keeps data, confirm removes it", async ({ page }) => {
   await seed(page, { profileCode: CODE, theme: "light" });
   await page.goto("/me/");
   await expect(page.locator("astro-island[ssr]")).toHaveCount(0);
+  await openRow(page, "Your data");
   const trigger = page.getByRole("button", { name: "Delete all data" });
 
   await trigger.click();
@@ -134,7 +172,8 @@ test("delete: cancel keeps data, confirm removes it", async ({ page }) => {
   await page.getByRole("checkbox", { name: /Also remove the offline copy/ }).check();
   await page.getByRole("button", { name: "Delete everything" }).click();
   await expect(page.getByText(/Everything KingdomOps saved in this browser was deleted, including the Discord webhook URL/)).toBeVisible();
-  await expect(page.getByRole("link", { name: "Build my guide" })).toBeVisible();
+  await openRow(page, "Profile and accounts");
+  await expect(page.getByRole("link", { name: "Start", exact: true })).toBeVisible();
   await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");
   const left = await page.evaluate(() => ({
     local: Object.keys(localStorage).filter((k) => k.startsWith("ko:")),
@@ -143,40 +182,41 @@ test("delete: cancel keeps data, confirm removes it", async ({ page }) => {
   }));
   expect(left).toEqual({ local: [], session: [], other: "keep" });
   await page.reload();
-  await expect(page.getByRole("link", { name: "Build my guide" })).toBeVisible();
+  await openRow(page, "Profile and accounts");
+  await expect(page.getByRole("link", { name: "Start", exact: true })).toBeVisible();
 });
 
-test("accounts: save main and farm, switch, remove", async ({ page }) => {
-  await seed(page, { profileCode: RICH });
+test("accounts: the profile is account #1, save a farm, switch, each keeps its own commanders, remove", async ({ page }) => {
+  await seed(page, { profileCode: RICH, commanders: { minamoto: { q1: "main" } } });
   await page.goto("/me/");
+  await openRow(page, "Profile and accounts");
+  // An older single profile shows as account #1, in use.
+  await expect(page.locator(".me-account")).toHaveCount(1);
+  await expect(page.locator(".me-account").first()).toContainText("Main");
+  await expect(page.locator(".me-account").getByText("In use")).toBeVisible();
   const name = page.getByLabel("Save the current profile as");
   await page.getByRole("button", { name: "Save", exact: true }).click();
   await expect(page.locator("#me-acc-error")).toContainText("Give this account a name");
-  await name.fill("Main");
-  await page.getByRole("button", { name: "Save", exact: true }).click();
-  await expect(page.locator(".me-account")).toHaveCount(1);
-  await expect(page.locator(".me-account").getByText("In use")).toBeVisible();
-
-  // Make the farm the current profile (as /start would), then save it too.
-  await page.evaluate((code) => {
-    const s = JSON.parse(localStorage.getItem("ko:v1")!);
-    localStorage.setItem("ko:v1", JSON.stringify({ ...s, profileCode: code }));
-  }, CODE);
-  await page.reload();
   await name.fill("Farm 1");
   await page.getByRole("button", { name: "Save", exact: true }).click();
   await expect(page.locator(".me-account")).toHaveCount(2);
 
-  await page.getByRole("button", { name: "Use Main" }).click();
-  await expect(page.getByText('Now using "Main".')).toBeVisible();
-  expect((await stored(page)).profileCode).toBe(RICH);
+  await page.getByRole("button", { name: "Use Farm 1" }).click();
+  await expect(page.getByText('Now using "Farm 1".')).toBeVisible();
+  let s = await stored(page);
+  expect(s.savedProfiles.find((p: { id: string }) => p.id === s.activeAccountId).name).toBe("Farm 1");
+  expect(s.commanders).toEqual({});
   await page.reload();
-  await expect(page.getByRole("button", { name: "Use Farm 1" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "Use Main" })).toHaveCount(0);
+  await expect(h1(page)).toHaveText("Me: Farm 1");
+  await openRow(page, "Profile and accounts");
+  await page.getByRole("button", { name: "Use Main" }).click();
+  s = await stored(page);
+  expect(s.profileCode).toBe(RICH);
+  expect(s.commanders).toEqual({ minamoto: { q1: "main" } });
 
   await page.getByRole("button", { name: "Remove Farm 1" }).click();
   await expect(page.locator(".me-account")).toHaveCount(1);
-  const s = await stored(page);
+  s = await stored(page);
   expect(s.savedProfiles.map((p: { name: string }) => p.name)).toEqual(["Main"]);
   expect(s.profileCode).toBe(RICH);
 });
@@ -185,7 +225,9 @@ test("360 px: no sideways scroll with the worst-case profile and confirmation op
   await page.setViewportSize({ width: 360, height: 740 });
   await seed(page, { profileCode: "1.5.4.4.25.1440.24.5000.10000000.byzantium.1", profileOverride: "kraken" });
   await page.goto("/me/");
-  await expect(page.getByText("10,000,000 USD")).toBeVisible();
+  await openRow(page, "Profile and accounts");
+  await expect(page.getByLabel("Roughly how much have you spent in total on this account?")).toHaveValue("10000000");
+  await openRow(page, "Your data");
   await page.getByRole("button", { name: "Delete all data" }).click();
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   expect(overflow).toBeLessThanOrEqual(0);
@@ -206,6 +248,7 @@ test.describe("accessibility", () => {
         await seed(page, { theme, ...c.store });
         await page.goto("/me/");
         await expect(h1(page)).toBeVisible();
+        for (const r of ["Profile and accounts", "Appearance", "Your data", "Backup"]) await openRow(page, r);
         await expect(page.getByRole("button", { name: "Export profile file" })).toBeVisible();
         if (c.confirm) {
           await page.getByRole("button", { name: "Delete all data" }).click();

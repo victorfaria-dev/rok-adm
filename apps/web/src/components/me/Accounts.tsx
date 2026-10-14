@@ -1,7 +1,8 @@
 import { useState } from "preact/hooks";
 import { writeStore, type StoreV1 } from "../../lib/store";
 import { profileFromCode, profileSummary } from "../../lib/profile";
-import { NAME_MAX, activeAccountId, newAccountId, removeAccount, saveAccount, useAccountPatch } from "../../lib/me";
+import { NAME_MAX, newAccountId, removeAccount, saveAccount } from "../../lib/me";
+import { accountsOf, switchAccountPatch } from "../../lib/accounts";
 
 interface Props {
   store: StoreV1;
@@ -15,8 +16,9 @@ export function Accounts({ store, now, onChange }: Props) {
   const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [status, setStatus] = useState("");
-  const list = store.savedProfiles;
-  const active = activeAccountId(list, store.profileCode, store.profileOverride);
+  const view = accountsOf(store);
+  const list = view.accounts;
+  const active = view.activeId;
 
   const save = (e: Event): void => {
     e.preventDefault();
@@ -30,15 +32,15 @@ export function Accounts({ store, now, onChange }: Props) {
     setError("");
     setName("");
     setStatus(`Saved "${name.trim().replace(/\s+/g, " ")}".`);
-    onChange(writeStore({ savedProfiles: r.list }), false);
+    onChange(writeStore({ savedProfiles: r.list, activeAccountId: active }), false);
   };
 
   return (
     <section class="me-section" aria-labelledby="me-acc-h">
       <h2 id="me-acc-h">Accounts</h2>
       <p class="me-note">
-        Play a main and farms? Save each profile here and switch which one the guide and routine use.
-        Routine checks and commander answers are shared between accounts.
+        Play a main and farms? Save each profile here and switch which one City Hall, the guide and the routine use.
+        Each account keeps its own routine checks and commander answers. You can also switch by swiping the cards on City Hall.
       </p>
 
       {list.length > 0 && (
@@ -61,7 +63,8 @@ export function Accounts({ store, now, onChange }: Props) {
                       onClick={() => {
                         setError("");
                         setStatus(`Now using "${p.name}".`);
-                        onChange(writeStore(useAccountPatch(p)), true);
+                        const patch = switchAccountPatch(store, p.id);
+                        if (patch) onChange(writeStore(patch), true);
                       }}
                     >Use</button>
                   )}
@@ -72,7 +75,7 @@ export function Accounts({ store, now, onChange }: Props) {
                     onClick={() => {
                       setError("");
                       setStatus(`Removed "${p.name}". Your current profile was not changed.`);
-                      onChange(writeStore({ savedProfiles: removeAccount(list, p.id) }), false);
+                      onChange(writeStore({ savedProfiles: removeAccount(list, p.id), activeAccountId: active }), false);
                     }}
                   >Remove</button>
                 </div>

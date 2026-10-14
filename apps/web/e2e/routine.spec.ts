@@ -12,9 +12,9 @@ async function seed(page: Page, store: object) {
   await page.evaluate((s) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: "dark", ...s })), store);
 }
 
-/** Open /routine/ and wait until the island has read the saved state. */
+/** Open the full routine (/city-hall/today/, was /routine/) and wait until the island has read the saved state. */
 async function open(page: Page) {
-  await page.goto("/routine/");
+  await page.goto("/city-hall/today/");
   await expect(page.locator(".rt[data-ready]")).toBeAttached();
 }
 

@@ -1,22 +1,63 @@
-// Questionnaire step machine (plan §4, screen 2). Pure functions, no DOM and no storage:
-// the island owns side effects. Questions, options, limits and defaults all come from
-// QUESTIONS in @rokadm/core; this file only adds navigation and how-to-fix messages.
+// Onboarding step machine (UX stage 1: at most 5 questions). Pure functions, no DOM and no storage:
+// the island owns side effects. Profile questions, options, limits and defaults come from QUESTIONS
+// in @rokadm/core; the one extra step, "Playing as" (player / leader), is the site's own and is not
+// part of the profile code. Every other core question is optional and edited later on /me.
 import {
   QUESTIONS,
   decodeProfile,
   encodeProfile,
+  getQuestion,
   validateAnswers,
   type AccountProfile,
   type NumberQuestion,
   type Question,
   type QuestionId,
+  type QuestionOption,
 } from "@rokadm/core";
+import { HOME_FOR } from "./nav";
+import { PLAYING_AS, type PlayingAs } from "./store";
 
-/** Raw answers keyed by question id. Number answers may be the text being typed. */
-export type Answers = Partial<Record<QuestionId, unknown>>;
+/** "Playing as": picks the tab set (lib/nav.ts) and the home tab the onboarding ends on. */
+export interface PlayingAsQuestion {
+  id: "playingAs";
+  type: "choice";
+  label: string;
+  help: string;
+  default: PlayingAs;
+  nullable: false;
+  options: ReadonlyArray<QuestionOption<PlayingAs>>;
+}
+
+export const PLAYING_AS_QUESTION: PlayingAsQuestion = {
+  id: "playingAs",
+  type: "choice",
+  nullable: false,
+  default: "player",
+  label: "How will you use KingdomOps?",
+  help: "Picks your tabs. You can switch any time on the Me tab.",
+  options: [
+    { value: "player", label: "As a player", help: "Your City Hall, today's must-dos, guides and tools." },
+    { value: "leader", label: "As a kingdom or alliance leader", help: "Kingdom rules, members, recruitment and events, plus the guides." },
+  ],
+};
+
+export type StepId = QuestionId | "playingAs";
+export type FlowQuestion = Question | PlayingAsQuestion;
+
+/** The core questions asked during onboarding, in order after "Playing as". */
+export const ONBOARDING_IDS: readonly QuestionId[] = ["spending", "minutesPerDay", "cityHall", "kingdomStage"];
+
+/** Optional answers, edited on /me ("More about your account"); the onboarding never asks them. */
+export const OPTIONAL_IDS: readonly QuestionId[] = QUESTIONS.map((q) => q.id).filter((id) => !ONBOARDING_IDS.includes(id));
+
+/** Every onboarding step, in display order. */
+export const STEPS: readonly FlowQuestion[] = [PLAYING_AS_QUESTION, ...ONBOARDING_IDS.map(getQuestion)];
+
+/** Raw answers keyed by step id. Number answers may be the text being typed. */
+export type Answers = Partial<Record<StepId, unknown>>;
 
 export interface FlowState {
-  /** 0..QUESTIONS.length - 1 is a question; SUMMARY is the final review step. */
+  /** 0..STEPS.length - 1 is a question; SUMMARY is the final review step. */
   step: number;
   answers: Answers;
   /** Opened from the summary with "Change": Next goes back to the summary. */
@@ -31,21 +72,21 @@ export interface Draft {
   answers: Answers;
 }
 
-export const TOTAL = QUESTIONS.length;
+export const TOTAL = STEPS.length;
 export const SUMMARY = TOTAL;
 
 export function initialState(): FlowState {
   return { step: 0, answers: {}, review: false, error: null };
 }
 
-export function questionAt(step: number): Question | null {
-  return QUESTIONS[step] ?? null;
+export function questionAt(step: number): FlowQuestion | null {
+  return STEPS[step] ?? null;
 }
 
 export const isSummary = (s: FlowState): boolean => s.step === SUMMARY;
 
 /** The value shown for a question: the answer, or the core default when unanswered. */
-export function currentValue(s: FlowState, q: Question): unknown {
+export function currentValue(s: FlowState, q: FlowQuestion): unknown {
   const v = s.answers[q.id];
   return v === undefined ? q.default : v;
 }
@@ -85,16 +126,16 @@ export function parseNumberAnswer(q: NumberQuestion, raw: unknown): { value: num
 }
 
 /** Parse a step's answer into the value stored when the step is committed. */
-export function parseStep(q: Question, raw: unknown): { value: unknown } | { error: string } {
+export function parseStep(q: FlowQuestion, raw: unknown): { value: unknown } | { error: string } {
   if (q.type === "number") return parseNumberAnswer(q, raw);
   if (q.type === "boolean") {
     return typeof raw === "boolean" ? { value: raw } : { error: "Pick Yes or No." };
   }
   if (raw === null && q.nullable) return { value: null };
-  return q.options.some((o) => o.value === raw) ? { value: raw } : { error: "Pick one of the options." };
+  return (q.options as ReadonlyArray<QuestionOption<unknown>>).some((o) => o.value === raw) ? { value: raw } : { error: "Pick one of the options." };
 }
 
-/** Answers as typed values for validateAnswers: number text parsed, unanswered left out. */
+/** Profile answers as typed values for validateAnswers: number text parsed, unanswered and "playingAs" left out. */
 export function normalizeAnswers(answers: Answers): Record<string, unknown> {
   const out: Record<string, unknown> = {};
   for (const q of QUESTIONS) {
@@ -118,7 +159,7 @@ export function validateStep(s: FlowState): { value: unknown } | { error: string
   const q = questionAt(s.step);
   if (!q) return { error: "No question at this step." };
   const r = parseStep(q, currentValue(s, q));
-  if ("error" in r) return r;
+  if ("error" in r || q.id === "playingAs") return r;
   const all = validateAnswers({ ...normalizeAnswers(s.answers), [q.id]: r.value });
   if ("errors" in all) {
     const mine = all.errors.find((e) => e.field === q.id);
@@ -179,11 +220,11 @@ export function fromDraft(raw: unknown): FlowState | null {
   const a = d.answers;
   if (typeof a !== "object" || a === null || Array.isArray(a)) return null;
   const answers: Answers = {};
-  for (const q of QUESTIONS) {
-    const v = (a as Record<string, unknown>)[q.id];
-    if (v !== undefined && isPrimitive(v)) answers[q.id] = v;
+  for (const id of [...QUESTIONS.map((q) => q.id), PLAYING_AS_QUESTION.id] as StepId[]) {
+    const v = (a as Record<string, unknown>)[id];
+    if (v !== undefined && isPrimitive(v)) answers[id] = v;
   }
-  const step = typeof d.step === "number" && Number.isInteger(d.step) && d.step >= 0 && d.step <= SUMMARY ? d.step : 0;
+  const step = typeof d.step === "number" && Number.isInteger(d.step) && d.step >= 0 ? Math.min(d.step, SUMMARY) : 0;
   return { step, answers, review: false, error: null };
 }
 
@@ -194,15 +235,18 @@ export function answersFromProfile(p: AccountProfile): Answers {
 }
 
 /**
- * Where the questionnaire opens: the draft in progress (same step), else the saved profile
- * pre-filled on the summary ("Edit answers"), else the first question.
+ * Where the onboarding opens: the draft in progress (same step), else the saved profile
+ * pre-filled on the summary ("Edit answers"), else the first question. A draft saved by the
+ * old 10-question flow keeps its answers; a step past the new summary opens the summary.
  */
-export function resume(saved: { draft: unknown; profileCode: string | null }): FlowState {
+export function resume(saved: { draft: unknown; profileCode: string | null; playingAs?: PlayingAs }): FlowState {
   const fromD = fromDraft(saved.draft);
   if (fromD) return fromD;
   if (saved.profileCode) {
     const r = decodeProfile(saved.profileCode);
-    if ("profile" in r) return { step: SUMMARY, answers: answersFromProfile(r.profile), review: false, error: null };
+    if ("profile" in r) {
+      return { step: SUMMARY, answers: { ...answersFromProfile(r.profile), playingAs: saved.playingAs ?? "player" }, review: false, error: null };
+    }
   }
   return initialState();
 }
@@ -211,19 +255,45 @@ export function resume(saved: { draft: unknown; profileCode: string | null }): F
 // Summary
 
 export type Outcome =
-  | { ok: true; profile: AccountProfile; warnings: string[]; code: string }
+  | { ok: true; profile: AccountProfile; warnings: string[]; code: string; playingAs: PlayingAs }
   | { ok: false; errors: { step: number; message: string }[] };
 
-/** Final validation with validateAnswers; warnings are profileWarnings (returned by it). */
+const asPlayingAs = (v: unknown): PlayingAs => (PLAYING_AS.includes(v as PlayingAs) ? (v as PlayingAs) : "player");
+
+/**
+ * Final validation with validateAnswers; warnings are profileWarnings (returned by it). Optional
+ * answers carried over from a saved profile are kept. "Playing as" sets the profile's account
+ * role only where they disagree: a leader becomes "Alliance / kingdom leader" (adds the kingdom
+ * admin guide); a player whose profile said leader goes back to the default role.
+ */
 export function finish(answers: Answers): Outcome {
-  const r = validateAnswers(normalizeAnswers(answers));
+  const playingAs = asPlayingAs(answers.playingAs);
+  const typed = normalizeAnswers(answers);
+  if (playingAs === "leader") typed.role = "lider";
+  else if (typed.role === "lider") delete typed.role;
+  let r = validateAnswers(typed);
+  let cleared: string[] = [];
+  // An optional answer kept from the saved profile (e.g. kingdom day) that no longer fits a new
+  // onboarding answer (e.g. kingdom stage) is cleared, not blocking: it is not on screen here.
+  if ("errors" in r && r.errors.every((e) => (OPTIONAL_IDS as readonly string[]).includes(e.field))) {
+    cleared = [...new Set(r.errors.map((e) => e.field))];
+    for (const f of cleared) delete typed[f];
+    r = validateAnswers(typed);
+  }
   if ("errors" in r) {
     return {
       ok: false,
-      errors: r.errors.map((e) => ({ step: Math.max(0, QUESTIONS.findIndex((q) => q.id === e.field)), message: e.message })),
+      // An error on an optional answer (never shown here) points at the first step.
+      errors: r.errors.map((e) => ({ step: Math.max(0, STEPS.findIndex((q) => q.id === e.field)), message: e.message })),
     };
   }
-  return { ok: true, profile: r.profile, warnings: r.warnings, code: encodeProfile(r.profile) };
+  const notes = cleared.map((f) => `${QUESTIONS.find((q) => q.id === f)?.label ?? f} Your old answer no longer fits, so it was cleared. Add it again on the Me tab.`);
+  return { ok: true, profile: r.profile, warnings: [...notes, ...r.warnings], code: encodeProfile(r.profile), playingAs };
+}
+
+/** Where the onboarding ends: the role's home tab (City Hall or Kingdom), not the long guide. */
+export function homeUrl(playingAs: PlayingAs): string {
+  return HOME_FOR[playingAs];
 }
 
 export function guideUrl(code: string): string {
@@ -231,10 +301,11 @@ export function guideUrl(code: string): string {
 }
 
 /** Answer text for the summary. Option and preset labels come from the core. */
-export function answerText(q: Question, value: unknown): string {
-  if (value === null) return q.type === "choice" ? (q.options.find((o) => o.value === null)?.label ?? "Skipped") : "Skipped";
+export function answerText(q: FlowQuestion, value: unknown): string {
+  const options = q.type === "choice" ? (q.options as ReadonlyArray<QuestionOption<unknown>>) : [];
+  if (value === null) return q.type === "choice" ? (options.find((o) => o.value === null)?.label ?? "Skipped") : "Skipped";
   if (q.type === "boolean") return value ? "Yes" : "No";
-  if (q.type === "choice") return q.options.find((o) => o.value === value)?.label ?? String(value);
+  if (q.type === "choice") return options.find((o) => o.value === value)?.label ?? String(value);
   const n = typeof value === "number" ? value : Number(cleanNumberText(String(value)));
   if (!Number.isFinite(n)) return String(value);
   return `${fmt(n)}${q.unit ? ` ${q.unit}` : ""}`;

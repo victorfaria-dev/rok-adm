@@ -35,7 +35,7 @@ test("signed in: app areas open, the account panel shows, sign out clears the se
   await mockSupabase(page, { tables: { profiles: [me] } });
   await signIn(page);
   await page.goto("/me/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("You");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Me: Governor");
   await expect(page.locator("[data-account-panel]")).toContainText("me@example.test");
   await page.locator("[data-account-panel]").getByRole("button", { name: "Sign out" }).click();
   await expect(page).toHaveURL(/\/$/);

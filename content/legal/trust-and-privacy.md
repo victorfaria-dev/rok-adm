@@ -15,14 +15,14 @@
 
 ### MVP (now)
 
-Everything below lives in your browser's storage on this device. Only you can see it, unless you export a file or share a link yourself. The **You** page (`/me/`) has **Back up everything** (one file with every row marked "yes" below) and **Delete all data** (removes every row below, the Discord webhook included, and can also remove the offline copy).
+Everything below lives in your browser's storage on this device. Only you can see it, unless you export a file or share a link yourself. The **Me** page (`/me/`) has **Back up everything** (one file with every row marked "yes" below) and **Delete all data** (removes every row below, the Discord webhook included, and can also remove the offline copy).
 
-#### Profile & answers, saved accounts, routine ticks, commander checks and theme
+#### Profile & answers, accounts, routine ticks, commander checks, playing as and theme
 
-- **What is in it:** Your questionnaire answers (spending, role, minutes per day, kingdom stage, City Hall level, civilization), any unfinished questionnaire, accounts you saved (main, farms), today's routine ticks and routine settings, your commander checklist answers, your theme
+- **What is in it:** Your questionnaire answers (spending, role, minutes per day, kingdom stage, City Hall level, civilization), any unfinished questionnaire, your accounts (main, farms, alts), each with its own today's routine ticks and commander checklist answers, routine settings, whether you use the site as a player or a leader, your theme
 - **In "Back up everything":** Yes
-- **Other ways to export:** You page: **Export profile file**
-- **How to delete it:** **Delete all data** on the You page (routine ticks also reset each day; a saved account can be removed on its own)
+- **Other ways to export:** Me page: **Export profile file**
+- **How to delete it:** **Delete all data** on the Me page (routine ticks also reset each day; a saved account can be removed on its own)
 
 #### Governor card
 
@@ -58,6 +58,13 @@ Everything below lives in your browser's storage on this device. Only you can se
 - **In "Back up everything":** Yes
 - **Other ways to export:** Council kit page (`/kingdom/`): **Export (.json)**; each tool: share link or CSV
 - **How to delete it:** Each tool: delete a document; council kit page: **Delete all council data** (also forgets the webhook)
+
+#### City card banners
+
+- **What is in it:** Images you picked as the banner of an account's city card, cropped and shrunk on your device (the default banners are not stored)
+- **In "Back up everything":** **No** (images are large; pick them again after a restore)
+- **Other ways to export:** None
+- **How to delete it:** **Reset to default** under **Edit banner** on the City Hall card, or **Delete all data** on the Me page
 
 #### Discord webhook URL
 

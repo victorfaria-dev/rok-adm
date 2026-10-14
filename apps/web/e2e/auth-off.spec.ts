@@ -4,7 +4,7 @@ import AxeBuilder from "@axe-core/playwright";
 import { expect, test } from "@playwright/test";
 
 test("app areas open without sign-in and carry no route guard", async ({ page }) => {
-  for (const path of ["/me/", "/tools/", "/kingdom/", "/routine/"]) {
+  for (const path of ["/me/", "/tools/", "/kingdom/", "/city-hall/"]) {
     const res = await page.goto(path);
     expect(res?.status(), path).toBe(200);
     expect(new URL(page.url()).pathname, path).toBe(path);
@@ -12,7 +12,7 @@ test("app areas open without sign-in and carry no route guard", async ({ page })
   }
   // No account panel and no dev notice in the production build.
   await page.goto("/me/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("You");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Me: Governor");
   await expect(page.locator("[data-account-panel]")).toHaveCount(0);
   await expect(page.locator("[data-auth-dev-notice]")).toHaveCount(0);
 });

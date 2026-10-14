@@ -48,9 +48,9 @@ test.describe("page transitions", () => {
     await page.goto("/guide/");
     await page.evaluate(() => navigator.serviceWorker.ready.then(() => true));
 
-    const nav = page.locator(isMobile ? "nav.tabs" : "nav.rail");
-    await nav.getByRole("link", { name: "Routine" }).click();
-    await page.waitForURL("**/routine/");
+    const nav = page.locator(isMobile ? "nav.tabs:visible" : "nav.rail");
+    await nav.getByRole("link", { name: "City Hall" }).click();
+    await page.waitForURL("**/city-hall/");
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
     await expect(page.locator("h1")).toHaveCount(1);
     expect(await page.evaluate(() => navigator.serviceWorker.controller !== null)).toBe(true);
@@ -62,8 +62,8 @@ test.describe("page transitions", () => {
 
     // An island on a page reached by a link hydrates and reacts.
     await page.goto("/crest/");
-    await nav.getByRole("link", { name: "Guide" }).first().click();
-    await page.waitForURL("**/guide/");
+    await nav.getByRole("link", { name: "Tools" }).first().click();
+    await page.waitForURL("**/tools/");
     await page.goBack();
     await page.waitForURL("**/crest/");
     await expect(page.locator("astro-island:has(.cr-wrap)")).not.toHaveAttribute("ssr", "");
@@ -73,7 +73,7 @@ test.describe("page transitions", () => {
 
   test("/start reached by a link still moves focus to the next question's replies", async ({ page }) => {
     await page.goto("/");
-    await page.getByRole("link", { name: "Build my guide" }).first().click();
+    await page.getByRole("link", { name: "Start", exact: true }).first().click();
     await page.waitForURL("**/start/");
     const title = page.getByRole("heading", { level: 1 });
     await expect(page.locator("astro-island").first()).not.toHaveAttribute("ssr", "");

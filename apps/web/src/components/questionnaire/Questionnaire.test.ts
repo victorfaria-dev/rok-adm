@@ -1,14 +1,15 @@
 // @vitest-environment happy-dom
-import { QUESTIONS, decodeProfile } from "@rokadm/core";
+import { decodeProfile } from "@rokadm/core";
 import { cleanup, fireEvent, render, screen } from "@testing-library/preact";
 import { h } from "preact";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { STEPS, SUMMARY } from "../../lib/questionnaire-flow";
 import { STORE_KEY, readStore } from "../../lib/store";
 import { LEADS } from "../../lib/sun-tzu";
 import Questionnaire from "./Questionnaire";
 
-const stepOf = (id: string): number => QUESTIONS.findIndex((q) => q.id === id);
-const label = (i: number): string => QUESTIONS[i]!.label;
+const stepOf = (id: string): number => STEPS.findIndex((q) => q.id === id);
+const label = (i: number): string => STEPS[i]!.label;
 const title = (): HTMLElement => screen.getByRole("heading", { level: 1 });
 const enter = (el: Element = document.body): boolean => fireEvent.keyDown(el, { key: "Enter" });
 
@@ -19,32 +20,35 @@ function setup(stored?: object) {
   return { navigate };
 }
 
-beforeEach(() => localStorage.clear());
+beforeEach(() => {
+  localStorage.clear();
+  document.documentElement.removeAttribute("data-role");
+});
 afterEach(cleanup);
 
 describe("questionnaire island: keyboard", () => {
   it("Enter moves forward and focus goes to the new question's options, not the log", () => {
     setup();
     expect(title().textContent).toBe(label(0));
-    expect(screen.getByText(/of 10/).textContent).toContain("1 of 10");
+    expect(screen.getByText(/of 5/).textContent).toContain("1 of 5");
     enter();
     expect(title().textContent).toBe(label(1));
-    // Total spend has presets and no answer: the first quick reply.
-    expect(document.activeElement).toBe(screen.getAllByRole("radio")[0]);
+    // Spending has options and the default is picked: the picked quick reply.
+    expect(document.activeElement).toBe(screen.getByRole("radio", { name: /F2P/ }));
     expect(screen.getByRole("log").contains(document.activeElement)).toBe(false);
-    expect(screen.getByText(/of 10/).textContent).toContain("2 of 10");
+    expect(screen.getByText(/of 5/).textContent).toContain("2 of 5");
   });
 
   it("first load focuses the picked option of the first question", async () => {
     setup();
     await new Promise((r) => setTimeout(r, 0));
-    expect(document.activeElement).toBe(screen.getByRole("radio", { name: /F2P/ }));
+    expect(document.activeElement).toBe(screen.getByRole("radio", { name: /As a player/ }));
   });
 
   it("first load on a resumed number step focuses its field", async () => {
-    setup({ draft: { step: stepOf("kingdomDay"), answers: {} } });
+    setup({ draft: { step: stepOf("cityHall"), answers: {} } });
     await new Promise((r) => setTimeout(r, 0));
-    expect(title().textContent).toBe(label(stepOf("kingdomDay")));
+    expect(title().textContent).toBe(label(stepOf("cityHall")));
     expect(document.activeElement).toBe(screen.getByRole("textbox"));
   });
 
@@ -64,22 +68,22 @@ describe("questionnaire island: keyboard", () => {
   });
 
   it("Enter on a radio option commits the picked option", () => {
-    setup();
+    setup({ draft: { step: stepOf("spending"), answers: {} } });
     const radio = screen.getByRole("radio", { name: /Whale/ });
     fireEvent.click(radio);
     enter(radio);
-    expect(title().textContent).toBe(label(1));
+    expect(title().textContent).toBe(label(stepOf("minutesPerDay")));
     expect((readStore().draft as { answers: Record<string, unknown> }).answers.spending).toBe("whale");
   });
 
   it("Enter in the number field submits; Back keeps the typed answer", () => {
-    setup({ draft: { step: stepOf("kingdomDay"), answers: {} } });
+    setup({ draft: { step: stepOf("cityHall"), answers: {} } });
     const input = screen.getByRole("textbox");
-    fireEvent.input(input, { target: { value: "5000" } });
+    fireEvent.input(input, { target: { value: "17" } });
     enter(input);
-    expect(title().textContent).toBe(label(stepOf("cityHall")));
+    expect(title().textContent).toBe(label(stepOf("kingdomStage")));
     fireEvent.click(screen.getByRole("button", { name: "Back" }));
-    expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("5000");
+    expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("17");
     expect(document.activeElement).toBe(screen.getByRole("textbox"));
   });
 
@@ -104,11 +108,11 @@ describe("questionnaire island: chat", () => {
     const log = screen.getByRole("log");
     expect(log.getAttribute("aria-live")).toBe("polite");
     expect(log.textContent).toContain("Sun Tzu");
+    expect(log.textContent).toContain(LEADS.playingAs);
+    fireEvent.click(screen.getByRole("radio", { name: /leader/ }));
+    enter(screen.getByRole("radio", { name: /leader/ }));
+    expect(log.textContent).toContain("You: As a kingdom or alliance leader");
     expect(log.textContent).toContain(LEADS.spending);
-    fireEvent.click(screen.getByRole("radio", { name: /Whale/ }));
-    enter(screen.getByRole("radio", { name: /Whale/ }));
-    expect(log.textContent).toContain("You: Whale");
-    expect(log.textContent).toContain(LEADS.lifetimeSpendUsd);
     // One page heading: the current question only.
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   });
@@ -120,14 +124,12 @@ describe("questionnaire island: chat", () => {
     for (const a of avatars) expect(a.getAttribute("aria-hidden")).toBe("true");
   });
 
-  it("Sun Tzu nods (approve) at an accepted answer and talks after Skip, while the new bubble types", () => {
+  it("Sun Tzu greets first, then nods (approve) at an accepted answer while the new bubble types", () => {
     setup();
     const stageState = () => document.querySelector(".st-stage")!.getAttribute("data-state");
     expect(stageState()).toBe("greet");
     enter();
     expect(stageState()).toBe("approve");
-    fireEvent.click(screen.getByRole("button", { name: "Skip" }));
-    expect(stageState()).toBe("talking");
   });
 
   it("one stage, above the current question; history shows still posters", () => {
@@ -142,15 +144,15 @@ describe("questionnaire island: chat", () => {
   });
 
   it("a tap on a quick reply answers and moves on in one go", () => {
-    setup();
+    setup({ draft: { step: stepOf("spending"), answers: {} } });
     const radio = screen.getByRole("radio", { name: /Medium spender/ });
     fireEvent.pointerDown(radio.closest("label")!);
     fireEvent.click(radio);
-    expect(title().textContent).toBe(label(1));
+    expect(title().textContent).toBe(label(stepOf("minutesPerDay")));
     expect((readStore().draft as { answers: Record<string, unknown> }).answers.spending).toBe("medium");
     // The late change event of the old step does not touch the new one.
     fireEvent.change(radio);
-    expect((readStore().draft as { answers: Record<string, unknown> }).answers.lifetimeSpendUsd).toBeUndefined();
+    expect((readStore().draft as { answers: Record<string, unknown> }).answers.minutesPerDay).toBeUndefined();
   });
 
   it("every option shows its one-line why", () => {
@@ -162,7 +164,7 @@ describe("questionnaire island: chat", () => {
   });
 
   it("no option is marked Recommended (decision QC-1)", () => {
-    for (let step = 0; step <= QUESTIONS.length; step++) {
+    for (let step = 0; step <= STEPS.length; step++) {
       setup({ draft: { step, answers: {} } });
       expect(document.body.textContent).not.toMatch(/recommended/i);
       cleanup();
@@ -205,42 +207,52 @@ describe("questionnaire island: errors", () => {
     expect(screen.queryByText(/out of range/)).toBeNull();
   });
 
-  it("Skip is offered only on nullable questions", () => {
-    setup();
-    expect(screen.queryByRole("button", { name: "Skip" })).toBeNull();
-    enter();
-    fireEvent.click(screen.getByRole("button", { name: "Skip" }));
-    expect(title().textContent).toBe(label(2));
+  it("Skip is never offered: all five questions are needed", () => {
+    for (let step = 0; step < STEPS.length; step++) {
+      setup({ draft: { step, answers: {} } });
+      expect(screen.queryByRole("button", { name: "Skip" })).toBeNull();
+      cleanup();
+      localStorage.clear();
+    }
   });
 });
 
 describe("questionnaire island: summary", () => {
-  it("shows warnings and saves the profile code before opening the guide", () => {
+  it("shows warnings, saves the profile code and opens City Hall (player)", () => {
     const { navigate } = setup({
-      draft: {
-        step: QUESTIONS.length,
-        answers: { spending: "f2p", lifetimeSpendUsd: 10_000_000, minutesPerDay: 1440, kingdomDay: 5000, cityHall: 25, civilization: null },
-      },
+      draft: { step: SUMMARY, answers: { playingAs: "player", spending: "f2p", minutesPerDay: 10, cityHall: 25, kingdomStage: "pre_kvk" } },
     });
     expect(title().textContent).toBe("Check your answers");
     expect(document.querySelector(".st-stage")!.getAttribute("data-state")).toBe("victory");
-    expect(screen.getByText(/You spent about \$10000000/)).toBeTruthy();
-    expect(screen.getByText("10,000,000 USD")).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "See my guide" }));
+    expect(screen.getByText(/Under 15 minutes a day/)).toBeTruthy();
+    expect(screen.getByText(/optional: add them any time on the Me tab/)).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Open my City Hall" }));
     const code = readStore().profileCode!;
     expect("profile" in decodeProfile(code)).toBe(true);
     expect(readStore().draft).toBeNull();
-    expect(navigate).toHaveBeenCalledWith(`/guide/?p=${code}`);
+    expect(readStore().playingAs).toBe("player");
+    expect(navigate).toHaveBeenCalledWith("/city-hall/");
   });
 
-  it("Edit answers: a saved profile opens pre-filled; Change returns to the summary", () => {
+  it("a leader lands on Kingdom and the tabs switch at once", () => {
+    const { navigate } = setup({ draft: { step: SUMMARY, answers: { playingAs: "leader" } } });
+    fireEvent.click(screen.getByRole("button", { name: "Open my Kingdom" }));
+    expect(readStore().playingAs).toBe("leader");
+    expect(document.documentElement.getAttribute("data-role")).toBe("leader");
+    expect(navigate).toHaveBeenCalledWith("/kingdom/");
+  });
+
+  it("Edit answers: a saved profile (old 10-answer code) opens pre-filled; Change returns to the summary", () => {
     setup({ profileCode: "1.1.2.1.12.30.2.140.250.china.1" });
     expect(title().textContent).toBe("Check your answers");
-    expect(screen.getByText("China")).toBeTruthy();
+    expect(screen.getAllByRole("button", { name: /^Change answer/ })).toHaveLength(5);
     fireEvent.click(screen.getByRole("button", { name: `Change answer: ${label(stepOf("cityHall"))}` }));
     expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("12");
     expect(screen.getByRole("button", { name: "Review answers" })).toBeTruthy();
     enter(screen.getByRole("textbox"));
     expect(title().textContent).toBe("Check your answers");
+    // The optional answers of the old code (civilization China, kingdom day 140) are kept.
+    fireEvent.click(screen.getByRole("button", { name: "Open my City Hall" }));
+    expect(readStore().profileCode).toBe("1.1.2.1.12.30.2.140.250.china.1");
   });
 });

@@ -4,7 +4,7 @@ import { fileURLToPath } from "node:url";
 import AxeBuilder from "@axe-core/playwright";
 import { expect, test, type Page } from "@playwright/test";
 import type { GuideBlock } from "@rokadm/core";
-import { SECONDARY } from "../src/lib/nav";
+import { HUB_GROUPS } from "../src/lib/guides-hub";
 
 const here = dirname(fileURLToPath(import.meta.url));
 const load = (set: string) => JSON.parse(readFileSync(join(here, `../../../guides/data/blocks.${set}.json`), "utf8")) as GuideBlock[];
@@ -25,7 +25,8 @@ async function axe(page: Page) {
     .map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`);
 }
 
-const moreButton = (page: Page) => page.locator("header.top").getByRole("button", { name: "More" });
+// Guides are not a tab (owner decision, UX stage 1): guide pages mark Me, where the Guides row is.
+const meTab = (page: Page) => page.locator("nav.tabs[data-nav=player]").getByRole("link", { name: "Me", exact: true });
 
 test.describe("without JavaScript", () => {
   test.use({ javaScriptEnabled: false });
@@ -48,15 +49,25 @@ test.describe("without JavaScript", () => {
     });
   }
 
-  test("/guides/ lists every guide with who it is for", async ({ page }) => {
+  test("/guides/ is one list grouped by intent with every guide, safety, zeroed and what changed", async ({ page }) => {
     await page.goto("/guides/");
-    await expect(page.locator("h1")).toHaveText("All guides");
+    await expect(page.locator("h1")).toHaveText("Guides");
     const entries = page.locator("[data-guide-entry]");
-    await expect(entries).toHaveCount(9);
-    for (const href of ["/guide/", "/guides/new-kingdom/", "/guides/farms/", ...GUIDES.map(([u]) => u)]) {
-      await expect(page.locator(`.gi-item h2 a[href="${href}"]`)).toHaveCount(1);
+    await expect(entries).toHaveCount(HUB_GROUPS.reduce((n, g) => n + g.items.length, 0));
+    await expect(page.locator("[data-guide-group] h2")).toHaveText(HUB_GROUPS.map((g) => g.title));
+    for (const href of ["/guide/", "/guides/new-kingdom/", "/guides/farms/", "/tools/safety/", "/tools/zeroed/", "/changes/", ...GUIDES.map(([u]) => u)]) {
+      await expect(page.locator(`.gh-item a.gh-link[href="${href}"]`)).toHaveCount(1);
     }
-    for (const entry of await entries.all()) await expect(entry.locator(".gi-for")).toContainText("For:");
+    for (const r of ["food", "wood", "stone", "gold"]) await expect(page.locator(`.gh-sub a[href="/guides/farms/${r}/"]`)).toHaveCount(1);
+    // No profile, no JS: everything shows, the filter stays hidden.
+    await expect(page.locator("[data-guides-filter]")).toBeHidden();
+  });
+
+  test("the glossary search submits to /glossary/ without JS", async ({ page }) => {
+    await page.goto("/guides/");
+    await page.getByLabel("Look up a term").fill("MGE");
+    await page.getByRole("button", { name: "Search glossary" }).click();
+    await expect(page).toHaveURL(/\/glossary\/\?q=MGE$/);
   });
 
   test("the low spender page explains it is a delta over the F2P guide", async ({ page }) => {
@@ -79,79 +90,57 @@ test("the returning guide uses its own chapter titles", async ({ page }) => {
   await expect(page.locator(".g-section h2").first()).toHaveText("What changed while you were away");
 });
 
-test.describe("More menu (phone)", () => {
-  test.beforeEach(({ isMobile }) => test.skip(!isMobile, "the top bar exists below 1024 px only"));
+test("with a profile the hub filters to For you; All guides shows everything", async ({ page }) => {
+  await page.goto("/");
+  await page.evaluate(() => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, profileCode: "1.0.0.0.12.30.....0" })));
+  await page.goto("/guides/");
+  const filter = page.locator("[data-guides-filter]");
+  await expect(filter).toBeVisible();
+  await expect(page.locator('[data-tag="kingdomadmin"]')).toBeHidden();
+  await expect(page.locator('a.gh-link[href="/guide/"]')).toBeVisible();
+  await filter.getByText("All guides").click();
+  await expect(page.locator('[data-tag="kingdomadmin"]')).toBeVisible();
+  await page.goto("/glossary/?q=MGE");
+  await expect(page.getByLabel("Search the glossary")).toHaveValue("MGE");
+});
 
-  test("opens and closes with the button, Esc returns focus", async ({ page }) => {
-    await page.goto("/guide/");
-    const button = moreButton(page);
-    const panel = page.locator("#more-panel");
-    await expect(button).toHaveAttribute("aria-expanded", "false");
-    await expect(button).toHaveAttribute("aria-controls", "more-panel");
-    await expect(panel).toBeHidden();
+test.describe("guides under Me (phone)", () => {
+  test.beforeEach(({ isMobile }) => test.skip(!isMobile, "the tab bar exists below 768 px only"));
 
-    await button.click();
-    await expect(button).toHaveAttribute("aria-expanded", "true");
-    await expect(panel).toBeVisible();
-    await expect(panel.getByRole("link")).toHaveText(SECONDARY.map((s) => s.label));
-
-    await page.keyboard.press("Tab");
-    await expect(panel.getByRole("link", { name: "All guides" })).toBeFocused();
-    await page.keyboard.press("Escape");
-    await expect(panel).toBeHidden();
-    await expect(button).toHaveAttribute("aria-expanded", "false");
-    await expect(button).toBeFocused();
-
-    await button.click();
-    await expect(panel).toBeVisible();
-    await page.mouse.click(10, 600); // tap outside the menu
-    await expect(panel).toBeHidden();
+  test("every guide page, the glossary and what changed sit under Me; Me's first row opens the hub", async ({ page }) => {
+    for (const url of ["/guides/", "/guide/", "/guides/recovery/", "/guides/farms/food/", "/commanders/", "/glossary/", "/changes/", "/tools/safety/"]) {
+      await page.goto(url);
+      await expect(meTab(page), url).toHaveAttribute("aria-current", "page");
+    }
+    await expect(page.locator("nav.tabs[data-nav=player] li")).toHaveCount(3);
+    await page.goto("/me/");
+    await page.locator("ul.me-group").first().getByRole("link", { name: "Guides", exact: true }).click();
+    await page.waitForURL(/\/guides\/$/);
+    await expect(page.getByRole("button", { name: "More" })).toHaveCount(0);
   });
 
-  test("keyboard: Enter opens, Tab past the last link closes", async ({ page }) => {
-    await page.goto("/");
-    const button = moreButton(page);
-    await button.focus();
-    await page.keyboard.press("Enter");
-    await expect(button).toHaveAttribute("aria-expanded", "true");
-    for (let n = 0; n <= SECONDARY.length; n++) await page.keyboard.press("Tab");
-    await expect(button).toHaveAttribute("aria-expanded", "false");
-  });
-
-  test("All guides navigates to /guides/ and marks it current; the tab bar keeps 4 tabs", async ({ page }) => {
-    await page.goto("/routine/");
-    await moreButton(page).click();
-    await page.locator("#more-panel").getByRole("link", { name: "All guides" }).click();
-    await expect(page).toHaveURL(/\/guides\/$/);
-    await moreButton(page).click();
-    await expect(page.locator("#more-panel").getByRole("link", { name: "All guides" })).toHaveAttribute("aria-current", "page");
-    await expect(page.locator("nav.tabs li")).toHaveCount(4);
-  });
-
-  test("fits a 360px screen with the menu open", async ({ page }) => {
+  test("fits a 360px screen", async ({ page }) => {
     await page.setViewportSize({ width: 360, height: 780 });
-    await page.goto("/guide/");
-    await moreButton(page).click();
-    await expect(page.locator("#more-panel")).toBeInViewport({ ratio: 1 });
+    await page.goto("/guides/");
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
     expect(overflow).toBeLessThanOrEqual(0);
   });
-
-  for (const theme of ["dark", "light"] as const) {
-    test(`axe ${theme} with the menu open`, async ({ page }) => {
-      await page.goto("/");
-      await page.evaluate((t) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: t })), theme);
-      await page.goto("/guides/");
-      await moreButton(page).click();
-      await expect(page.locator("#more-panel")).toBeVisible();
-      expect(await axe(page)).toEqual([]);
-    });
-  }
 });
 
-test("desktop: the rail lists All guides and no More button is shown", async ({ page, isMobile }) => {
+for (const theme of ["dark", "light"] as const) {
+  test(`axe ${theme} /guides/`, async ({ page }) => {
+    await page.goto("/");
+    await page.evaluate((t) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: t })), theme);
+    await page.goto("/guides/");
+    expect(await axe(page)).toEqual([]);
+  });
+}
+
+test("desktop: guide pages mark Me in the rail and no More button is shown", async ({ page, isMobile }) => {
   test.skip(isMobile, "desktop only");
   await page.goto("/guides/recovery/");
-  await expect(page.locator("nav.rail").getByRole("link", { name: "All guides" })).toBeVisible();
-  await expect(page.getByRole("button", { name: "More" })).toBeHidden();
+  const rail = page.locator("nav.rail");
+  await expect(rail.getByRole("link", { name: "Me", exact: true })).toBeVisible();
+  await expect(rail.getByRole("link", { name: "Me", exact: true })).toHaveAttribute("aria-current", "page");
+  await expect(page.getByRole("button", { name: "More" })).toHaveCount(0);
 });

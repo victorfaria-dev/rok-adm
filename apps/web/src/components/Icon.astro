@@ -1,16 +1,23 @@
 ---
-// 24 px stroke icons drawn for KingdomOps (no icon runtime).
+// 24 px stroke icons drawn for KingdomOps (no icon runtime, no game art).
 import type { IconName } from "../lib/nav";
-interface Props { name: IconName | "theme" | "close" | "more" }
+interface Props { name: IconName | "theme" | "close" }
 const { name } = Astro.props;
 const paths: Record<string, string> = {
+  // A keep with a crenellated top and a gate.
+  cityhall: "M4 20V9h3V6h2v3h2V6h2v3h2V6h2v3h3v11zM10 20v-4.5a2 2 0 0 1 4 0V20M3 20h18",
   guide: "M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5C4.7 20 4 19.3 4 18.5zM13 4h5.5c.8 0 1.5.7 1.5 1.5v13c0 .8-.7 1.5-1.5 1.5H13zM7 8h1.5M7 11h1.5M16 8h1.5M16 11h1.5",
-  routine: "M12 21a8.5 8.5 0 1 0 0-17 8.5 8.5 0 0 0 0 17zM12 8v4.5l3 2M9 2h6",
-  commanders: "M12 3l7 3v5.5c0 4.3-3 7.8-7 9.5-4-1.7-7-5.2-7-9.5V6zM9 12l2 2 4-4",
+  // Hammer and handle.
+  tools: "M14.5 4.5l5 5-2 2-5-5zM12.5 6.5L4 15l5 5 8.5-8.5M3 21l3-3",
   you: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4.5 20.5c1.2-3.5 4.2-5.5 7.5-5.5s6.3 2 7.5 5.5",
+  // A banner on a pole.
+  kingdom: "M6 21V3M6 4h12l-3 4 3 4H6",
+  // Two people.
+  members: "M9 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zM2.5 20c.9-3 3.4-5 6.5-5s5.6 2 6.5 5M16 4.3a3.5 3.5 0 0 1 0 6.4M18 15c1.8.6 3 2.4 3.5 5",
+  // A calendar page with a marked day.
+  events: "M4 6h16v14H4zM4 10h16M8 3v4M16 3v4M14 14h3v3h-3z",
   theme: "M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 3v18",
   close: "M6 6l12 12M18 6L6 18",
-  more: "M4 7h16M4 12h16M4 17h16",
 };
 ---
 <svg class="icon" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true">

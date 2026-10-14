@@ -3,9 +3,11 @@ import { expect, test } from "@playwright/test";
 
 const ROUTES = [
   "/", "/start/", "/guide/", "/guides/", "/guides/new-kingdom/", "/guides/first-30-days/", "/guides/low-spender/",
-  "/guides/returning/", "/guides/recovery/", "/guides/kingdom-admin/", "/guides/late-game/", "/routine/", "/commanders/", "/me/", "/trust/",
+  "/guides/returning/", "/guides/recovery/", "/guides/kingdom-admin/", "/guides/late-game/", "/city-hall/", "/city-hall/today/",
+  "/city-hall/commanders/", "/tools/", "/commanders/", "/me/", "/kingdom/", "/trust/",
 ];
-const DESTS = [["/guide/", "Guide"], ["/routine/", "Routine"], ["/commanders/", "Commanders"], ["/me/", "You"]] as const;
+// UX stage 1: player tabs City Hall · Tools · Me; guide pages mark Me (the Guides row lives there).
+const DESTS = [["/city-hall/", "City Hall"], ["/city-hall/today/", "City Hall"], ["/tools/pack-value/", "Tools"], ["/me/", "Me"], ["/guides/", "Me"]] as const;
 
 test.describe("every MVP route", () => {
   for (const route of ROUTES) {
@@ -25,11 +27,11 @@ test.describe("every MVP route", () => {
 });
 
 test("navigation marks the current destination", async ({ page, isMobile }) => {
-  const nav = isMobile ? page.locator("nav.tabs") : page.locator("nav.rail");
+  const nav = isMobile ? page.locator("nav.tabs:visible") : page.locator("nav.rail");
   for (const [href, label] of DESTS) {
     await page.goto(href);
-    await expect(nav).toBeVisible();
-    await expect(nav.getByRole("link", { name: label, exact: false }).first()).toHaveAttribute("aria-current", "page");
+    await expect(nav.first()).toBeVisible();
+    await expect(nav.getByRole("link", { name: label, exact: true })).toHaveAttribute("aria-current", "page");
   }
 });
 
@@ -42,7 +44,7 @@ test.describe("theme", () => {
   });
 
   test("light persists after reload, set before first paint", async ({ page, isMobile }) => {
-    await page.goto("/");
+    await page.goto("/guides/");
     const picker = page.locator(isMobile ? "header.top [data-theme-picker]" : "nav.rail [data-theme-picker]");
     await picker.locator("summary").click();
     await picker.getByText("Light", { exact: true }).click();
@@ -64,7 +66,7 @@ test.describe("theme", () => {
 
 test("profile chip: setup link without a profile, summary with one", async ({ page, isMobile }) => {
   const chip = page.locator(isMobile ? "header.top [data-profile-chip]" : "nav.rail [data-profile-chip]");
-  await page.goto("/");
+  await page.goto("/guides/");
   await expect(chip).toHaveAttribute("href", "/start/");
   await page.evaluate(() => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, theme: "dark", profileCode: "1.0.1.0.12.30.....0" })));
   await page.reload();
@@ -75,7 +77,7 @@ test("profile chip: setup link without a profile, summary with one", async ({ pa
 test("home: primary action visible without scrolling on a phone", async ({ page, isMobile }) => {
   test.skip(!isMobile, "phone only");
   await page.goto("/");
-  const cta = page.getByRole("link", { name: "Build my guide" });
+  const cta = page.getByRole("link", { name: "Start", exact: true }).first();
   await expect(cta).toBeInViewport();
 });
 
@@ -92,7 +94,7 @@ test("pages open offline after the first visit", async ({ page, context }) => {
   await page.evaluate(() => navigator.serviceWorker.ready);
   await page.reload(); // let the worker control the page
   await context.setOffline(true);
-  for (const route of ["/guide/", "/start/", "/guides/", "/guides/new-kingdom/", "/guides/recovery/"]) {
+  for (const route of ["/guide/", "/start/", "/city-hall/", "/guides/", "/guides/new-kingdom/", "/guides/recovery/"]) {
     await page.goto(route);
     await expect(page.getByRole("heading", { level: 1 })).toHaveCount(1);
   }

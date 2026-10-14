@@ -1,9 +1,17 @@
+---
+// One global footer: the fan-made / no-bots / local-data line once, plus the off-nav pages.
+import { FOOTER_LINKS } from "../lib/nav";
+---
 <footer class="foot">
-  <p>Fan-made planner. Not affiliated with, endorsed by, or sponsored by Lilith Games. We never ask for your login, never automate the game, and keep your answers in your browser. <a href="/trust/">Trust &amp; privacy</a></p>
+  <p>Fan-made planner. Not affiliated with, endorsed by, or sponsored by Lilith Games. We never ask for your login, never automate the game, and keep your answers in your browser.</p>
+  <ul>
+    {FOOTER_LINKS.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+  </ul>
 </footer>
 
 <style>
-  .foot { border-top: 1px solid var(--ko-border); padding-block: var(--ko-space-6); margin-top: var(--ko-space-12); }
+  .foot { border-top: 1px solid var(--ko-border); padding-block: var(--ko-space-6); margin-top: var(--ko-space-12); display: grid; gap: var(--ko-space-2); }
   p { font-size: var(--ko-text-xs); line-height: var(--ko-leading-xs); color: var(--ko-text-muted); max-width: 72ch; }
-  a { color: var(--ko-text); }
+  ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 0 var(--ko-space-4); }
+  a { color: var(--ko-text); font-size: var(--ko-text-xs); display: inline-flex; align-items: center; min-height: 44px; }
 </style>

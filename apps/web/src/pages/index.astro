@@ -1,82 +1,169 @@
 ---
+// Public landing page (UX stage 1). First visit: what KingdomOps is, for whom, three concrete
+// examples, trust points and one "Start". A returning visitor with a saved profile is sent to their
+// role's home tab before paint (LANDING_REDIRECT_SCRIPT); "/?about" always shows this page.
 import Shell from "../layouts/Shell.astro";
-import { facts } from "@rokadm/data";
+import Logo from "../components/Logo.astro";
+import { LANDING_REDIRECT_SCRIPT } from "../lib/role";
 
-// Counted at build from the generated fact cards, so the number never goes stale.
-const factCount = facts.length;
+// Where "Start" goes. Sign-in (Supabase, later) slots in here: point START_HREF at the login step,
+// which then continues to /start/. Nothing else on the page needs to change.
+const START_HREF = "/start/";
 
-const tools = [
-  { href: "/guide/", name: "Guide", text: "Step-by-step plan for your spending, play time and kingdom age. Every step shows its source and the patch it was checked on." },
-  { href: "/routine/", name: "Routine", text: "What to do today in 15, 30 or 60 minutes, most valuable first. Skip the rest without guilt." },
-  { href: "/commanders/", name: "Commanders", text: "A checklist before you spend sculptures, so a pick still makes sense three months from now." },
-];
+// Every user-facing string on this page, in one place (i18n later).
+const S = {
+  docTitle: "KingdomOps: a planner for Rise of Kingdoms players and kingdom leaders",
+  description: "A free planner for Rise of Kingdoms: today's must-dos for your play time, City Hall goals, pack checks, and rules, MGE and recruiting for kingdom leaders. No bots, no login to the game.",
+  guides: "Guides",
+  start: "Start",
+  startHint: "5 quick questions. No sign-up.",
+  openHome: "Open my home tab",
+  presents: "Sun Tzu presents",
+  bubble: "Strategy is knowing what to do today, and what to leave for tomorrow. I'll show you both.",
+  h1: "Plan your Rise of Kingdoms account on the time you actually have.",
+  sub: "KingdomOps turns sourced game facts into a short plan: what to do today, what your next City Hall needs, and whether a purchase is worth it.",
+  forH: "Who it is for",
+  who: [
+    { name: "Players", text: "Free to play or light spenders who want a clear daily plan, City Hall goals and honest tool answers.", tabs: "City Hall · Tools · Me" },
+    { name: "Kingdom and alliance leaders", text: "Kings, R4s and council members who publish rules, set member requirements, plan MGE and recruit.", tabs: "Kingdom · Members · Events · Me" },
+  ],
+  examplesH: "What it solves",
+  examples: [
+    { q: "“I have 30 minutes. What do I do today?”", a: "Your City Hall tab shows the 3 must-dos that fit your time, in order of value." },
+    { q: "“Is this $20 pack worth it?”", a: "Pack value turns the price you see into gems and VIP points per dollar, so you can compare." },
+    { q: "“Where are our rules, MGE ranks and recruiting post?”", a: "Leaders keep rules, MGE planning and a recruiting post in one place, shared as view-only links." },
+  ],
+  trustH: "Why you can trust it",
+  trust: [
+    { t: "Sourced data", d: "Every number points to a researched fact card and the game patch it was checked on." },
+    { t: "No bots", d: "We never automate the game and never ask for your game login. You do every in-game action." },
+    { t: "Within Lilith's terms", d: "No game files, no reading game data, no game art. Fan-made and not affiliated with Lilith Games." },
+  ],
+  browse: "Browse the guides",
+};
 ---
-<Shell title="Home" docTitle="KingdomOps: account and kingdom planner" description="Answer a few questions and get a step-by-step plan for your account, built for the time you actually have." mode="operate">
-  <section class="hero">
-    <h1>Grow your account on the time you actually have.</h1>
-    <p class="sub">Answer 10 questions. Get a plan for your spending, daily play time and kingdom age.</p>
-    <div class="actions" data-home-actions>
-      <a class="btn btn-primary" href="/start/" data-primary>Build my guide</a>
-      <a class="btn btn-secondary" href="/guide/">Read the F2P guide</a>
+<Shell title="Welcome" docTitle={S.docTitle} description={S.description} mode="operate" bare headScript={LANDING_REDIRECT_SCRIPT}>
+  <div class="lp">
+    <header class="lp-top">
+      <a class="lp-logo" href="/?about" aria-label="KingdomOps"><Logo variant="horizontal" class="lp-wide" /></a>
+      <nav aria-label="Main">
+        <a class="lp-link" href="/guides/">{S.guides}</a>
+        <a class="btn btn-primary lp-start-sm" href={START_HREF} data-start>{S.start}</a>
+      </nav>
+    </header>
+
+    <section class="lp-hero" aria-labelledby="lp-h1">
+      <figure class="lp-mascot">
+        <video class="lp-video" muted playsinline loop preload="none" poster="/mascot/greet-poster.webp" width="160" height="160" aria-hidden="true" data-mascot>
+          <source src="/mascot/idle-480.mp4" type="video/mp4" />
+        </video>
+        <figcaption>
+          <span class="lp-presents">{S.presents}</span>
+          <span class="lp-bubble">{S.bubble}</span>
+        </figcaption>
+      </figure>
+      <div class="lp-copy">
+        <h1 id="lp-h1">{S.h1}</h1>
+        <p class="lp-sub">{S.sub}</p>
+        <div class="lp-actions">
+          <a class="btn btn-primary" href={START_HREF} data-start data-primary data-open-label={S.openHome}>{S.start}</a>
+          <a class="btn btn-secondary" href="/guides/">{S.browse}</a>
+        </div>
+        <p class="lp-hint">{S.startHint}</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="lp-for-h">
+      <h2 id="lp-for-h">{S.forH}</h2>
+      <ul class="lp-cards">
+        {S.who.map((w) => (
+          <li class="lp-card"><h3>{w.name}</h3><p>{w.text}</p><p class="lp-tabs mono">{w.tabs}</p></li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="lp-ex-h">
+      <h2 id="lp-ex-h">{S.examplesH}</h2>
+      <ol class="lp-examples">
+        {S.examples.map((e) => <li><p class="lp-q">{e.q}</p><p>{e.a}</p></li>)}
+      </ol>
+    </section>
+
+    <section aria-labelledby="lp-trust-h">
+      <h2 id="lp-trust-h">{S.trustH}</h2>
+      <dl class="lp-trust">
+        {S.trust.map((x) => <div><dt>{x.t}</dt><dd>{x.d}</dd></div>)}
+      </dl>
+    </section>
+
+    <div class="lp-end">
+      <a class="btn btn-primary" href={START_HREF} data-start>{S.start}</a>
     </div>
-  </section>
-
-  <section class="tools" aria-labelledby="tools-h">
-    <h2 id="tools-h">What's inside</h2>
-    <ul>
-      {tools.map((t) => (
-        <li>
-          <a href={t.href}>
-            <span class="name">{t.name}</span>
-            <span class="text">{t.text}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
-  </section>
-
-  <section class="facts" aria-labelledby="facts-h">
-    <h2 id="facts-h">How we keep it honest</h2>
-    <dl>
-      <div><dt class="mono">{factCount}</dt><dd>researched fact cards behind the guides, each with sources</dd></div>
-      <div><dt class="mono">patch</dt><dd>every step says which game version it was checked on</dd></div>
-      <div><dt class="mono">0</dt><dd>logins, bots or game files. Your answers stay in this browser.</dd></div>
-    </dl>
-  </section>
+  </div>
 </Shell>
 
 <style>
-  .hero { display: grid; gap: var(--ko-space-4); padding-block: var(--ko-space-4) var(--ko-space-10); }
-  h1 { font-size: var(--ko-text-4xl); line-height: var(--ko-leading-4xl); max-width: 16ch; }
-  .sub { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); color: var(--ko-text-muted); max-width: 44ch; }
-  .actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); margin-top: var(--ko-space-2); }
-  h2 {
-    font-size: var(--ko-text-sm); line-height: 1.2; letter-spacing: .08em; text-transform: uppercase;
-    color: var(--ko-text-muted); margin-bottom: var(--ko-space-4);
+  .lp { display: grid; gap: var(--ko-space-10); }
+  .lp-top { display: flex; align-items: center; justify-content: space-between; gap: var(--ko-space-3); }
+  .lp-logo { display: inline-flex; align-items: center; min-height: 48px; }
+  .lp-logo :global(.lp-wide) { width: 160px; height: auto; }
+  .lp-top nav { display: flex; align-items: center; gap: var(--ko-space-2); }
+  .lp-link { display: inline-flex; align-items: center; min-height: 48px; padding-inline: var(--ko-space-3); color: var(--ko-text); }
+  .lp-hero { display: grid; gap: var(--ko-space-6); align-items: center; }
+  .lp-mascot { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: var(--ko-space-4); align-items: center; }
+  .lp-video { width: 112px; height: 112px; border-radius: var(--ko-radius-pill); background: var(--ko-surface); object-fit: cover; border: 2px solid var(--ko-border); }
+  figcaption { display: grid; gap: var(--ko-space-2); }
+  .lp-presents { font: var(--ko-weight-semibold) var(--ko-text-xs)/1.2 var(--ko-font-display); letter-spacing: .1em; text-transform: uppercase; color: var(--ko-accent); }
+  .lp-bubble { padding: var(--ko-space-3) var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-copy { display: grid; gap: var(--ko-space-4); }
+  h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); max-width: 20ch; }
+  .lp-sub { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); color: var(--ko-text-muted); max-width: 52ch; }
+  .lp-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); }
+  .lp-hint { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+  h2 { font-size: var(--ko-text-sm); line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); margin-bottom: var(--ko-space-4); }
+  h3 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); }
+  ul, ol { list-style: none; margin: 0; padding: 0; }
+  .lp-cards { display: grid; gap: var(--ko-space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  .lp-card { display: grid; gap: var(--ko-space-2); padding: var(--ko-space-5); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); }
+  .lp-card p { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-card .lp-tabs { color: var(--ko-text); font-size: var(--ko-text-xs); }
+  .lp-examples { display: grid; gap: var(--ko-space-4); counter-reset: ex; }
+  .lp-examples li { display: grid; gap: var(--ko-space-1); padding-left: var(--ko-space-10); position: relative; counter-increment: ex; }
+  .lp-examples li::before { content: counter(ex); position: absolute; left: 0; top: 0; font: var(--ko-weight-bold) var(--ko-text-2xl)/1 var(--ko-font-mono); color: var(--ko-accent); }
+  .lp-q { font-weight: var(--ko-weight-semibold); }
+  .lp-examples p:not(.lp-q) { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-trust { margin: 0; display: grid; gap: var(--ko-space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  .lp-trust div { display: grid; gap: var(--ko-space-1); border-top: 2px solid var(--ko-accent); padding-top: var(--ko-space-3); }
+  .lp-trust dt { font: var(--ko-weight-semibold) var(--ko-text-md)/1.3 var(--ko-font-display); }
+  .lp-trust dd { margin: 0; color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-end { display: flex; justify-content: center; }
+  @media (min-width: 768px) {
+    .lp { gap: var(--ko-space-12); }
+    .lp-hero { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+    .lp-mascot { order: 2; grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .lp-video { width: 200px; height: 200px; }
+    h1 { font-size: var(--ko-text-4xl); line-height: var(--ko-leading-4xl); }
   }
-  .tools ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: var(--ko-space-3); }
-  .tools a {
-    display: grid; gap: var(--ko-space-2); height: 100%; padding: var(--ko-space-5);
-    background: var(--ko-surface); border: 1px solid var(--ko-border); text-decoration: none;
-    transition: border-color var(--ko-duration-fast) var(--ko-ease-out);
-  }
-  .name { font: var(--ko-weight-bold) var(--ko-text-xl)/1.2 var(--ko-font-display); }
-  .text { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
-  @media (hover: hover) and (pointer: fine) { .tools a:hover { border-color: var(--ko-accent); } }
-  .facts { margin-top: var(--ko-space-12); }
-  dl { margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--ko-space-5); }
-  dl div { display: grid; gap: var(--ko-space-1); border-top: 2px solid var(--ko-border); padding-top: var(--ko-space-3); }
-  dt { font-size: var(--ko-text-2xl); color: var(--ko-accent); }
-  dd { margin: 0; color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
-  @media (min-width: 768px) { h1 { font-size: var(--ko-text-5xl); line-height: var(--ko-leading-5xl); } }
 </style>
 
 <script>
   import { readStore } from "../lib/store";
   import { profileFromCode } from "../lib/profile";
-  // Returning users go straight to their guide.
-  if (profileFromCode(readStore().profileCode)) {
-    const a = document.querySelector<HTMLAnchorElement>("[data-primary]");
-    if (a) { a.textContent = "Open my guide"; a.href = "/guide/"; }
+  import { HOME_FOR } from "../lib/nav";
+
+  // Seen from "/?about" with a saved profile: Start becomes "open my home tab".
+  const s = readStore();
+  if (profileFromCode(s.profileCode)) {
+    for (const a of document.querySelectorAll<HTMLAnchorElement>("[data-start]")) {
+      a.href = HOME_FOR[s.playingAs];
+      if (a.dataset.openLabel) a.textContent = a.dataset.openLabel;
+    }
+  }
+
+  // Sun Tzu moves only when motion is welcome; otherwise his poster stays.
+  const video = document.querySelector<HTMLVideoElement>("[data-mascot]");
+  if (video && window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    video.preload = "auto";
+    video.play().catch(() => {});
   }
 </script>

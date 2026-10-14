@@ -1,6 +1,7 @@
 import type { Ref } from "preact";
 import { useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
-import { QUESTIONS, type Question } from "@rokadm/core";
+import { withActiveCode } from "../../lib/accounts";
+import { setPlayingAs } from "../../lib/role";
 import { readStore, writeStore } from "../../lib/store";
 import {
   SUMMARY,
@@ -12,7 +13,7 @@ import {
   currentValue,
   edit,
   finish,
-  guideUrl,
+  homeUrl,
   initialState,
   isSummary,
   next,
@@ -21,6 +22,8 @@ import {
   setAnswer,
   skip,
   toDraft,
+  STEPS,
+  type FlowQuestion,
   type FlowState,
 } from "../../lib/questionnaire-flow";
 import { GREETING, LEADS, SUMMARY_LEAD } from "../../lib/sun-tzu";
@@ -85,14 +88,29 @@ function BotMessage(props: { current: boolean; typing: boolean; grumble?: number
 }
 
 /** The player's answer as they picked it: the quick-reply label ("2–3 times"), else the value. */
-function ReplyText({ q, value }: { q: Question; value: unknown }) {
+function ReplyText({ q, value }: { q: FlowQuestion; value: unknown }) {
   const preset = q.type === "number" ? q.presets?.find((p) => p.value === value) : undefined;
   if (preset) return <span>{preset.label}</span>;
   return <span class={q.type === "number" && value !== null ? "mono" : undefined}>{answerText(q, value)}</span>;
 }
 
+// User-facing strings of the onboarding frame (the questions come from questionnaire-flow).
+const S = {
+  close: "Close",
+  review: "Review",
+  question: "Question ",
+  of: (n: number, total: number) => `${n} of ${total}`,
+  summaryTitle: "Check your answers",
+  summaryHelp: "Your answers stay in this browser. More details (kingdom age, civilization and others) are optional: add them any time on the Me tab.",
+  back: "Back",
+  skip: "Skip",
+  next: "Next",
+  reviewAnswers: "Review answers",
+  finish: { player: "Open my City Hall", leader: "Open my Kingdom" },
+} as const;
+
 /**
- * F-01 questionnaire as a chat with Sun Tzu: he asks one question per step in a log
+ * Onboarding (F-01, UX stage 1: 5 questions) as a chat with Sun Tzu: he asks one question per step in a log
  * (aria-live polite), the reply area below holds quick replies or a number field, and
  * every answer is saved as a draft. Flow rules live in lib/questionnaire-flow.ts.
  */
@@ -144,8 +162,9 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
     const out = finish(stateRef.current.answers);
     if (out.ok) {
       finished.current = true;
-      writeStore({ profileCode: out.code, draft: null });
-      navigate(guideUrl(out.code));
+      writeStore({ ...withActiveCode(readStore(), out.code), draft: null });
+      setPlayingAs(out.playingAs);
+      navigate(homeUrl(out.playingAs));
       return;
     }
     const first = out.errors[0]!;
@@ -171,7 +190,7 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   // Resume: draft in progress, else saved profile ("Edit answers"), else first question.
   useLayoutEffect(() => {
     const saved = readStore();
-    const s = resume({ draft: saved.draft, profileCode: saved.profileCode });
+    const s = resume({ draft: saved.draft, profileCode: saved.profileCode, playingAs: saved.playingAs });
     stateRef.current = s;
     setState(s);
     setCloseHref(closeTarget(document.referrer, window.location.origin));
@@ -258,7 +277,7 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
   const typing = typingStep === state.step;
 
   // The conversation so far: every question before this one with the answer given.
-  const history = summary ? [] : QUESTIONS.slice(0, state.step);
+  const history = summary ? [] : STEPS.slice(0, state.step);
 
   return (
     <div class="q">
@@ -274,10 +293,10 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
           <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="square" aria-hidden="true">
             <path d="M6 6l12 12M18 6L6 18" />
           </svg>
-          Close
+          {S.close}
         </a>
         <p class="q-progress mono" id="q-progress">
-          {summary ? "Review" : <><span class="visually-hidden">Question </span>{state.step + 1} of {TOTAL}</>}
+          {summary ? S.review : <><span class="visually-hidden">{S.question}</span>{S.of(state.step + 1, TOTAL)}</>}
         </p>
       </div>
       <div class="q-bar" aria-hidden="true">
@@ -305,8 +324,8 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
             arrival="victory"
             calm="victory"
             lead={SUMMARY_LEAD}
-            title="Check your answers"
-            help="Your answers stay in this browser. You can change them any time from the You page."
+            title={S.summaryTitle}
+            help={S.summaryHelp}
             headingRef={headingRef}
           />
         )}
@@ -337,13 +356,13 @@ export default function Questionnaire({ navigate = defaultNavigate }: Props) {
 
         <div class="q-actions">
           {state.step > 0 && (
-            <button type="button" class="btn btn-secondary" onClick={() => update(back)}>Back</button>
+            <button type="button" class="btn btn-secondary" onClick={() => update(back)}>{S.back}</button>
           )}
           {canSkip(state) && (
-            <button type="button" class="btn btn-secondary" onClick={() => update(skip)}>Skip</button>
+            <button type="button" class="btn btn-secondary" onClick={() => update(skip)}>{S.skip}</button>
           )}
           <button type="submit" class="btn btn-primary q-next">
-            {summary ? "See my guide" : state.review || state.step === SUMMARY - 1 ? "Review answers" : "Next"}
+            {summary ? S.finish[state.answers.playingAs === "leader" ? "leader" : "player"] : state.review || state.step === SUMMARY - 1 ? S.reviewAnswers : S.next}
           </button>
         </div>
       </form>

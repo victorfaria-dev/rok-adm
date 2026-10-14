@@ -25,6 +25,14 @@ import {
   profileRows,
 } from "../../lib/me";
 import { Accounts } from "./Accounts";
+import { ProfileDetails } from "./ProfileDetails";
+import BackupAll from "./BackupAll";
+import { TileIcon, type TileIconName } from "../cityhall/TileIcon";
+import { activeAccount } from "../../lib/accounts";
+import { PROFILE_NAMES } from "@rokadm/core";
+import { ONBOARDING_IDS } from "../../lib/questionnaire-flow";
+import { ROLE_LABEL, setPlayingAs } from "../../lib/role";
+import { PLAYING_AS } from "../../lib/store";
 import { USER_DATA_KEYS, clearAllKeys, clearOfflineCache } from "../../lib/storage-keys";
 import "./me.css";
 
@@ -88,7 +96,69 @@ function syncProfileChips(code: string | null): void {
   }
 }
 
-/** You page island: profile summary, F-72 effective profile, theme and local data. */
+// User-facing strings added in UX stage 1 (role switch, short onboarding, share card), in one place.
+const S = {
+  title: "Me",
+  lead: "Your profile, how you use KingdomOps, theme and data. Everything here is stored only in this browser: no account, no server.",
+  playingH: "Playing as",
+  playingNote: "Player shows City Hall, Tools and Me. Leader shows Kingdom, Members, Events and Me. Guides stay one tap away, in the first row below.",
+  empty: "No profile yet. Answer 5 quick questions and KingdomOps sets up your City Hall, daily routine and guide.",
+  start: "Start",
+  editAnswers: "Edit answers",
+  defaultName: "Governor",
+  noProfileLine: "No profile yet",
+  groupMain: "You and your accounts",
+  groupSettings: "Settings",
+  groupAbout: "Trust and about",
+  rows: {
+    guides: "Guides",
+    profile: "Profile and accounts",
+    share: "Share card",
+    theme: "Appearance",
+    data: "Your data",
+    backup: "Backup",
+    trust: "Trust & privacy",
+    about: "About KingdomOps",
+    brand: "Brand",
+  },
+} as const;
+
+/** "Main" → "MA", "Farm 1" → "F1". */
+const initials = (name: string): string => {
+  const w = name.trim().split(/\s+/).filter(Boolean);
+  return (w.length > 1 ? `${w[0]![0]}${w[1]![0]}` : (w[0] ?? "?").slice(0, 2)).toUpperCase();
+};
+
+/** One row of the grouped hub that opens in place (long text lives behind it). */
+function Row(props: { id: string; icon: TileIconName; label: string; children: preact.ComponentChildren }) {
+  return (
+    <li>
+      <details class="me-row-item" id={`me-row-${props.id}`} data-me-row={props.id}>
+        <summary class="me-item">
+          <TileIcon name={props.icon} class="me-item-icon" />
+          <span class="me-item-label">{props.label}</span>
+          <TileIcon name="chevron" class="me-item-chevron" />
+        </summary>
+        <div class="me-panel">{props.children}</div>
+      </details>
+    </li>
+  );
+}
+
+/** One row of the grouped hub that goes to another page. */
+function LinkRow(props: { href: string; icon: TileIconName; label: string }) {
+  return (
+    <li>
+      <a class="me-item" href={props.href}>
+        <TileIcon name={props.icon} class="me-item-icon" />
+        <span class="me-item-label">{props.label}</span>
+        <TileIcon name="chevron" class="me-item-chevron" />
+      </a>
+    </li>
+  );
+}
+
+/** Me page island: role switch, profile summary, optional details, F-72 effective profile, share card, theme and local data. */
 export default function Me({ navigate = defaultNavigate, download = defaultDownload, now = () => new Date() }: Props) {
   // Server render has no storage: profile area shows a placeholder until the store is read.
   const [store, setStore] = useState<StoreV1 | null>(null);
@@ -115,6 +185,19 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     };
     document.addEventListener("change", onChange);
     return () => document.removeEventListener("change", onChange);
+  }, []);
+
+  // A link to something inside a closed row (e.g. #me-backup-h) opens that row.
+  useEffect(() => {
+    const open = (): void => {
+      const id = decodeURIComponent(location.hash.slice(1));
+      const el = id ? document.getElementById(id) : null;
+      const row = el?.closest("details");
+      if (row && !row.open) row.open = true;
+    };
+    open();
+    window.addEventListener("hashchange", open);
+    return () => window.removeEventListener("hashchange", open);
   }, []);
 
   // Focus moves into the confirmation when it opens and back to its trigger when it closes.
@@ -168,6 +251,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     applyTheme(next.theme);
     syncThemePickers(next.theme);
     syncProfileChips(next.profileCode);
+    document.documentElement.setAttribute("data-role", next.playingAs);
     setConfirming(false);
     setStore(next);
     say(skipped > 0 ? `${IMPORTED_MESSAGE} ${skippedMessage(skipped)}` : IMPORTED_MESSAGE);
@@ -189,6 +273,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
     applyTheme("dark");
     syncThemePickers("dark");
     syncProfileChips(null);
+    document.documentElement.setAttribute("data-role", "player");
     const fresh = readStore();
     focusAfter.current = "delete";
     setConfirming(false);
@@ -198,15 +283,39 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
   };
 
   const profile = store ? profileFromCode(store.profileCode) : null;
+  const account = store ? activeAccount(store) : null;
   const eff = profile && store ? effectiveView(profile, store.profileOverride) : null;
 
   return (
     <div class="me">
-      <header class="me-head">
-        <h1>You</h1>
-        <p class="me-lead">Your profile, theme and data. Everything here is stored only in this browser: no account, no server.</p>
+      <header class="me-hero" data-layer="2">
+        <span class="me-avatar" aria-hidden="true">{initials(account?.name ?? S.defaultName)}</span>
+        <div class="me-hero-text">
+          <h1><span class="visually-hidden">{S.title}: </span>{account?.name ?? S.defaultName}</h1>
+          <p class="me-hero-line mono">
+            {profile ? `${ROLE_LABEL[store?.playingAs ?? "player"]} · ${PROFILE_NAMES[profile.spending]} · CH ${profile.cityHall}` : S.noProfileLine}
+          </p>
+        </div>
       </header>
 
+      <section class="me-section me-role" aria-labelledby="me-role-h" data-playing-as>
+        <h2 id="me-role-h" class="me-role-h">{S.playingH}</h2>
+        <fieldset class="me-choices me-choices-row">
+          <legend class="visually-hidden">{S.playingH}</legend>
+          {PLAYING_AS.map((r) => (
+            <label class="me-choice" key={r}>
+              <input type="radio" name="me-role" value={r} checked={(store?.playingAs ?? "player") === r}
+                onChange={() => { setPlayingAs(r); setStore(readStore()); }} />
+              <span>{ROLE_LABEL[r]}</span>
+            </label>
+          ))}
+        </fieldset>
+        <p class="me-note">{S.playingNote}</p>
+      </section>
+
+      <ul class="me-group" aria-label={S.groupMain}>
+      <LinkRow href="/guides/" icon="guide" label={S.rows.guides} />
+      <Row id="profile" icon="user" label={S.rows.profile}>
       <section class="me-section" aria-labelledby="me-profile-h">
         <h2 id="me-profile-h">Profile</h2>
         {!store ? (
@@ -214,7 +323,7 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
         ) : profile ? (
           <>
             <dl class="me-answers">
-              {profileRows(profile).map((r) => (
+              {profileRows(profile, ONBOARDING_IDS).map((r) => (
                 <div class="me-row" key={r.id}>
                   <dt>{r.label}</dt>
                   <dd class={r.numeric ? "mono" : undefined}>{r.value}</dd>
@@ -222,16 +331,18 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
               ))}
             </dl>
             <div class="me-actions">
-              <button type="button" class="btn btn-secondary" onClick={editAnswers}>Edit answers</button>
+              <button type="button" class="btn btn-secondary" onClick={editAnswers}>{S.editAnswers}</button>
             </div>
           </>
         ) : (
           <div class="me-empty">
-            <p>No profile yet. Answer ten questions about your account and KingdomOps builds your guide and daily routine.</p>
-            <a class="btn btn-primary" href="/start/">Build my guide</a>
+            <p>{S.empty}</p>
+            <a class="btn btn-primary" href="/start/">{S.start}</a>
           </div>
         )}
       </section>
+
+      {store && profile && <ProfileDetails store={store} onChange={setStore} />}
 
       {store && (
         <Accounts
@@ -275,7 +386,12 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
           <p class="me-note">Your spending answers stay on this device. KingdomOps never sends them anywhere.</p>
         </section>
       )}
+      </Row>
+      <LinkRow href="/card/" icon="card" label={S.rows.share} />
+      </ul>
 
+      <ul class="me-group" aria-label={S.groupSettings}>
+      <Row id="theme" icon="theme" label={S.rows.theme}>
       <section class="me-section" aria-labelledby="me-theme-h">
         <h2 id="me-theme-h">Theme</h2>
         <fieldset class="me-choices me-choices-row">
@@ -295,7 +411,9 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
         </fieldset>
         <p class="me-note">System follows your device's light or dark setting.</p>
       </section>
+      </Row>
 
+      <Row id="data" icon="data" label={S.rows.data}>
       <section class="me-section" aria-labelledby="me-data-h">
         <h2 id="me-data-h">Your data</h2>
         <p>
@@ -364,6 +482,18 @@ export default function Me({ navigate = defaultNavigate, download = defaultDownl
           <p class="me-status" role="status">{status.at === "delete" ? status.text : ""}</p>
         </div>
       </section>
+      </Row>
+
+      <Row id="backup" icon="backup" label={S.rows.backup}>
+        <BackupAll download={download} now={now} />
+      </Row>
+      </ul>
+
+      <ul class="me-group" aria-label={S.groupAbout}>
+        <LinkRow href="/trust/" icon="trust" label={S.rows.trust} />
+        <LinkRow href="/?about" icon="info" label={S.rows.about} />
+        <LinkRow href="/brand/" icon="flag" label={S.rows.brand} />
+      </ul>
     </div>
   );
 }

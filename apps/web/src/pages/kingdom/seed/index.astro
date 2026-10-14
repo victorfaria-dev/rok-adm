@@ -1,7 +1,6 @@
 ---
 import Shell from "../../../layouts/Shell.astro";
 import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
-import PrivacyNote from "../../../components/kingdom/shared/PrivacyNote.astro";
 import SeedSimulator from "../../../components/kingdom/seed/SeedSimulator";
 import { CONFIDENCE_LABEL, SEED_RULE, SEED_SOURCES } from "@rokadm/planner";
 import "../../../components/kingdom/shared/kingdom.css";
@@ -24,9 +23,8 @@ const ASSUMPTIONS = [
       <span class="kg-badge" data-experimental>Experimental</span>
       <h1>Seed simulator</h1>
       <p class="kg-lead">Paste your governors' powers and see the kingdom power that counts for Season of Conquest seeding under the 1.0.95 rule: only the top 300, with power above 150M counting less.</p>
-      <p class="kg-note" data-guardrail><strong>Planning only. No bots, no scanning, no game files. Type the numbers yourself.</strong></p>
     </header>
-    <KingdomNav />
+    <KingdomNav section="kingdom" />
     <SeedSimulator client:load />
     <section class="kg-grid" aria-labelledby="ks-assume-h">
       <h2 id="ks-assume-h">Assumptions</h2>
@@ -34,7 +32,6 @@ const ASSUMPTIONS = [
         {ASSUMPTIONS.map((a) => <li>{a.text} <span class="kg-hint">({a.src})</span></li>)}
       </ol>
     </section>
-    <PrivacyNote thirdParty />
     <section class="kg-grid" aria-labelledby="ks-src-h">
       <h2 id="ks-src-h">Where this comes from</h2>
       <ul class="ks-sources" data-sources>

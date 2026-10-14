@@ -1,7 +1,6 @@
 ---
 import Shell from "../../../layouts/Shell.astro";
 import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
-import PrivacyNote from "../../../components/kingdom/shared/PrivacyNote.astro";
 import MyRequirements from "../../../components/kingdom/my/MyRequirements";
 import "../../../components/kingdom/shared/kingdom.css";
 import "../../../components/kingdom/requirements/requirements.css";
@@ -12,14 +11,12 @@ import "../../../components/kingdom/my/my.css";
     <header class="kg-head">
       <h1>My requirements</h1>
       <p class="kg-lead">Open the card your council published, enter your own numbers and see your target, your progress and what it takes to close the gap.</p>
-      <p class="kg-note" data-guardrail><strong>Planning only. No bots, no scanning, no game files. You do every in-game action yourself.</strong></p>
     </header>
-    <KingdomNav />
+    <KingdomNav section="members" leaderOnly />
     <section class="km-explainer" aria-labelledby="km-what-h" data-explainer>
       <h2 id="km-what-h">What is DKP?</h2>
       <p>DKP isn't a game number: each kingdom sets its own formula, usually points for T4 and T5 kills plus more points for dead troops (fact B08-0001). Your council then asks for a DKP target, often as a percent of your power: "250% of power" means a 10.5M-power player needs 26.25M DKP. It is counted from what you gain between the start scan and the end scan, not your lifetime totals (fact B08-0002).</p>
     </section>
     <MyRequirements client:load />
-    <PrivacyNote />
   </div>
 </Shell>

@@ -107,6 +107,11 @@ export default defineConfig({
   site: "https://kingdomops.example",
   trailingSlash: "always",
   build: { format: "directory" },
+  // UX stage 1: old URLs keep working as static redirect pages (meta refresh, precached for offline).
+  redirects: {
+    "/more/": "/",
+    "/routine/": "/city-hall/today/",
+  },
   integrations: [preact(), brandAssets(), ocrAssets(), serviceWorker()],
   // The lazy Three.js chunk for the 3D crest is ~550 KB raw (~140 KB gz); scripts/check-budget.ts caps it.
   vite: { server: { fs: { allow: [join(here, "../..")] } }, build: { chunkSizeWarningLimit: 600 } },

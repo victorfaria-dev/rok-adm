@@ -1,0 +1,14 @@
+---
+// Full daily routine (was /routine/, which now redirects here): "See all" from the City Hall tab.
+import Shell from "../../../layouts/Shell.astro";
+import Routine from "../../../components/routine/Routine";
+---
+<Shell title="Today" description="What to do today in the time you have, most valuable first. Break Mode for busy days." mode="operate">
+  <nav class="crumb" aria-label="Breadcrumb"><a href="/city-hall/">City Hall</a> <span aria-hidden="true">/</span> <span aria-current="page">Today</span></nav>
+  <Routine client:load />
+</Shell>
+
+<style>
+  .crumb { display: flex; gap: var(--ko-space-2); align-items: center; font-size: var(--ko-text-sm); color: var(--ko-text-muted); margin-bottom: var(--ko-space-2); }
+  .crumb a { color: var(--ko-text); min-height: 44px; display: inline-flex; align-items: center; }
+</style>

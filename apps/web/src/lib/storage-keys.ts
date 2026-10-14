@@ -17,12 +17,13 @@ export interface StorageKeyInfo {
 }
 
 export const STORAGE_KEYS: readonly StorageKeyInfo[] = [
-  { key: "ko:v1", area: "local", name: "Profile & answers, saved accounts, routine ticks, commander checks and theme", backup: true },
+  { key: "ko:v1", area: "local", name: "Profile & answers, accounts, routine ticks, commander checks, playing as and theme", backup: true },
   { key: "ko:card:v1", area: "local", name: "Governor card", backup: true },
   { key: "ko:crest:v1", area: "local", name: "Alliance crest", backup: true },
   { key: "ko:tools:v1", area: "local", name: "Tool inputs (calculators, shared inventory, checklists)", backup: true },
   { key: "ko:farms:v1", area: "local", name: "Farms & shipment log", backup: true },
   { key: "ko:kingdom:v1", area: "local", name: "Kingdom council documents (rules, requirements, MGE ledger, recruiting post, seed plans)", backup: true },
+  { key: "ko:banners:v1", area: "local", name: "City card banners", backup: false, note: "Images: large; pick them again after a restore." },
   { key: "ko:kingdom:webhook:v1", area: "local", name: "Discord webhook URL", backup: false, note: "A secret: anyone with it can post in that channel." },
   { key: "ko:auth:v1", area: "local", name: "Sign-in session", backup: false, note: "A secret: it keeps you signed in on this device." },
   { key: "ko:auth:upload:v1", area: "local", name: "Account upload choices", backup: false, note: "About this device only: what you already uploaded to your account or chose to keep here." },

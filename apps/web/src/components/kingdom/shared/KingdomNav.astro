@@ -1,23 +1,52 @@
 ---
+// The one in-section nav of the leader tabs (UX stage 1): Kingdom, Members or Events. The bottom
+// tabs switch sections; this row switches pages inside one. `leaderOnly` (pages shared with the
+// player tabs: /crest/, /tools/kvk/) shows it only when "Playing as" is Leader.
 import "./kingdom.css";
 import { isActive } from "../../../lib/nav";
 
-const LINKS = [
-  { href: "/kingdom/", label: "Council kit", exact: true },
-  { href: "/kingdom/rules/", label: "Rules page" },
-  { href: "/kingdom/requirements/", label: "Requirements" },
-  { href: "/kingdom/my/", label: "My requirements" },
-  { href: "/kingdom/mge/", label: "MGE planner" },
-  { href: "/kingdom/recruit/", label: "Recruitment post" },
-  { href: "/kingdom/seed/", label: "Seed (experimental)" },
-  { href: "/guides/kingdom-admin/", label: "Admin guide" },
-];
+export type KingdomSection = "kingdom" | "members" | "events";
+interface Props {
+  section: KingdomSection;
+  leaderOnly?: boolean;
+}
+const { section, leaderOnly = false } = Astro.props;
+
+// Every label of the leader sections, in one place (i18n later).
+const SECTIONS: Record<KingdomSection, { label: string; links: { href: string; label: string; exact?: boolean }[] }> = {
+  kingdom: {
+    label: "Kingdom",
+    links: [
+      { href: "/kingdom/", label: "Overview", exact: true },
+      { href: "/kingdom/rules/", label: "Rules" },
+      { href: "/crest/", label: "Alliance crest" },
+      { href: "/kingdom/seed/", label: "Seed (experimental)" },
+    ],
+  },
+  members: {
+    label: "Members",
+    links: [
+      { href: "/kingdom/requirements/", label: "Requirements" },
+      { href: "/kingdom/recruit/", label: "Recruitment post" },
+      { href: "/kingdom/my/", label: "My requirements" },
+    ],
+  },
+  events: {
+    label: "Events",
+    links: [
+      { href: "/kingdom/mge/", label: "MGE planner" },
+      { href: "/tools/kvk/", label: "KvK planner" },
+    ],
+  },
+};
+const s = SECTIONS[section];
 const path = Astro.url.pathname;
 const norm = (p: string) => (p.endsWith("/") ? p : `${p}/`);
 const current = (l: { href: string; exact?: boolean }) => (l.exact ? norm(path) === l.href : isActive(l.href, path));
 ---
-<nav class="kg-subnav kg-noprint" aria-label="Council kit">
+<nav class:list={["kg-subnav", "kg-noprint", { "kg-leader-only": leaderOnly }]} aria-label={`${s.label} pages`} data-kingdom-section={section}>
+  <p class="kg-section" aria-hidden="true">{s.label}</p>
   <ul>
-    {LINKS.map((l) => <li><a href={l.href} aria-current={current(l) ? "page" : undefined}>{l.label}</a></li>)}
+    {s.links.map((l) => <li><a href={l.href} aria-current={current(l) ? "page" : undefined}>{l.label}</a></li>)}
   </ul>
 </nav>

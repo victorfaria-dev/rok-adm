@@ -43,7 +43,11 @@
 /* Live status line ("Saved", "Copied"). */
 .kg-status { min-height: 1.5em; color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
 
-/* Sub-navigation between council tools. */
+/* The one in-section nav of a leader tab (Kingdom, Members, Events). */
+.kg-subnav { display: grid; gap: var(--ko-space-2); }
+.kg-section { font: var(--ko-weight-semibold) var(--ko-text-xs)/1.2 var(--ko-font-display); letter-spacing: .1em; text-transform: uppercase; color: var(--ko-accent); }
+.kg-leader-only { display: none; }
+:root[data-role="leader"] .kg-leader-only { display: grid; }
 .kg-subnav ul { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); margin: 0; padding: 0; list-style: none; }
 .kg-subnav a {
   display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--ko-space-3);
