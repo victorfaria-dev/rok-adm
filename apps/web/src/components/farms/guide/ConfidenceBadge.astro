@@ -6,11 +6,11 @@ import { CONFIDENCE_LABEL } from "../../../lib/farms-guide";
 
 interface Props {
   confidence?: Confidence;
-  /** Show the "Hypothesis — not sourced" label instead of a confidence level. */
+  /** Show the "Hipótese: sem fonte" label instead of a confidence level. */
   hypothesis?: boolean;
 }
 const { confidence, hypothesis = false } = Astro.props;
 ---
 {hypothesis
-  ? <span class="fm-pill fm-pill-hypothesis" data-hypothesis>Hypothesis — not sourced</span>
+  ? <span class="fm-pill fm-pill-hypothesis" data-hypothesis>Hipótese: sem fonte</span>
   : confidence && <span class={`fm-pill fm-pill-${confidence}`} data-confidence={confidence}>{CONFIDENCE_LABEL[confidence]}</span>}

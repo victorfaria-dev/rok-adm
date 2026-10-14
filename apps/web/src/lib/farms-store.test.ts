@@ -135,10 +135,10 @@ describe("farms CRUD", () => {
 
   it("addFarm rejects bad names and the 11th farm", () => {
     const st = memory();
-    expect(() => addFarm({ name: "   " }, st)).toThrow(/name/);
-    expect(() => addFarm({ name: "x".repeat(FARM_NAME_MAX + 1) }, st)).toThrow(/1–40/);
+    expect(() => addFarm({ name: "   " }, st)).toThrow(/nome/);
+    expect(() => addFarm({ name: "x".repeat(FARM_NAME_MAX + 1) }, st)).toThrow(/1 a 40/);
     for (let i = 0; i < MAX_FARMS; i++) addFarm({ name: `F${i}` }, st);
-    expect(() => addFarm({ name: "one more" }, st)).toThrow(/up to 10/);
+    expect(() => addFarm({ name: "one more" }, st)).toThrow(/até 10/);
   });
 
   it("updateFarm merges fields and levels, keeps id/createdAt, validates name", () => {
@@ -153,7 +153,7 @@ describe("farms CRUD", () => {
     expect(f.goal).toEqual({ resource: "stone", amount: 500 });
     expect(f.id).toBe(farm.id);
     expect(f.createdAt).toBe(farm.createdAt);
-    expect(() => updateFarm(farm.id, { name: "" }, st)).toThrow(/name/);
+    expect(() => updateFarm(farm.id, { name: "" }, st)).toThrow(/nome/);
     expect(updateFarm("missing", { name: "Z" }, st)).toEqual(readFarms(st));
     expect(updateFarm(farm.id, { levels: { cityHall: 99 } }, st).farms[0]!.levels.cityHall).toBeNull();
     expect(updateFarm(farm.id, { gatheringUntil: null }, st).farms[0]!.gatheringUntil).toBeNull();
@@ -184,7 +184,7 @@ describe("shipments", () => {
   });
 
   it("rejects an invalid shipment", () => {
-    expect(() => addShipment({ ...shipment(), net: -1 }, memory())).toThrow(/not valid/);
+    expect(() => addShipment({ ...shipment(), net: -1 }, memory())).toThrow(/não é válido/);
   });
 
   it("drops the oldest past MAX_SHIPMENTS", () => {
@@ -206,10 +206,10 @@ describe("export / import", () => {
   });
 
   it("rejects non-exports and other apps with an actionable message", () => {
-    expect(() => importFarms("nope")).toThrow(/not a KingdomOps farms export/);
-    expect(() => importFarms("{}")).toThrow(/Pick the .json file/);
-    expect(() => importFarms(JSON.stringify({ app: "kingdomops", v: 1 }))).toThrow(/farms export/);
-    expect(() => importFarms(JSON.stringify({ app: "kingdomops-farms", v: 2 }))).toThrow(/version/);
+    expect(() => importFarms("nope")).toThrow(/não é uma exportação de contas farm do KingdomOps/);
+    expect(() => importFarms("{}")).toThrow(/Escolha o arquivo .json/);
+    expect(() => importFarms(JSON.stringify({ app: "kingdomops", v: 1 }))).toThrow(/exportação de contas farm/);
+    expect(() => importFarms(JSON.stringify({ app: "kingdomops-farms", v: 2 }))).toThrow(/versão/);
   });
 
   it("import drops bad entries like a read does", () => {

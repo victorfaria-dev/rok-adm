@@ -30,10 +30,10 @@ export interface ScreenReader {
 }
 
 function loadingStep(status: string): string {
-  if (/core/.test(status)) return "Loading the text reader";
-  if (/language|traineddata/.test(status)) return "Loading the English model";
-  if (/initializ/.test(status)) return "Starting the text reader";
-  return "Working";
+  if (/core/.test(status)) return "Carregando o leitor de texto";
+  if (/language|traineddata/.test(status)) return "Carregando o modelo em inglês";
+  if (/initializ/.test(status)) return "Iniciando o leitor de texto";
+  return "Trabalhando";
 }
 
 const PSM: Record<Layout, string> = { auto: "3", sparse: "11", line: "7" };
@@ -78,7 +78,7 @@ export async function createScreenReader(onProgress: (p: OcrProgress) => void = 
       report = progress;
       const src = await decode(image);
       const parts: ReadOutput["parts"] = [];
-      let step = "Reading the screenshot";
+      let step = "Lendo o print";
       let done = 0;
       const result = await readScreenshot(
         src,

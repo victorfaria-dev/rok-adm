@@ -43,7 +43,7 @@ describe("farms-hub helpers", () => {
   it("parseLevel uses FARM_LEVEL_RANGES", () => {
     expect(parseLevel("cityHall", "")).toEqual({ ok: true, value: null });
     expect(parseLevel("cityHall", "25")).toEqual({ ok: true, value: 25 });
-    expect(parseLevel("cityHall", "26")).toMatchObject({ ok: false, error: expect.stringContaining("1 to 25") });
+    expect(parseLevel("cityHall", "26")).toMatchObject({ ok: false, error: expect.stringContaining("1 a 25") });
     expect(parseLevel("commanderLevel", "60")).toEqual({ ok: true, value: 60 });
     expect(parseLevel("commanderLevel", "61").ok).toBe(false);
   });
@@ -70,7 +70,7 @@ describe("farms-hub helpers", () => {
 
   it("levelsSummary lists only saved levels", () => {
     expect(levelsSummary(emptyLevels())).toBe("");
-    expect(levelsSummary({ ...emptyLevels(), cityHall: 12, tradingPost: 5 })).toBe("City Hall 12 · Trading Post 5");
+    expect(levelsSummary({ ...emptyLevels(), cityHall: 12, tradingPost: 5 })).toBe("Prefeitura 12 · Entreposto Comercial 5");
   });
 
   it("memoryStorage behaves like a tiny localStorage", () => {

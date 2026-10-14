@@ -48,7 +48,7 @@ function Webhook({ id, onChange }: { id: string; onChange: (url: string | null) 
     setText("");
     setError("");
     setEditing(false);
-    setStatus(blocked ? "Webhook kept for this page only (this browser blocks saving)." : "Webhook saved in this browser.");
+    setStatus(blocked ? "Webhook mantido só nesta página (este navegador bloqueia o salvamento)." : "Webhook salvo neste navegador.");
   }
 
   function forget() {
@@ -56,7 +56,7 @@ function Webhook({ id, onChange }: { id: string; onChange: (url: string | null) 
     setSaved(null);
     onChange(null);
     setEditing(false);
-    setStatus("Webhook removed from this browser.");
+    setStatus("Webhook removido deste navegador.");
   }
 
   const hintId = `${id}-wh-hint`;
@@ -67,15 +67,15 @@ function Webhook({ id, onChange }: { id: string; onChange: (url: string | null) 
         <div class="dc-row">
           <p class="dc-saved" data-webhook-saved>Webhook: <span class="dc-mono">{maskWebhook(saved)}</span></p>
           <div class="dc-actions">
-            <button type="button" class="btn btn-secondary" onClick={() => { setEditing(true); setStatus(""); }}>Change webhook</button>
-            <button type="button" class="btn btn-secondary" onClick={forget}>Forget webhook</button>
+            <button type="button" class="btn btn-secondary" onClick={() => { setEditing(true); setStatus(""); }}>Alterar webhook</button>
+            <button type="button" class="btn btn-secondary" onClick={forget}>Esquecer webhook</button>
           </div>
         </div>
       ) : (
         <form class="dc-form" onSubmit={save} noValidate>
           <div class="dc-field">
-            <label for={`${id}-wh`}>Discord webhook URL</label>
-            <p id={hintId} class="dc-hint">In Discord: channel settings → Integrations → Webhooks → New Webhook → Copy Webhook URL. Ask whoever runs your server.</p>
+            <label for={`${id}-wh`}>URL do webhook do Discord</label>
+            <p id={hintId} class="dc-hint">No Discord: configurações do canal → Integrações → Webhooks → Novo Webhook → Copiar URL do Webhook. Peça a quem administra o seu servidor.</p>
             <input
               id={`${id}-wh`}
               type="text"
@@ -91,19 +91,19 @@ function Webhook({ id, onChange }: { id: string; onChange: (url: string | null) 
             {error && <p id={errId} class="dc-error">{error}</p>}
           </div>
           <div class="dc-actions">
-            <button type="submit" class="btn btn-secondary">Save webhook</button>
-            {editing && <button type="button" class="btn btn-secondary" onClick={() => { setEditing(false); setError(""); }}>Cancel</button>}
+            <button type="submit" class="btn btn-secondary">Salvar webhook</button>
+            {editing && <button type="button" class="btn btn-secondary" onClick={() => { setEditing(false); setError(""); }}>Cancelar</button>}
           </div>
         </form>
       )}
-      <p class="dc-warn" data-webhook-warning><strong>Anyone with this URL can post in that channel.</strong> It stays in this browser only: it is not in your exports or backups and is sent to nobody but Discord, and only when you press Send.</p>
+      <p class="dc-warn" data-webhook-warning><strong>Qualquer pessoa com esta URL pode publicar nesse canal.</strong> Ela fica só neste navegador: não entra nas suas exportações nem nos backups e não é enviada a ninguém além do Discord, e só quando você aperta Enviar.</p>
       <p class="dc-status" role="status" aria-live="polite">{status}</p>
     </div>
   );
 }
 
 /** "Post to Discord": exact preview, then one POST to the council's own webhook on an explicit click. */
-export default function DiscordPost({ id, message, summary = "Post to Discord", fetchImpl }: Props) {
+export default function DiscordPost({ id, message, summary = "Publicar no Discord", fetchImpl }: Props) {
   const [url, setUrl] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
   const [waitUntil, setWaitUntil] = useState(0);
@@ -125,7 +125,7 @@ export default function DiscordPost({ id, message, summary = "Post to Discord", 
     const r = await sendToDiscord(url, message.content, fetchImpl ?? ((...a) => fetch(...a)));
     setBusy(false);
     if (r.ok) {
-      setResult({ ok: true, text: "Posted to Discord." });
+      setResult({ ok: true, text: "Publicado no Discord." });
       return;
     }
     setResult({ ok: false, text: r.message });
@@ -142,11 +142,11 @@ export default function DiscordPost({ id, message, summary = "Post to Discord", 
       <div class="dc-body">
         <Webhook id={id} onChange={setUrl} />
         <div class="dc-field">
-          <p class="dc-label" id={`${prevId}-label`}>Message preview (exactly what will be posted)</p>
+          <p class="dc-label" id={`${prevId}-label`}>Prévia da mensagem (exatamente o que será publicado)</p>
           {message.ok ? (
             <>
               <pre class="dc-preview" id={prevId} tabIndex={0} aria-labelledby={`${prevId}-label`} data-discord-preview>{message.content}</pre>
-              <p class="dc-hint">{message.content.length.toLocaleString("en-US")} / {DISCORD_MAX.toLocaleString("en-US")} characters. Mentions such as @everyone will not ping anyone.</p>
+              <p class="dc-hint">{message.content.length.toLocaleString("pt-BR")} / {DISCORD_MAX.toLocaleString("pt-BR")} caracteres. Menções como @everyone não notificam ninguém.</p>
             </>
           ) : (
             <p class="dc-hint" data-discord-reason>{message.reason}</p>
@@ -154,9 +154,9 @@ export default function DiscordPost({ id, message, summary = "Post to Discord", 
         </div>
         <div class="dc-actions">
           <button type="button" class="btn btn-primary" onClick={() => void send()} disabled={!url || !message.ok || busy || waiting} data-discord-send>
-            {busy ? "Sending…" : "Send to Discord"}
+            {busy ? "Enviando…" : "Enviar ao Discord"}
           </button>
-          {!url && <p class="dc-hint">Save a webhook first.</p>}
+          {!url && <p class="dc-hint">Salve um webhook primeiro.</p>}
         </div>
         {result && (result.ok
           ? <p class="dc-ok" role="status" data-discord-result="ok">{result.text}</p>

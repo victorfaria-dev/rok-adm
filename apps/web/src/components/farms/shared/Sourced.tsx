@@ -3,10 +3,10 @@ import type { JSX } from "preact";
 export type Confidence = "high" | "medium" | "low" | "pending";
 
 const LABEL: Record<Confidence, string> = {
-  high: "High confidence",
-  medium: "Medium confidence",
-  low: "Low confidence",
-  pending: "Pending in-game check",
+  high: "Confiança alta",
+  medium: "Confiança média",
+  low: "Confiança baixa",
+  pending: "Conferência no jogo pendente",
 };
 
 /** Confidence as text plus a token-coloured dot (never colour alone). */
@@ -15,7 +15,7 @@ export function ConfidencePill({ confidence }: { confidence: Confidence }): JSX.
 }
 
 export function HypothesisPill(): JSX.Element {
-  return <span class="fm-pill fm-pill-hypothesis">Hypothesis, not sourced</span>;
+  return <span class="fm-pill fm-pill-hypothesis">Hipótese, sem fonte</span>;
 }
 
 interface SourcedProps {
@@ -31,8 +31,8 @@ export function Sourced({ confidence, facts, gaps = [], hypothesis = false }: So
     <p class="fm-sourced">
       <ConfidencePill confidence={confidence} />
       {hypothesis && <HypothesisPill />}
-      {facts.length > 0 && <span class="fm-cards mono">Sources: {facts.join(", ")}</span>}
-      {gaps.length > 0 && <span class="fm-gaps mono">Pending measurement: {gaps.join(", ")}</span>}
+      {facts.length > 0 && <span class="fm-cards mono">Fontes: {facts.join(", ")}</span>}
+      {gaps.length > 0 && <span class="fm-gaps mono">Medição pendente: {gaps.join(", ")}</span>}
     </p>
   );
 }

@@ -28,7 +28,7 @@
   border-bottom: 1px solid var(--ko-border); text-decoration: none; color: var(--ko-text);
 }
 .fg-more li a[aria-current="page"] { color: var(--ko-text-muted); }
-.fg-more li a[aria-current="page"]::after { content: " (this page)"; white-space: pre; }
+.fg-more li a[aria-current="page"]::after { content: " (esta página)"; white-space: pre; }
 .fg-more p { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
 .fg-more p a { color: var(--ko-text); }
 @media (hover: hover) and (pointer: fine) { .fg-toc a:hover, .fg-more li a:hover { color: var(--ko-accent); } }

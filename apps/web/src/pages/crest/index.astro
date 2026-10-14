@@ -5,21 +5,21 @@ import ShareCardNav from "../../components/ShareCardNav.astro";
 import KingdomNav from "../../components/kingdom/shared/KingdomNav.astro";
 import CrestBuilder from "../../components/crest/CrestBuilder.tsx";
 ---
-<Shell title="Alliance crest" description="Build an original alliance crest: shield, alliance colour, tag and emblem. Download it as PNG or SVG, or turn it in 3D." mode="operate">
+<Shell title="Brasão da aliança" description="Crie um brasão original para a aliança: escudo, cor da aliança, sigla e emblema. Baixe em PNG ou SVG, ou gire em 3D." mode="operate">
   <ShareCardNav />
   <KingdomNav section="kingdom" leaderOnly />
   <section class="intro">
-    <p class="exp"><span class="pill">Experimental</span> We are testing whether alliances want this. It may change or go away.</p>
-    <h1>Alliance crest</h1>
-    <p class="sub">Pick a shield, your alliance colour, your tag and an emblem. It saves on this device and shows on your governor card.</p>
+    <p class="exp"><span class="pill">Experimental</span> Estamos testando se as alianças querem isto. Pode mudar ou sumir.</p>
+    <h1>Brasão da aliança</h1>
+    <p class="sub">Escolha um escudo, a cor da sua aliança, a sigla e um emblema. Ele fica salvo neste aparelho e aparece no seu cartão de governador.</p>
   </section>
 
   <CrestBuilder client:load />
 
   <section class="notes" aria-labelledby="notes-h">
-    <h2 id="notes-h">About the crest</h2>
-    <p>Every shape and emblem here was drawn for KingdomOps. Nothing comes from the game's art, so you can use the PNG or SVG anywhere: Discord, a banner, your avatar.</p>
-    <p>The crest is not an official in-game alliance flag and does not change anything in the game.</p>
+    <h2 id="notes-h">Sobre o brasão</h2>
+    <p>Cada forma e emblema aqui foi desenhado para o KingdomOps. Nada vem da arte do jogo, então você pode usar o PNG ou o SVG em qualquer lugar: Discord, um banner, seu avatar.</p>
+    <p>O brasão não é uma bandeira oficial de aliança do jogo e não muda nada no jogo.</p>
   </section>
 </Shell>
 

@@ -9,7 +9,7 @@ import { Cite } from "./Cite";
 afterEach(cleanup);
 
 describe("Cite", () => {
-  it("lists the stale card ids next to Re-verify", () => {
+  it("lists the stale card ids next to Reverificar", () => {
     const c = mergeCites(
       { facts: ["A05-0001"], confidence: "high", stale: true },
       { facts: ["A05-0002"], confidence: "medium", stale: false },
@@ -18,8 +18,8 @@ describe("Cite", () => {
     expect(c.staleFacts).toEqual(["A05-0001", "A10-0003"]);
     const { container } = render(h(Cite, { cite: c }));
     const tag = container.querySelector(".t-stale")!;
-    expect(tag.textContent).toBe("Re-verify: A05-0001, A10-0003");
-    expect(tag.getAttribute("title")).toBe("Confirmed before the latest official patch: A05-0001, A10-0003");
+    expect(tag.textContent).toBe("Reverificar: A05-0001, A10-0003");
+    expect(tag.getAttribute("title")).toBe("Confirmado antes do último patch oficial: A05-0001, A10-0003");
   });
 
   it("no stale card, no badge and no staleFacts key", () => {

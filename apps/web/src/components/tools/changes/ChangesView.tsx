@@ -27,7 +27,7 @@ function PatchCard({ item }: { item: ChangeItem<ChangesPatch> }) {
       </h4>
       <p>{p.summary}</p>
       <p class="c-conf">{PATCH_CONFIDENCE_WORDS[p.confidence]}.</p>
-      {item.sameMonth ? <p class="c-flag">Same month you stopped: you may have played this one already.</p> : null}
+      {item.sameMonth ? <p class="c-flag">Mesmo mês em que você parou: talvez você já tenha jogado este.</p> : null}
       <Cite cite={p.cite} />
     </li>
   );
@@ -38,7 +38,7 @@ function Group({ id, title, note, items }: { id: string; title: string; note: st
     <section class="c-group" aria-labelledby={id} data-group={id}>
       <h3 id={id}>{title} ({items.length})</h3>
       <p class="t-note">{note}</p>
-      {items.length ? <ol class="c-list">{items.map((i) => <PatchCard key={i.patch.version} item={i} />)}</ol> : <p>None in this range.</p>}
+      {items.length ? <ol class="c-list">{items.map((i) => <PatchCard key={i.patch.version} item={i} />)}</ol> : <p>Nenhum neste período.</p>}
     </section>
   );
 }
@@ -54,25 +54,25 @@ export default function ChangesView({ patches, months }: ChangesViewProps) {
   const g = groupBySource(items);
   const summary = since
     ? items.length
-      ? `${items.length} patch${items.length === 1 ? "" : "es"} since ${formatMonth(since)}, newest first.`
-      : `No patch in our data after ${formatMonth(since)}. You haven't missed a known update.`
-    : `All ${items.length} patches in our data, newest first.`;
+      ? `${items.length} ${items.length === 1 ? "patch" : "patches"} desde ${formatMonth(since)}, do mais novo ao mais antigo.`
+      : `Nenhum patch nos nossos dados depois de ${formatMonth(since)}. Você não perdeu nenhuma atualização conhecida.`
+    : `Todos os ${items.length} patches dos nossos dados, do mais novo ao mais antigo.`;
 
   return (
     <div class="t-page-body" data-tool="changes">
       {ready ? (
-        <form class="c-form" onSubmit={(e) => e.preventDefault()} aria-label="When you stopped">
-          <SelectField id="c-since" label="When did you stop playing?" value={since}
-            help="Pick the month. Patches from that same month are shown and marked, since you may have seen them."
-            options={[{ value: "", label: "Show every patch" }, ...months.map((m) => ({ value: m, label: formatMonth(m) }))]}
+        <form class="c-form" onSubmit={(e) => e.preventDefault()} aria-label="Quando você parou">
+          <SelectField id="c-since" label="Quando você parou de jogar?" value={since}
+            help="Escolha o mês. Os patches desse mesmo mês aparecem marcados, porque você pode já tê-los visto."
+            options={[{ value: "", label: "Mostrar todos os patches" }, ...months.map((m) => ({ value: m, label: formatMonth(m) }))]}
             onChange={(v) => set({ since: v })} />
         </form>
       ) : null}
       <p class="c-summary" aria-live="polite" data-testid="c-summary">{summary}</p>
-      <Group id="c-official" title="With official patch notes" items={g.official}
-        note="Lilith published notes for these versions." />
-      <Group id="c-reported" title="Reported only" items={g.reported}
-        note="No official notes found yet: known from other sources, so details may change." />
+      <Group id="c-official" title="Com notas oficiais de patch" items={g.official}
+        note="A Lilith publicou notas para estas versões." />
+      <Group id="c-reported" title="Só relatados" items={g.reported}
+        note="Ainda sem notas oficiais: conhecidos por outras fontes, então os detalhes podem mudar." />
     </div>
   );
 }

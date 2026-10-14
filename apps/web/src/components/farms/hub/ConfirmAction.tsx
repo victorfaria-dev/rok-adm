@@ -1,18 +1,18 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 
 interface Props {
-  /** Visible text of the first button, e.g. "Delete". */
+  /** Visible text of the first button, e.g. "Excluir". */
   label: string;
   /** Accessible name of the first button when the visible label needs context. */
   ariaLabel?: string;
-  /** Question shown in the confirm step, e.g. "Delete Farm 1?". */
+  /** Question shown in the confirm step, e.g. "Excluir Farm 1?". */
   question: string;
   yesLabel?: string;
   onConfirm: () => void;
 }
 
 /** Inline two-step confirm ("Delete" → "Delete X? Yes / No"), instead of window.confirm. */
-export default function ConfirmAction({ label, ariaLabel, question, yesLabel = "Yes, delete", onConfirm }: Props) {
+export default function ConfirmAction({ label, ariaLabel, question, yesLabel = "Sim, excluir", onConfirm }: Props) {
   const [open, setOpen] = useState(false);
   const yesRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
@@ -38,7 +38,7 @@ export default function ConfirmAction({ label, ariaLabel, question, yesLabel = "
       <p>{question}</p>
       <div class="fm-actions">
         <button type="button" class="btn btn-primary" ref={yesRef} onClick={onConfirm}>{yesLabel}</button>
-        <button type="button" class="btn btn-secondary" onClick={() => { returnFocus.current = true; setOpen(false); }}>No, keep it</button>
+        <button type="button" class="btn btn-secondary" onClick={() => { returnFocus.current = true; setOpen(false); }}>Não, manter</button>
       </div>
     </div>
   );

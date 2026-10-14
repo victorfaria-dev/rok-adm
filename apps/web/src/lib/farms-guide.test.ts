@@ -57,9 +57,9 @@ describe("block selection", () => {
 
   it("every gap used by the blocks has a plain-English line", () => {
     for (const b of FARM_BLOCKS) for (const g of b.gaps) expect(GAPS[g], `${b.id} ${g}`).toBeDefined();
-    expect(gapLine("L-A13-01")).toMatch(/^Pending in-game measurement: L-A13-01, minutes per farm/);
-    expect(gapLine("L-A13-02")).toMatch(/^Pending research: L-A13-02/);
-    expect(gapLine("L-X99-99")).toBe("Open question: L-X99-99");
+    expect(gapLine("L-A13-01")).toMatch(/^Medição no jogo pendente: L-A13-01, minutos por conta farm/);
+    expect(gapLine("L-A13-02")).toMatch(/^Pesquisa pendente: L-A13-02/);
+    expect(gapLine("L-X99-99")).toBe("Pergunta em aberto: L-X99-99");
   });
 });
 
@@ -72,10 +72,10 @@ describe("card meta", () => {
     expect(factConfidence(undefined)).toBe("pending");
   });
 
-  it("labels status in English; C04 unchecked cards read as patch notes", () => {
-    expect(cardMeta("A13-0001", { title: "T", confidence: "media", status: "organizado" }).status).toBe("not yet verified");
-    expect(cardMeta("C04-0006", { title: "T", confidence: "alta", status: "bruto" })).toMatchObject({ confidence: "high", status: "patch notes" });
-    expect(cardMeta("A99-0001", undefined)).toMatchObject({ confidence: "pending", status: "missing" });
+  it("labels status in Portuguese; C04 unchecked cards read as patch notes", () => {
+    expect(cardMeta("A13-0001", { title: "T", confidence: "media", status: "organizado" }).status).toBe("ainda não verificada");
+    expect(cardMeta("C04-0006", { title: "T", confidence: "alta", status: "bruto" })).toMatchObject({ confidence: "high", status: "notas de patch" });
+    expect(cardMeta("A99-0001", undefined)).toMatchObject({ confidence: "pending", status: "ausente" });
   });
 });
 
@@ -103,10 +103,10 @@ describe("renderMd", () => {
 
   it("turns card citations into chips with confidence and status text", () => {
     const html = renderMd("Two cities [A13-0001].", lookup);
-    expect(html).toContain('<span class="fg-cite fg-cite-medium" title="Accounts &lt;per&gt; kingdom"><span class="mono">A13-0001</span> <span class="fg-cite-meta">medium · not yet verified</span></span>');
+    expect(html).toContain('<span class="fg-cite fg-cite-medium" title="Accounts &lt;per&gt; kingdom"><span class="mono">A13-0001</span> <span class="fg-cite-meta">média · not yet verified</span></span>');
     const multi = renderMd("Disputed [A13-0001, A03-0025].", lookup);
     expect(multi.match(/class="fg-cite /g)).toHaveLength(2);
-    expect(multi).toContain("pending · missing");
+    expect(multi).toContain("pendente · ausente");
   });
 
   it("parses cited cards", () => {

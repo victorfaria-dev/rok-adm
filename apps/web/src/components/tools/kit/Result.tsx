@@ -21,7 +21,7 @@ export function ResultRow({ label, value, cite, notes = [], pending = [], testId
       <dd>
         <span class="t-value mono">{value}</span>
         <Cite cite={cite} />
-        {pending.length ? <span class="t-note">Uses your own value for: {pending.join(", ")} (pending measurement).</span> : null}
+        {pending.length ? <span class="t-note">Usa o seu próprio valor para: {pending.join(", ")} (medição pendente).</span> : null}
         {notes.map((n) => <span class="t-note" key={n}>{n}</span>)}
       </dd>
     </div>
@@ -29,7 +29,7 @@ export function ResultRow({ label, value, cite, notes = [], pending = [], testId
 }
 
 /** Results live region: screen readers hear updates without focus moving. */
-export function Results({ title = "Result", children }: { title?: string; children: ComponentChildren }) {
+export function Results({ title = "Resultado", children }: { title?: string; children: ComponentChildren }) {
   return (
     <section class="t-results" aria-labelledby="t-results-h">
       <h2 id="t-results-h">{title}</h2>

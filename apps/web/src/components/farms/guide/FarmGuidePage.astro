@@ -37,12 +37,12 @@ const others = Object.values(GUIDE_PAGES);
     <header class="fg-head">
       <h1>{info.title}</h1>
       <p class="fm-lead">{info.intro}</p>
-      <p class="fg-note" data-guardrail><strong>Planning and bookkeeping only.</strong> You do every in-game action yourself: no bots, macros or scripts.</p>
+      <p class="fg-note" data-guardrail><strong>Só planejamento e anotações.</strong> Você faz cada ação no jogo por conta própria: sem bots, macros nem scripts.</p>
     </header>
 
     <section class="fg-legend" aria-labelledby="fg-legend-h">
-      <h2 id="fg-legend-h">How sure are we?</h2>
-      <p>Every recommendation shows a confidence level and cites fact cards, like <span class="mono">A13-0002</span>. Each card chip shows that card's own confidence and status.</p>
+      <h2 id="fg-legend-h">Qual o grau de certeza?</h2>
+      <p>Toda recomendação mostra um nível de confiança e cita fichas de fonte, como <span class="mono">A13-0002</span>. Cada selo de ficha mostra a confiança e o status daquela ficha.</p>
       <dl>
         {LEVELS.map((c) => (
           <div>
@@ -52,15 +52,15 @@ const others = Object.values(GUIDE_PAGES);
         ))}
         <div>
           <dt><ConfidenceBadge hypothesis /></dt>
-          <dd>Our own derived reasoning. No source recommends it; it waits for an in-game test.</dd>
+          <dd>Raciocínio derivado nosso. Nenhuma fonte o recomenda; aguarda um teste no jogo.</dd>
         </div>
       </dl>
     </section>
 
     <nav class="fg-toc" aria-labelledby="fg-toc-h">
-      <h2 id="fg-toc-h">On this page</h2>
+      <h2 id="fg-toc-h">Nesta página</h2>
       <ol>
-        {blocks.map((b) => <li><a href={`#${b.id}`}>{isHypothesis(b) ? `Hypothesis: ${displayTitle(b)}` : b.title}</a></li>)}
+        {blocks.map((b) => <li><a href={`#${b.id}`}>{isHypothesis(b) ? `Hipótese: ${displayTitle(b)}` : b.title}</a></li>)}
       </ol>
     </nav>
 
@@ -69,13 +69,13 @@ const others = Object.values(GUIDE_PAGES);
     </div>
 
     <nav class="fg-more" aria-labelledby="fg-more-h">
-      <h2 id="fg-more-h">Farm guides</h2>
+      <h2 id="fg-more-h">Guias de farm</h2>
       <ul>
         {others.map((o) => (
           <li><a href={o.href} aria-current={o.page === page ? "page" : undefined}>{o.title}</a></li>
         ))}
       </ul>
-      <p>Plan your own farms in the <a href="/farms/">farm hub</a>.</p>
+      <p>Planeje suas próprias contas farm na <a href="/farms/">central de farms</a>.</p>
     </nav>
   </div>
 </Shell>

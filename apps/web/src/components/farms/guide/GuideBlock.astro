@@ -17,12 +17,12 @@ const hypothesis = isHypothesis(block);
 const title = displayTitle(block);
 
 const CONSENSUS: Record<string, string> = {
-  unanimous: "All sources agree",
-  majority: "Most sources agree",
-  split: "Sources disagree",
-  minority: "Minority view",
-  "single-source": "Single source",
-  mechanic: "Game mechanic",
+  unanimous: "Todas as fontes concordam",
+  majority: "A maioria das fontes concorda",
+  split: "As fontes divergem",
+  minority: "Visão minoritária",
+  "single-source": "Fonte única",
+  mechanic: "Mecânica do jogo",
 };
 const consensus = CONSENSUS[block.consensus];
 const splitViews = block.consensus === "split" && typeof block.split_views === "string"
@@ -33,7 +33,7 @@ const cards = block.cards.map((id) => metas[id]).filter((m): m is CardMeta => m 
 ---
 <article class:list={["fg-block", { "fg-hypothesis": hypothesis }]} id={block.id} data-block={block.id} aria-labelledby={`${block.id}-h`}>
   <header class="fg-block-head">
-    <h2 id={`${block.id}-h`}>{hypothesis && <span class="visually-hidden">Hypothesis: </span>}{title}</h2>
+    <h2 id={`${block.id}-h`}>{hypothesis && <span class="visually-hidden">Hipótese: </span>}{title}</h2>
     <p class="fg-badges">
       {hypothesis && <ConfidenceBadge hypothesis />}
       <ConfidenceBadge confidence={block.confidence} />
@@ -43,9 +43,9 @@ const cards = block.cards.map((id) => metas[id]).filter((m): m is CardMeta => m 
 
   {hypothesis ? (
     <>
-      <p class="fg-hyp-note"><strong>No source recommends this.</strong> It is our own derived reasoning, shown so you can check it. Don't plan around it until an in-game test confirms it.</p>
+      <p class="fg-hyp-note"><strong>Nenhuma fonte recomenda isto.</strong> É raciocínio derivado nosso, mostrado para você conferir. Não planeje em cima dele até um teste no jogo confirmar.</p>
       <details class="fg-details">
-        <summary>Read the reasoning</summary>
+        <summary>Ler o raciocínio</summary>
         <div class="fg-body" set:html={body} />
       </details>
     </>
@@ -54,15 +54,15 @@ const cards = block.cards.map((id) => metas[id]).filter((m): m is CardMeta => m 
   )}
 
   {splitViews.length > 0 && (
-    <section class="fg-split" aria-label="Both views" data-split>
-      <h3>Both views</h3>
+    <section class="fg-split" aria-label="As duas visões" data-split>
+      <h3>As duas visões</h3>
       {splitViews.map((v) => <div class="fg-view" set:html={v} />)}
     </section>
   )}
 
   {block.uncertain_notes && (
     <div class="fg-uncertain">
-      <p class="fg-label">Uncertain</p>
+      <p class="fg-label">Incerto</p>
       <div set:html={renderMd(block.uncertain_notes)} />
     </div>
   )}
@@ -74,10 +74,10 @@ const cards = block.cards.map((id) => metas[id]).filter((m): m is CardMeta => m 
   )}
 
   <details class="fg-details fg-why">
-    <summary>Why</summary>
+    <summary>Por quê</summary>
     <div class="fg-body" set:html={renderMd(block.why_md, lookup)} />
-    <p class="fg-label">Cards cited</p>
+    <p class="fg-label">Fichas citadas</p>
     <FactList cards={cards} />
-    <p class="fg-checked">Checked on {block.as_of}{block.patch_ref ? ` against patch ${block.patch_ref}` : ""}.</p>
+    <p class="fg-checked">Conferido em {block.as_of}{block.patch_ref ? ` contra o patch ${block.patch_ref}` : ""}.</p>
   </details>
 </article>

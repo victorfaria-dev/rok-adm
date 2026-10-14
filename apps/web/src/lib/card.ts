@@ -12,6 +12,12 @@ export const ALLIANCE_COLORS = [
 ] as const;
 export type AllianceColor = (typeof ALLIANCE_COLORS)[number];
 
+/** Names shown to the player (the token names above stay in English). */
+export const ALLIANCE_COLOR_NAMES: Record<AllianceColor, string> = {
+  crimson: "Carmesim", ember: "Brasa", amber: "Âmbar", lime: "Limão", jade: "Jade", teal: "Verde-azulado",
+  sky: "Céu", cobalt: "Cobalto", indigo: "Índigo", violet: "Violeta", orchid: "Orquídea", rose: "Rosa",
+};
+
 export const NAME_MAX = 16;
 export const TAG_MIN = 2;
 export const TAG_MAX = 4;
@@ -39,7 +45,7 @@ export interface FieldResult {
 /** Governor name: trimmed, single spaces, no control characters, up to 16 characters. */
 export function validateName(raw: string): FieldResult {
   const value = raw.replace(/[\u0000-\u001f\u007f]/g, "").replace(/\s+/g, " ").trim();
-  if (value.length > NAME_MAX) return { value: value.slice(0, NAME_MAX), error: `Up to ${NAME_MAX} characters.` };
+  if (value.length > NAME_MAX) return { value: value.slice(0, NAME_MAX), error: `Até ${NAME_MAX} caracteres.` };
   return { value, error: null };
 }
 
@@ -47,7 +53,7 @@ export function validateName(raw: string): FieldResult {
 export function validateTag(raw: string): FieldResult {
   const value = raw.replace(/[\[\]\s]/g, "").toUpperCase();
   if (value === "") return { value: "", error: null };
-  if (!TAG_RE.test(value)) return { value: "", error: `${TAG_MIN} to ${TAG_MAX} letters or digits, like ABC.` };
+  if (!TAG_RE.test(value)) return { value: "", error: `${TAG_MIN} a ${TAG_MAX} letras ou dígitos, como ABC.` };
   return { value, error: null };
 }
 
@@ -127,7 +133,7 @@ export function cardData(profile: Pick<AccountProfile, "cityHall" | "spending"> 
   const spending = profile?.spending ?? EXAMPLE.spending;
   const rarity = rarityForCityHall(cityHall);
   return {
-    name: card.name || (example ? EXAMPLE.name : "Governor"),
+    name: card.name || (example ? EXAMPLE.name : "Governador"),
     tag: card.tag || (example ? EXAMPLE.tag : ""),
     color: card.color,
     cityHall,

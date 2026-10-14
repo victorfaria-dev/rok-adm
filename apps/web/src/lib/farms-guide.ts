@@ -44,7 +44,7 @@ export function blocksForPage(page: GuidePage, blocks: readonly GuideBlock[] = F
     .sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 }
 
-/** Unsourced heuristics are written with a title starting "Hypothesis:". */
+/** Unsourced heuristics are written with a title starting "Hypothesis:" (data, in English). */
 export function isHypothesis(b: Pick<GuideBlock, "title">): boolean {
   return /^hypothesis\s*:/i.test(b.title);
 }
@@ -66,47 +66,47 @@ export interface GuidePageInfo {
 
 export const GUIDE_PAGES: Record<GuidePage, GuidePageInfo> = {
   general: {
-    page: "general", href: "/guides/farms/", title: "Farm guide",
-    description: "What a farm account is for, how to set it up and ship to your main, and what the evidence supports.",
-    intro: "A farm is a second city you play yourself to feed your main with resources. This guide covers the setup, the Trading Post, gathering, safety and which kind of farm the evidence supports.",
+    page: "general", href: "/guides/farms/", title: "Guia de conta farm",
+    description: "Para que serve uma conta farm, como montá-la e enviar para a sua principal, e o que as evidências apoiam.",
+    intro: "Uma conta farm é uma segunda cidade que você mesmo joga para abastecer a sua principal com recursos. Este guia cobre a montagem, o Entreposto Comercial, a coleta, a segurança e que tipo de conta farm as evidências apoiam.",
   },
   food: {
-    page: "food", href: "/guides/farms/food/", title: "Food on a farm",
-    description: "When your main needs food, the food gathering techs, civilization perks and building output.",
-    intro: "Food is what your main burns first. Here is when it matters, and what makes a farm gather more of it.",
+    page: "food", href: "/guides/farms/food/", title: "Comida numa conta farm",
+    description: "Quando a sua principal precisa de comida, as tecnologias de coleta de comida, os bônus das civilizações e a produção das construções.",
+    intro: "Comida é o que a sua principal gasta primeiro. Aqui está quando ela importa e o que faz uma conta farm coletar mais dela.",
   },
   wood: {
-    page: "wood", href: "/guides/farms/wood/", title: "Wood on a farm",
-    description: "When your main needs wood, the wood gathering techs, civilization perks and what to buy with it.",
-    intro: "Wood is the other early building resource. Here is when it matters, and what makes a farm gather more of it.",
+    page: "wood", href: "/guides/farms/wood/", title: "Madeira numa conta farm",
+    description: "Quando a sua principal precisa de madeira, as tecnologias de coleta de madeira, os bônus das civilizações e o que comprar com ela.",
+    intro: "Madeira é o outro recurso de construção do início. Aqui está quando ela importa e o que faz uma conta farm coletar mais dela.",
   },
   stone: {
-    page: "stone", href: "/guides/farms/stone/", title: "Stone on a farm",
-    description: "When your main needs stone, why the stone techs make it a later farm stage, and civilization perks.",
-    intro: "Stone is where most mains first run short in the mid game. Its gathering techs come later, so it fits a more developed farm.",
+    page: "stone", href: "/guides/farms/stone/", title: "Pedra numa conta farm",
+    description: "Quando a sua principal precisa de pedra, por que as tecnologias de pedra a deixam para uma etapa posterior da conta farm, e os bônus das civilizações.",
+    intro: "Pedra é onde a maioria das principais fica curta pela primeira vez no meio do jogo. As tecnologias de coleta vêm depois, então combina com uma conta farm mais desenvolvida.",
   },
   gold: {
-    page: "gold", href: "/guides/farms/gold/", title: "Gold on a farm",
-    description: "When your main needs gold, the gold techs, the Maya perk, and the split on gold farms versus gold on the main.",
-    intro: "Gold is the late bottleneck. Sources disagree on whether a farm should gather it, so both views are shown.",
+    page: "gold", href: "/guides/farms/gold/", title: "Ouro numa conta farm",
+    description: "Quando a sua principal precisa de ouro, as tecnologias de ouro, o bônus dos Maias, e a divisão entre contas farm de ouro e ouro na principal.",
+    intro: "Ouro é o gargalo do fim do jogo. As fontes divergem sobre se uma conta farm deve coletá-lo, então as duas visões aparecem.",
   },
 };
 
 // ---------------------------------------------------------------- confidence and card meta
 
 export const CONFIDENCE_LABEL: Record<Confidence, string> = {
-  high: "High confidence",
-  medium: "Medium confidence",
-  low: "Low confidence",
-  pending: "Pending in-game check",
+  high: "Confiança alta",
+  medium: "Confiança média",
+  low: "Confiança baixa",
+  pending: "Conferência no jogo pendente",
 };
 
 /** What each level means, for the "How sure are we?" legend. */
 export const CONFIDENCE_MEANING: Record<Confidence, string> = {
-  high: "Official notes or several solid sources agree, and the cards are verified.",
-  medium: "Verified cards backed by wiki or guide sources; no official confirmation yet.",
-  low: "Few or old sources, disputed, or advice that varies by kingdom. Treat it as a lead, not a rule.",
-  pending: "Not measured yet. Waits for an in-game check; no number is given.",
+  high: "Notas oficiais ou várias fontes sólidas concordam, e as fichas estão verificadas.",
+  medium: "Fichas verificadas, apoiadas por fontes de wiki ou guias; ainda sem confirmação oficial.",
+  low: "Poucas fontes ou fontes antigas, disputadas, ou conselhos que variam por reino. Trate como pista, não como regra.",
+  pending: "Ainda não medido. Aguarda uma conferência no jogo; nenhum número é dado.",
 };
 
 /** Card confidence → app confidence (alta→high, media→medium, baixa→low; disputed/outdated capped at low). */
@@ -118,19 +118,19 @@ export function factConfidence(f: Pick<Fact, "confidence" | "status"> | undefine
 }
 
 const STATUS_LABEL: Record<Fact["status"], string> = {
-  verificado: "verified",
-  organizado: "not yet verified",
-  bruto: "unchecked",
-  contestado: "disputed",
-  parcialmente_obsoleto: "partly outdated",
-  obsoleto: "outdated",
+  verificado: "verificada",
+  organizado: "ainda não verificada",
+  bruto: "não conferida",
+  contestado: "contestada",
+  parcialmente_obsoleto: "parcialmente desatualizada",
+  obsoleto: "desatualizada",
 };
 
 export interface CardMeta {
   id: string;
   title: string;
   confidence: Confidence;
-  /** Short status text, e.g. "verified", "disputed", "patch notes". */
+  /** Short status text, e.g. "verificada", "contestada", "notas de patch". */
   status: string;
   /** Longer badge label (e.g. from factBadge), optional. */
   badge?: string;
@@ -138,8 +138,8 @@ export interface CardMeta {
 
 /** Card meta from a fact (or a "not found" placeholder). C04 unchecked cards are official patch notes. */
 export function cardMeta(id: string, fact: Pick<Fact, "title" | "confidence" | "status"> | undefined, badge?: string): CardMeta {
-  if (!fact) return { id, title: "Card not in the dataset", confidence: "pending", status: "missing" };
-  const status = id.startsWith("C04-") && fact.status === "bruto" ? "patch notes" : STATUS_LABEL[fact.status];
+  if (!fact) return { id, title: "Ficha fora do conjunto de dados", confidence: "pending", status: "ausente" };
+  const status = id.startsWith("C04-") && fact.status === "bruto" ? "notas de patch" : STATUS_LABEL[fact.status];
   return { id, title: fact.title, confidence: factConfidence(fact), status, ...(badge ? { badge } : {}) };
 }
 
@@ -152,21 +152,21 @@ export interface GapInfo {
 
 /** Gap ids used by the farm blocks (from research/facts/A13 and A03 _lacunas.md). */
 export const GAPS: Record<string, GapInfo> = {
-  "L-A13-01": { kind: "measure", text: "minutes per farm per day and yield per day by farm City Hall" },
-  "L-A13-02": { kind: "research", text: "official policy on farms and multiple accounts (Terms of Service)" },
-  "L-A13-03": { kind: "measure", text: "resource-pair farms: no source, only derived reasoning; needs farm yields" },
-  "L-A13-04": { kind: "research", text: "how many farms fit each spending tier" },
-  "L-A03-01": { kind: "measure", text: "resource amount per node level and base gathering speed per resource" },
-  "L-A03-02": { kind: "measure", text: "gathering yield per hour and per day by City Hall stage" },
-  "L-A03-03": { kind: "measure", text: "gold through the Trading Post, and whether it needs a Trading Post level" },
-  "L-A03-04": { kind: "measure", text: "Trading Post capacity L1–L24 and the City Hall that unlocks it" },
-  "L-A03-05": { kind: "measure", text: "Storehouse protection L6–L24 (two tables differ by 10–35%)" },
+  "L-A13-01": { kind: "measure", text: "minutos por conta farm por dia e produção por dia segundo a Prefeitura da conta farm" },
+  "L-A13-02": { kind: "research", text: "política oficial sobre contas farm e múltiplas contas (Termos de Serviço)" },
+  "L-A13-03": { kind: "measure", text: "contas farm de pares de recursos: nenhuma fonte, só raciocínio derivado; precisa da produção das contas farm" },
+  "L-A13-04": { kind: "research", text: "quantas contas farm cabem em cada faixa de gasto" },
+  "L-A03-01": { kind: "measure", text: "quantidade de recursos por nível de ponto de coleta e velocidade base de coleta por recurso" },
+  "L-A03-02": { kind: "measure", text: "produção de coleta por hora e por dia segundo a etapa da Prefeitura" },
+  "L-A03-03": { kind: "measure", text: "ouro pelo Entreposto Comercial, e se exige um nível de Entreposto Comercial" },
+  "L-A03-04": { kind: "measure", text: "capacidade do Entreposto Comercial nos níveis 1 a 24 e a Prefeitura que o desbloqueia" },
+  "L-A03-05": { kind: "measure", text: "proteção do Depósito nos níveis 6 a 24 (duas tabelas diferem em 10 a 35%)" },
 };
 
 export function gapLine(id: string): string {
   const g = GAPS[id];
-  if (!g) return `Open question: ${id}`;
-  return `${g.kind === "measure" ? "Pending in-game measurement" : "Pending research"}: ${id}, ${g.text}`;
+  if (!g) return `Pergunta em aberto: ${id}`;
+  return `${g.kind === "measure" ? "Medição no jogo pendente" : "Pesquisa pendente"}: ${id}, ${g.text}`;
 }
 
 // ---------------------------------------------------------------- tiny safe Markdown renderer
@@ -192,8 +192,8 @@ export type CardLookup = (id: string) => CardMeta | undefined;
 /** One citation chip: card id, its confidence and status as text (never colour alone). */
 export function citationChip(id: string, meta: CardMeta | undefined): string {
   const conf = meta?.confidence ?? "pending";
-  const confText = conf === "pending" ? "pending" : conf;
-  const status = meta?.status ?? "missing";
+  const confText = ({ high: "alta", medium: "média", low: "baixa", pending: "pendente" } as const)[conf];
+  const status = meta?.status ?? "ausente";
   const title = meta ? ` title="${escapeHtml(meta.title)}"` : "";
   return `<span class="fg-cite fg-cite-${conf}"${title}><span class="mono">${escapeHtml(id)}</span> <span class="fg-cite-meta">${confText} · ${escapeHtml(status)}</span></span>`;
 }

@@ -49,7 +49,7 @@ export interface ReadHooks {
   onPart?: (part: Part, words: OcrWord[]) => void;
 }
 
-const SCREENS = "Governor Profile, VIP, Album, or the city view with the City Hall tapped";
+const SCREENS = "Perfil do Governador, VIP, Álbum, ou a visão da cidade com a Prefeitura tocada";
 
 /** Recognise the screen and read its values. Every value is a suggestion for the player to check. */
 export async function readScreenshot(src: Img, recognize: Recognize, hooks: ReadHooks = {}): Promise<ReadResult> {
@@ -69,12 +69,12 @@ export async function readScreenshot(src: Img, recognize: Recognize, hooks: Read
   };
   const step = (s: string) => hooks.onStep?.(s);
 
-  step("Reading the whole screenshot");
+  step("Lendo o print inteiro");
   const first = await read("first", { mode: "light", level: 150, scale: k(1.5) }, "auto");
 
   const profile = parseProfile(first, src);
   if (profile.ok) {
-    step("Reading the profile panel closely");
+    step("Lendo o painel do perfil de perto");
     const close = await read("panel", { rect: profile.panel, mode: "notDark", level: 55, scale: k(2) }, "auto");
     const p2 = parseProfile(close, src);
     return mergeProfile(profile, p2.ok ? p2 : null);
@@ -83,11 +83,11 @@ export async function readScreenshot(src: Img, recognize: Recognize, hooks: Read
   const vip = parseVip(first);
   if (vip.ok) {
     if (vip.bar && (vip.points === null || vip.nextLevelPoints === null)) {
-      step("Reading the VIP points bar");
+      step("Lendo a barra de pontos VIP");
       const barWords = await read("bar", { rect: vip.bar, mode: "light", level: 150, scale: k(2) }, "line");
       const again = parseVip([...first, ...barWords]);
       if (again.ok && again.points !== null) return { ...vip, points: again.points, nextLevelPoints: again.nextLevelPoints };
-      vip.notes.push("The points bar was not readable: type your VIP points yourself.");
+      vip.notes.push("A barra de pontos não estava legível: digite você mesmo seus pontos VIP.");
     }
     return vip;
   }
@@ -97,7 +97,7 @@ export async function readScreenshot(src: Img, recognize: Recognize, hooks: Read
 
   const hud = parseHud(first, W, H);
   if (hud.power !== null && hud.powerBox) {
-    step("Reading the City Hall banner and the VIP badge");
+    step("Lendo o banner da Prefeitura e o emblema de VIP");
     const b = hud.powerBox, h = b.y1 - b.y0;
     const badge = await read("badge", { rect: { x0: b.x0 - h * 0.6, y0: b.y1 + h * 0.6, x1: b.x0 + h * 4.6, y1: b.y1 + h * 2.7 }, mode: "gold", scale: k(4) }, "line");
     const centre = await read("centre", { rect: { x0: W * 0.3, y0: H * 0.15, x1: W * 0.7, y1: H * 0.65 }, mode: "light", level: 150, scale: k(3) }, "sparse");
@@ -105,8 +105,8 @@ export async function readScreenshot(src: Img, recognize: Recognize, hooks: Read
     const era = hud.era ?? (eraWords.filter((w) => /\p{L}{2,}/u.test(w.text)).map((w) => w.text).join(" ") || null);
     const banner = parseBuildingBanner(centre);
     const notes: string[] = [];
-    if (banner.level !== null && !banner.cityHall) notes.push("The building name on the banner was not recognised as the City Hall. Make sure you tapped the City Hall.");
-    if (banner.level === null) notes.push("No building level was found. Tap your City Hall so its name and level show above it, then take the screenshot.");
+    if (banner.level !== null && !banner.cityHall) notes.push("O nome da construção no banner não foi reconhecido como a Prefeitura. Confira se você tocou na Prefeitura.");
+    if (banner.level === null) notes.push("Nenhum nível de construção foi encontrado. Toque na sua Prefeitura para que o nome e o nível apareçam acima dela e tire o print.");
     return {
       ok: true, screen: "city",
       cityHall: banner.level, cityHallNamed: banner.cityHall, bannerTitle: banner.title,
@@ -114,12 +114,12 @@ export async function readScreenshot(src: Img, recognize: Recognize, hooks: Read
     };
   }
 
-  step("Looking for an album code");
+  step("Procurando um código de álbum");
   const gray = await read("gray", { mode: "gray", scale: k(1.5) }, "auto");
   const album2 = parseAlbum(gray);
   if (album2.ok) return album2;
 
-  return { ok: false, reason: `This screenshot does not match a supported screen (${SCREENS}). ${profile.reason}` };
+  return { ok: false, reason: `Este print não corresponde a uma tela compatível (${SCREENS}). ${profile.reason}` };
 }
 
 /** Fill the gaps of the first reading with the closer second one (the second wins when both have a value). */
@@ -131,8 +131,8 @@ function mergeProfile(first: ProfileRead, second: ProfileRead | null): ProfileRe
   const idSource = fromLine ? "id-line" : pick("idSource");
   const civilization = pick("civilization");
   const notes = [...new Set([...second.notes, ...first.notes])]
-    .filter((n) => !(idSource === "id-line" && n.startsWith("The ID was taken")))
-    .filter((n) => !(civilization && n.startsWith("Civilization")));
+    .filter((n) => !(idSource === "id-line" && n.startsWith("O ID foi tirado")))
+    .filter((n) => !(civilization && n.startsWith("Nome da civilização")));
   return {
     ...first,
     governorId, idSource, civilization, notes,

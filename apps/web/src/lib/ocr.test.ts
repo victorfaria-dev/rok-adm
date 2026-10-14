@@ -112,7 +112,7 @@ describe("readScreenshot on real-layout fixtures (fake values)", () => {
     const noIdLine: Fixture = { ...profileA, parts: Object.fromEntries(Object.entries(profileA.parts).map(([k, ws]) => [k, ws.filter((x) => !/ID|\)$/i.test(x.text))])) };
     const r = await readScreenshot(blank(noIdLine), replay(noIdLine));
     expect(r).toMatchObject({ screen: "profile", idSource: "name", governorId: profileA.expected.governorId });
-    expect(r.ok && r.screen === "profile" && r.notes.join(" ")).toMatch(/default name/);
+    expect(r.ok && r.screen === "profile" && r.notes.join(" ")).toMatch(/nome padrão/);
   });
 
   it("the city view reads the era and says when the banner is not the City Hall", async () => {
@@ -122,14 +122,14 @@ describe("readScreenshot on real-layout fixtures (fake values)", () => {
     const other: Fixture = { ...city, parts: { ...city.parts, centre: city.parts.centre!.map((x) => (x.text === "Prefeitura" ? { ...x, text: "Quartel" } : x)) } };
     const r2 = await readScreenshot(blank(other), replay(other));
     expect(r2).toMatchObject({ screen: "city", cityHall: 12, cityHallNamed: false });
-    expect(r2.ok && r2.notes.join(" ")).toMatch(/not recognised as the City Hall/);
+    expect(r2.ok && r2.notes.join(" ")).toMatch(/não foi reconhecido como a Prefeitura/);
   });
 
   it("rejects a screen that matches none of the layouts, and says why", async () => {
     const fx: Fixture = { width: 1560, height: 720, expected: {}, parts: { first: [w("Hello", 100, 100), w("world", 200, 100), w("2024", 100, 300)], gray: [] } };
     const r = await readScreenshot(blank(fx), replay(fx));
     expect(r.ok).toBe(false);
-    expect(!r.ok && r.reason).toMatch(/does not match a supported screen.*Governor Profile/);
+    expect(!r.ok && r.reason).toMatch(/não corresponde a uma tela compatível.*Perfil do Governador/);
   });
 });
 
@@ -151,7 +151,7 @@ describe("profile layout without readable labels (Cyrillic, Korean, Chinese, Ara
   it("refuses numbers that do not sit in the profile's columns", () => {
     const shifted = words.map((x) => (x.text === "67.890" ? { ...x, bbox: { ...x.bbox, x0: 1300, x1: 1360 } } : x));
     expect(parseProfile(shifted.filter((x) => x.text !== "45.678.901"), { width: 1560, height: 720 }).ok).toBe(false);
-    expect(parseProfile([], { width: 1560, height: 720 })).toMatchObject({ ok: false, reason: expect.stringMatching(/No text/) });
+    expect(parseProfile([], { width: 1560, height: 720 })).toMatchObject({ ok: false, reason: expect.stringMatching(/Nenhum texto/) });
   });
 });
 
@@ -203,11 +203,11 @@ describe("combineReads", () => {
     const v: VipRead = { ok: true, screen: "vip", vip: null, points: 6_000, nextLevelPoints: 11_500, todayPoints: 40, loginStreak: 2, notes: [], bar: null };
     const c = combineReads([p, ci, v], levels);
     expect(c.values).toMatchObject({ power: 2_000_000, vip: 5 });
-    expect(c.notes.join(" ")).toMatch(/Power differs/);
-    expect(c.notes.join(" ")).toMatch(/worked out from the points bar/);
+    expect(c.notes.join(" ")).toMatch(/O poder difere/);
+    expect(c.notes.join(" ")).toMatch(/deduzido do alvo da barra de pontos/);
     const c2 = combineReads([{ ...v, vip: 9 }, ci], levels);
-    expect(c2.notes.join(" ")).toMatch(/not the VIP 10 threshold/);
-    expect(c2.notes.join(" ")).toMatch(/VIP level differs/);
+    expect(c2.notes.join(" ")).toMatch(/não é o limite do VIP 10/);
+    expect(c2.notes.join(" ")).toMatch(/O nível de VIP difere/);
     expect(combineReads([], levels)).toMatchObject({ screens: [], values: {}, album: null });
   });
 });
@@ -227,8 +227,8 @@ describe("checkImageFile", () => {
   it("accepts screenshots, refuses other files and huge images", () => {
     expect(checkImageFile({ type: "image/png", size: 100 })).toBeNull();
     expect(checkImageFile({ type: "image/jpeg", size: 100 })).toBeNull();
-    expect(checkImageFile({ type: "application/pdf", size: 100 })).toMatch(/screenshot image/);
-    expect(checkImageFile({ type: "image/svg+xml", size: 100 })).toMatch(/screenshot image/);
+    expect(checkImageFile({ type: "application/pdf", size: 100 })).toMatch(/imagem de print/);
+    expect(checkImageFile({ type: "image/svg+xml", size: 100 })).toMatch(/imagem de print/);
     expect(checkImageFile({ type: "image/png", size: 20_000_000 })).toMatch(/15 MB/);
   });
 });

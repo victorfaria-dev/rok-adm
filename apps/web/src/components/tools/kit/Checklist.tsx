@@ -40,7 +40,7 @@ export function Checklist({ listId, title, items, level = 2 }: Props) {
   return (
     <section class="t-checklist" aria-labelledby={hid} data-checklist={listId}>
       <H id={hid}>{title}</H>
-      <p class="t-progress" aria-live="polite">{done.length} of {items.length} done</p>
+      <p class="t-progress" aria-live="polite">{done.length} de {items.length} concluídos</p>
       <ul class="t-check">
         {items.map((it) => {
           const cid = `cl-${listId}-${it.id}`;
@@ -50,14 +50,14 @@ export function Checklist({ listId, title, items, level = 2 }: Props) {
               <label for={cid}>
                 <span>{it.text}</span>
                 {it.detail ? <span class="t-note">{it.detail}</span> : null}
-                {it.cite ? <Cite cite={it.cite} /> : <span class="t-cite"><strong>No consensus</strong> (no fact card yet)</span>}
+                {it.cite ? <Cite cite={it.cite} /> : <span class="t-cite"><strong>Sem consenso</strong> (ainda sem ficha de fonte)</span>}
               </label>
             </li>
           );
         })}
       </ul>
       {done.length > 0 ? (
-        <button type="button" class="btn btn-secondary" onClick={() => { setDone([]); writeChecks(listId, []); }}>Clear marks</button>
+        <button type="button" class="btn btn-secondary" onClick={() => { setDone([]); writeChecks(listId, []); }}>Limpar marcações</button>
       ) : null}
     </section>
   );

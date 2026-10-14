@@ -48,19 +48,19 @@ test("hub: paste, validate, save (masked), keep out of the council export, forge
   const lines = consoleLines(page);
   await gotoHydrated(page, "/kingdom/");
   const box = page.locator("#discord");
-  await expect(box.locator("[data-webhook-warning]")).toContainText("Anyone with this URL can post in that channel.");
-  const input = box.getByLabel("Discord webhook URL");
+  await expect(box.locator("[data-webhook-warning]")).toContainText("Qualquer pessoa com esta URL pode publicar nesse canal.");
+  const input = box.getByLabel("URL do webhook do Discord");
   await input.fill("https://evil.example/api/webhooks/1/2");
-  await box.getByRole("button", { name: "Save webhook" }).click();
-  await expect(box.locator(".dc-error")).toContainText("Only webhooks on discord.com");
+  await box.getByRole("button", { name: "Salvar webhook" }).click();
+  await expect(box.locator(".dc-error")).toContainText("Só webhooks em discord.com");
   await expect(input).toHaveAttribute("aria-invalid", "true");
   await input.fill(`${WEBHOOK}?wait=true`);
-  await box.getByRole("button", { name: "Save webhook" }).click();
-  await expect(box.locator(".dc-error")).toContainText("Remove anything after the token");
+  await box.getByRole("button", { name: "Salvar webhook" }).click();
+  await expect(box.locator(".dc-error")).toContainText("Remova tudo depois do token");
 
   await input.fill(WEBHOOK);
-  await box.getByRole("button", { name: "Save webhook" }).click();
-  await expect(box.locator("[data-webhook-saved]")).toHaveText("Webhook: discord.com/api/webhooks/1234…5678 (token hidden)");
+  await box.getByRole("button", { name: "Salvar webhook" }).click();
+  await expect(box.locator("[data-webhook-saved]")).toHaveText("Webhook: discord.com/api/webhooks/1234…5678 (token oculto)");
   await expect(page.locator("#main")).not.toContainText(TOKEN);
   expect(await page.evaluate((k) => JSON.parse(localStorage.getItem(k) ?? "null"), WEBHOOK_KEY)).toEqual({ v: 1, url: WEBHOOK });
 
@@ -72,8 +72,8 @@ test("hub: paste, validate, save (masked), keep out of the council export, forge
   const { readFileSync } = await import("node:fs");
   expect(readFileSync((await download.path())!, "utf8")).not.toContain(TOKEN);
 
-  await page.locator("#discord").getByRole("button", { name: "Forget webhook" }).click();
-  await expect(page.locator("#discord").getByLabel("Discord webhook URL")).toBeVisible();
+  await page.locator("#discord").getByRole("button", { name: "Esquecer webhook" }).click();
+  await expect(page.locator("#discord").getByLabel("URL do webhook do Discord")).toBeVisible();
   expect(await page.evaluate((k) => localStorage.getItem(k), WEBHOOK_KEY)).toBeNull();
   expect(lines.filter((l) => l.includes(TOKEN))).toEqual([]);
   expect(errors).toEqual([]);
@@ -89,15 +89,15 @@ test("MGE: preview is exactly what is posted; nothing is sent before the click; 
   const panel = page.locator('[data-discord="mge"]');
   await panel.locator("summary").click();
   const preview = panel.locator("[data-discord-preview]");
-  await expect(preview).toContainText("**MGE results: K1 MGE**");
+  await expect(preview).toContainText("**Resultados do MGE: K1 MGE**");
   await expect(preview).toContainText("1. Alpha — score rank 1");
   await expect(preview).toContainText("2. @​everyone — score rank 2");
-  await expect(preview).not.toContainText("4,200,000");
+  await expect(preview).not.toContainText("4.200.000");
   expect(sent).toHaveLength(0);
 
   const text = await preview.textContent();
-  await panel.getByRole("button", { name: "Send to Discord" }).click();
-  await expect(panel.locator('[data-discord-result="ok"]')).toHaveText("Posted to Discord.");
+  await panel.getByRole("button", { name: "Enviar ao Discord" }).click();
+  await expect(panel.locator('[data-discord-result="ok"]')).toHaveText("Publicado no Discord.");
   expect(sent).toHaveLength(1);
   expect(sent[0]!.method()).toBe("POST");
   expect(sent[0]!.url()).toBe(WEBHOOK);
@@ -105,7 +105,7 @@ test("MGE: preview is exactly what is posted; nothing is sent before the click; 
 
   // Creating the public link adds it to the message (new message → old result cleared).
   await page.getByRole("button", { name: "Create public link" }).click();
-  await expect(preview).toContainText("Full ledger: http");
+  await expect(preview).toContainText("Registro completo: http");
   await expect(panel.locator("[data-discord-result]")).toHaveCount(0);
   expect(lines.filter((l) => l.includes(TOKEN))).toEqual([]);
   expect(errors).toEqual([]);
@@ -118,13 +118,13 @@ test("rate limit (429) and deleted webhook (404) are explained; Send waits for D
   await gotoHydrated(page, "/kingdom/mge/");
   const panel = page.locator('[data-discord="mge"]');
   await panel.locator("summary").click();
-  const send = panel.getByRole("button", { name: "Send to Discord" });
+  const send = panel.getByRole("button", { name: "Enviar ao Discord" });
   await send.click();
-  await expect(panel.getByRole("alert")).toContainText("Try again in 2 seconds.");
+  await expect(panel.getByRole("alert")).toContainText("Tente de novo em 2 segundos.");
   await expect(send).toBeDisabled();
   await expect(send).toBeEnabled({ timeout: 5000 });
   await send.click();
-  await expect(panel.getByRole("alert")).toContainText("it was deleted or the URL is wrong");
+  await expect(panel.getByRole("alert")).toContainText("foi excluído ou a URL está errada");
   await expect(panel.getByRole("alert")).not.toContainText(TOKEN);
   expect(sent).toHaveLength(2);
 });
@@ -134,11 +134,11 @@ test("no webhook saved: Send stays off and the panel asks for one", async ({ pag
   await gotoHydrated(page, "/kingdom/mge/");
   const panel = page.locator('[data-discord="mge"]');
   await panel.locator("summary").click();
-  await expect(panel.getByRole("button", { name: "Send to Discord" })).toBeDisabled();
-  await expect(panel).toContainText("Save a webhook first.");
-  await panel.getByLabel("Discord webhook URL").fill(WEBHOOK);
-  await panel.getByRole("button", { name: "Save webhook" }).click();
-  await expect(panel.getByRole("button", { name: "Send to Discord" })).toBeEnabled();
+  await expect(panel.getByRole("button", { name: "Enviar ao Discord" })).toBeDisabled();
+  await expect(panel).toContainText("Salve um webhook primeiro.");
+  await panel.getByLabel("URL do webhook do Discord").fill(WEBHOOK);
+  await panel.getByRole("button", { name: "Salvar webhook" }).click();
+  await expect(panel.getByRole("button", { name: "Enviar ao Discord" })).toBeEnabled();
 });
 
 test("recruitment post and rules link go to Discord in Discord format", async ({ page }) => {
@@ -148,10 +148,10 @@ test("recruitment post and rules link go to Discord in Discord format", async ({
   await gotoHydrated(page, "/kingdom/recruit/");
   const panel = page.locator('[data-discord="recruit"]');
   await panel.locator("summary").click();
-  await expect(panel.locator("[data-discord-reason]")).toContainText("the post is empty");
+  await expect(panel.locator("[data-discord-reason]")).toContainText("a publicação está vazia");
   await page.getByLabel("Contact").fill("DM Ana on Discord");
   await expect(panel.locator("[data-discord-preview]")).toContainText("DM Ana on Discord");
-  await panel.getByRole("button", { name: "Send to Discord" }).click();
+  await panel.getByRole("button", { name: "Enviar ao Discord" }).click();
   await expect(panel.locator('[data-discord-result="ok"]')).toBeVisible();
   expect((sent[0]!.postDataJSON() as { content: string }).content).toContain("DM Ana on Discord");
 
@@ -159,9 +159,9 @@ test("recruitment post and rules link go to Discord in Discord format", async ({
   await page.locator("[data-new-blank]").click();
   const rules = page.locator('[data-discord="rules"]');
   await rules.locator("summary").click();
-  await expect(rules.locator("[data-discord-reason]")).toContainText("Create the view-only link first");
+  await expect(rules.locator("[data-discord-reason]")).toContainText("Crie primeiro o link somente para visualização");
   await page.locator("[data-make-link]").click();
-  await expect(rules.locator("[data-discord-preview]")).toContainText("Read our kingdom rules (view-only): http");
+  await expect(rules.locator("[data-discord-preview]")).toContainText("Leia as regras do nosso reino (somente leitura): http");
 });
 
 test("farm log: weekly summary to Discord", async ({ page }) => {
@@ -179,9 +179,9 @@ test("farm log: weekly summary to Discord", async ({ page }) => {
   const panel = page.locator('[data-discord="farms"]');
   await panel.locator("summary").click();
   const preview = panel.locator("[data-discord-preview]");
-  await expect(preview).toContainText("Received by the main: **180,000** (1 shipment, tax paid 20,000)");
-  await expect(preview).toContainText("Alpha\\_farm: received 180,000");
-  await panel.getByRole("button", { name: "Send to Discord" }).click();
+  await expect(preview).toContainText("Recebido pela principal: **180.000** (1 envio, imposto pago 20.000)");
+  await expect(preview).toContainText("Alpha\\_farm: recebido 180.000");
+  await panel.getByRole("button", { name: "Enviar ao Discord" }).click();
   await expect(panel.locator('[data-discord-result="ok"]')).toBeVisible();
   expect(sent).toHaveLength(1);
 });

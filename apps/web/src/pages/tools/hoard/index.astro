@@ -8,43 +8,43 @@ import { cite } from "../../../lib/tools-payload";
 import hoard from "../../../../../../packages/planner/tools-data/hoard.json";
 import "../../../components/tools/kit/tools.css";
 
-const SAVE: Record<SaveKind, string> = { ap: "AP recovery items", gems: "gems", speedups: "speedups", resources: "resources (as items)" };
+const SAVE: Record<SaveKind, string> = { ap: "itens de recuperação de PA", gems: "gemas", speedups: "acelerações", resources: "recursos (como itens)" };
 const goals = hoard.goals.map((g) => ({ id: g.id, title: g.title, save: g.save as SaveKind[] }));
 const cites = Object.fromEntries(hoard.goals.map((g) => [g.id, cite(g.rules.flatMap((r) => r.facts))]));
 const ids = [...hoard.goals.flatMap((g) => g.rules.flatMap((r) => r.facts)), ...hoard.general.flatMap((r) => r.facts)];
 ---
-<Shell title="Hoard advisor" description="What to save in Rise of Kingdoms for Lohar's Trial, More Than Gems, Eve of the Crusade, KvK and MGE, and why. No dates: events have no fixed schedule. Every rule cites its source." mode="operate">
+<Shell title="Guia de acúmulo" description="O que guardar em Rise of Kingdoms para a Provação de Lohar, Mais que Gemas, Véspera da Cruzada, KvK e MGE, e por quê. Sem datas: os eventos não têm calendário fixo. Cada regra cita sua fonte." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Hoard advisor</h1>
-      <p class="t-lead">What to save for which event, and why. No dates: the event schedule is not fixed, so watch the in-game calendar. Values you type stay on this device.</p>
+      <h1>Guia de acúmulo</h1>
+      <p class="t-lead">O que guardar para cada evento, e por quê. Sem datas: o calendário dos eventos não é fixo, então acompanhe o calendário do jogo. Os valores que você digita ficam neste aparelho.</p>
       <DataStamp />
     </header>
 
     {hoard.goals.map((g) => (
       <section class="t-section" aria-labelledby={`hoard-${g.id}-h`} data-goal={g.id}>
         <h2 id={`hoard-${g.id}-h`}>{g.title}</h2>
-        <p class="t-note">Save: {g.save.map((s) => SAVE[s as SaveKind]).join(", ")}.</p>
+        <p class="t-note">Guardar: {g.save.map((s) => SAVE[s as SaveKind]).join(", ")}.</p>
         <RuleList rules={g.rules} />
       </section>
     ))}
 
     <section class="t-section" aria-labelledby="hoard-general-h">
-      <h2 id="hoard-general-h">For every goal</h2>
+      <h2 id="hoard-general-h">Para qualquer meta</h2>
       <RuleList rules={hoard.general} testId="hoard-general" />
     </section>
 
     <section class="t-section" aria-labelledby="hoard-calc-h">
-      <h2 id="hoard-calc-h">Saved vs target</h2>
-      <p class="t-note">Saved amounts are shared with the other tools on this device. Targets are your own: no card gives them.</p>
+      <h2 id="hoard-calc-h">Guardado e meta</h2>
+      <p class="t-note">As quantidades guardadas são compartilhadas com as outras ferramentas neste aparelho. As metas são suas: nenhuma ficha as traz.</p>
       <HoardCalc client:load goals={goals} cites={cites} />
     </section>
 
     <section class="t-deferred" aria-labelledby="t-deferred-h">
-      <h2 id="t-deferred-h">Not here yet</h2>
+      <h2 id="t-deferred-h">Ainda não está aqui</h2>
       <ul>
-        <li>Suggested amounts per event (how many AP items for Lohar's Trial, speedups for MGE milestones): needs in-game measurements.</li>
-        <li>Reminders before an event: waits on the kingdom calendar.</li>
+        <li>Quantidades sugeridas por evento (quantos itens de PA para a Provação de Lohar, acelerações para as metas do MGE): precisa de medições no jogo.</li>
+        <li>Lembretes antes de um evento: depende do calendário do reino.</li>
       </ul>
     </section>
     <SourcesList ids={ids} />

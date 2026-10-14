@@ -21,7 +21,7 @@ export function DurationField({ id, label, value, onChange, help }: Props) {
   const commit = (raw: string): void => {
     setText(raw);
     const s = parseDuration(raw);
-    if (s === null) { setError("Enter a time like 2d 4h 30m."); return; }
+    if (s === null) { setError("Digite um tempo como 2d 4h 30m."); return; }
     setError(null);
     onChange(raw.trim(), s);
   };
@@ -35,7 +35,7 @@ export function DurationField({ id, label, value, onChange, help }: Props) {
           aria-describedby={describedBy} onInput={(e) => commit((e.currentTarget as HTMLInputElement).value)}
           onBlur={() => { if (!error) setText(null); }} />
       </div>
-      {error ? <p id={`${id}-err`} class="t-error">{error}</p> : <p id={`${id}-read`} class="t-help">Read as {formatDuration(secs ?? 0)}.</p>}
+      {error ? <p id={`${id}-err`} class="t-error">{error}</p> : <p id={`${id}-read`} class="t-help">Lido como {formatDuration(secs ?? 0)}.</p>}
     </div>
   );
 }

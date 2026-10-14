@@ -33,7 +33,7 @@ export default function FarmForm({ farm, onSubmit, onCancel }: Props) {
   const formRef = useRef<HTMLFormElement>(null);
   const focusFirstError = useRef(false);
   const pre = farm ? `ff-${farm.id}` : "ff-new";
-  const title = farm ? `Edit ${farm.name}` : "Add a farm";
+  const title = farm ? `Editar ${farm.name}` : "Adicionar uma conta farm";
 
   useEffect(() => {
     formRef.current?.querySelector<HTMLInputElement>(`#${pre}-name`)?.focus();
@@ -68,12 +68,12 @@ export default function FarmForm({ farm, onSubmit, onCancel }: Props) {
   return (
     <form class="fm-card fh-form" ref={formRef} onSubmit={submit} noValidate aria-labelledby={`${pre}-title`}>
       <h3 id={`${pre}-title`}>{title}</h3>
-      {count > 0 && <p class="fm-error" role="alert">Fix {count === 1 ? "1 field" : `${count} fields`} below.</p>}
+      {count > 0 && <p class="fm-error" role="alert">Corrija {count === 1 ? "1 campo" : `${count} campos`} abaixo.</p>}
       {formError && <p class="fm-error" role="alert">{formError}</p>}
 
       <div class="fm-field">
-        <label for={`${pre}-name`}>Name</label>
-        <p class="fm-hint" id={`${pre}-name-hint`}>Required, up to {FARM_NAME_MAX} characters. Any name you use for the account.</p>
+        <label for={`${pre}-name`}>Nome</label>
+        <p class="fm-hint" id={`${pre}-name-hint`}>Obrigatório, até {FARM_NAME_MAX} caracteres. Qualquer nome que você use para a conta.</p>
         <input
           id={`${pre}-name`} type="text" autocomplete="off" value={v.name} maxLength={FARM_NAME_MAX}
           aria-invalid={errors.name ? "true" : undefined} aria-describedby={describe("name", `${pre}-name-hint`)}
@@ -83,7 +83,7 @@ export default function FarmForm({ farm, onSubmit, onCancel }: Props) {
       </div>
 
       <fieldset class="fh-fieldset">
-        <legend class="fm-label">What it mainly gathers</legend>
+        <legend class="fm-label">O que ela mais coleta</legend>
         <div class="fh-radios">
           {FOCUSES.map((f) => (
             <label class="fh-radio" key={f}>
@@ -95,8 +95,8 @@ export default function FarmForm({ farm, onSubmit, onCancel }: Props) {
       </fieldset>
 
       <fieldset class="fh-fieldset">
-        <legend class="fm-label">Levels (optional)</legend>
-        <p class="fm-hint">Leave empty what you don't know. The build path and Trading Post tax use these.</p>
+        <legend class="fm-label">Níveis (opcional)</legend>
+        <p class="fm-hint">Deixe em branco o que você não sabe. O caminho de construção e o imposto do Entreposto Comercial usam estes valores.</p>
         <div class="fh-levels">
           {LEVEL_FIELDS.map((f) => {
             const [min, max] = FARM_LEVEL_RANGES[f];
@@ -117,8 +117,8 @@ export default function FarmForm({ farm, onSubmit, onCancel }: Props) {
       </fieldset>
 
       <div class="fm-field">
-        <label for={`${pre}-note`}>Note (optional)</label>
-        <p class="fm-hint" id={`${pre}-note-hint`}>Up to {FARM_NOTE_MAX} characters, e.g. where it sits on the map.</p>
+        <label for={`${pre}-note`}>Observação (opcional)</label>
+        <p class="fm-hint" id={`${pre}-note-hint`}>Até {FARM_NOTE_MAX} caracteres, por exemplo onde ela fica no mapa.</p>
         <textarea
           id={`${pre}-note`} rows={2} value={v.note}
           aria-invalid={errors.note ? "true" : undefined} aria-describedby={describe("note", `${pre}-note-hint`)}
@@ -128,8 +128,8 @@ export default function FarmForm({ farm, onSubmit, onCancel }: Props) {
       </div>
 
       <div class="fm-actions">
-        <button type="submit" class="btn btn-primary">{farm ? "Save changes" : "Add farm"}</button>
-        <button type="button" class="btn btn-secondary" onClick={onCancel}>Cancel</button>
+        <button type="submit" class="btn btn-primary">{farm ? "Salvar alterações" : "Adicionar conta farm"}</button>
+        <button type="button" class="btn btn-secondary" onClick={onCancel}>Cancelar</button>
       </div>
     </form>
   );

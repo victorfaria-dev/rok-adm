@@ -31,21 +31,21 @@ const ruleIds = [
 const ids = [...new Set([...ruleIds, ...m.checklist.flatMap((i) => i.facts)])];
 const cites = Object.fromEntries(ids.map((id) => [id, cite([id])]));
 ---
-<Shell title="Migration checker" description="Can you migrate to another Rise of Kingdoms kingdom? City Hall, alliance, troops, cooldown, age limits per route and Passport Pages, each rule with its source and patch." mode="operate">
+<Shell title="Verificador de migração" description="Você pode migrar para outro reino de Rise of Kingdoms? Prefeitura, aliança, tropas, período de espera, limites de idade por rota e Páginas de Passaporte, cada regra com sua fonte e patch." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Migration checker</h1>
-      <p class="t-lead">Enter your account and the target kingdom. You get eligible or not eligible, every reason, and the Passport Pages for your power. Each rule shows the patch it was checked on. Values stay on this device.</p>
+      <h1>Verificador de migração</h1>
+      <p class="t-lead">Informe sua conta e o reino de destino. Você vê elegível ou não elegível, cada motivo e as Páginas de Passaporte para o seu poder. Cada regra mostra o patch em que foi conferida. Os valores ficam neste aparelho.</p>
       <DataStamp />
     </header>
     <MigrationCheck client:load rules={rules} cites={cites} />
-    <Checklist client:load listId="migration-before" title="Before you move" items={items} />
+    <Checklist client:load listId="migration-before" title="Antes de se mudar" items={items} />
     <section class="t-deferred" aria-labelledby="t-deferred-h">
-      <h2 id="t-deferred-h">Not here yet</h2>
+      <h2 id="t-deferred-h">Ainda não está aqui</h2>
       <ul>
-        <li>The full Passport Page table between 10M and 50M and between 55M and 100M: only three data points are known.</li>
-        <li>Rules from the 1.1.10 to 1.1.12 official notes: not verified yet.</li>
-        <li>Fewer pages for Vacation Permit holders: the reduction is not quantified.</li>
+        <li>A tabela completa de Páginas de Passaporte entre 10M e 50M e entre 55M e 100M: só três pontos de dados são conhecidos.</li>
+        <li>Regras das notas oficiais 1.1.10 a 1.1.12: ainda não verificadas.</li>
+        <li>Menos páginas para quem tem Licença de Férias: a redução não foi quantificada.</li>
       </ul>
     </section>
     <SourcesList ids={ids} />

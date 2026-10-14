@@ -66,17 +66,17 @@ export default function FarmHub({ clock = realClock }: Props) {
         const s = updateFarm(editing.id, v, stRef.current);
         setStore(s);
         focusTarget.current = `fc-${editing.id}-h`;
-        say(`${v.name} saved.`);
+        say(`${v.name} salva.`);
       } else {
         const { store: s, farm } = addFarm(v, stRef.current);
         setStore(s);
         focusTarget.current = `fc-${farm.id}-h`;
-        say(`${farm.name} added.`);
+        say(`${farm.name} adicionada.`);
       }
       setEditing({ kind: "none" });
       return null;
     } catch (e) {
-      return e instanceof Error ? e.message : "Could not save the farm.";
+      return e instanceof Error ? e.message : "Não foi possível salvar a conta farm.";
     }
   };
 
@@ -92,16 +92,16 @@ export default function FarmHub({ clock = realClock }: Props) {
   };
 
   const deleteFarm = (id: string): void => {
-    const name = farms.find((f) => f.id === id)?.name ?? "Farm";
+    const name = farms.find((f) => f.id === id)?.name ?? "Conta farm";
     const s = removeFarm(id, stRef.current);
     setStore(s);
     focusTarget.current = s.farms.length ? "fh-list-h" : "fh-add";
-    say(`${name} deleted.`);
+    say(`${name} excluída.`);
   };
 
   const doExport = (): void => {
     downloadText(`kingdomops-farms-${today}.json`, exportFarms(store), "application/json");
-    say("Export ready: check your downloads.");
+    say("Exportação pronta: veja seus downloads.");
   };
 
   const doImport = async (e: Event): Promise<void> => {
@@ -113,9 +113,9 @@ export default function FarmHub({ clock = realClock }: Props) {
       const data = importFarms(await file.text());
       setStore(writeFarms(data, stRef.current));
       setImportError(null);
-      say(`Imported ${data.farms.length} ${data.farms.length === 1 ? "farm" : "farms"} and ${data.shipments.length} shipments.`);
+      say(`Importadas ${data.farms.length} ${data.farms.length === 1 ? "conta farm" : "contas farm"} e ${data.shipments.length} envios.`);
     } catch (err) {
-      setImportError(err instanceof Error ? err.message : "Could not read that file.");
+      setImportError(err instanceof Error ? err.message : "Não foi possível ler esse arquivo.");
     }
   };
 
@@ -124,34 +124,34 @@ export default function FarmHub({ clock = realClock }: Props) {
     setStore(defaultFarmsStore());
     setEditing({ kind: "none" });
     focusTarget.current = "fh-add";
-    say("All farm data deleted from this browser.");
+    say("Todos os dados de contas farm foram excluídos deste navegador.");
   };
 
   const visits = nextFarmToVisit(farms, now);
   const byId = new Map(farms.map((f) => [f.id, f]));
 
   const addButton = full ? (
-    <p class="fm-note" id="fh-limit">You track {MAX_FARMS} farms, the limit. Delete one to add another.</p>
+    <p class="fm-note" id="fh-limit">Você acompanha {MAX_FARMS} contas farm, o limite. Exclua uma para adicionar outra.</p>
   ) : (
-    <button type="button" class="btn btn-primary" id="fh-add" onClick={() => setEditing({ kind: "add" })} disabled={!loaded}>Add a farm</button>
+    <button type="button" class="btn btn-primary" id="fh-add" onClick={() => setEditing({ kind: "add" })} disabled={!loaded}>Adicionar uma conta farm</button>
   );
 
   return (
     <div class="fh">
-      {blocked && <p class="fh-notice" role="note">This browser blocks saving, so your farms last only until you close this page.</p>}
+      {blocked && <p class="fh-notice" role="note">Este navegador bloqueia o salvamento, então suas contas farm duram só até você fechar esta página.</p>}
       <p class="visually-hidden" role="status" aria-live="polite">{status}</p>
 
       {loaded && farms.length === 0 && editing.kind !== "add" && (
         <section class="fm-card fh-empty" aria-labelledby="fh-empty-h">
-          <h2 id="fh-empty-h">Track your farm accounts</h2>
+          <h2 id="fh-empty-h">Acompanhe suas contas farm</h2>
           <ul>
-            <li>See which farm to visit next, from the time its marches come back.</li>
-            <li>Tick a short daily checklist per farm. Ticks reset at midnight.</li>
-            <li>Set a daily goal and count what the main received in the shipment log.</li>
+            <li>Veja qual conta farm visitar em seguida, pelo horário em que as marchas voltam.</li>
+            <li>Marque uma lista diária curta por conta farm. As marcações zeram à meia-noite.</li>
+            <li>Defina uma meta diária e conte o que a principal recebeu no registro de envios.</li>
           </ul>
-          <p class="fm-note">Everything stays in this browser. Nothing is sent anywhere.</p>
+          <p class="fm-note">Tudo fica neste navegador. Nada é enviado para lugar nenhum.</p>
           <div class="fm-actions">{addButton}</div>
-          <p>New to farms? Read <a href="/farms/choose/">Which farm should I build?</a> or the <a href="/guides/farms/">farm guides</a>.</p>
+          <p>Novo em contas farm? Leia <a href="/farms/choose/">Qual farm devo criar?</a> ou os <a href="/guides/farms/">guias de farm</a>.</p>
         </section>
       )}
 
@@ -159,7 +159,7 @@ export default function FarmHub({ clock = realClock }: Props) {
 
       {farms.length > 0 && (
         <section class="fh-visit" aria-labelledby="fh-visit-h">
-          <h2 id="fh-visit-h">Visit next</h2>
+          <h2 id="fh-visit-h">Visitar em seguida</h2>
           <ol class="fh-visit-list">
             {visits.map((v) => {
               const f = byId.get(v.id);
@@ -168,23 +168,23 @@ export default function FarmHub({ clock = realClock }: Props) {
                 <li key={v.id}>
                   <a href={`#fc-${f.id}-h`} onClick={(e) => { e.preventDefault(); document.getElementById(`fc-${f.id}-h`)?.focus(); }}>{f.name}</a>
                   {v.status === "idle"
-                    ? <span class="fh-visit-when">{v.until ? "marches are back" : "idle"}</span>
-                    : <span class="fh-visit-when">back in {formatDuration(v.minutesLeft ?? 0)} <span class="fm-note">(at {formatLocalTime(v.until!, now)})</span></span>}
+                    ? <span class="fh-visit-when">{v.until ? "as marchas voltaram" : "parada"}</span>
+                    : <span class="fh-visit-when">volta em {formatDuration(v.minutesLeft ?? 0)} <span class="fm-note">(às {formatLocalTime(v.until!, now)})</span></span>}
                 </li>
               );
             })}
           </ol>
-          <p class="fm-hint">Idle farms first, then the soonest return. Updates every minute.</p>
+          <p class="fm-hint">Primeiro as contas paradas, depois a volta mais próxima. Atualiza a cada minuto.</p>
         </section>
       )}
 
       {farms.length > 0 && (
         <section class="fh-list" aria-labelledby="fh-list-h">
           <div class="fh-list-head">
-            <h2 id="fh-list-h" tabIndex={-1}>Your farms <span class="fm-note">({farms.length} of {MAX_FARMS})</span></h2>
+            <h2 id="fh-list-h" tabIndex={-1}>Suas contas farm <span class="fm-note">({farms.length} de {MAX_FARMS})</span></h2>
             {editing.kind !== "add" && addButton}
           </div>
-          <p class="fm-note">Minutes per task are not measured yet (pending in-game measurement, gap L-A13-01), so the checklist shows no times.</p>
+          <p class="fm-note">Os minutos por tarefa ainda não foram medidos (medição no jogo pendente, lacuna L-A13-01), então a lista não mostra tempos.</p>
           {farms.map((f) =>
             editing.kind === "edit" && editing.id === f.id ? (
               <FarmForm key={f.id} farm={f} onSubmit={submitFarm} onCancel={cancelForm} />
@@ -202,20 +202,20 @@ export default function FarmHub({ clock = realClock }: Props) {
 
       {loaded && (
         <section class="fm-card fh-data" aria-labelledby="fh-data-h">
-          <h2 id="fh-data-h">Your farm data</h2>
-          <p class="fm-note">Saved only in this browser. Export a file to keep a copy or move it to another device.</p>
+          <h2 id="fh-data-h">Dados das suas contas farm</h2>
+          <p class="fm-note">Salvos só neste navegador. Exporte um arquivo para guardar uma cópia ou levar para outro aparelho.</p>
           <div class="fm-actions">
-            <button type="button" class="btn btn-secondary" onClick={doExport} disabled={farms.length === 0 && store.shipments.length === 0}>Export farms (JSON)</button>
-            <button type="button" class="btn btn-secondary" onClick={() => fileRef.current?.click()}>Import farms…</button>
+            <button type="button" class="btn btn-secondary" onClick={doExport} disabled={farms.length === 0 && store.shipments.length === 0}>Exportar contas farm (JSON)</button>
+            <button type="button" class="btn btn-secondary" onClick={() => fileRef.current?.click()}>Importar contas farm…</button>
             <input
               ref={fileRef} id="fh-import" class="visually-hidden" type="file" accept=".json,application/json"
-              aria-label="Import farms file" tabIndex={-1} onChange={(e) => void doImport(e)}
+              aria-label="Arquivo de contas farm para importar" tabIndex={-1} onChange={(e) => void doImport(e)}
             />
           </div>
-          <p class="fm-hint">Importing replaces the farms and shipments in this browser.</p>
+          <p class="fm-hint">Importar substitui as contas farm e os envios deste navegador.</p>
           {importError && <p class="fm-error" role="alert">{importError}</p>}
           {(farms.length > 0 || store.shipments.length > 0) && (
-            <ConfirmAction label="Delete all farm data" question="Delete every farm, checklist and shipment from this browser?" yesLabel="Yes, delete all" onConfirm={deleteAll} />
+            <ConfirmAction label="Excluir todos os dados de contas farm" question="Excluir todas as contas farm, listas e envios deste navegador?" yesLabel="Sim, excluir tudo" onConfirm={deleteAll} />
           )}
         </section>
       )}

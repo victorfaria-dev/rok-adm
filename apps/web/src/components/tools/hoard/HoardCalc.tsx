@@ -16,18 +16,18 @@ export interface HoardCalcProps {
 }
 
 const ITEMS = [
-  { key: "gems", kind: "gems", label: "Gems", unit: "gems" },
-  { key: "apItems", kind: "ap", label: "AP recovery items", unit: "items" },
-  { key: "speedupUniversalMin", kind: "speedups", label: "Universal speedups", unit: "minutes" },
-  { key: "speedupBuildingMin", kind: "speedups", label: "Building speedups", unit: "minutes" },
-  { key: "speedupResearchMin", kind: "speedups", label: "Research speedups", unit: "minutes" },
-  { key: "speedupTrainingMin", kind: "speedups", label: "Training speedups", unit: "minutes" },
-  { key: "speedupHealingMin", kind: "speedups", label: "Healing speedups", unit: "minutes" },
+  { key: "gems", kind: "gems", label: "Gemas", unit: "gemas" },
+  { key: "apItems", kind: "ap", label: "Itens de recuperação de PA", unit: "itens" },
+  { key: "speedupUniversalMin", kind: "speedups", label: "Acelerações universais", unit: "minutos" },
+  { key: "speedupBuildingMin", kind: "speedups", label: "Acelerações de construção", unit: "minutos" },
+  { key: "speedupResearchMin", kind: "speedups", label: "Acelerações de pesquisa", unit: "minutos" },
+  { key: "speedupTrainingMin", kind: "speedups", label: "Acelerações de treinamento", unit: "minutos" },
+  { key: "speedupHealingMin", kind: "speedups", label: "Acelerações de cura", unit: "minutos" },
 ] as const;
 
 type Key = (typeof ITEMS)[number]["key"];
 const INVENTORY = ["gems", "speedupUniversalMin", "speedupBuildingMin", "speedupResearchMin", "speedupTrainingMin", "speedupHealingMin"] as const;
-const fmt = (n: number) => n.toLocaleString("en-US");
+const fmt = (n: number) => n.toLocaleString("pt-BR");
 const tKey = (k: Key) => `target_${k}`;
 
 /** F-25 (b): saved vs target per item for one goal. Saved values are shared with the other tools. */
@@ -41,28 +41,28 @@ export default function HoardCalc({ goals, cites }: HoardCalcProps) {
 
   return (
     <div class="t-page-body" data-tool="hoard">
-      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Saved versus target">
-        <SelectField id="hoard-goal" label="Saving for" value={goal.id} options={goals.map((g) => ({ value: g.id, label: g.title }))} onChange={(x) => set({ goal: x })} />
+      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label="Guardado e meta">
+        <SelectField id="hoard-goal" label="Guardando para" value={goal.id} options={goals.map((g) => ({ value: g.id, label: g.title }))} onChange={(x) => set({ goal: x })} />
       </form>
-      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label={`Amounts for ${goal.title}`}>
+      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label={`Quantidades para ${goal.title}`}>
         {items.map((it) => [
-          <NumberField key={it.key} id={`hoard-${it.key}`} label={`${it.label} saved (${it.unit})`} value={num(it.key)} max={10 ** 9}
-            onChange={(x) => set({ [it.key]: x })} help={INVENTORY.includes(it.key as never) ? "Shared with the other tools on this device." : undefined} />,
-          <NumberField key={tKey(it.key)} id={`hoard-t-${it.key}`} label={`${it.label} target (${it.unit})`} value={num(tKey(it.key))} max={10 ** 9}
-            onChange={(x) => set({ [tKey(it.key)]: x })} pending help="Your own target: no card gives one." />,
+          <NumberField key={it.key} id={`hoard-${it.key}`} label={`Guardado: ${it.label} (${it.unit})`} value={num(it.key)} max={10 ** 9}
+            onChange={(x) => set({ [it.key]: x })} help={INVENTORY.includes(it.key as never) ? "Compartilhado com as outras ferramentas neste aparelho." : undefined} />,
+          <NumberField key={tKey(it.key)} id={`hoard-t-${it.key}`} label={`Meta: ${it.label} (${it.unit})`} value={num(tKey(it.key))} max={10 ** 9}
+            onChange={(x) => set({ [tKey(it.key)]: x })} pending help="Sua própria meta: nenhuma ficha traz uma." />,
         ])}
       </form>
       {goal.save.includes("resources") ? (
-        <p class="t-note">This goal also asks for resources saved as items: count those in game.</p>
+        <p class="t-note">Esta meta também pede recursos guardados como itens: conte-os no jogo.</p>
       ) : null}
       {items.length ? (
-        <Results title="Your hoard result">
+        <Results title="Seu resultado de acúmulo">
           {items.map((it) => {
             const g = reserveGap(num(it.key), num(tKey(it.key)));
             return (
               <ResultRow key={it.key} testId={`hoard-gap-${it.key}`} label={it.label}
-                value={g.target === 0 ? `${fmt(g.saved)} saved, no target set` : g.missing === 0 ? `On target (${fmt(g.saved)} of ${fmt(g.target)})` : `${fmt(g.missing)} ${it.unit} to go (${g.pct}%)`}
-                cite={cites[goal.id] ?? { facts: [], confidence: "pending" }} pending={["target"]} />
+                value={g.target === 0 ? `${fmt(g.saved)} guardados, sem meta definida` : g.missing === 0 ? `Meta atingida (${fmt(g.saved)} de ${fmt(g.target)})` : `Faltam ${fmt(g.missing)} ${it.unit} (${g.pct}%)`}
+                cite={cites[goal.id] ?? { facts: [], confidence: "pending" }} pending={["meta"]} />
             );
           })}
         </Results>

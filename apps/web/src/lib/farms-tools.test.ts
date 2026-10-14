@@ -32,14 +32,14 @@ describe("parseAmount", () => {
   it.each(["abc", "1,50,000", "1,5m", "1.", "k", "1.5x", "12,34", "1e6", "NaN", "Infinity"])("%s is an error, never NaN", (text) => {
     const r = parseAmount(text);
     expect(r).toMatchObject({ ok: false });
-    expect(r && !r.ok ? r.error : "").toMatch(/1,500,000/);
+    expect(r && !r.ok ? r.error : "").toMatch(/1500000/);
   });
 
   it("negative, fractional and huge values explain how to fix them", () => {
-    expect(parseAmount("-5")).toEqual({ ok: false, error: "Enter 0 or more." });
-    expect(parseAmount("1.5")).toEqual({ ok: false, error: "Use a whole number of resources." });
-    expect(parseAmount("1.2345k")).toEqual({ ok: false, error: "Use a whole number of resources." });
-    expect(parseAmount("9999999b")).toEqual({ ok: false, error: "That number is too large." });
+    expect(parseAmount("-5")).toEqual({ ok: false, error: "Digite 0 ou mais." });
+    expect(parseAmount("1.5")).toEqual({ ok: false, error: "Use um número inteiro de recursos." });
+    expect(parseAmount("1.2345k")).toEqual({ ok: false, error: "Use um número inteiro de recursos." });
+    expect(parseAmount("9999999b")).toEqual({ ok: false, error: "Esse número é grande demais." });
   });
 });
 
@@ -47,7 +47,7 @@ describe("parseIntInRange / parsePercent", () => {
   it("levels", () => {
     expect(parseIntInRange("15", 1, 25)).toEqual(ok(15));
     expect(parseIntInRange("", 1, 25)).toBeNull();
-    expect(parseIntInRange("30", 1, 25)).toEqual({ ok: false, error: "30 is out of range. Enter a number from 1 to 25." });
+    expect(parseIntInRange("30", 1, 25)).toEqual({ ok: false, error: "30 está fora do intervalo. Digite um número de 1 a 25." });
     expect(parseIntInRange("1.5", 1, 25)).toMatchObject({ ok: false });
   });
 
@@ -56,18 +56,18 @@ describe("parseIntInRange / parsePercent", () => {
     expect(parsePercent("21%")).toEqual(ok(0.21));
     expect(parsePercent("12.5")).toEqual(ok(0.125));
     expect(parsePercent("")).toBeNull();
-    expect(parsePercent("100")).toEqual({ ok: false, error: "Enter a percentage below 100." });
+    expect(parsePercent("100")).toEqual({ ok: false, error: "Digite uma porcentagem abaixo de 100." });
     expect(parsePercent("x")).toMatchObject({ ok: false });
   });
 });
 
 describe("formatting", () => {
-  it("en-US numbers and percents", () => {
-    expect(formatAmount(1_265_823)).toBe("1,265,823");
+  it("pt-BR numbers and percents", () => {
+    expect(formatAmount(1_265_823)).toBe("1.265.823");
     expect(formatPercent(0.21)).toBe("21%");
-    expect(formatPercent(0.125)).toBe("12.5%");
-    expect(civName("byzantium")).toBe("Byzantium");
-    expect(listText(["food", "wood", "stone"])).toBe("food, wood and stone");
+    expect(formatPercent(0.125)).toBe("12,5%");
+    expect(civName("byzantium")).toBe("Bizâncio");
+    expect(listText(["food", "wood", "stone"])).toBe("food, wood e stone");
     expect(listText(["gold"])).toBe("gold");
   });
 });

@@ -2,8 +2,17 @@
 // Pure: parsing what the player types, formatting numbers, and the saved-profile prefill.
 // From @rokadm/planner: types plus the shared number parser (readQuantity, no fact data).
 import type { SpendingProfile } from "@rokadm/core";
-import { QUANTITY_ERROR_TEXT, readQuantity, type Resource } from "@rokadm/planner";
+import { readQuantity, type QuantityError, type Resource } from "@rokadm/planner";
 import { profileFromCode } from "./profile";
+
+/** Plain-language fix for each QuantityError (pt-BR copy). */
+const QUANTITY_ERROR_TEXT: Readonly<Record<QuantityError, string>> = {
+  empty: "Digite um número.",
+  negative: "Digite 0 ou mais.",
+  format: "Digite um número como 1500000, 1.5m ou 300k.",
+  fraction: "Use um número inteiro.",
+  too_large: "Esse número é grande demais.",
+};
 
 /** Parse result: null = the field is empty; otherwise a value or a how-to-fix error. */
 export type Parsed<T> = null | { ok: true; value: T } | { ok: false; error: string };
@@ -19,16 +28,16 @@ export function parseAmount(text: string): Parsed<number> {
   const r = readQuantity(text, { max: MAX_AMOUNT });
   if (r.ok) return { ok: true, value: r.value };
   if (r.error === "empty") return null;
-  return { ok: false, error: r.error === "fraction" ? "Use a whole number of resources." : QUANTITY_ERROR_TEXT[r.error] };
+  return { ok: false, error: r.error === "fraction" ? "Use um número inteiro de recursos." : QUANTITY_ERROR_TEXT[r.error] };
 }
 
 /** Whole number in [min, max] ("1,000" style commas not accepted: levels and counts are small). */
 export function parseIntInRange(text: string, min: number, max: number): Parsed<number> {
   const s = text.trim();
   if (s === "") return null;
-  if (!/^-?\d+$/.test(s)) return { ok: false, error: `Enter a whole number from ${min} to ${max}.` };
+  if (!/^-?\d+$/.test(s)) return { ok: false, error: `Digite um número inteiro de ${min} a ${max}.` };
   const n = Number(s);
-  if (n < min || n > max) return { ok: false, error: `${s} is out of range. Enter a number from ${min} to ${max}.` };
+  if (n < min || n > max) return { ok: false, error: `${s} está fora do intervalo. Digite um número de ${min} a ${max}.` };
   return { ok: true, value: n };
 }
 
@@ -36,9 +45,9 @@ export function parseIntInRange(text: string, min: number, max: number): Parsed<
 export function parsePercent(text: string): Parsed<number> {
   const s = text.trim().replace(/%$/, "").trim();
   if (s === "") return null;
-  if (!/^\d+(\.\d+)?$/.test(s)) return { ok: false, error: "Enter a percentage like 21 or 12.5." };
+  if (!/^\d+(\.\d+)?$/.test(s)) return { ok: false, error: "Digite uma porcentagem como 21 ou 12.5." };
   const n = Number(s);
-  if (n >= 100) return { ok: false, error: "Enter a percentage below 100." };
+  if (n >= 100) return { ok: false, error: "Digite uma porcentagem abaixo de 100." };
   return { ok: true, value: Math.round(n * 1e6) / 1e8 };
 }
 
@@ -47,10 +56,10 @@ export const valueOf = <T,>(p: Parsed<T>): T | null => (p && p.ok ? p.value : nu
 /** Error text of a parse result, or undefined. */
 export const errorOf = <T,>(p: Parsed<T>): string | undefined => (p && !p.ok ? p.error : undefined);
 
-const NUM = new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 });
-const PCT = new Intl.NumberFormat("en-US", { maximumFractionDigits: 2 });
+const NUM = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 0 });
+const PCT = new Intl.NumberFormat("pt-BR", { maximumFractionDigits: 2 });
 
-/** 1265823 → "1,265,823". */
+/** 1265823 → "1.265.823". */
 export function formatAmount(n: number): string {
   return NUM.format(n);
 }
@@ -60,17 +69,23 @@ export function formatPercent(rate: number): string {
   return `${PCT.format(rate * 100)}%`;
 }
 
-export const RESOURCE_LABEL: Record<Resource, string> = { food: "Food", wood: "Wood", stone: "Stone", gold: "Gold" };
+export const RESOURCE_LABEL: Record<Resource, string> = { food: "Comida", wood: "Madeira", stone: "Pedra", gold: "Ouro" };
 
-/** "byzantium" → "Byzantium". */
+const CIV_NAMES: Readonly<Record<string, string>> = {
+  rome: "Roma", germany: "Alemanha", britain: "Grã-Bretanha", france: "França", spain: "Espanha", china: "China", japan: "Japão",
+  korea: "Coreia", arabia: "Arábia", ottoman: "Otomanos", ottomans: "Otomanos", byzantium: "Bizâncio", vikings: "Vikings",
+  maya: "Maias", egypt: "Egito", greece: "Grécia",
+};
+
+/** "byzantium" → "Bizâncio" (unknown codes are capitalised). */
 export function civName(code: string): string {
-  return code.charAt(0).toUpperCase() + code.slice(1);
+  return CIV_NAMES[code.toLowerCase()] ?? code.charAt(0).toUpperCase() + code.slice(1);
 }
 
-/** "food", "wood", "stone" → "food, wood and stone". */
+/** "comida", "madeira", "pedra" → "comida, madeira e pedra". */
 export function listText(items: readonly string[]): string {
   if (items.length <= 1) return items.join("");
-  return `${items.slice(0, -1).join(", ")} and ${items[items.length - 1]}`;
+  return `${items.slice(0, -1).join(", ")} e ${items[items.length - 1]}`;
 }
 
 export interface ProfilePrefill {

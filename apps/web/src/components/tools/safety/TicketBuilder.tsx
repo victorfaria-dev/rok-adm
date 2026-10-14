@@ -22,18 +22,18 @@ export default function TicketBuilder() {
   const copy = async (): Promise<void> => {
     try {
       await navigator.clipboard.writeText(text);
-      setMsg("Copied. Paste it into the game's support chat.");
+      setMsg("Copiado. Cole no chat de suporte do jogo.");
     } catch {
       out.current?.focus();
       out.current?.select();
-      setMsg("Copy didn't work here. The text is selected: copy it with your device's copy command.");
+      setMsg("A cópia não funcionou aqui. O texto está selecionado: copie com o comando de copiar do seu aparelho.");
     }
   };
 
   return (
     <div class="s-ticket" data-tool="ticket">
       <fieldset class="s-kinds">
-        <legend>What do you need?</legend>
+        <legend>O que você precisa?</legend>
         {TICKET_TEMPLATES.map((t) => (
           <label key={t.kind} class="s-kind">
             <input type="radio" name="s-kind" value={t.kind} checked={kind === t.kind} onChange={() => { setKind(t.kind); setMsg(""); }} />
@@ -42,7 +42,7 @@ export default function TicketBuilder() {
         ))}
       </fieldset>
 
-      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label={`${tpl.title}: details`}>
+      <form class="t-form" onSubmit={(e) => e.preventDefault()} aria-label={`${tpl.title}: detalhes`}>
         {tpl.fields.map((f) => {
           const id = `s-${f.id}`;
           const help = f.help ? `${id}-help` : undefined;
@@ -52,7 +52,7 @@ export default function TicketBuilder() {
           };
           return (
             <div key={f.id} class={`t-field${f.multiline ? " s-wide" : ""}`}>
-              <label for={id}>{f.label}{f.required ? null : <span class="t-note"> (optional)</span>}</label>
+              <label for={id}>{f.label}{f.required ? null : <span class="t-note"> (opcional)</span>}</label>
               {f.help ? <p id={help} class="t-help">{f.help}</p> : null}
               {f.multiline ? <textarea class="t-textarea" rows={4} {...common} /> : <input type="text" {...common} />}
             </div>
@@ -61,15 +61,15 @@ export default function TicketBuilder() {
       </form>
 
       <section class="s-out" aria-labelledby="s-out-h">
-        <h3 id="s-out-h">Your ticket text</h3>
+        <h3 id="s-out-h">Texto do seu ticket</h3>
         {ticket.missing.length ? (
-          <p class="t-note" data-testid="s-missing">Still missing: {ticket.missing.join(", ")}.</p>
+          <p class="t-note" data-testid="s-missing">Ainda falta: {ticket.missing.join(", ")}.</p>
         ) : (
-          <p class="t-note">All the details support asks for are in.</p>
+          <p class="t-note">Todos os detalhes que o suporte pede estão aí.</p>
         )}
-        <label for="s-text" class="visually-hidden">Ticket text to copy</label>
+        <label for="s-text" class="visually-hidden">Texto do ticket para copiar</label>
         <textarea id="s-text" ref={out} class="t-textarea s-text" readOnly rows={14} value={text} />
-        <button type="button" class="btn btn-primary" onClick={() => void copy()}>Copy ticket text</button>
+        <button type="button" class="btn btn-primary" onClick={() => void copy()}>Copiar texto do ticket</button>
         <p role="status" class="t-status">{msg}</p>
       </section>
     </div>

@@ -19,11 +19,11 @@ test.describe("glossary", () => {
     await hydrated(page);
     const all = page.locator("[data-glossary-term]");
     await expect(all).toHaveCount(glossary.terms.length);
-    const q = page.getByLabel("Search the glossary");
+    const q = page.getByLabel("Buscar no glossário");
     await q.fill("More Than Gems");
     await expect(page.locator("#more-than-gems")).toBeVisible();
     await expect(page.locator("#dkp")).toBeHidden();
-    await expect(page.getByTestId("g-count")).toHaveText(/^\d+ of \d+ terms match$/);
+    await expect(page.getByTestId("g-count")).toHaveText(/^\d+ de \d+ termos correspondem$/);
     await q.fill("mtg");
     await expect(page.locator("#more-than-gems")).toBeVisible();
     await q.fill("");
@@ -33,12 +33,12 @@ test.describe("glossary", () => {
   test("empty state says what to do and clears", async ({ page }) => {
     await page.goto("/glossary/");
     await hydrated(page);
-    await page.getByLabel("Search the glossary").fill("qwertyzzz");
-    await expect(page.getByTestId("g-empty")).toContainText("Try a shorter word");
-    await expect(page.getByTestId("g-count")).toHaveText(`0 of ${glossary.terms.length} terms match`);
-    await page.getByRole("button", { name: "Clear search" }).click();
+    await page.getByLabel("Buscar no glossário").fill("qwertyzzz");
+    await expect(page.getByTestId("g-empty")).toContainText("Tente uma palavra mais curta");
+    await expect(page.getByTestId("g-count")).toHaveText(`0 de ${glossary.terms.length} termos correspondem`);
+    await page.getByRole("button", { name: "Limpar busca" }).click();
     await expect(page.getByTestId("g-empty")).toHaveCount(0);
-    await expect(page.getByLabel("Search the glossary")).toBeFocused();
+    await expect(page.getByLabel("Buscar no glossário")).toBeFocused();
     await expect(page.locator("[data-glossary-term]:visible")).toHaveCount(glossary.terms.length);
   });
 
@@ -46,7 +46,7 @@ test.describe("glossary", () => {
     await page.goto("/glossary/#dkp");
     await expect(page.locator("#dkp")).toBeInViewport();
     await hydrated(page);
-    await page.getByLabel("Search the glossary").fill("dkp");
+    await page.getByLabel("Buscar no glossário").fill("dkp");
     await expect(page.locator("#t4-t5")).toBeHidden();
     await page.locator("#dkp .g-related").getByRole("link", { name: "T4 / T5" }).click();
     await expect(page).toHaveURL(/#t4-t5$/);
@@ -60,20 +60,20 @@ test.describe("what changed since", () => {
     await page.goto("/changes/");
     await hydrated(page);
     await expect(page.locator(".c-patch")).toHaveCount(patches.length);
-    await page.getByLabel("When did you stop playing?").selectOption("2025-05");
+    await page.getByLabel("Quando você parou de jogar?").selectOption("2025-05");
     const expected = patchesSince(patches, "2025-05");
-    await expect(page.getByTestId("c-summary")).toHaveText(`${expected.length} patches since May 2025, newest first.`);
+    await expect(page.getByTestId("c-summary")).toHaveText(`${expected.length} patches desde May 2025, do mais novo ao mais antigo.`);
     const shown = await page.locator(".c-patch").evaluateAll((els) => els.map((e) => e.getAttribute("data-version")!));
     expect(new Set(shown)).toEqual(new Set(expected.map((x) => x.patch.version)));
     expect(shown).not.toContain("1.0.92");
     const official = await page.locator('[data-group="c-official"] .c-patch').evaluateAll((els) => els.map((e) => e.getAttribute("data-version")!));
     expect(official).toEqual(expected.filter((x) => x.patch.confidence === "alta").map((x) => x.patch.version));
-    await expect(page.locator('.c-patch[data-version="1.0.94"]')).toContainText("Same month you stopped");
-    await expect(page.locator('.c-patch[data-version="1.1.12"]')).toContainText("Low confidence");
+    await expect(page.locator('.c-patch[data-version="1.0.94"]')).toContainText("Mesmo mês em que você parou");
+    await expect(page.locator('.c-patch[data-version="1.1.12"]')).toContainText("Confiança baixa");
     expect(await toolsStore(page)).toMatchObject({ v: 1, inputs: { changes: { since: "2025-05" } } });
     await page.reload();
     await hydrated(page);
-    await expect(page.getByLabel("When did you stop playing?")).toHaveValue("2025-05");
+    await expect(page.getByLabel("Quando você parou de jogar?")).toHaveValue("2025-05");
     await expect(page.locator(".c-patch")).toHaveCount(expected.length);
   });
 
@@ -81,11 +81,11 @@ test.describe("what changed since", () => {
     await page.goto("/changes/");
     await hydrated(page);
     const last = patches.map((p) => p.date!.slice(0, 7)).sort().at(-1)!;
-    const options = await page.getByLabel("When did you stop playing?").locator("option").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
+    const options = await page.getByLabel("Quando você parou de jogar?").locator("option").evaluateAll((os) => os.map((o) => (o as HTMLOptionElement).value));
     const later = options.find((v) => v > last);
     test.skip(!later, "no month after the last patch in the picker");
-    await page.getByLabel("When did you stop playing?").selectOption(later!);
-    await expect(page.getByTestId("c-summary")).toContainText("You haven't missed a known update");
+    await page.getByLabel("Quando você parou de jogar?").selectOption(later!);
+    await expect(page.getByTestId("c-summary")).toContainText("Você não perdeu nenhuma atualização conhecida");
     await expect(page.locator(".c-patch")).toHaveCount(0);
   });
 
@@ -98,9 +98,9 @@ test.describe("what changed since", () => {
 test.describe("play it safe", () => {
   test("FAQ covers the rules and the Discord-link warning", async ({ page }) => {
     await page.goto("/tools/safety/");
-    await expect(page.locator("h1")).toHaveText("Play it safe");
+    await expect(page.locator("h1")).toHaveText("Jogue com segurança");
     await expect(page.locator("#faq-bots")).toContainText("C02-0002");
-    await expect(page.locator("#faq-discord-links")).toContainText("Reported by the community");
+    await expect(page.locator("#faq-discord-links")).toContainText("Relatado pela comunidade");
     await expect(page.locator("#faq-sharing")).toContainText("C02-0005");
   });
 
@@ -127,14 +127,14 @@ test.describe("play it safe", () => {
     await expect(page.getByTestId("s-missing")).toContainText("Why you think it is a mistake");
     await page.getByLabel("Why you think it is a mistake").fill("I only posted rally times in alliance chat.");
     await page.getByLabel(/Screenshots you will attach/).fill("mute notice\nprofile page");
-    const out = page.getByLabel("Ticket text to copy");
+    const out = page.getByLabel("Texto do ticket para copiar");
     await expect(out).toHaveJSProperty("readOnly", true);
     await expect(out).toHaveValue(/Subject: Appeal of a ban or mute/);
     await expect(out).toHaveValue(/Your governor ID: 87654321/);
     await expect(out).toHaveValue(/- profile page/);
     await expect(page.getByTestId("s-missing")).toHaveCount(0);
-    await page.getByRole("button", { name: "Copy ticket text" }).click();
-    await expect(page.getByRole("status").filter({ hasText: /Copied|Copy didn't work/ })).toBeVisible();
+    await page.getByRole("button", { name: "Copiar texto do ticket" }).click();
+    await expect(page.getByRole("status").filter({ hasText: /Copiado|A cópia não funcionou/ })).toBeVisible();
     const stored = await page.evaluate(() => Object.keys(localStorage).map((k) => `${k}=${localStorage.getItem(k)}`).join("\n"));
     expect(stored).not.toContain("87654321");
     expect(stored).not.toContain("rally times");
@@ -147,12 +147,12 @@ test.describe("zeroed recovery", () => {
     await hydrated(page);
     const items = page.locator('[data-checklist="zeroed-logoff"] input[type="checkbox"]');
     expect(await items.count()).toBeLessThanOrEqual(6);
-    await expect(page.locator('[data-checklist="zeroed-logoff"]')).toContainText("Pending measurement");
-    await expect(page.getByText("Peace shields: pending measurement.")).toBeVisible();
+    await expect(page.locator('[data-checklist="zeroed-logoff"]')).toContainText("Medição pendente");
+    await expect(page.getByText("Escudos de paz: medição pendente.")).toBeVisible();
     await page.getByRole("checkbox", { name: /Heal or clear your hospital/ }).check();
     expect(await toolsStore(page)).toMatchObject({ checks: { "zeroed-logoff": ["hospital"] } });
     await expect(page.locator("ol.z-steps > li")).toHaveCount(7);
-    await expect(page.getByRole("heading", { name: "If it was your farm" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Se era a sua conta farm" })).toBeVisible();
     await expect(page.locator("main")).toContainText("A13-0005");
   });
 });
@@ -162,25 +162,25 @@ test.describe("without JavaScript", () => {
   test("glossary lists every term, no dead search box", async ({ page }) => {
     await page.goto("/glossary/");
     await expect(page.locator("[data-glossary-term]")).toHaveCount(glossary.terms.length);
-    await expect(page.getByLabel("Search the glossary")).toHaveCount(0);
-    await expect(page.getByRole("heading", { name: "Sources on this page" })).toBeVisible();
+    await expect(page.getByLabel("Buscar no glossário")).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: "Fontes desta página" })).toBeVisible();
   });
   test("changes shows the full timeline", async ({ page }) => {
     await page.goto("/changes/");
     await expect(page.locator(".c-patch")).toHaveCount(patches.length);
-    await expect(page.getByTestId("c-summary")).toHaveText(`All ${patches.length} patches in our data, newest first.`);
+    await expect(page.getByTestId("c-summary")).toHaveText(`Todos os ${patches.length} patches dos nossos dados, do mais novo ao mais antigo.`);
   });
   test("safety shows the FAQ, checklist and ticket form", async ({ page }) => {
     await page.goto("/tools/safety/");
     await expect(page.locator(".s-faq article")).toHaveCount(11);
-    await expect(page.getByRole("heading", { name: "Account safety checklist" })).toBeVisible();
-    await expect(page.getByLabel("Ticket text to copy")).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Lista de segurança da conta" })).toBeVisible();
+    await expect(page.getByLabel("Texto do ticket para copiar")).toBeVisible();
   });
   test("zeroed shows the checklist and the steps", async ({ page }) => {
     await page.goto("/tools/zeroed/");
-    await expect(page.getByRole("heading", { name: "30-second log-off check" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Checagem de 30 segundos antes de sair" })).toBeVisible();
     await expect(page.locator("ol.z-steps > li")).toHaveCount(7);
-    await expect(page.getByRole("heading", { name: "Sources on this page" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Fontes desta página" })).toBeVisible();
   });
 });
 

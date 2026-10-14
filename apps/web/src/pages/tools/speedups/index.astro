@@ -20,11 +20,11 @@ const props = {
 };
 const ids = [...durationIds, ...ac.cite.facts, ...sp.helpPct.facts];
 ---
-<Shell title="Speedups and time" description="Add up your speedups by type, see the grand total, and check whether they finish a building, research, training or healing job after alliance helps." mode="operate">
+<Shell title="Acelerações e tempo" description="Some suas acelerações por tipo, veja o total geral e confira se elas concluem uma construção, pesquisa, treinamento ou cura depois das ajudas da aliança." mode="operate">
   <div class="t-page">
     <header>
-      <h1>Speedups and time</h1>
-      <p class="t-lead">Type how many speedup items you hold. You get the time per type and in total, and whether they finish a job once alliance helps are counted. Values stay on this device.</p>
+      <h1>Acelerações e tempo</h1>
+      <p class="t-lead">Digite quantos itens de aceleração você tem. Você vê o tempo por tipo e o total, e se eles concluem uma tarefa depois de contar as ajudas da aliança. Os valores ficam neste aparelho.</p>
       <DataStamp />
     </header>
     <SpeedupsCalc client:load {...props} />

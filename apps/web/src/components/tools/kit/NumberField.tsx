@@ -12,7 +12,7 @@ interface Props {
   step?: number;
   /** Short help under the label. */
   help?: string;
-  /** No fact card covers this value: the user types their own (shown as "Pending measurement"). */
+  /** No fact card covers this value: the user types their own (shown as "Medição pendente"). */
   pending?: boolean;
   suffix?: string;
   integer?: boolean;
@@ -32,11 +32,11 @@ export function inputText(v: number): string {
 /** Inline error for a value the shared parser refused. */
 export function fieldError(error: QuantityError, integer: boolean, min: number, max?: number): string {
   switch (error) {
-    case "empty": return "Enter a number.";
-    case "negative": return `Use ${min} or more.`;
-    case "fraction": return "Enter a whole number.";
-    case "too_large": return max !== undefined ? `Use ${max} or less.` : "That number is too large.";
-    default: return integer ? "Enter a whole number, like 1500, 1,500 or 1.5k." : "Enter a number, like 12.5, 1,500 or 1.5k.";
+    case "empty": return "Digite um número.";
+    case "negative": return `Use ${min} ou mais.`;
+    case "fraction": return "Digite um número inteiro.";
+    case "too_large": return max !== undefined ? `Use ${max} ou menos.` : "Esse número é grande demais.";
+    default: return integer ? "Digite um número inteiro, como 1500 ou 1.5k." : "Digite um número, como 12.5 ou 1.5k.";
   }
 }
 
@@ -57,8 +57,8 @@ export function NumberField({ id, label, value, onChange, min = 0, max, step, he
       return;
     }
     const v = r.value;
-    if (v < min) { setError(`Use ${min} or more.`); return; }
-    if (max !== undefined && v > max) { setError(`Use ${max} or less.`); return; }
+    if (v < min) { setError(`Use ${min} ou mais.`); return; }
+    if (max !== undefined && v > max) { setError(`Use ${max} ou menos.`); return; }
     setError(null);
     onChange(v);
   };

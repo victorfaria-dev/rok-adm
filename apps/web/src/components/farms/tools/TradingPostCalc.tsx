@@ -13,12 +13,12 @@ import {
 import { Sourced } from "../shared/Sourced";
 import { SelectField, TextField } from "./Field";
 
-export const SOURCE_TEXT: Record<ValueSource, string> = { table: "from table", override: "your value", unknown: "unknown" };
+export const SOURCE_TEXT: Record<ValueSource, string> = { table: "da tabela", override: "seu valor", unknown: "desconhecido" };
 const RESOURCE_OPTIONS = RESOURCES.map((r) => ({ value: r, label: RESOURCE_LABEL[r] }));
 const MAX_MARCHES = 99;
 
 function positive(p: Parsed<number>): Parsed<number> {
-  return p && p.ok && p.value <= 0 ? { ok: false, error: "Enter more than 0." } : p;
+  return p && p.ok && p.value <= 0 ? { ok: false, error: "Digite mais que 0." } : p;
 }
 
 function Results({ plan }: { plan: TransferPlan }): JSX.Element {
@@ -26,27 +26,27 @@ function Results({ plan }: { plan: TransferPlan }): JSX.Element {
   const row = (label: string, value: string, key: string) => (
     <div key={key} data-row={key}><dt>{label}</dt><dd>{value}</dd></div>
   );
-  const unknown = "Unknown";
+  const unknown = "Desconhecido";
   return (
     <dl class="ft-results">
-      {row("Farm sends (before tax)", plan.gross !== null ? `${formatAmount(plan.gross)} ${res}` : unknown, "gross")}
-      {row("Main receives", `${formatAmount(plan.netNeeded)} ${res}`, "net")}
+      {row("A conta farm envia (antes do imposto)", plan.gross !== null ? `${formatAmount(plan.gross)} ${res}` : unknown, "gross")}
+      {row("A principal recebe", `${formatAmount(plan.netNeeded)} ${res}`, "net")}
       {row(
-        "Tax paid",
-        plan.tax !== null && plan.taxRate !== null ? `${formatAmount(plan.tax)} (${formatPercent(plan.taxRate)}, ${SOURCE_TEXT[plan.taxSource]})` : `${unknown} (tax rate ${SOURCE_TEXT[plan.taxSource]})`,
+        "Imposto pago",
+        plan.tax !== null && plan.taxRate !== null ? `${formatAmount(plan.tax)} (${formatPercent(plan.taxRate)}, ${SOURCE_TEXT[plan.taxSource]})` : `${unknown} (taxa de imposto ${SOURCE_TEXT[plan.taxSource]})`,
         "tax",
       )}
       {row(
-        "Capacity per trip",
+        "Capacidade por viagem",
         plan.capacityPerTrip !== null ? `${formatAmount(plan.capacityPerTrip)} (${SOURCE_TEXT[plan.capacitySource]})` : unknown,
         "capacity",
       )}
-      {row("Trips", plan.trips !== null ? formatAmount(plan.trips) : unknown, "trips")}
-      {row("Rounds (trips ÷ free march queues)", plan.rounds !== null ? formatAmount(plan.rounds) : "Enter free march queues to count", "rounds")}
-      {row("Shippable now (stock above protection)", plan.shippable !== null ? `${formatAmount(plan.shippable)} ${res}` : "Enter farm stock and protection", "shippable")}
+      {row("Viagens", plan.trips !== null ? formatAmount(plan.trips) : unknown, "trips")}
+      {row("Rodadas (viagens ÷ filas de marcha livres)", plan.rounds !== null ? formatAmount(plan.rounds) : "Informe as filas de marcha livres para contar", "rounds")}
+      {row("Enviável agora (estoque acima da proteção)", plan.shippable !== null ? `${formatAmount(plan.shippable)} ${res}` : "Informe o estoque da conta farm e a proteção", "shippable")}
       {row(
-        "Shortfall",
-        plan.shortfall === null ? unknown : plan.shortfall === 0 ? "None: the farm has enough above protection" : `${formatAmount(plan.shortfall)} ${res}`,
+        "Falta",
+        plan.shortfall === null ? unknown : plan.shortfall === 0 ? "Nenhuma: a conta farm tem o suficiente acima da proteção" : `${formatAmount(plan.shortfall)} ${res}`,
         "shortfall",
       )}
     </dl>
@@ -69,15 +69,15 @@ export default function TradingPostCalc(): JSX.Element {
     if (!id) return;
     const farm = readFarms().farms.find((f) => f.id === id);
     if (!farm) {
-      setPrefillNote("That farm is not saved in this browser. Enter its Trading Post level by hand.");
+      setPrefillNote("Essa conta farm não está salva neste navegador. Informe o nível do Entreposto Comercial à mão.");
       return;
     }
     if (farm.levels.tradingPost !== null) setLevel(String(farm.levels.tradingPost));
     if (isResource(farm.role)) setResource(farm.role);
     setPrefillNote(
       farm.levels.tradingPost !== null
-        ? `Trading Post level prefilled from ${farm.name}.`
-        : `${farm.name} has no Trading Post level saved yet. Enter it below.`,
+        ? `Nível do Entreposto Comercial preenchido a partir de ${farm.name}.`
+        : `${farm.name} ainda não tem nível de Entreposto Comercial salvo. Informe abaixo.`,
     );
   }, []);
 
@@ -111,43 +111,43 @@ export default function TradingPostCalc(): JSX.Element {
 
   const res = RESOURCE_LABEL[resource].toLowerCase();
   let summary: string;
-  if (hasErrors) summary = "Fix the highlighted fields to update the result.";
-  else if (!plan) summary = "Enter the amount your main needs.";
-  else if (plan.gross === null) summary = "Enter the farm's Trading Post level or the tax rate you see in game.";
+  if (hasErrors) summary = "Corrija os campos destacados para atualizar o resultado.";
+  else if (!plan) summary = "Informe a quantidade que a sua principal precisa.";
+  else if (plan.gross === null) summary = "Informe o nível do Entreposto Comercial da conta farm ou a taxa de imposto que você vê no jogo.";
   else {
-    summary = `Send ${formatAmount(plan.gross)} ${res} so your main receives ${formatAmount(plan.netNeeded)}.`;
-    if (plan.trips !== null) summary += ` ${formatAmount(plan.trips)} trip${plan.trips === 1 ? "" : "s"}.`;
-    if (plan.shortfall !== null && plan.shortfall > 0) summary += ` Short by ${formatAmount(plan.shortfall)}.`;
+    summary = `Envie ${formatAmount(plan.gross)} ${res} para a sua principal receber ${formatAmount(plan.netNeeded)}.`;
+    if (plan.trips !== null) summary += ` ${formatAmount(plan.trips)} ${plan.trips === 1 ? "viagem" : "viagens"}.`;
+    if (plan.shortfall !== null && plan.shortfall > 0) summary += ` Faltam ${formatAmount(plan.shortfall)}.`;
   }
 
   return (
     <div class="ft">
       <form class="fm-card ft-form" aria-labelledby="tp-form-h" onSubmit={(e) => e.preventDefault()}>
-        <h2 id="tp-form-h">Transfer</h2>
+        <h2 id="tp-form-h">Transferência</h2>
         {prefillNote && <p class="ft-prefill" data-prefilled>{prefillNote}</p>}
-        <p class="fm-hint">Amounts accept 1,500,000, 1.5m or 300k.</p>
+        <p class="fm-hint">As quantidades aceitam 1500000, 1.5m ou 300k.</p>
         <div class="ft-fields">
-          <TextField id="tp-net" label="Amount your main needs (after tax)" value={net} onValue={setNet} error={errorOf(netP)} inputMode="text" placeholder="e.g. 1.5m" />
-          <SelectField id="tp-res" label="Resource" value={resource} options={RESOURCE_OPTIONS} onValue={setResource} />
-          <TextField id="tp-level" label="Farm Trading Post level" hint={`1 to ${TRADING_POST_MAX_LEVEL}. Uses the table for tax and capacity.`} value={level} onValue={setLevel} error={errorOf(levelP)} />
-          <TextField id="tp-tax" label="Tax rate you see in game (%)" hint="Optional. Wins over the table." value={taxPct} onValue={setTaxPct} error={errorOf(taxP)} inputMode="decimal" />
-          <TextField id="tp-cap" label="Capacity per trip you see in game" hint="Optional. Wins over the table." value={capacity} onValue={setCapacity} error={errorOf(capP)} inputMode="text" />
-          <TextField id="tp-stock" label={`Farm stock of ${res}`} hint="Optional. The raw amount in the farm's city." value={stock} onValue={setStock} error={errorOf(stockP)} inputMode="text" />
+          <TextField id="tp-net" label="Quantidade que a sua principal precisa (depois do imposto)" value={net} onValue={setNet} error={errorOf(netP)} inputMode="text" placeholder="ex.: 1.5m" />
+          <SelectField id="tp-res" label="Recurso" value={resource} options={RESOURCE_OPTIONS} onValue={setResource} />
+          <TextField id="tp-level" label="Nível do Entreposto Comercial da conta farm" hint={`1 a ${TRADING_POST_MAX_LEVEL}. Usa a tabela para imposto e capacidade.`} value={level} onValue={setLevel} error={errorOf(levelP)} />
+          <TextField id="tp-tax" label="Taxa de imposto que você vê no jogo (%)" hint="Opcional. Vale mais que a tabela." value={taxPct} onValue={setTaxPct} error={errorOf(taxP)} inputMode="decimal" />
+          <TextField id="tp-cap" label="Capacidade por viagem que você vê no jogo" hint="Opcional. Vale mais que a tabela." value={capacity} onValue={setCapacity} error={errorOf(capP)} inputMode="text" />
+          <TextField id="tp-stock" label={`Estoque de ${res} da conta farm`} hint="Opcional. A quantidade bruta na cidade da conta farm." value={stock} onValue={setStock} error={errorOf(stockP)} inputMode="text" />
           <TextField
             id="tp-prot"
-            label="Storehouse protection (pending: read it on your Storehouse screen)"
-            hint="Optional. Sources disagree for most Storehouse levels, so we never fill this in for you."
+            label="Proteção do Depósito (pendente: leia na tela do seu Depósito)"
+            hint="Opcional. As fontes divergem para a maioria dos níveis do Depósito, então nunca preenchemos isto por você."
             value={protection}
             onValue={setProtection}
             error={errorOf(protP)}
             inputMode="text"
           />
-          <TextField id="tp-marches" label="Free march queues on the farm" hint="Optional. Each trip uses one." value={marches} onValue={setMarches} error={errorOf(marchP)} />
+          <TextField id="tp-marches" label="Filas de marcha livres na conta farm" hint="Opcional. Cada viagem usa uma." value={marches} onValue={setMarches} error={errorOf(marchP)} />
         </div>
       </form>
 
       <section class="ft-section" aria-labelledby="tp-res-h">
-        <h2 id="tp-res-h">Result</h2>
+        <h2 id="tp-res-h">Resultado</h2>
         <p class="ft-live" aria-live="polite" data-summary>{summary}</p>
         {plan && (
           <div class="fm-card">
@@ -159,7 +159,7 @@ export default function TradingPostCalc(): JSX.Element {
 
       {plan && (
         <section class="ft-section" aria-labelledby="tp-warn-h">
-          <h2 id="tp-warn-h">Before you ship</h2>
+          <h2 id="tp-warn-h">Antes de enviar</h2>
           <ul class="ft-warnings">
             {plan.warnings.map((w) => (
               <li key={w.code} data-warning={w.code}>
@@ -172,14 +172,14 @@ export default function TradingPostCalc(): JSX.Element {
       )}
 
       <details class="fm-card ft-details" data-reference>
-        <summary>Trading Post levels: tax and capacity table</summary>
+        <summary>Níveis do Entreposto Comercial: tabela de imposto e capacidade</summary>
         <div class="ft-details-body">
-          <p class="fm-note">Tax per level is well sourced. Capacity for levels 1–24 comes from one wiki table; only level 25 is official.</p>
+          <p class="fm-note">O imposto por nível tem boas fontes. A capacidade dos níveis 1 a 24 vem de uma única tabela de wiki; só o nível 25 é oficial.</p>
           <div class="fm-table-wrap">
             <table class="fm-table">
-              <caption class="visually-hidden">Trading Post tax, capacity per trip and requirement by level</caption>
+              <caption class="visually-hidden">Imposto do Entreposto Comercial, capacidade por viagem e requisito por nível</caption>
               <thead>
-                <tr><th scope="col" class="num">Level</th><th scope="col" class="num">Tax</th><th scope="col" class="num">Capacity per trip</th><th scope="col">Requirement</th></tr>
+                <tr><th scope="col" class="num">Nível</th><th scope="col" class="num">Imposto</th><th scope="col" class="num">Capacidade por viagem</th><th scope="col">Requisito</th></tr>
               </thead>
               <tbody>
                 {TRADING_POST_LEVELS.map((l) => (
@@ -187,7 +187,7 @@ export default function TradingPostCalc(): JSX.Element {
                     <th scope="row" class="num">{l.level}</th>
                     <td class="num">{formatPercent(l.taxRate)}</td>
                     <td class="num">{formatAmount(l.capacity)}</td>
-                    <td>{l.requirement || "None"}</td>
+                    <td>{l.requirement || "Nenhum"}</td>
                   </tr>
                 ))}
               </tbody>

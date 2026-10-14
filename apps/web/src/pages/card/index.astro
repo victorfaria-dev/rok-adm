@@ -5,19 +5,19 @@ import ShareCardNav from "../../components/ShareCardNav.astro";
 import GovernorCard from "../../components/GovernorCard.tsx";
 import { RARITIES, RARITY_LABELS, RARITY_MEANING, RARITY_RANGES } from "../../lib/rarity";
 ---
-<Shell title="Governor card" description="Your collectible governor card: rarity by City Hall, alliance colors and a PNG avatar you can download." mode="operate">
+<Shell title="Cartão do governador" description="Seu cartão de governador colecionável: raridade pela Prefeitura, cores da aliança e um avatar em PNG para baixar." mode="operate">
   <ShareCardNav />
   <section class="intro">
-    <h1>Governor card</h1>
-    <p class="sub">One number sets the rarity: your City Hall. Tilt it, make it yours, download the PNG as your avatar.</p>
+    <h1>Cartão do governador</h1>
+    <p class="sub">Um número define a raridade: a sua Prefeitura. Incline o cartão, deixe-o com a sua cara e baixe o PNG como avatar.</p>
   </section>
 
   <GovernorCard client:load />
 
   <section class="rules" aria-labelledby="rules-h">
-    <h2 id="rules-h">How rarity is earned</h2>
+    <h2 id="rules-h">Como a raridade é conquistada</h2>
     <table>
-      <thead><tr><th scope="col">Rarity</th><th scope="col">City Hall</th><th scope="col">What it means in the game</th></tr></thead>
+      <thead><tr><th scope="col">Raridade</th><th scope="col">Prefeitura</th><th scope="col">O que significa no jogo</th></tr></thead>
       <tbody>
         {RARITIES.map((r) => {
           const [lo, hi] = RARITY_RANGES[r];
@@ -31,8 +31,8 @@ import { RARITIES, RARITY_LABELS, RARITY_MEANING, RARITY_RANGES } from "../../li
         })}
       </tbody>
     </table>
-    <p>Rarity measures progress, not skill: spenders get there sooner, but every account can reach Legendary. F2P accounts at Rare or above carry the F2P Achiever mark.</p>
-    <p>Every card is <strong>Self-reported</strong> for now. The <strong>Verified</strong> seal (one City Hall screenshot) comes with the screenshot reader, which is not built yet. Nothing here uses game art: the card draws the KingdomOps K and your own words.</p>
+    <p>A raridade mede progresso, não habilidade: quem gasta chega mais cedo, mas toda conta pode chegar a Lendário. Contas F2P em Raro ou acima ganham a marca Conquista F2P.</p>
+    <p>Todo cartão é, por enquanto, <strong>Autodeclarado</strong>. O selo <strong>Verificado</strong> (um print da Prefeitura) vem com o leitor de prints, que ainda não está pronto. Nada aqui usa arte do jogo: o cartão desenha o K do KingdomOps e as suas próprias palavras.</p>
   </section>
 </Shell>
 

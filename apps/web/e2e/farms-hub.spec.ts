@@ -51,12 +51,12 @@ test.describe("farm hub pages render", () => {
         const res = await page.goto(route);
         expect(res?.status()).toBe(200);
         await expect(page.locator("h1")).toHaveCount(1);
-        await expect(page.locator("[data-guardrail]")).toHaveText("Planning and bookkeeping only. You do every in-game action yourself.");
-        await expect(page.getByRole("navigation", { name: "Farm hub" })).toBeVisible();
+        await expect(page.locator("[data-guardrail]")).toHaveText("Só planejamento e anotações. Você faz cada ação no jogo por conta própria.");
+        await expect(page.getByRole("navigation", { name: "Central de farms" })).toBeVisible();
         if (route === "/farms/") {
-          await expect(page.getByRole("heading", { level: 2, name: state === "empty" ? "Track your farm accounts" : "Visit next" })).toBeVisible();
+          await expect(page.getByRole("heading", { level: 2, name: state === "empty" ? "Acompanhe suas contas farm" : "Visitar em seguida" })).toBeVisible();
         } else {
-          await expect(page.getByRole("heading", { level: 2, name: state === "empty" ? "Add a farm first" : "Log a shipment" })).toBeVisible();
+          await expect(page.getByRole("heading", { level: 2, name: state === "empty" ? "Adicione uma conta farm primeiro" : "Registrar um envio" })).toBeVisible();
         }
         await page.evaluate(() => document.querySelectorAll<HTMLDetailsElement>("#main details").forEach((d) => { d.open = true; }));
         await noSideways(page);
@@ -69,45 +69,45 @@ test.describe("farm hub pages render", () => {
 test("farms: add two, set gathering and a daily task, reload keeps everything", async ({ page }) => {
   const errors = watchErrors(page);
   await page.goto("/farms/");
-  await page.getByRole("button", { name: "Add a farm" }).click();
-  await expect(page.getByLabel("Name")).toBeFocused();
-  await page.getByRole("button", { name: "Add farm" }).click();
-  await expect(page.getByText("Give the farm a name.")).toBeVisible();
-  await page.getByLabel("Name").fill("Alpha");
-  await page.getByRole("radio", { name: "Food" }).check();
-  await page.getByLabel("Trading Post").fill("1");
-  await page.getByLabel("City Hall").fill("40");
-  await page.getByRole("button", { name: "Add farm" }).click();
-  await expect(page.getByText(/City Hall: enter a whole number from 1 to 25/)).toBeVisible();
-  await expect(page.getByLabel("City Hall")).toBeFocused();
-  await page.getByLabel("City Hall").fill("14");
-  await page.getByRole("button", { name: "Add farm" }).click();
+  await page.getByRole("button", { name: "Adicionar uma conta farm" }).click();
+  await expect(page.getByLabel("Nome")).toBeFocused();
+  await page.getByRole("button", { name: "Adicionar conta farm" }).click();
+  await expect(page.getByText("Dê um nome à conta farm.")).toBeVisible();
+  await page.getByLabel("Nome").fill("Alpha");
+  await page.getByRole("radio", { name: "Comida" }).check();
+  await page.getByLabel("Entreposto Comercial").fill("1");
+  await page.getByLabel("Prefeitura").fill("40");
+  await page.getByRole("button", { name: "Adicionar conta farm" }).click();
+  await expect(page.getByText(/Prefeitura: digite um número inteiro de 1 a 25/)).toBeVisible();
+  await expect(page.getByLabel("Prefeitura")).toBeFocused();
+  await page.getByLabel("Prefeitura").fill("14");
+  await page.getByRole("button", { name: "Adicionar conta farm" }).click();
   await expect(page.getByRole("heading", { level: 3, name: "Alpha" })).toBeFocused();
 
-  await page.getByRole("button", { name: "Add a farm" }).click();
-  await page.getByLabel("Name").fill("Beta");
-  await page.getByRole("button", { name: "Add farm" }).click();
+  await page.getByRole("button", { name: "Adicionar uma conta farm" }).click();
+  await page.getByLabel("Nome").fill("Beta");
+  await page.getByRole("button", { name: "Adicionar conta farm" }).click();
   await expect(page.getByRole("heading", { level: 3, name: "Beta" })).toBeFocused();
 
   const alpha = page.locator("article", { has: page.getByRole("heading", { level: 3, name: "Alpha" }) });
   const beta = page.locator("article", { has: page.getByRole("heading", { level: 3, name: "Beta" }) });
   await beta.getByRole("button", { name: "+2 h" }).click();
   await alpha.getByRole("button", { name: "+4 h" }).click();
-  await expect(beta.getByText(/Gathering: back in 2 h/)).toBeVisible();
+  await expect(beta.getByText(/Coletando: volta em 2 h/)).toBeVisible();
   const visit = page.locator(".fh-visit-list li");
   await expect(visit.nth(0)).toContainText("Beta");
-  await expect(visit.nth(0)).toContainText("back in 2 h");
+  await expect(visit.nth(0)).toContainText("volta em 2 h");
   await expect(visit.nth(1)).toContainText("Alpha");
 
   const task = alpha.getByRole("checkbox", { name: "Gather inside alliance territory" });
   await task.check();
-  await expect(alpha.getByText(/Today's checklist: 1 of/)).toBeVisible();
-  await expect(alpha.getByRole("link", { name: /Build path/ })).toHaveAttribute("href", /\/farms\/build\/\?farm=/);
+  await expect(alpha.getByText(/Lista de hoje: 1 de/)).toBeVisible();
+  await expect(alpha.getByRole("link", { name: /Caminho de construção/ })).toHaveAttribute("href", /\/farms\/build\/\?farm=/);
 
   await page.reload();
   await expect(page.getByRole("heading", { level: 3, name: "Alpha" })).toBeVisible();
   await expect(alpha.getByRole("checkbox", { name: "Gather inside alliance territory" })).toBeChecked();
-  await expect(alpha.getByText("City Hall 14 · Trading Post 1")).toBeVisible();
+  await expect(alpha.getByText("Prefeitura 14 · Entreposto Comercial 1")).toBeVisible();
   await expect(page.locator(".fh-visit-list li").nth(0)).toContainText("Beta");
   const stored = await page.evaluate((k) => JSON.parse(localStorage.getItem(k) ?? "null"), KEY);
   expect(stored.farms.map((f: { name: string }) => f.name)).toEqual(["Alpha", "Beta"]);
@@ -115,18 +115,18 @@ test("farms: add two, set gathering and a daily task, reload keeps everything", 
   expect(stored.farms[1].gatheringUntil).not.toBeNull();
 
   // Edit, then delete with the inline confirm.
-  await alpha.getByRole("button", { name: "Edit Alpha" }).click();
-  await page.getByLabel("Name").fill("Alpha Prime");
-  await page.getByRole("button", { name: "Save changes" }).click();
+  await alpha.getByRole("button", { name: "Editar Alpha" }).click();
+  await page.getByLabel("Nome").fill("Alpha Prime");
+  await page.getByRole("button", { name: "Salvar alterações" }).click();
   await expect(page.getByRole("heading", { level: 3, name: "Alpha Prime" })).toBeFocused();
-  await beta.getByRole("button", { name: "Delete Beta" }).click();
-  await beta.getByRole("button", { name: "Yes, delete" }).click();
+  await beta.getByRole("button", { name: "Excluir Beta" }).click();
+  await beta.getByRole("button", { name: "Sim, excluir" }).click();
   await expect(page.getByRole("heading", { level: 3, name: "Beta" })).toHaveCount(0);
   await expect(page.locator("#fh-list-h")).toBeFocused();
 
-  await page.getByRole("button", { name: "Delete all farm data" }).click();
-  await page.getByRole("button", { name: "Yes, delete all" }).click();
-  await expect(page.getByRole("heading", { name: "Track your farm accounts" })).toBeVisible();
+  await page.getByRole("button", { name: "Excluir todos os dados de contas farm" }).click();
+  await page.getByRole("button", { name: "Sim, excluir tudo" }).click();
+  await expect(page.getByRole("heading", { name: "Acompanhe suas contas farm" })).toBeVisible();
   expect(await page.evaluate((k) => localStorage.getItem(k), KEY)).toBeNull();
   expect(errors).toEqual([]);
 });
@@ -135,25 +135,25 @@ test("shipment log: gross → net with table tax, weekly summary, CSV, delete", 
   const errors = watchErrors(page);
   await seedFilled(page);
   await page.goto("/farms/log/?farm=fa");
-  await expect(page.getByLabel("Farm", { exact: true })).toHaveValue("fa");
-  const tax = page.getByLabel("Trading Post tax (%)");
+  await expect(page.getByLabel("Conta farm", { exact: true })).toHaveValue("fa");
+  const tax = page.getByLabel("Imposto do Entreposto Comercial (%)");
   await expect(tax).toHaveValue(String(Math.round(TP1_TAX * 100)));
   await expect(page.locator("#fl-tax-hint")).toHaveAttribute("data-tax-source", "table");
-  await expect(page.getByLabel("Date sent")).toHaveValue(localDay());
+  await expect(page.getByLabel("Data do envio")).toHaveValue(localDay());
 
-  await page.getByLabel("Amount", { exact: true }).fill("100,000");
+  await page.getByLabel("Quantidade", { exact: true }).fill("100,000");
   const net = Math.floor(100000 * (1 - TP1_TAX) + 1e-6);
-  await expect(page.locator("[data-preview]")).toContainText(`main receives ${net.toLocaleString("en-US")}`);
-  await page.getByRole("button", { name: "Add shipment" }).click();
-  await expect(page.getByLabel("Amount", { exact: true })).toBeFocused();
+  await expect(page.locator("[data-preview]")).toContainText(`a principal recebe ${net.toLocaleString("pt-BR")}`);
+  await page.getByRole("button", { name: "Adicionar envio" }).click();
+  await expect(page.getByLabel("Quantidade", { exact: true })).toBeFocused();
   await expect(page.locator("[data-shipment]")).toHaveCount(2);
-  await expect(page.locator("[data-total-net]")).toHaveText((130000 + net).toLocaleString("en-US"));
-  await expect(page.getByRole("table", { name: "By resource" })).toContainText("Food");
+  await expect(page.locator("[data-total-net]")).toHaveText((130000 + net).toLocaleString("pt-BR"));
+  await expect(page.getByRole("table", { name: "Por recurso" })).toContainText("Comida");
 
-  await page.getByLabel("Resource").selectOption("gold");
+  await page.getByLabel("Recurso").selectOption("gold");
   await expect(page.locator("[data-warning='gold_pending_t0']")).toContainText("not yet confirmed in game");
 
-  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: /Export CSV: shown/ }).click()]);
+  const [download] = await Promise.all([page.waitForEvent("download"), page.getByRole("button", { name: /Exportar CSV: exibidos/ }).click()]);
   expect(download.suggestedFilename()).toBe(`kingdomops-shipments-${localDay()}.csv`);
   const csv = readFileSync((await download.path())!, "utf8").replace(/^﻿/, "");
   const lines = csv.split("\r\n");
@@ -162,17 +162,17 @@ test("shipment log: gross → net with table tax, weekly summary, CSV, delete", 
 
   await page.reload();
   await expect(page.locator("[data-shipment]")).toHaveCount(2);
-  await page.getByRole("button", { name: /^Delete shipment .*first run|^Delete shipment .*200,000/ }).click();
-  await page.getByRole("button", { name: "Yes, delete" }).click();
+  await page.getByRole("button", { name: /^Excluir envio .*200\.000/ }).click();
+  await page.getByRole("button", { name: "Sim, excluir" }).click();
   await expect(page.locator("[data-shipment]")).toHaveCount(1);
   await expect(page.locator("#fl-list-h")).toBeFocused();
   const stored = await page.evaluate((k) => JSON.parse(localStorage.getItem(k) ?? "null"), KEY);
   expect(stored.shipments.map((s: { gross: number }) => s.gross)).toEqual([100000]);
 
   // Week navigation: last week is empty.
-  await page.getByRole("button", { name: "Previous week" }).click();
-  await expect(page.getByText("No shipments this week.")).toBeVisible();
-  await page.getByRole("button", { name: "This week" }).click();
+  await page.getByRole("button", { name: "Semana anterior" }).click();
+  await expect(page.getByText("Nenhum envio nesta semana.")).toBeVisible();
+  await page.getByRole("button", { name: "Esta semana" }).click();
   await expect(page.locator("[data-shipment]")).toHaveCount(1);
   expect(errors).toEqual([]);
 });
@@ -189,7 +189,7 @@ test.describe("farm hub accessibility", () => {
           await page.reload();
           await expect(page.locator("html")).toHaveAttribute("data-theme", theme);
           await expect(page.locator("h2").first()).toBeVisible();
-          if (route === "/farms/log/" && state === "filled") await page.getByLabel("Resource").selectOption("gold");
+          if (route === "/farms/log/" && state === "filled") await page.getByLabel("Recurso").selectOption("gold");
           await page.evaluate(() => document.querySelectorAll<HTMLDetailsElement>("#main details").forEach((d) => { d.open = true; }));
           const result = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
           expect(result.violations.map((v) => `${v.id}: ${v.nodes.map((n) => n.target.join(" ")).join(", ")}`)).toEqual([]);

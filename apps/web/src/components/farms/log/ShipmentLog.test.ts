@@ -27,61 +27,61 @@ afterEach(() => {
 describe("ShipmentLog", () => {
   it("without farms, points to /farms/", () => {
     setup();
-    expect(screen.getByRole("link", { name: /Add your farm on My farms/ }).getAttribute("href")).toBe("/farms/");
+    expect(screen.getByRole("link", { name: /Adicione a sua em Minhas contas farm/ }).getAttribute("href")).toBe("/farms/");
   });
 
   it("prefills tax from the farm's Trading Post level and logs gross → net", () => {
     seed([farm("a", "Alpha", 1), farm("b", "Beta", null)]);
     setup();
-    expect(field("Date sent").value).toBe("2026-10-14");
-    const tax = field("Trading Post tax (%)");
+    expect(field("Data do envio").value).toBe("2026-10-14");
+    const tax = field("Imposto do Entreposto Comercial (%)");
     expect(tax.value).not.toBe("");
     const rate = Number(tax.value) / 100;
-    expect(screen.getByText(/From table: Trading Post level 1/)).toBeTruthy();
-    fireEvent.input(field("Amount"), { target: { value: "100,000" } });
-    fireEvent.click(screen.getByRole("button", { name: "Add shipment" }));
+    expect(screen.getByText(/Da tabela: Entreposto Comercial nível 1/)).toBeTruthy();
+    fireEvent.input(field("Quantidade"), { target: { value: "100,000" } });
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar envio" }));
     const s = readFarms().shipments;
     expect(s).toHaveLength(1);
     expect(s[0]).toMatchObject({ farmId: "a", date: "2026-10-14", resource: "food", gross: 100000, taxRate: rate });
     expect(s[0]!.net).toBe(Math.floor(100000 * (1 - rate) + 1e-6));
-    expect(document.activeElement).toBe(field("Amount"));
-    expect(screen.getAllByRole("status")[0]!.textContent).toMatch(/^Saved: Alpha sent 100,000 food/);
-    expect(screen.getByText(/Total received this week/).textContent).toContain(s[0]!.net.toLocaleString("en-US"));
+    expect(document.activeElement).toBe(field("Quantidade"));
+    expect(screen.getAllByRole("status")[0]!.textContent).toMatch(/^Salvo: Alpha enviou 100\.000 de comida/);
+    expect(screen.getByText(/Total recebido nesta semana/).textContent).toContain(s[0]!.net.toLocaleString("pt-BR"));
 
     // Typing a tax marks it as the user's value; a farm without TP level asks for it.
     fireEvent.input(tax, { target: { value: "10" } });
-    expect(screen.getByText("Your value.")).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: /Use table value/ }));
-    expect(screen.getByText(/From table/)).toBeTruthy();
-    fireEvent.change(screen.getByLabelText("Farm"), { target: { value: "b" } });
-    expect(field("Trading Post tax (%)").value).toBe("");
-    expect(screen.getByText(/No Trading Post level saved/)).toBeTruthy();
+    expect(screen.getByText("Seu valor.")).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: /Usar o valor da tabela/ }));
+    expect(screen.getByText(/Da tabela/)).toBeTruthy();
+    fireEvent.change(screen.getByLabelText("Conta farm"), { target: { value: "b" } });
+    expect(field("Imposto do Entreposto Comercial (%)").value).toBe("");
+    expect(screen.getByText(/Nenhum nível de Entreposto Comercial salvo/)).toBeTruthy();
   });
 
   it("net mode computes gross; validation errors are announced", () => {
     seed([farm("b", "Beta", null)]);
     setup();
-    fireEvent.click(screen.getByRole("button", { name: "Add shipment" }));
-    expect(screen.getByRole("alert").textContent).toBe("Fix 2 fields below.");
-    expect(document.activeElement).toBe(field("Amount"));
-    fireEvent.click(screen.getByRole("radio", { name: "Received by the main (net)" }));
-    fireEvent.input(field("Amount"), { target: { value: "79" } });
-    fireEvent.input(field("Trading Post tax (%)"), { target: { value: "21" } });
-    expect(document.querySelector("[data-preview]")!.textContent).toBe("Farm sends 100, tax 21, main receives 79.");
-    fireEvent.click(screen.getByRole("button", { name: "Add shipment" }));
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar envio" }));
+    expect(screen.getByRole("alert").textContent).toBe("Corrija 2 campos abaixo.");
+    expect(document.activeElement).toBe(field("Quantidade"));
+    fireEvent.click(screen.getByRole("radio", { name: "Recebida pela principal (líquida)" }));
+    fireEvent.input(field("Quantidade"), { target: { value: "79" } });
+    fireEvent.input(field("Imposto do Entreposto Comercial (%)"), { target: { value: "21" } });
+    expect(document.querySelector("[data-preview]")!.textContent).toBe("A conta farm envia 100, imposto 21, a principal recebe 79.");
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar envio" }));
     expect(readFarms().shipments[0]).toMatchObject({ gross: 100, net: 79, taxRate: 0.21 });
   });
 
   it("accepts 1.5m like every other number field and refuses negatives (Q2 P2-3)", () => {
     seed([farm("b", "Beta", null)]);
     setup();
-    fireEvent.input(field("Trading Post tax (%)"), { target: { value: "20" } });
-    fireEvent.input(field("Amount"), { target: { value: "-1.5m" } });
-    fireEvent.click(screen.getByRole("button", { name: "Add shipment" }));
+    fireEvent.input(field("Imposto do Entreposto Comercial (%)"), { target: { value: "20" } });
+    fireEvent.input(field("Quantidade"), { target: { value: "-1.5m" } });
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar envio" }));
     expect(readFarms().shipments).toHaveLength(0);
-    expect(screen.getByText(/above 0, e.g. 500000, 500k or 1.5m/)).toBeTruthy();
-    fireEvent.input(field("Amount"), { target: { value: "1.5m" } });
-    fireEvent.click(screen.getByRole("button", { name: "Add shipment" }));
+    expect(screen.getByText(/acima de 0, por exemplo 500000, 500k ou 1.5m/)).toBeTruthy();
+    fireEvent.input(field("Quantidade"), { target: { value: "1.5m" } });
+    fireEvent.click(screen.getByRole("button", { name: "Adicionar envio" }));
     expect(readFarms().shipments[0]).toMatchObject({ gross: 1_500_000, net: 1_200_000 });
   });
 
@@ -89,7 +89,7 @@ describe("ShipmentLog", () => {
     seed([farm("a", "Alpha", 5)]);
     setup();
     expect(document.querySelector("[data-warning]")).toBeNull();
-    fireEvent.change(screen.getByLabelText("Resource"), { target: { value: "gold" } });
+    fireEvent.change(screen.getByLabelText("Recurso"), { target: { value: "gold" } });
     const w = document.querySelector("[data-warning='gold_pending_t0']")!;
     expect(w.textContent).toContain("not yet confirmed in game");
     expect(w.textContent).toContain("A03-0027");
@@ -104,23 +104,23 @@ describe("ShipmentLog", () => {
     setup();
     const ids = () => [...document.querySelectorAll("[data-shipment]")].map((e) => e.getAttribute("data-shipment"));
     expect(ids()).toEqual(["s2", "s1"]);
-    expect(document.querySelector("[data-total-net]")!.textContent).toBe("1,200");
-    const byRes = screen.getByRole("table", { name: "By resource" });
-    expect(byRes.textContent).toContain("Food1,000200800Wood500100400");
-    const byFarm = screen.getByRole("table", { name: "By farm" });
+    expect(document.querySelector("[data-total-net]")!.textContent).toBe("1.200");
+    const byRes = screen.getByRole("table", { name: "Por recurso" });
+    expect(byRes.textContent).toContain("Comida1.000200800Madeira500100400");
+    const byFarm = screen.getByRole("table", { name: "Por conta farm" });
     expect(byFarm.textContent).toContain("Alpha");
     expect(byFarm.textContent).toContain("Beta");
 
-    fireEvent.change(screen.getByLabelText("Show farm"), { target: { value: "a" } });
+    fireEvent.change(screen.getByLabelText("Mostrar conta farm"), { target: { value: "a" } });
     expect(ids()).toEqual(["s1"]);
     expect(document.querySelector("[data-total-net]")!.textContent).toBe("800");
-    fireEvent.click(screen.getByRole("button", { name: "Previous week" }));
+    fireEvent.click(screen.getByRole("button", { name: "Semana anterior" }));
     expect(ids()).toEqual(["s3"]);
-    fireEvent.click(screen.getByRole("button", { name: "This week" }));
+    fireEvent.click(screen.getByRole("button", { name: "Esta semana" }));
     expect(ids()).toEqual(["s1"]);
 
-    fireEvent.click(screen.getByRole("button", { name: /^Delete shipment/ }));
-    fireEvent.click(screen.getByRole("button", { name: "Yes, delete" }));
+    fireEvent.click(screen.getByRole("button", { name: /^Excluir envio/ }));
+    fireEvent.click(screen.getByRole("button", { name: "Sim, excluir" }));
     expect(readFarms().shipments.map((e) => e.id)).toEqual(["s2", "s3"]);
     expect(document.activeElement?.id).toBe("fl-list-h");
   });
@@ -133,7 +133,7 @@ describe("ShipmentLog", () => {
     let filename = "";
     vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(function (this: HTMLAnchorElement) { filename = this.download; });
     setup();
-    fireEvent.click(screen.getByRole("button", { name: "Export CSV: shown (1)" }));
+    fireEvent.click(screen.getByRole("button", { name: "Exportar CSV: exibidos (1)" }));
     expect(filename).toBe("kingdomops-shipments-2026-10-14.csv");
     const text = await (blob as unknown as Blob).text();
     const lines = text.replace(/^﻿/, "").split("\r\n");

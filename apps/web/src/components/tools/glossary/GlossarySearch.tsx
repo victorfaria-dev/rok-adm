@@ -25,7 +25,7 @@ export default function GlossarySearch({ total }: { total: number }) {
       },
     }));
     setReady(true);
-    // "Look up a term" on the Guides tab submits here as ?q=.
+    // "Look up a term" (aba Guias) submits here as ?q=.
     const initial = new URLSearchParams(location.search).get("q");
     if (initial) apply(initial.slice(0, 80));
     // A link to a term hidden by the filter clears the filter so the target is visible.
@@ -52,20 +52,20 @@ export default function GlossarySearch({ total }: { total: number }) {
 
   if (!ready) return null;
   return (
-    <div class="g-search" role="search" aria-label="Glossary">
+    <div class="g-search" role="search" aria-label="Glossário">
       <div class="t-field">
-        <label for="g-q">Search the glossary</label>
-        <p id="g-q-help" class="t-help">A term, an abbreviation like KP, or any word from a definition.</p>
+        <label for="g-q">Buscar no glossário</label>
+        <p id="g-q-help" class="t-help">Um termo, uma sigla como KP, ou qualquer palavra de uma definição.</p>
         <input id="g-q" ref={input} type="search" autoComplete="off" spellcheck={false} value={q} aria-describedby="g-q-help g-count"
           onInput={(e) => apply((e.currentTarget as HTMLInputElement).value)} />
       </div>
       <p id="g-count" class="t-progress" aria-live="polite" data-testid="g-count">
-        {q.trim() ? `${shown} of ${total} terms match` : `${total} terms`}
+        {q.trim() ? `${shown} de ${total} termos correspondem` : `${total} termos`}
       </p>
       {q.trim() && shown === 0 ? (
         <div class="g-empty" data-testid="g-empty">
-          <p>No term matches “{q.trim()}”. Try a shorter word or an abbreviation (for example MGE or AP), or clear the search to see every term.</p>
-          <button type="button" class="btn btn-secondary" onClick={() => { apply(""); input.current?.focus(); }}>Clear search</button>
+          <p>Nenhum termo corresponde a “{q.trim()}”. Tente uma palavra mais curta ou uma sigla (por exemplo MGE ou AP), ou limpe a busca para ver todos os termos.</p>
+          <button type="button" class="btn btn-secondary" onClick={() => { apply(""); input.current?.focus(); }}>Limpar busca</button>
         </div>
       ) : null}
     </div>
