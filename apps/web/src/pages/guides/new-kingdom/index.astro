@@ -14,12 +14,12 @@ const payload = buildGuidePayload("newkingdom");
 const view = fullGuide(payload);
 const hasTimeline = buildTimeline(view, payload.badges).show;
 ---
-<Shell title="New kingdom guide" description="Survive day 1 of a new kingdom and set up the first weeks, with sources and patch checks for every step." mode="read">
+<Shell title="Guia do reino novo" description="Sobreviva ao dia 1 de um reino novo e organize as primeiras semanas, com fontes e conferência de atualização em cada passo." mode="read">
   <div class="g-page">
-    <h1>New kingdom guide</h1>
-    <GuideMeta view={view} label="For every spending profile in a kingdom that just opened" />
-    <p class="g-intro">Read this first if your kingdom opened in the last few days. Then follow <a href="/guide/">your guide</a> for the rest of the road to KvK1.</p>
-    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Timeline" />}
+    <h1>Guia do reino novo</h1>
+    <GuideMeta view={view} label="Para todos os perfis de gasto, num reino que acabou de abrir" />
+    <p class="g-intro">Leia este primeiro se o seu reino abriu há poucos dias. Depois siga <a href="/guide/">o seu guia</a> pelo resto do caminho até o KvK1.</p>
+    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Linha do tempo" />}
     <GuideBody view={view} badges={payload.badges} profileTags={false} />
     {hasTimeline && <TimelineScript />}
   </div>

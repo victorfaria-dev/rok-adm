@@ -12,24 +12,24 @@ export default function LedgerTable({ event, showScores }: Props) {
     ...event.slots,
     ...event.unfilled.map((slot) => ({ slot, name: null, reason: "" })),
   ].sort((a, b) => a.slot - b.slot);
-  const caption = `${longDay(event.date)}${event.commander ? `, ${event.commander}` : ""}${event.locked ? " (locked)" : ""}`;
+  const caption = `${longDay(event.date)}${event.commander ? `, ${event.commander}` : ""}${event.locked ? " (travado)" : ""}`;
   return (
-    <div class="kg-table-wrap" tabIndex={0} role="region" aria-label={`Ledger: ${caption}`}>
+    <div class="kg-table-wrap" tabIndex={0} role="region" aria-label={`Registro: ${caption}`}>
       <table class="kg-table kx-ledger" data-ledger={event.date}>
-        <caption>Ledger: {caption}</caption>
+        <caption>Registro: {caption}</caption>
         <thead>
           <tr>
-            <th scope="col" class="num">Slot</th>
-            <th scope="col">Governor</th>
-            <th scope="col">Why</th>
-            {showScores && <th scope="col" class="num">Score</th>}
+            <th scope="col" class="num">Vaga</th>
+            <th scope="col">Governador</th>
+            <th scope="col">Por quê</th>
+            {showScores && <th scope="col" class="num">Pontuação</th>}
           </tr>
         </thead>
         <tbody>
           {rows.map((r) => (
             <tr key={r.slot} data-slot={r.slot}>
               <td class="num">{r.slot}</td>
-              <td>{r.name ?? <span class="kx-muted">Not filled</span>}</td>
+              <td>{r.name ?? <span class="kx-muted">Não preenchida</span>}</td>
               <td>{r.reason}</td>
               {showScores && <td class="num">{r.score !== undefined ? formatInt(r.score) : ""}</td>}
             </tr>

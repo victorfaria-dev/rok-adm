@@ -15,7 +15,7 @@ const GAP = 6;
 const CX = 146;
 const TOP = 40;
 
-const short = (f: Floor) => (f.lane === "pre-kvk1" ? "Pre-KvK1" : f.title);
+const short = (f: Floor) => (f.lane === "pre-kvk1" ? "Pré-KvK1" : f.title);
 
 export function Tower({ floors, here }: Props) {
   const n = floors.length;
@@ -25,16 +25,16 @@ export function Tower({ floors, here }: Props) {
   const hereIdx = here?.lane === "past" ? n : floors.findIndex((f) => f.here);
   const hereFloor = hereIdx >= 0 && hereIdx < n ? floors[hereIdx] : null;
   const caption = hereFloor
-    ? `You are on the ${short(hereFloor)} floor (${here!.text}).`
+    ? `Você está no andar ${short(hereFloor)} (${here!.text}).`
     : here?.lane === "past"
-      ? `You are past the top floor: ${here.text}.`
-      : "Personalize your guide to see your floor.";
+      ? `Você passou do último andar: ${here.text}.`
+      : "Personalize o seu guia para ver o seu andar.";
   const data = JSON.stringify(floors.map((f) => ({ t: short(f), s: f.steps })));
   return (
     <figure class="tw" data-tower data-floors={data} data-here={hereIdx}>
       <div class="tw-view">
         <svg class="tw-svg" viewBox={`0 0 252 ${height}`} role="img" aria-labelledby="tw-cap" data-tower-svg>
-          {/* Flag on the top floor: KvK1 is the goal. */}
+          {/* Bandeira no último andar: o KvK1 é a meta. */}
           <line class="tw-pole" x1={CX} x2={CX} y1={TOP - 34} y2={TOP} />
           <path class="tw-flag" d={`M${CX} ${TOP - 34} l26 7 l-26 7 z`} />
           {floors.map((f, i) => {
@@ -50,18 +50,18 @@ export function Tower({ floors, here }: Props) {
           {hereIdx >= 0 && (
             <g class="tw-you" transform={`translate(${hereIdx < n ? CX - wOf(hereIdx) / 2 - 8 : CX - 20} ${hereIdx < n ? yOf(hereIdx) + FLOOR_H / 2 : TOP - 30})`}>
               <path d="M0 0 l-10 -7 v14 z" />
-              <text x="-14" y="4" text-anchor="end">You</text>
+              <text x="-14" y="4" text-anchor="end">Você</text>
             </g>
           )}
         </svg>
         <div class="tw-3d" data-tower-host hidden />
       </div>
       <figcaption id="tw-cap" class="tw-cap">
-        Progress tower: one floor per phase with its number of steps, days 0–3 at the bottom, KvK1 at the top. {caption}
+        Torre de progresso: um andar por fase, com o número de passos, dias 0–3 embaixo e KvK1 no topo. {caption}
       </figcaption>
       <div class="tw-actions" data-tower-actions hidden>
-        <button type="button" class="btn btn-secondary" data-tower-toggle>View in 3D</button>
-        <span class="tw-size">Loads only when you ask (about 140 KB).</span>
+        <button type="button" class="btn btn-secondary" data-tower-toggle>Ver em 3D</button>
+        <span class="tw-size">Só carrega quando você pede (cerca de 140 KB).</span>
       </div>
       <p class="tw-status" role="status" data-tower-status />
       <p class="tw-note" data-tower-fallback hidden />

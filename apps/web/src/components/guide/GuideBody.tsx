@@ -60,16 +60,16 @@ export function GuideBody({ view, badges, budget, lowBudget = null, profileTags 
   };
   const toc = [
     ...view.sections.map((s) => ({ href: `#${idPrefix}-${s.id}`, label: sectionTitle(s.title) })),
-    ...(view.alreadyDone.length > 0 ? [{ href: "#already-done", label: `Already done? (${view.alreadyDone.length})` }] : []),
-    ...(budget ? [{ href: "#budget", label: "Budget reality check" }] : []),
+    ...(view.alreadyDone.length > 0 ? [{ href: "#already-done", label: `Já feito? (${view.alreadyDone.length})` }] : []),
+    ...(budget ? [{ href: "#budget", label: "Teste de realidade do orçamento" }] : []),
   ];
   const blk = (b: ViewBlock, level: 3 | 4) => <StableBlock key={b.block.id} item={b} badges={badges} level={level} profileTags={profileTags} />;
 
   return (
     <div class="g-body">
-      <nav class="g-toc" aria-label="Guide sections">
+      <nav class="g-toc" aria-label="Seções do guia">
         <details>
-          <summary>Sections ({toc.length})</summary>
+          <summary>Seções ({toc.length})</summary>
           <ol>
             {toc.map((t) => <li key={t.href}><a href={t.href}>{t.label}</a></li>)}
           </ol>
@@ -81,8 +81,8 @@ export function GuideBody({ view, badges, budget, lowBudget = null, profileTags 
         if (left <= 0) return null;
         const fallback = s.fallback ? (
           <p class="g-section-fallback" data-section-fallback>
-            <strong>Closest available: KvK1 content.</strong> No step in this section is written for your kingdom's stage
-            yet, so it shows the steps written for KvK1. Check them against what your kingdom is doing now.
+            <strong>O mais próximo disponível: conteúdo do KvK1.</strong> Nenhum passo desta seção foi escrito para a fase do seu reino
+            ainda, então mostramos os passos escritos para o KvK1. Confira com o que o seu reino está fazendo agora.
           </p>
         ) : null;
         if (s.id === "plan") {
@@ -112,12 +112,12 @@ export function GuideBody({ view, badges, budget, lowBudget = null, profileTags 
       })}
 
       {view.alreadyDone.length > 0 && left > 0 && (
-        <section class="g-section g-done" id="already-done" aria-label="Already done?">
+        <section class="g-section g-done" id="already-done" aria-label="Já feito?">
           <details>
             <summary>
-              <h2>Already done?</h2>
+              <h2>Já feito?</h2>
               <span class="g-done-count">
-                {view.alreadyDone.length} {view.alreadyDone.length === 1 ? "step" : "steps"} for an earlier City Hall or kingdom phase. Check you didn't miss any.
+                {view.alreadyDone.length} {view.alreadyDone.length === 1 ? "passo" : "passos"} de uma Prefeitura ou fase do reino anterior. Confira se não perdeu nenhum.
               </span>
             </summary>
             {take(view.alreadyDone).map((b) => blk(b, 3))}
@@ -136,10 +136,10 @@ export function GuideMeta({ view, label }: { view: GuideView; label: string }) {
   const done = view.alreadyDone.length;
   return (
     <p class="g-meta">
-      {label}. <span class="mono">{view.meta.shownBlocks}</span> of <span class="mono">{view.meta.totalBlocks}</span> steps apply
-      {done > 0 && <>, <span class="mono">{done}</span> probably done</>}.
+      {label}. <span class="mono">{view.meta.shownBlocks}</span> de <span class="mono">{view.meta.totalBlocks}</span> passos se aplicam
+      {done > 0 && <>, <span class="mono">{done}</span> provavelmente já feitos</>}.
       {first && first.patch.version !== "unknown" && (
-        <> Checked against patch <span class="mono">{first.patch.version}</span> on <span class="mono">{first.patch.asOf}</span>.</>
+        <> Conferido na atualização <span class="mono">{first.patch.version}</span> em <span class="mono">{first.patch.asOf}</span>.</>
       )}
     </p>
   );
@@ -150,7 +150,7 @@ export function GuideConfidence({ view }: { view: GuideView }) {
   const blocks = [...view.sections.flatMap((s) => withFolded(s.blocks)), ...view.alreadyDone].map((b) => b.block);
   return (
     <p class="g-meta g-conf-summary" data-confidence-summary>
-      <span>Steps by confidence:</span>
+      <span>Passos por confiança:</span>
       {confidenceCounts(blocks).map((c) => (
         <span key={c.level} class="g-conf-count">
           <Confidence level={c.level} short /> <span class="mono">{c.count}</span>
@@ -161,7 +161,7 @@ export function GuideConfidence({ view }: { view: GuideView }) {
 }
 
 /** "Guides for you": other guides that fit this profile, with why, plus the full list. */
-export function GuidesForYou({ links, title = "Guides for you" }: { links: readonly GuideLink[]; title?: string }) {
+export function GuidesForYou({ links, title = "Guias para você" }: { links: readonly GuideLink[]; title?: string }) {
   return (
     <nav class="g-foryou" aria-labelledby="g-foryou-h" data-guides-for-you>
       <h2 id="g-foryou-h" class="g-foryou-title">{title}</h2>
@@ -177,12 +177,12 @@ export function GuidesForYou({ links, title = "Guides for you" }: { links: reado
       )}
       {links.filter((l) => l.included).map((l) => (
         <p key={l.set} class="g-foryou-also" data-guide-link={l.set} data-included>
-          <span>Already in your guide: </span>
+          <span>Já está no seu guia: </span>
           <a href={l.href}>{l.title}</a>
           <span class="g-foryou-why">{l.reason}</span>
         </p>
       ))}
-      <a class="g-foryou-all" href="/guides/">All guides</a>
+      <a class="g-foryou-all" href="/guides/">Todos os guias</a>
     </nav>
   );
 }

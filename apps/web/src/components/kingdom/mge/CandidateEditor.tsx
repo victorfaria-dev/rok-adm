@@ -38,9 +38,9 @@ export default function CandidateEditor({ doc, candidate, onSave, onCancel }: Pr
       if (first) setTimeout(() => document.getElementById(`${base}-${first}`)?.focus(), 0);
       return;
     }
-    const renamed = r.previousName !== r.candidate.name ? ` (was ${r.previousName})` : "";
-    const dup = r.duplicate ? ` Another governor is also named ${r.candidate.name}; rename one so the ledger is clear.` : "";
-    onSave(r.doc, `Saved ${r.candidate.name}${renamed}.${dup}`);
+    const renamed = r.previousName !== r.candidate.name ? ` (era ${r.previousName})` : "";
+    const dup = r.duplicate ? ` Outro governador também se chama ${r.candidate.name}; renomeie um para o registro ficar claro.` : "";
+    onSave(r.doc, `${r.candidate.name}${renamed} salvo.${dup}`);
   }
 
   return (
@@ -58,15 +58,15 @@ export default function CandidateEditor({ doc, candidate, onSave, onCancel }: Pr
       noValidate
     >
       <fieldset class="kx-fieldset kg-grid">
-        <legend class="kx-legend">Edit {candidate.name}</legend>
-        <TextField id={`${base}-name`} label={`Name for ${candidate.name}`} value={name} onValue={setName} error={errors.name} maxLength={MGE_LIMITS.name + 1} />
-        <TextField id={`${base}-score`} label={`Score for ${candidate.name} (optional)`} value={score} onValue={setScore} error={errors.score} hint="4200000, 4,200,000 or 4.2m. Leave empty for no score." />
-        <TextField id={`${base}-tags`} label={`Tags for ${candidate.name} (optional)`} value={tags} onValue={setTags} error={errors.tags} hint={`Separate with commas, up to ${MGE_LIMITS.tags}.`} />
+        <legend class="kx-legend">Editar {candidate.name}</legend>
+        <TextField id={`${base}-name`} label={`Nome de ${candidate.name}`} value={name} onValue={setName} error={errors.name} maxLength={MGE_LIMITS.name + 1} />
+        <TextField id={`${base}-score`} label={`Pontuação de ${candidate.name} (opcional)`} value={score} onValue={setScore} error={errors.score} hint="4200000, 4,200,000 ou 4.2m. Deixe vazio para sem pontuação." />
+        <TextField id={`${base}-tags`} label={`Etiquetas de ${candidate.name} (opcional)`} value={tags} onValue={setTags} error={errors.tags} hint={`Separe com vírgulas, até ${MGE_LIMITS.tags}.`} />
       </fieldset>
-      <p class="kg-hint">Locked events keep the name they were locked with.</p>
+      <p class="kg-hint">Eventos travados mantêm o nome com que foram travados.</p>
       <div class="kg-actions">
-        <button type="submit" class="btn btn-primary">Save</button>
-        <button type="button" class="btn btn-secondary" onClick={onCancel}>Cancel</button>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <button type="button" class="btn btn-secondary" onClick={onCancel}>Cancelar</button>
       </div>
     </form>
   );

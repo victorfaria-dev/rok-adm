@@ -11,14 +11,14 @@ interface Props {
 export function Checklist({ answers, suggested, onAnswer, onConfirm }: Props) {
   return (
     <section class="cmd-block" aria-labelledby="cmd-checklist-title">
-      <h3 id="cmd-checklist-title" class="cmd-h3">Before you spend</h3>
+      <h3 id="cmd-checklist-title" class="cmd-h3">Antes de gastar</h3>
       {suggested.length > 0 && (
         <div class="cmd-suggest-note">
           <p>
-            {suggested.length === 1 ? "1 answer is" : `${suggested.length} answers are`} prefilled from our commander table and
-            marked <span class="cmd-pill cmd-pill-suggested">Suggested</span>. Change any that do not fit your account.
+            {suggested.length === 1 ? "1 resposta vem" : `${suggested.length} respostas vêm`} preenchida{suggested.length === 1 ? "" : "s"} pela nossa tabela de comandantes e
+            marcada{suggested.length === 1 ? "" : "s"} como <span class="cmd-pill cmd-pill-suggested">Sugerida</span>. Mude as que não servirem à sua conta.
           </p>
-          <button type="button" class="btn btn-secondary" onClick={onConfirm}>Keep suggested answers</button>
+          <button type="button" class="btn btn-secondary" onClick={onConfirm}>Manter respostas sugeridas</button>
         </div>
       )}
       <div class="cmd-questions">
@@ -28,8 +28,8 @@ export function Checklist({ answers, suggested, onAnswer, onConfirm }: Props) {
             <fieldset key={q.id} class="cmd-q" id={`cmd-q-${q.id}`}>
               <legend class="cmd-legend">
                 <span>{q.text}</span>
-                {!q.required && <span class="cmd-pill">Optional</span>}
-                {isSuggested && <span class="cmd-pill cmd-pill-suggested">Suggested</span>}
+                {!q.required && <span class="cmd-pill">Opcional</span>}
+                {isSuggested && <span class="cmd-pill cmd-pill-suggested">Sugerida</span>}
               </legend>
               <div class="cmd-options">
                 {q.options.map((o) => {
@@ -49,7 +49,7 @@ export function Checklist({ answers, suggested, onAnswer, onConfirm }: Props) {
                       />
                       <span class="cmd-option-label">
                         {o.label}
-                        {checked && isSuggested && <span class="visually-hidden"> (suggested)</span>}
+                        {checked && isSuggested && <span class="visually-hidden"> (sugerida)</span>}
                       </span>
                     </label>
                   );

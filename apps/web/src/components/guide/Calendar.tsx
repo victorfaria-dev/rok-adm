@@ -28,16 +28,16 @@ export function Calendar({ milestones, blocks, here = null }: Props) {
           <span class="cal-name">{m.title}</span>
           <span class="cal-meta">
             <Confidence level={m.day ? m.confidence : "pending"} short />
-            {m.day === null && m.gaps.length > 0 && <> · research gap <span class="mono">{m.gaps.join(", ")}</span></>}
+            {m.day === null && m.gaps.length > 0 && <> · lacuna de pesquisa <span class="mono">{m.gaps.join(", ")}</span></>}
             {" · "}
-            <span class="visually-hidden">Fact cards: </span>
+            <span class="visually-hidden">Fichas de fatos: </span>
             <span class="mono">{m.facts.join(", ")}</span>
             {m.sources.length > 0 && <> · {m.sources.slice(0, 3).join(", ")}</>}
           </span>
           {m.note && <span class="cal-note">{m.note}</span>}
           {tips.length > 0 && (
             <span class="cal-tips">
-              Steps:{" "}
+              Passos:{" "}
               {tips.map((t, n) => (
                 <Fragment key={t.id}>
                   {n > 0 && ", "}
@@ -53,12 +53,12 @@ export function Calendar({ milestones, blocks, here = null }: Props) {
   const you = here?.day ?? null;
   return (
     <section class="cal" aria-labelledby="cal-h" data-calendar>
-      <h2 id="cal-h" class="cal-title">Kingdom calendar</h2>
+      <h2 id="cal-h" class="cal-title">Calendário do reino</h2>
       <div class="cal-strip" aria-hidden="true">
         <div class="cal-bar">
           {bands.map((m) => (
             <span key={m.id} class={`cal-band cal-band-${m.kind}`} data-conf={m.confidence} style={`left:${stripPos(m.day![0])}%;width:${stripPos(m.day![1]) - stripPos(m.day![0])}%`}>
-              <span class="cal-band-label">{m.id === "pre-kvk" ? "Pre-KvK" : m.id === "kvk1-length" ? "KvK1" : ""}</span>
+              <span class="cal-band-label">{m.id === "pre-kvk" ? "Pré-KvK" : m.id === "kvk1-length" ? "KvK1" : ""}</span>
             </span>
           ))}
           {points.map((m) => (
@@ -66,30 +66,30 @@ export function Calendar({ milestones, blocks, here = null }: Props) {
           ))}
           {you !== null && (
             <span class="cal-you" style={`left:${stripPos(you)}%`}>
-              <span class="cal-you-label">You{you > STRIP_DAYS ? ` (day ${you})` : ""}</span>
+              <span class="cal-you-label">Você{you > STRIP_DAYS ? ` (dia ${you})` : ""}</span>
             </span>
           )}
         </div>
         <div class="cal-ticks">
           {TICKS.map((t) => (
-            <span key={t} class="cal-tick mono" style={`left:${stripPos(t)}%`}>{t === 0 ? "Day 0" : t}</span>
+            <span key={t} class="cal-tick mono" style={`left:${stripPos(t)}%`}>{t === 0 ? "Dia 0" : t}</span>
           ))}
         </div>
       </div>
       {you !== null && (
         <p class="cal-here" data-you-are-here>
-          You are here: <span class="mono">kingdom day {you}</span>
-          {you > STRIP_DAYS ? ", past the end of this calendar." : "."}
+          Você está aqui: <span class="mono">dia {you} do reino</span>
+          {you > STRIP_DAYS ? ", depois do fim deste calendário." : "."}
         </p>
       )}
       <ol class="cal-list">{dated.map(item)}</ol>
       {pending.length > 0 && (
         <details class="cal-pending">
-          <summary>Pending: {pending.length} milestones without a dated source yet</summary>
+          <summary>Pendentes: {pending.length} marcos ainda sem fonte datada</summary>
           <ul class="cal-list">{pending.map(item)}</ul>
         </details>
       )}
-      <p class="cal-foot">Events do not follow a fixed schedule; the in-game calendar shows a few days ahead. Days come only from dated fact cards; anything else is marked Pending.</p>
+      <p class="cal-foot">Os eventos não seguem um calendário fixo; o calendário do jogo mostra alguns dias à frente. Os dias vêm só de fichas de fatos datadas; todo o resto fica marcado como Pendente.</p>
     </section>
   );
 }

@@ -34,9 +34,9 @@ export type CommanderPickerProps = BaseProps &
   );
 
 const RARITY_OPTIONS: { id: PickerRarity | "all"; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "legendary", label: "Legendary" },
-  { id: "epic", label: "Epic" },
+  { id: "all", label: "Todos" },
+  { id: "legendary", label: "Lendário" },
+  { id: "epic", label: "Épico" },
 ];
 
 /**
@@ -44,7 +44,7 @@ const RARITY_OPTIONS: { id: PickerRarity | "all"; label: string }[] = [
  * One tab stop for the grid (roving tabindex); arrow keys, Home and End move between portraits.
  */
 export function CommanderPicker(props: CommanderPickerProps) {
-  const { roster, progress, title = "Choose a commander", idPrefix = "ckp", filters = true, allowFuture = false } = props;
+  const { roster, progress, title = "Escolha um comandante", idPrefix = "ckp", filters = true, allowFuture = false } = props;
   const [query, setQuery] = useState("");
   const [rarity, setRarity] = useState<PickerRarity | "all">("all");
   const [availableOnly, setAvailableOnly] = useState(false);
@@ -125,24 +125,24 @@ export function CommanderPicker(props: CommanderPickerProps) {
       <h2 id={titleId} class="ckp-title">{title}</h2>
       <div class="ckp-tools">
         <div class="ckp-search">
-          <label for={`${idPrefix}-q`} class="visually-hidden">Search by name</label>
+          <label for={`${idPrefix}-q`} class="visually-hidden">Buscar pelo nome</label>
           <input
             id={`${idPrefix}-q`}
             class="ckp-input"
             type="search"
             autoComplete="off"
             spellcheck={false}
-            placeholder="Search commanders"
+            placeholder="Buscar comandantes"
             value={query}
             onInput={(e) => setQuery(e.currentTarget.value)}
           />
         </div>
         {filters && (
           <details class="ckp-more">
-            <summary>Filters</summary>
+            <summary>Filtros</summary>
             <div class="ckp-filters">
             <fieldset class="ckp-seg">
-              <legend class="visually-hidden">Rarity</legend>
+              <legend class="visually-hidden">Raridade</legend>
               {RARITY_OPTIONS.map((o) => (
                 <label key={o.id} class="ckp-seg-opt">
                   <input type="radio" name={`${idPrefix}-rarity`} value={o.id} checked={rarity === o.id} onChange={() => setRarity(o.id)} />
@@ -153,27 +153,27 @@ export function CommanderPicker(props: CommanderPickerProps) {
             {progress && (
               <label class="ckp-check">
                 <input type="checkbox" checked={availableOnly} onChange={(e) => setAvailableOnly(e.currentTarget.checked)} />
-                <span>Only what I can get now</span>
+                <span>Só o que posso conseguir agora</span>
               </label>
             )}
             </div>
           </details>
         )}
         <p id={hintId} class="ckp-hint">
-          {count === 1 ? "1 commander" : `${count} commanders`} in arrival order. Arrow keys move.
+          {count === 1 ? "1 comandante" : `${count} comandantes`} em ordem de chegada. As setas movem.
         </p>
       </div>
       <p class="ckp-note" role="status">{note}</p>
 
       <div class="ckp-scroll" ref={gridRef}>
-        {groups.length === 0 && <p class="ckp-empty">No commander matches “{query}”.</p>}
+        {groups.length === 0 && <p class="ckp-empty">Nenhum comandante corresponde a “{query}”.</p>}
         {groups.map((g) => {
           const hid = `${idPrefix}-p-${g.period.id}`;
           return (
             <div key={g.period.id} class="ckp-group" role="group" aria-labelledby={hid} data-future={g.future ? "" : undefined}>
               <h3 id={hid} class="ckp-period">
                 <span>{g.period.label}</span>
-                {g.future && <span class="ckp-later">Coming later</span>}
+                {g.future && <span class="ckp-later">Chega depois</span>}
               </h3>
               <div class="ckp-grid">
                 {g.commanders.map((c, n) => (

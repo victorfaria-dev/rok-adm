@@ -1,16 +1,16 @@
-// Formula input with live validation (error below, aria-invalid) and a plain-language explanation.
+// Campo de fórmula com validação ao vivo (erro abaixo, aria-invalid) e uma explicação em linguagem simples.
 import { explainFormula, formatFormula, parseFormula, type ParseResult } from "@rokadm/planner";
 import type { JSX } from "preact";
 import { TextField } from "../shared/Field";
 
-export const FORMULA_HINT = "Names: t1–t5 (kills by troop tier), deads, kp (kill points), power. Use + - * / and parentheses; min, max, round, floor, ceil, abs. Example: t4 * 10 + t5 * 20 + deads * 50.";
+export const FORMULA_HINT = "Nomes: t1–t5 (abates por nível de tropa), deads (mortos), kp (pontos de abate), power (poder). Use + - * / e parênteses; min, max, round, floor, ceil, abs. Exemplo: t4 * 10 + t5 * 20 + deads * 50.";
 
 interface Props {
   id: string;
   label: string;
   value: string;
   onValue: (v: string) => void;
-  /** Show "write a formula" as an error when empty (otherwise empty is allowed and quiet). */
+  /** Mostra "escreva uma fórmula" como erro quando vazio (otherwise empty is allowed and quiet). */
   required?: boolean;
   hint?: string;
 }
@@ -29,7 +29,7 @@ export default function FormulaField({ id, label, value, onValue, required = tru
       {parsed?.ok && (
         <div class="kr-explain" data-explain={id}>
           <p>{explainFormula(parsed.ast)}</p>
-          <p class="kg-hint">Read as: <code>{formatFormula(parsed.ast)}</code></p>
+          <p class="kg-hint">Lido como: <code>{formatFormula(parsed.ast)}</code></p>
         </div>
       )}
     </div>

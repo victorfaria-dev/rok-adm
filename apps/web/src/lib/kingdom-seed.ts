@@ -30,18 +30,18 @@ export function powerText(n: number): string {
   return `${formatCompact(n)} (${formatInt(n)})`;
 }
 
-/** One-paragraph summary for the aria-live region. */
+/** Resumo de um parágrafo para a região aria-live. */
 export function seedSummary(c: SeedComparison): string {
   const r = c.before;
-  if (r.totalGovernors === 0) return "No governors entered yet.";
+  if (r.totalGovernors === 0) return "Nenhum governador informado ainda.";
   const parts = [
-    `Counted kingdom power: ${formatCompact(r.counted)} from the top ${r.countedGovernors} of ${r.totalGovernors} governors.`,
+    `Poder do reino contado: ${formatCompact(r.counted)}, dos ${r.countedGovernors} primeiros de ${r.totalGovernors} governadores.`,
   ];
-  if (r.ignoredGovernors > 0) parts.push(`${r.ignoredGovernors} governor${r.ignoredGovernors === 1 ? " is" : "s are"} below the top 300 and not counted.`);
-  parts.push(r.imperium.reached ? "At or above the Imperium threshold (23.5B)." : `${formatCompact(r.imperium.gap)} below the Imperium threshold (23.5B).`);
+  if (r.ignoredGovernors > 0) parts.push(`${r.ignoredGovernors} ${r.ignoredGovernors === 1 ? "governador está abaixo" : "governadores estão abaixo"} do top 300 e não ${r.ignoredGovernors === 1 ? "conta" : "contam"}.`);
+  parts.push(r.imperium.reached ? "No limite do Imperium (23,5B) ou acima dele." : `${formatCompact(r.imperium.gap)} abaixo do limite do Imperium (23,5B).`);
   if (c.vacationCount + c.zeroedCount > 0) {
-    const sign = c.delta < 0 ? "drops by" : c.delta > 0 ? "rises by" : "does not change";
-    parts.push(`With the what-if marks, counted power ${sign}${c.delta === 0 ? "" : ` ${formatCompact(Math.abs(c.delta))}`} to ${formatCompact(c.after.counted)}.`);
+    const sign = c.delta < 0 ? "cai" : c.delta > 0 ? "sobe" : "não muda";
+    parts.push(`Com as marcas de simulação, o poder contado ${sign}${c.delta === 0 ? "" : ` ${formatCompact(Math.abs(c.delta))}`} e vai a ${formatCompact(c.after.counted)}.`);
   }
   return parts.join(" ");
 }

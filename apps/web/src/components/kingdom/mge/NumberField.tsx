@@ -42,7 +42,7 @@ export default function NumberField({ id, label, value, min, max, onValue, hint,
           if (/^\d{1,3}$/.test(t) && n >= min && n <= max) {
             setError("");
             if (n !== value) onValue(n);
-          } else setError(`Enter a whole number from ${min} to ${max}.`);
+          } else setError(`Digite um número inteiro de ${min} a ${max}.`);
         }}
       />
       {error && <p id={errId} class="kg-error">{error}</p>}

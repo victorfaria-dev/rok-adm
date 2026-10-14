@@ -16,9 +16,9 @@ export interface CommanderTileProps {
   loading?: "lazy" | "eager";
 }
 
-/** "Guan Yu, Legendary, coming in Season 3": starts with the visible name (label in name). */
+/** "Guan Yu, Lendário, chega em Temporada 3": starts with the visible name (label in name). */
 export function tileLabel(c: PickerCommander, future: boolean): string {
-  return `${c.name}, ${RARITY_TEXT[c.rarity]}${future ? `, coming in ${PERIOD_CHIP[c.period]}` : ""}`;
+  return `${c.name}, ${RARITY_TEXT[c.rarity]}${future ? `, chega em ${PERIOD_CHIP[c.period]}` : ""}`;
 }
 
 /** Portrait (or initials on a tinted tile), name and a rarity gem. Tokens only. */

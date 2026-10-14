@@ -22,21 +22,21 @@ const lastPatch = dated.at(-1)!.slice(0, 7), built = manifest.builtAt.slice(0, 7
 const months = monthsBetween(from, built > lastPatch ? built : lastPatch);
 const ids = patches.flatMap((p) => p.factIds);
 ---
-<Shell title="What changed since…" description="Stopped playing Rise of Kingdoms for a while? Pick the month you left and see every game update since, newest first, with official notes marked." mode="operate">
+<Shell title="O que mudou desde…" description="Parou de jogar Rise of Kingdoms por um tempo? Escolha o mês em que saiu e veja todas as atualizações do jogo desde então, da mais nova para a mais antiga, com as notas oficiais marcadas." mode="operate">
   <div class="t-page">
     <header>
-      <h1>What changed since you left</h1>
-      <p class="t-lead">Pick the month you stopped playing to see every update since, newest first. Each patch says whether official notes exist and which fact cards cover it.</p>
+      <h1>O que mudou desde que você saiu</h1>
+      <p class="t-lead">Escolha o mês em que parou de jogar para ver todas as atualizações desde então, da mais nova para a mais antiga. Cada atualização diz se há notas oficiais e quais fichas de fato a cobrem.</p>
       <DataStamp />
     </header>
     <section class="t-page-body" aria-labelledby="c-h">
-      <h2 id="c-h">Updates</h2>
-      <p class="t-note">Our data has no impact rating per patch, so we don't guess one. Patches are split by source instead: official notes first, then versions only reported elsewhere.</p>
+      <h2 id="c-h">Atualizações</h2>
+      <p class="t-note">Nossos dados não têm nota de impacto por atualização, então não chutamos uma. As atualizações são separadas pela fonte: primeiro as com notas oficiais, depois as versões só relatadas em outros lugares.</p>
       <ChangesView client:load patches={patches} months={months} />
     </section>
     <aside class="c-next" aria-labelledby="c-next-h">
-      <h2 id="c-next-h">Thinking of moving?</h2>
-      <p>Migration rules changed several times in these patches. <a href="/tools/migration/">Check whether you can migrate now</a>.</p>
+      <h2 id="c-next-h">Pensando em se mudar?</h2>
+      <p>As regras de migração mudaram várias vezes nessas atualizações. <a href="/tools/migration/">Veja se você pode migrar agora</a>.</p>
     </aside>
     <SourcesList ids={ids} />
   </div>

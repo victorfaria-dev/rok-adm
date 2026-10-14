@@ -6,20 +6,20 @@ import { CONFIDENCE_LABEL, MGE_SOURCES } from "@rokadm/planner";
 import "../../../components/kingdom/shared/kingdom.css";
 import "../../../components/kingdom/mge/mge.css";
 ---
-<Shell title="MGE planner" description="Plan who gets which MGE slots with a rotation, score or manual rule, keep a ledger of every event and publish a view-only link. Works in your browser." mode="operate">
+<Shell title="Planejador de MGE" description="Planeje quem fica com cada vaga de MGE por rodízio, pontuação ou regra manual, mantenha um registro de cada evento e publique um link só de leitura. Funciona no seu navegador." mode="operate">
   <div class="kg">
     <header class="kg-head">
-      <h1>MGE planner</h1>
-      <p class="kg-lead">Decide who gets which MGE slots with a rule everyone can check. Every slot in the ledger says when and why. Publish it as a view-only link.</p>
+      <h1>Planejador de MGE</h1>
+      <p class="kg-lead">Decida quem fica com cada vaga de MGE com uma regra que todos podem conferir. Cada vaga no registro diz quando e por quê. Publique como link só de leitura.</p>
     </header>
     <KingdomNav section="events" />
     <MgePlanner client:load />
     <section class="kg-grid" aria-labelledby="kx-src-h">
-      <h2 id="kx-src-h">Where this comes from</h2>
+      <h2 id="kx-src-h">De onde vem isto</h2>
       <ul class="kx-sources" data-sources>
-        {MGE_SOURCES.map((s) => <li><strong>{s.id}</strong> (confidence: {CONFIDENCE_LABEL[s.confidence]}): {s.text}</li>)}
+        {MGE_SOURCES.map((s) => <li><strong>{s.id}</strong> (confiança: {CONFIDENCE_LABEL[s.confidence]}): {s.text}</li>)}
       </ul>
-      <p class="kg-note">How a "rotation" works is never described in public sources (open question L-B05-02). The rotation rule here is KingdomOps' own and is spelled out in full above, so anyone can check it. No MGE point or reward values are shown: none are sourced.</p>
+      <p class="kg-note">Como funciona um "rodízio" nunca é descrito em fontes públicas (pergunta em aberto L-B05-02). A regra de rodízio daqui é do próprio KingdomOps e está explicada por inteiro acima, para qualquer um conferir. Nenhum valor de pontos ou recompensas de MGE é mostrado: nenhum tem fonte.</p>
     </section>
   </div>
 </Shell>

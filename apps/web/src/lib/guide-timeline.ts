@@ -29,13 +29,13 @@ const dated = (phase: GuidePhase, from: number, fallback: string, sub: string): 
 
 /** Lanes top to bottom. The five dated lanes are the phases of core (PHASE_TITLES, PHASE_LAST_DAY). */
 export const LANES: readonly Lane[] = [
-  { id: "start", title: "Before you start", sub: "Read once", days: null },
-  dated("day0-3", 0, "Days 0–3", "Setup and first choices"),
-  dated("day4-14", 4, "Days 4–14", ""),
-  dated("day15-40", 15, "Days 15–40", ""),
-  dated("day41-90", 41, "Days 41–90", ""),
-  { ...dated("pre-kvk1", 85, "Pre-KvK1 and KvK1", ""), days: [85, 100] },
-  { id: "any", title: "Any day", sub: "Daily routine, events and habits", days: null },
+  { id: "start", title: "Antes de começar", sub: "Leia uma vez", days: null },
+  dated("day0-3", 0, "Dias 0–3", "Preparação e primeiras escolhas"),
+  dated("day4-14", 4, "Dias 4–14", ""),
+  dated("day15-40", 15, "Dias 15–40", ""),
+  dated("day41-90", 41, "Dias 41–90", ""),
+  { ...dated("pre-kvk1", 85, "Pré-KvK1 e KvK1", ""), days: [85, 100] },
+  { id: "any", title: "Qualquer dia", sub: "Rotina diária, eventos e hábitos", days: null },
 ];
 
 /** The phases that form the progress tower, bottom floor first. */
@@ -120,16 +120,16 @@ export interface Here {
  */
 export function hereFor(p: AccountProfile): Here {
   if (isLateStage(p.kingdomStage)) {
-    return { lane: "past", basis: "stage", text: `Your kingdom is in ${STAGE_NAMES[p.kingdomStage]}, past KvK1`, day: p.kingdomDay };
+    return { lane: "past", basis: "stage", text: `Seu reino está no ${STAGE_NAMES[p.kingdomStage]}, depois do KvK1`, day: p.kingdomDay };
   }
   const d = p.kingdomDay;
   if (d !== null) {
     const lane = FLOOR_LANES.find((l) => d <= (PHASE_LAST_DAY[l as GuidePhase] ?? Number.POSITIVE_INFINITY)) ?? "pre-kvk1";
-    return { lane, basis: "day", text: `Kingdom day ${d}`, day: d };
+    return { lane, basis: "day", text: `Dia ${d} do reino`, day: d };
   }
   const ch = p.cityHall;
   const lane: LaneId = ch < 8 ? "day0-3" : ch < 12 ? "day4-14" : ch < 17 ? "day15-40" : ch < 22 ? "day41-90" : "pre-kvk1";
-  return { lane, basis: "cityHall", text: `City Hall ${ch} (no kingdom day given)`, day: null };
+  return { lane, basis: "cityHall", text: `Prefeitura ${ch} (sem dia do reino informado)`, day: null };
 }
 
 // ---------------------------------------------------------------------------
@@ -167,10 +167,10 @@ export const STRIP_DAYS = 160;
 export const stripPos = (day: number): number => Math.round((Math.min(Math.max(day, 0), STRIP_DAYS) / STRIP_DAYS) * 1000) / 10;
 
 export function dayText(m: Pick<CalendarMilestone, "day" | "approx">): string {
-  if (!m.day) return "Pending";
+  if (!m.day) return "Pendente";
   const [a, b] = m.day;
-  const range = a === b ? `Day ${a}` : b >= STRIP_DAYS ? `Day ${a}+` : `Days ${a}–${b}`;
-  return m.approx ? `${range.replace(/^Days? /, (s) => `${s}~`)}` : range;
+  const range = a === b ? `Dia ${a}` : b >= STRIP_DAYS ? `Dia ${a}+` : `Dias ${a}–${b}`;
+  return m.approx ? `${range.replace(/^Dias? /, (s) => `${s}~`)}` : range;
 }
 
 export interface TipLink {

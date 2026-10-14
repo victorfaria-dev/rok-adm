@@ -38,18 +38,18 @@ export interface PickerRoster {
 }
 
 /** Shown wherever portraits render. Kept in sync with the portrait manifest by a unit test. */
-export const PORTRAIT_CREDIT = "Portraits: Rise of Kingdoms © Lilith Games. Fan site, not affiliated.";
+export const PORTRAIT_CREDIT = "Retratos: Rise of Kingdoms © Lilith Games. Site de fã, sem afiliação.";
 
-export const RARITY_TEXT: Record<PickerRarity, string> = { legendary: "Legendary", epic: "Epic" };
+export const RARITY_TEXT: Record<PickerRarity, string> = { legendary: "Lendário", epic: "Épico" };
 
 /** Short chip for a period ("Season 2"); the header carries the full label. */
 export const PERIOD_CHIP: Record<CommanderPeriodId, string> = {
-  launch: "Start",
-  pre_kvk: "Prep season",
-  kvk1: "Season 1",
-  kvk2: "Season 2",
-  kvk3: "Season 3",
-  soc: "SoC",
+  launch: "Início",
+  pre_kvk: "Pré-temporada",
+  kvk1: "Temporada 1",
+  kvk2: "Temporada 2",
+  kvk3: "Temporada 3",
+  soc: "Conquista",
 };
 
 /** Portrait paths (same pattern as packages/planner commanderPortrait; a test checks they match). */
@@ -136,7 +136,7 @@ export function groupForPicker(
     .map((period) => {
       const commanders = list
         .filter((c) => c.period === period.id)
-        .sort((a, b) => a.name.localeCompare(b.name, "en"));
+        .sort((a, b) => a.name.localeCompare(b.name, "pt-BR"));
       // A period is "coming later" when none of its commanders is reachable yet.
       const future = commanders.length > 0 && commanders.every((c) => isFuture(c, progress));
       return { period, future, commanders };
@@ -144,9 +144,9 @@ export function groupForPicker(
     .filter((g) => g.commanders.length > 0);
 }
 
-/** "Genghis Khan arrives in Season 3 (KvK3). Nothing to decide yet." */
+/** "Genghis Khan chega em Temporada 3 (KvK3). Ainda não há o que decidir." */
 export function arrivesText(name: string, period: PickerPeriod | undefined): string {
-  return `${name} arrives in ${period?.label ?? "a later season"}. Nothing to decide yet.`;
+  return `${name} chega em ${period?.label ?? "uma temporada posterior"}. Ainda não há o que decidir.`;
 }
 
 /**

@@ -13,7 +13,7 @@ describe("recruit store glue", () => {
     expect(doc).toEqual({ ...input, id: "d1", updatedAt: NOW.toISOString() });
     const list = listRecruit(st);
     expect(list).toHaveLength(1);
-    expect(list[0]!.title).toBe("Kingdom 1234 recruitment post");
+    expect(list[0]!.title).toBe("Post de recrutamento do Kingdom 1234");
     expect(draftInput(list[0]!.doc)).toEqual(input);
   });
 
@@ -21,25 +21,25 @@ describe("recruit store glue", () => {
     const st = memoryStorage();
     saveDoc({ id: "bad", kind: "recruit", title: "x", data: 5 }, st, NOW);
     expect(listRecruit(st)).toEqual([]);
-    expect(recruitTitle({ kingdom: " " })).toBe("Recruitment post");
-    expect(recruitTitle({ kingdom: "K9" })).toBe("K9 recruitment post");
+    expect(recruitTitle({ kingdom: " " })).toBe("Post de recrutamento");
+    expect(recruitTitle({ kingdom: "K9" })).toBe("Post de recrutamento do K9");
   });
 
   it("formats character counts", () => {
-    expect(charCount(1234, 2000)).toBe("1,234 / 2,000 characters");
-    expect(charCount(5, null)).toBe("5 characters");
+    expect(charCount(1234, 2000)).toBe("1.234 / 2.000 caracteres");
+    expect(charCount(5, null)).toBe("5 caracteres");
   });
 
   it("words the over-limit warning for the format, and the title cut", () => {
     expect(overLimitText({ format: "discord", chars: 2100, limit: 2000, over: true })).toBe(
-      "This post is 2,100 characters, over Discord's 2,000-character limit by 100. Shorten the notes or split it into two messages.");
+      "Este post tem 2.100 caracteres, 100 acima do limite de 2.000 caracteres do Discord. Encurte as notas ou divida em duas mensagens.");
     expect(overLimitText({ format: "reddit", chars: 40_005, limit: 40_000, over: true })).toBe(
-      "This post body is 40,005 characters, over Reddit's 40,000-character limit by 5. Shorten the notes before you post.");
+      "O corpo deste post tem 40.005 caracteres, 5 acima do limite de 40.000 caracteres do Reddit. Encurte as notas antes de postar.");
     expect(overLimitText({ format: "reddit", chars: 10, limit: 40_000, over: false })).toBe("");
     expect(overLimitText({ format: "text", chars: 99_999, limit: null, over: false })).toBe("");
     const huge = recruitPost({ ...emptyRecruitInput(), migrationNote: "m".repeat(40_000) }, "reddit");
-    expect(overLimitText(huge)).toContain("over Reddit's 40,000-character limit");
-    expect(titleCutText({ titleCut: true })).toContain("Reddit titles stop at 300 characters");
+    expect(overLimitText(huge)).toContain("acima do limite de 40.000 caracteres do Reddit");
+    expect(titleCutText({ titleCut: true })).toContain("Os títulos do Reddit param em 300 caracteres");
     expect(titleCutText({ titleCut: false })).toBe("");
   });
 });

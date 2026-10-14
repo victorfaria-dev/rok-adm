@@ -8,25 +8,25 @@ import DataControls from "../../components/kingdom/shared/DataControls";
 import { WebhookSettings } from "../../components/discord/DiscordPost";
 import "../../components/kingdom/shared/kingdom.css";
 
-// Every user-facing string on this page, in one place (i18n later).
+// Todos os textos desta página, num lugar só.
 const S = {
-  title: "Kingdom",
-  description: "For kings, R4s and council members: rules page, alliance crest, member requirements and recruiting, MGE and KvK planning. Works in your browser.",
-  h1: "Your kingdom",
-  lead: "For kings, R4s and council members. Publish clear rules, set what you ask of members, recruit for the roles you need and plan events openly.",
-  guardrail: "Planning and publishing only. No bots, no scanning, no game files. You do every in-game action yourself.",
-  whereH: "Where things are",
+  title: "Reino",
+  description: "Para reis, R4 e conselheiros: página de regras, brasão da aliança, requisitos dos membros, recrutamento e planejamento de MGE e KvK. Funciona no seu navegador.",
+  h1: "Seu reino",
+  lead: "Para reis, R4 e conselheiros. Publique regras claras, defina o que você pede dos membros, recrute para as funções de que precisa e planeje os eventos de forma aberta.",
+  guardrail: "Só planejamento e publicação. Sem bots, sem varredura, sem arquivos do jogo. Você faz cada ação no jogo por conta própria.",
+  whereH: "Onde fica cada coisa",
   where: [
-    { tab: "Kingdom", text: "Rules page, alliance crest and the experimental seed simulator." },
-    { tab: "Members", text: "Requirements card with your DKP formula, recruitment post, and the page players use to see their own target." },
-    { tab: "Events", text: "MGE planner with a rule everyone can check, and the KvK planner." },
+    { tab: "Reino", text: "Página de regras, brasão da aliança e o simulador de seed (experimental)." },
+    { tab: "Membros", text: "Cartão de requisitos com a sua fórmula de DKP, post de recrutamento e a página em que os jogadores veem a própria meta." },
+    { tab: "Eventos", text: "Planejador de MGE com uma regra que todos podem conferir, e o planejador de KvK." },
   ],
-  adminGuide: "New to running a kingdom? Read the",
-  adminGuideLink: "kingdom admin guide",
-  dataH: "Your council data",
-  dataNote: "Saved only in this browser. Export a file to move it to another device or hand it to another officer.",
-  discordH: "Discord webhook",
-  discordNote: "Paste your server's webhook once and the MGE planner, rules page and recruitment post (and the farm log) get a \"Post to Discord\" button. You always see the exact message first, and nothing is sent until you press Send.",
+  adminGuide: "Está começando a administrar um reino? Leia o",
+  adminGuideLink: "guia de administração do reino",
+  dataH: "Dados do seu conselho",
+  dataNote: "Salvos só neste navegador. Exporte um arquivo para levar a outro aparelho ou passar a outro oficial.",
+  discordH: "Webhook do Discord",
+  discordNote: "Cole o webhook do seu servidor uma vez e o planejador de MGE, a página de regras e o post de recrutamento (e o registro de farms) ganham um botão \"Postar no Discord\". Você sempre vê a mensagem exata antes, e nada é enviado até você apertar Enviar.",
 };
 ---
 <Shell title={S.title} description={S.description} mode="operate">

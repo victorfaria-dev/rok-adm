@@ -44,7 +44,7 @@ describe("lean roster", () => {
   it("builds the same portrait paths as the planner and the same credit as the manifest", () => {
     const p = commanderPortrait("sun-tzu", 96)!;
     expect(portraitSrc("sun-tzu")).toEqual({ src: p.src, srcset: p.srcset });
-    expect(PORTRAIT_CREDIT).toBe(`Portraits: ${PORTRAIT_ATTRIBUTION}. Fan site, not affiliated.`);
+    expect(PORTRAIT_CREDIT).toBe(`Retratos: ${PORTRAIT_ATTRIBUTION}. Site de fã, sem afiliação.`);
   });
 });
 
@@ -148,6 +148,6 @@ describe("text", () => {
     expect(initials("Yi Seong-Gye")).toBe("YG");
     expect(initials("Achilles")).toBe("AC");
     expect(initials("Casimir III")).toBe("CI");
-    expect(arrivesText("Guan Yu", roster.periods.find((p) => p.id === "kvk3"))).toBe("Guan Yu arrives in Season 3 (KvK3). Nothing to decide yet.");
+    expect(arrivesText("Guan Yu", roster.periods.find((p) => p.id === "kvk3"))).toBe("Guan Yu chega em Season 3 (KvK3). Ainda não há o que decidir.");
   });
 });

@@ -15,18 +15,18 @@ import "../../styles/guide.css";
 const data = buildGuideData();
 const view = selectGuide(data.guide, defaultProfile());
 ---
-<Shell title="Your guide" description="A step-by-step F2P plan to KvK1 with sources, patch checks and a budget reality check. Personalize it for your spending, play time and City Hall." mode="read">
+<Shell title="Seu guia" description="Um plano F2P passo a passo até o KvK1, com fontes, conferência de atualização e um teste de realidade do orçamento. Personalize para o seu gasto, tempo de jogo e Prefeitura." mode="read">
   <div class="g-page">
-    <h1>Your guide</h1>
+    <h1>Seu guia</h1>
     <GuideIsland client:load dataUrl="/data/guide.json">
       <div data-guide="default">
         <aside class="g-banner" aria-labelledby="g-banner-h">
-          <p id="g-banner-h" class="g-banner-title">Personalize in 2 minutes</p>
-          <p>This is the default guide for a new F2P account. Answer 5 quick questions and it filters to your spending, play time and City Hall.</p>
-          <a class="btn btn-primary" href="/start/">Build my guide</a>
+          <p id="g-banner-h" class="g-banner-title">Personalize em 2 minutos</p>
+          <p>Este é o guia padrão para uma conta F2P nova. Responda 5 perguntas rápidas e ele se ajusta ao seu gasto, tempo de jogo e Prefeitura.</p>
+          <a class="btn btn-primary" href="/start/">Montar meu guia</a>
         </aside>
-        <GuideMeta view={view} label={`Default guide for ${profileSummary(defaultProfile())}`} />
-        <GuidesForYou links={defaultGuideLinks()} title="Other guides" />
+        <GuideMeta view={view} label={`Guia padrão para ${profileSummary(defaultProfile())}`} />
+        <GuidesForYou links={defaultGuideLinks()} title="Outros guias" />
         <GuideVisual view={view} badges={data.guide.badges} calendar={data.calendar} />
         <GuideBody view={view} badges={data.guide.badges} budget={data.budget} />
       </div>

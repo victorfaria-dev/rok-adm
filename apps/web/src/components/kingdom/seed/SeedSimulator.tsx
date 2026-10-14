@@ -20,8 +20,8 @@ const realClock = (): Date => new Date();
 const WHATIF_ROWS = 320;
 
 const MODE_OPTIONS = [
-  { value: "list" as const, label: "Paste a list of powers" },
-  { value: "quick" as const, label: "Quick: counts per power band" },
+  { value: "list" as const, label: "Colar uma lista de poderes" },
+  { value: "quick" as const, label: "Rápido: quantidade por faixa de poder" },
 ];
 
 /** F-39 seed simulator (EXPERIMENTAL): counted kingdom power under the 1.0.95 rule, with a what-if panel. */
@@ -53,7 +53,7 @@ export default function SeedSimulator({ clock = realClock }: Props) {
       setError("");
     } catch (e) {
       setDoc(next);
-      setError(e instanceof Error ? e.message : "This simulation could not be saved.");
+      setError(e instanceof Error ? e.message : "Não foi possível salvar esta simulação.");
     }
     setSaved(listSeeds(stRef.current));
   }
@@ -61,71 +61,71 @@ export default function SeedSimulator({ clock = realClock }: Props) {
 
   function newSim() {
     setDoc(emptySeedDoc(newDocId(), clock()));
-    setStatus("New simulation started. It is saved when you enter something.");
+    setStatus("Nova simulação iniciada. Ela é salva assim que você digitar algo.");
   }
   function open(id: string) {
     const d = loadSeed(id, stRef.current);
     if (d) {
       setDoc(d);
-      setStatus(`Opened ${d.title}.`);
+      setStatus(`${d.title} aberta.`);
     }
   }
   function remove(id: string) {
     deleteSeed(id, stRef.current);
     setSaved(listSeeds(stRef.current));
     if (doc.id === id) setDoc(emptySeedDoc(newDocId(), clock()));
-    setStatus("Simulation deleted.");
+    setStatus("Simulação apagada.");
   }
 
   return (
     <div class="kg" data-seed>
-      {blocked && <p class="kg-error" data-blocked>This browser blocks saving. Your simulation lasts until you close this page.</p>}
-      <p class="kg-note" data-freshness><strong>{fresh.text}</strong> Rule from patch {SEED_RULE.patch} ({SEED_RULE.patchDate}).</p>
+      {blocked && <p class="kg-error" data-blocked>Este navegador bloqueia o salvamento. Sua simulação dura até você fechar esta página.</p>}
+      <p class="kg-note" data-freshness><strong>{fresh.text}</strong> Regra da atualização {SEED_RULE.patch} ({SEED_RULE.patchDate}).</p>
 
       <section class="kg-grid" aria-labelledby="ks-saved-h">
-        <h2 id="ks-saved-h">Saved simulations</h2>
-        {saved.length === 0 ? <p class="kg-note">None saved on this device yet. A simulation is saved as soon as you enter something.</p> : (
+        <h2 id="ks-saved-h">Simulações salvas</h2>
+        {saved.length === 0 ? <p class="kg-note">Nenhuma salva neste aparelho ainda. Uma simulação é salva assim que você digita algo.</p> : (
           <ul class="ks-saved" data-saved>
             {saved.map((s) => (
               <li key={s.id}>
-                <span class="ks-saved-name"><strong>{s.title || "Seed simulation"}</strong>{doc.id === s.id && <span class="kg-badge">Open</span>}</span>
+                <span class="ks-saved-name"><strong>{s.title || "Simulação de seed"}</strong>{doc.id === s.id && <span class="kg-badge">Aberta</span>}</span>
                 <span class="kg-actions">
-                  {doc.id !== s.id && <button type="button" class="btn btn-secondary" aria-label={`Open ${s.title}`} onClick={() => open(s.id)}>Open</button>}
-                  <ConfirmAction label="Delete" ariaLabel={`Delete ${s.title}`} question={`Delete the simulation "${s.title}"?`} onConfirm={() => remove(s.id)} />
+                  {doc.id !== s.id && <button type="button" class="btn btn-secondary" aria-label={`Abrir ${s.title}`} onClick={() => open(s.id)}>Abrir</button>}
+                  <ConfirmAction label="Apagar" ariaLabel={`Apagar ${s.title}`} question={`Apagar a simulação "${s.title}"?`} onConfirm={() => remove(s.id)} />
                 </span>
               </li>
             ))}
           </ul>
         )}
-        <div class="kg-actions"><button type="button" class="btn btn-secondary" onClick={newSim}>New simulation</button></div>
+        <div class="kg-actions"><button type="button" class="btn btn-secondary" onClick={newSim}>Nova simulação</button></div>
         {error && <p class="kg-error" role="alert">{error}</p>}
         <p class="kg-status" role="status" aria-live="polite">{status}</p>
       </section>
 
       <section class="kg-grid" aria-labelledby="ks-input-h">
-        <h2 id="ks-input-h">Your governors</h2>
+        <h2 id="ks-input-h">Seus governadores</h2>
         <div class="kg-grid kg-grid-2">
-          <TextField id="ks-title" label="Simulation name (optional)" value={doc.title} maxLength={SEED_LIMITS.title} onValue={(v) => set({ title: v.slice(0, SEED_LIMITS.title) })} />
-          <SelectField id="ks-mode" label="How to enter powers" value={doc.mode} options={MODE_OPTIONS} onValue={(v) => set({ mode: v })} />
+          <TextField id="ks-title" label="Nome da simulação (opcional)" value={doc.title} maxLength={SEED_LIMITS.title} onValue={(v) => set({ title: v.slice(0, SEED_LIMITS.title) })} />
+          <SelectField id="ks-mode" label="Como informar os poderes" value={doc.mode} options={MODE_OPTIONS} onValue={(v) => set({ mode: v })} />
         </div>
         {doc.mode === "list" ? (
           <>
             <TextAreaField
               id="ks-list"
-              label="Governor powers, one per line"
+              label="Poder dos governadores, um por linha"
               value={doc.listText}
               rows={8}
               onValue={(v) => { const listText = v.slice(0, SEED_LIMITS.text); set({ listText, whatIf: remapWhatIf(doc.listText, listText, doc.whatIf) }); }}
-              hint="Write 1.5m, 300k or 1,200,000. A name is optional: Name, power. Paste up to 2,000 lines."
-              error={input.errors.length ? `${input.errors.length} line${input.errors.length === 1 ? "" : "s"} could not be read.` : undefined}
+              hint="Escreva 1.5m, 300k ou 1200000. O nome é opcional: Nome, poder. Cole até 2.000 linhas."
+              error={input.errors.length ? `${input.errors.length} ${input.errors.length === 1 ? "linha não pôde" : "linhas não puderam"} ser lida${input.errors.length === 1 ? "" : "s"}.` : undefined}
             />
             {input.errors.length > 0 && (
               <ul class="ks-errors" data-line-errors>
-                {input.errors.slice(0, 20).map((e) => <li key={e.line}>Line {e.line} ("{e.text.slice(0, 40)}"): {e.message}</li>)}
-                {input.errors.length > 20 && <li>…and {input.errors.length - 20} more.</li>}
+                {input.errors.slice(0, 20).map((e) => <li key={e.line}>Linha {e.line} ("{e.text.slice(0, 40)}"): {e.message}</li>)}
+                {input.errors.length > 20 && <li>…e mais {input.errors.length - 20}.</li>}
               </ul>
             )}
-            {input.truncated && <p class="kg-error">Only the first {formatInt(SEED_LIMITS.governors)} governors are read.</p>}
+            {input.truncated && <p class="kg-error">Só os primeiros {formatInt(SEED_LIMITS.governors)} governadores são lidos.</p>}
           </>
         ) : (
           <QuickInputs key={doc.id} doc={doc} onChange={(quick) => set({ quick })} />
@@ -144,7 +144,7 @@ export default function SeedSimulator({ clock = realClock }: Props) {
 function QuickInputs({ doc, onChange }: { doc: SeedDoc; onChange: (q: SeedDoc["quick"]) => void }) {
   return (
     <div class="kg-grid" data-quick>
-      <p class="kg-note">Enter how many governors are in each band and, if you know it, their average power. An empty average uses the middle of the band (600M for the top band; above 500M every governor counts the same).</p>
+      <p class="kg-note">Informe quantos governadores há em cada faixa e, se souber, o poder médio deles. Uma média vazia usa o meio da faixa (600M para a faixa mais alta; acima de 500M todo governador conta igual).</p>
       <div class="kg-grid kg-grid-2">
         {SEED_BANDS.map((b) => <QuickBand key={b.key} band={b.key} label={b.label} value={doc.quick[b.key]} onChange={(v) => onChange({ ...doc.quick, [b.key]: v })} />)}
       </div>
@@ -162,24 +162,24 @@ function QuickBand({ band, label, value, onChange }: { band: QuickBandKey; label
       <legend>{label}</legend>
       <TextField
         id={`${id}-count`}
-        label="Governors"
+        label="Governadores"
         inputMode="numeric"
         value={count}
         error={errs.count}
         onValue={(v) => {
           setCount(v);
           const n = v.trim() === "" ? 0 : parseQuantity(v);
-          if (n === null || n > SEED_LIMITS.governors) return setErrs({ ...errs, count: `Enter a whole number up to ${formatInt(SEED_LIMITS.governors)}.` });
+          if (n === null || n > SEED_LIMITS.governors) return setErrs({ ...errs, count: `Digite um número inteiro até ${formatInt(SEED_LIMITS.governors)}.` });
           setErrs({ ...errs, count: undefined });
           onChange({ ...value, count: n });
         }}
       />
       <TextField
         id={`${id}-avg`}
-        label="Average power (optional)"
+        label="Poder médio (opcional)"
         value={avg}
         error={errs.avg}
-        hint={`Empty: ${formatCompact(QUICK_DEFAULT_AVERAGE[band])}`}
+        hint={`Vazio: ${formatCompact(QUICK_DEFAULT_AVERAGE[band])}`}
         onValue={(v) => {
           setAvg(v);
           if (!v.trim()) {
@@ -187,7 +187,7 @@ function QuickBand({ band, label, value, onChange }: { band: QuickBandKey; label
             return onChange({ ...value, average: null });
           }
           const n = parseQuantity(v);
-          if (n === null || !quickAverageFits(band, n)) return setErrs({ ...errs, avg: `Enter a power inside this band (${label.toLowerCase()}), for example ${formatCompact(QUICK_DEFAULT_AVERAGE[band])}.` });
+          if (n === null || !quickAverageFits(band, n)) return setErrs({ ...errs, avg: `Digite um poder dentro desta faixa (${label.toLowerCase()}), por exemplo ${formatCompact(QUICK_DEFAULT_AVERAGE[band])}.` });
           setErrs({ ...errs, avg: undefined });
           onChange({ ...value, average: n });
         }}
@@ -199,25 +199,25 @@ function QuickBand({ band, label, value, onChange }: { band: QuickBandKey; label
 function Results({ result: r, summary }: { result: SeedResult; summary: string }) {
   return (
     <section class="kg-grid" aria-labelledby="ks-res-h">
-      <h2 id="ks-res-h">Counted kingdom power</h2>
+      <h2 id="ks-res-h">Poder do reino contado</h2>
       <p class="ks-summary" aria-live="polite" data-summary>{summary}</p>
       {r.totalGovernors > 0 && (
         <>
           <dl class="ks-stats" data-stats>
-            <div><dt>Counted power</dt><dd data-counted>{powerText(r.counted)}</dd></div>
-            <div><dt>Raw power of the top {r.countedGovernors}</dt><dd>{powerText(r.rawTopPower)}</dd></div>
-            <div><dt>Imperium threshold</dt><dd>{formatCompact(r.imperium.threshold)} — {r.imperium.reached ? "reached" : `${formatCompact(r.imperium.gap)} short`}</dd></div>
-            <div><dt>Not counted (rank 301 and below)</dt><dd data-ignored>{r.ignoredGovernors} governor{r.ignoredGovernors === 1 ? "" : "s"}, {formatCompact(r.ignoredPower)}</dd></div>
+            <div><dt>Poder contado</dt><dd data-counted>{powerText(r.counted)}</dd></div>
+            <div><dt>Poder bruto dos {r.countedGovernors} primeiros</dt><dd>{powerText(r.rawTopPower)}</dd></div>
+            <div><dt>Limite do Imperium</dt><dd>{formatCompact(r.imperium.threshold)} — {r.imperium.reached ? "atingido" : `faltam ${formatCompact(r.imperium.gap)}`}</dd></div>
+            <div><dt>Não contados (posição 301 em diante)</dt><dd data-ignored>{r.ignoredGovernors} {r.ignoredGovernors === 1 ? "governador" : "governadores"}, {formatCompact(r.ignoredPower)}</dd></div>
           </dl>
-          <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Breakdown by power band">
+          <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Detalhamento por faixa de poder">
             <table class="kg-table" data-bands>
-              <caption class="ks-caption">Breakdown by band (top {r.countedGovernors})</caption>
+              <caption class="ks-caption">Detalhamento por faixa (top {r.countedGovernors})</caption>
               <thead>
                 <tr>
-                  <th scope="col">Part of each governor's power</th>
-                  <th scope="col" class="num">Counts at</th>
-                  <th scope="col" class="num">Power in this part</th>
-                  <th scope="col" class="num">Counted</th>
+                  <th scope="col">Parte do poder de cada governador</th>
+                  <th scope="col" class="num">Conta a</th>
+                  <th scope="col" class="num">Poder nesta parte</th>
+                  <th scope="col" class="num">Contado</th>
                 </tr>
               </thead>
               <tbody>
@@ -236,11 +236,11 @@ function Results({ result: r, summary }: { result: SeedResult; summary: string }
             </table>
           </div>
           <ul class="ks-thresholds" data-thresholds>
-            <li>Above 150M: <strong>{r.above150M}</strong> governor{r.above150M === 1 ? "" : "s"}</li>
-            <li>Above 300M: <strong>{r.above300M}</strong></li>
-            <li>Above 500M: <strong>{r.above500M}</strong> (power above 500M adds nothing)</li>
+            <li>Acima de 150M: <strong>{r.above150M}</strong> {r.above150M === 1 ? "governador" : "governadores"}</li>
+            <li>Acima de 300M: <strong>{r.above300M}</strong></li>
+            <li>Acima de 500M: <strong>{r.above500M}</strong> (poder acima de 500M não soma nada)</li>
           </ul>
-          <p class="kg-note">No seed letter is shown: only the Imperium threshold is published. The thresholds for A, B, C and D are not known.</p>
+          <p class="kg-note">Nenhuma letra de seed é mostrada: só o limite do Imperium foi publicado. Os limites de A, B, C e D não são conhecidos.</p>
         </>
       )}
     </section>
@@ -267,30 +267,30 @@ function WhatIf({ doc, result, after, delta, marks, onChange }: WhatIfProps) {
 
   return (
     <section class="kg-grid" aria-labelledby="ks-whatif-h">
-      <h2 id="ks-whatif-h">What if</h2>
+      <h2 id="ks-whatif-h">E se</h2>
       <p class="kg-note">
-        Some councils zero their own players or turn power away to land in a lower seed. This panel shows the arithmetic only; it is not advice to do either. The Vacation Permit is the official way a king can take a governor out of the matchmaking score.
+        Alguns conselhos zeram os próprios jogadores ou dispensam poder para cair num seed mais baixo. Este painel mostra só a aritmética; não é conselho para fazer nenhuma das duas coisas. A Permissão de Férias é a forma oficial de o rei tirar um governador da pontuação de matchmaking.
       </p>
-      <p class="kg-note"><span class="kg-badge">Hypothesis</span> A Vacation Permit is treated here as removing the governor from this counted power. The patch notes only say "matchmaking score"; whether that is the same number is not stated.</p>
+      <p class="kg-note"><span class="kg-badge">Hipótese</span> Aqui, uma Permissão de Férias é tratada como tirar o governador deste poder contado. As notas só dizem "pontuação de matchmaking"; não está dito se é o mesmo número.</p>
       <dl class="ks-stats" data-whatif-result aria-live="polite">
-        <div><dt>Counted now</dt><dd>{formatCompact(result.counted)}</dd></div>
-        <div><dt>With your marks</dt><dd data-after>{formatCompact(after.counted)}</dd></div>
-        <div><dt>Change</dt><dd data-delta>{marks === 0 ? "No marks yet" : `${delta > 0 ? "+" : delta < 0 ? "−" : ""}${formatCompact(Math.abs(delta))}`}</dd></div>
-        <div><dt>Imperium threshold</dt><dd>{after.imperium.reached ? "reached" : `${formatCompact(after.imperium.gap)} short`}</dd></div>
+        <div><dt>Contado agora</dt><dd>{formatCompact(result.counted)}</dd></div>
+        <div><dt>Com as suas marcas</dt><dd data-after>{formatCompact(after.counted)}</dd></div>
+        <div><dt>Mudança</dt><dd data-delta>{marks === 0 ? "Nenhuma marca ainda" : `${delta > 0 ? "+" : delta < 0 ? "−" : ""}${formatCompact(Math.abs(delta))}`}</dd></div>
+        <div><dt>Limite do Imperium</dt><dd>{after.imperium.reached ? "atingido" : `faltam ${formatCompact(after.imperium.gap)}`}</dd></div>
       </dl>
-      {marks > 0 && <div class="kg-actions"><button type="button" class="btn btn-secondary" onClick={() => onChange({ vacation: [], zeroed: {} })}>Clear all marks</button></div>}
+      {marks > 0 && <div class="kg-actions"><button type="button" class="btn btn-secondary" onClick={() => onChange({ vacation: [], zeroed: {} })}>Limpar todas as marcas</button></div>}
       <details class="ks-details">
-        <summary>Mark governors ({all.length} highest shown)</summary>
-        <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Mark governors">
+        <summary>Marcar governadores ({all.length} maiores mostrados)</summary>
+        <div class="kg-table-wrap" tabIndex={0} role="region" aria-label="Marcar governadores">
           <table class="kg-table ks-whatif" data-whatif>
-            <caption class="visually-hidden">Governors by power, with what-if marks</caption>
+            <caption class="visually-hidden">Governadores por poder, com marcas de simulação</caption>
             <thead>
               <tr>
-                <th scope="col" class="num">Rank</th>
-                <th scope="col">Governor</th>
-                <th scope="col" class="num">Power</th>
-                <th scope="col">Vacation Permit</th>
-                <th scope="col">Power after zeroing</th>
+                <th scope="col" class="num">Posição</th>
+                <th scope="col">Governador</th>
+                <th scope="col" class="num">Poder</th>
+                <th scope="col">Permissão de Férias</th>
+                <th scope="col">Poder depois de zerar</th>
               </tr>
             </thead>
             <tbody>
@@ -305,7 +305,7 @@ function WhatIf({ doc, result, after, delta, marks, onChange }: WhatIfProps) {
                       <input
                         type="checkbox"
                         class="ks-check"
-                        aria-label={`Vacation Permit for ${label}`}
+                        aria-label={`Permissão de Férias para ${label}`}
                         checked={vac.has(g.id)}
                         onChange={(e) => {
                           const on = (e.currentTarget as HTMLInputElement).checked;
@@ -314,7 +314,7 @@ function WhatIf({ doc, result, after, delta, marks, onChange }: WhatIfProps) {
                       />
                     </td>
                     <td>
-                      <ZeroInput id={`ks-zero-${g.id}`} label={`Power after zeroing for ${label}`} value={w.zeroed[g.id]} max={g.power} onValue={(v) => {
+                      <ZeroInput id={`ks-zero-${g.id}`} label={`Poder depois de zerar para ${label}`} value={w.zeroed[g.id]} max={g.power} onValue={(v) => {
                         const zeroed = { ...w.zeroed };
                         if (v === null) delete zeroed[g.id];
                         else zeroed[g.id] = v;
@@ -327,7 +327,7 @@ function WhatIf({ doc, result, after, delta, marks, onChange }: WhatIfProps) {
             </tbody>
           </table>
         </div>
-        <p class="kg-hint">The row after rank {SEED_RULE.topN} is the first governor who is not counted now. Removing someone above moves them in.</p>
+        <p class="kg-hint">A linha depois da posição {SEED_RULE.topN} é o primeiro governador que não conta agora. Tirar alguém de cima faz ele entrar.</p>
       </details>
     </section>
   );
@@ -361,7 +361,7 @@ function ZeroInput({ id, label, value, max, onValue }: { id: string; label: stri
         if (ok) onValue(n);
       }}
     />
-    {bad && <p id={`${id}-error`} class="kg-error">Enter a power below {formatCompact(max)}.</p>}
+    {bad && <p id={`${id}-error`} class="kg-error">Digite um poder abaixo de {formatCompact(max)}.</p>}
     </>
   );
 }

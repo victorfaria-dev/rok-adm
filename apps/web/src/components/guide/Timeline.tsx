@@ -27,8 +27,8 @@ function Node({ n, lazy }: { n: TimelineNode; lazy: boolean }) {
           <span class="tl-dot" aria-hidden="true" />
           <span class="tl-node-title">{n.title}</span>
           <span class="tl-node-tags">
-            {n.done && <span class="tl-done">Probably done</span>}
-            {n.ch && <span class="tl-ch mono">CH {n.ch[0]}–{n.ch[1]}</span>}
+            {n.done && <span class="tl-done">Provavelmente já feito</span>}
+            {n.ch && <span class="tl-ch mono">Pref. {n.ch[0]}–{n.ch[1]}</span>}
             <Confidence level={n.confidence} short />
           </span>
         </summary>
@@ -36,11 +36,11 @@ function Node({ n, lazy }: { n: TimelineNode; lazy: boolean }) {
         <div class="tl-card">
           {n.gist && <p class="tl-gist">{n.gist}</p>}
           <p class="tl-meta">
-            <span>Sources: {sites || "none listed"}</span>
-            {n.cards.length > 0 && <span class="tl-cards"> · {n.cards.length} fact {n.cards.length === 1 ? "card" : "cards"}</span>}
+            <span>Fontes: {sites || "nenhuma listada"}</span>
+            {n.cards.length > 0 && <span class="tl-cards"> · {n.cards.length} {n.cards.length === 1 ? "ficha de fato" : "fichas de fatos"}</span>}
           </p>
           <a class="tl-more" href={`#b-${n.id}`} data-read-more={n.id}>
-            Read more<span class="visually-hidden">: {n.title}</span>
+            Ler mais<span class="visually-hidden">: {n.title}</span>
           </a>
         </div>
         )}
@@ -63,18 +63,18 @@ function Nodes({ lane, lazy }: { lane: TimelineLane; lazy: boolean }) {
   const n = lane.nodes.length;
   return (
     <details class="tl-fold" data-fold={done ? "done" : "any"} onToggle={lazy ? (e) => setOpen((e.currentTarget as HTMLDetailsElement).open) : undefined}>
-      <summary>Show {n} {n === 1 ? "step" : "steps"} {done ? "(probably done)" : "for any day"}</summary>
+      <summary>Mostrar {n} {n === 1 ? "passo" : "passos"} {done ? "(provavelmente já feitos)" : "para qualquer dia"}</summary>
       {(!lazy || open) && list}
     </details>
   );
 }
 
-export function Timeline({ timeline, here = null, title = "Your road to KvK1", idPrefix = "tl", lazyCards = false }: Props) {
+export function Timeline({ timeline, here = null, title = "Seu caminho até o KvK1", idPrefix = "tl", lazyCards = false }: Props) {
   const hid = `${idPrefix}-h`;
   return (
     <section class="tl" data-timeline aria-labelledby={hid}>
       <h2 id={hid} class="tl-title">{title}</h2>
-      <p class="tl-hint">Each dot is a step, placed where it applies. Open one for a short summary; the full text of every step is further down.</p>
+      <p class="tl-hint">Cada ponto é um passo, colocado onde se aplica. Abra um para ver um resumo curto; o texto completo de cada passo está mais abaixo.</p>
       <ol class="tl-lanes">
         {timeline.lanes.map((lane) => {
           const isHere = here?.lane === lane.id;
@@ -86,7 +86,7 @@ export function Timeline({ timeline, here = null, title = "Your road to KvK1", i
                 {lane.sub && <span class="tl-lane-sub">{lane.sub}</span>}
                 {isHere && here && (
                   <span class="tl-here" data-you-are-here>
-                    You are here <span class="tl-here-why">· {here.text}</span>
+                    Você está aqui <span class="tl-here-why">· {here.text}</span>
                   </span>
                 )}
               </div>
@@ -96,7 +96,7 @@ export function Timeline({ timeline, here = null, title = "Your road to KvK1", i
         })}
       </ol>
       {here?.lane === "past" && (
-        <p class="tl-past" data-you-are-here>You are here: past the end of this road. {here.text}.</p>
+        <p class="tl-past" data-you-are-here>Você está aqui: depois do fim deste caminho. {here.text}.</p>
       )}
     </section>
   );

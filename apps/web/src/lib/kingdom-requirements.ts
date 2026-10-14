@@ -18,9 +18,9 @@ export const EXAMPLE_PERCENT = 250;
 /** Clearly fictional sandbox accounts (stable ids so server and browser render the same). */
 export function sampleAccounts(): SampleAccount[] {
   return [
-    { id: "sample-a", name: "Sample A", stats: { power: 10_500_000, t4: 600_000, t5: 0, deads: 300_000 } },
-    { id: "sample-b", name: "Sample B", stats: { power: 35_000_000, t4: 2_000_000, t5: 1_500_000, deads: 900_000 } },
-    { id: "sample-c", name: "Sample C", stats: { power: 80_000_000, t4: 1_000_000, t5: 6_000_000, deads: 2_500_000 } },
+    { id: "sample-a", name: "Exemplo A", stats: { power: 10_500_000, t4: 600_000, t5: 0, deads: 300_000 } },
+    { id: "sample-b", name: "Exemplo B", stats: { power: 35_000_000, t4: 2_000_000, t5: 1_500_000, deads: 900_000 } },
+    { id: "sample-c", name: "Exemplo C", stats: { power: 80_000_000, t4: 1_000_000, t5: 6_000_000, deads: 2_500_000 } },
   ];
 }
 
@@ -41,7 +41,7 @@ export function newCard(now: Date = new Date()): RequirementsCard {
 
 export type Parsed<T> = { ok: true; value: T } | { ok: false; error: string } | null;
 
-const QTY_ERROR = "Enter a whole number like 1,200,000, 10.5m or 300k.";
+const QTY_ERROR = "Digite um número inteiro como 1200000, 10.5m ou 300k.";
 
 /** A well-formed quantity that parseQuantity refused only for its size (past the safe-integer range). */
 function looksTooLarge(text: string): boolean {
@@ -55,8 +55,8 @@ function looksTooLarge(text: string): boolean {
 export function parseQty(text: string): Parsed<number> {
   if (!text.trim()) return null;
   const v = parseQuantity(text);
-  if (v === null) return { ok: false, error: looksTooLarge(text) ? "This number is too large." : QTY_ERROR };
-  if (v > REQ_MAX_NUMBER) return { ok: false, error: "This number is too large." };
+  if (v === null) return { ok: false, error: looksTooLarge(text) ? "Este número é grande demais." : QTY_ERROR };
+  if (v > REQ_MAX_NUMBER) return { ok: false, error: "Este número é grande demais." };
   return { ok: true, value: v };
 }
 
@@ -64,9 +64,9 @@ export function parseQty(text: string): Parsed<number> {
 export function parsePct(text: string): Parsed<number> {
   const s = text.trim().replace(/%$/, "").trim();
   if (!s) return null;
-  if (!/^\d+(\.\d+)?$/.test(s)) return { ok: false, error: "Enter a percent like 250." };
+  if (!/^\d+(\.\d+)?$/.test(s)) return { ok: false, error: "Digite uma porcentagem como 250." };
   const v = Number(s);
-  if (v <= 0 || v > REQ_MAX_PERCENT) return { ok: false, error: `Enter more than 0 and at most ${REQ_MAX_PERCENT.toLocaleString("en-US")}.` };
+  if (v <= 0 || v > REQ_MAX_PERCENT) return { ok: false, error: `Digite mais que 0 e no máximo ${REQ_MAX_PERCENT.toLocaleString("pt-BR")}.` };
   return { ok: true, value: v };
 }
 
@@ -74,9 +74,9 @@ export function parsePct(text: string): Parsed<number> {
 export function parseGroupPct(text: string): Parsed<number> {
   const s = text.trim().replace(/%$/, "").trim();
   if (!s) return null;
-  if (!/^\d+(\.\d+)?$/.test(s)) return { ok: false, error: "Enter a percent like 80." };
+  if (!/^\d+(\.\d+)?$/.test(s)) return { ok: false, error: "Digite uma porcentagem como 80." };
   const v = Number(s);
-  if (v <= 0 || v > REQ_GROUP_MAX_PERCENT) return { ok: false, error: `Enter more than 0 and at most ${REQ_GROUP_MAX_PERCENT.toLocaleString("en-US")}.` };
+  if (v <= 0 || v > REQ_GROUP_MAX_PERCENT) return { ok: false, error: `Digite mais que 0 e no máximo ${REQ_GROUP_MAX_PERCENT.toLocaleString("pt-BR")}.` };
   return { ok: true, value: v };
 }
 
@@ -138,7 +138,7 @@ export function emptyGroup(taken: readonly string[]): GroupRow {
 }
 
 export function emptySample(n: number): SampleRow {
-  return { id: newDocId(), name: `Sample ${String.fromCharCode(65 + (n % 26))}`, values: statsToValues({}) };
+  return { id: newDocId(), name: `Exemplo ${String.fromCharCode(65 + (n % 26))}`, values: statsToValues({}) };
 }
 
 export function cardToForm(c: RequirementsCard): CardForm {
@@ -185,7 +185,7 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
       if (errorOf(min)) errors[`band-${i}-min`] = errorOf(min)!;
       if (errorOf(max)) errors[`band-${i}-max`] = errorOf(max)!;
       if (errorOf(pct)) errors[`band-${i}-pct`] = errorOf(pct)!;
-      else if (!pct) errors[`band-${i}-pct`] = "Enter the percent of power for this band.";
+      else if (!pct) errors[`band-${i}-pct`] = "Digite a porcentagem do poder para esta faixa.";
       bands.push({ minPower: valueOf(min) ?? 0, maxPower: valueOf(max), percent: valueOf(pct) ?? 0 });
     });
     if (Object.keys(errors).length === 0) bandIssues = validateBands(bands);
@@ -201,9 +201,9 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
   const groupRows = f.groups.slice(0, REQ_MAX_GROUPS);
   groupRows.forEach((g, i) => {
     const pct = parseGroupPct(g.pct);
-    if (!g.name.trim()) errors[`group-${i}-name`] = "Enter a name for this group.";
+    if (!g.name.trim()) errors[`group-${i}-name`] = "Digite um nome para este grupo.";
     if (errorOf(pct)) errors[`group-${i}-pct`] = errorOf(pct)!;
-    else if (!pct) errors[`group-${i}-pct`] = "Enter the percent of the normal target.";
+    else if (!pct) errors[`group-${i}-pct`] = "Digite a porcentagem da meta normal.";
     groups.push({ id: g.id, name: g.name, percent: valueOf(pct) ?? 0 });
   });
   for (const x of validateGroups(groups)) {
@@ -213,7 +213,7 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
   const fixed = parseQty(f.fixed);
   if (f.mode === "fixed") {
     if (errorOf(fixed)) errors.fixed = errorOf(fixed)!;
-    else if (!fixed) errors.fixed = "Enter the DKP target.";
+    else if (!fixed) errors.fixed = "Digite a meta de DKP.";
   }
   const samples: SampleAccount[] = f.samples.slice(0, REQ_MAX_SAMPLES).map((s) => {
     const stats: FormulaVars = {};
@@ -247,7 +247,7 @@ export function formToCard(f: CardForm, now: Date = new Date()): FormCheck {
 
 /** Text title for the store list. */
 export function cardTitle(c: Pick<RequirementsCard, "title" | "kingdom">): string {
-  return c.title || (c.kingdom ? `${c.kingdom} requirements` : "Untitled requirements card");
+  return c.title || (c.kingdom ? `Requisitos de ${c.kingdom}` : "Cartão de requisitos sem título");
 }
 
 // ---------------------------------------------------------------------------
@@ -346,7 +346,7 @@ export function rosterToCsv(card: Pick<RequirementsCard, "formula" | "requiremen
 }
 
 const ROSTER_COLUMNS = {
-  name: ["name", "governor", "account", "player"],
+  name: ["name", "governor", "account", "player", "nome", "governador", "conta", "jogador"],
   power: ["power"], t1: ["t1", "t1 kills"], t2: ["t2", "t2 kills"], t3: ["t3", "t3 kills"], t4: ["t4", "t4 kills"], t5: ["t5", "t5 kills"],
   deads: ["deads", "dead", "dead troops"], kp: ["kp", "kill points", "killpoints"],
 } as const;
@@ -373,10 +373,10 @@ export function rosterFromCsv(current: readonly SampleRow[], text: string, makeI
   let added = 0, updated = 0, overLimit = 0;
   for (const { line, values } of t.records) {
     const name = values.name.replace(/\s+/g, " ").trim();
-    if (!name) { errors.push({ line, message: "No name on this row." }); continue; }
-    if (name.length > 40) { errors.push({ line, message: "Name is longer than 40 characters." }); continue; }
+    if (!name) { errors.push({ line, message: "Nenhum nome nesta linha." }); continue; }
+    if (name.length > 40) { errors.push({ line, message: "O nome tem mais de 40 caracteres." }); continue; }
     const bad = ROSTER_VARS.filter((v) => values[v] && errorOf(parseQty(values[v])));
-    if (bad.length) { errors.push({ line, message: `Not a number: ${bad.join(", ")}.` }); continue; }
+    if (bad.length) { errors.push({ line, message: `Não é um número: ${bad.join(", ")}.` }); continue; }
     const i = samples.findIndex((s) => s.name.toLowerCase() === name.toLowerCase());
     if (i >= 0) {
       for (const v of ROSTER_VARS) if (values[v]) samples[i]!.values[v] = values[v];

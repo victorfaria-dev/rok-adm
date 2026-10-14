@@ -25,53 +25,55 @@ export interface HubGroup {
   items: HubItem[];
 }
 
+const RES_PT = { food: "comida", wood: "madeira", stone: "pedra", gold: "ouro" } as const;
+
 const fromPage = (set: GuidePage["set"], tag: HubTag = set): HubItem => {
   const g = guidePage(set);
   return { href: g.href, title: g.title, summary: g.summary, set, tag };
 };
 
-// Every user-facing label of the hub groups lives here.
+// Todos os rótulos dos grupos do hub ficam aqui.
 export const HUB_GROUPS: readonly HubGroup[] = [
   {
     id: "plan",
-    title: "Plan my account",
+    title: "Planejar minha conta",
     items: [fromPage("f2p", "always"), fromPage("first30"), fromPage("low"), fromPage("latestage")],
   },
   {
     id: "commanders",
-    title: "Commanders",
+    title: "Comandantes",
     items: [{
-      href: "/commanders/", title: "Commander guide",
-      summary: "Which commanders are worth your sculptures: shelf life and Go / Wait / Avoid, with the reasons.", tag: "always",
+      href: "/commanders/", title: "Guia de comandantes",
+      summary: "Quais comandantes valem suas esculturas: validade e Vale a pena / Espere / Evite, com os motivos.", tag: "always",
     }],
   },
-  { id: "new-kingdom", title: "Starting in a new kingdom", items: [fromPage("newkingdom")] },
+  { id: "new-kingdom", title: "Começando num reino novo", items: [fromPage("newkingdom")] },
   {
     id: "back",
-    title: "Coming back after a break",
+    title: "Voltando depois de uma pausa",
     items: [
       fromPage("returning"),
-      { href: "/changes/", title: "What changed since…", summary: "Pick when you stopped playing and see the patches since.", tag: "returning" },
+      { href: "/changes/", title: "O que mudou desde…", summary: "Escolha quando parou de jogar e veja as atualizações desde então.", tag: "returning" },
     ],
   },
   {
     id: "trouble",
-    title: "When things go wrong",
+    title: "Quando dá errado",
     items: [
       fromPage("recovery"),
-      { href: "/tools/zeroed/", title: "Zeroed? Recovery plan", summary: "A 30-second log-off checklist and what to rebuild first.", tag: "recovery" },
-      { href: "/tools/safety/", title: "Play it safe", summary: "What gets accounts banned, and a support ticket builder.", tag: "always" },
+      { href: "/tools/zeroed/", title: "Foi zerado? Plano de recuperação", summary: "Uma lista de 30 segundos para sair do jogo e o que reconstruir primeiro.", tag: "recovery" },
+      { href: "/tools/safety/", title: "Jogue com segurança", summary: "O que leva contas a serem banidas, e um montador de pedido ao suporte.", tag: "always" },
     ],
   },
   {
     id: "farms",
-    title: "Farm accounts",
+    title: "Contas farm",
     items: [{
       ...fromPage("farms"),
-      links: (["food", "wood", "stone", "gold"] as const).map((r) => ({ href: `/guides/farms/${r}/`, label: `${r[0]!.toUpperCase()}${r.slice(1)} farm` })),
+      links: (["food", "wood", "stone", "gold"] as const).map((r) => ({ href: `/guides/farms/${r}/`, label: `Farm de ${RES_PT[r]}` })),
     }],
   },
-  { id: "lead", title: "Leading a kingdom", items: [fromPage("kingdomadmin")] },
+  { id: "lead", title: "Liderando um reino", items: [fromPage("kingdomadmin")] },
 ];
 
 /** Every guide page appears exactly once in the hub (tested). */

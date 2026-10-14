@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 
 interface Props {
-  /** Visible text of the first button, e.g. "Delete". */
+  /** Visible text of the first button, ex.: "Apagar". */
   label: string;
   /** Accessible name of the first button when the visible label needs context. */
   ariaLabel?: string;
-  /** Question shown in the confirm step, e.g. "Delete this rules page?". */
+  /** Question shown in the confirm step, ex.: "Apagar esta página de regras?". */
   question: string;
   yesLabel?: string;
   noLabel?: string;
@@ -32,7 +32,7 @@ function keepFocus(from: HTMLElement | null): void {
 }
 
 /** Inline two-step confirm ("Delete" → "Delete X? Yes / No"), instead of window.confirm. */
-export default function ConfirmAction({ label, ariaLabel, question, yesLabel = "Yes, delete", noLabel = "No, keep it", onConfirm }: Props) {
+export default function ConfirmAction({ label, ariaLabel, question, yesLabel = "Sim, apagar", noLabel = "Não, manter", onConfirm }: Props) {
   const [open, setOpen] = useState(false);
   const yesRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);

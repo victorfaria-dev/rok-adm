@@ -15,14 +15,14 @@ test.describe("seed simulator", () => {
   test("renders experimental badge, freshness warning, assumptions and sources", async ({ page }) => {
     const errors = trackErrors(page);
     await gotoHydrated(page, "/kingdom/seed/");
-    await expect(page.locator("h1")).toHaveText("Seed simulator");
+    await expect(page.locator("h1")).toHaveText("Simulador de seed");
     await expect(page.locator("[data-experimental].kg-badge")).toHaveText("Experimental");
     await expect(page.locator("[data-freshness]")).toContainText("Last verified for patch 1.0.95; check date passed, may be outdated.");
     await expect(page.locator("[data-assumptions] li")).toHaveCount(8);
     await expect(page.locator("[data-assumptions]")).toContainText("L-B03-03");
-    await expect(page.locator("[data-sources]")).toContainText("B08-0008 (confidence: high)");
+    await expect(page.locator("[data-sources]")).toContainText("B08-0008 (confiança: high)");
     await expect(page.locator("[data-privacy]")).toHaveCount(0); // UX stage 1: shown once, on the Kingdom overview
-    await expect(page.locator("[data-summary]")).toHaveText("No governors entered yet.");
+    await expect(page.locator("[data-summary]")).toHaveText("Nenhum governador informado ainda.");
     expect(errors).toEqual([]);
   });
 
@@ -30,37 +30,37 @@ test.describe("seed simulator", () => {
     const errors = trackErrors(page);
     await gotoHydrated(page, "/kingdom/seed/");
     const powers = Array.from({ length: 305 }, (_, i) => (i + 1) * M);
-    await page.getByLabel("Governor powers, one per line").fill(powers.map((p) => `${p / M}m`).join("\n"));
+    await page.getByLabel("Poder dos governadores, um por linha").fill(powers.map((p) => `${p / M}m`).join("\n"));
     const expected = powers.slice(5).reduce((s, p) => s + counted(p), 0);
     await expect(page.locator("[data-counted]")).toContainText(fmt(expected));
-    await expect(page.locator("[data-ignored]")).toContainText("5 governors, 15M");
-    await expect(page.locator("[data-summary]")).toContainText("from the top 300 of 305 governors");
-    await expect(page.locator("[data-summary]")).toContainText("5 governors are below the top 300 and not counted.");
+    await expect(page.locator("[data-ignored]")).toContainText("5 governadores, 15M");
+    await expect(page.locator("[data-summary]")).toContainText("dos 300 primeiros de 305 governadores");
+    await expect(page.locator("[data-summary]")).toContainText("5 governadores estão abaixo do top 300 e não contam.");
     expect(errors).toEqual([]);
   });
 
   test("band breakdown for a known input, saved locally, and what-if marks", async ({ page }) => {
     await gotoHydrated(page, "/kingdom/seed/");
-    await page.getByLabel("Governor powers, one per line").fill("Alpha, 600m\nBravo, 400m\nCharlie, 200,000,000\n100000000\nnot a number");
-    await expect(page.locator("[data-line-errors]")).toContainText("Line 5");
+    await page.getByLabel("Poder dos governadores, um por linha").fill("Alpha, 600m\nBravo, 400m\nCharlie, 200,000,000\n100000000\nnot a number");
+    await expect(page.locator("[data-line-errors]")).toContainText("Linha 5");
     const band = (k: string) => page.locator(`[data-band="${k}"] td`).allTextContents();
     expect(await band("0-150M")).toEqual(["100%", fmt(550 * M), fmt(550 * M)]);
     expect(await band("150-300M")).toEqual(["80%", fmt(350 * M), fmt(280 * M)]);
     expect(await band("300-500M")).toEqual(["50%", fmt(300 * M), fmt(150 * M)]);
     expect(await band(">500M")).toEqual(["0%", fmt(100 * M), "0"]);
     await expect(page.locator("[data-counted]")).toContainText(fmt(980 * M));
-    await expect(page.locator("[data-thresholds]")).toContainText("Above 150M: 3 governors");
-    await expect(page.locator("[data-thresholds]")).toContainText("Above 500M: 1");
-    await expect(page.locator("[data-summary]")).toContainText("below the Imperium threshold (23.5B)");
+    await expect(page.locator("[data-thresholds]")).toContainText("Acima de 150M: 3 governadores");
+    await expect(page.locator("[data-thresholds]")).toContainText("Acima de 500M: 1");
+    await expect(page.locator("[data-summary]")).toContainText("abaixo do limite do Imperium (23,5B)");
 
-    await page.getByText(/Mark governors/).click();
-    await page.getByLabel("Vacation Permit for #1 Alpha").check();
+    await page.getByText(/Marcar governadores/).click();
+    await page.getByLabel("Permissão de Férias para #1 Alpha").check();
     await expect(page.locator("[data-delta]")).toHaveText("−370M");
-    await page.getByLabel("Power after zeroing for #3 Charlie").fill("50m");
+    await page.getByLabel("Poder depois de zerar para #3 Charlie").fill("50m");
     await expect(page.locator("[data-after]")).toHaveText("470M"); // 980 − 370 (Alpha) − 140 (Charlie 190 → 50)
-    await expect(page.locator("[data-summary]")).toContainText("counted power drops by 510M to 470M");
-    await page.getByLabel("Power after zeroing for #2 Bravo").fill("900m");
-    await expect(page.locator("#ks-zero-L2-error")).toContainText("Enter a power below 400M");
+    await expect(page.locator("[data-summary]")).toContainText("o poder contado cai 510M e vai a 470M");
+    await page.getByLabel("Poder depois de zerar para #2 Bravo").fill("900m");
+    await expect(page.locator("#ks-zero-L2-error")).toContainText("Digite um poder abaixo de 400M");
 
     const stored = await page.evaluate((k) => JSON.parse(localStorage.getItem(k) ?? "{}"), KINGDOM_KEY);
     expect(stored.docs[0].kind).toBe("seed");
@@ -74,7 +74,7 @@ test.describe("seed simulator", () => {
     await gotoHydrated(page, "/kingdom/seed/");
     // The select is server-rendered: retry until the island has hydrated and shows the quick fields.
     await expect(async () => {
-      await page.getByLabel("How to enter powers").selectOption("quick");
+      await page.getByLabel("Como informar os poderes").selectOption("quick");
       await expect(page.locator("#ks-q-0150M-count")).toBeVisible({ timeout: 1000 });
     }).toPass();
     await page.locator("#ks-q-0150M-count").fill("100");
@@ -82,7 +82,7 @@ test.describe("seed simulator", () => {
     await page.locator("#ks-q-500M-count").fill("2");
     await expect(page.locator("[data-counted]")).toContainText(fmt(100 * 100 * M + 2 * 370 * M));
     await page.locator("#ks-q-150300M-avg").fill("10m");
-    await expect(page.locator("#ks-q-150300M-avg-error")).toContainText("inside this band");
+    await expect(page.locator("#ks-q-150300M-avg-error")).toContainText("dentro desta faixa");
   });
 
   test("360px: no sideways scroll, 44px targets (filled)", async ({ page }) => {

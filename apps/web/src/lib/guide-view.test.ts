@@ -51,7 +51,7 @@ describe("profile precedence", () => {
     for (const bad of ["garbage", "", "1.9.0.0.12.60....0", "2.0.0.0.1.60....0"]) {
       const c = chooseProfile(`?p=${bad}`, saved);
       expect(c.source, bad).toBe("default");
-      expect(c.error, bad).toMatch(/not valid/);
+      expect(c.error, bad).toMatch(/não é válido/);
       expect(c.profile).toEqual(defaultProfile());
       expect(c.canSave).toBe(false);
     }

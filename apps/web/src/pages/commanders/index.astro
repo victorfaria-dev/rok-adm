@@ -6,10 +6,10 @@ import { buildPickerRoster } from "../../lib/commander-roster";
 // Lean roster (id, name, rarity, period, portrait flag) as props: no facts or sources reach the client.
 const roster = buildPickerRoster();
 ---
-<Shell title="Commanders" description="A checklist before you spend sculptures on a commander: shelf-life tags, Go / Wait / Avoid and why. Your answers stay in this browser." mode="operate">
+<Shell title="Comandantes" description="Uma lista de conferência antes de gastar esculturas em um comandante: etiquetas de validade, Vale a pena / Espere / Evite e o porquê. Suas respostas ficam neste navegador." mode="operate">
   <div class="intro">
-    <h1>Commanders</h1>
-    <p>Check a commander before you spend gold heads or sculptures on it.</p>
+    <h1>Comandantes</h1>
+    <p>Confira um comandante antes de gastar cabeças douradas ou esculturas nele.</p>
   </div>
   <Commanders roster={roster} client:load />
 </Shell>

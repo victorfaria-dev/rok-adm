@@ -32,26 +32,26 @@ describe("CommanderPicker", () => {
     const noPortrait = roster.commanders.find((c) => !c.portrait)!;
     expect(tile(noPortrait.name).querySelector("img")).toBeNull();
     expect(tile(noPortrait.name).querySelector(".ckt-initials")).not.toBeNull();
-    expect(screen.getByText("Portraits: Rise of Kingdoms © Lilith Games. Fan site, not affiliated.")).toBeTruthy();
+    expect(screen.getByText("Retratos: Rise of Kingdoms © Lilith Games. Site de fã, sem afiliação.")).toBeTruthy();
   });
 
   it("searches without accents and filters by rarity", () => {
     single();
-    fireEvent.input(screen.getByLabelText("Search by name"), { target: { value: "SÚN tz" } });
+    fireEvent.input(screen.getByLabelText("Buscar pelo nome"), { target: { value: "SÚN tz" } });
     expect(tiles().map((t) => t.dataset.id)).toEqual(["sun-tzu"]);
-    fireEvent.input(screen.getByLabelText("Search by name"), { target: { value: "" } });
-    fireEvent.click(screen.getByRole("radio", { name: "Epic" }));
+    fireEvent.input(screen.getByLabelText("Buscar pelo nome"), { target: { value: "" } });
+    fireEvent.click(screen.getByRole("radio", { name: "Épico" }));
     expect(tiles().every((t) => t.dataset.rarity === "epic")).toBe(true);
-    fireEvent.input(screen.getByLabelText("Search by name"), { target: { value: "qqq" } });
-    expect(screen.getByText(/No commander matches/)).toBeTruthy();
+    fireEvent.input(screen.getByLabelText("Buscar pelo nome"), { target: { value: "qqq" } });
+    expect(screen.getByText(/Nenhum comandante corresponde/)).toBeTruthy();
   });
 
   it("only offers 'available to me now' when the stage is known", () => {
     single();
-    expect(screen.queryByRole("checkbox", { name: /Only what I can get now/ })).toBeNull();
+    expect(screen.queryByRole("checkbox", { name: /Só o que posso conseguir agora/ })).toBeNull();
     cleanup();
     single({ stage: "pre_kvk" });
-    fireEvent.click(screen.getByRole("checkbox", { name: /Only what I can get now/ }));
+    fireEvent.click(screen.getByRole("checkbox", { name: /Só o que posso conseguir agora/ }));
     expect(tiles().some((t) => t.hasAttribute("data-future"))).toBe(false);
     expect(screen.queryByRole("group", { name: /Season 3/ })).toBeNull();
   });
@@ -68,11 +68,11 @@ describe("CommanderPicker", () => {
     const onChange = single({ stage: "pre_kvk" });
     const guan = tile("Guan Yu");
     expect(guan.getAttribute("aria-disabled")).toBe("true");
-    expect(guan.textContent).toContain("Season 3");
-    expect(screen.getByRole("group", { name: /Season 3 \(KvK3\) Coming later/ })).toBeTruthy();
+    expect(guan.textContent).toContain("Temporada 3");
+    expect(screen.getByRole("group", { name: /Season 3 \(KvK3\) Chega depois/ })).toBeTruthy();
     fireEvent.click(guan);
     expect(onChange).not.toHaveBeenCalled();
-    expect(screen.getByRole("status").textContent).toBe("Guan Yu arrives in Season 3 (KvK3). Nothing to decide yet.");
+    expect(screen.getByRole("status").textContent).toBe("Guan Yu chega em Season 3 (KvK3). Ainda não há o que decidir.");
   });
 
   it("multi select toggles ids", () => {

@@ -110,7 +110,7 @@ export default function Commanders({ roster }: { roster: PickerRoster }) {
       <CommanderPicker
         roster={roster}
         progress={progress}
-        title="Choose a commander"
+        title="Escolha um comandante"
         idPrefix="cmd-pick"
         value={selected}
         onChange={(id) => {
@@ -127,26 +127,26 @@ export default function Commanders({ roster }: { roster: PickerRoster }) {
             pick(OTHER_ID);
           }}
         >
-          {OTHER_NAME} (not in our list)
+          {OTHER_NAME} (fora da nossa lista)
         </button>
         {!progress && (
           <p class="cmd-stage-hint">
-            <a href="/start/">Tell us your kingdom stage</a> to mark the commanders that arrive later.
+            <a href="/start/">Conte a fase do seu reino</a> para marcarmos os comandantes que chegam mais tarde.
           </p>
         )}
       </CommanderPicker>
 
       {!selected && (
         <p class="cmd-empty">
-          Pick the commander you want to spend sculptures on. Answers are prefilled from our table where we have data,
-          and you can change every one.
+          Escolha o comandante em que você quer gastar esculturas. As respostas vêm preenchidas pela nossa tabela onde temos dados,
+          e você pode mudar todas.
         </p>
       )}
 
       {selected && later && (
         <article class="cmd-detail" aria-labelledby="cmd-name">
           <h2 id="cmd-name" class="cmd-h2" tabIndex={-1} ref={titleRef}>{nameOf(selected)}</h2>
-          <p class="cmd-later">This commander arrives in {later.label}; nothing to decide yet.</p>
+          <p class="cmd-later">Este comandante chega em {later.label}; ainda não há o que decidir.</p>
         </article>
       )}
 
@@ -157,35 +157,35 @@ export default function Commanders({ roster }: { roster: PickerRoster }) {
             <div class="cmd-tag">
               <p class="cmd-shelf">
                 <span class="cmd-pill cmd-pill-shelf">{SHELF_LIFE_TEXT[tag.shelfLife]}</span>
-                {tag.split && <span class="cmd-pill cmd-pill-split">Community divided</span>}
+                {tag.split && <span class="cmd-pill cmd-pill-split">Comunidade dividida</span>}
               </p>
               <dl class="cmd-dl">
                 <div>
-                  <dt>Useful in</dt>
-                  <dd>{tag.usefulStages.length ? tag.usefulStages.map(stageLabel).join(", ") : "No stage listed"}</dd>
+                  <dt>Útil em</dt>
+                  <dd>{tag.usefulStages.length ? tag.usefulStages.map(stageLabel).join(", ") : "Nenhuma fase listada"}</dd>
                 </div>
                 {tag.rarity && (
                   <div>
-                    <dt>Rarity</dt>
-                    <dd>{tag.rarity === "legendary" ? "Legendary" : tag.rarity === "epic" ? "Epic" : tag.rarity}</dd>
+                    <dt>Raridade</dt>
+                    <dd>{tag.rarity === "legendary" ? "Lendário" : tag.rarity === "epic" ? "Épico" : tag.rarity}</dd>
                   </div>
                 )}
                 <div>
-                  <dt>Note</dt>
+                  <dt>Nota</dt>
                   <dd>{tag.note}</dd>
                 </div>
                 <div>
-                  <dt>Facts</dt>
+                  <dt>Fatos</dt>
                   <dd class="mono">{tag.facts.join(", ")}</dd>
                 </div>
               </dl>
               <p class="cmd-asof">
-                Tag as of <span class="mono">{SHELF_LIFE_AS_OF}</span>, taken from our research cards. Not yet checked against a game patch.
+                Etiqueta de <span class="mono">{SHELF_LIFE_AS_OF}</span>, tirada das nossas fichas de pesquisa. Ainda não conferida com uma atualização do jogo.
               </p>
             </div>
           ) : (
             <p class="cmd-tag cmd-other">
-              This commander is not in our table, so nothing is prefilled. Answer the questions yourself.
+              Este comandante não está na nossa tabela, então nada vem preenchido. Responda você mesmo às perguntas.
             </p>
           )}
 
@@ -205,25 +205,25 @@ export default function Commanders({ roster }: { roster: PickerRoster }) {
       )}
 
       <section class="cmd-overview" aria-labelledby="cmd-saved-title">
-        <h2 id="cmd-saved-title" class="cmd-h2">Your saved checks</h2>
+        <h2 id="cmd-saved-title" class="cmd-h2">Suas conferências salvas</h2>
         <p class="cmd-status" role="status">
           {undo && (
             <>
-              Answers cleared for {nameOf(undo.id)}.{" "}
-              <button type="button" class="cmd-link-btn" ref={undoRef} onClick={restore}>Undo</button>
+              Respostas apagadas de {nameOf(undo.id)}.{" "}
+              <button type="button" class="cmd-link-btn" ref={undoRef} onClick={restore}>Desfazer</button>
             </>
           )}
         </p>
         {saved.length === 0 ? (
-          <p class="cmd-empty">Nothing saved yet. Your answers stay in this browser once you answer a question.</p>
+          <p class="cmd-empty">Nada salvo ainda. Suas respostas ficam neste navegador assim que você responde uma pergunta.</p>
         ) : (
           <ul class="cmd-saved">
             {saved.map((c) => (
               <li key={c.id} class="cmd-saved-row" data-verdict={c.verdict}>
                 <a class="cmd-saved-name" href={`#${c.id}`} aria-current={c.id === selected ? "true" : undefined}>{c.name}</a>
                 <span class="cmd-saved-verdict">{VERDICT_TEXT[c.verdict].word}</span>
-                <button type="button" class="cmd-link-btn" onClick={() => clear(c.id)} aria-label={`Clear answers for ${c.name}`}>
-                  Clear answers
+                <button type="button" class="cmd-link-btn" onClick={() => clear(c.id)} aria-label={`Apagar respostas de ${c.name}`}>
+                  Apagar respostas
                 </button>
               </li>
             ))}

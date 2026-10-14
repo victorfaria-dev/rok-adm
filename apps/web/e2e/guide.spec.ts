@@ -35,13 +35,13 @@ test.describe("without JavaScript", () => {
 
   test("the default F2P guide is in the HTML, with the personalize banner and budget", async ({ page }) => {
     await page.goto("/guide/");
-    await expect(page.locator("h1")).toHaveText("Your guide");
-    await expect(page.getByText("Personalize in 2 minutes")).toBeVisible();
-    await expect(defaultGuide(page).getByRole("link", { name: "Build my guide" })).toHaveAttribute("href", "/start/");
+    await expect(page.locator("h1")).toHaveText("Seu guia");
+    await expect(page.getByText("Personalize em 2 minutos")).toBeVisible();
+    await expect(defaultGuide(page).getByRole("link", { name: "Montar meu guia" })).toHaveAttribute("href", "/start/");
     const expected = selectBlocks(blocks, defaultProfile());
     await expect(defaultGuide(page).locator("article[data-block-id]")).toHaveCount(expected.meta.shownBlocks + expected.alreadyDone.length);
-    await expect(page.locator("article[data-block-id]").first().getByText(/Verified on patch \d/)).toBeVisible();
-    await expect(page.locator("#budget h2")).toHaveText("Budget reality check");
+    await expect(page.locator("article[data-block-id]").first().getByText(/Verificado na atualização \d/)).toBeVisible();
+    await expect(page.locator("#budget h2")).toHaveText("Teste de realidade do orçamento");
     await expect(page.locator("#budget table").first()).toBeAttached();
   });
 
@@ -55,14 +55,14 @@ test.describe("without JavaScript", () => {
 test("?p=valid shows the personal guide with Recommended, without saving it", async ({ page }) => {
   await page.goto(`/guide/?p=${VALID}`);
   await expect(personal(page)).toBeVisible();
-  await expect(personal(page).getByText("Recommended", { exact: true }).first()).toBeVisible();
-  await expect(page.getByText("Shared profile:")).toBeVisible();
+  await expect(personal(page).getByText("Recomendado", { exact: true }).first()).toBeVisible();
+  await expect(page.getByText("Perfil compartilhado:")).toBeVisible();
   const expected = selectBlocks(blocks, F2P_CH12);
   await expect(personal(page).locator("article[data-block-id]")).toHaveCount(expected.meta.shownBlocks + expected.alreadyDone.length);
   expect(await page.evaluate(() => localStorage.getItem("ko:v1"))).toBeNull();
 
-  await page.getByRole("button", { name: "Use this profile" }).click();
-  await expect(page.getByRole("status").filter({ hasText: "Saved" })).toBeVisible();
+  await page.getByRole("button", { name: "Usar este perfil" }).click();
+  await expect(page.getByRole("status").filter({ hasText: "Salvo" })).toBeVisible();
   const saved = await page.evaluate(() => JSON.parse(localStorage.getItem("ko:v1") ?? "{}").profileCode);
   expect(saved).toBe(VALID);
 });
@@ -70,7 +70,7 @@ test("?p=valid shows the personal guide with Recommended, without saving it", as
 test("Low profile: budget says what buying doesn't change, with no purchase links", async ({ page }) => {
   await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}`);
   const unchanged = page.locator("#budget-unchanged");
-  await expect(unchanged.getByRole("heading", { name: "What buying doesn't change" })).toBeVisible();
+  await expect(unchanged.getByRole("heading", { name: "O que comprar não muda" })).toBeVisible();
   // The only link is our own pack value calculator: nothing points to a store.
   await expect(page.locator("#budget-low")).toBeVisible();
   const hrefs = await page.locator("#budget a").evaluateAll((as) => as.map((a) => a.getAttribute("href")));
@@ -86,11 +86,11 @@ test("Low profile: budget says what buying doesn't change, with no purchase link
 test("Low profile: Low spender targets, with tiers, per-dollar caveat, price warnings, confidence and fact ids", async ({ page }) => {
   await page.goto(`/guide/?p=${encodeProfile(LOW_D20)}#budget`);
   const low = page.locator("#budget-low");
-  await expect(low.getByRole("heading", { name: "Low spender targets" })).toBeVisible();
+  await expect(low.getByRole("heading", { name: "Metas para quem gasta pouco" })).toBeVisible();
   await expect(low.locator("[data-low-tier='pass-only'] h4")).toContainText("Pass-only");
   await expect(low.locator("[data-low-tier='low-full'] h4")).toContainText("fuller budget");
-  await expect(low.locator("#budget-low-method")).toContainText("Gems and raw VIP points per dollar only");
-  await expect(low.locator("[data-low-purchase='gem-supply-30d']").first()).toContainText("1,952");
+  await expect(low.locator("#budget-low-method")).toContainText("Só gemas e pontos de VIP brutos por dólar");
+  await expect(low.locator("[data-low-purchase='gem-supply-30d']").first()).toContainText("1.952");
   // Every line with a price carries the regional warning; every purchase row has confidence and fact ids.
   for (const item of await low.locator("[data-low-purchase]").all()) {
     await expect(item.locator("[data-price-warning]")).toHaveCount(1);
@@ -100,8 +100,8 @@ test("Low profile: Low spender targets, with tiers, per-dollar caveat, price war
   await expect(low.locator("[data-low-outside] [data-low-purchase='daily-special-offers']")).toHaveCount(1);
   await expect(low.locator("table")).toBeAttached();
   // The F2P numbers below stay labelled as the F2P baseline, never as Low's.
-  await expect(page.locator("#budget [data-f2p-baseline]")).toContainText("F2P baseline");
-  await expect(page.locator("#budget h3", { hasText: "(F2P baseline)" }).first()).toBeVisible();
+  await expect(page.locator("#budget [data-f2p-baseline]")).toContainText("base F2P");
+  await expect(page.locator("#budget h3", { hasText: "(base F2P)" }).first()).toBeVisible();
 });
 
 test("F2P and Medium profiles never get the Low targets payload", async ({ page }) => {
@@ -137,10 +137,10 @@ test("the personal guide renders in steps after idle, and a #section link render
 
 test("?p=garbage shows an inline error and the default guide", async ({ page }) => {
   await page.goto("/guide/?p=garbage");
-  await expect(page.getByRole("alert")).toContainText("not valid");
+  await expect(page.getByRole("alert")).toContainText("não é válido");
   await expect(defaultGuide(page)).toBeVisible();
   await expect(personal(page)).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Use this profile" })).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Usar este perfil" })).toHaveCount(0);
 });
 
 test("share falls back to copying the link and confirms inline", async ({ page, context, browserName }) => {
@@ -150,8 +150,8 @@ test("share falls back to copying the link and confirms inline", async ({ page, 
     Object.defineProperty(Navigator.prototype, "share", { value: undefined, configurable: true });
   });
   await page.goto(`/guide/?p=${VALID}`);
-  await page.getByRole("button", { name: "Share" }).click();
-  await expect(page.locator(".g-live[aria-live='polite']")).toHaveText("Link copied");
+  await page.getByRole("button", { name: "Compartilhar" }).click();
+  await expect(page.locator(".g-live[aria-live='polite']")).toHaveText("Link copiado");
   const copied = await page.evaluate(() => navigator.clipboard.readText());
   expect(copied).toMatch(new RegExp(`/guide/\\?p=${VALID.replace(/\./g, "\\.")}$`));
 });
@@ -160,7 +160,7 @@ test("KvK2+ profile: the late-game plan is the main content; KvK1 only labels th
   const kvk2 = make({ spending: "f2p", kingdomStage: "kvk2", cityHall: 25, minutesPerDay: 120 });
   await page.goto(`/guide/?p=${encodeProfile(kvk2)}`);
   await expect(personal(page)).toBeVisible();
-  await expect(page.locator("[data-guide-late]")).toContainText("Your plan for KvK2");
+  await expect(page.locator("[data-guide-late]")).toContainText("Seu plano para KvK2");
   await expect(page.locator("[data-guide-late] a")).toHaveAttribute("href", "/guides/late-game/");
   await expect(page.locator("[data-guide-fallback]")).toHaveCount(0);
   const sel = selectGuideWithFallback(asPayload(blocks), kvk2, asPayload(lateBlocks));
@@ -174,7 +174,7 @@ test("KvK2+ profile: the late-game plan is the main content; KvK1 only labels th
   // The KvK1 notice sits only in the sections that still lack late-stage steps.
   const marked = personal(page).locator("[data-section-fallback]");
   await expect(marked).toHaveCount(sel.fallbackSections.length);
-  await expect(marked.first()).toContainText("Closest available: KvK1 content");
+  await expect(marked.first()).toContainText("O mais próximo disponível: conteúdo do KvK1");
   for (const id of sel.fallbackSections) await expect(personal(page).locator(`#s-${id} [data-section-fallback]`)).toHaveCount(1);
   await expect(personal(page).locator("#s-plan [data-section-fallback]")).toHaveCount(0);
   const first = personal(page).locator("[data-guides-for-you] li").first();
@@ -187,7 +187,7 @@ test("KvK2+ profile: if the late-game guide fails to load, the whole guide falls
   await page.goto(`/guide/?p=${encodeProfile(soc)}`);
   await expect(personal(page)).toBeVisible();
   const notice = page.locator("[data-guide-fallback]");
-  await expect(notice).toContainText("Closest available: KvK1 content");
+  await expect(notice).toContainText("O mais próximo disponível: conteúdo do KvK1");
   const expected = selectBlocks(blocks, { ...soc, kingdomStage: "kvk1" });
   await expect(personal(page).locator("article[data-block-id]")).toHaveCount(expected.meta.shownBlocks + expected.alreadyDone.length);
   await expect(page.locator("[data-guide-late]")).toHaveCount(0);
@@ -198,9 +198,9 @@ test("a link to your own saved profile says 'Your profile' with no save button",
   await page.evaluate((code) => localStorage.setItem("ko:v1", JSON.stringify({ v: 1, profileCode: code })), VALID);
   await page.goto(`/guide/?p=${VALID}`);
   await expect(personal(page)).toBeVisible();
-  await expect(page.getByText("Your profile:")).toBeVisible();
-  await expect(page.getByText("Shared profile:")).toHaveCount(0);
-  await expect(page.getByRole("button", { name: "Use this profile" })).toHaveCount(0);
+  await expect(page.getByText("Seu perfil:")).toBeVisible();
+  await expect(page.getByText("Perfil compartilhado:")).toHaveCount(0);
+  await expect(page.getByRole("button", { name: "Usar este perfil" })).toHaveCount(0);
 });
 
 test("no sideways scroll at 360px on the personal guide", async ({ page }) => {
@@ -245,11 +245,11 @@ test.describe("guides for you", () => {
     const back = make({ spending: "f2p", returningPlayer: true, cityHall: 20 });
     await page.goto(`/guide/?p=${encodeProfile(back)}`);
     const strip = personal(page).locator("[data-guides-for-you]");
-    await expect(strip.getByRole("heading", { name: "Guides for you" })).toBeVisible();
+    await expect(strip.getByRole("heading", { name: "Guias para você" })).toBeVisible();
     const first = strip.locator("li").first();
     await expect(first).toHaveAttribute("data-guide-link", "returning");
     await expect(first.getByRole("link")).toHaveAttribute("href", "/guides/returning/");
-    await expect(strip.getByRole("link", { name: "All guides" })).toHaveAttribute("href", "/guides/");
+    await expect(strip.getByRole("link", { name: "Todos os guias" })).toHaveAttribute("href", "/guides/");
   });
 
   test("a Low profile gets the low spender steps merged in, and a link to read them alone", async ({ page }) => {
@@ -267,8 +267,8 @@ test.describe("guides for you", () => {
     await expect(first.getByRole("link")).toHaveAttribute("href", "/guides/farms/");
     const low = strip.locator('[data-guide-link="low"]');
     await expect(low).toHaveAttribute("data-included", "true");
-    await expect(low).toContainText("Already in your guide");
-    await expect(strip.getByRole("link", { name: "Low spender guide" })).toHaveCount(0);
+    await expect(low).toContainText("Já está no seu guia");
+    await expect(strip.getByRole("link", { name: "Guia para quem gasta pouco" })).toHaveCount(0);
   });
 
   test("an F2P profile does not load the Low delta", async ({ page }) => {
@@ -286,7 +286,7 @@ test.describe("guides for you", () => {
     test("without a profile, the default guide lists the other guides", async ({ page }) => {
       await page.goto("/guide/");
       const strip = defaultGuide(page).locator("[data-guides-for-you]");
-      await expect(strip.getByRole("heading", { name: "Other guides" })).toBeVisible();
+      await expect(strip.getByRole("heading", { name: "Outros guias" })).toBeVisible();
       await expect(strip.locator("li")).toHaveCount(4);
     });
   });
