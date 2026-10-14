@@ -89,7 +89,7 @@ describe("route guard script", () => {
   });
   it("dev notice uses tokens only", () => {
     expect(devNoticeHtml()).not.toMatch(/#[0-9a-f]{3,8}\b/i);
-    expect(devNoticeHtml()).toContain("auth not configured");
+    expect(devNoticeHtml()).toContain("login não configurado");
   });
 });
 
@@ -110,7 +110,7 @@ describe("sign-in actions (fake client, no network)", () => {
   it("6-digit code and Google", async () => {
     const f = fakeSupabase({ auth: { verifyOtp: { message: "Token has expired or is invalid" } } });
     const r = await verifyEmailCode(f.client, "p@example.test", "12 34 56");
-    expect(r).toEqual({ ok: false, message: "That code or link has expired or was already used. Ask for a new one." });
+    expect(r).toEqual({ ok: false, message: "Esse código ou link expirou ou já foi usado. Peça um novo." });
     expect(f.calls[0]!.args[0]).toEqual({ email: "p@example.test", token: "123456", type: "email" });
     expect((await verifyEmailCode(f.client, "p@example.test", "abc")).ok).toBe(false);
     await signInWithGoogle(f.client, "/me/", "https://k.test");
@@ -133,8 +133,8 @@ describe("sign-in actions (fake client, no network)", () => {
     expect(f.calls[0]).toEqual({ op: "auth.signOut", args: [{ scope: "local" }] });
   });
   it("friendly errors", () => {
-    expect(friendlyError({ message: "x", status: 429 })).toMatch(/Too many/);
-    expect(friendlyError(new TypeError("Failed to fetch"))).toMatch(/No connection/);
-    expect(friendlyError({ message: "both auth code and code verifier should be non-empty" })).toMatch(/same browser/);
+    expect(friendlyError({ message: "x", status: 429 })).toMatch(/Muitas tentativas/);
+    expect(friendlyError(new TypeError("Failed to fetch"))).toMatch(/Sem conexão/);
+    expect(friendlyError({ message: "both auth code and code verifier should be non-empty" })).toMatch(/mesmo navegador/);
   });
 });

@@ -88,7 +88,7 @@ export function QuestionStep({ question: q, value, error, onAnswer, onSend, inpu
       <div class="q-body">
         <Options name={name} options={q.options as ReadonlyArray<QuestionOption<unknown>>} value={value} invalid={!!error} onAnswer={onAnswer} onSend={onSend} />
         {q.id === "kingdomStage" && (
-          <p class="q-note" data-stage-note>From KvK2 on, the guide uses the late-game plan; sections it does not cover yet show KvK1 steps, labelled.</p>
+          <p class="q-note" data-stage-note>A partir da KvK2, o guia usa o plano da fase final; as seções que ele ainda não cobre mostram os passos da KvK1, com a indicação.</p>
         )}
         <ErrorText error={error} />
       </div>
@@ -98,7 +98,7 @@ export function QuestionStep({ question: q, value, error, onAnswer, onSend, inpu
   const presets = q.presets ?? [];
   const isPreset = typeof value === "number" && presets.some((p) => p.value === value);
   const text = typeof value === "string" ? value : typeof value === "number" && !isPreset ? String(value) : "";
-  const hint = `Whole number ${rangeText(q)}.`;
+  const hint = `Número inteiro ${rangeText(q)}.`;
   const describedBy = error ? "q-hint q-error" : "q-hint";
 
   return (
@@ -108,7 +108,7 @@ export function QuestionStep({ question: q, value, error, onAnswer, onSend, inpu
       )}
       <div class="q-field">
         {presets.length > 0 ? (
-          <label class="q-label" for="q-input">Other</label>
+          <label class="q-label" for="q-input">Outro</label>
         ) : null}
         <p class="q-hint" id="q-hint">{hint}</p>
         <input

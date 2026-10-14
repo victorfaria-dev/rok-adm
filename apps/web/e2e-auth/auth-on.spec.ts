@@ -9,7 +9,7 @@ test("signed out: app areas redirect to /login/ with next; landing page and guid
   await mockSupabase(page);
   await page.goto("/tools/vip/?from=test");
   await expect(page).toHaveURL(/\/login\/\?next=%2Ftools%2Fvip%2F%3Ffrom%3Dtest$/);
-  await expect(page.getByRole("button", { name: "Continue with Google" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Continuar com o Google" })).toBeVisible();
   for (const path of ["/", "/guide/", "/guides/"]) {
     await page.goto(path);
     expect(new URL(page.url()).pathname, path).toBe(path);
@@ -22,8 +22,8 @@ test("e-mail sign-in asks for the code after sending the link", async ({ page })
   const s = await mockSupabase(page);
   await page.goto("/login/?next=%2Fme%2F");
   await page.getByLabel("E-mail").fill("me@example.test");
-  await page.getByRole("button", { name: "E-mail me a sign-in link" }).click();
-  await expect(page.getByLabel("Code from the e-mail")).toBeVisible();
+  await page.getByRole("button", { name: "Receber um link de login por e-mail" }).click();
+  await expect(page.getByLabel("Código do e-mail")).toBeVisible();
   const otp = s.requests.find((r) => r.path.startsWith("/auth/v1/otp"));
   expect(otp?.body).toMatchObject({ email: "me@example.test" });
   // PKCE (no tokens in the link) and the redirect back to the callback with "next".
@@ -35,9 +35,9 @@ test("signed in: app areas open, the account panel shows, sign out clears the se
   await mockSupabase(page, { tables: { profiles: [me] } });
   await signIn(page);
   await page.goto("/me/");
-  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Me: Governor");
+  await expect(page.getByRole("heading", { level: 1 })).toHaveText("Eu: Governador");
   await expect(page.locator("[data-account-panel]")).toContainText("me@example.test");
-  await page.locator("[data-account-panel]").getByRole("button", { name: "Sign out" }).click();
+  await page.locator("[data-account-panel]").getByRole("button", { name: "Sair" }).click();
   await expect(page).toHaveURL(/\/$/);
   expect(await page.evaluate(() => localStorage.getItem("ko:auth:v1"))).toBeNull();
   await page.goto("/me/");
@@ -49,15 +49,15 @@ test("public profile: card, verification badge, report and block", async ({ page
   await signIn(page);
   await page.goto("/u/?h=bob");
   await expect(page.getByRole("heading", { level: 1, name: "Bob" })).toBeVisible();
-  await expect(page.getByText("Ownership proven")).toBeVisible();
-  await page.getByRole("button", { name: "Report" }).click();
-  await page.getByLabel("Spam or advertising").check();
-  await page.getByRole("button", { name: "Send report" }).click();
-  await expect(page.getByText(/The report was sent/)).toBeVisible();
+  await expect(page.getByText("Posse comprovada")).toBeVisible();
+  await page.getByRole("button", { name: "Denunciar" }).click();
+  await page.getByLabel("Spam ou propaganda").check();
+  await page.getByRole("button", { name: "Enviar denúncia" }).click();
+  await expect(page.getByText(/A denúncia foi enviada/)).toBeVisible();
   expect(s.requests.find((r) => r.method === "POST" && r.path.startsWith("/rest/v1/reports"))?.body).toMatchObject({ target_id: BOB, reason: "spam" });
-  await page.getByRole("button", { name: "Block" }).click();
-  await page.getByRole("group", { name: "Block @bob" }).getByRole("button", { name: "Block" }).click();
-  await expect(page.getByText("You blocked this player.")).toBeVisible();
+  await page.getByRole("button", { name: "Bloquear" }).click();
+  await page.getByRole("group", { name: "Bloquear @bob" }).getByRole("button", { name: "Bloquear" }).click();
+  await expect(page.getByText("Você bloqueou este jogador.")).toBeVisible();
 });
 
 test("verify: the code image is drawn for this request and downloads as a PNG", async ({ page }) => {
@@ -76,13 +76,13 @@ test("verify: the code image is drawn for this request and downloads as a PNG", 
   });
   await signIn(page);
   await page.goto("/me/verify/");
-  await page.getByRole("button", { name: "Verify this account" }).click();
+  await page.getByRole("button", { name: "Verificar esta conta" }).click();
   const img = page.locator("img[data-code-image]");
   await expect(img).toBeVisible();
   // A real 4:3 image was rendered on a canvas.
   expect(await img.evaluate((el: HTMLImageElement) => el.decode().then(() => [el.naturalWidth, el.naturalHeight]))).toEqual([1200, 900]);
-  await expect(page.locator("[data-countdown]")).toContainText(/Time left for this code: (59|60):\d\d/);
-  await expect(page.getByText(/Governor Profile → Album → add a photo/)).toBeVisible();
+  await expect(page.locator("[data-countdown]")).toContainText(/Tempo restante deste código: (59|60):\d\d/);
+  await expect(page.getByText(/Perfil do Governador → Álbum → adicionar foto/)).toBeVisible();
   const [download] = await Promise.all([page.waitForEvent("download"), page.locator("[data-download-code]").click()]);
   expect(download.suggestedFilename()).toBe("kingdomops-code-042719.png");
   const path = await download.path();

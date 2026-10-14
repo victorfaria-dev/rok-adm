@@ -42,9 +42,9 @@ export function UploadOffer({ client, userId, plan, onDone, headingLevel = 2, lo
     rememberChoice(localStore(), userId, "uploaded", plan.fingerprint);
     await claimSiteAchievements(client);
     setBusy(false);
-    const bannerNote = b.uploaded > 0 ? ` ${b.uploaded === 1 ? "1 city banner" : `${b.uploaded} city banners`} uploaded.` : "";
-    const bannerFail = b.failed.length > 0 ? ` ${b.failed.length === 1 ? "1 banner" : `${b.failed.length} banners`} could not be uploaded and stay on this device: ${b.failed[0]}` : "";
-    setDone(`Uploaded. ${r.cities === 1 ? "1 city" : `${r.cities} cities`} added to your account.${bannerNote} Your data on this device is unchanged.${bannerFail}`);
+    const bannerNote = b.uploaded > 0 ? ` ${b.uploaded === 1 ? "1 banner de cidade enviado" : `${b.uploaded} banners de cidade enviados`}.` : "";
+    const bannerFail = b.failed.length > 0 ? ` ${b.failed.length === 1 ? "1 banner não pôde ser enviado e fica" : `${b.failed.length} banners não puderam ser enviados e ficam`} só neste aparelho: ${b.failed[0]}` : "";
+    setDone(`Enviado. ${r.cities === 1 ? "1 cidade adicionada" : `${r.cities} cidades adicionadas`} à sua conta.${bannerNote} Seus dados neste aparelho não mudaram.${bannerFail}`);
     onDone("uploaded");
   };
   const keep = () => {
@@ -56,20 +56,20 @@ export function UploadOffer({ client, userId, plan, onDone, headingLevel = 2, lo
 
   return (
     <section class="au-offer" aria-labelledby="au-offer-title" data-upload-offer>
-      <H id="au-offer-title">Bring this device's data to your account?</H>
-      <p>This browser already has KingdomOps data. Upload a copy so it is saved with your account:</p>
+      <H id="au-offer-title">Levar os dados deste aparelho para a sua conta?</H>
+      <p>Este navegador já tem dados do KingdomOps. Envie uma cópia para ela ficar salva na sua conta:</p>
       <ul class="au-summary">
         {plan.summary.map((s) => (
           <li key={s.label}><strong>{s.label}</strong>: {s.detail}</li>
         ))}
       </ul>
-      {banners.length > 0 && <p class="au-note">{banners.length === 1 ? "1 custom city banner" : `${banners.length} custom city banners`} will be uploaded too.</p>}
-      {cities > 0 && <p class="au-note">{cities === 1 ? "1 city" : `${cities} cities`} (main, farms and alts) will show in your account.</p>}
-      <p class="au-note">Nothing is deleted from this device either way. The Discord webhook is never uploaded.</p>
+      {banners.length > 0 && <p class="au-note">{banners.length === 1 ? "1 banner de cidade personalizado será enviado" : `${banners.length} banners de cidade personalizados serão enviados`} também.</p>}
+      {cities > 0 && <p class="au-note">{cities === 1 ? "1 cidade (principal, farms e alts) aparecerá" : `${cities} cidades (principal, farms e alts) aparecerão`} na sua conta.</p>}
+      <p class="au-note">Nada é apagado deste aparelho, de qualquer forma. O webhook do Discord nunca é enviado.</p>
       <div class="au-actions">
-        <button type="button" class="btn btn-primary" onClick={upload} disabled={busy}>{busy ? "Uploading…" : "Upload to my account"}</button>
-        <button type="button" class="btn btn-secondary" onClick={() => onDone("later")} disabled={busy}>Not now</button>
-        <button type="button" class="btn btn-secondary" onClick={keep} disabled={busy}>Keep it only on this device</button>
+        <button type="button" class="btn btn-primary" onClick={upload} disabled={busy}>{busy ? "Enviando…" : "Enviar para a minha conta"}</button>
+        <button type="button" class="btn btn-secondary" onClick={() => onDone("later")} disabled={busy}>Agora não</button>
+        <button type="button" class="btn btn-secondary" onClick={keep} disabled={busy}>Manter só neste aparelho</button>
       </div>
       {error && <p class="au-error" role="alert">{error}</p>}
     </section>

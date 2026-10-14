@@ -60,22 +60,22 @@ export default function AuthCallback({ navigate = navigateTo, href }: Props) {
     };
   }, []);
 
-  if (view.k === "working") return <section class="au"><h1>Signing you in…</h1><p class="au-lead" role="status">One moment.</p></section>;
+  if (view.k === "working") return <section class="au"><h1>Entrando…</h1><p class="au-lead" role="status">Só um instante.</p></section>;
   if (view.k === "off") {
     return (
       <section class="au">
-        <h1>Sign-in is not switched on</h1>
-        <p class="au-lead" data-auth-off>Accounts are not available yet. Everything keeps working on this device.</p>
-        <p><a class="btn btn-secondary" href="/">Back to the start page</a></p>
+        <h1>O login não está ativado</h1>
+        <p class="au-lead" data-auth-off>As contas ainda não estão disponíveis. Tudo continua funcionando neste aparelho.</p>
+        <p><a class="btn btn-secondary" href="/">Voltar para a página inicial</a></p>
       </section>
     );
   }
   if (view.k === "error") {
     return (
       <section class="au">
-        <h1>Sign-in did not finish</h1>
+        <h1>O login não foi concluído</h1>
         <p class="au-error" role="alert">{view.message}</p>
-        <p><a class="btn btn-primary" href={view.next ? loginHref(view.next) : LOGIN_PATH}>Try again</a></p>
+        <p><a class="btn btn-primary" href={view.next ? loginHref(view.next) : LOGIN_PATH}>Tentar de novo</a></p>
       </section>
     );
   }

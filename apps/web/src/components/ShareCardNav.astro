@@ -1,12 +1,12 @@
 ---
-// "Share card" (UX stage 1): the governor card and the alliance crest as one entry under Me, two tabs.
+// "Cartão para compartilhar" (UX stage 1): the governor card and the alliance crest as one entry under Me, two tabs.
 // A leader reaches the crest from the Kingdom tab instead (KingdomNav), so this row is player-only.
 import { isActive } from "../lib/nav";
 
-const LABEL = "Share card";
+const LABEL = "Cartão para compartilhar";
 const LINKS = [
-  { href: "/card/", label: "Governor card" },
-  { href: "/crest/", label: "Alliance crest" },
+  { href: "/card/", label: "Cartão do governador" },
+  { href: "/crest/", label: "Brasão da aliança" },
 ];
 const path = Astro.url.pathname;
 ---

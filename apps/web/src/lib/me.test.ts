@@ -42,21 +42,21 @@ describe("profileRows", () => {
     expect(valueOf(rows, "kingdomStage")).toBe("Before the first KvK");
     expect(valueOf(rows, "cityHall")).toBe("12");
     expect(valueOf(rows, "minutesPerDay")).toBe("30 min");
-    expect(valueOf(rows, "sessionsPerDay")).toBe("Not answered");
-    expect(valueOf(rows, "kingdomDay")).toBe("Not answered");
-    expect(valueOf(rows, "lifetimeSpendUsd")).toBe("Not answered");
+    expect(valueOf(rows, "sessionsPerDay")).toBe("Não respondido");
+    expect(valueOf(rows, "kingdomDay")).toBe("Não respondido");
+    expect(valueOf(rows, "lifetimeSpendUsd")).toBe("Não respondido");
     expect(valueOf(rows, "civilization")).toBe("Not chosen yet / not sure");
-    expect(valueOf(rows, "returningPlayer")).toBe("No");
+    expect(valueOf(rows, "returningPlayer")).toBe("Não");
   });
 
   it("formats large numbers and filled optional answers", () => {
     const rows = profileRows(profile("1.5.4.4.25.1440.24.5000.10000000.china.1"));
     expect(valueOf(rows, "spending")).toBe("Kraken — $5,000+ per month");
-    expect(valueOf(rows, "lifetimeSpendUsd")).toBe("10,000,000 USD");
-    expect(valueOf(rows, "kingdomDay")).toBe("5,000 days");
+    expect(valueOf(rows, "lifetimeSpendUsd")).toBe("10.000.000 USD");
+    expect(valueOf(rows, "kingdomDay")).toBe("5.000 days");
     expect(valueOf(rows, "sessionsPerDay")).toBe("24");
     expect(valueOf(rows, "civilization")).toBe("China");
-    expect(valueOf(rows, "returningPlayer")).toBe("Yes");
+    expect(valueOf(rows, "returningPlayer")).toBe("Sim");
     expect(rows.find((r) => r.id === "lifetimeSpendUsd")!.numeric).toBe(true);
     expect(rows.find((r) => r.id === "role")!.numeric).toBe(false);
   });
@@ -65,19 +65,19 @@ describe("profileRows", () => {
 describe("effectiveView (F-72)", () => {
   it("without total spend uses the monthly answer", () => {
     const v = effectiveView(profile("1.0.1.0.12.30.....0"), null);
-    expect(v).toMatchObject({ declared: "F2P", lifetime: "Not answered", effective: "F2P" });
+    expect(v).toMatchObject({ declared: "F2P", lifetime: "Não respondido", effective: "F2P" });
     expect(v.result.source).toBe("declared");
   });
 
   it("total spend can raise the profile", () => {
     const v = effectiveView(profile("1.0.0.0.12.30...10000..0"), null);
-    expect(v.lifetime).toBe("High (about $10,000 in total)");
-    expect(v.effective).toBe("High (raised by total spend)");
+    expect(v.lifetime).toBe("High (cerca de US$ 10.000 no total)");
+    expect(v.effective).toBe("High (elevado pelo gasto total)");
   });
 
   it("a manual pick wins and says so", () => {
     const v = effectiveView(profile("1.0.0.0.12.30...10000..0"), "low");
-    expect(v.effective).toBe("Low (set by hand)");
+    expect(v.effective).toBe("Low (definido à mão)");
     expect(v.result.explanation).toContain("by hand");
   });
 
@@ -91,7 +91,7 @@ describe("effectiveView (F-72)", () => {
 describe("override choices", () => {
   it("Automatic first, then the six profiles with their monthly bands", () => {
     expect(OVERRIDE_CHOICES.map((c) => c.value)).toEqual(["auto", "f2p", "low", "medium", "high", "whale", "kraken"]);
-    expect(OVERRIDE_CHOICES[0]!.label).toBe("Automatic (recommended)");
+    expect(OVERRIDE_CHOICES[0]!.label).toBe("Automático (recomendado)");
     expect(OVERRIDE_CHOICES[2]!.label).toBe("Low spender — $5–$100 per month");
   });
 
@@ -106,7 +106,7 @@ describe("override choices", () => {
 
 describe("theme and export", () => {
   it("offers Dark, Light and System", () => {
-    expect(THEME_CHOICES.map((t) => t.label)).toEqual(["Dark", "Light", "System"]);
+    expect(THEME_CHOICES.map((t) => t.label)).toEqual(["Escuro", "Claro", "Sistema"]);
     expect(isThemePref("light")).toBe(true);
     expect(isThemePref("neon")).toBe(false);
   });
@@ -127,13 +127,13 @@ describe("saved accounts", () => {
     if (!r.ok) throw new Error();
     r = saveAccount(r.list, "main", B, "low", "id2");
     expect(r.ok && r.list).toEqual([{ id: "id1", name: "main", code: B, override: "low" }]);
-    expect(saveAccount([], " ", A, null, "x")).toMatchObject({ ok: false, error: expect.stringMatching(/name/) });
+    expect(saveAccount([], " ", A, null, "x")).toMatchObject({ ok: false, error: expect.stringMatching(/nome/) });
     expect(saveAccount([], "x".repeat(NAME_MAX + 1), A, null, "x")).toMatchObject({ ok: false });
   });
 
   it("caps the list", () => {
     const full = Array.from({ length: MAX_SAVED_PROFILES }, (_, i) => ({ id: `i${i}`, name: `F${i}`, code: A, override: null }));
-    expect(saveAccount(full, "New", A, null, "n")).toMatchObject({ ok: false, error: expect.stringMatching(/Remove one/) });
+    expect(saveAccount(full, "New", A, null, "n")).toMatchObject({ ok: false, error: expect.stringMatching(/Remova uma/) });
   });
 
   it("finds the active account, removes and switches", () => {

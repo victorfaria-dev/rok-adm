@@ -95,18 +95,18 @@ describe("per-step validation", () => {
   it("blocks an out-of-range City Hall with a how-to-fix message", () => {
     const s = next(setAnswer(at("cityHall"), "30"));
     expect(s.step).toBe(stepOf("cityHall"));
-    expect(s.error).toBe("30 is out of range. Enter a number from 1 to 25.");
+    expect(s.error).toBe("30 está fora do intervalo. Digite um número de 1 a 25.");
     expect(s.answers.cityHall).toBe("30");
     expect(setAnswer(s, "3").error).toBeNull();
   });
 
   it("messages for blank, non-digit and fractional input use the core limits", () => {
     const ch = numQ("cityHall");
-    expect(parseNumberAnswer(ch, "")).toEqual({ error: "Enter a number from 1 to 25." });
-    expect(parseNumberAnswer(ch, "abc")).toEqual({ error: "Use digits only: a whole number from 1 to 25." });
-    expect(parseNumberAnswer(ch, "2.5")).toEqual({ error: "Use a whole number from 1 to 25." });
+    expect(parseNumberAnswer(ch, "")).toEqual({ error: "Digite um número de 1 a 25." });
+    expect(parseNumberAnswer(ch, "abc")).toEqual({ error: "Use só dígitos: um número inteiro de 1 a 25." });
+    expect(parseNumberAnswer(ch, "2.5")).toEqual({ error: "Use um número inteiro de 1 a 25." });
     expect(parseNumberAnswer(numQ("lifetimeSpendUsd"), "10,000,001")).toEqual({
-      error: "10,000,001 is out of range. Enter a number from 0 to 10,000,000 USD.",
+      error: "10.000.001 está fora do intervalo. Digite um número de 0 a 10.000.000 USD.",
     });
   });
 
@@ -118,7 +118,7 @@ describe("per-step validation", () => {
   });
 
   it("a role that is not an option is rejected", () => {
-    expect(next(setAnswer(initialState(), "king")).error).toBe("Pick one of the options.");
+    expect(next(setAnswer(initialState(), "king")).error).toBe("Escolha uma das opções.");
   });
 });
 
@@ -189,16 +189,16 @@ describe("finish", () => {
     expect(out.ok).toBe(true);
     if (!out.ok) return;
     expect(out.profile.kingdomDay).toBeNull();
-    expect(out.warnings[0]).toMatch(/no longer fits/);
+    expect(out.warnings[0]).toMatch(/deixou de combinar/);
   });
 
   it("answer text uses core labels", () => {
     expect(answerText(getQuestion("spending"), "f2p")).toBe(QUESTIONS[0]!.type === "choice" ? QUESTIONS[0]!.options[0]!.label : "");
     expect(answerText(getQuestion("civilization"), null)).toBe("Not chosen yet / not sure");
-    expect(answerText(getQuestion("lifetimeSpendUsd"), 10_000_000)).toBe("10,000,000 USD");
-    expect(answerText(getQuestion("kingdomDay"), null)).toBe("Skipped");
-    expect(answerText(getQuestion("returningPlayer"), true)).toBe("Yes");
-    expect(answerText(PLAYING_AS_QUESTION, "leader")).toBe("As a kingdom or alliance leader");
+    expect(answerText(getQuestion("lifetimeSpendUsd"), 10_000_000)).toBe("10.000.000 USD");
+    expect(answerText(getQuestion("kingdomDay"), null)).toBe("Pulada");
+    expect(answerText(getQuestion("returningPlayer"), true)).toBe("Sim");
+    expect(answerText(PLAYING_AS_QUESTION, "leader")).toBe("Como líder de reino ou de aliança");
   });
 });
 

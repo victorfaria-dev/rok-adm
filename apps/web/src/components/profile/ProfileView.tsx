@@ -47,18 +47,18 @@ export default function ProfileView({ handle: given }: Props) {
   }, [client, viewerId, handle]);
 
   if (auth.status === "off") {
-    return <div class="pf"><h1 class="pf-title">Player profile</h1><p class="pf-empty" data-auth-off>Player profiles are not switched on yet.</p></div>;
+    return <div class="pf"><h1 class="pf-title">Perfil do jogador</h1><p class="pf-empty" data-auth-off>Os perfis de jogadores ainda não estão ativados.</p></div>;
   }
   if (auth.status === "error") return <div class="pf"><p class="au-error" role="alert">{auth.message}</p></div>;
-  if (!handle) return <div class="pf"><h1 class="pf-title">Player profile</h1><p class="pf-empty">This link has no player handle in it.</p></div>;
+  if (!handle) return <div class="pf"><h1 class="pf-title">Perfil do jogador</h1><p class="pf-empty">Este link não tem o identificador de um jogador.</p></div>;
   if (auth.status === "loading" || load.k === "loading") return <div class="pf pf-skeleton" aria-busy="true"><span /><span /></div>;
   if (load.k === "error") return <div class="pf"><h1 class="pf-title">@{handle}</h1><p class="au-error" role="alert">{load.message}</p></div>;
   if (load.k === "missing") {
     return (
       <div class="pf" data-profile-missing>
         <h1 class="pf-title">@{handle}</h1>
-        <p class="pf-empty">No profile to show. It may not exist, or its owner keeps it private.</p>
-        {auth.status === "signed_out" && <p><a class="btn btn-secondary" href={loginHref(`/u/${handle}/`)}>Sign in to see profiles shared with players</a></p>}
+        <p class="pf-empty">Nenhum perfil para mostrar. Ele pode não existir, ou o dono o mantém privado.</p>
+        {auth.status === "signed_out" && <p><a class="btn btn-secondary" href={loginHref(`/u/${handle}/`)}>Entrar para ver perfis compartilhados com jogadores</a></p>}
       </div>
     );
   }
@@ -71,15 +71,15 @@ export default function ProfileView({ handle: given }: Props) {
       {load.blockedByMe ? (
         <div class="pf-blocked">
           <h1 class="pf-title">@{profile.handle}</h1>
-          <p>You blocked this player. They cannot see your profile.</p>
-          <button type="button" class="btn btn-secondary" onClick={async () => { await unblockUser(c, profile.id); await refresh(c); }}>Unblock</button>
+          <p>Você bloqueou este jogador. Ele não pode ver o seu perfil.</p>
+          <button type="button" class="btn btn-secondary" onClick={async () => { await unblockUser(c, profile.id); await refresh(c); }}>Desbloquear</button>
         </div>
       ) : (
         <ProfileHeader profile={profile} achievements={achievements}
           avatarUrl={publicImageUrl(c, "avatar", profile.avatar_path)} bannerUrl={publicImageUrl(c, "banner", profile.banner_path)}>
-          {own && <a class="btn btn-secondary" href="/me/profile/">Edit profile</a>}
+          {own && <a class="btn btn-secondary" href="/me/profile/">Editar perfil</a>}
           {!own && viewerId && <SafetyActions client={c} targetId={profile.id} handle={profile.handle ?? handle} onBlocked={() => refresh(c)} />}
-          {!own && !viewerId && <a class="btn btn-secondary" href={loginHref(`/u/${handle}/`)}>Sign in to report or block</a>}
+          {!own && !viewerId && <a class="btn btn-secondary" href={loginHref(`/u/${handle}/`)}>Entrar para denunciar ou bloquear</a>}
         </ProfileHeader>
       )}
     </div>
@@ -96,7 +96,7 @@ function SafetyActions({ client, targetId, handle, onBlocked }: { client: KoSupa
   const sendReport = async (e: Event) => {
     e.preventDefault();
     if (!reason) {
-      setMsg({ ok: false, text: "Pick what is wrong." });
+      setMsg({ ok: false, text: "Escolha o que há de errado." });
       return;
     }
     setBusy(true);
@@ -104,7 +104,7 @@ function SafetyActions({ client, targetId, handle, onBlocked }: { client: KoSupa
     setBusy(false);
     if (r.ok) {
       setMode("idle");
-      setMsg({ ok: true, text: "Thanks. The report was sent; reports about children's safety are reviewed first. You can also block this player." });
+      setMsg({ ok: true, text: "Obrigado. A denúncia foi enviada; denúncias sobre a segurança de crianças são analisadas primeiro. Você também pode bloquear este jogador." });
     } else setMsg({ ok: false, text: r.message });
   };
   const confirmBlock = async () => {
@@ -119,23 +119,23 @@ function SafetyActions({ client, targetId, handle, onBlocked }: { client: KoSupa
     <>
       {mode === "idle" && (
         <>
-          <button type="button" class="btn btn-secondary" data-report onClick={() => { setMode("report"); setMsg(null); }}>Report</button>
-          <button type="button" class="btn btn-secondary" data-block onClick={() => { setMode("block"); setMsg(null); }}>Block</button>
+          <button type="button" class="btn btn-secondary" data-report onClick={() => { setMode("report"); setMsg(null); }}>Denunciar</button>
+          <button type="button" class="btn btn-secondary" data-block onClick={() => { setMode("block"); setMsg(null); }}>Bloquear</button>
         </>
       )}
       {mode === "block" && (
-        <div class="pf-confirm" role="group" aria-label={`Block @${handle}`}>
-          <p>Block @{handle}? They will no longer see your profile or achievements. They are not told.</p>
+        <div class="pf-confirm" role="group" aria-label={`Bloquear @${handle}`}>
+          <p>Bloquear @{handle}? Ele deixará de ver o seu perfil e as suas conquistas. Ele não é avisado.</p>
           <div class="au-actions">
-            <button type="button" class="btn btn-primary" onClick={confirmBlock} disabled={busy}>Block</button>
-            <button type="button" class="btn btn-secondary" onClick={() => setMode("idle")}>Cancel</button>
+            <button type="button" class="btn btn-primary" onClick={confirmBlock} disabled={busy}>Bloquear</button>
+            <button type="button" class="btn btn-secondary" onClick={() => setMode("idle")}>Cancelar</button>
           </div>
         </div>
       )}
       {mode === "report" && (
-        <form class="pf-report" onSubmit={sendReport} aria-label={`Report @${handle}`}>
+        <form class="pf-report" onSubmit={sendReport} aria-label={`Denunciar @${handle}`}>
           <fieldset class="pf-choices">
-            <legend>What is wrong with this profile?</legend>
+            <legend>O que há de errado com este perfil?</legend>
             {REPORT_REASONS.map((r) => (
               <label class="pf-choice" key={r.value}>
                 <input type="radio" name="reason" value={r.value} checked={reason === r.value} onChange={() => setReason(r.value)} />
@@ -144,13 +144,13 @@ function SafetyActions({ client, targetId, handle, onBlocked }: { client: KoSupa
             ))}
           </fieldset>
           <label class="pf-field">
-            <span>Details (optional)</span>
+            <span>Detalhes (opcional)</span>
             <textarea rows={3} maxLength={REPORT_DETAILS_MAX} value={details} onInput={(e) => setDetails((e.target as HTMLTextAreaElement).value)} />
           </label>
-          <p class="pf-muted pf-fine">If someone is in danger right now, contact local emergency services. A copy of this profile as it is now is kept with the report.</p>
+          <p class="pf-muted pf-fine">Se alguém está em perigo agora, ligue para os serviços de emergência locais. Uma cópia deste perfil como ele está agora é guardada junto com a denúncia.</p>
           <div class="au-actions">
-            <button type="submit" class="btn btn-primary" disabled={busy}>{busy ? "Sending…" : "Send report"}</button>
-            <button type="button" class="btn btn-secondary" onClick={() => setMode("idle")}>Cancel</button>
+            <button type="submit" class="btn btn-primary" disabled={busy}>{busy ? "Enviando…" : "Enviar denúncia"}</button>
+            <button type="button" class="btn btn-secondary" onClick={() => setMode("idle")}>Cancelar</button>
           </div>
         </form>
       )}

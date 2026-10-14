@@ -34,12 +34,12 @@ describe("profile rules", () => {
     const db = sql("20261013200006_storage.sql");
     expect(db).toContain(`('avatars', 'avatars', true, ${IMAGE_KINDS.avatar.maxBytes}`);
     expect(db).toContain(`('banners', 'banners', true, ${IMAGE_KINDS.banner.maxBytes}`);
-    expect(checkInputImage({ type: "image/gif", size: 10 })).toMatch(/JPEG, PNG or WebP/);
+    expect(checkInputImage({ type: "image/gif", size: 10 })).toMatch(/JPEG, PNG ou WebP/);
     expect(checkInputImage({ type: "image/png", size: 16 * 1024 * 1024 })).toMatch(/15 MB/);
     expect(checkInputImage({ type: "image/jpeg", size: 1000 })).toBeNull();
   });
   it("self-declared achievements: no links, unique codes", () => {
-    expect(validateSelfAchievement("", "")).toMatch(/Type/);
+    expect(validateSelfAchievement("", "")).toMatch(/Digite/);
     expect(validateSelfAchievement("CH25", "see www.x.test")).toMatch(/Links/);
     expect(achievementCode("Won KvK!", ["won-kvk"])).toBe("won-kvk-2");
   });
@@ -91,7 +91,7 @@ describe("profile api (fake client)", () => {
   });
   it("maps database errors to words", async () => {
     const f = fakeSupabase({ fail: { "profiles:upsert": { code: "23505", message: 'duplicate key value violates unique constraint "profiles_handle_key"' } } });
-    expect(await saveMyProfile(f.client, U, { handle: "bob", display_name: null, bio: null, kingdom_number: null, visibility: "private" })).toEqual({ ok: false, message: "That handle is taken. Pick another." });
+    expect(await saveMyProfile(f.client, U, { handle: "bob", display_name: null, bio: null, kingdom_number: null, visibility: "private" })).toEqual({ ok: false, message: "Esse identificador já está em uso. Escolha outro." });
     expect(await saveMyProfile(f.client, U, { handle: "bob", display_name: null, bio: null, kingdom_number: null, visibility: "private" })).toEqual({ ok: true });
     expect(f.tables.profiles![0]).toMatchObject({ id: U, handle: "bob" });
   });
@@ -117,7 +117,7 @@ describe("profile api (fake client)", () => {
   });
   it("report and block", async () => {
     const f = fakeSupabase({ fail: { "reports:insert": { code: "23505", message: "duplicate" } } });
-    expect(await reportUser(f.client, "t", "spam", "x")).toEqual({ ok: false, message: "You already reported this profile. We will review it." });
+    expect(await reportUser(f.client, "t", "spam", "x")).toEqual({ ok: false, message: "Você já denunciou este perfil. Vamos analisá-lo." });
     expect(await reportUser(f.client, "t", "minor_safety", "  details  ")).toEqual({ ok: true });
     expect(f.tables.reports![0]).toMatchObject({ target_id: "t", reason: "minor_safety", details: "details" });
     expect(await blockUser(f.client, "t")).toEqual({ ok: true });
@@ -137,7 +137,7 @@ describe("account data rights (fake client)", () => {
     expect(x.accounts).toHaveLength(1);
     expect(x.blocks).toHaveLength(1);
     expect(x.images.map((i) => i.path)).toEqual([`${U}/avatar-1.webp`]);
-    await expect(exportAccountData(fakeSupabase().client)).rejects.toThrow(/signed out/);
+    await expect(exportAccountData(fakeSupabase().client)).rejects.toThrow(/saiu da conta/);
   });
   it("deletes images first, then the account, then signs out", async () => {
     const f = fakeSupabase({ session: { user: { id: U } }, rpc: { delete_my_account: () => ({ data: null }) } });

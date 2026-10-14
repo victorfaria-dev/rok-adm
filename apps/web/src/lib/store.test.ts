@@ -46,8 +46,8 @@ describe("store", () => {
   });
 
   it("rejects files that are not exports with an actionable message", () => {
-    expect(() => importStore("{}")).toThrow(/not a KingdomOps export/);
-    expect(() => importStore("nope")).toThrow(/Pick the .json file/);
+    expect(() => importStore("{}")).toThrow(/não é uma exportação do KingdomOps/);
+    expect(() => importStore("nope")).toThrow(/Escolha o arquivo .json/);
   });
 
   it("parses wave B fields tolerantly", () => {

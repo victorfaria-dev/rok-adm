@@ -93,10 +93,10 @@ test("the guide's task list renders as list items with a done/undone marker", as
 
 test("landing: what it is, for whom, 3 examples, the trust points and one Start", async ({ page }) => {
   await page.goto("/");
-  await expect(page.getByRole("heading", { level: 1 })).toContainText("Plan your Rise of Kingdoms account");
-  await expect(page.locator(".lp-card h3")).toHaveText(["Players", "Kingdom and alliance leaders"]);
+  await expect(page.getByRole("heading", { level: 1 })).toContainText("Planeje sua conta de Rise of Kingdoms");
+  await expect(page.locator(".lp-card h3")).toHaveText(["Jogadores", "Líderes de reino e de aliança"]);
   await expect(page.locator(".lp-examples > li")).toHaveCount(3);
-  await expect(page.locator(".lp-trust dt")).toHaveText(["Sourced data", "No bots", "Within Lilith's terms"]);
+  await expect(page.locator(".lp-trust dt")).toHaveText(["Dados com fonte", "Sem bots", "Dentro dos termos da Lilith"]);
   for (const a of await page.locator("[data-start]").all()) await expect(a).toHaveAttribute("href", "/start/");
   await expect(page.locator("video[data-mascot]")).toHaveAttribute("poster", /\/mascot\//);
 });

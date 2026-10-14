@@ -36,7 +36,7 @@ describe("city card banners", () => {
 
   it("refuses anything that is not a small image data URL; corrupted storage reads as none", async () => {
     const store = localBannerStore(new Mem());
-    await expect(store.setBanner("x", "https://example.com/a.png")).rejects.toThrow(/too large or not a picture/);
+    await expect(store.setBanner("x", "https://example.com/a.png")).rejects.toThrow(/grande demais ou não é uma figura/);
     await expect(store.setBanner("x", `data:image/webp;base64,${"A".repeat(BANNER_MAX_CHARS)}`)).rejects.toThrow();
     expect(parseBanners("{bad")).toEqual({});
     expect(parseBanners(JSON.stringify({ v: 1, banners: { a: IMG, b: "javascript:1" } }))).toEqual({ a: IMG });

@@ -6,8 +6,8 @@ const ROUTES = [
   "/guides/returning/", "/guides/recovery/", "/guides/kingdom-admin/", "/guides/late-game/", "/city-hall/", "/city-hall/today/",
   "/city-hall/commanders/", "/tools/", "/commanders/", "/me/", "/kingdom/", "/trust/",
 ];
-// UX stage 1: player tabs City Hall · Tools · Me; guide pages mark Me (the Guides row lives there).
-const DESTS = [["/city-hall/", "City Hall"], ["/city-hall/today/", "City Hall"], ["/tools/pack-value/", "Tools"], ["/me/", "Me"], ["/guides/", "Me"]] as const;
+// UX stage 1: player tabs Prefeitura · Ferramentas · Eu; guide pages mark Me (the Guides row lives there).
+const DESTS = [["/city-hall/", "Prefeitura"], ["/city-hall/today/", "Prefeitura"], ["/tools/pack-value/", "Ferramentas"], ["/me/", "Eu"], ["/guides/", "Eu"]] as const;
 
 test.describe("every MVP route", () => {
   for (const route of ROUTES) {
@@ -47,7 +47,7 @@ test.describe("theme", () => {
     await page.goto("/guides/");
     const picker = page.locator(isMobile ? "header.top [data-theme-picker]" : "nav.rail [data-theme-picker]");
     await picker.locator("summary").click();
-    await picker.getByText("Light", { exact: true }).click();
+    await picker.getByText("Claro", { exact: true }).click();
     await expect(page.locator("html")).toHaveAttribute("data-theme", "light");
     await page.reload({ waitUntil: "domcontentloaded" });
     expect(await page.evaluate(() => document.documentElement.getAttribute("data-theme"))).toBe("light");
@@ -77,14 +77,14 @@ test("profile chip: setup link without a profile, summary with one", async ({ pa
 test("home: primary action visible without scrolling on a phone", async ({ page, isMobile }) => {
   test.skip(!isMobile, "phone only");
   await page.goto("/");
-  const cta = page.getByRole("link", { name: "Start", exact: true }).first();
+  const cta = page.getByRole("link", { name: "Começar", exact: true }).first();
   await expect(cta).toBeInViewport();
 });
 
 test("skip link moves focus to the main content", async ({ page }) => {
   await page.goto("/");
   await page.keyboard.press("Tab");
-  await expect(page.getByRole("link", { name: "Skip to content" })).toBeFocused();
+  await expect(page.getByRole("link", { name: "Ir para o conteúdo" })).toBeFocused();
   await page.keyboard.press("Enter");
   await expect(page.locator("#main")).toBeFocused();
 });

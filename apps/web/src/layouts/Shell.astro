@@ -33,7 +33,7 @@ const navs = [
 ] as const;
 ---
 <!doctype html>
-<html lang="en">
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
@@ -53,11 +53,11 @@ const navs = [
   </head>
   <body class:list={[{ bare }]}>
     <LogoSting />
-    <a class="skip" href="#main">Skip to content</a>
+    <a class="skip" href="#main">Ir para o conteúdo</a>
 
     {!bare && (
       <header class="top">
-        <a class="home" href="/" aria-label="KingdomOps home"><Logo variant="icon" class="k" /></a>
+        <a class="home" href="/" aria-label="Início do KingdomOps"><Logo variant="icon" class="k" /></a>
         <p class="page" aria-hidden="true">{title}</p>
         <ThemePicker id="top" placement="down" />
         <ProfileChip />
@@ -65,8 +65,8 @@ const navs = [
     )}
 
     {!bare && (
-      <nav class="rail" aria-label="Main">
-        <a class="brand" href="/" aria-label="KingdomOps home">
+      <nav class="rail" aria-label="Principal">
+        <a class="brand" href="/" aria-label="Início do KingdomOps">
           <Logo variant="icon" class="k" />
           <Logo variant="horizontal" class="wide" />
         </a>
@@ -96,7 +96,7 @@ const navs = [
     </main>
 
     {!bare && navs.map((n) => (
-      <nav class="tabs" aria-label="Main" data-nav={n.role}>
+      <nav class="tabs" aria-label="Principal" data-nav={n.role}>
         <ul>
           {n.items.map((d) => (
             <li>

@@ -10,43 +10,43 @@ import { LANDING_REDIRECT_SCRIPT } from "../lib/role";
 // which then continues to /start/. Nothing else on the page needs to change.
 const START_HREF = "/start/";
 
-// Every user-facing string on this page, in one place (i18n later).
+// Every user-facing string on this page, in one place.
 const S = {
-  docTitle: "KingdomOps: a planner for Rise of Kingdoms players and kingdom leaders",
-  description: "A free planner for Rise of Kingdoms: today's must-dos for your play time, City Hall goals, pack checks, and rules, MGE and recruiting for kingdom leaders. No bots, no login to the game.",
-  guides: "Guides",
-  start: "Start",
-  startHint: "5 quick questions. No sign-up.",
-  openHome: "Open my home tab",
-  presents: "Sun Tzu presents",
-  bubble: "Strategy is knowing what to do today, and what to leave for tomorrow. I'll show you both.",
-  h1: "Plan your Rise of Kingdoms account on the time you actually have.",
-  sub: "KingdomOps turns sourced game facts into a short plan: what to do today, what your next City Hall needs, and whether a purchase is worth it.",
-  forH: "Who it is for",
+  docTitle: "KingdomOps: planejador para jogadores e líderes de reino de Rise of Kingdoms",
+  description: "Um planejador gratuito para Rise of Kingdoms: o que não pode faltar hoje no seu tempo de jogo, metas da Prefeitura, análise de pacotes e, para líderes de reino, regras, MGE e recrutamento. Sem bots, sem login do jogo.",
+  guides: "Guias",
+  start: "Começar",
+  startHint: "5 perguntas rápidas. Sem cadastro.",
+  openHome: "Abrir minha aba inicial",
+  presents: "Sun Tzu apresenta",
+  bubble: "Estratégia é saber o que fazer hoje e o que deixar para amanhã. Eu mostro os dois.",
+  h1: "Planeje sua conta de Rise of Kingdoms com o tempo que você realmente tem.",
+  sub: "O KingdomOps transforma dados do jogo com fonte em um plano curto: o que fazer hoje, o que a sua próxima Prefeitura exige e se uma compra vale a pena.",
+  forH: "Para quem é",
   who: [
-    { name: "Players", text: "Free to play or light spenders who want a clear daily plan, City Hall goals and honest tool answers.", tabs: "City Hall · Tools · Me" },
-    { name: "Kingdom and alliance leaders", text: "Kings, R4s and council members who publish rules, set member requirements, plan MGE and recruit.", tabs: "Kingdom · Members · Events · Me" },
+    { name: "Jogadores", text: "Quem joga de graça ou gasta pouco e quer um plano diário claro, metas da Prefeitura e respostas honestas das ferramentas.", tabs: "Prefeitura · Ferramentas · Eu" },
+    { name: "Líderes de reino e de aliança", text: "Reis, R4s e membros do conselho que publicam regras, definem requisitos de membros, planejam o MGE e recrutam.", tabs: "Reino · Membros · Eventos · Eu" },
   ],
-  examplesH: "What it solves",
+  examplesH: "O que ele resolve",
   examples: [
-    { q: "“I have 30 minutes. What do I do today?”", a: "Your City Hall tab shows the 3 must-dos that fit your time, in order of value." },
-    { q: "“Is this $20 pack worth it?”", a: "Pack value turns the price you see into gems and VIP points per dollar, so you can compare." },
-    { q: "“Where are our rules, MGE ranks and recruiting post?”", a: "Leaders keep rules, MGE planning and a recruiting post in one place, shared as view-only links." },
+    { q: "“Tenho 30 minutos. O que faço hoje?”", a: "A aba Prefeitura mostra as 3 tarefas essenciais que cabem no seu tempo, em ordem de valor." },
+    { q: "“Esse pacote de US$ 20 vale a pena?”", a: "O valor do pacote transforma o preço que você vê em gemas e pontos de VIP por dólar, para você comparar." },
+    { q: "“Onde ficam nossas regras, as posições do MGE e o anúncio de recrutamento?”", a: "Os líderes guardam regras, planejamento do MGE e um anúncio de recrutamento em um só lugar, compartilhados por links somente para leitura." },
   ],
-  trustH: "Why you can trust it",
+  trustH: "Por que confiar",
   trust: [
-    { t: "Sourced data", d: "Every number points to a researched fact card and the game patch it was checked on." },
-    { t: "No bots", d: "We never automate the game and never ask for your game login. You do every in-game action." },
-    { t: "Within Lilith's terms", d: "No game files, no reading game data, no game art. Fan-made and not affiliated with Lilith Games." },
+    { t: "Dados com fonte", d: "Cada número aponta para uma ficha de fatos pesquisada e para o patch do jogo em que foi conferido." },
+    { t: "Sem bots", d: "Nunca automatizamos o jogo e nunca pedimos o seu login do jogo. Você faz cada ação dentro do jogo." },
+    { t: "Dentro dos termos da Lilith", d: "Sem arquivos do jogo, sem leitura de dados do jogo, sem arte do jogo. Feito por fãs e sem afiliação com a Lilith Games." },
   ],
-  browse: "Browse the guides",
+  browse: "Ver os guias",
 };
 ---
-<Shell title="Welcome" docTitle={S.docTitle} description={S.description} mode="operate" bare headScript={LANDING_REDIRECT_SCRIPT}>
+<Shell title="Boas-vindas" docTitle={S.docTitle} description={S.description} mode="operate" bare headScript={LANDING_REDIRECT_SCRIPT}>
   <div class="lp">
     <header class="lp-top">
       <a class="lp-logo" href="/?about" aria-label="KingdomOps"><Logo variant="horizontal" class="lp-wide" /></a>
-      <nav aria-label="Main">
+      <nav aria-label="Principal">
         <a class="lp-link" href="/guides/">{S.guides}</a>
         <a class="btn btn-primary lp-start-sm" href={START_HREF} data-start>{S.start}</a>
       </nav>

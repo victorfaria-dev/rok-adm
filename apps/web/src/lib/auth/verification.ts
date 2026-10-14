@@ -54,9 +54,9 @@ export const loadVerificationOcr = async (): Promise<VerificationOcr | null> => 
 
 export type ScreenshotSlot = "profile" | "city_hall" | "album";
 export const SLOTS: readonly { slot: ScreenshotSlot; screen: VerificationScreen; label: string; help: string; level: 2 | 3 }[] = [
-  { slot: "profile", screen: "governor_profile", label: "Governor Profile", help: "Shows your governor ID, name, power, kill points and civilization.", level: 2 },
-  { slot: "city_hall", screen: "city_hall", label: "City Hall", help: "Your city with the City Hall tapped: City Hall level, VIP and power.", level: 2 },
-  { slot: "album", screen: "album", label: "Album with the code", help: "Your Album after adding the code image from this page.", level: 3 },
+  { slot: "profile", screen: "governor_profile", label: "Perfil do Governador", help: "Mostra o seu ID de governador, nome, poder, pontos de abate e civilização.", level: 2 },
+  { slot: "city_hall", screen: "city_hall", label: "Prefeitura", help: "Sua cidade com a Prefeitura tocada: nível da Prefeitura, VIP e poder.", level: 2 },
+  { slot: "album", screen: "album", label: "Álbum com o código", help: "Seu Álbum depois de adicionar a imagem do código desta página.", level: 3 },
 ];
 
 export interface ClaimedValues {
@@ -103,12 +103,12 @@ export interface Check {
 /** What the page can check before sending (the moderator checks the screenshots again). */
 export function crossCheck(v: ClaimedValues, level: 2 | 3, requestCode: string): Check[] {
   const checks: Check[] = [
-    { id: "governor_id", ok: /^\d{5,12}$/.test(v.governorId.trim()), label: "Governor ID is 5 to 12 digits" },
-    { id: "city_hall", ok: v.cityHall.trim() === "" || (/^\d{1,2}$/.test(v.cityHall.trim()) && +v.cityHall >= 1 && +v.cityHall <= 25), label: "City Hall level is 1 to 25" },
+    { id: "governor_id", ok: /^\d{5,12}$/.test(v.governorId.trim()), label: "O ID do governador tem de 5 a 12 dígitos" },
+    { id: "city_hall", ok: v.cityHall.trim() === "" || (/^\d{1,2}$/.test(v.cityHall.trim()) && +v.cityHall >= 1 && +v.cityHall <= 25), label: "O nível da Prefeitura vai de 1 a 25" },
   ];
   if (level === 3) {
-    checks.push({ id: "album_code", ok: v.albumCode.replace(/\s/g, "") === requestCode, label: "The Album shows this request's code" });
-    checks.push({ id: "album_name", ok: v.albumName.trim() !== "" && norm(v.albumName) === norm(v.name), label: "The Album's governor name matches the profile name" });
+    checks.push({ id: "album_code", ok: v.albumCode.replace(/\s/g, "") === requestCode, label: "O Álbum mostra o código desta solicitação" });
+    checks.push({ id: "album_name", ok: v.albumName.trim() !== "" && norm(v.albumName) === norm(v.name), label: "O nome do governador no Álbum confere com o nome do perfil" });
   }
   return checks;
 }
@@ -125,18 +125,18 @@ export function claimJson(v: ClaimedValues, checks: readonly Check[], ocrUsed: b
 }
 
 export const LEVEL_LABEL: Record<VerificationLevel, string> = {
-  1: "Unverified (declared)",
-  2: "Screenshot-checked",
-  3: "Ownership proven",
+  1: "Não verificada (declarada)",
+  2: "Conferida por print",
+  3: "Posse comprovada",
 };
 
 export const STATUS_LABEL: Record<VerificationRequestRow["status"], string> = {
-  awaiting_screenshots: "Waiting for your screenshots",
-  pending_review: "Waiting for a moderator",
-  approved: "Approved",
-  rejected: "Not approved",
-  expired: "Code expired",
-  cancelled: "Cancelled",
+  awaiting_screenshots: "Aguardando seus prints",
+  pending_review: "Aguardando um moderador",
+  approved: "Aprovada",
+  rejected: "Não aprovada",
+  expired: "Código expirado",
+  cancelled: "Cancelada",
 };
 
 /** "59:30" style countdown; "0:00" when over. */
@@ -167,7 +167,7 @@ export function codeCardFileName(code: string): string {
 
 /** Draw the card on a 2D context (separate from canvas creation so tests can pass a fake context). */
 export function drawCodeCard(ctx: CanvasRenderingContext2D, code: string): void {
-  if (!/^\d{6}$/.test(code)) throw new Error("A verification code has 6 digits.");
+  if (!/^\d{6}$/.test(code)) throw new Error("Um código de verificação tem 6 dígitos.");
   const { width: w, height: h } = CODE_CARD;
   const { x: mx, y: my } = CODE_CARD_SAFE;
   const safeW = w - 2 * mx;
@@ -186,7 +186,7 @@ export function drawCodeCard(ctx: CanvasRenderingContext2D, code: string): void 
   ctx.fillText(spaced, w / 2, h / 2 - 30, safeW - 80);
   ctx.fillStyle = CARD_INK;
   ctx.font = "600 40px system-ui, sans-serif";
-  ctx.fillText("KingdomOps verification code", w / 2, h - my - 70, safeW - 80);
+  ctx.fillText("Código de verificação do KingdomOps", w / 2, h - my - 70, safeW - 80);
 }
 
 /** Browser only: the card as a PNG blob. */
@@ -195,10 +195,10 @@ export async function codeCardPng(code: string): Promise<Blob> {
   canvas.width = CODE_CARD.width;
   canvas.height = CODE_CARD.height;
   const ctx = canvas.getContext("2d");
-  if (!ctx) throw new Error("This browser cannot draw the code image.");
+  if (!ctx) throw new Error("Este navegador não consegue desenhar a imagem do código.");
   drawCodeCard(ctx, code);
   const blob = await new Promise<Blob | null>((res) => canvas.toBlob(res, "image/png"));
-  if (!blob) throw new Error("This browser cannot save the code image.");
+  if (!blob) throw new Error("Este navegador não consegue salvar a imagem do código.");
   return blob;
 }
 
@@ -215,7 +215,7 @@ export function fitWithin(w: number, h: number, max: number): { width: number; h
 
 export async function prepareScreenshot(file: Blob): Promise<Blob> {
   const bitmap = await createImageBitmap(file).catch(() => {
-    throw new Error("This screenshot could not be read. Use the PNG or JPEG your phone saved.");
+    throw new Error("Não foi possível ler este print. Use o PNG ou JPEG que o seu celular salvou.");
   });
   try {
     const size = fitWithin(bitmap.width, bitmap.height, SCREENSHOT_MAX_SIDE);
@@ -223,10 +223,10 @@ export async function prepareScreenshot(file: Blob): Promise<Blob> {
     canvas.width = size.width;
     canvas.height = size.height;
     const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("This browser cannot resize images.");
+    if (!ctx) throw new Error("Este navegador não consegue redimensionar imagens.");
     ctx.drawImage(bitmap, 0, 0, size.width, size.height);
     const blob = await encodeToFit((type, q) => new Promise((res) => canvas.toBlob(res, type, Math.max(q, 0.75))), SCREENSHOT_MAX_BYTES);
-    if (!blob) throw new Error("This screenshot is too big even after resizing.");
+    if (!blob) throw new Error("Este print continua grande demais mesmo depois de redimensionado.");
     return blob;
   } finally {
     bitmap.close();
@@ -247,7 +247,7 @@ export async function listCities(client: KoSupabase): Promise<CityRow[]> {
 
 export async function addCity(client: KoSupabase, name: string, kind: CityKind): Promise<{ ok: true } | { ok: false; message: string }> {
   const n = name.trim();
-  if (!n || n.length > 40) return { ok: false, message: "Name the city (up to 40 characters)." };
+  if (!n || n.length > 40) return { ok: false, message: "Dê um nome à cidade (até 40 caracteres)." };
   const { error } = await client.from("accounts").insert({ name: n, kind });
   return error ? { ok: false, message: dbError(error) } : { ok: true };
 }
@@ -262,12 +262,12 @@ export async function listRequests(client: KoSupabase): Promise<VerificationRequ
 
 export async function startVerification(client: KoSupabase, accountId: string, level: 2 | 3): Promise<{ ok: true; request: VerificationRequestRow } | { ok: false; message: string }> {
   const { data, error } = await client.rpc("start_verification", { p_account_id: accountId, p_level: level });
-  if (error) return { ok: false, message: /in progress/i.test(error.message) ? "This city already has a verification in progress." : dbError(error) };
+  if (error) return { ok: false, message: /in progress/i.test(error.message) ? "Esta cidade já tem uma verificação em andamento." : dbError(error) };
   return { ok: true, request: data as VerificationRequestRow };
 }
 
 export async function uploadScreenshot(client: KoSupabase, userId: string, requestId: string, slot: ScreenshotSlot, blob: Blob): Promise<{ ok: true; path: string } | { ok: false; message: string }> {
-  if (blob.size > SCREENSHOT_MAX_BYTES) return { ok: false, message: "Screenshot is over 3 MB." };
+  if (blob.size > SCREENSHOT_MAX_BYTES) return { ok: false, message: "O print passa de 3 MB." };
   const path = `${userId}/${requestId}/${slot}.${extensionOf(blob.type)}`;
   const { error } = await client.storage.from("verification").upload(path, blob, { contentType: blob.type, upsert: true });
   return error ? { ok: false, message: dbError(error) } : { ok: true, path };
@@ -279,9 +279,9 @@ export async function submitVerification(
   const { error } = await client.rpc("submit_verification", { p_request_id: requestId, p_claimed: claimed, p_paths: paths, p_album_code: albumCode });
   if (!error) return { ok: true };
   const m = error.message ?? "";
-  if (/expired/i.test(m)) return { ok: false, message: "The code expired (1 hour). Start again for a new code." };
-  if (/does not match/i.test(m)) return { ok: false, message: "The Album code does not match this verification's code." };
-  if (/already used/i.test(m)) return { ok: false, message: "This code was already used. Start again for a new code." };
+  if (/expired/i.test(m)) return { ok: false, message: "O código expirou (1 hora). Comece de novo para receber um código novo." };
+  if (/does not match/i.test(m)) return { ok: false, message: "O código do Álbum não confere com o código desta verificação." };
+  if (/already used/i.test(m)) return { ok: false, message: "Este código já foi usado. Comece de novo para receber um código novo." };
   return { ok: false, message: dbError(error) };
 }
 

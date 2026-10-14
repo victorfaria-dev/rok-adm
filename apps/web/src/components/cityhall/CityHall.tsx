@@ -16,54 +16,54 @@ import { accountKind, defaultBanner, localBannerStore, type AccountKind, type Ba
 import type { ComponentChildren } from "preact";
 import "./cityhall.css";
 
-// Every user-facing string of this island, in one place (i18n later).
+// Every user-facing string of this island, in one place (pt-BR).
 const S = {
-  title: "City Hall",
-  yourCity: "Your city",
-  accounts: "Your accounts",
-  slide: (i: number, n: number, name: string) => `${i} of ${n}: ${name}`,
-  showCard: (name: string) => `Show ${name}`,
-  chLevel: "City Hall",
-  defaults: "Default answers",
-  sheetH: "Quick actions",
-  expand: "Show status and today's tasks",
-  collapse: "Show less",
+  title: "Prefeitura",
+  yourCity: "Sua cidade",
+  accounts: "Suas contas",
+  slide: (i: number, n: number, name: string) => `${i} de ${n}: ${name}`,
+  showCard: (name: string) => `Mostrar ${name}`,
+  chLevel: "Prefeitura",
+  defaults: "Respostas padrão",
+  sheetH: "Ações rápidas",
+  expand: "Mostrar status e tarefas de hoje",
+  collapse: "Mostrar menos",
   tiles: {
-    today: (left: number) => (left > 0 ? `Today's tasks (${left} left)` : "Today's tasks"),
-    next: (to: number | null) => (to ? `Next: CH ${to}` : "City Hall"),
-    routine: "Full routine",
-    commanders: "My commanders",
+    today: (left: number) => (left > 0 ? `Tarefas de hoje (faltam ${left})` : "Tarefas de hoje"),
+    next: (to: number | null) => (to ? `Próxima: CH ${to}` : "Prefeitura"),
+    routine: "Rotina completa",
+    commanders: "Meus comandantes",
   },
   statusH: "Status",
-  next: (to: number) => `Next: City Hall ${to}`,
-  needs: "Needs first",
-  cost: "Cost",
-  items: "Items",
-  rawTime: "Raw build time",
-  topLevel: "City Hall 25 is the top level. Nothing left to build here.",
-  planMore: "Plan more levels",
-  chForKvk: (n: number) => `City Hall ${n} for KvK1`,
-  lostKingdom: (n: number) => `City Hall ${n} for Lost Kingdom`,
-  kingdomDay: (d: number) => `Kingdom day to KvK1 (around day ${d})`,
-  gaugeText: (g: Gauge, unit: string) => `${unit} ${g.current} of ${g.target}${g.reached ? " · reached" : ""}`,
+  next: (to: number) => `Próxima: Prefeitura ${to}`,
+  needs: "Exige antes",
+  cost: "Custo",
+  items: "Itens",
+  rawTime: "Tempo de construção bruto",
+  topLevel: "A Prefeitura 25 é o nível máximo. Não há mais nada para construir aqui.",
+  planMore: "Planejar mais níveis",
+  chForKvk: (n: number) => `Prefeitura ${n} para a KvK1`,
+  lostKingdom: (n: number) => `Prefeitura ${n} para o Reino Perdido`,
+  kingdomDay: (d: number) => `Dia do reino até a KvK1 (por volta do dia ${d})`,
+  gaugeText: (g: Gauge, unit: string) => `${unit} ${g.current} de ${g.target}${g.reached ? " · atingida" : ""}`,
   targetsFacts: (t: CityHallTargets) => [
-    `Player reports call CH ${t.chWorkable}+ workable for KvK1; CH ${t.chNotExpected} is not expected without spending.`,
-    `T4 troops usually around kingdom day ${t.t4Day}. Power around KvK1: ${t.powerMillions.min}M to ${t.powerMillions.max}M.`,
-    ...(t.vipTargets.length ? [`VIP targets: ${t.vipTargets.map((x) => `VIP ${x}`).join(", then ")}.`] : []),
+    `Relatos de jogadores dizem que CH ${t.chWorkable}+ é viável para a KvK1; CH ${t.chNotExpected} não é esperada sem gastar.`,
+    `Tropas T4 geralmente por volta do dia ${t.t4Day} do reino. Poder na KvK1: de ${t.powerMillions.min}M a ${t.powerMillions.max}M.`,
+    ...(t.vipTargets.length ? [`Metas de VIP: ${t.vipTargets.map((x) => `VIP ${x}`).join(", depois ")}.`] : []),
   ],
-  kingdomDayUnknown: (d: number) => `KvK1 starts around kingdom day ${d}. Add your kingdom's age on Me to track it here.`,
-  milestonesH: "City Hall rewards",
-  milestone: (m: { label: string; gems: number; cityHall: number }) => `CH ${m.cityHall}: ${m.label} (${m.gems.toLocaleString("en-US")} gems)`,
-  reached: "reached",
-  targetsNote: "Targets are the F2P baseline from the guide's Budget reality check.",
-  readWhy: "Read the reasoning",
-  alertsH: "Alerts",
-  noAlerts: "Nothing needs your attention.",
-  todayH: "Today's must-dos",
-  done: (n: number, of: number) => `${n} of ${of} done`,
-  seeAll: (n: number) => `See all ${n} tasks`,
-  mustDo: "must-do",
-  nothing: "Nothing fits today's time. Open the full list to pick more minutes.",
+  kingdomDayUnknown: (d: number) => `A KvK1 começa por volta do dia ${d} do reino. Informe a idade do seu reino em Eu para acompanhar aqui.`,
+  milestonesH: "Recompensas da Prefeitura",
+  milestone: (m: { label: string; gems: number; cityHall: number }) => `CH ${m.cityHall}: ${m.label} (${m.gems.toLocaleString("pt-BR")} gemas)`,
+  reached: "atingida",
+  targetsNote: "As metas são a base F2P da checagem de realidade do orçamento do guia.",
+  readWhy: "Ler a justificativa",
+  alertsH: "Avisos",
+  noAlerts: "Nada precisa da sua atenção.",
+  todayH: "O essencial de hoje",
+  done: (n: number, of: number) => `${n} de ${of} concluídas`,
+  seeAll: (n: number) => `Ver as ${n} tarefas`,
+  mustDo: "essencial",
+  nothing: "Nada cabe no tempo de hoje. Abra a lista completa para escolher mais minutos.",
 } as const;
 
 interface Props {
@@ -333,7 +333,7 @@ export default function CityHall({ rows, targets: t, now = () => new Date(), ban
             <ul class="ch-gauges">
               <Bar g={gauge(ch, t.chWorkable)} label={S.chForKvk(t.chWorkable)} unit="CH" />
               <Bar g={gauge(ch, t.lostKingdomCH)} label={S.lostKingdom(t.lostKingdomCH)} unit="CH" />
-              {day !== null && day <= t.kvk1Day && <Bar g={gauge(day, t.kvk1Day)} label={S.kingdomDay(t.kvk1Day)} unit="Day" />}
+              {day !== null && day <= t.kvk1Day && <Bar g={gauge(day, t.kvk1Day)} label={S.kingdomDay(t.kvk1Day)} unit="Dia" />}
             </ul>
             <div class="ch-next" data-next-level>
               {next ? (
@@ -388,7 +388,7 @@ export default function CityHall({ rows, targets: t, now = () => new Date(), ban
               <p class="ch-count mono" role="status" aria-live="polite">{S.done(n, plan.included.length)}</p>
             </div>
             {top.length ? (
-              <ul class="ch-tasks" aria-label="Today's top tasks">
+              <ul class="ch-tasks" aria-label="Principais tarefas de hoje">
                 {top.map((x) => (
                   <li key={x.id}>
                     <label class="ch-task" for={`ch-task-${x.id}`}>

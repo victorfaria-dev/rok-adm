@@ -8,11 +8,11 @@ const B = "1.0.1.0.8.15.....0";
 const make = (p: Partial<StoreV1>): StoreV1 => ({ ...defaultStore(), ...p });
 
 describe("accounts (UX stage 1)", () => {
-  it("migrates an older single profile to account #1 'Main', and the code still decodes", () => {
+  it("migrates an older single profile to account #1 'Principal', and the code still decodes", () => {
     const s = parseStore(JSON.stringify({ v: 1, profileCode: A }));
     expect(s.activeAccountId).toBeNull();
     const v = accountsOf(s);
-    expect(v).toEqual({ accounts: [{ id: "main", name: "Main", code: A, override: null, kind: "main" }], activeId: "main", migrated: true });
+    expect(v).toEqual({ accounts: [{ id: "main", name: "Principal", code: A, override: null, kind: "main" }], activeId: "main", migrated: true });
     expect(migrationPatch(s)).toEqual({ savedProfiles: v.accounts, activeAccountId: "main" });
     expect(migrationPatch(make({ ...s, ...migrationPatch(s)! }))).toBeNull();
   });
@@ -70,7 +70,7 @@ describe("City Hall alerts", () => {
   it("are built only from planner and core signals", () => {
     expect(cityAlerts(base)).toEqual([]);
     expect(cityAlerts({ ...base, hasProfile: false })[0]?.kind).toBe("setup");
-    expect(cityAlerts({ ...base, mustDoMissing: 2 })[0]?.text).toBe("2 must-do tasks do not fit in 30 min today.");
+    expect(cityAlerts({ ...base, mustDoMissing: 2 })[0]?.text).toBe("2 tarefas essenciais não cabem em 30 min hoje.");
     expect(cityAlerts({ ...base, warnings: ["w"] })[0]).toEqual({ kind: "warning", text: "w" });
     expect(cityAlerts({ ...base, kingdomDay: 200 })[0]?.kind).toBe("late");
   });

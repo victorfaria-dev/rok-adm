@@ -26,9 +26,9 @@ export interface AnswerRow {
   numeric: boolean;
 }
 
-/** Answer text for the profile summary; an optional question left blank reads "Not answered". */
+/** Answer text for the profile summary; an optional question left blank reads "Não respondido". */
 export function profileAnswerText(q: Question, value: unknown): string {
-  if (value === null && q.type === "number") return "Not answered";
+  if (value === null && q.type === "number") return "Não respondido";
   return answerText(q, value);
 }
 
@@ -58,7 +58,7 @@ export interface OverrideChoice {
 
 /** Radio options for the manual override: Automatic first, then the six profiles. */
 export const OVERRIDE_CHOICES: readonly OverrideChoice[] = [
-  { value: "auto", label: "Automatic (recommended)" },
+  { value: "auto", label: "Automático (recomendado)" },
   ...SPENDING_PROFILES.map((sp) => ({ value: sp, label: spendingOptionLabel(sp) })),
 ];
 
@@ -81,13 +81,13 @@ export function effectiveView(p: AccountProfile, override: SpendingProfile | nul
   const result = effectiveProfile(p, override);
   const lifetime =
     p.lifetimeSpendUsd === null
-      ? "Not answered"
-      : `${profileName(result.lifetimeTier!)} (about $${p.lifetimeSpendUsd.toLocaleString("en-US")} in total)`;
+      ? "Não respondido"
+      : `${profileName(result.lifetimeTier!)} (cerca de US$ ${p.lifetimeSpendUsd.toLocaleString("pt-BR")} no total)`;
   const effective =
     result.source === "override"
-      ? `${profileName(result.effective)} (set by hand)`
+      ? `${profileName(result.effective)} (definido à mão)`
       : result.source === "lifetime"
-        ? `${profileName(result.effective)} (raised by total spend)`
+        ? `${profileName(result.effective)} (elevado pelo gasto total)`
         : profileName(result.effective);
   return { result, declared: profileName(result.declared), lifetime, effective };
 }
@@ -99,7 +99,7 @@ export const RULE_BODY = ((s: string) => s.charAt(0).toUpperCase() + s.slice(1))
 
 export const THEME_CHOICES: ReadonlyArray<{ value: ThemePref; label: string }> = THEME_PREFS.map((t) => ({
   value: t,
-  label: t === "dark" ? "Dark" : t === "light" ? "Light" : "System",
+  label: t === "dark" ? "Escuro" : t === "light" ? "Claro" : "Sistema",
 }));
 
 export const isThemePref = (v: unknown): v is ThemePref => THEME_PREFS.includes(v as ThemePref);
@@ -114,19 +114,19 @@ export function exportFileName(d: Date): string {
 /** What "Delete everything" reports: it clears every ko:* key (lib/storage-keys.ts), webhook included. */
 export function deletedMessage(removed: number, offlineCleared: boolean | null): string {
   const what = removed === 0
-    ? "Nothing KingdomOps saved was left in this browser."
-    : "Everything KingdomOps saved in this browser was deleted, including the Discord webhook URL if you had one.";
-  if (offlineCleared === null) return `${what} The offline copy of the site (pages only, nothing about you) was kept.`;
-  return `${what} ${offlineCleared ? "The offline copy of the site was removed too." : "There was no offline copy of the site to remove."}`;
+    ? "Não havia nada salvo pelo KingdomOps neste navegador."
+    : "Tudo o que o KingdomOps salvou neste navegador foi apagado, inclusive a URL do webhook do Discord, se você tinha uma.";
+  if (offlineCleared === null) return `${what} A cópia offline do site (só páginas, nada sobre você) foi mantida.`;
+  return `${what} ${offlineCleared ? "A cópia offline do site também foi removida." : "Não havia cópia offline do site para remover."}`;
 }
 export const DELETED_MESSAGE = deletedMessage(1, null);
-export const IMPORTED_MESSAGE = "Imported. Your profile, saved accounts, routine, commander checks and theme were replaced with the file's contents.";
+export const IMPORTED_MESSAGE = "Importado. Seu perfil, contas salvas, rotina, checagens de comandantes e tema foram substituídos pelo conteúdo do arquivo.";
 
 /** Import note when saved accounts in the file had a profile code that does not decode (Q2 P2-5). */
 export function skippedMessage(n: number): string {
   return n === 1
-    ? "1 saved account in the file had a damaged profile code and was skipped. Answer the questions again on that account to save it."
-    : `${n} saved accounts in the file had a damaged profile code and were skipped. Answer the questions again on those accounts to save them.`;
+    ? "1 conta salva no arquivo tinha um código de perfil danificado e foi ignorada. Responda às perguntas de novo nessa conta para salvá-la."
+    : `${n} contas salvas no arquivo tinham um código de perfil danificado e foram ignoradas. Responda às perguntas de novo nessas contas para salvá-las.`;
 }
 
 // ---------------------------------------------------------------------------
@@ -145,8 +145,8 @@ export function saveAccount(
   id: string,
 ): SaveResult {
   const clean = name.trim().replace(/\s+/g, " ");
-  if (!clean) return { ok: false, error: "Give this account a name, for example Main or Farm 1." };
-  if (clean.length > NAME_MAX) return { ok: false, error: `Use at most ${NAME_MAX} characters.` };
+  if (!clean) return { ok: false, error: "Dê um nome a esta conta, por exemplo Principal ou Farm 1." };
+  if (clean.length > NAME_MAX) return { ok: false, error: `Use no máximo ${NAME_MAX} caracteres.` };
   const same = list.findIndex((p) => p.name.toLowerCase() === clean.toLowerCase());
   if (same >= 0) {
     const next = [...list];
@@ -154,7 +154,7 @@ export function saveAccount(
     return { ok: true, list: next };
   }
   if (list.length >= MAX_SAVED_PROFILES) {
-    return { ok: false, error: `You can save up to ${MAX_SAVED_PROFILES} accounts. Remove one first.` };
+    return { ok: false, error: `Você pode salvar até ${MAX_SAVED_PROFILES} contas. Remova uma antes.` };
   }
   return { ok: true, list: [...list, { id, name: clean, code, override }] };
 }

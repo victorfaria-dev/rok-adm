@@ -7,7 +7,7 @@ import { decodeProfile } from "@rokadm/core";
 import type { SavedProfile, StoreV1 } from "./store";
 
 /** Name and id given to the single profile of an older save when it becomes account #1. */
-export const FIRST_ACCOUNT = { id: "main", name: "Main" } as const;
+export const FIRST_ACCOUNT = { id: "main", name: "Principal" } as const;
 
 type AccountsStore = Pick<StoreV1, "profileCode" | "profileOverride" | "savedProfiles" | "activeAccountId" | "commanders" | "routine">;
 

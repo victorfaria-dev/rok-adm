@@ -30,19 +30,19 @@ describe("questionnaire island: keyboard", () => {
   it("Enter moves forward and focus goes to the new question's options, not the log", () => {
     setup();
     expect(title().textContent).toBe(label(0));
-    expect(screen.getByText(/of 5/).textContent).toContain("1 of 5");
+    expect(screen.getByText(/de 5/).textContent).toContain("1 de 5");
     enter();
     expect(title().textContent).toBe(label(1));
     // Spending has options and the default is picked: the picked quick reply.
     expect(document.activeElement).toBe(screen.getByRole("radio", { name: /F2P/ }));
     expect(screen.getByRole("log").contains(document.activeElement)).toBe(false);
-    expect(screen.getByText(/of 5/).textContent).toContain("2 of 5");
+    expect(screen.getByText(/de 5/).textContent).toContain("2 de 5");
   });
 
   it("first load focuses the picked option of the first question", async () => {
     setup();
     await new Promise((r) => setTimeout(r, 0));
-    expect(document.activeElement).toBe(screen.getByRole("radio", { name: /As a player/ }));
+    expect(document.activeElement).toBe(screen.getByRole("radio", { name: /Como jogador/ }));
   });
 
   it("first load on a resumed number step focuses its field", async () => {
@@ -64,7 +64,7 @@ describe("questionnaire island: keyboard", () => {
 
   it("the kingdom stage step notes how KvK2+ is covered", () => {
     setup({ draft: { step: stepOf("kingdomStage"), answers: {} } });
-    expect(screen.getByText(/From KvK2 on, the guide uses the late-game plan/)).toBeTruthy();
+    expect(screen.getByText(/A partir da KvK2, o guia usa o plano da fase final/)).toBeTruthy();
   });
 
   it("Enter on a radio option commits the picked option", () => {
@@ -82,7 +82,7 @@ describe("questionnaire island: keyboard", () => {
     fireEvent.input(input, { target: { value: "17" } });
     enter(input);
     expect(title().textContent).toBe(label(stepOf("kingdomStage")));
-    fireEvent.click(screen.getByRole("button", { name: "Back" }));
+    fireEvent.click(screen.getByRole("button", { name: "Voltar" }));
     expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("17");
     expect(document.activeElement).toBe(screen.getByRole("textbox"));
   });
@@ -96,7 +96,7 @@ describe("questionnaire island: keyboard", () => {
 
   it("Enter on a button keeps the button's own action", () => {
     setup({ draft: { step: 2, answers: {} } });
-    const backBtn = screen.getByRole("button", { name: "Back" });
+    const backBtn = screen.getByRole("button", { name: "Voltar" });
     enter(backBtn);
     expect(title().textContent).toBe(label(2));
   });
@@ -109,9 +109,9 @@ describe("questionnaire island: chat", () => {
     expect(log.getAttribute("aria-live")).toBe("polite");
     expect(log.textContent).toContain("Sun Tzu");
     expect(log.textContent).toContain(LEADS.playingAs);
-    fireEvent.click(screen.getByRole("radio", { name: /leader/ }));
-    enter(screen.getByRole("radio", { name: /leader/ }));
-    expect(log.textContent).toContain("You: As a kingdom or alliance leader");
+    fireEvent.click(screen.getByRole("radio", { name: /líder/ }));
+    enter(screen.getByRole("radio", { name: /líder/ }));
+    expect(log.textContent).toContain("Você: Como líder de reino ou de aliança");
     expect(log.textContent).toContain(LEADS.spending);
     // One page heading: the current question only.
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
@@ -184,9 +184,9 @@ describe("questionnaire island: chat", () => {
 
   it("Sun Tzu grumbles at an empty or invalid answer, next to the error text", () => {
     setup({ draft: { step: stepOf("cityHall"), answers: { cityHall: "" } } });
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: "Avançar" }));
     expect(document.querySelector(".q-msg-bot[data-current] .st-avatar")!.getAttribute("data-state")).toBe("grumble");
-    expect(screen.getByText(/Enter a number from 1 to 25/)).toBeTruthy();
+    expect(screen.getByText(/Digite um número de 1 a 25/)).toBeTruthy();
   });
 });
 
@@ -195,9 +195,9 @@ describe("questionnaire island: errors", () => {
     setup({ draft: { step: stepOf("cityHall"), answers: {} } });
     const input = screen.getByRole("textbox");
     fireEvent.input(input, { target: { value: "30" } });
-    fireEvent.click(screen.getByRole("button", { name: "Next" }));
+    fireEvent.click(screen.getByRole("button", { name: "Avançar" }));
     expect(title().textContent).toBe(label(stepOf("cityHall")));
-    const err = screen.getByText("30 is out of range. Enter a number from 1 to 25.");
+    const err = screen.getByText("30 está fora do intervalo. Digite um número de 1 a 25.");
     expect(input.getAttribute("aria-invalid")).toBe("true");
     expect(input.getAttribute("aria-describedby")).toContain(err.id);
     expect(document.activeElement).toBe(input);
@@ -210,7 +210,7 @@ describe("questionnaire island: errors", () => {
   it("Skip is never offered: all five questions are needed", () => {
     for (let step = 0; step < STEPS.length; step++) {
       setup({ draft: { step, answers: {} } });
-      expect(screen.queryByRole("button", { name: "Skip" })).toBeNull();
+      expect(screen.queryByRole("button", { name: "Pular" })).toBeNull();
       cleanup();
       localStorage.clear();
     }
@@ -222,11 +222,11 @@ describe("questionnaire island: summary", () => {
     const { navigate } = setup({
       draft: { step: SUMMARY, answers: { playingAs: "player", spending: "f2p", minutesPerDay: 10, cityHall: 25, kingdomStage: "pre_kvk" } },
     });
-    expect(title().textContent).toBe("Check your answers");
+    expect(title().textContent).toBe("Confira suas respostas");
     expect(document.querySelector(".st-stage")!.getAttribute("data-state")).toBe("victory");
     expect(screen.getByText(/Under 15 minutes a day/)).toBeTruthy();
-    expect(screen.getByText(/optional: add them any time on the Me tab/)).toBeTruthy();
-    fireEvent.click(screen.getByRole("button", { name: "Open my City Hall" }));
+    expect(screen.getByText(/são opcionais: adicione quando quiser na aba Eu/)).toBeTruthy();
+    fireEvent.click(screen.getByRole("button", { name: "Abrir minha Prefeitura" }));
     const code = readStore().profileCode!;
     expect("profile" in decodeProfile(code)).toBe(true);
     expect(readStore().draft).toBeNull();
@@ -236,7 +236,7 @@ describe("questionnaire island: summary", () => {
 
   it("a leader lands on Kingdom and the tabs switch at once", () => {
     const { navigate } = setup({ draft: { step: SUMMARY, answers: { playingAs: "leader" } } });
-    fireEvent.click(screen.getByRole("button", { name: "Open my Kingdom" }));
+    fireEvent.click(screen.getByRole("button", { name: "Abrir meu Reino" }));
     expect(readStore().playingAs).toBe("leader");
     expect(document.documentElement.getAttribute("data-role")).toBe("leader");
     expect(navigate).toHaveBeenCalledWith("/kingdom/");
@@ -244,15 +244,15 @@ describe("questionnaire island: summary", () => {
 
   it("Edit answers: a saved profile (old 10-answer code) opens pre-filled; Change returns to the summary", () => {
     setup({ profileCode: "1.1.2.1.12.30.2.140.250.china.1" });
-    expect(title().textContent).toBe("Check your answers");
-    expect(screen.getAllByRole("button", { name: /^Change answer/ })).toHaveLength(5);
-    fireEvent.click(screen.getByRole("button", { name: `Change answer: ${label(stepOf("cityHall"))}` }));
+    expect(title().textContent).toBe("Confira suas respostas");
+    expect(screen.getAllByRole("button", { name: /^Alterar resposta/ })).toHaveLength(5);
+    fireEvent.click(screen.getByRole("button", { name: `Alterar resposta: ${label(stepOf("cityHall"))}` }));
     expect((screen.getByRole("textbox") as HTMLInputElement).value).toBe("12");
-    expect(screen.getByRole("button", { name: "Review answers" })).toBeTruthy();
+    expect(screen.getByRole("button", { name: "Revisar respostas" })).toBeTruthy();
     enter(screen.getByRole("textbox"));
-    expect(title().textContent).toBe("Check your answers");
+    expect(title().textContent).toBe("Confira suas respostas");
     // The optional answers of the old code (civilization China, kingdom day 140) are kept.
-    fireEvent.click(screen.getByRole("button", { name: "Open my City Hall" }));
+    fireEvent.click(screen.getByRole("button", { name: "Abrir minha Prefeitura" }));
     expect(readStore().profileCode).toBe("1.1.2.1.12.30.2.140.250.china.1");
   });
 });

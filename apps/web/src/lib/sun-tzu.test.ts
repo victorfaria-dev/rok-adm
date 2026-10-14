@@ -18,7 +18,7 @@ describe("Sun Tzu lines", () => {
   });
 
   it("the greeting counts the real number of questions (at most 5)", () => {
-    expect(GREETING).toContain(`${STEPS.length} quick questions`);
+    expect(GREETING).toContain(`${STEPS.length} perguntas rápidas`);
     expect(STEPS.length).toBeLessThanOrEqual(5);
   });
 });

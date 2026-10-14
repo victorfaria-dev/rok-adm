@@ -5,16 +5,16 @@ import { withActiveCode } from "../../lib/accounts";
 import { profileFromCode } from "../../lib/profile";
 import { readStore, writeStore, type StoreV1 } from "../../lib/store";
 
-// Every user-facing string of this section, in one place (i18n later).
+// Every user-facing string of this section, in one place (pt-BR).
 const S = {
-  h: "More about your account",
-  lead: "Optional. The guide and routine use these when you add them; leave any blank you are not sure about.",
-  notChosen: "Not answered",
-  yes: "Yes",
-  no: "No",
-  save: "Save details",
-  saved: "Saved.",
-  fix: "Fix the fields marked below.",
+  h: "Mais sobre a sua conta",
+  lead: "Opcional. O guia e a rotina usam estas respostas quando você as informa; deixe em branco as que não souber.",
+  notChosen: "Não respondido",
+  yes: "Sim",
+  no: "Não",
+  save: "Salvar detalhes",
+  saved: "Salvo.",
+  fix: "Corrija os campos marcados abaixo.",
 } as const;
 
 interface Props {

@@ -9,17 +9,17 @@ import { buildPickerRoster } from "../../../lib/commander-roster";
 const roster = buildPickerRoster();
 
 const S = {
-  title: "My commanders",
-  description: "Your commander checks for the account in use: main, farm or alt each keep their own answers.",
-  crumb: "City Hall",
-  lead: "Check a commander before this account spends sculptures on it.",
-  account: "Account:",
-  guide: "General picks:",
-  guideLink: "commander guide",
+  title: "Meus comandantes",
+  description: "Suas checagens de comandantes para a conta em uso: principal, farm ou alt guardam cada uma as suas respostas.",
+  crumb: "Prefeitura",
+  lead: "Confira um comandante antes de esta conta gastar esculturas nele.",
+  account: "Conta:",
+  guide: "Escolhas gerais:",
+  guideLink: "guia de comandantes",
 };
 ---
 <Shell title={S.title} description={S.description} mode="operate">
-  <nav class="crumb" aria-label="Breadcrumb"><a href="/city-hall/">{S.crumb}</a> <span aria-hidden="true">/</span> <span aria-current="page">{S.title}</span></nav>
+  <nav class="crumb" aria-label="Trilha de navegação"><a href="/city-hall/">{S.crumb}</a> <span aria-hidden="true">/</span> <span aria-current="page">{S.title}</span></nav>
   <section class="intro" aria-labelledby="mc-h">
     <h1 id="mc-h">{S.title}</h1>
     <p>{S.lead} {S.guide} <a href="/commanders/">{S.guideLink}</a>.</p>

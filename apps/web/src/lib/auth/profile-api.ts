@@ -18,12 +18,12 @@ export interface ProfileBundle {
 export function dbError(e: unknown): string {
   const code = typeof e === "object" && e !== null && "code" in e ? String((e as { code: unknown }).code) : "";
   const msg = typeof e === "object" && e !== null && "message" in e ? String((e as { message: unknown }).message) : "";
-  if (code === "23505" && /handle/i.test(msg)) return "That handle is taken. Pick another.";
-  if (code === "23505") return "You already did that.";
-  if (/reserved/i.test(msg)) return "This handle is reserved. Pick another.";
+  if (code === "23505" && /handle/i.test(msg)) return "Esse identificador já está em uso. Escolha outro.";
+  if (code === "23505") return "Você já fez isso.";
+  if (/reserved/i.test(msg)) return "Este identificador é reservado. Escolha outro.";
   if (/Too many/i.test(msg)) return msg;
-  if (code === "23514") return "Some of that is not allowed (length, links or characters). Check the fields.";
-  if (code === "42501") return "You are not allowed to do that. Sign in again and retry.";
+  if (code === "23514") return "Parte disso não é permitida (tamanho, links ou caracteres). Confira os campos.";
+  if (code === "42501") return "Você não tem permissão para isso. Entre de novo e tente outra vez.";
   return friendlyError(e);
 }
 
@@ -81,7 +81,7 @@ export async function replaceProfileImage(
   client: KoSupabase, userId: string, kind: ImageKind, blob: Blob, previousPath: string | null, now: number = Date.now(),
 ): Promise<{ ok: true; path: string } | { ok: false; message: string }> {
   const spec = IMAGE_KINDS[kind];
-  if (blob.size > spec.maxBytes) return { ok: false, message: `${spec.label} is over the ${Math.round(spec.maxBytes / 1024)} KB limit.` };
+  if (blob.size > spec.maxBytes) return { ok: false, message: `${spec.label}: acima do limite de ${Math.round(spec.maxBytes / 1024)} KB.` };
   const path = `${userId}/${kind}-${now}.${extensionOf(blob.type)}`;
   const bucket = client.storage.from(spec.bucket);
   const up = await bucket.upload(path, blob, { contentType: blob.type, upsert: false, cacheControl: "31536000" });
@@ -133,7 +133,7 @@ export async function claimSiteAchievements(client: KoSupabase): Promise<SiteAch
 export async function reportUser(client: KoSupabase, targetId: string, reason: ReportReason, details: string): Promise<ActionResult> {
   const text = details.trim().slice(0, REPORT_DETAILS_MAX);
   const { error } = await client.from("reports").insert({ target_id: targetId, reason, details: text || null });
-  if (error && (error as { code?: string }).code === "23505") return { ok: false, message: "You already reported this profile. We will review it." };
+  if (error && (error as { code?: string }).code === "23505") return { ok: false, message: "Você já denunciou este perfil. Vamos analisá-lo." };
   return error ? { ok: false, message: dbError(error) } : { ok: true };
 }
 

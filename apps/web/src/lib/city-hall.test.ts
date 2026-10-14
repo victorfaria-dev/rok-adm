@@ -19,7 +19,7 @@ describe("City Hall tab helpers", () => {
     const n = nextLevel(rows, 9);
     expect(n?.to).toBe(10);
     expect(n?.resources.length).toBeGreaterThan(0);
-    for (const line of n!.resources) expect(line).toMatch(/^(Food|Wood|Stone|Gold) [\d,]+$/);
+    for (const line of n!.resources) expect(line).toMatch(/^(Comida|Madeira|Pedra|Ouro) [\d.]+$/);
     expect(n?.requirement).toBeTruthy();
   });
 

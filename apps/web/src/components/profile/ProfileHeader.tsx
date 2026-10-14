@@ -23,7 +23,7 @@ export function initials(name: string | null, handle: string | null): string {
 }
 
 export function ProfileHeader({ profile, avatarUrl, bannerUrl, achievements = [], children, as: H = "h1" }: Props) {
-  const name = profile.display_name || (profile.handle ? `@${profile.handle}` : "New player");
+  const name = profile.display_name || (profile.handle ? `@${profile.handle}` : "Novo jogador");
   return (
     <section class="pf-section" aria-labelledby="pf-name">
       <div class="pf-banner" data-empty={bannerUrl ? undefined : ""}>
@@ -31,17 +31,17 @@ export function ProfileHeader({ profile, avatarUrl, bannerUrl, achievements = []
       </div>
       <div class="pf-card">
         <div class="pf-avatar" aria-hidden={avatarUrl ? undefined : "true"}>
-          {avatarUrl ? <img src={avatarUrl} alt={`Photo of ${name}`} width={256} height={256} decoding="async" /> : <span>{initials(profile.display_name, profile.handle)}</span>}
+          {avatarUrl ? <img src={avatarUrl} alt={`Foto de ${name}`} width={256} height={256} decoding="async" /> : <span>{initials(profile.display_name, profile.handle)}</span>}
         </div>
         <div class="pf-id">
           <H id="pf-name" class="pf-name">{name}</H>
           <p class="pf-meta">
             {profile.handle && <span class="mono">@{profile.handle}</span>}
-            {profile.kingdom_number !== null && <span>Kingdom <span class="mono">#{profile.kingdom_number}</span></span>}
+            {profile.kingdom_number !== null && <span>Reino <span class="mono">#{profile.kingdom_number}</span></span>}
           </p>
           {profile.verified_level !== undefined && (
             <span class="pf-badge pf-verified" data-kind={profile.verified_level > 1 ? "site" : "unverified"} data-verified-level={profile.verified_level}
-              title={profile.verified_level === 3 ? "A moderator saw this site's one-time code in the player's in-game Album." : profile.verified_level === 2 ? "A moderator checked the player's screenshots." : "Nothing checked yet: values are what the player typed."}>
+              title={profile.verified_level === 3 ? "Um moderador viu o código de uso único deste site no Álbum do jogo do jogador." : profile.verified_level === 2 ? "Um moderador conferiu os prints do jogador." : "Nada conferido ainda: os valores são o que o jogador digitou."}>
               {LEVEL_LABEL[profile.verified_level]}
             </span>
           )}
@@ -50,9 +50,9 @@ export function ProfileHeader({ profile, avatarUrl, bannerUrl, achievements = []
         {children && <div class="pf-actions">{children}</div>}
       </div>
       <div class="pf-body">
-        <h2 class="pf-h">Achievements</h2>
+        <h2 class="pf-h">Conquistas</h2>
         {achievements.length === 0 ? (
-          <p class="pf-muted">No achievements yet.</p>
+          <p class="pf-muted">Ainda sem conquistas.</p>
         ) : (
           <ul class="pf-achievements">
             {achievements.map((a) => (
@@ -60,13 +60,13 @@ export function ProfileHeader({ profile, avatarUrl, bannerUrl, achievements = []
                 <span class="pf-ach-title">{a.title}</span>
                 {a.detail && <span class="pf-ach-detail">{a.detail}</span>}
                 <span class="pf-badge" data-kind={a.source === "site" ? "site" : "unverified"}>
-                  {a.source === "site" ? "Earned on KingdomOps" : "Unverified (self-declared)"}
+                  {a.source === "site" ? "Conquistada no KingdomOps" : "Não verificada (autodeclarada)"}
                 </span>
               </li>
             ))}
           </ul>
         )}
-        <p class="pf-muted pf-fine">KingdomOps cannot read game data. "Unverified" achievements are what the player typed; only "Earned on KingdomOps" ones are checked by the site.</p>
+        <p class="pf-muted pf-fine">O KingdomOps não consegue ler dados do jogo. As conquistas "Não verificadas" são o que o jogador digitou; só as "Conquistadas no KingdomOps" são conferidas pelo site.</p>
       </div>
     </section>
   );

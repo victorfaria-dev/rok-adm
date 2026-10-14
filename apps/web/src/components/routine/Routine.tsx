@@ -32,9 +32,9 @@ type BudgetChoice = (typeof BUDGETS)[number] | "usual";
 const WEEKLY_TASKS = ROUTINE_TASKS.filter((t) => t.frequency === "weekly");
 const ESTIMATE_LABEL = ESTIMATE_NOTICE.label;
 
-export const fmtMin = (n: number): string => String(Math.round(n * 10) / 10);
+export const fmtMin = (n: number): string => (Math.round(n * 10) / 10).toLocaleString("pt-BR");
 export const minutesText = (minutes: number, isEstimate: boolean): string =>
-  isEstimate ? `~${fmtMin(minutes)} min · pending measurement` : `${fmtMin(minutes)} min`;
+  isEstimate ? `~${fmtMin(minutes)} min · medição pendente` : `${fmtMin(minutes)} min`;
 
 function choiceOf(prefs: RoutinePrefs | null): BudgetChoice {
   const m = prefs?.minutes;
@@ -45,7 +45,7 @@ function choiceOf(prefs: RoutinePrefs | null): BudgetChoice {
 function skipText(s: SkippedTask): string {
   if (s.reason === "not_today" && s.task.frequency === "weekly") {
     const cadence = ROUTINE_META[s.id]?.cadence;
-    return `Weekly task${cadence ? `: ${cadence}` : ""}. Turn on weekly tasks above on its day.`;
+    return `Tarefa semanal${cadence ? `: ${cadence}` : ""}. Ative as tarefas semanais acima no dia dela.`;
   }
   return s.detail;
 }
@@ -60,7 +60,7 @@ function NoteList({ notes }: { notes: readonly Note[] }) {
     <ul class="rt-notes">
       {notes.map((n) => (
         <li key={n.text}>
-          {n.pending && <strong class="rt-pending">Pending research: </strong>}
+          {n.pending && <strong class="rt-pending">Pesquisa pendente: </strong>}
           {n.text}
           {n.facts.length > 0 && <span class="mono rt-facts"> ({n.facts.join(", ")})</span>}
         </li>
@@ -84,14 +84,14 @@ function TaskRow({ t, checked, onToggle }: { t: PlannedTask; checked: boolean; o
           <span class="rt-task-title">{t.title}</span>
           <span class={t.isEstimate ? "rt-min rt-min-est" : "rt-min"}>
             <span class="mono">{t.isEstimate ? `~${fmtMin(t.minutes)}` : fmtMin(t.minutes)} min</span>
-            {t.isEstimate && " · pending measurement"}
-            {t.mustDo && " · must-do"}
+            {t.isEstimate && " · medição pendente"}
+            {t.mustDo && " · essencial"}
           </span>
         </span>
       </label>
       {t.why && (
         <details class="rt-why">
-          <summary>Why<span class="visually-hidden">: {t.title}</span></summary>
+          <summary>Por quê<span class="visually-hidden">: {t.title}</span></summary>
           <p>{t.why}</p>
         </details>
       )}
@@ -104,14 +104,14 @@ function Checklist({ tasks, done, onToggle, label }: { tasks: readonly PlannedTa
   return (
     <>
       <p class="rt-progress" role="status" aria-live="polite">
-        <span class="mono">{n}</span> of <span class="mono">{tasks.length}</span> done
+        <span class="mono">{n}</span> de <span class="mono">{tasks.length}</span> concluídas
       </p>
       {tasks.length ? (
         <ul class="rt-list" aria-label={label}>
           {tasks.map((t) => <TaskRow key={t.id} t={t} checked={done.includes(t.id)} onToggle={onToggle} />)}
         </ul>
       ) : (
-        <p class="rt-empty">Nothing fits this time. Pick more minutes above.</p>
+        <p class="rt-empty">Nada cabe neste tempo. Escolha mais minutos acima.</p>
       )}
     </>
   );
@@ -157,7 +157,7 @@ export default function Routine({ now = () => new Date() }: Props) {
     setStore(writeStore({ routine: setDone(readStore().routine, id, d, now()) }));
   };
 
-  const qualifier = eff.source === "lifetime" ? " (effective profile, from your total spend)" : eff.source === "override" ? " (chosen by hand)" : "";
+  const qualifier = eff.source === "lifetime" ? " (perfil efetivo, pelo seu gasto total)" : eff.source === "override" ? " (escolhido à mão)" : "";
   const forText = `${PROFILE_NAMES[eff.effective]}${qualifier} · CH ${base.cityHall}`;
 
   const safeSkips = plan.skipped.filter((s) => s.safeToSkip);
@@ -175,37 +175,37 @@ export default function Routine({ now = () => new Date() }: Props) {
   return (
     <div class="rt" data-ready={ready ? "" : undefined}>
       <div class="rt-head">
-        <h1>Today's routine</h1>
-        <p class="rt-lede">What to do today in the time you have, most valuable first.</p>
+        <h1>Rotina de hoje</h1>
+        <p class="rt-lede">O que fazer hoje no tempo que você tem, o mais valioso primeiro.</p>
         <p class="rt-for">
-          Planned for:{" "}
-          {saved ? <a href="/me/">{forText}</a> : <span>default answers ({forText})</span>}
+          Planejada para:{" "}
+          {saved ? <a href="/me/">{forText}</a> : <span>respostas padrão ({forText})</span>}
         </p>
         {today && (
-          <p class="rt-help">Checks clear at the game's daily reset, 00:00 UTC ({resetLocalTime(today)} your time).</p>
+          <p class="rt-help">As marcações zeram na virada diária do jogo, 00:00 UTC ({resetLocalTime(today)} no seu horário).</p>
         )}
       </div>
 
       {ready && !saved && (
         <div class="rt-banner">
-          <p>This plan uses default answers. Answer 5 quick questions so it fits your account.</p>
-          <a class="btn btn-primary" href="/start/">Set up your profile</a>
+          <p>Este plano usa respostas padrão. Responda a 5 perguntas rápidas para ele combinar com a sua conta.</p>
+          <a class="btn btn-primary" href="/start/">Configurar seu perfil</a>
         </div>
       )}
 
       <label class="rt-switch">
         <input type="checkbox" role="switch" checked={onBreak} onChange={(e) => savePrefs({ breakMode: (e.currentTarget as HTMLInputElement).checked })} />
         <span>
-          <span class="rt-switch-label">Break Mode: busy day or pausing</span>
-          <span class="rt-help">The minimum: keep your VIP streak and keep queues and gatherers working while you are away.</span>
+          <span class="rt-switch-label">Modo Pausa: dia corrido ou pausa no jogo</span>
+          <span class="rt-help">O mínimo: manter a sequência de VIP e as filas e coletores trabalhando enquanto você está fora.</span>
         </span>
       </label>
 
       {!onBreak && (
         <section class="rt-section" aria-labelledby="rt-plan-title">
-          <h2 id="rt-plan-title">Plan</h2>
+          <h2 id="rt-plan-title">Plano</h2>
           <fieldset class="rt-budget">
-            <legend>Time today</legend>
+            <legend>Tempo hoje</legend>
             <div class="rt-choices">
               {BUDGETS.map((m) => (
                 <label class="rt-choice" key={m}>
@@ -215,25 +215,25 @@ export default function Routine({ now = () => new Date() }: Props) {
               ))}
               <label class="rt-choice">
                 <input type="radio" name="rt-budget" value="usual" checked={choice === "usual"} onChange={() => savePrefs({ minutes: null })} />
-                <span>{saved ? "My usual" : "Default"} (<span class="mono">{base.minutesPerDay}</span> min)</span>
+                <span>{saved ? "Meu padrão" : "Padrão"} (<span class="mono">{base.minutesPerDay}</span> min)</span>
               </label>
             </div>
           </fieldset>
 
           <fieldset class="rt-extra">
-            <legend>Also plan for</legend>
+            <legend>Planejar também</legend>
             <label class="rt-check">
               <input type="checkbox" checked={weekly} onChange={(e) => savePrefs({ includeWeekly: (e.currentTarget as HTMLInputElement).checked })} />
               <span>
-                Weekly tasks, on their day
+                Tarefas semanais, no dia delas
                 <span class="rt-help">{WEEKLY_TASKS.map((t) => `${t.title}${ROUTINE_META[t.id]?.cadence ? `: ${ROUTINE_META[t.id]!.cadence}` : ""}`).join(". ")}.</span>
               </span>
             </label>
             <label class="rt-check">
               <input type="checkbox" checked={events} onChange={(e) => savePrefs({ includeEvents: (e.currentTarget as HTMLInputElement).checked })} />
               <span>
-                An event is running
-                <span class="rt-help">Check the in-game calendar; events are not on a fixed schedule.</span>
+                Um evento está em andamento
+                <span class="rt-help">Confira o calendário do jogo; os eventos não têm horário fixo.</span>
               </span>
             </label>
           </fieldset>
@@ -241,33 +241,33 @@ export default function Routine({ now = () => new Date() }: Props) {
       )}
 
       <section class="rt-section" aria-labelledby="rt-list-title">
-        <h2 id="rt-list-title">{onBreak ? "Break Mode: the minimum" : "Checklist"}</h2>
+        <h2 id="rt-list-title">{onBreak ? "Modo Pausa: o mínimo" : "Checklist"}</h2>
         {onBreak && (
           <p class="rt-help" data-break-scope>
-            Keeps your VIP streak and keeps builders, research, training, healing and gatherers busy while you are away.
-            It does not cover shields or resource protection: KingdomOps has no checked facts on those yet.
+            Mantém a sequência de VIP e mantém construtores, pesquisa, treinamento, cura e coletores ocupados enquanto você está fora.
+            Não cobre escudos nem proteção de recursos: o KingdomOps ainda não tem fatos conferidos sobre isso.
           </p>
         )}
-        <Checklist tasks={shown} done={done} onToggle={toggle} label={onBreak ? "Break Mode daily tasks" : "Today's tasks"} />
+        <Checklist tasks={shown} done={done} onToggle={toggle} label={onBreak ? "Tarefas diárias do Modo Pausa" : "Tarefas de hoje"} />
 
         {!onBreak && mustMissing.length > 0 && (
           <div class="rt-warn">
-            <h3>Must-do tasks that did not fit</h3>
+            <h3>Tarefas essenciais que não couberam</h3>
             <ul>
               {mustMissing.map((s) => <li key={s.id}>{s.title}: {s.detail}</li>)}
             </ul>
-            <p>Pick more time to fit them.</p>
+            <p>Escolha mais tempo para encaixá-las.</p>
           </div>
         )}
 
         {!onBreak && (
           <>
             <details class="rt-more">
-              <summary>Safe to skip today (<span class="mono">{safeSkips.length}</span>)</summary>
+              <summary>Pode pular hoje (<span class="mono">{safeSkips.length}</span>)</summary>
               <SkipList items={safeSkips} />
             </details>
             <details class="rt-more">
-              <summary>Not in today's plan (<span class="mono">{otherSkips.length}</span>)</summary>
+              <summary>Fora do plano de hoje (<span class="mono">{otherSkips.length}</span>)</summary>
               <SkipList items={otherSkips} />
             </details>
           </>
@@ -276,7 +276,7 @@ export default function Routine({ now = () => new Date() }: Props) {
         {onBreak && (
           <>
             <details class="rt-more">
-              <summary>Safe to drop while paused (<span class="mono">{pause.dropWhilePaused.length}</span>)</summary>
+              <summary>Pode largar durante a pausa (<span class="mono">{pause.dropWhilePaused.length}</span>)</summary>
               <ul class="rt-plain">
                 {pause.dropWhilePaused.map((t) => <li key={t.id}>{t.title}</li>)}
               </ul>
@@ -287,26 +287,26 @@ export default function Routine({ now = () => new Date() }: Props) {
       </section>
 
       <section class="rt-section rt-reality" aria-labelledby="rt-reality-title">
-        <h2 id="rt-reality-title">Reality check</h2>
+        <h2 id="rt-reality-title">Checagem de realidade</h2>
         <ul class="rt-facts-list">
           <li>
-            Planned: <span class="mono">{fmtMin(shownMinutes)}</span> of <span class="mono">{fmtMin(plan.budgetMinutes)}</span> min{onBreak ? " (Break Mode)" : ""}.
+            Planejado: <span class="mono">{fmtMin(shownMinutes)}</span> de <span class="mono">{fmtMin(plan.budgetMinutes)}</span> min{onBreak ? " (Modo Pausa)" : ""}.
           </li>
           <li>
             {estimates.length === 0
-              ? "Every task time here is measured in game."
-              : <><span class="mono">{estimates.length}</span> of <span class="mono">{shown.length}</span> task times (<span class="mono">{fmtMin(estimateMinutes)}</span> min) are estimates pending in-game measurement.</>}
+              ? "Todos os tempos das tarefas aqui foram medidos no jogo."
+              : <><span class="mono">{estimates.length}</span> de <span class="mono">{shown.length}</span> tempos de tarefas (<span class="mono">{fmtMin(estimateMinutes)}</span> min) são estimativas, com medição no jogo pendente.</>}
           </li>
           <li>
             {rc.message}
             {gems && (
-              <> Guaranteed gems per day: <span class="mono">{gems.value}</span> {gems.unit} (confidence: {gems.confidence}).</>
+              <> Gemas garantidas por dia: <span class="mono">{gems.value}</span> {gems.unit} (confiança: {gems.confidence}).</>
             )}
           </li>
         </ul>
         {!onBreak && <NoteList notes={extraNotes(plan.notes)} />}
         <p class="rt-help">
-          <strong>About "pending measurement":</strong> {ESTIMATE_NOTICE.basis}
+          <strong>Sobre "medição pendente":</strong> {ESTIMATE_NOTICE.basis}
         </p>
       </section>
 
@@ -316,7 +316,7 @@ export default function Routine({ now = () => new Date() }: Props) {
 }
 
 function SkipList({ items }: { items: readonly SkippedTask[] }) {
-  if (!items.length) return <p class="rt-help">None today.</p>;
+  if (!items.length) return <p class="rt-help">Nenhuma hoje.</p>;
   return (
     <ul class="rt-plain">
       {items.map((s) => (

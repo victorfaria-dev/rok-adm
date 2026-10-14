@@ -48,8 +48,8 @@ describe("planRestore / applyRestore", () => {
     const by = Object.fromEntries(plan.rows.map((r) => [r.key, r]));
     expect(by["ko:v1"]!.change).toBe("same");
     expect(by["ko:card:v1"]!.change).toBe("same");
-    expect(by["ko:farms:v1"]).toMatchObject({ change: "replace", now: "0 farms, 0 shipments", incoming: "1 farm, 0 shipments" });
-    expect(by["ko:tools:v1"]).toMatchObject({ change: "add", now: null, incoming: "0 calculators, 1 inventory value, 0 checklists" });
+    expect(by["ko:farms:v1"]).toMatchObject({ change: "replace", now: "0 farms, 0 envios", incoming: "1 farm, 0 envios" });
+    expect(by["ko:tools:v1"]).toMatchObject({ change: "add", now: null, incoming: "0 calculadoras, 1 valor de inventário, 0 checklists" });
     expect(by["ko:crest:v1"]).toMatchObject({ change: "invalid", incoming: null });
     expect(by["ko:kingdom:v1"]).toBeUndefined();
     expect(plan.unknown).toEqual(["ko:other:v9"]);
@@ -64,9 +64,9 @@ describe("planRestore / applyRestore", () => {
   });
 
   it("refuses files that are not backups, and newer versions", () => {
-    expect(() => planRestore("nope", null)).toThrow(/not a KingdomOps backup/);
-    expect(() => planRestore(JSON.stringify({ app: "kingdomops", v: 1 }), null)).toThrow(/not a KingdomOps backup/);
-    expect(() => planRestore(JSON.stringify({ app: BACKUP_APP, v: 2, keys: {} }), null)).toThrow(/newer version/);
+    expect(() => planRestore("nope", null)).toThrow(/não é um backup do KingdomOps/);
+    expect(() => planRestore(JSON.stringify({ app: "kingdomops", v: 1 }), null)).toThrow(/não é um backup do KingdomOps/);
+    expect(() => planRestore(JSON.stringify({ app: BACKUP_APP, v: 2, keys: {} }), null)).toThrow(/versão mais nova/);
   });
 
   it("a section that is not a v1 object is invalid, not silently reset to defaults", () => {

@@ -7,40 +7,40 @@ import { ALLIANCE_COLORS } from "../../lib/card";
 import { RARITIES, RARITY_LABELS } from "../../lib/rarity";
 import styleguideUrl from "../../../../../design/styleguide.html?url";
 
-const brand = [["graphite", "Graphite"], ["bronze", "Bronze"], ["ivory", "Ivory"]] as const;
+const brand = [["graphite", "Grafite"], ["bronze", "Bronze"], ["ivory", "Marfim"]] as const;
 ---
-<Shell title="Brand" description="The KingdomOps logo, its short motion sting and the interface colors." mode="read">
+<Shell title="Marca" description="O logo do KingdomOps, a sua vinheta animada curta e as cores da interface." mode="read">
   <section class="hero">
-    <h1>KingdomOps brand</h1>
-    <p class="sub">Operations plus kingdom. The K is assembled like a machined part: three facets lock, then the name follows.</p>
+    <h1>Marca KingdomOps</h1>
+    <p class="sub">Operações mais reino. O K é montado como uma peça usinada: três facetas se encaixam e depois vem o nome.</p>
     <div class="lockup"><Logo variant="horizontal" class="wide" /></div>
   </section>
 
   <section class="sting-demo" aria-labelledby="sting-h">
-    <h2 id="sting-h">Logo sting</h2>
-    <p>About 1.2 seconds, K only: the facets slide in on their own axes, lock with a small pop and a light sweeps across. In the installed app it plays once per session on launch; it never plays with reduced motion on.</p>
+    <h2 id="sting-h">Vinheta do logo</h2>
+    <p>Cerca de 1,2 segundo, só o K: as facetas deslizam cada uma no seu eixo, se encaixam com um pequeno estalo e uma luz passa por cima. No app instalado, toca uma vez por sessão ao abrir; nunca toca com movimento reduzido ativado.</p>
     <LogoSting mode="demo" />
     <div class="actions">
-      <button type="button" class="btn btn-primary" data-sting-play>Play sting</button>
-      <p class="note" data-sting-note hidden>Your system asks for reduced motion, so the sting stays off and the logo stays still.</p>
+      <button type="button" class="btn btn-primary" data-sting-play>Tocar vinheta</button>
+      <p class="note" data-sting-note hidden>Seu sistema pede movimento reduzido, então a vinheta fica desligada e o logo fica parado.</p>
     </div>
   </section>
 
   <section class="colors" aria-labelledby="colors-h">
-    <h2 id="colors-h">Colors</h2>
-    <h3>Brand</h3>
+    <h2 id="colors-h">Cores</h2>
+    <h3>Marca</h3>
     <ul class="swatches">
       {brand.map(([t, label]) => <li><span class="sw" style={`--c: var(--ko-${t})`}></span><span>{label}</span><code>--ko-{t}</code></li>)}
     </ul>
-    <h3>Rarity</h3>
+    <h3>Raridade</h3>
     <ul class="swatches">
       {RARITIES.map((r) => <li><span class="sw" style={`--c: var(--ko-rarity-${r})`}></span><span>{RARITY_LABELS[r]}</span><code>--ko-rarity-{r}</code></li>)}
     </ul>
-    <h3>Alliance</h3>
+    <h3>Aliança</h3>
     <ul class="swatches">
       {ALLIANCE_COLORS.map((c) => <li><span class="sw" style={`--c: var(--ko-alliance-${c})`}></span><span>{c}</span><code>--ko-alliance-{c}</code></li>)}
     </ul>
-    <p class="more">Every color, type size and spacing step with its contrast check: <a href={styleguideUrl}>open the style guide</a>.</p>
+    <p class="more">Todas as cores, tamanhos de texto e espaçamentos com a checagem de contraste: <a href={styleguideUrl}>abrir o guia de estilo</a>.</p>
   </section>
 </Shell>
 
