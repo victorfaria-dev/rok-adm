@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BANNERS_KEY, BANNER_MAX_CHARS, accountKind, cropAt, defaultBanner, localBannerStore, parseBanners } from "./banner";
+import { BANNERS_KEY, BANNER_MAX_CHARS, accountKind, cropAt, defaultBanner, localBannerStore, localBannersForUpload, parseBanners } from "./banner";
 
 class Mem {
   m = new Map<string, string>();
@@ -49,5 +49,14 @@ describe("city card banners", () => {
     expect(cropAt(1920, 1080, 1, 0.5)).toEqual({ sx: 1110, sy: 0, sw: 810, sh: 1080 });
     expect(cropAt(1000, 2000, 0.5, 0)).toEqual({ sx: 0, sy: 0, sw: 1000, sh: 1333 });
     expect(cropAt(1000, 2000, 0.5, 2)).toEqual({ sx: 0, sy: 667, sw: 1000, sh: 1333 });
+  });
+
+  it("hands custom banners to the first-sign-in upload as blobs", async () => {
+    const st = new Mem();
+    await localBannerStore(st).setBanner("farm1", IMG);
+    const out = await localBannersForUpload(st);
+    expect(out.map((b) => b.accountId)).toEqual(["farm1"]);
+    expect(out[0]!.blob.type).toBe("image/webp");
+    expect(out[0]!.blob.size).toBe(3);
   });
 });

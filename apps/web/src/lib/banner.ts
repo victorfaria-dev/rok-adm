@@ -121,3 +121,26 @@ export async function prepareBanner(file: File, fx = 0.5, fy = 0.5): Promise<str
   }
   throw new Error("This image is too detailed to store on this device. Try a simpler or smaller image.");
 }
+
+/**
+ * Every custom banner on this device as a Blob, for the first-sign-in upload
+ * (lib/auth/account-banners.ts loadLocalBanners). Account ids are the saved-account ids.
+ */
+export async function localBannersForUpload(st: StorageLike | null = storage()): Promise<{ accountId: string; blob: Blob }[]> {
+  let all: Record<string, string> = {};
+  try {
+    all = parseBanners(st?.getItem(BANNERS_KEY));
+  } catch {
+    return [];
+  }
+  const out: { accountId: string; blob: Blob }[] = [];
+  for (const [accountId, url] of Object.entries(all)) {
+    const m = /^data:([^;]+);base64,(.*)$/.exec(url);
+    if (!m) continue;
+    const bin = atob(m[2]!);
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    out.push({ accountId, blob: new Blob([bytes], { type: m[1] }) });
+  }
+  return out;
+}

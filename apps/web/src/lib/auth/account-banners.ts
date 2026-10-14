@@ -39,10 +39,13 @@ export interface LocalBanner {
 }
 
 /**
- * Wire point for the City Hall track: return the device's custom city banners (not the defaults).
- * Until it is wired, there is nothing to migrate.
+ * Wire point for the City Hall track: the device's custom city banners (not the defaults), from
+ * lib/banner.ts (ko:banners:v1, keyed by saved-account id), as upload-ready blobs.
  */
-export const loadLocalBanners = async (): Promise<LocalBanner[]> => [];
+export const loadLocalBanners = async (): Promise<LocalBanner[]> => {
+  const { localBannersForUpload } = await import("../banner");
+  return (await localBannersForUpload()).map((b) => ({ localId: localIdForSavedProfile(b.accountId), blob: b.blob }));
+};
 
 /** Browser only: center-crop to 3:4, scale to at most 768×1024, re-encode (drops metadata), ≤ 512 KB. */
 export async function prepareAccountBanner(file: Blob): Promise<Blob> {
