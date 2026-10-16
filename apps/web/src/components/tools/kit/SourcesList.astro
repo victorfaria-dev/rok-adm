@@ -1,0 +1,18 @@
+---
+// Static list of every fact card a page cites, with confidence and last confirmation.
+import { sourceRows } from "../../../lib/tools-payload";
+interface Props { ids: Iterable<string> }
+const rows = sourceRows(Astro.props.ids);
+const TEXT = { high: "alta", medium: "média", low: "baixa", pending: "pendente" } as const;
+---
+<section class="t-sources" aria-labelledby="t-sources-h">
+  <h2 id="t-sources-h">Fontes desta página</h2>
+  <ul>
+    {rows.map((r) => (
+      <li>
+        <span class="mono">{r.id}</span> {r.title}
+        <span class="t-src-meta">Confiança {TEXT[r.confidence]}{r.verifiedOn ? `, última confirmação em ${r.verifiedOn}` : ""}{r.stale ? ". Reverificar" : ""}</span>
+      </li>
+    ))}
+  </ul>
+</section>

@@ -1,0 +1,31 @@
+{
+  "_about": "Inputs of the Healing planner (/tools/healing/, F-22). Hospital capacity per level comes from the A01-buildings-hospital table ('Hospital Capacity', A01-0008) at build time.",
+  "overflowDies": {
+    "text": "Tropas feridas além da capacidade do hospital morrem.",
+    "facts": ["A08-0502"],
+    "evidence": { "A08-0502": "Wounded troops beyond hospital capacity die" }
+  },
+  "t5HealsCostMore": {
+    "text": "A cura de T5 custa muito mais recursos e tempo que a de T4.",
+    "facts": ["A08-0505"],
+    "evidence": { "A08-0505": "T5 healing costs much more resources/time than T4" }
+  },
+  "hospitals": {
+    "value": 1,
+    "unit": "hospitais na sua cidade",
+    "pending": true,
+    "_note": "Entrada do jogador: nenhuma ficha informa quantos hospitais uma cidade tem como valor."
+  },
+  "healCostPerTroop": {
+    "value": 0,
+    "unit": "comida, madeira, pedra, ouro por tropa curada",
+    "pending": true,
+    "_note": "Não está em nenhuma ficha: leia na tela do hospital."
+  },
+  "healSecondsPerTroop": {
+    "value": 0,
+    "unit": "segundos por tropa curada",
+    "pending": true,
+    "_note": "Não está em nenhuma ficha: leia na tela do hospital."
+  }
+}

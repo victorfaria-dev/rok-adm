@@ -1,0 +1,16 @@
+---
+interface Props {
+  /** Extra sentence for tools that hold other players' data (names, stats). */
+  thirdParty?: boolean;
+}
+const { thirdParty = false } = Astro.props;
+---
+<aside class="kg-privacy kg-noprint" data-privacy aria-labelledby="kg-privacy-h">
+  <h2 id="kg-privacy-h">Privacidade</h2>
+  <ul>
+    <li>Tudo o que você digita fica neste navegador. Nada é enviado a um servidor.</li>
+    <li>O link de compartilhamento leva o documento dentro dele mesmo. Qualquer pessoa com o link pode lê-lo, então compartilhe só onde você quiser.</li>
+    {thirdParty && <li>Informe só nomes e números de outros jogadores que o seu conselho coletou por conta própria e que eles aceitaram compartilhar. Não cole senhas, e-mails nem leituras que você não tinha permissão para fazer.</li>}
+    <li>Exporte, importe ou apague todos os dados do conselho em <a href="/kingdom/#data">Dados do seu conselho</a>, abaixo.</li>
+  </ul>
+</aside>

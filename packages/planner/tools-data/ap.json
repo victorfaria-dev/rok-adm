@@ -1,0 +1,63 @@
+{
+  "_about": "Inputs of the Action Points calculator (/tools/action-points/).",
+  "cap": {
+    "value": 1500,
+    "unit": "PA de limite sem bônus",
+    "facts": ["A09-0001"],
+    "evidence": { "A09-0001": "the maximum Action Points is 1,500" }
+  },
+  "dailyClaim": {
+    "value": 500,
+    "unit": "PA coletáveis uma vez por dia",
+    "facts": ["A09-0001", "A09-0006"],
+    "evidence": { "A09-0001": "claim an extra 500 free AP per day", "A09-0006": "claimable whenever AP is below the cap and may push AP above it" }
+  },
+  "barbarianBase": {
+    "value": 50,
+    "unit": "PA por ataque a bárbaros",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "Attacking barbarians costs 50 AP" }
+  },
+  "barbarianStep": {
+    "value": 2,
+    "unit": "PA a menos por ataque consecutivo sem voltar",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "reduces the cost by 2 AP" }
+  },
+  "barbarianMaxStreak": {
+    "value": 10,
+    "unit": "PA de maior redução da sequência",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "down to a maximum reduction of 10 AP" }
+  },
+  "insightMax": {
+    "value": 10,
+    "unit": "PA a mais de desconto com o talento Insight, no máximo",
+    "facts": ["A09-0002"],
+    "evidence": { "A09-0002": "can reduce it by up to 10 AP more" }
+  },
+  "packAp": {
+    "value": 500,
+    "unit": "PA por compra com gemas",
+    "facts": ["A04-0008"],
+    "evidence": { "A04-0008": "500 AP for 100 gems" }
+  },
+  "packStartGems": {
+    "value": 100,
+    "unit": "gemas na primeira compra do dia",
+    "facts": ["A04-0008"],
+    "evidence": { "A04-0008": "the price starts at 100 gems" }
+  },
+  "packStepGems": {
+    "value": 50,
+    "unit": "gemas a mais por compra",
+    "facts": ["A04-0008"],
+    "evidence": { "A04-0008": "rises by 50 gems per purchase, resetting to 100 gems at the daily server reset" }
+  },
+  "regenPerHour": {
+    "value": 0,
+    "unit": "PA regenerados por hora",
+    "pending": true,
+    "_note": "Desconhecido nos nossos dados (lacuna L-A09-01, A09-0001). Apenas medição de jogadores."
+  }
+}

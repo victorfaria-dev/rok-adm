@@ -1,0 +1,10 @@
+---
+// Static shell for every public profile: Netlify rewrites /u/<handle>/ here (netlify.toml);
+// /u/?h=<handle> works on any host. The island reads the handle and loads the profile.
+import Shell from "../../layouts/Shell.astro";
+import ProfileView from "../../components/profile/ProfileView";
+---
+<Shell title="Perfil do jogador" description="Perfil de comunidade de um jogador do KingdomOps: foto, banner, reino, bio e conquistas." mode="operate">
+  <ProfileView client:load />
+  <noscript><p>Os perfis de jogadores precisam de JavaScript.</p></noscript>
+</Shell>

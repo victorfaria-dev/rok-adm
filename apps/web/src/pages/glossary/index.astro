@@ -1,0 +1,57 @@
+---
+// F-88 Glossary: static, indexable list (one anchor per term) plus a small search island.
+import Shell from "../../layouts/Shell.astro";
+import GlossarySearch from "../../components/tools/glossary/GlossarySearch";
+import { Cite } from "../../components/tools/kit/Cite";
+import DataStamp from "../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../lib/tools-payload";
+import { getFact, compareVersions } from "@rokadm/data";
+import glossary from "../../../../../packages/planner/tools-data/glossary.json";
+import "../../components/tools/kit/tools.css";
+import "../../components/tools/glossary/glossary.css";
+
+const byId = new Map(glossary.terms.map((t) => [t.id, t]));
+const terms = [...glossary.terms]
+  .sort((a, b) => a.term.localeCompare(b.term, "pt-BR", { sensitivity: "base" }))
+  .map((t) => {
+    // The newest patch among the cited cards, when a card has one.
+    const patches = t.facts.map((id) => getFact(id)?.patch ?? null).filter((p): p is string => !!p);
+    const patch = patches.sort((a, b) => compareVersions(b, a))[0] ?? null;
+    const related = (t.related ?? []).map((id) => ({ id, term: byId.get(id)?.term ?? id }));
+    return { ...t, cite: cite(t.facts), patch, related };
+  });
+const ids = glossary.terms.flatMap((t) => t.facts);
+---
+<Shell title="Glossário" description="Termos de Rise of Kingdoms em palavras simples: DKP, KP, MGE, More Than Gems, seed, Reino Perdido, KvK, Temporada de Conquista, Posto de Troca e mais. Cada definição cita a ficha de fato que a sustenta." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Glossário</h1>
+      <p class="t-lead">Termos de Rise of Kingdoms em até duas frases, escritos por nós. Cada um mostra a ficha de fato em que se apoia e, quando a ficha tem, a atualização.</p>
+      <DataStamp />
+    </header>
+    <GlossarySearch client:load total={terms.length} />
+    <dl class="g-list" aria-label="Termos">
+      {terms.map((t) => (
+        <div class="g-term" id={t.id} data-glossary-term data-term={t.term} data-aliases={t.aliases.join("|")}>
+          <dt>
+            <a class="g-anchor" href={`#${t.id}`}><dfn>{t.term}</dfn></a>
+            {t.aliases.length ? <span class="g-aliases">Também: {t.aliases.join(", ")}</span> : null}
+          </dt>
+          <dd>
+            <p data-def>{t.definition}</p>
+            <p class="g-meta">
+              <Cite cite={t.cite} />
+              {t.patch ? <span class="t-note">Atualização <span class="mono">{t.patch}</span></span> : null}
+            </p>
+            {t.related.length ? (
+              <p class="g-related">Veja também: {t.related.map((r, i) => <>{i > 0 ? ", " : ""}<a href={`#${r.id}`}>{r.term}</a></>)}</p>
+            ) : null}
+          </dd>
+        </div>
+      ))}
+    </dl>
+    <p class="t-note">As definições são com as nossas palavras. Não copiamos texto de wiki.</p>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

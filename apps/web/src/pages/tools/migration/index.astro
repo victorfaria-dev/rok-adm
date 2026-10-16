@@ -1,0 +1,53 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import MigrationCheck from "../../../components/tools/migration/MigrationCheck";
+import { Checklist } from "../../../components/tools/kit/Checklist";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import type { MigrationRules } from "@rokadm/planner/tools";
+import m from "../../../../../../packages/planner/tools-data/migration.json";
+import "../../../components/tools/kit/tools.css";
+
+const src = (x: { facts: string[]; patch: string }) => ({ facts: x.facts, patch: x.patch });
+const rules: MigrationRules = {
+  chMin: { value: m.chMin.value, ...src(m.chMin) },
+  cooldownDays: { value: m.cooldownDays.value, ...src(m.cooldownDays) },
+  ageLimit: {
+    "same-soc": { value: m.ageLimit["same-soc"].value, ...src(m.ageLimit["same-soc"]) },
+    "cross-s2": { value: m.ageLimit["cross-s2"].value, ...src(m.ageLimit["cross-s2"]) },
+    "cross-s3": { value: m.ageLimit["cross-s3"].value, ...src(m.ageLimit["cross-s3"]) },
+  },
+  passport: { bands: m.passport.bands.map((b) => ({ fromM: b.fromM, toM: b.toM, pages: b.value })), ...src(m.passport) },
+  crossPower: { minM: m.crossPower.minM, maxM: m.crossPower.maxM, ...src(m.crossPower) },
+  personal: src(m.personal),
+  kingdom: src(m.kingdom),
+};
+const items = m.checklist.map((i) => ({ id: i.id, text: i.text, ...(i.detail ? { detail: i.detail } : {}), cite: cite(i.facts) }));
+const ruleIds = [
+  ...m.chMin.facts, ...m.cooldownDays.facts, ...m.personal.facts, ...m.passport.facts, ...m.crossPower.facts, ...m.kingdom.facts,
+  ...Object.values(m.ageLimit).flatMap((a) => a.facts),
+];
+const ids = [...new Set([...ruleIds, ...m.checklist.flatMap((i) => i.facts)])];
+const cites = Object.fromEntries(ids.map((id) => [id, cite([id])]));
+---
+<Shell title="Verificador de migração" description="Você pode migrar para outro reino de Rise of Kingdoms? Prefeitura, aliança, tropas, período de espera, limites de idade por rota e Páginas de Passaporte, cada regra com sua fonte e patch." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Verificador de migração</h1>
+      <p class="t-lead">Informe sua conta e o reino de destino. Você vê elegível ou não elegível, cada motivo e as Páginas de Passaporte para o seu poder. Cada regra mostra o patch em que foi conferida. Os valores ficam neste aparelho.</p>
+      <DataStamp />
+    </header>
+    <MigrationCheck client:load rules={rules} cites={cites} />
+    <Checklist client:load listId="migration-before" title="Antes de se mudar" items={items} />
+    <section class="t-deferred" aria-labelledby="t-deferred-h">
+      <h2 id="t-deferred-h">Ainda não está aqui</h2>
+      <ul>
+        <li>A tabela completa de Páginas de Passaporte entre 10M e 50M e entre 55M e 100M: só três pontos de dados são conhecidos.</li>
+        <li>Regras das notas oficiais 1.1.10 a 1.1.12: ainda não verificadas.</li>
+        <li>Menos páginas para quem tem Licença de Férias: a redução não foi quantificada.</li>
+      </ul>
+    </section>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

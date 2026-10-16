@@ -41,3 +41,19 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A08-0504 | estrategia | media | organizado |  |
 | A08-0505 | estrategia | media | verificado |  |
 | A08-0506 | estrategia | media | verificado |  |
+
+## Onda J (J2, 2026-10-13) — late stages (KvK2, KvK3, SoC)
+
+Raw notes: `research/raw/J2-late-troops-economy/_notas-J2.md`. Status `organizado` (awaiting adversarial verification).
+
+| ID | Title | Type | Consensus | Confidence | Conflicts |
+|---|---|---|---|---|---|
+| [A08-0600](A08-0600.md) | Fate of severely wounded units by battle context | mecanica | n/a | media | — |
+| [A08-0601](A08-0601.md) | Hall of Heroes (official): return at season end, rate by LK tier, healing refund | mecanica | n/a | alta | — |
+| [A08-0602](A08-0602.md) | Hall of Heroes returns ~half of dead troops (2022 guide) | mecanica | n/a | baixa | — |
+| [A08-0603](A08-0603.md) | Base healing cost per unit (rkg calculator): T4 vs T5 | mecanica | n/a | baixa | A08-0604 |
+| [A08-0604](A08-0604.md) | Packsify heal cost for 100k T5/T4 (contestado) | mecanica | n/a | baixa | A08-0603 |
+| [A08-0605](A08-0605.md) | Max base hospital capacity 300,000 (derived) | derivado | n/a | media | — |
+| [A08-0606](A08-0606.md) | T4 open field, T5 rallies/garrison/Ark | estrategia | unanime | media | — |
+| [A08-0607](A08-0607.md) | Convert to T5 inside MGE/power events (upgrade-vs-train cost disputed) | estrategia | majoritario | media | — |
+| [A08-0608](A08-0608.md) | Official healing-cost relief levers (SoC) | mecanica | n/a | alta | — |

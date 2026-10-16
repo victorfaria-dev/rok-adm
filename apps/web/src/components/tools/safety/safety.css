@@ -1,0 +1,17 @@
+/* /tools/safety/ (F-32, F-82). Tokens only. */
+.s-faq { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.s-faq article { display: grid; gap: var(--ko-space-2); padding-bottom: var(--ko-space-4); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.s-faq p { max-width: 70ch; overflow-wrap: anywhere; }
+.s-community { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+.s-community strong { color: var(--ko-text); }
+.s-ticket { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.s-kinds { margin: 0; padding: 0; border: 0; display: grid; gap: var(--ko-space-2); min-width: 0; }
+.s-kinds legend { font-weight: var(--ko-weight-semibold); font-size: var(--ko-text-sm); margin-bottom: var(--ko-space-2); }
+.s-kind { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--ko-space-3); align-items: center; min-height: 44px; padding: var(--ko-space-2) var(--ko-space-3); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md); cursor: pointer; }
+.s-kind input { width: 22px; height: 22px; accent-color: var(--ko-accent); margin: 0; }
+.s-kind > span { display: grid; gap: var(--ko-space-1); }
+.s-kind:has(input:checked) { box-shadow: inset 0 0 0 1px var(--ko-accent); border-color: var(--ko-accent); }
+@media (min-width: 640px) { .s-wide { grid-column: 1 / -1; } }
+.s-out { display: grid; gap: var(--ko-space-3); justify-items: start; padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); min-width: 0; }
+.s-text { font-family: var(--ko-font-mono); font-size: var(--ko-text-sm); white-space: pre-wrap; }
+.s-where { display: grid; gap: var(--ko-space-2); max-width: 70ch; }

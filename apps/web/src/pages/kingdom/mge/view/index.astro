@@ -1,0 +1,16 @@
+---
+import Shell from "../../../../layouts/Shell.astro";
+import MgeView from "../../../../components/kingdom/mge/MgeView";
+import "../../../../components/kingdom/shared/kingdom.css";
+import "../../../../components/kingdom/mge/mge.css";
+---
+<Shell title="Registro de MGE" description="O registro de MGE de um conselho: quem ficou com qual vaga, quando e por quê. Só leitura." mode="read">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>Registro de MGE</h1>
+      <p class="kg-lead">Quem ficou com cada vaga de MGE, quando e por quê, segundo as regras que o seu conselho publicou.</p>
+    </header>
+    <MgeView client:load />
+    <p class="kg-note kg-noprint">Feito com o <a href="/kingdom/mge/">planejador de MGE do KingdomOps</a>. O registro vive dentro do link; nada fica guardado em servidor.</p>
+  </div>
+</Shell>

@@ -1,0 +1,35 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import ApCalc from "../../../components/tools/ap/ApCalc";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite, sourced } from "../../../lib/tools-payload";
+import ap from "../../../../../../packages/planner/tools-data/ap.json";
+import "../../../components/tools/kit/tools.css";
+
+const props = {
+  cap: sourced(ap.cap).value,
+  dailyClaim: sourced(ap.dailyClaim).value,
+  barbarian: { base: ap.barbarianBase.value, step: ap.barbarianStep.value, maxStreak: ap.barbarianMaxStreak.value },
+  insightMax: ap.insightMax.value,
+  pack: { ap: ap.packAp.value, startGems: ap.packStartGems.value, stepGems: ap.packStepGems.value },
+  cites: {
+    cap: cite(ap.cap.facts),
+    claim: cite(ap.dailyClaim.facts),
+    barbarian: cite([...ap.barbarianBase.facts, ...ap.barbarianStep.facts, ...ap.barbarianMaxStreak.facts, ...ap.insightMax.facts]),
+    pack: cite([...ap.packAp.facts, ...ap.packStartGems.facts, ...ap.packStepGems.facts]),
+  },
+};
+const ids = [...ap.cap.facts, ...ap.dailyClaim.facts, ...ap.barbarianBase.facts, ...ap.packAp.facts];
+---
+<Shell title="Pontos de Ação" description="Quantos bárbaros uma sequência de ataques consome com os seus PA, seus PA depois da coleta diária e o preço em gemas para comprar mais PA hoje." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Pontos de Ação</h1>
+      <p class="t-lead">Ataques a bárbaros por sequência, PA depois da coleta diária e quanto custa comprar PA com gemas hoje. A taxa base de recuperação não está nos nossos dados: informe a sua, se você a mediu. Os valores ficam neste aparelho.</p>
+      <DataStamp />
+    </header>
+    <ApCalc client:load {...props} />
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

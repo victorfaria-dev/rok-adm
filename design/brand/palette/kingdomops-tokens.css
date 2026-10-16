@@ -1,0 +1,42 @@
+/* KingdomOps — identity and semantic interface colors */
+:root {
+  --ko-graphite: #191B1D;
+  --ko-bronze: #B58B59;
+  --ko-ivory: #E8E3DA;
+}
+[data-theme="dark"] {
+  --ko-background: #101214;
+  --ko-surface: #191B1D;
+  --ko-surface-raised: #24282C;
+  --ko-border: #3B4248;
+  --ko-text: #E8E3DA;
+  --ko-text-muted: #A7ADB3;
+  --ko-accent: #B58B59;
+  --ko-accent-hover: #C9A476;
+  --ko-accent-pressed: #A77D4D;
+  --ko-on-accent: #101214;
+  --ko-focus: #C9A476;
+  --ko-success: #75C6A4;
+  --ko-warning: #E0B86C;
+  --ko-error: #F08B8B;
+  --ko-info: #8CB9E1;
+  color-scheme: dark;
+}
+[data-theme="light"] {
+  --ko-background: #F4F1EC;
+  --ko-surface: #FFFFFF;
+  --ko-surface-raised: #E8E3DA;
+  --ko-border: #D4CEC5;
+  --ko-text: #191B1D;
+  --ko-text-muted: #5C6268;
+  --ko-accent: #79582F;
+  --ko-accent-hover: #664824;
+  --ko-accent-pressed: #52391D;
+  --ko-on-accent: #FFFFFF;
+  --ko-focus: #79582F;
+  --ko-success: #246C50;
+  --ko-warning: #795700;
+  --ko-error: #AF353D;
+  --ko-info: #285E8D;
+  color-scheme: light;
+}

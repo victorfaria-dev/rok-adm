@@ -1,0 +1,42 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
+import SeedSimulator from "../../../components/kingdom/seed/SeedSimulator";
+import { CONFIDENCE_LABEL, SEED_RULE, SEED_SOURCES } from "@rokadm/planner";
+import "../../../components/kingdom/shared/kingdom.css";
+import "../../../components/kingdom/seed/seed.css";
+
+const ASSUMPTIONS = [
+  { text: "As faixas são marginais, como no imposto de renda: cada taxa vale só para a parte do poder do governador dentro da faixa. A nota de atualização diz \"80% do seu poder de 150.000.000 a 300.000.000\". Então 200M contam como 150M + 80% de 50M = 190M, e nenhum governador conta mais que 370M.", src: "B08-0008" },
+  { text: "Só contam os 300 governadores com mais poder individual. Isso vem do Q&A da Lilith de abril de 2025, não da nota de atualização em si.", src: "B08-0008" },
+  { text: "Limite do Imperium: 23,5B desse poder contado. Os limites dos seeds A, B, C e D não são publicados, então nenhuma letra de seed é prevista.", src: "B08-0008, B01-0001" },
+  { text: "Hipótese: um governador com Permissão de Férias sai desse poder contado, e o próximo governador entra no top 300. As notas só dizem que quem tem a permissão não conta para a \"pontuação de matchmaking\". Não está dito se é esse mesmo número.", src: "B03-0007, pergunta em aberto L-B03-03" },
+  { text: "\"Zerar\": o poder que você digita substitui o poder do governador e conta como qualquer outro.", src: "suposição do planejador" },
+  { text: "Não modelado: desde a 1.0.96 o matchmaking também usa o poder médio e o total de pontos de abate; as duplas (1.1.03) somam o poder da equipe. Nenhum dos dois está neste simulador.", src: "notas de B08-0008" },
+  { text: "O modo rápido põe todo governador de uma faixa na média que você informar, ou no meio da faixa quando você deixa em branco.", src: "planner assumption" },
+  { text: `A regra foi verificada pela última vez na atualização ${SEED_RULE.patch}. A data de conferência (${SEED_RULE.checkBy}) já passou, então uma atualização posterior pode tê-la mudado.`, src: "B08-0008" },
+];
+---
+<Shell title="Simulador de seed" description="Experimental: veja quanto do poder dos seus 300 maiores governadores conta para o poder do reino pela regra da 1.0.95, e o que muda com Permissões de Férias. Funciona no seu navegador." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <span class="kg-badge" data-experimental>Experimental</span>
+      <h1>Simulador de seed</h1>
+      <p class="kg-lead">Cole os poderes dos seus governadores e veja o poder do reino que conta para o seeding da Temporada de Conquista pela regra da 1.0.95: só o top 300, e o poder acima de 150M conta menos.</p>
+    </header>
+    <KingdomNav section="kingdom" />
+    <SeedSimulator client:load />
+    <section class="kg-grid" aria-labelledby="ks-assume-h">
+      <h2 id="ks-assume-h">Suposições</h2>
+      <ol class="ks-assumptions" data-assumptions>
+        {ASSUMPTIONS.map((a) => <li>{a.text} <span class="kg-hint">({a.src})</span></li>)}
+      </ol>
+    </section>
+    <section class="kg-grid" aria-labelledby="ks-src-h">
+      <h2 id="ks-src-h">De onde vem isto</h2>
+      <ul class="ks-sources" data-sources>
+        {SEED_SOURCES.map((s) => <li><strong>{s.id}</strong> (confiança: {CONFIDENCE_LABEL[s.confidence]}): {s.text}</li>)}
+      </ul>
+    </section>
+  </div>
+</Shell>

@@ -1,0 +1,10 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "noUncheckedIndexedAccess": true
+  },
+  "include": ["src", "scripts", "e2e", "e2e-auth", "playwright.config.ts", "playwright.auth.config.ts", "vitest.config.ts", ".astro/types.d.ts"],
+  "exclude": ["dist"]
+}

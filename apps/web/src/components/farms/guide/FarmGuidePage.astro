@@ -1,0 +1,81 @@
+---
+// Shared layout of the five farm guide pages. Card meta comes from @rokadm/data here, in the
+// frontmatter (build time only); the page ships no client JS of its own.
+import { factBadge, getFact } from "@rokadm/data";
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../shared/FarmsNav.astro";
+import GuideBlock from "./GuideBlock.astro";
+import ConfidenceBadge from "./ConfidenceBadge.astro";
+import "../shared/farms.css";
+import "./guide.css";
+import {
+  CONFIDENCE_MEANING, GUIDE_PAGES, blocksForPage, cardMeta, displayTitle, isHypothesis,
+  type CardMeta, type GuidePage,
+} from "../../../lib/farms-guide";
+
+interface Props {
+  page: GuidePage;
+}
+const { page } = Astro.props;
+const info = GUIDE_PAGES[page];
+const blocks = blocksForPage(page);
+
+const metas: Record<string, CardMeta> = {};
+for (const b of blocks) {
+  for (const id of b.cards) {
+    const f = getFact(id);
+    metas[id] = cardMeta(id, f, f ? factBadge(f).label : undefined);
+  }
+}
+const LEVELS = ["high", "medium", "low", "pending"] as const;
+const others = Object.values(GUIDE_PAGES);
+---
+<Shell title={info.title} description={info.description} mode="read">
+  <div class="fg">
+    <FarmsNav />
+
+    <header class="fg-head">
+      <h1>{info.title}</h1>
+      <p class="fm-lead">{info.intro}</p>
+      <p class="fg-note" data-guardrail><strong>Só planejamento e anotações.</strong> Você faz cada ação no jogo por conta própria: sem bots, macros nem scripts.</p>
+    </header>
+
+    <section class="fg-legend" aria-labelledby="fg-legend-h">
+      <h2 id="fg-legend-h">Qual o grau de certeza?</h2>
+      <p>Toda recomendação mostra um nível de confiança e cita fichas de fonte, como <span class="mono">A13-0002</span>. Cada selo de ficha mostra a confiança e o status daquela ficha.</p>
+      <dl>
+        {LEVELS.map((c) => (
+          <div>
+            <dt><ConfidenceBadge confidence={c} /></dt>
+            <dd>{CONFIDENCE_MEANING[c]}</dd>
+          </div>
+        ))}
+        <div>
+          <dt><ConfidenceBadge hypothesis /></dt>
+          <dd>Raciocínio derivado nosso. Nenhuma fonte o recomenda; aguarda um teste no jogo.</dd>
+        </div>
+      </dl>
+    </section>
+
+    <nav class="fg-toc" aria-labelledby="fg-toc-h">
+      <h2 id="fg-toc-h">Nesta página</h2>
+      <ol>
+        {blocks.map((b) => <li><a href={`#${b.id}`}>{isHypothesis(b) ? `Hipótese: ${displayTitle(b)}` : b.title}</a></li>)}
+      </ol>
+    </nav>
+
+    <div class="fg-blocks">
+      {blocks.map((b) => <GuideBlock block={b} metas={metas} />)}
+    </div>
+
+    <nav class="fg-more" aria-labelledby="fg-more-h">
+      <h2 id="fg-more-h">Guias de farm</h2>
+      <ul>
+        {others.map((o) => (
+          <li><a href={o.href} aria-current={o.page === page ? "page" : undefined}>{o.title}</a></li>
+        ))}
+      </ul>
+      <p>Planeje suas próprias contas farm na <a href="/farms/">central de farms</a>.</p>
+    </nav>
+  </div>
+</Shell>

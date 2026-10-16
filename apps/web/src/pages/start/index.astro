@@ -1,0 +1,9 @@
+---
+// Onboarding: 5 questions with Sun Tzu, then the role's home tab. No login yet: when sign-in arrives
+// (Supabase, later), it goes in front of this page; the landing page's "Start" points here today.
+import Shell from "../../layouts/Shell.astro";
+import Questionnaire from "../../components/questionnaire/Questionnaire";
+---
+<Shell title="Começar" description="Cinco perguntas rápidas para montar o seu plano: jogador ou líder, gastos, tempo de jogo, Prefeitura e fase do reino. Suas respostas ficam neste navegador." mode="operate" bare>
+  <Questionnaire client:load />
+</Shell>

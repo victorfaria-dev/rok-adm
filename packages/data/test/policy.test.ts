@@ -42,13 +42,13 @@ describe("factBadge", () => {
   it("labels a usable fact with patch and date", () => {
     expect(factBadge(base)).toEqual({
       factId: "A99-0001", confidence: "media", status: "verificado", patch: "1.1.09", verifiedOn: "2026-08-02",
-      sourceCount: 2, usable: true, label: "Verified on patch 1.1.09 · 2026-08-02",
+      sourceCount: 2, usable: true, label: "Verificado no patch 1.1.09 · 2026-08-02",
     });
   });
   it("labels unknown patch, unverified, disputed and outdated facts", () => {
-    expect(factBadge({ ...base, patch: null, validUntil: null }).label).toBe("Verified (patch unknown)");
-    expect(factBadge({ ...base, confidence: "baixa" })).toMatchObject({ usable: false, label: "Unverified" });
-    expect(factBadge({ ...base, status: "contestado" }).label).toBe("Disputed");
-    expect(factBadge({ ...base, status: "obsoleto" }).label).toBe("Outdated");
+    expect(factBadge({ ...base, patch: null, validUntil: null }).label).toBe("Verificado (patch desconhecido)");
+    expect(factBadge({ ...base, confidence: "baixa" })).toMatchObject({ usable: false, label: "Não verificado" });
+    expect(factBadge({ ...base, status: "contestado" }).label).toBe("Contestado");
+    expect(factBadge({ ...base, status: "obsoleto" }).label).toBe("Desatualizado");
   });
 });

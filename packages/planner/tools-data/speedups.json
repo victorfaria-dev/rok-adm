@@ -1,0 +1,20 @@
+{
+  "_about": "Inputs of the Speedups and time calculator (/tools/speedups/). Item durations (1m … 7d) are the durations printed in item names, used as UI labels, not game numbers. Helps per job come from the A01-buildings-alliance-center table column 'Times You Can Be Helped' (A10-0006) at build time.",
+  "helpPct": {
+    "value": 1,
+    "unit": "% da tarefa por ajuda da aliança",
+    "facts": ["A10-0006"],
+    "evidence": { "A10-0006": "each help fills 1% of the progress bar" }
+  },
+  "trainingNotHelped": {
+    "text": "O treinamento de tropas não pode ser ajudado.",
+    "facts": ["A10-0006"],
+    "evidence": { "A10-0006": "troop training cannot be helped" }
+  },
+  "helpMinimum": {
+    "value": 0,
+    "unit": "segundos removidos por uma ajuda, no mínimo",
+    "pending": true,
+    "_note": "Se uma ajuda remove um tempo mínimo fixo não está em nenhuma ficha (lacuna anotada em A10-0006). A calculadora supõe que não há mínimo."
+  }
+}

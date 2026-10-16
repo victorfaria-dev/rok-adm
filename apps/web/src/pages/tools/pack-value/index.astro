@@ -1,0 +1,66 @@
+---
+// /tools/pack-value/ (wave J): gems and raw VIP points per unit of money at the price the player sees.
+// Method A12-0618 only. The reference packs come from the Low spender data (@rokadm/planner) at build.
+import Shell from "../../../layouts/Shell.astro";
+import PackValueCalc from "../../../components/tools/packvalue/PackValueCalc";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { Cite } from "../../../components/tools/kit/Cite";
+import { buildLowBudgetPayload } from "../../../lib/guide-payload";
+import { cite } from "../../../lib/tools-payload";
+import type { PackReference } from "../../../lib/pack-value";
+import "../../../components/tools/kit/tools.css";
+
+const low = buildLowBudgetPayload();
+const refs: PackReference[] = low.purchases.map((p) => ({
+  id: p.id, label: p.label, priceUsd: p.priceUsd.value, gemsPerUsd: p.gemsPerUsd?.value ?? null, vipPerUsd: p.vipPerUsd?.value ?? null,
+}));
+const method = cite(low.valueMethod.facts);
+const fmt = (n: number, d = 0) => n.toLocaleString("pt-BR", { minimumFractionDigits: d, maximumFractionDigits: d });
+const usd = (x: number) => `US$ ${fmt(x, Number.isInteger(x) ? 0 : 2)}`;
+const ids = [...low.valueMethod.facts, ...low.purchases.flatMap((p) => p.facts)];
+---
+<Shell title="Valor de pacotes" description="Gemas e pontos VIP por dólar de um pacote de Rise of Kingdoms, no preço que a sua loja mostra. Só razões brutas: os itens nunca são avaliados em gemas." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Valor de pacotes</h1>
+      <p class="t-lead">Gemas e pontos VIP por dólar de um pacote, no preço que você vê. Os valores ficam neste aparelho.</p>
+      <DataStamp />
+    </header>
+
+    <section class="t-section" aria-labelledby="pv-limits-h" data-pack-limits>
+      <h2 id="pv-limits-h">O que isto não diz</h2>
+      <ul>
+        <li>Só contam gemas e pontos VIP. Acelerações, esculturas, materiais e chaves não são convertidos em gemas: dependendo da base, isso muda qual pacote parece o melhor em até cerca de 5×. <Cite cite={method} /></li>
+        <li>Os selos de “% de valor” da loja usam preços sem desconto, então não são comparados aqui.</li>
+        <li>Os preços da loja dependem de região, moeda, impostos e data. Os preços de referência abaixo são preços de tabela em USD citados por jogadores, vendedores e guias, não o seu preço.</li>
+        <li>Não diz se você deve comprar. Um pacote que rende muitas gemas por dólar continua sendo dinheiro gasto.</li>
+      </ul>
+    </section>
+
+    <PackValueCalc client:load refs={refs} method={method} />
+
+    <section class="t-section" aria-labelledby="pv-ref-h">
+      <h2 id="pv-ref-h">Pacotes de referência (preços de tabela em USD)</h2>
+      <p class="t-note">{low.priceWarning}</p>
+      <div class="t-table" role="region" aria-label="Pacotes de referência, tabela" tabindex="0">
+        <table data-testid="pv-refs">
+          <thead><tr><th scope="col">Pacote</th><th scope="col">Preço de tabela</th><th scope="col">Gemas por US$</th><th scope="col">Pontos VIP por US$</th><th scope="col">Fonte</th></tr></thead>
+          <tbody>
+            {low.purchases.map((p) => (
+              <tr data-row={p.id}>
+                <td>{p.label}</td>
+                <td><span class="mono">{usd(p.priceUsd.value)}</span> <span class="t-note">preço de tabela, varia por região</span></td>
+                <td class="mono">{p.gemsPerUsd ? fmt(p.gemsPerUsd.value) : "–"}</td>
+                <td class="mono">{p.vipPerUsd ? fmt(p.vipPerUsd.value) : "–"}</td>
+                <td><Cite cite={cite(p.facts)} /></td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="t-note">Para saber qual destes um jogador de gasto baixo compra primeiro, veja as <a href="/guide/#budget-low">metas de gasto baixo</a> no seu guia (perfil Baixo).</p>
+    </section>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

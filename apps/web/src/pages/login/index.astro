@@ -1,0 +1,8 @@
+---
+import Shell from "../../layouts/Shell.astro";
+import Login from "../../components/auth/Login";
+---
+<Shell title="Entrar" description="Entre no KingdomOps com o seu e-mail ou o Google. Sem login do jogo: o KingdomOps nunca pede a sua senha do Rise of Kingdoms." mode="operate">
+  <Login client:load />
+  <noscript><p>Para entrar é preciso JavaScript. Os guias funcionam sem ele.</p></noscript>
+</Shell>

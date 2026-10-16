@@ -1,0 +1,11 @@
+---
+// F-81 (b): every tool shows which data it runs on.
+import { dataStamp } from "../../../lib/tools-payload";
+const s = dataStamp();
+---
+<p class="t-stamp">
+  Dados: último patch oficial <span class="mono">{s.official?.version ?? "desconhecido"}</span>
+  {s.official ? <>({s.official.date})</> : null}
+  {s.latest && s.latest.version !== s.official?.version ? <>, relatado ao vivo <span class="mono">{s.latest.version}</span> (confiança baixa)</> : null}
+  · conjunto de dados <span class="mono">{s.datasetVersion}</span>. Fichas confirmadas antes do patch oficial mostram <strong>Reverificar</strong>.
+</p>

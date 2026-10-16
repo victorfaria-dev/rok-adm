@@ -1,0 +1,63 @@
+---
+// F-13 Zeroed Recovery Playbook + 30-second log-off checklist. Content from tools-data/zeroed.json.
+// Peace shield costs and durations are a known gap: shown as pending measurement, never as numbers.
+import Shell from "../../../layouts/Shell.astro";
+import { Checklist } from "../../../components/tools/kit/Checklist";
+import { Cite } from "../../../components/tools/kit/Cite";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import z from "../../../../../../packages/planner/tools-data/zeroed.json";
+import "../../../components/tools/kit/tools.css";
+import "../../../components/tools/zeroed/zeroed.css";
+
+const logoff = z.logoff.map((i) => ({ id: i.id, text: i.text, detail: i.detail, cite: cite(i.facts) }));
+const withCite = <T extends { facts: string[] }>(xs: T[]) => xs.map((x) => ({ ...x, cite: cite(x.facts) }));
+const steps = withCite(z.steps), still = withCite(z.stillCounts), farm = withCite(z.farm);
+const ids = [z.logoff, z.steps, z.stillCounts, z.farm].flatMap((xs) => xs.flatMap((x) => x.facts));
+---
+<Shell title="Zerado? Plano de recuperação" description="Acabou de ser zerado em Rise of Kingdoms? Uma lista de 30 segundos antes de sair, o que reconstruir primeiro, o que ainda conta e como proteger uma conta farm." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Zerado? Eis o plano</h1>
+      <p class="t-lead">Perder as tropas dói, mas não é o fim da conta. Comece pela checagem de 30 segundos antes de sair do jogo e depois reconstrua nesta ordem.</p>
+      <DataStamp />
+    </header>
+
+    <Checklist client:load listId="zeroed-logoff" title="Checagem de 30 segundos antes de sair" items={logoff} />
+
+    <div class="z-gap" role="note" aria-label="Lacuna conhecida">
+      <p><strong>Escudos de paz: medição pendente.</strong> Ainda não temos ficha de fonte sobre preço ou duração de escudos, então esta página não dá números. Confira a descrição do item no seu jogo.</p>
+    </div>
+
+    <section class="z-section" aria-labelledby="z-steps-h">
+      <h2 id="z-steps-h">Recuperação, passo a passo</h2>
+      <ol class="z-steps">
+        {steps.map((s) => (
+          <li id={`step-${s.id}`}>
+            <h3>{s.title}</h3>
+            <p>{s.text}</p>
+            {"link" in s && s.link ? <a class="z-link" href={s.link.href}>{s.link.text}</a> : null}
+            <Cite cite={s.cite} />
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="z-section" aria-labelledby="z-still-h">
+      <h2 id="z-still-h">O que ainda conta</h2>
+      <ul class="z-list">
+        {still.map((s) => <li><p>{s.text}</p><Cite cite={s.cite} /></li>)}
+      </ul>
+    </section>
+
+    <section class="z-section" aria-labelledby="z-farm-h">
+      <h2 id="z-farm-h">Se era a sua conta farm</h2>
+      <ul class="z-list">
+        {farm.map((s) => <li><p>{s.text}</p><Cite cite={s.cite} /></li>)}
+      </ul>
+    </section>
+
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

@@ -1,24 +1,24 @@
 {
-  "builtAt": "2026-10-13T07:05:08.550Z",
+  "builtAt": "2026-10-14T20:26:39.129Z",
   "counts": {
     "blocks": 43,
-    "facts": 282,
+    "facts": 362,
     "factsByDomain": {
       "A01": 11,
-      "A02": 5,
-      "A03": 32,
-      "A04": 11,
-      "A05": 8,
-      "A06": 17,
-      "A07": 5,
-      "A08": 7,
+      "A02": 8,
+      "A03": 36,
+      "A04": 17,
+      "A05": 9,
+      "A06": 37,
+      "A07": 12,
+      "A08": 16,
       "A09": 8,
       "A10": 8,
-      "A11": 14,
-      "A12": 5,
+      "A11": 19,
+      "A12": 24,
       "A13": 10,
       "A14": 3,
-      "B01": 11,
+      "B01": 14,
       "B02": 5,
       "B03": 7,
       "B04": 7,
@@ -29,16 +29,16 @@
       "B09": 3,
       "C01": 30,
       "C02": 21,
-      "C04": 33
+      "C04": 36
     },
-    "patches": 25,
-    "tableRows": 663,
-    "tables": 23,
-    "usableFacts": 110
+    "patches": 26,
+    "tableRows": 764,
+    "tables": 24,
+    "usableFacts": 151
   },
-  "datasetVersion": "520992189f7208e4",
-  "gitCommit": "b0d9c5ca9160d1f6d7865e9c4a10182087f85452",
-  "inputs": 307,
+  "datasetVersion": "696d3043fe9980f6",
+  "gitCommit": "19438968a99ffe96c0e2ff5b03c7d94c370d7467",
+  "inputs": 388,
   "latestKnownPatch": {
     "confidence": "baixa",
     "date": "2026-09-22",
@@ -86,6 +86,7 @@
     "A03-resource-buildings",
     "A03-trading-post",
     "A04-vip-shop",
-    "A05-vip-levels"
+    "A05-vip-levels",
+    "A06-rkg-commander-season"
   ]
 }

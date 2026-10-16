@@ -1,0 +1,229 @@
+---
+import "../styles/global.css";
+import Icon from "../components/Icon.astro";
+import Logo from "../components/Logo.astro";
+import ThemePicker from "../components/ThemePicker.astro";
+import ProfileChip from "../components/ProfileChip.astro";
+import Footer from "../components/Footer.astro";
+import LogoSting from "../components/LogoSting.astro";
+import { LEADER_NAV, PLAYER_NAV, activeTab } from "../lib/nav";
+import { ROLE_BOOT_SCRIPT } from "../lib/role";
+import { THEME_BOOT_SCRIPT } from "../lib/theme";
+
+interface Props {
+  /** Page title shown in the top bar and <title>. */
+  title: string;
+  description: string;
+  /** read = long text (72ch), operate = tools (960px). */
+  mode?: "read" | "operate";
+  /** Hide tabs/rail (full-screen flows like the questionnaire). */
+  bare?: boolean;
+  /** Home uses the brand name as its document title. */
+  docTitle?: string;
+  /** Extra inline <head> script (the landing page's returning-visitor redirect). */
+  headScript?: string;
+}
+const { title, description, mode = "read", bare = false, docTitle, headScript } = Astro.props;
+const path = Astro.url.pathname;
+const fullTitle = docTitle ?? `${title} · KingdomOps`;
+// Both tab sets are in the HTML; <html data-role> (ROLE_BOOT_SCRIPT) shows one.
+const navs = [
+  { role: "player", items: PLAYER_NAV, current: activeTab(PLAYER_NAV, path) },
+  { role: "leader", items: LEADER_NAV, current: activeTab(LEADER_NAV, path) },
+] as const;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content" />
+    <script is:inline set:html={THEME_BOOT_SCRIPT} />
+    <script is:inline set:html={ROLE_BOOT_SCRIPT} />
+    {headScript && <script is:inline set:html={headScript} />}
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#101214" />
+    <link rel="icon" href="/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icons/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body class:list={[{ bare }]}>
+    <LogoSting />
+    <a class="skip" href="#main">Ir para o conteúdo</a>
+
+    {!bare && (
+      <header class="top">
+        <a class="home" href="/" aria-label="Início do KingdomOps"><Logo variant="icon" class="k" /></a>
+        <p class="page" aria-hidden="true">{title}</p>
+        <ThemePicker id="top" placement="down" />
+        <ProfileChip />
+      </header>
+    )}
+
+    {!bare && (
+      <nav class="rail" aria-label="Principal">
+        <a class="brand" href="/" aria-label="Início do KingdomOps">
+          <Logo variant="icon" class="k" />
+          <Logo variant="horizontal" class="wide" />
+        </a>
+        {navs.map((n) => (
+          <ul class="dest" data-nav={n.role}>
+            {n.items.map((d) => (
+              <li>
+                <a href={d.href} aria-current={n.current === d.href ? "page" : undefined}>
+                  <Icon name={d.icon} />
+                  <span class="short">{d.short}</span>
+                  <span class="long">{d.label}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        ))}
+        <div class="rail-foot">
+          <ThemePicker id="rail" placement="up" />
+          <ProfileChip />
+        </div>
+      </nav>
+    )}
+
+    <main id="main" class:list={["main", mode]} tabindex="-1">
+      <slot />
+      <Footer />
+    </main>
+
+    {!bare && navs.map((n) => (
+      <nav class="tabs" aria-label="Principal" data-nav={n.role}>
+        <ul>
+          {n.items.map((d) => (
+            <li>
+              <a href={d.href} aria-current={n.current === d.href ? "page" : undefined}>
+                <Icon name={d.icon} />
+                <span>{d.label}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    ))}
+
+    <script>
+      if (import.meta.env.PROD && "serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").catch(() => {});
+      }
+    </script>
+  </body>
+</html>
+
+<style>
+  :root { --top-h: 56px; --tabs-h: 64px; --rail-w: 0px; }
+
+  .skip {
+    position: fixed; z-index: 100; left: var(--ko-space-4); top: calc(env(safe-area-inset-top, 0px) + var(--ko-space-2));
+    padding: var(--ko-space-3) var(--ko-space-4); background: var(--ko-accent); color: var(--ko-on-accent);
+    transform: translateY(-200%);
+  }
+  .skip:focus { transform: none; }
+
+  /* Top bar: phone + tablet. */
+  .top {
+    position: fixed; z-index: 10; top: 0; left: var(--rail-w); right: 0;
+    height: calc(var(--top-h) + env(safe-area-inset-top, 0px));
+    padding: env(safe-area-inset-top, 0px) var(--ko-space-2) 0 var(--ko-space-4);
+    display: flex; align-items: center; gap: var(--ko-space-2);
+    background: var(--ko-background); border-bottom: 1px solid var(--ko-border);
+    view-transition-name: ko-top;
+  }
+  .home { display: flex; align-items: center; min-height: 48px; }
+  .home :global(.k) { width: 28px; height: auto; }
+  .page {
+    flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    font: var(--ko-weight-semibold) var(--ko-text-md)/1 var(--ko-font-display); letter-spacing: .02em;
+  }
+  .top :global(.chip) { max-width: 40vw; }
+
+  /* Bottom tabs: phone only. */
+  .tabs {
+    position: fixed; z-index: 10; left: 0; right: 0; bottom: 0;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    background: var(--ko-background); border-top: 1px solid var(--ko-border);
+    view-transition-name: ko-tabs;
+  }
+  .tabs ul { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; margin: 0; padding: 0; list-style: none; }
+  /* One tab set at a time: player unless <html data-role="leader">. */
+  .tabs[data-nav="leader"], .dest[data-nav="leader"] { display: none; }
+  :global(:root[data-role="leader"]) .tabs[data-nav="player"],
+  :global(:root[data-role="leader"]) .dest[data-nav="player"] { display: none; }
+  :global(:root[data-role="leader"]) .tabs[data-nav="leader"] { display: block; }
+  .tabs a {
+    min-height: var(--tabs-h); display: grid; place-items: center; align-content: center; gap: 2px;
+    color: var(--ko-text-muted); text-decoration: none; font-size: var(--ko-text-xs); position: relative;
+  }
+  .tabs a[aria-current="page"] { color: var(--ko-accent); }
+  .tabs a[aria-current="page"]::before {
+    content: ""; position: absolute; top: 0; left: 30%; right: 30%; height: 2px; background: var(--ko-accent);
+  }
+
+  /* Rail: tablet (80 px) and desktop (240 px). */
+  .rail { display: none; view-transition-name: ko-rail; }
+
+  .main {
+    padding-inline: var(--ko-space-4);
+    padding-top: calc(var(--top-h) + env(safe-area-inset-top, 0px) + var(--ko-space-6));
+    padding-bottom: calc(var(--tabs-h) + env(safe-area-inset-bottom, 0px) + var(--ko-space-6));
+    margin-left: var(--rail-w);
+    outline: none;
+  }
+  .main > :global(*) { margin-inline: auto; }
+  .read > :global(*) { max-width: 72ch; }
+  .operate > :global(*) { max-width: 960px; }
+  .bare .main { padding-top: calc(env(safe-area-inset-top, 0px) + var(--ko-space-6)); padding-bottom: calc(env(safe-area-inset-bottom, 0px) + var(--ko-space-6)); margin-left: 0; }
+
+  @media (min-width: 768px) {
+    :root { --rail-w: 80px; }
+    .tabs { display: none; }
+    .main { padding-bottom: var(--ko-space-8); padding-inline: var(--ko-space-8); }
+    .rail {
+      display: flex; flex-direction: column; position: fixed; z-index: 11; top: 0; bottom: 0; left: 0; width: var(--rail-w);
+      padding: calc(env(safe-area-inset-top, 0px) + var(--ko-space-4)) 0 var(--ko-space-4);
+      background: var(--ko-surface); border-right: 1px solid var(--ko-border);
+      overflow-y: auto; overscroll-behavior: contain;
+    }
+    .brand { display: flex; justify-content: center; padding-block: var(--ko-space-2) var(--ko-space-6); }
+    .brand :global(.k) { width: 32px; height: auto; }
+    .brand :global(.wide) { display: none; }
+    .rail ul { list-style: none; margin: 0; padding: 0; }
+    .dest a {
+      display: grid; justify-items: center; gap: 2px; padding-block: var(--ko-space-3); min-height: 56px;
+      color: var(--ko-text-muted); text-decoration: none; font-size: var(--ko-text-xs); position: relative;
+    }
+    .dest a[aria-current="page"] { color: var(--ko-accent); }
+    .dest a[aria-current="page"]::before { content: ""; position: absolute; left: 0; top: 20%; bottom: 20%; width: 2px; background: var(--ko-accent); }
+    :global(:root[data-role="leader"]) .tabs[data-nav="leader"] { display: none; }
+    :global(:root[data-role="leader"]) .dest[data-nav="leader"] { display: block; }
+    .dest .long, .rail-foot { display: none; }
+    .bare .main { margin-left: 0; }
+  }
+
+  @media (min-width: 1024px) {
+    :root { --rail-w: 240px; }
+    .top { display: none; }
+    .main { padding-top: calc(env(safe-area-inset-top, 0px) + var(--ko-space-10)); }
+    .rail { padding-inline: var(--ko-space-4); }
+    .brand { justify-content: flex-start; padding-inline: var(--ko-space-2); }
+    .brand :global(.k) { display: none; }
+    .brand :global(.wide) { display: block; width: 176px; height: auto; }
+    .dest a { display: flex; align-items: center; gap: var(--ko-space-3); justify-items: start; padding-inline: var(--ko-space-3); min-height: 48px; font-size: var(--ko-text-md); }
+    .dest a[aria-current="page"] { background: var(--ko-surface-raised); color: var(--ko-text); }
+    .dest a[aria-current="page"] :global(.icon) { color: var(--ko-accent); }
+    .dest .short { display: none; }
+    .dest .long { display: inline; }
+    .rail-foot { display: grid; gap: var(--ko-space-2); margin-top: auto; justify-items: start; }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .dest a:hover, .tabs a:hover { color: var(--ko-text); }
+  }
+</style>

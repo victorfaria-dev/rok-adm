@@ -1,0 +1,101 @@
+{
+  "_about": "Hoard advisor rules (/tools/hoard/, F-25): what to save for which goal and why, without dates. Targets the cards don't give are the player's own (pending).",
+  "goals": [
+    {
+      "id": "lohar",
+      "title": "Provação de Lohar",
+      "save": ["ap"],
+      "rules": [
+        {
+          "id": "lohar-ap",
+          "text": "Guarde seus primeiros itens de recuperação de PA para a Provação de Lohar: é um evento prioritário para jogadores gratuitos.",
+          "facts": ["A11-0505"],
+          "evidence": { "A11-0505": "is a priority F2P event; save the first AP potion(s) for it" }
+        },
+        {
+          "id": "lohar-why",
+          "text": "Os abates de bárbaros ali pagam gemas e flechas.",
+          "facts": ["A09-0007"],
+          "evidence": { "A09-0007": "Lohar's Trial (gems, arrows)" }
+        }
+      ]
+    },
+    {
+      "id": "mtg",
+      "title": "Mais que Gemas",
+      "save": ["gems"],
+      "rules": [
+        {
+          "id": "mtg-gems",
+          "text": "Poupe gemas e gaste-as durante o Mais que Gemas, um evento de 2 dias com marcos diários de gasto de gemas (pule abaixo do VIP 6).",
+          "facts": ["A11-0502", "A04-0009"],
+          "evidence": {
+            "A11-0502": "More Than Gems (2-day event with daily gem-spend milestones) is the best window for F2P to spend gems (except below VIP 6)",
+            "A04-0009": "ideally be spent during the 'More Than Gems' event for bonus rewards"
+          }
+        },
+        {
+          "id": "mtg-tier",
+          "text": "Faixa relatada para jogadores gratuitos: 7.000 gemas por dia por 5 esculturas lendárias universais.",
+          "value": 7000,
+          "unit": "gemas por dia",
+          "facts": ["A11-0502"],
+          "evidence": { "A11-0502": "7,000 gems/day → 5 universal legendary sculptures" }
+        }
+      ]
+    },
+    {
+      "id": "eve",
+      "title": "Véspera da Cruzada e KvK",
+      "save": ["ap", "speedups", "resources"],
+      "rules": [
+        {
+          "id": "eve-ap",
+          "text": "Guarde os itens de recuperação de PA principalmente para a Véspera da Cruzada: os saqueadores dela soltam acelerações, gemas e créditos.",
+          "facts": ["A09-0007"],
+          "evidence": { "A09-0007": "especially the pre-KvK Eve of the Crusade (marauders drop speedups, gems, credits)" }
+        },
+        {
+          "id": "kvk-stock",
+          "text": "Guarde acelerações e recursos como itens para eventos pontuados e para a cura na KvK, em vez de gastá-los conforme chegam.",
+          "facts": ["A11-0501"],
+          "evidence": { "A11-0501": "save speedups, resources (as items), AP potions for scoring events and KvK healing" }
+        }
+      ]
+    },
+    {
+      "id": "mge",
+      "title": "Governador Mais Poderoso (MGE)",
+      "save": ["speedups", "resources"],
+      "rules": [
+        {
+          "id": "mge-milestones",
+          "text": "Poupe para as recompensas de marcos, não para o ranking: o ranking está fora de alcance para a maioria dos jogadores gratuitos em um reino novo.",
+          "facts": ["A11-0500"],
+          "evidence": { "A11-0500": "target individual milestone rewards (or coordinate with kingdom MGE rules)" }
+        }
+      ]
+    }
+  ],
+  "general": [
+    {
+      "id": "universal",
+      "text": "Para onde vão as acelerações universais (pesquisa, Prefeitura ou o estoque) é uma questão dividida: as fontes discordam.",
+      "divided": true,
+      "facts": ["A02-0503"],
+      "evidence": { "A02-0503": "One source says use universal speedups only on research; an older one says pour speedups into City Hall; others say hoard them." }
+    },
+    {
+      "id": "schedule",
+      "text": "Não há cronograma fixo de eventos: acompanhe o calendário do jogo, que mostra os próximos eventos com alguns dias de antecedência.",
+      "facts": ["A11-0512"],
+      "evidence": { "A11-0512": "Events in RoK do not follow a fixed schedule; the calendar shows upcoming events a few days ahead" }
+    },
+    {
+      "id": "ap-daily",
+      "text": "Guarde itens de PA, não o PA que regenera: o PA parado no limite é desperdiçado.",
+      "facts": ["A09-0007"],
+      "evidence": { "A09-0007": "idle AP at cap is wasted" }
+    }
+  ]
+}

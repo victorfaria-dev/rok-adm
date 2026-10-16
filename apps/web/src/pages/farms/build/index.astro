@@ -1,0 +1,18 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../../../components/farms/shared/FarmsNav.astro";
+import BuildPathTool from "../../../components/farms/tools/BuildPathTool";
+import "../../../components/farms/shared/farms.css";
+import "../../../components/farms/tools/tools.css";
+---
+<Shell title="Caminho de construção" description="Confira a Prefeitura, o Entreposto Comercial, a Mina de Ouro, a Academia e o comandante de coleta de uma conta farm contra as metas de farm da Prefeitura 11, 17 e 22, com fontes para cada passo." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Caminho de construção</h1>
+      <p class="fm-lead">Informe os níveis de uma conta farm para ver quais metas ela já cumpre e o que construir em seguida, da Prefeitura 11 até a Prefeitura 22.</p>
+      <p class="ft-guardrail" data-guardrail>Só planejamento e anotações. Você faz cada ação no jogo por conta própria.</p>
+    </header>
+    <FarmsNav />
+    <BuildPathTool client:load />
+  </div>
+</Shell>

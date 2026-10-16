@@ -1,0 +1,52 @@
+---
+// A navegação única dentro de cada aba de líder (UX etapa 1): Reino, Membros ou Eventos. The bottom
+// tabs switch sections; this row switches pages inside one. `leaderOnly` (pages shared with the
+// player tabs: /crest/, /tools/kvk/) shows it only when "Playing as" is Leader.
+import "./kingdom.css";
+import { isActive } from "../../../lib/nav";
+
+export type KingdomSection = "kingdom" | "members" | "events";
+interface Props {
+  section: KingdomSection;
+  leaderOnly?: boolean;
+}
+const { section, leaderOnly = false } = Astro.props;
+
+// Todos os rótulos das seções de líder, num lugar só.
+const SECTIONS: Record<KingdomSection, { label: string; links: { href: string; label: string; exact?: boolean }[] }> = {
+  kingdom: {
+    label: "Reino",
+    links: [
+      { href: "/kingdom/", label: "Visão geral", exact: true },
+      { href: "/kingdom/rules/", label: "Regras" },
+      { href: "/crest/", label: "Brasão da aliança" },
+      { href: "/kingdom/seed/", label: "Seed (experimental)" },
+    ],
+  },
+  members: {
+    label: "Membros",
+    links: [
+      { href: "/kingdom/requirements/", label: "Requisitos" },
+      { href: "/kingdom/recruit/", label: "Post de recrutamento" },
+      { href: "/kingdom/my/", label: "Meus requisitos" },
+    ],
+  },
+  events: {
+    label: "Eventos",
+    links: [
+      { href: "/kingdom/mge/", label: "Planejador de MGE" },
+      { href: "/tools/kvk/", label: "Planejador de KvK" },
+    ],
+  },
+};
+const s = SECTIONS[section];
+const path = Astro.url.pathname;
+const norm = (p: string) => (p.endsWith("/") ? p : `${p}/`);
+const current = (l: { href: string; exact?: boolean }) => (l.exact ? norm(path) === l.href : isActive(l.href, path));
+---
+<nav class:list={["kg-subnav", "kg-noprint", { "kg-leader-only": leaderOnly }]} aria-label={`Páginas de ${s.label}`} data-kingdom-section={section}>
+  <p class="kg-section" aria-hidden="true">{s.label}</p>
+  <ul>
+    {s.links.map((l) => <li><a href={l.href} aria-current={current(l) ? "page" : undefined}>{l.label}</a></li>)}
+  </ul>
+</nav>

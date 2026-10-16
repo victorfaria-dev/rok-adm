@@ -1,0 +1,43 @@
+---
+// F-28 What changed since…: the patch timeline of @rokadm/data (patches.json), read at build time
+// and passed as lean props. The static HTML lists every patch, so it works without JavaScript.
+import Shell from "../../layouts/Shell.astro";
+import ChangesView, { type ChangesPatch } from "../../components/tools/changes/ChangesView";
+import DataStamp from "../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../lib/tools-payload";
+import { manifest, patches as allPatches } from "@rokadm/data";
+import { monthsBetween } from "@rokadm/planner/tools";
+import "../../components/tools/kit/tools.css";
+import "../../components/tools/changes/changes.css";
+
+const patches: ChangesPatch[] = allPatches.map((p) => ({
+  version: p.version, date: p.date, confidence: p.confidence, summary: p.summary, factIds: p.factIds, cite: cite(p.factIds),
+}));
+const dated = patches.map((p) => p.date).filter((d): d is string => !!d).sort();
+const first = dated[0]!.slice(0, 7);
+const [fy, fm] = first.split("-").map(Number) as [number, number];
+const from = fm === 1 ? `${fy - 1}-12` : `${fy}-${String(fm - 1).padStart(2, "0")}`;
+const lastPatch = dated.at(-1)!.slice(0, 7), built = manifest.builtAt.slice(0, 7);
+const months = monthsBetween(from, built > lastPatch ? built : lastPatch);
+const ids = patches.flatMap((p) => p.factIds);
+---
+<Shell title="O que mudou desde…" description="Parou de jogar Rise of Kingdoms por um tempo? Escolha o mês em que saiu e veja todas as atualizações do jogo desde então, da mais nova para a mais antiga, com as notas oficiais marcadas." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>O que mudou desde que você saiu</h1>
+      <p class="t-lead">Escolha o mês em que parou de jogar para ver todas as atualizações desde então, da mais nova para a mais antiga. Cada atualização diz se há notas oficiais e quais fichas de fato a cobrem.</p>
+      <DataStamp />
+    </header>
+    <section class="t-page-body" aria-labelledby="c-h">
+      <h2 id="c-h">Atualizações</h2>
+      <p class="t-note">Nossos dados não têm nota de impacto por atualização, então não chutamos uma. As atualizações são separadas pela fonte: primeiro as com notas oficiais, depois as versões só relatadas em outros lugares.</p>
+      <ChangesView client:load patches={patches} months={months} />
+    </section>
+    <aside class="c-next" aria-labelledby="c-next-h">
+      <h2 id="c-next-h">Pensando em se mudar?</h2>
+      <p>As regras de migração mudaram várias vezes nessas atualizações. <a href="/tools/migration/">Veja se você pode migrar agora</a>.</p>
+    </aside>
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

@@ -1,0 +1,51 @@
+---
+// Wave H and J guides (first 30 days, low spender, returning, recovery, kingdom admin, late game):
+// static pages rendered at build from guides/data/blocks.<set>.json with the same
+// block component as /guide/. No island: readable with JS off, no client payload.
+import Shell from "../../layouts/Shell.astro";
+import { GuideBody, GuideConfidence, GuideMeta } from "../../components/guide/GuideBody";
+import { buildGuidePayload } from "../../lib/guide-payload";
+import { fullGuide } from "../../lib/guide-view";
+import { STATIC_GUIDES, type GuidePage } from "../../lib/guides";
+import { guideSetById, type GuideSetId } from "@rokadm/core";
+import { GuideVisual } from "../../components/guide/GuideVisual";
+import TimelineScript from "../../components/guide/TimelineScript.astro";
+import { buildTimeline } from "../../lib/guide-timeline";
+import "../../styles/guide.css";
+
+export function getStaticPaths() {
+  return STATIC_GUIDES.map((page) => ({ params: { slug: page.slug }, props: { page } }));
+}
+
+const { page } = Astro.props as { page: GuidePage };
+const set = page.set as GuideSetId;
+const payload = buildGuidePayload(set);
+const view = fullGuide(payload, guideSetById(set).sectionTitles);
+const hasTimeline = buildTimeline(view, payload.badges).show;
+const forWho = page.audience.replace(/\.$/, "");
+---
+<Shell title={page.title} description={`${page.summary} ${page.audience}`} mode="read">
+  <div class="g-page" data-guide-set={set}>
+    <h1>{page.title}</h1>
+    <GuideMeta view={view} label={`Para: ${forWho}`} />
+    <GuideConfidence view={view} />
+    {set === "low" ? (
+      <p class="g-intro">
+        Estes passos são um complemento ao plano F2P: um passo daqui substitui o passo F2P do mesmo assunto, e os demais são acrescentados.
+        Se o seu perfil é Low ou maior, <a href="/guide/">o seu guia</a> já os incorpora.
+      </p>
+    ) : set === "latestage" ? (
+      <p class="g-intro">
+        O plano depois do KvK1, para reinos no KvK2, no KvK3 ou na Temporada de Conquista. Se o seu perfil está em uma dessas fases,
+        <a href="/guide/">o seu guia</a> mostra estes passos como plano principal. Os outros guias estão em <a href="/guides/">todos os guias</a>.
+      </p>
+    ) : set === "recovery" ? (
+      <p class="g-intro">Comece pelo primeiro passo, mesmo que não leia mais nada hoje. Depois volte para o resto. Os outros guias estão em <a href="/guides/">todos os guias</a>.</p>
+    ) : (
+      <p class="g-intro">{page.summary} Use junto com <a href="/guide/">o seu guia</a>; os outros guias estão em <a href="/guides/">todos os guias</a>.</p>
+    )}
+    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Linha do tempo" />}
+    <GuideBody view={view} badges={payload.badges} profileTags={false} />
+    {hasTimeline && <TimelineScript />}
+  </div>
+</Shell>

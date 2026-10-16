@@ -1,0 +1,36 @@
+/* "Post to Discord" panel and webhook settings (wave G). Only --ko-* tokens. */
+.dc {
+  min-width: 0; border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); background: var(--ko-surface);
+  overflow-wrap: anywhere;
+}
+.dc-summary {
+  display: flex; align-items: center; min-height: 48px; padding-inline: var(--ko-space-4); cursor: pointer;
+  font-weight: var(--ko-weight-semibold);
+}
+.dc-summary:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: -2px; }
+.dc-body, .dc-webhook, .dc-form { display: grid; gap: var(--ko-space-3); min-width: 0; }
+.dc-body { padding: 0 var(--ko-space-4) var(--ko-space-4); }
+.dc-row { display: grid; gap: var(--ko-space-2); }
+.dc-field { display: grid; gap: var(--ko-space-1); min-width: 0; }
+.dc-field label, .dc-label { font-weight: var(--ko-weight-medium); font-size: var(--ko-text-sm); }
+.dc-field input {
+  min-height: 48px; width: 100%; min-width: 0; padding: var(--ko-space-2) var(--ko-space-3);
+  color: var(--ko-text); background: var(--ko-background); font: inherit;
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-sm);
+}
+.dc-field input:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 1px; }
+.dc-field input[aria-invalid="true"] { border-color: var(--ko-error); }
+.dc-hint { color: var(--ko-text-muted); font-size: var(--ko-text-xs); line-height: var(--ko-leading-xs); }
+.dc-warn { font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); padding-left: var(--ko-space-3); border-left: 2px solid var(--ko-warning); }
+.dc-saved { font-size: var(--ko-text-sm); }
+.dc-mono { font-family: var(--ko-font-mono); }
+.dc-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); align-items: center; }
+.dc-preview {
+  margin: 0; max-height: 20rem; overflow: auto; padding: var(--ko-space-3); white-space: pre-wrap; overflow-wrap: anywhere;
+  font-family: var(--ko-font-mono); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm);
+  color: var(--ko-text); background: var(--ko-background); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-sm);
+}
+.dc-preview:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 1px; }
+.dc-status { min-height: 1.5em; color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.dc-ok { color: var(--ko-success); font-size: var(--ko-text-sm); }
+.dc-error { color: var(--ko-error); font-size: var(--ko-text-sm); }

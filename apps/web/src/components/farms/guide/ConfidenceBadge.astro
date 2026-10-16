@@ -1,0 +1,16 @@
+---
+// Confidence as text plus a token-coloured dot (never colour alone). Reuses the hub's .fm-pill styles.
+import "../shared/farms.css";
+import type { Confidence } from "@rokadm/core";
+import { CONFIDENCE_LABEL } from "../../../lib/farms-guide";
+
+interface Props {
+  confidence?: Confidence;
+  /** Show the "Hipótese: sem fonte" label instead of a confidence level. */
+  hypothesis?: boolean;
+}
+const { confidence, hypothesis = false } = Astro.props;
+---
+{hypothesis
+  ? <span class="fm-pill fm-pill-hypothesis" data-hypothesis>Hipótese: sem fonte</span>
+  : confidence && <span class={`fm-pill fm-pill-${confidence}`} data-confidence={confidence}>{CONFIDENCE_LABEL[confidence]}</span>}

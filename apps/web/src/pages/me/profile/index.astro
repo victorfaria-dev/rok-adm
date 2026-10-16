@@ -1,0 +1,7 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import ProfileEdit from "../../../components/profile/ProfileEdit";
+---
+<Shell title="Perfil público" description="Edite o seu perfil de comunidade do KingdomOps: foto, banner, nome, reino, bio, conquistas e quem pode vê-lo. Exporte ou apague a sua conta." mode="operate">
+  <ProfileEdit client:load />
+</Shell>

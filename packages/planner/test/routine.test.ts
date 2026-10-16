@@ -28,7 +28,7 @@ describe("routine data", () => {
       expect(t.facts.length).toBeGreaterThan(0);
     }
     expect(ESTIMATE_NOTICE.gap).toBe("L-A10-01");
-    expect(ESTIMATE_NOTICE.label).toMatch(/ESTIMATE/);
+    expect(ESTIMATE_NOTICE.label).toMatch(/ESTIMATIVA/);
   });
 
   it("presets are 15/30/60", () => {
@@ -101,7 +101,7 @@ describe("planRoutine", () => {
     const lowVip = planRoutine(ROUTINE_TASKS, profile(), 120, { includeWeekly: true, vipLevel: 1 });
     expect(lowVip.skipped.find((s) => s.id === "vip-shop-weekly")?.reason).toBe("below_vip");
     const unknownVip = planRoutine(ROUTINE_TASKS, profile(), 120, { includeWeekly: true });
-    expect(unknownVip.notes.some((n) => /VIP level unknown/.test(n.text))).toBe(true);
+    expect(unknownVip.notes.some((n) => /Nível de VIP desconhecido/.test(n.text))).toBe(true);
     const sunday = planRoutine(ROUTINE_TASKS, profile(), 120, { weekday: 0 });
     expect(sunday.skipped.find((s) => s.id === "lyceum-mock")?.reason).toBe("not_today");
     const events = planRoutine(ROUTINE_TASKS, profile(), 120, { includeEvents: true });

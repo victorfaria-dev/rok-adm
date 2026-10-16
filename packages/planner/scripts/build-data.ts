@@ -1,12 +1,14 @@
-// Builds packages/planner/data/{facts-meta,vip-levels}.json straight from research/facts
+// Builds packages/planner/data/{facts-meta,vip-levels,trading-post,farms-facts}.json straight from research/facts
 // and validates the hand-authored planner data against the fact cards:
 //   - every cited fact ID exists;
 //   - every gap ID exists in some _lacunas.md;
-//   - every `evidence` substring in budget-inputs.json is literally present in its card.
+//   - commander-periods.json: known periods, unique ids, confidence no higher than its best card;
+//   - commander-portraits.json: every portrait has source, date, attribution and both WebP files in apps/web/public/commanders;
+//   - every `evidence` (or `*Evidence`) substring in budget-inputs.json, farms.json and low-spender.json is literally present in its card.
 // Usage: pnpm --filter @rokadm/planner build:data   (add --check to fail on drift without writing)
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
-import { PLANNER_DATA_DIR, readCard, findCardPath, readGapIds, readFactsCsv, type RawCard } from "./research";
+import { PLANNER_DATA_DIR, REPO_ROOT, readCard, findCardPath, readGapIds, readFactsCsv, type RawCard } from "./research";
 
 export const AUTHORED_FILES = [
   "routine-tasks.json",
@@ -14,7 +16,75 @@ export const AUTHORED_FILES = [
   "budget-inputs.json",
   "commander-checklist.json",
   "commander-shelf-life.json",
+  "farms.json",
+  "low-spender.json",
+  "commander-periods.json",
 ] as const;
+
+const PERIODS = ["launch", "pre_kvk", "kvk1", "kvk2", "kvk3", "soc"];
+const CONF_RANK: Record<string, number> = { low: 1, medium: 2, high: 3, baixa: 1, media: 2, alta: 3 };
+
+/**
+ * Checks commander-periods.json: known periods, unique ids, dates, and that no commander claims more
+ * confidence than its best-supported card (a conflict caps it at low).
+ */
+export function checkCommanderPeriods(text: string, cards: ReadonlyMap<string, RawCard>): string[] {
+  const errors: string[] = [];
+  const doc = JSON.parse(text) as {
+    periods: Array<{ id: string }>;
+    commanders: Array<{ id: string; period: string; confidence: string; conflict: boolean; facts: string[]; lastConfirmed: string }>;
+  };
+  if (doc.periods.map((p) => p.id).join() !== PERIODS.join()) errors.push(`commander-periods: periods must be ${PERIODS.join(", ")} in order`);
+  const seen = new Set<string>();
+  for (const c of doc.commanders) {
+    const key = `commander-periods ${c.id}`;
+    if (seen.has(c.id)) errors.push(`${key}: duplicate id`);
+    seen.add(c.id);
+    if (!/^[a-z0-9-]+$/.test(c.id)) errors.push(`${key}: id must be kebab-case`);
+    if (!PERIODS.includes(c.period)) errors.push(`${key}: unknown period ${c.period}`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(c.lastConfirmed)) errors.push(`${key}: lastConfirmed must be YYYY-MM-DD`);
+    if (!c.facts.length) errors.push(`${key}: no facts`);
+    const best = Math.max(0, ...c.facts.map((id) => CONF_RANK[cards.get(id)?.fields["confianca"] ?? ""] ?? 0));
+    const own = CONF_RANK[c.confidence] ?? 0;
+    if (!own) errors.push(`${key}: confidence must be high, medium or low`);
+    if (own > best) errors.push(`${key}: confidence ${c.confidence} is above its best card`);
+    if (c.conflict && c.confidence !== "low") errors.push(`${key}: conflicting sources must be low confidence`);
+  }
+  return errors;
+}
+
+export const PORTRAIT_ATTRIBUTION_TEXT = "Rise of Kingdoms © Lilith Games";
+
+/**
+ * Checks commander-portraits.json against the files in apps/web/public/commanders: every portrait belongs to a
+ * commander in commander-periods.json, has a source URL, a retrieval date and the attribution, and both WebP sizes
+ * exist; no file in the folder is missing from the manifest.
+ */
+export function checkCommanderPortraits(manifestText: string, periodsText: string, dir: string): string[] {
+  const errors: string[] = [];
+  const doc = JSON.parse(manifestText) as {
+    attribution: string; sizes: number[];
+    portraits: Array<{ id: string; sourceUrl: string; sourcePage: string; retrievedOn: string; attribution: string }>;
+  };
+  const commanders = new Set((JSON.parse(periodsText) as { commanders: Array<{ id: string }> }).commanders.map((c) => c.id));
+  if (doc.attribution !== PORTRAIT_ATTRIBUTION_TEXT) errors.push(`commander-portraits: attribution must be "${PORTRAIT_ATTRIBUTION_TEXT}"`);
+  const files = new Set(existsSync(dir) ? readdirSync(dir) : []);
+  const expected = new Set<string>();
+  for (const p of doc.portraits) {
+    const key = `commander-portraits ${p.id}`;
+    if (!commanders.has(p.id)) errors.push(`${key}: not in commander-periods.json`);
+    if (!/^https:\/\//.test(p.sourceUrl) || !/^https:\/\//.test(p.sourcePage)) errors.push(`${key}: sourceUrl and sourcePage must be https URLs`);
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(p.retrievedOn)) errors.push(`${key}: retrievedOn must be YYYY-MM-DD`);
+    if (p.attribution !== PORTRAIT_ATTRIBUTION_TEXT) errors.push(`${key}: attribution must be "${PORTRAIT_ATTRIBUTION_TEXT}"`);
+    for (const s of doc.sizes) {
+      const f = `${p.id}-${s}.webp`;
+      expected.add(f);
+      if (!files.has(f)) errors.push(`${key}: missing apps/web/public/commanders/${f}`);
+    }
+  }
+  for (const f of files) if (!expected.has(f)) errors.push(`commander-portraits: ${f} is not in the manifest`);
+  return errors;
+}
 
 export interface FactMetaRow {
   id: string;
@@ -59,10 +129,42 @@ function toMeta(card: RawCard): FactMetaRow {
   };
 }
 
+export interface TradingPostRow {
+  level: number;
+  /** 0.35 = 35%. */
+  taxRate: number;
+  /** Transport capacity per trip (Fandom; L1–L24 contested, A03-0025). */
+  capacity: number;
+  /** Requirement column as written in the table ("" when none). */
+  requirement: string;
+  facts: string[];
+}
+
+/** Slim fact row for the farm modules (no invalidatedBy/validUntil: keeps client bundles free of the dataset marker). */
+export interface FarmFactRow {
+  id: string;
+  title: string;
+  confidence: FactMetaRow["confidence"];
+  status: string;
+  consensus: string;
+}
+
 export interface BuildResult {
   factsMeta: FactMetaRow[];
   vipLevels: VipLevelRow[];
+  tradingPost: TradingPostRow[];
+  farmFacts: FarmFactRow[];
   errors: string[];
+}
+
+/** Collects every `evidence: { factId: substring }` map nested anywhere in a JSON value. */
+function collectEvidence(v: unknown, path: string, out: Array<[string, Record<string, string>]>): void {
+  if (Array.isArray(v)) { v.forEach((x, i) => collectEvidence(x, `${path}[${i}]`, out)); return; }
+  if (typeof v !== "object" || v === null) return;
+  for (const [k, x] of Object.entries(v as Record<string, unknown>)) {
+    if ((k === "evidence" || /Evidence$/.test(k)) && typeof x === "object" && x !== null && !Array.isArray(x)) out.push([path, x as Record<string, string>]);
+    else collectEvidence(x, path ? `${path}.${k}` : k, out);
+  }
 }
 
 export function buildData(): BuildResult {
@@ -74,11 +176,20 @@ export function buildData(): BuildResult {
   const ids = new Set<string>([...all.matchAll(FACT_ID_RE)].map((m) => m[0]));
   ids.add("A05-0001");
   ids.add("A05-0007");
+  ids.add("A03-0024");
+  ids.add("A03-0025");
   const cards = new Map<string, RawCard>();
   for (const id of [...ids].sort()) {
     if (!findCardPath(id)) { errors.push(`fact not found in research/facts: ${id}`); continue; }
     cards.set(id, readCard(id));
   }
+
+  errors.push(...checkCommanderPeriods(texts[AUTHORED_FILES.indexOf("commander-periods.json")] ?? "{}", cards));
+  errors.push(...checkCommanderPortraits(
+    readFileSync(join(PLANNER_DATA_DIR, "commander-portraits.json"), "utf8"),
+    texts[AUTHORED_FILES.indexOf("commander-periods.json")] ?? "{}",
+    join(REPO_ROOT, "apps", "web", "public", "commanders"),
+  ));
 
   const gapIds = readGapIds();
   for (const m of all.matchAll(GAP_ID_RE)) {
@@ -90,9 +201,15 @@ export function buildData(): BuildResult {
     inputs: Record<string, { evidence?: Record<string, string> }>;
     oneTimeGems: Array<{ id: string; evidence?: Record<string, string> }>;
   };
+  const farmEvidence: Array<[string, Record<string, string>]> = [];
+  collectEvidence(JSON.parse(texts[AUTHORED_FILES.indexOf("farms.json")] ?? "{}"), "farms", farmEvidence);
+  const lowEvidence: Array<[string, Record<string, string>]> = [];
+  collectEvidence(JSON.parse(texts[AUTHORED_FILES.indexOf("low-spender.json")] ?? "{}"), "low", lowEvidence);
   const evidenceSets = [
     ...Object.entries(budget.inputs).map(([k, v]) => [k, v.evidence ?? {}] as const),
     ...budget.oneTimeGems.map((g) => [g.id, g.evidence ?? {}] as const),
+    ...farmEvidence,
+    ...lowEvidence,
   ];
   for (const [key, ev] of evidenceSets) {
     for (const [id, needle] of Object.entries(ev)) {
@@ -112,7 +229,33 @@ export function buildData(): BuildResult {
   }));
   if (vipLevels.some((r) => !Number.isFinite(r.vip) || !Number.isFinite(r.threshold))) errors.push("vip-levels.csv: non-numeric row");
 
-  return { factsMeta: [...cards.values()].map(toMeta), vipLevels, errors };
+  // Trading Post tax and capacity from the A03 CSV (A03-0024 tax, A03-0025 capacity).
+  const tradingPost: TradingPostRow[] = readFactsCsv("A03/data/trading-post.csv").map((r) => {
+    const req = (r["Requirements"] ?? "").trim();
+    return {
+      level: Number(r["Level"]),
+      taxRate: Number((r["Tax Rate"] ?? "").replace("%", "")) / 100,
+      capacity: Number((r["Transportation Capacity"] ?? "").replace(/,/g, "")),
+      requirement: req === "-" ? "" : req,
+      facts: ["A03-0024", "A03-0025"],
+    };
+  });
+  if (tradingPost.length !== 25 || tradingPost.some((r, i) => r.level !== i + 1 || !Number.isFinite(r.taxRate) || !(r.capacity > 0) || r.taxRate <= 0 || r.taxRate >= 1)) {
+    errors.push("trading-post.csv: expected levels 1..25 with numeric tax and capacity");
+  }
+
+  // Facts cited by farms.json (+ the Trading Post table cards), slim, for the farm modules.
+  const farmIds = new Set<string>([...(texts[AUTHORED_FILES.indexOf("farms.json")] ?? "").matchAll(FACT_ID_RE)].map((m) => m[0]));
+  farmIds.add("A03-0024");
+  farmIds.add("A03-0025");
+  const farmFacts: FarmFactRow[] = [...farmIds].sort().flatMap((id) => {
+    const c = cards.get(id);
+    if (!c) return [];
+    const m = toMeta(c);
+    return [{ id: m.id, title: m.title, confidence: m.confidence, status: m.status, consensus: m.consensus }];
+  });
+
+  return { factsMeta: [...cards.values()].map(toMeta), vipLevels, tradingPost, farmFacts, errors };
 }
 
 export function serialize(v: unknown): string {
@@ -130,6 +273,8 @@ if (isMain) {
   const outputs: Array<[string, unknown]> = [
     ["facts-meta.json", { _generated: "by scripts/build-data.ts from research/facts — do not edit", facts: res.factsMeta }],
     ["vip-levels.json", { _generated: "by scripts/build-data.ts from research/facts/A05/data/vip-levels.csv — do not edit", levels: res.vipLevels }],
+    ["trading-post.json", { _generated: "by scripts/build-data.ts from research/facts/A03/data/trading-post.csv — do not edit", levels: res.tradingPost }],
+    ["farms-facts.json", { _generated: "by scripts/build-data.ts from research/facts (cards cited by farms.json) — do not edit", facts: res.farmFacts }],
   ];
   let drift = false;
   for (const [file, data] of outputs) {
@@ -142,6 +287,6 @@ if (isMain) {
       if (!check) writeFileSync(path, next);
     }
   }
-  console.log(`${res.factsMeta.length} facts, ${res.vipLevels.length} VIP levels${check ? (drift ? " — DRIFT" : " — in sync") : " — written"}`);
+  console.log(`${res.factsMeta.length} facts, ${res.vipLevels.length} VIP levels, ${res.tradingPost.length} Trading Post levels${check ? (drift ? " — DRIFT" : " — in sync") : " — written"}`);
   if (check && drift) process.exit(1);
 }

@@ -3,3 +3,5 @@ __pycache__/
 *.pyc
 dist/
 coverage/
+.claude/worktrees/
+apps/api/.data/

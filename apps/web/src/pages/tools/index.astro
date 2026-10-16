@@ -1,0 +1,47 @@
+---
+import Shell from "../../layouts/Shell.astro";
+import DataStamp from "../../components/tools/kit/DataStamp.astro";
+import { GROUPS, TOOLS } from "../../lib/tools-catalog";
+import "../../components/tools/kit/tools.css";
+
+// List only tools whose page exists in this build (pages land one by one).
+const built = new Set(
+  Object.keys(import.meta.glob("/src/pages/**/index.astro")).map((k) => k.replace(/^\/src\/pages/, "").replace(/index\.astro$/, "")),
+);
+const live = TOOLS.filter((t) => built.has(t.href));
+
+// Every user-facing string on this page, in one place (pt-BR).
+const S = {
+  title: "Ferramentas",
+  description: "Calculadoras e listas para jogadores de Rise of Kingdoms, agrupadas por tarefa: gastos e valor, acelerações e tempo, combate e cura, mudanças de reino e contas farm. Cada número cita sua fonte.",
+  lead: "Calculadoras e listas, agrupadas pelo que você quer fazer. O que você digita fica neste aparelho.",
+  notYet: "Ainda não está aqui",
+  notYetItems: [
+    "Custos de pesquisa e de treinamento de tropas: ainda não temos tabela de pesquisa nem de tropas nos nossos dados.",
+    "Caminho dos primeiros 30 dias e referência de marcos: dependem de medições no jogo.",
+  ],
+};
+---
+<Shell title={S.title} description={S.description} mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>{S.title}</h1>
+      <p class="t-lead">{S.lead}</p>
+      <DataStamp />
+    </header>
+    {GROUPS.filter((g) => live.some((t) => t.group === g.id)).map((g) => (
+      <section aria-labelledby={`g-${g.id}`} class="t-page-body" data-tool-group={g.id}>
+        <h2 id={`g-${g.id}`}>{g.title}</h2>
+        <ul class="t-hub">
+          {live.filter((t) => t.group === g.id).map((t) => (
+            <li><a href={t.href}><strong>{t.title}</strong><span>{t.blurb}</span></a></li>
+          ))}
+        </ul>
+      </section>
+    ))}
+    <details class="t-deferred">
+      <summary>{S.notYet}</summary>
+      <ul>{S.notYetItems.map((x) => <li>{x}</li>)}</ul>
+    </details>
+  </div>
+</Shell>

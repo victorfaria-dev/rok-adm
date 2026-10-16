@@ -1,0 +1,494 @@
+[
+  {
+    "id": "low-overview-pass-only",
+    "title": "Low (gasta pouco), \"só passes\": o que este guia cobre",
+    "phase": "overview",
+    "section": "overview",
+    "order": 5,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Para quem é.** O perfil Low vai de US$ 5 a 100 por mês (convenção do projeto, `research/perfis.md`, que já prevê uma divisão entre \"só passes\" e \"low completo\"). Essa faixa é larga, então este guia cobre apenas a ponta **\"só passes\"**: o jogador que compra os pacotes de gemas recorrentes ou únicos mais baratos e nada além disso. A ponta **\"low completo\"** (recargas no momento dos eventos, faixas do Chamado dos Antigos [A12-0004, ficha fraca], pacotes; o limite de ~US$ 25 é uma proposta de trabalho, não um valor do jogo) está **fora do escopo** aqui e terá um delta próprio.\n\n**O que as fichas colocam em primeiro** (tanto de sites de guias quanto de vendedores):\n1. **Fundo de Crescimento**: cerca de **US$ 15 uma vez** (preço de site de vendedor; confirme na sua loja, L-A12-01), cerca de **81.000 gemas** pagas conforme os marcos da Prefeitura são alcançados; o valor total exige **Prefeitura 24 (ou 25)**. Citado como a compra de melhor custo-benefício [A12-0001].\n2. **Suprimento de gemas de 30 dias (Depósito de Suprimentos)**: cerca de **US$ 10 por 30 dias** (preço de site de vendedor; confirme na sua loja, L-A12-01) por cerca de **19.500 gemas** (650/dia). Em segundo lugar depois do Fundo de Crescimento [A12-0002].\n\nAs fichas trazem as suas próprias razões **derivadas** (81.000 ÷ 15 ≈ 5.400 gemas por dólar no Fundo de Crescimento, 19.500 ÷ 10 ≈ 1.950 no suprimento) [A12-0001, A12-0002]; elas explicam o ranking, mas vêm de preços de sites de vendedores. Os preços são valores de sites de vendedores em USD; **confirme na sua loja** (região e data variam, lacuna L-A12-01).\n\n**O que não muda.** O plano é o plano F2P, só que mais rápido: as gemas continuam convertendo 1:1 em pontos VIP [A05-0004], as metas continuam sendo **VIP 6 e depois VIP 10** [A05-0008], e as gemas continuam rendendo mais se gastas durante o **Mais que Gemas** [A11-0502]. O conselho para quem gasta pouco é comprar **poucos itens de alto valor**, escolher o momento das compras em torno do **evento de Recarga**, guardar gemas para eventos de gemas e **não correr atrás de todo pacote novo** [A12-0005].\n\nTodo bloco F2P continua valendo, a menos que um bloco Low abaixo o substitua.",
+    "why_md": "Um passe de US$ 5 e um mês de US$ 100 compram contas muito diferentes, então um único guia \"Low\" ou subestimaria quem só compra passes ou empurraria para essa pessoa as compras de quem gasta o low completo. Os dois pacotes acima são as únicas compras com fichas firmes (verificadas, confiança média); todo o resto da loja é incerto ou está fora do escopo, então este guia para por aí.",
+    "cards": [
+      "A05-0004",
+      "A05-0008",
+      "A11-0502",
+      "A12-0001",
+      "A12-0002",
+      "A12-0004",
+      "A12-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Todas as fontes A12 são um site de guia mais sites de vendedores/recarga (conflito de interesse); não foi encontrada uma tabela oficial de preços. O limite de US$ 25 entre só passes e low completo é uma proposta de trabalho, não um valor do jogo. A12-0004 (Chamado dos Antigos) é baixa e só é citada aqui como fora do escopo.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ov-budget-reality-check",
+    "title": "Realidade do orçamento: o que um Low \"só passes\" pode esperar até a KvK1",
+    "phase": "overview",
+    "section": "overview",
+    "order": 10,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Igual ao F2P**\n- A primeira KvK começa por volta do **dia 100 do reino**; a pré-KvK (Véspera da Cruzada) em torno dos dias 85–95 [B01-0500].\n- **T4 é o nível de trabalho de um F2P na KvK1**, e os passes não mudam isso; o T5 exige Prefeitura 25 e muito investimento [A08-0500]. O T4 é liberado na **Prefeitura 21** [A01-0001].\n- Uma **aliança com jogadores que gastam** continua sendo sua melhor fonte gratuita de esculturas, chaves e pontos VIP [A06-0516].\n- Dispute os **marcos** do MGE, não o ranking [A11-0500]; encha rallies fortes em vez de liderar [A08-0503].\n\n**O que os passes mudam**\n- **Renda de gemas.** O F2P tem **100 gemas/dia** garantidas [A04-0001]. O suprimento de 30 dias acrescenta **650/dia** (19.500 a cada 30 dias) [A12-0002], cerca de **6,5×** o valor do F2P (derivado: 650 ÷ 100). O Fundo de Crescimento acrescenta até **81.000**, mas só conforme os marcos da Prefeitura são alcançados, com valor total na **Prefeitura 24 (ou 25)** [A12-0001].\n- **Ritmo do VIP.** O caminho VIP 6 → VIP 10 é o mesmo [A05-0008]; como as gemas convertem 1:1 em pontos VIP [A05-0004], mais gemas significam que cada etapa chega mais cedo (raciocínio, não uma data medida). Quanto mais cedo, não se sabe: veja *VIP 10 para um Low \"só passes\"*.\n- **Mais que Gemas.** Um suprimento completo de 30 dias, se guardado (a partir do VIP 6), cobre a faixa relatada de 7.000 gemas/dia nos dois dias: 19.500 ≥ 2 × 7.000 = 14.000 (derivado) [A12-0002, A11-0502]. Veja Eventos.\n\n**O que os passes não mudam:** rankings abertos de poder continuam não sendo onde você compete [A11-0511], e nada nos dois pacotes acelera tropas ou a Prefeitura além das gemas e do VIP que eles somam (raciocínio). Os preços são valores de sites de vendedores em USD; **confirme na sua loja** (região e data variam, lacuna L-A12-01).",
+    "why_md": "Um jogador \"só passes\" paga por um caminho de VIP mais rápido, não por um jogo diferente. Enquadrar a compra assim mantém as expectativas honestas: ela compra o VIP 6 (2º construtor permanente [A05-0008]) mais cedo e aproxima a escultura lendária diária (VIP 10), mas não compra uma conta com Prefeitura 25 nem uma marcha de topo de ranking para a KvK1.",
+    "cards": [
+      "A01-0001",
+      "A04-0001",
+      "A05-0004",
+      "A05-0008",
+      "A06-0516",
+      "A08-0500",
+      "A08-0503",
+      "A11-0500",
+      "A11-0502",
+      "A11-0511",
+      "A12-0001",
+      "A12-0002",
+      "B01-0500"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A razão de 6,5× e o valor de 14.000 do MTG são aritmética derivada dos números das fichas. A11-0511 é baixa. A08-0500 é uma ficha F2P, aplicada aqui sem alteração. Quanto do Fundo de Crescimento é pago até a KvK1 depende de uma tabela de marcos que não foi encontrada (L-A12-02). Preços e quantidades de gemas vêm de sites de guias e de vendedores.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02",
+      "L-A04-01",
+      "L-A11-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "low-growth-fund",
+    "title": "Compre o Fundo de Crescimento uma vez, o mais cedo possível",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 62,
+    "stage": [
+      "pre_kvk"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "unanimous",
+    "split_views": null,
+    "body_md": "- **Recomendado (Low \"só passes\"): o Fundo de Crescimento é a primeira compra** [A12-0001]. Consenso entre os guias encontrados: **unânime** (3 fontes, todas sites de guias ou de vendedores).\n- É uma compra **única** de cerca de **US$ 15** por cerca de **81.000 gemas**, pagas **progressivamente conforme a sua Prefeitura alcança os níveis de marco**; para receber tudo você precisa da **Prefeitura 24 (ou 25)** [A12-0001].\n- **Compre cedo.** As notas da ficha aconselham comprar cedo porque as gemas se acumulam com o progresso da Prefeitura [A12-0001]; comprar antes do seu primeiro marco permite coletar cada um ao alcançá-lo (raciocínio).\n- **Para onde vão as gemas:** o plano F2P. VIP até o **VIP 6** (11.500 pontos VIP, lidos como total acumulado; não confirmado, L-A05-01), depois poupar para o Mais que Gemas e o VIP 10 [A05-0008, A05-0001, A11-0502]. Nunca em conclusões instantâneas nem em PA [A04-0009, A04-0008].\n- As gemas do Fundo de Crescimento vêm **além** das recompensas fixas de melhoria da Prefeitura (100 gemas na Prefeitura 16, 200 na 21) [A01-0002] (as 200 da Prefeitura 21 se apoiam em uma só fonte).\n\n**Confira na loja antes de comprar:** o preço na sua moeda, a tabela de marcos e se é exigido algum nível de VIP (um relato não verificado de 2019 dizia VIP 5; pode estar obsoleto). Os preços são valores de sites de vendedores em USD; **confirme na sua loja** (região e data variam, lacuna L-A12-01).",
+    "why_md": "O Fundo de Crescimento paga mais gemas que qualquer outra coisa que as fichas precificam, é uma compra única e recompensa um progresso que você faria de qualquer jeito. Como os pagamentos dependem da Prefeitura, as 81.000 completas só chegam tarde (Prefeitura 24), então os pagamentos iniciais são os que mais importam para o VIP 6.",
+    "cards": [
+      "A01-0002",
+      "A04-0008",
+      "A04-0009",
+      "A05-0001",
+      "A05-0008",
+      "A11-0502",
+      "A12-0001"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A exigência de VIP 5 é um único trecho de 2019 nas notas de A12-0001 (não verificado). A tabela de marcos (qual Prefeitura paga quanto) não foi encontrada, então a parcela paga antes da KvK é desconhecida.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02",
+      "L-A05-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "low-supply-depot",
+    "title": "Depois o suprimento de gemas de 30 dias, renovado só enquanto você o usa",
+    "phase": "day0-3",
+    "section": "day0",
+    "order": 64,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Segunda compra: o suprimento de gemas de 30 dias** (Depósito de Suprimentos), cerca de **US$ 10 por 30 dias** (preço de site de vendedor; confirme na sua loja, L-A12-01) por cerca de **19.500 gemas**, ou seja, **650 gemas/dia** (19.500 ÷ 30) [A12-0002]. Os guias o colocam em **segundo lugar, depois do Fundo de Crescimento** [A12-0002].\n- **O conselho que vem junto: guarde essas gemas para eventos de gemas** (as fontes citam o Mais que Gemas e a Roda da Fortuna; a Roda agora exige Tíquetes de Giro [C04-0022], veja Eventos) [A12-0002, A12-0005]. Abaixo do VIP 6 vale a exceção do F2P: VIP primeiro [A11-0502].\n- **Quando renovar:** escolha as renovações de modo que o período cubra o **evento de Recarga** [A12-0005]. O que esse evento paga e com que frequência acontece ainda não está documentado (veja *Evento de Recarga*).\n- Um **\"Suprimento de Gemas com 50% de desconto\" de US$ 5** (~21.700 gemas; preço de site de vendedor, confirme na sua loja, L-A12-01) é listado por um site de vendedor [A12-0003]. A quantidade de gemas não bate com as ~19.500 por US$ 10 de A12-0002; as notas de uma ficha supõem que seja uma variante de primeira compra com desconto desse suprimento, o que não foi confirmado. Confira na loja se ele existe e se é o mesmo pacote antes de contá-lo.\n\nOs preços são valores de sites de vendedores em USD; **confirme na sua loja** (região e data variam, lacuna L-A12-01).",
+    "why_md": "É o único pacote recorrente com ficha firme, e multiplica várias vezes a renda diária garantida de gemas (100/dia garantidas para um F2P [A04-0001] contra 650/dia). Por ser recorrente, também é o pacote mais fácil de continuar comprando por hábito: renove de propósito, em torno do evento de Recarga, não no automático.",
+    "cards": [
+      "A04-0001",
+      "A11-0502",
+      "A12-0002",
+      "A12-0003",
+      "A12-0005",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0022"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "A12-0003 é baixa (um site de vendedor) e conflita com A12-0002 (~21.700 por US$ 5 contra ~19.500 por US$ 10). A leitura de \"variante de primeira compra\" é um palpite nas notas de A12-0002. Nenhuma ficha informa o multiplicador de gemas da primeira compra (L-A12-03). Não está claro se o suprimento paga diariamente na conta ou precisa ser coletado (e se um dia perdido se perde); veja o bloco diário. C04-0022 tem status bruto.",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-03",
+      "L-A11-07",
+      "L-A11-08"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "low-daily-supply-claim",
+    "title": "Diário: colete o suprimento de gemas junto com os pontos VIP",
+    "phase": "daily",
+    "section": "daily",
+    "order": 285,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "single-source",
+    "split_views": null,
+    "body_md": "Acrescente um passo à rotina F2P de 15 minutos, ao lado da coleta do VIP: **colete o suprimento de gemas de 30 dias** (650 gemas/dia enquanto ele durar) [A12-0002].\n\n- As notas da ficha dizem que o suprimento **exige um login diário para ser coletado** [A12-0002]. Se um dia perdido se perde ou pode ser coletado depois, é **desconhecido** (lacuna L-A12-05).\n- Até isso ser medido, trate como a sequência do VIP: **colete todos os dias** [A05-0003].\n\n**Custo de tempo:** Pendente de medição no jogo (T0), lacuna L-A10-01 (as notas da ficha dizem segundos).",
+    "why_md": "Se os dias não coletados se perdem, um login perdido são gemas que você já pagou. Juntar a coleta com a coleta do VIP faz com que não custe nenhuma ida extra ao jogo.",
+    "cards": [
+      "A05-0003",
+      "A12-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "A exigência de coleta diária está nas notas de A12-0002, não na afirmação principal; a regra do dia perdido não foi medida.",
+    "gaps": [
+      "L-A10-01",
+      "L-A12-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "d41-vip10-reality",
+    "title": "VIP 10 para um Low \"só passes\": mais perto, mas ainda sem data",
+    "phase": "day41-90",
+    "section": "plan",
+    "order": 240,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- O VIP 10 exige **150.000** pontos VIP, lidos como total acumulado (não confirmado, L-A05-01) [A05-0001]; as gemas convertem 1:1 [A05-0004]. Ele acrescenta **1 escultura lendária por dia** [A05-0006].\n- Para um F2P puro, a estimativa derivada é de cerca do **dia 503** (um limite superior) [A05-0007]. Os passes mudam as entradas:\n  - Suprimento de 30 dias: **19.500 gemas por período** [A12-0002], então três períodos (cerca de 90 dias, antes da KvK1 por volta do dia 100 [B01-0500]) dão **58.500** (derivado: 3 × 19.500; três compras).\n  - Fundo de Crescimento: até **81.000**, mas o **valor total exige a Prefeitura 24** [A12-0001]. Comentários de jogadores (ficha fraca) dizem que um F2P não está a caminho da Prefeitura 25 na KvK1 e pode lutar com a Prefeitura 21 [B01-0700]; uma conta \"só passes\" em uma Prefeitura parecida ainda teria parte do fundo sem pagar no dia ~100 (raciocínio).\n  - Renda F2P por cima: 100 gemas/dia [A04-0001] e até 200 pontos VIP/dia da sequência [A05-0003].\n- **O que isso significa:** o VIP 10 chega antes do limite superior do F2P, mas **nenhuma ficha dá uma data**, e o guia não estima uma. O fator de variação é quanto do Fundo de Crescimento é pago até o nível da sua Prefeitura na KvK1 (L-A12-02).\n- Depois do VIP 6, continue comprando VIP **durante o Mais que Gemas** [A11-0502].\n\nAs quantidades de gemas vêm de sites de guias e de vendedores; **confirme na sua loja** (lacuna L-A12-01).",
+    "why_md": "A escultura lendária diária do VIP 10 é o principal retorno de longo prazo dos passes, então é tentador planejar o comandante da KvK1 em torno dela. Até a tabela de marcos do Fundo de Crescimento ser conhecida, planeje a KvK1 como um F2P faria (esculturas douradas guardadas, Sun Tzu, Aethelflaed) e trate o VIP 10 antes da KvK1 como um bônus.",
+    "cards": [
+      "A04-0001",
+      "A05-0001",
+      "A05-0003",
+      "A05-0004",
+      "A05-0006",
+      "A05-0007",
+      "A11-0502",
+      "A12-0001",
+      "A12-0002",
+      "B01-0500",
+      "B01-0700"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A05-0007 é derivado (baixa) e pressupõe limiares acumulados (L-A05-01). B01-0700 é baixa (comentários de jogadores sobre contas F2P, aplicados aqui por analogia). O total de 58.500 é aritmética simples sobre A12-0002. A tabela de marcos do Fundo de Crescimento está faltando, então não se dá uma data para o VIP 10.",
+    "gaps": [
+      "L-A12-02",
+      "L-A05-01",
+      "L-A04-01",
+      "L-A12-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ev-more-than-gems",
+    "title": "Mais que Gemas: para onde vão as gemas do suprimento",
+    "phase": "event",
+    "section": "events",
+    "order": 340,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Recomendado (a partir do VIP 6): poupe gemas e gaste-as em pontos VIP durante o Mais que Gemas** [A11-0502, A11-0504]. Consenso: **maioria**. É também o que os guias aconselham para as gemas do suprimento de 30 dias [A12-0002].\n- Estrutura relatada: um evento de **2 dias** com marcos diários de gasto de gemas; **7.000 gemas/dia → 5 esculturas lendárias universais**, **25.000/dia → 13**; cerca de **mensal**, só em reinos com mais de ~21 dias [A11-0502].\n- **O que o passe muda:** um suprimento completo de 30 dias, guardado, são **19.500 gemas** [A12-0002], mais que as **14.000** necessárias para a faixa de 7.000 nos **dois** dias (derivado: 2 × 7.000; só vale se as coletas de um período inteiro forem guardadas antes do evento). Um F2P com renda garantida tem cerca de 3.000 a cada 30 dias [A04-0006]. A faixa mais alta (25.000/dia, 50.000 no evento [A11-0502]) continua fora do alcance só com o suprimento (derivado: 19.500 < 50.000).\n- **Roda da Fortuna:** guias mais antigos também dizem para poupar para ela [A12-0002], mas os giros agora exigem **Tíquetes de Giro** comprados com gemas ou pacotes (Temporada 3 e Temporada de Conquista desde a 1.0.92, Temporada 2 desde a 1.0.94 e, segundo relatos, Temporada 1 desde a 1.1.12, T3) [C04-0022]. Não conte com ela como um segundo ralo de gemas.",
+    "why_md": "As mesmas gemas compram os mesmos pontos VIP de qualquer forma; durante o MTG elas também pagam esculturas lendárias universais. Para um F2P essa faixa é um esforço grande; para um jogador \"só passes\" ela é alcançável a cada vez, se o MTG continuar mais ou menos mensal e o suprimento for guardado (derivado), o que faz do MTG o maior retorno do suprimento.",
+    "cards": [
+      "A04-0006",
+      "A11-0502",
+      "A11-0504",
+      "A12-0002",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0022"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Os valores das faixas do MTG são relatos T3/T4 a confirmar no jogo (L-A11-02); periodicidade definida a partir de T3 + T4. A04-0006 é baixa (estimativa F2P derivada). O valor de 14.000 é aritmética sobre A11-0502. C04-0022 tem status bruto; a parte da Temporada 1 é apenas T3. Quantidades de gemas de sites de vendedores/guias; confirme na sua loja (L-A12-01).",
+    "gaps": [
+      "L-A11-01",
+      "L-A11-02",
+      "L-A11-03",
+      "L-A12-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "low-recharge-event",
+    "title": "Evento de Recarga: escolha as renovações em torno dele (conteúdo desconhecido)",
+    "phase": "event",
+    "section": "events",
+    "order": 345,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- O conselho para quem gasta pouco é **escolher o momento das compras em torno do evento de Recarga**; um guia diz que ajustar o suprimento de gemas de 30 dias (e o suprimento de materiais de 7 dias) para dar tempo ao evento de recarga deve ser a sua principal prioridade [A12-0005].\n- **O que não se sabe:** o que o evento de Recarga paga, com que frequência acontece e se os passes contam para ele. Nenhuma ficha informa isso (lacuna L-A11-07).\n- **Até ser medido:** quando o suprimento de 30 dias acabar, confira o calendário de eventos antes de renovar; se um evento de Recarga estiver anunciado, renove durante ele. Os preços são valores de sites de vendedores em USD; **confirme na sua loja** (região e data variam, lacuna L-A12-01).",
+    "why_md": "As fontes de quem gasta pouco ligam o conselho a este evento, então ele provavelmente agrega valor a uma compra que você faria de qualquer jeito. Sem a tabela de recompensas dele, não há nada mais específico a dizer, e inventar uma seria pior.",
+    "cards": [
+      "A12-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "As fontes de A12-0005 monetizam compras (risco de viés). O suprimento de materiais de 7 dias não tem ficha firme própria e não faz parte das compras \"só passes\" ranqueadas.",
+    "gaps": [
+      "L-A11-07",
+      "L-A11-01",
+      "L-A12-01",
+      "L-A11-08"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "low-what-not-to-buy",
+    "title": "O que não comprar (lista do FOMO)",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 405,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Todo pacote novo.** Quem gasta pouco deve evitar correr atrás de todo pacote novo; gastar de forma seletiva costuma montar uma conta mais forte do que compras frequentes e sem foco [A12-0005].\n2. **Pacotes grandes.** Pacotes como a Coroação do Rei (uma faixa de **US$ 385**) são voltados a quem gasta mais [A12-0005]. Ficam fora do \"só passes\".\n3. **Gastar gemas compradas como uma baleia.** Gemas compradas seguem as regras do F2P: nada de conclusões instantâneas, nada de PA comprado com gemas [A04-0009, A04-0008].\n4. **Eventos de gasto de gemas além do MTG.** Eventos repetidos de gasto de gemas e de ranking de poder estão listados como não compensando para o F2P [A11-0511]; a Roda da Fortuna agora exige Tíquetes de Giro [C04-0022], e o conselho antigo era girar só por um alvo planejado, de preferência depois do VIP 10 [A11-0503].\n5. **\"Ofertas de US$ 5\" aceitas na confiança.** Sites de vendedores listam várias ofertas de US$ 5 como bom negócio (Suprimento de Materiais de 7 Dias, pacote Vanquisher, Suprimento de Gemas com 50% de desconto, Pergaminho de Lucerna) [A12-0003]. Nenhuma tem ficha firme; confira o conteúdo na loja e compare com os dois pacotes ranqueados antes de comprar.\n\nOs preços são valores de sites de vendedores em USD; **confirme na sua loja** (região e data variam, lacuna L-A12-01).",
+    "why_md": "A loja é desenhada em torno de ofertas por tempo limitado, e para um orçamento \"só passes\" um pacote por impulso pode custar mais que vários meses do suprimento. A única orientação firme para quem gasta pouco é \"poucos itens de alto valor\"; esta lista nomeia o que isso exclui.",
+    "cards": [
+      "A04-0008",
+      "A04-0009",
+      "A11-0503",
+      "A11-0511",
+      "A12-0003",
+      "A12-0005",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0022"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "A11-0511 é baixa. A11-0503 é parcialmente_obsoleto (a conta de gemas dela é anterior aos Tíquetes de Giro). A12-0003 é baixa e vem de sites de vendedores. As fontes de A12-0005 vendem recargas (risco de viés); nenhum consenso de quem gasta pouco no Reddit foi coletado.",
+    "gaps": [
+      "L-A12-01",
+      "L-A11-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "low-open-questions",
+    "title": "Perguntas em aberto do guia Low \"só passes\"",
+    "phase": "anytime",
+    "section": "open",
+    "order": 435,
+    "stage": [
+      "pre_kvk",
+      "kvk1"
+    ],
+    "perfil": [
+      "low"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "Essas lacunas enfraquecem os blocos Low acima; a maioria se fecha com **capturas de tela da loja, sem precisar comprar** (T0).\n\n| Lacuna | O que mudaria | Blocos afetados |\n|---|---|---|\n| L-A12-01 preços e conteúdo no jogo por região (USD, BRL) | Todo preço deste guia | todos os blocos low-* |\n| L-A12-02 tabela de marcos do Fundo de Crescimento; VIP oficial por US$ | Data do VIP 10; valor do Fundo de Crescimento até a KvK1 | d41-vip10-reality, low-growth-fund |\n| L-A12-03 multiplicador de gemas da primeira compra | Se o primeiro pacote vale mais | low-supply-depot |\n| L-A11-07 recompensas e periodicidade | Quando renovar o suprimento | low-recharge-event |\n| L-A12-05 regra do dia perdido | Se um login perdido faz perder gemas | low-daily-supply-claim |\n| L-A05-01 limiares acumulados de VIP | Aritmética do VIP 6 / VIP 10 | d41-vip10-reality |\n| L-A11-02 tabela de recompensas do Mais que Gemas | A meta da faixa de 7.000/dia | ev-more-than-gems |\n\nPendente: um requisito de nível de VIP para o Fundo de Crescimento (um relato não verificado de 2019) [A12-0001].",
+    "why_md": "Toda recomendação Low se apoia em preços de sites de vendedores e relatos T3. Listar o que não se sabe permite ao leitor conferir a loja antes de confiar em um número, e diz ao lado da pesquisa o que medir.",
+    "cards": [
+      "A12-0001"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "As fontes A12 são sites de guias e de vendedores (conflito de interesse).",
+    "gaps": [
+      "L-A12-01",
+      "L-A12-02",
+      "L-A12-03",
+      "L-A11-07",
+      "L-A12-05",
+      "L-A05-01",
+      "L-A11-02",
+      "L-A11-08"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  }
+]

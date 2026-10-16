@@ -1,0 +1,22 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
+import MyRequirements from "../../../components/kingdom/my/MyRequirements";
+import "../../../components/kingdom/shared/kingdom.css";
+import "../../../components/kingdom/requirements/requirements.css";
+import "../../../components/kingdom/my/my.css";
+---
+<Shell title="Meus requisitos" description="Abra o cartão de requisitos do seu conselho, informe os seus números e veja sua meta de KvK, seu DKP até agora e o que falta para fechar a diferença." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>Meus requisitos</h1>
+      <p class="kg-lead">Abra o cartão que o seu conselho publicou, informe os seus números e veja sua meta, seu progresso e o que falta para fechar a diferença.</p>
+    </header>
+    <KingdomNav section="members" leaderOnly />
+    <section class="km-explainer" aria-labelledby="km-what-h" data-explainer>
+      <h2 id="km-what-h">O que é DKP?</h2>
+      <p>DKP não é um número do jogo: cada reino define a própria fórmula, geralmente pontos por abates de T4 e T5 e mais pontos por tropas mortas (fato B08-0001). O seu conselho então pede uma meta de DKP, muitas vezes como porcentagem do seu poder: "250% do poder" significa que um jogador com 10,5M de poder precisa de 26,25M de DKP. Ele é contado pelo que você ganha entre a leitura inicial e a final, não pelos seus totais de sempre (fato B08-0002).</p>
+    </section>
+    <MyRequirements client:load />
+  </div>
+</Shell>

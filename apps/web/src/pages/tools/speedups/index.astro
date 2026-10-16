@@ -1,0 +1,33 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import SpeedupsCalc from "../../../components/tools/speedups/SpeedupsCalc";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite, levelTable, sourced } from "../../../lib/tools-payload";
+import sp from "../../../../../../packages/planner/tools-data/speedups.json";
+import "../../../components/tools/kit/tools.css";
+
+const COL = "Times You Can Be Helped";
+const ac = levelTable("A01-buildings-alliance-center", [COL]);
+const helps = ac.rows.flatMap((r) => (r.stats[COL] == null ? [] : [{ level: r.level, helps: r.stats[COL]! }]));
+const pct = sourced(sp.helpPct);
+// Item durations are labels printed in item names; A04-0007's VIP Shop table names several of them.
+const durationIds = ["A04-0007"];
+const props = {
+  helps,
+  helpPct: pct.value,
+  cites: { durations: cite(durationIds), helps: ac.cite, helpPct: cite(sp.helpPct.facts) },
+};
+const ids = [...durationIds, ...ac.cite.facts, ...sp.helpPct.facts];
+---
+<Shell title="Acelerações e tempo" description="Some suas acelerações por tipo, veja o total geral e confira se elas concluem uma construção, pesquisa, treinamento ou cura depois das ajudas da aliança." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Acelerações e tempo</h1>
+      <p class="t-lead">Digite quantos itens de aceleração você tem. Você vê o tempo por tipo e o total, e se eles concluem uma tarefa depois de contar as ajudas da aliança. Os valores ficam neste aparelho.</p>
+      <DataStamp />
+    </header>
+    <SpeedupsCalc client:load {...props} />
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

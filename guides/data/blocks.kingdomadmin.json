@@ -1,0 +1,744 @@
+[
+  {
+    "id": "ka-overview-what-a-council-does",
+    "title": "O que um conselho do reino faz, e o que o jogo já faz por ele",
+    "phase": "overview",
+    "section": "overview",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Duas camadas de poder.** O jogo define o **rei** e os títulos e habilidades que vêm com o trono, e abaixo do rei os **cargos da aliança** (líder, Conselheiros, oficiais com permissões personalizáveis) [B03-0003, B04-0001]. Todo o resto (o conselho, o DKP, as listas de MGE, as regras de entrada e de saída) é feito pela comunidade e **varia por reino** [B03-0004, B03-0005].\n\n**O que um conselho faz, em dez tarefas recorrentes** (resumo deste guia das fichas de prática abaixo, não uma lista medida): combinar as regras antes da KvK; escolher quem entra no Reino Perdido; definir e pontuar requisitos (DKP); gerir saídas; avaliar migrantes; alocar o MGE; distribuir títulos; manter as alianças em ordem; organizar inscrições em eventos; e cuidar da diplomacia.\n\n**Desde 2025 as ferramentas oficiais cobrem parte desse trabalho:**\n\n| Tarefa | Ferramenta oficial (patch) | Ainda feito fora do jogo |\n|---|---|---|\n| Títulos | Reserva de títulos com aprovação do rei/governante ou aprovação automática (1.0.91), requisito de Prefeitura por título (1.0.94) [B03-0002] | Pouco; alguns reinos ainda mantêm filas ou bots de títulos |\n| Quem entra no Reino Perdido | Domínios (1.0.91, regra de 600 governadores 1.1.01) e lista de batalha para reinos de domínio único (1.1.00), código de importação da lista do ROK Toolkit (1.1.02) [B02-0001]; habilidade de rei Watchlist (1.1.00) [B02-0002] | Publicar os critérios de seleção |\n| Organização da aliança | 6 categorias de permissão de oficiais (1.0.96) [B04-0001]; Notas da Aliança e Quick Checks (1.1.07) [B04-0002] | Registros privados dos oficiais, histórico de atividade |\n| Coordenação de combate | Grupos de Exército e marcadores no mapa (pioneiro 1.1.01; Grupos de Exército para todas as alianças da SoC 1.1.02) [B04-0005] | Agendamento entre fusos horários |\n| Diplomacia na SoC | Team-ups (1.0.95), votação de confronto e coalizões (1.1.03), votação de Modo Descanso (1.1.08, pioneiro) [B09-0002] | Acordos dentro do reino |\n| DKP e requisitos | **Nenhuma encontrada.** Nossa revisão não achou exportação oficial de estatísticas por governador nas notas 1.0.90–1.1.09 [B08-0003, organizado]; o DKP não tem definição oficial [B08-0001]. O conteúdo do ROK Toolkit é desconhecido [B08-0007] | Varreduras, fórmula, publicação |\n| Entrada | Parcial: um guia T3 diz que o rei define o limite normal de poder de imigração e aprova imigração especial; as notas oficiais confirmam apenas que a imigração especial existe (1.1.03) [B06-0002] | Avaliar candidatos |\n| Alocação de MGE, listas de saída | **Nenhuma encontrada** nas fichas | Tudo |\n\n**Padrão para um conselho novo:** use toda ferramenta oficial nas tarefas que ela cobre, e gaste suas regras escritas e o tempo dos voluntários nas tarefas que ela não cobre (DKP, MGE, avaliação de entrada, saídas).",
+    "why_md": "Os conselhos perdem tempo mantendo bots, planilhas e filas de chat para tarefas que o jogo já faz (os títulos são o caso mais claro [B03-0002]), enquanto as tarefas que causam as piores disputas (DKP, MGE, saídas) não têm nenhum suporte oficial. Saber essa divisão mostra onde são necessárias regras escritas e pessoas de confiança.",
+    "cards": [
+      "B02-0001",
+      "B02-0002",
+      "B03-0002",
+      "B03-0003",
+      "B03-0004",
+      "B03-0005",
+      "B04-0001",
+      "B04-0002",
+      "B04-0005",
+      "B06-0002",
+      "B08-0001",
+      "B08-0003",
+      "B08-0007",
+      "B09-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0004 (uma equipe de liderança / conselho por reino) é organizado/baixa: uma norma da comunidade vinda de poucas vozes. B03-0005 (imposição informal) e B08-0003 (nenhuma exportação oficial encontrada) são organizado. B06-0002 (limite de imigração do rei e aprovação) é organizado/media; o controle do limite pelo rei é só T3. A lista de dez tarefas é uma síntese deste guia. Todo o resto da tabela são notas oficiais de patch (verificado/alta).",
+    "gaps": [
+      "L-B08-01",
+      "L-B06-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-roles-official-powers",
+    "title": "Cargos e poderes oficiais: rei, Rainha/General/PM, R5, oficiais",
+    "phase": "overview",
+    "section": "overview",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| Cargo | Poderes oficiais | Ficha |\n|---|---|---|\n| **Rei** | Escolhe quais títulos estão abertos à reserva, a aprovação automática e as durações (1.0.91; requisito de Prefeitura por título 1.0.94); habilidade de rei **Watchlist** (1.1.00); lista de batalha em reinos de domínio único (1.1.00) e ativação de domínios extras no registro do Reino Perdido; Licenças de Férias quando o reino está na SoC (1.0.87); votação de Modo Descanso (1.1.08, pioneiro); *relatado apenas por um guia T3:* define o limite normal de poder de imigração e aprova a imigração especial | B03-0002, B02-0002, B02-0001, B03-0007, C04-0031, B06-0002 |\n| **Rainha, General, Primeiro-Ministro** | Desde a 1.0.96, em reinos e domínios do Reino Perdido, podem usar **Imprison, Exile, Banish, Leader e Inspire** (somente essas cinco habilidades) | B03-0003 |\n| **\"Governantes\" (rulers)** | As notas dizem que reis e governantes podem aprovar reservas de títulos (1.0.91) e que governantes podem gerir a Watchlist (1.1.03); reis e governantes não podem ser alvo da Watchlist nem do Banish (1.1.03). **Quem conta como governante não é definido nas notas** (lacuna L-B03-04); não suponha que significa Rainha/General/PM até conferir no jogo | B02-0002, B03-0002 |\n| **Líder da aliança (R5) e Conselheiros** | Personalizam as permissões de cada título de oficial em 6 categorias (1.0.96); podem cancelar a demolição de um edifício (1.1.03) | B04-0001 |\n| **Oficiais** | O que o título deles recebe; com permissão: Notas da Aliança e Quick Checks (1.1.07), marcadores da coalizão; oficiais colocam marcadores de aliança e de teletransporte no mapa (1.1.01) | B04-0001, B04-0002, B04-0005 |\n\n**Limites da Watchlist (1.1.01):** ela não pode atingir os 100 melhores por poder individual em reinos Imperium nem os 50 melhores nos outros reinos, mas qualquer pessoa com menos de 50M de poder pode ser incluída na watchlist independentemente da posição; colocar na watchlist alguém que já está no Reino Perdido o manda para casa [B02-0002].\n\n**Banish** (habilidade de rei desde a 1.0.74) teletransporta uma cidade para um ponto aleatório da província superior esquerda do reino [B03-0003].\n\n**Faça isto (conselho):** um guia T3 diz que o rei atribui Rainha, General e Primeiro-Ministro [B03-0001]; dê esses títulos a membros de confiança do conselho em **fusos horários diferentes**, para as cinco habilidades compartilhadas (Imprison, Exile, Banish, Leader, Inspire) ficarem disponíveis 24 horas. Os demais poderes do rei acima não são compartilhados com eles por nenhuma nota que achamos.",
+    "why_md": "Desde a 1.0.96 cinco habilidades de rei podem ser compartilhadas com a Rainha, o General e o Primeiro-Ministro [B03-0003]. Um reino em que só o rei pode agir para de funcionar quando o rei dorme ou desiste. A proteção da Watchlist para os 50/100 melhores significa que ela não pode ser usada contra as contas mais fortes a menos que tenham menos de 50M de poder [B02-0002], então planeje regras que não dependam dela para elas.",
+    "cards": [
+      "B02-0001",
+      "B02-0002",
+      "B03-0001",
+      "B03-0002",
+      "B03-0003",
+      "B03-0007",
+      "B04-0001",
+      "B04-0002",
+      "B04-0005",
+      "B06-0002",
+      "C04-0031"
+    ],
+    "patch_cards": [
+      "C04-0031"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B06-0002 é organizado/media: o controle do rei sobre o limite normal de imigração e a aprovação de imigração especial vêm de um guia T3; as notas oficiais só confirmam que a imigração especial existe (1.1.03). B03-0001 (o rei atribui Rainha/General/PM) é organizado/media, guias T3. C04-0031 (votação de Modo Descanso, pioneiro) é uma ficha de estado de patch. Quem são os \"governantes\" é indefinido (L-B03-04). Efeitos e tempos de espera de Imprison, Exile, Leader e Inspire não foram coletados.",
+    "gaps": [
+      "L-B03-02",
+      "L-B03-04",
+      "L-B04-01",
+      "L-B06-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-written-kingdom-rules",
+    "title": "Escreva as regras do reino antes da KvK1 e publique onde os jogadores vejam",
+    "phase": "pre-kvk1",
+    "section": "plan",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**O que escrever (uma página por item basta):**\n1. **Quem lidera:** os membros do conselho, o rei, quem tem Rainha/General/PM e como o conselho decide.\n2. **Território e bandeiras:** qual aliança ocupa qual zona.\n3. **Fórmula do DKP e requisito**, com a data a partir da qual valem (veja o bloco de DKP).\n4. **Política de MGE:** modelo, quem fica com as primeiras vagas, tetos de pontos para todos os outros, penalidade por quebrar a regra.\n5. **Entrada:** requisitos de migração, caminho de candidatura, em qual aliança os recém-chegados entram.\n6. **Saídas e imposição:** o que causa uma remoção, prazo de aviso, recurso.\n7. **Títulos:** quais podem ser reservados e em que termos.\n8. **Conduta:** sem scripts nem trapaças (Pontuação de Conduta) e sem compartilhar logins.\n\n**Onde os reinos publicam (prática):** alguns reinos mantêm sites de regras com páginas de imigração, regras, DKP, títulos e Arca de Osíris; muitos dependem de regras não escritas passadas no chat ou no Discord [B07-0002]. O Discord é o ponto de encontro habitual [B07-0001], e relata-se que líderes avisam por correio e chat do jogo [B07-0003].\n\n**Lugares oficiais no jogo:** o **Kingdom Bugle** e o **Lost Kingdom Bugle** fixam um comunicado no topo do chat do reino/Reino Perdido (1.0.91); o correio; o chat de voz de aliança e coalizão (1.0.99) [B07-0004]. Nenhuma função de tradução no jogo aparece nas notas 1.0.90–1.1.09 [B07-0004], então reinos multilíngues precisam de cópias traduzidas.\n\n**Nosso padrão:** mantenha uma fonte escrita (site ou documento), fixe um resumo curto com um link no Bugle e mande por correio toda mudança com a data.",
+    "why_md": "Regras não escritas são a principal forma de os recém-chegados serem punidos por coisas que ninguém contou: um jogador da primeira KvK recebeu por correio um requisito de 250% do poder sem saber o que era DKP [B08-0002]. Em alguns reinos espera-se que os migrantes peçam ao rei antes de se mudar, e um jogador relatou que nada no jogo o avisou dessa regra [B03-0006]. Uma regra escrita e datada também dá ao conselho algo a que apontar em uma disputa, em vez da memória de uma mensagem de chat.",
+    "cards": [
+      "B03-0006",
+      "B07-0001",
+      "B07-0002",
+      "B07-0003",
+      "B07-0004",
+      "B08-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B07-0002 (sites de regras contra regras não escritas; só 2 sites encontrados, com um modelo em comum), B07-0003 (correio e chat como canais de aviso) e B03-0006 (norma de aprovação antes de migrar) são organizado/baixa. B07-0001 e B08-0002 são organizado/media. A lista do que escrever é uma síntese deste guia das tarefas do bloco de visão geral, não uma prática medida.",
+    "gaps": [
+      "L-B07-01",
+      "L-B07-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-dkp-and-requirements",
+    "title": "DKP e requisitos: princípios de projeto (os pesos são escolha do seu reino)",
+    "phase": "pre-kvk1",
+    "section": "plan",
+    "order": 40,
+    "stage": [
+      "pre_kvk",
+      "kvk1",
+      "kvk2",
+      "kvk3",
+      "soc"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**O DKP não é um recurso do jogo.** Cada reino define os próprios pesos, em geral ignorando os abates de T1–T3 e dando mais peso às mortes [B08-0001]. **Este guia não recomenda pesos**; eles são uma decisão do reino. Os exemplos verificados mostram o quanto diferem:\n\n| Fonte | Fórmula, citada da fonte | Nota |\n|---|---|---|\n| Site do reino K2708 (KvK1) | \"DKP = T4 kill * 10 + T5 kill * 20 + death * 50.\" | |\n| Site do reino K2779 (KvK2) | \"DKP = T4 kill * 10 + T5 kill * 30 + death * 80.\" | \"T1, T2, T3 kills are not included. If you are zeroed with terrible trade, your death of that day will be counted as 0.\" |\n| ROK Steward (exemplo na ferramenta) | \"Excel formula = T4 × 1 + T5 × 2 + Deads × 10\" | peso opcional de KP bruto e bônus/penalidades de grupo |\n\n[B08-0001]. São exemplos do que outros reinos escolheram, não valores recomendados. Os dois sites de reinos compartilham um modelo, então trate-os como uma norma com dois conjuntos de parâmetros.\n\n**Requisitos (prática relatada):** muitas vezes uma meta de DKP proporcional ao poder (fixa ou por faixas de poder), às vezes ajustada pela idade da conta, seed ou grupo, e medida como a **variação entre uma varredura inicial e uma final** [B08-0002].\n\n**Princípios de projeto que a evidência sustenta:**\n- **Publique a fórmula e o requisito antes da KvK**, com data, e explique o que o DKP significa. Jogadores da primeira KvK recebem metas sem explicação [B08-0002].\n- **Diga qual poder é a base** (poder da varredura inicial, poder de tropas...). As fontes não dizem o que os reinos usam, então você precisa definir.\n- **Pontue a variação entre uma varredura inicial e uma final** (como as fontes de requisitos descrevem) e mantenha um **registro de exceções** (p. ex., a regra do K2779 para mortes do dia em que foi zerado) [B08-0001].\n- **Se os dados vêm de varreduras, junte pelo ID de governador.** Na documentação de um scanner, as varreduras do reino capturam IDs; as varreduras de ranking de honra/aliança/seed dão só um nome aproximado, então a honra precisa ser casada pelo nome [B08-0004].\n- **Diga como as contas alternativas são tratadas.** Alguns reinos combinam as contas de um governador em uma só para o DKP [B08-0006].\n- **Conheça a métrica oficial.** O **Acclaim** é ganho com ferimentos graves e abates causados e sofridos, proporcional ao nível da tropa (Reinos Perdidos da SoC, 1.1.01); a 1.1.04 cortou as taxas de T1 para 1 Acclaim por 10.000 T1 gravemente feridos e 2 por 10.000 mortos [C04-0015]. **Incerto:** um resumo comercial de terceiros, não verificado, diz que a 1.1.12 estende o Acclaim às Temporadas 1–2 [C04-0002].\n\n**Depois da KvK:** relata-se que alguns reinos dividem os governadores em recompensa / observação / remoção [B08-0006]; veja o bloco de saídas.",
+    "why_md": "Não existe fórmula padrão, e nos três exemplos verificados o peso da morte é de 2,5× a 5× o peso do abate de T5 [B08-0001], então copiar os números de outro reino copia as prioridades dele, não uma regra. Os pesos são escolha do seu reino. O que os jogadores disputam geralmente não são os pesos, mas a surpresa: uma meta que não conheciam, uma base que não entendiam, ou uma exceção feita para outra pessoa. Os princípios acima eliminam a surpresa sejam quais forem os pesos.",
+    "cards": [
+      "B08-0001",
+      "B08-0002",
+      "B08-0004",
+      "B08-0006",
+      "C04-0002",
+      "C04-0015"
+    ],
+    "patch_cards": [
+      "C04-0015"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B08-0002 (requisitos como % do poder, variações) e B08-0006 (faixas pós-KvK, contas alternativas combinadas) são organizado (media/baixa): prática relatada, não mecânica. C04-0002 (Acclaim nas Temporadas 1–2, 1.1.12) é uma única fonte T3 comercial que distorce outros detalhes, bruto/baixa (as próprias notas de C04-0015 dizem Temporadas 1–3). C04-0015 é uma ficha de estado de patch (notas oficiais, bruto). Só três fórmulas foram verificadas; os princípios de 'publicar/definir/registrar' são raciocínio deste guia.",
+    "gaps": [
+      "L-B08-02",
+      "L-B08-03",
+      "L-B08-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-data-collection-and-toolkit",
+    "title": "Conseguindo os números: confira primeiro o ROK Toolkit oficial; scanners trazem risco de ToS",
+    "phase": "pre-kvk1",
+    "section": "plan",
+    "order": 45,
+    "stage": [
+      "pre_kvk",
+      "kvk1",
+      "kvk2",
+      "kvk3",
+      "soc"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**O que o jogo dá oficialmente (nossa revisão das notas):** perfis e rankings por governador, e um gráfico pessoal de \"visão geral de desenvolvimento\" (1.0.91); **nenhuma exportação de estatísticas por governador** aparece nas notas oficiais 1.0.90–1.1.09 [B08-0003].\n\n**O ROK Toolkit.** A Lilith mantém um **ROK Toolkit** oficial no jogo, acessado pelo Quadro de Avisos, descrito como tendo \"tons of info about every Kingdom\"; desde a 1.1.02 ele transforma uma lista de batalha enviada em um código de lista [B08-0007]. Que dados de governadores ele mostra, quem pode abri-lo e se exporta algo é **desconhecido** (pendente de verificação no jogo, T0). **Abra-o antes de pagar ou montar qualquer outra coisa.**\n\n**Como os reinos conseguem estatísticas hoje (prática relatada, não recomendação):** scanners próprios, serviços de varredura pagos, análises gratuitas ou scanners contratados, e depois o DKP em planilhas [B08-0003]. Os scanners próprios controlam o cliente do jogo por um emulador com ADB [B08-0004], ou seja, são automação.\n\n**O risco:** o texto dos Termos de Serviço (versão exibida 2025-04-15) proíbe acessar ou baixar conteúdo do jogo com robôs, rastreadores ou ferramentas de mineração de dados e acessar os serviços por meios automatizados [C02-0003, C02-0004]. Desde a 1.1.07, jogadores que usam ferramentas de terceiros, como scripts ou trapaças, têm a **Pontuação de Conduta** reduzida, com punições abaixo de certos limites (lançado primeiro em reinos da SoC) [C04-0006]. Se um determinado scanner aciona a Pontuação de Conduta não está documentado. Este guia não recomenda scanners, serviços de varredura nem qualquer automação no cliente do jogo.\n\n**Hábitos de menor risco:** pegue números de telas oficiais e do Toolkit; mantenha a fórmula e a planilha resultante em um documento compartilhado do conselho, não na ferramenta de uma só pessoa.",
+    "why_md": "Sem uma exportação oficial, os reinos relatam depender de scanners ou serviços pagos [B08-0003] e de quem os opera. Se o Toolkit já mostra estatísticas do reino, grande parte desse trabalho e risco desaparece; se não mostra, o conselho deve pelo menos conhecer o risco de ToS e de Pontuação de Conduta e evitar que o reino dependa do scanner de uma só pessoa.",
+    "cards": [
+      "B08-0003",
+      "B08-0004",
+      "B08-0007",
+      "C02-0003",
+      "C02-0004",
+      "C02-0016",
+      "C04-0006"
+    ],
+    "patch_cards": [
+      "C04-0006"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B08-0003 (nenhuma exportação oficial encontrada; serviços de varredura) é organizado/media e conflita com a hipótese de exportação no jogo não verificada de C02-0016 (organizado/baixa). C02-0003 e C02-0004 (cláusulas dos ToS) são organizado/alta: texto literal dos ToS, ainda não conferido contra uma versão mais nova. C04-0006 é uma ficha de estado de patch; como a Pontuação de Conduta trata scanners ou serviços de varredura não é informado.",
+    "gaps": [
+      "L-B08-01",
+      "L-B08-05",
+      "L-B02-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-lost-kingdom-preparation",
+    "title": "Preparação para o Reino Perdido / KvK: cronograma, registro, lista de batalha, funções",
+    "phase": "pre-kvk1",
+    "section": "events",
+    "order": 50,
+    "stage": [
+      "pre_kvk",
+      "kvk1",
+      "kvk2",
+      "kvk3",
+      "soc"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Cronograma (primeira KvK, aproximado):** guias de terceiros (versão do jogo desconhecida) colocam a pré-KvK (Véspera da Cruzada) por volta do dia 85–95 do reino e a KvK1 por volta do dia 100 [B01-0500]. **Incerto:** um resumo comercial da 1.1.12, não verificado e distorcido em alguns pontos, diz que a Véspera da Cruzada agora abre junto com o Reino Perdido [C04-0002]; se for assim, a fase separada de pré-KvK desses guias não vale mais (lacuna L-B01-03). Confira o calendário de eventos do jogo. As durações da KvK por temporada são contestadas nas fontes [B01-0502]; cronogramas dia a dia por história não foram coletados.\n\n**Registro (oficial):**\n- Os reinos são divididos em domínios por nível de atividade (1.0.91); desde a 1.1.01 um domínio é liberado com **600+ governadores ativos** e comporta até **600** [B02-0001].\n- Reinos de domínio único têm uma **lista de batalha**: o rei seleciona quais governadores participam (1.1.00). Por padrão só um domínio fica ativo no registro; o rei pode ativar mais até o limite; **os domínios travam quando o registro termina** [B02-0001].\n- Desde a 1.1.02 você pode **enviar a lista no ROK Toolkit**, receber um código de lista e colá-lo na interface de Domínio do Reino Perdido [B02-0001, B08-0007].\n- A **Watchlist** (habilidade de rei, 1.1.00) mantém um governador fora do Reino Perdido (limites no bloco de cargos) [B02-0002].\n- Os **Quick Checks** (1.1.07, confirmar/recusar para toda a aliança) são liberados quando o reino entra na Temporada 1 [B04-0002].\n\n**Cronograma de passagens e ruínas:** os líderes montam ou procuram planilhas por história (prática, evidência 2023–2025); a Lilith disse em abril de 2025 que trabalhava em um calendário dentro da KvK, mas nenhuma nota de patch até a 1.1.09 o anuncia. Em um pioneiro para duas histórias (1.1.02), as passagens são liberadas 13 horas depois de o capítulo das Crônicas terminar [B02-0005]. **Pode estar desatualizado:** o mesmo resumo não verificado da 1.1.12 diz que os capítulos-chave das Crônicas agora são liberados de sexta a sábado [C04-0002], e não há notas depois da 1.1.09, então confira no jogo se já existe um calendário (lacuna L-B02-01).\n\n**Quadro de funções (prática, varia por reino):** os conselhos dividem a liderança da KvK em diplomacia, líder de guerra, dados, território e eventos, e preenchem funções de rally, guarnição, campo aberto e bandeira [B02-0003]; posts de recrutamento listam vagas por tipo de tropa e fixam os horários de eventos em **UTC** [B02-0004].\n\n**Lista antes de o registro fechar:** critérios de seleção da lista escritos; lista enviada e código testado; Watchlist revisada; horários de luta publicados em UTC; requisitos publicados (bloco de DKP).",
+    "why_md": "Os domínios travam ao fim do registro [B02-0001], e as notas não dizem se a lista pode ser alterada depois, então trate o registro como o prazo. Ficar de fora do Reino Perdido parece arbitrário para os jogadores quando os critérios não estão escritos; o jogo dá ao rei a ferramenta, mas não a explicação.",
+    "cards": [
+      "B01-0500",
+      "B01-0502",
+      "B02-0001",
+      "B02-0002",
+      "B02-0003",
+      "B02-0004",
+      "B02-0005",
+      "B04-0002",
+      "B08-0007",
+      "C04-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B01-0500 (dia 85–95 / dia 100) é verificado/media mas de guias T3 de versão do jogo desconhecida. C04-0002 (1.1.12: Véspera da Cruzada abrindo com o Reino Perdido; capítulos das Crônicas fixados de sexta a sábado) é uma única fonte T3 comercial, bruto/baixa, não utilizável como fato. B01-0502 (durações da KvK) é contestado/baixa. B02-0005 é organizado/media; a evidência de calendário dela é de 2023–2025 e pode ter sido superada. B02-0003 e B02-0004 (equipes de funções, horários em UTC) são organizado/baixa: anúncios de recrutamento e posts no estilo de guia. O tamanho máximo da lista de batalha e quem além do rei pode editá-la não são informados.",
+    "gaps": [
+      "L-B02-01",
+      "L-B02-02",
+      "L-B02-03",
+      "L-B01-02",
+      "L-B01-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-mge-allocation-and-disputes",
+    "title": "Alocação de MGE e disputas: escolha um modelo, publique-o, registre toda exceção",
+    "phase": "event",
+    "section": "events",
+    "order": 60,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Prática, varia por reino.** Posts de recrutamento e relatos de jogadores descrevem muitos reinos, especialmente a partir da KvK1, rodando um MGE **fixo** (\"controlado\"): uma lista publicada de quem pode ficar com as primeiras posições em cada evento; alguns deixam o MGE inicial ou de entressafra livre para todos [B05-0002].\n\n| Modelo | Como funciona | Ficha |\n|---|---|---|\n| Fixo por contribuição | As primeiras vagas vão para quem tem melhor DKP/desempenho na KvK | B05-0002 |\n| Fixo por função | Líderes de rally/guarnição ficam com os comandantes de que precisam | B05-0002 |\n| Leilão de DKP (minoritário, evidência só de 2025) | O DKP vira moeda; as posições são leiloadas; os saldos podem expirar. O bot de leilão da evidência não é mantido desde jan/2025; não é recomendação de ferramenta atual | B05-0004 |\n| Livre para todos | Início do jogo / entressafra; alianças da família podem diferir do núcleo | B05-0002, B04-0003 |\n| \"Rodízio\" | Anunciado em posts de recrutamento, nunca descrito | B05-0002 |\n\n**Por que as primeiras vagas importam:** as recompensas de posição são muito concentradas no topo (uma tabela da wiki dá à posição 1 tanto quanto às posições 2–3 somadas) [B05-0001]. A tabela é contestada; confira a tela do evento no jogo.\n\n**Rodando o ciclo (conselho):** colete candidaturas (alguns reinos usam bots de Discord para formulários de MGE multilíngues, fora do cliente do jogo [B07-0001]); publique a lista e o **teto de pontos** para quem está fora dela; acompanhe o ranking durante o evento; fale com quem passar da sua vaga.\n\n**Disputas:** os jogadores relatam que quem quebra as regras é punido com expulsão, migração forçada, zeragem ou multa [B05-0003]. Qualquer que seja a penalidade que você escolher, **escreva-a na política de MGE antes do evento** e registre cada caso (quem, evento, posição tomada, decisão). Nenhuma ferramenta oficial de alocação ou de violação de MGE aparece nas fichas.",
+    "why_md": "As disputas de MGE voltam a cada evento, e \"MGE justo/transparente\" é uma promessa de recrutamento comum [B05-0002], o que mostra que os jogadores julgam um reino por isso. Um modelo publicado e um registro das decisões são o que faz um MGE fixo parecer justo em vez de acúmulo do conselho.",
+    "cards": [
+      "B04-0003",
+      "B05-0001",
+      "B05-0002",
+      "B05-0003",
+      "B05-0004",
+      "B07-0001"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "Todas as fichas estão abaixo do filtro firme. B05-0002 (MGE fixo) é organizado/media, na maior parte anúncios de recrutamento. B05-0004 (leilões de DKP) é organizado/media, minoritário, evidência de 2025-01 a 2025-05, data de validade da ficha vencida, e o Auctioneer Bot que ela cita não é mantido desde 2025-01-28: descrito apenas como prática passada. B05-0003 (punições) e B04-0003 (famílias) são organizado/baixa. B07-0001 é organizado/media. B05-0001 (estrutura de etapas e tabela de esculturas) é contestado/baixa: o Fandom e outro guia discordam sobre o número de etapas.",
+    "gaps": [
+      "L-B05-01",
+      "L-B05-02",
+      "L-B05-03",
+      "L-B05-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-migration-intake",
+    "title": "Entrada de migrantes: primeiro a elegibilidade do jogo, depois a sua própria triagem",
+    "phase": "anytime",
+    "section": "plan",
+    "order": 70,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Regras do jogo (verificadas pelo jogo; um guia T3 diz que a liderança não pode contorná-las)** [B06-0002]:\n- **Limites de idade desde a 1.1.06 (2026-03-24):** mesma temporada para um reino SoC de primeira história: personagem no máximo 150 dias mais velho que o reino de destino (eram 240); entre temporadas para a Temporada 2: 80 (eram 120); para a Temporada 3: 120 (eram 180) [B06-0003, C04-0008].\n- **Reinos novos** ficam impedidos de receber imigração da mesma temporada até o fim da Temporada 1 (pioneiro em continentes selecionados) [B06-0003].\n- **Entre temporadas (1.0.83):** depósito reembolsável de 20.000 gemas, governadores com menos de 10M de poder inelegíveis, limite de poder de 85M [C04-0025].\n- **Requisitos pessoais (T3):** Prefeitura 16+, sem aliança, um tempo de espera depois de migrar, Páginas de Passaporte proporcionais ao poder [B06-0001].\n- **Alavancas do rei (guia T3; não descritas nas notas oficiais):** o limite normal de poder de imigração e a aprovação de **imigração especial** acima dele. Oficialmente, a imigração especial existe e seus registros são redefinidos depois de uma Fusão de Reinos (1.1.03) [B06-0002]. As regras depois da 1.1.09 não foram verificadas (lacuna L-B06-03).\n\n**A sua triagem (prática, varia por reino):** formulários de candidatura e revisões de conta com mínimos (abates, mortes, poder, Prefeitura 25/T5, comandantes/equipamento), colocação em aliança e recrutamento de funções, feitos pelo rei ou por oficiais de migração [B06-0004]. Os limites variam muito; não há padrão.\n\n**Ferramentas oficiais de aliança que ajudam:** passlist (aceitação automática, até 200), Aprovação Rápida de pedidos de entrada, busca de membros (1.0.91) [B04-0006].\n\n**Faça isto:** publique as regras de entrada com **o patch contra o qual foram conferidas**; passe todo candidato por um só oficial; coloque-o em uma aliança na chegada.",
+    "why_md": "As regras de migração mudaram em março de 2026 [B06-0003], e os jogadores estão confusos com a regra de idade e com correios oficiais que foram retirados. Em alguns reinos espera-se que os migrantes peçam antes, e relata-se que chegadas sem aviso são tratadas como espiões ou farms [B03-0006]; um caminho de entrada público evita esse conflito.",
+    "cards": [
+      "B03-0006",
+      "B04-0006",
+      "B06-0001",
+      "B06-0002",
+      "B06-0003",
+      "B06-0004",
+      "C04-0008",
+      "C04-0025"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0025"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B06-0001 (Prefeitura 16, tabela de passaportes, espera) é organizado/media de um guia T3 de um marketplace de contas. B06-0002 (controle do limite pelo rei) é organizado/media; a interface do limite é T3. B06-0004 (triagem do reino) é organizado/media. B03-0006 é organizado/baixa. C04-0008 e C04-0025 são fichas de estado de patch (notas oficiais, bruto). As regras depois da 1.1.09 não foram verificadas.",
+    "gaps": [
+      "L-B06-01",
+      "L-B06-02",
+      "L-B06-03",
+      "L-B06-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-exits-and-enforcement",
+    "title": "Saídas e imposição de regras depois da KvK: aviso, prazo, alavancas oficiais antes da força",
+    "phase": "event",
+    "section": "plan",
+    "order": 75,
+    "stage": [
+      "kvk1",
+      "kvk2",
+      "kvk3",
+      "soc"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**O que os reinos fazem (prática, varia por reino):** depois da KvK, algumas lideranças publicam quem precisa sair, com um prazo; o site de um reino mira \"very low DKP and high power (top 300 in the kingdom)\" [B06-0005]. Uma escada relatada é expulsão da aliança, uma ordem de migrar dentro de um prazo e depois zeragem; é usada para DKP não cumprido, acordos de MGE quebrados, ordens recusadas ou poder indesejado [B03-0005]. Alguns reinos também dividem os jogadores em recompensa / observação / remoção [B08-0006].\n\n**Alavancas oficiais e seus limites:**\n- A **Watchlist** bloqueia a entrada no Reino Perdido, mas não para os 50 melhores por poder (100 em reinos Imperium), a menos que tenham menos de 50M [B02-0002].\n- O **Banish** (rei, e desde a 1.0.96 Rainha/General/PM) teletransporta uma cidade para a província superior esquerda [B03-0003].\n- A **lista de bloqueio da aliança** (até 200) funciona por aliança; não foi encontrada nas notas uma lista de bloqueio para todo o reino [B04-0006].\n- **Proteção de território no Reino de Origem da SoC (1.1.03):** os governadores não podem mais atacar cidades dentro do território de outras alianças no Reino de Origem [C04-0014], o que limita a zeragem ali.\n- **Licença de Férias (SoC, 1.0.87):** tira o governador que aceita da pontuação de matchmaking do reino na temporada (veja o bloco da SoC) [B03-0007].\n\n**Faça isto:** use a regra de saída escrita; mande a cada governador o motivo, os números e o prazo por correio; registre a decisão e qualquer recurso; prefira as alavancas oficiais acima.",
+    "why_md": "Listas de saída que miram contas dos 300 maiores poderes tocam a mesma janela dos 300 maiores usada para o poder do reino que determina o seeding da SoC [B08-0008], então as saídas mudam esse número. O jogo não dá ferramentas de aviso nem de recurso, então uma lista de saída sem motivos escritos pode parecer pessoal. Um aviso datado e numérico é o único registro que os dois lados têm.",
+    "cards": [
+      "B02-0002",
+      "B03-0003",
+      "B03-0005",
+      "B03-0007",
+      "B04-0006",
+      "B06-0005",
+      "B08-0006",
+      "B08-0008",
+      "C04-0014"
+    ],
+    "patch_cards": [
+      "C04-0014"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B06-0005 (listas de saída) e B03-0005 (escada de imposição) são organizado/media; os dois sites de regras de reinos por trás delas compartilham um modelo, então 'top 300' é uma só fonte. B08-0006 (faixas) é organizado/baixa. C04-0014 é uma ficha de estado de patch (notas oficiais, bruto).",
+    "gaps": [
+      "L-B03-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-title-management",
+    "title": "Gestão de títulos: use o sistema oficial de reservas",
+    "phase": "anytime",
+    "section": "plan",
+    "order": 80,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Oficial desde a 1.0.91:** os governadores reservam títulos do reino \"da classe defensor\" (quais títulos isso cobre não é definido, lacuna L-B03-01) para um horário; se o rei ou um governante (indefinido, lacuna L-B03-04) aprovar, o título é concedido automaticamente nesse horário. Reis/governantes escolhem quais títulos estão abertos, podem ativar a **aprovação automática** e definir as durações das reservas. Desde a 1.0.94 cada título pode exigir um **nível de Prefeitura** e ter sua própria duração de reserva, e quem os tem pode abrir mão do título [B03-0002].\n\n**Desde a 1.0.91 cada domínio do Reino Perdido tem o seu próprio conjunto de títulos**, válidos apenas no Reino Perdido (nota oficial citada em B03-0001).\n\n**Bônus dos títulos (dois guias T3, mesmos números; verifique no jogo)** [B03-0001]:\n\n| Título | Bônus |\n|---|---|\n| Rei | +5% de ataque, defesa e vida das tropas |\n| Rainha | +15% de velocidade de coleta |\n| General | +5% de ataque e defesa das tropas |\n| Primeiro-Ministro | +15% de produção de recursos, +10% de velocidade de construção |\n| Justice | +5% de ataque, +10% de velocidade de marcha |\n| Duke | +5% de defesa, +10% de velocidade de treinamento |\n| Architect | +10% de velocidade de construção |\n| Scientist | +5% de velocidade de pesquisa, +10% de coleta de ouro |\n\nOs títulos negativos (Traitor, Beggar, Exile, Slave, Sluggard, Fool) trazem penalidades [B03-0001]. Os mesmos guias T3 dizem que um título de desenvolvimento precisa estar ativo **quando a fila começa**.\n\n**Faça isto:** abra os títulos reserváveis, ligue a aprovação automática com uma duração razoável, defina o requisito de Prefeitura e escreva nas regras para que servem os títulos de liderança. Aposente filas manuais de títulos e bots de títulos onde o sistema de reservas cobre o título.",
+    "why_md": "As filas de títulos antes exigiam uma pessoa ou um bot pago online o dia todo; o sistema de reservas faz isso dentro do jogo [B03-0002]. Quais títulos contam como reserváveis (\"classe defensor\") não é definido nas notas, então títulos de liderança ainda podem precisar de uma regra manual.",
+    "cards": [
+      "B03-0001",
+      "B03-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0001 (lista de títulos e valores de bônus) é organizado/media: dois guias T3 que podem copiar um ao outro, um deles de um marketplace de contas. A mecânica de reservas (B03-0002) é oficial.",
+    "gaps": [
+      "L-B03-01",
+      "L-B03-04",
+      "L-B03-06"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-alliance-housekeeping-tools",
+    "title": "Organização da aliança com as ferramentas oficiais (e o que elas não fazem)",
+    "phase": "anytime",
+    "section": "plan",
+    "order": 85,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Permissões (1.0.96):** as permissões de oficiais são divididas em 6 categorias (Info, Member, Internal, Building, Garrison/Rally, Admin Management); o líder e os Conselheiros personalizam cada título de oficial. Desde a 1.1.03 a demolição de edifícios roda com uma contagem regressiva e uma notificação, e o líder ou um Conselheiro pode cancelá-la [B04-0001]. **Mantenha os direitos de Building e Admin com pessoas de confiança.**\n\n**Membros:** lista de bloqueio (200 desde a 1.0.96) e passlist (200 desde a 1.0.91); Aprovação Rápida para pedidos de entrada; busca de membros; pode-se dar um motivo ao remover um membro [B04-0006, B04-0001].\n\n**Notas da Aliança (1.1.07):** as notas sobre membros são **visíveis para todos os membros da aliança** — nunca coloque ali advertências, observações ou julgamentos privados [B04-0002].\n\n**Quick Checks (1.1.07):** todos os membros online recebem um pedido de confirmar/recusar; liberado quando o reino entra na Temporada 1 [B04-0002].\n\n**Grupos de Exército e marcadores (pioneiro 1.1.01; Grupos de Exército para todas as alianças da SoC 1.1.02):** os governadores atribuem tropas ao grupo, e o criador as controla contra tropas de campo e rallies inimigos; oficiais colocam marcadores de comando e de teletransporte no mapa [B04-0005]. Se isso funciona enquanto esses membros estão offline não é informado nas notas.\n\n**Além das ferramentas (prática, varia por reino):** os conselhos acompanham ajudas, doações, rallies em fortes, atividade no chat e crescimento de poder em uma planilha ou bot para colocar membros e decidir expulsões [B08-0005]; as melhores alianças mantêm alianças academia e farm como uma família [B04-0003]. Se você usa métricas de atividade, publique-as; os membros reclamam de serem marcados como inativos sem conhecer a medida.",
+    "why_md": "Um oficial com os direitos errados pode demolir edifícios da aliança ou editar a aliança; as categorias da 1.0.96 e a contagem regressiva de demolição da 1.1.03 só reduzem esse risco se o líder realmente as configurar [B04-0001]. As notas serem públicas é fácil de perder de vista e transforma um registro privado em uma acusação pública [B04-0002].",
+    "cards": [
+      "B04-0001",
+      "B04-0002",
+      "B04-0003",
+      "B04-0005",
+      "B04-0006",
+      "B08-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B08-0005 (métricas de atividade) e B04-0003 (famílias de alianças) são organizado/baixa. O conteúdo de cada categoria de permissão e os limites de tamanho dos Grupos de Exército não estão documentados.",
+    "gaps": [
+      "L-B04-01",
+      "L-B04-02",
+      "L-B04-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-soc-seeding-and-votes",
+    "title": "Temporada de Conquista: seeding, Licenças de Férias, team-ups e votações",
+    "phase": "event",
+    "section": "events",
+    "order": 90,
+    "stage": [
+      "soc"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "O **registro** em uma história da SoC exige Prefeitura 25 [C04-0033].\n\n**O poder do reino que determina o seeding é matemática oficial (1.0.95):** o poder de cada governador conta 100% até 150M, 80% de 150–300M, 50% de 300–500M e 0% acima de 500M; só os 300 melhores governadores por poder individual contam (Q&A); o limiar do Imperium é 23,5B [B08-0008, C04-0020].\n\n**Licença de Férias (desde a 1.0.87):** quando o reino está na SoC o rei pode emitir licenças; uma licença aceita tira o governador da **pontuação de matchmaking** do reino pelo resto da temporada; quem a tem pode entrar no Reino Perdido, mas não pode sair da província inicial. As licenças podem ser revogadas (1.0.89); o número mensal depende da atividade do reino (1.0.90) [B03-0007]. **Incerto:** as notas não dizem se essa \"pontuação de matchmaking\" é o poder do reino em faixas dos 300 melhores acima (lacuna L-B03-03). Se for, licenças para contas inativas ou farm são uma alternativa não violenta a zerar seus próprios jogadores; confira antes de contar com isso.\n\n**Votações e diplomacia (oficial):**\n- **Team-up / equipes de fusão (1.1.03):** uma equipe precisa de pelo menos 2 reinos (eram 3) e 150 governadores ativos (eram 200); o poder da equipe = soma dos 300 melhores governadores, limitado aos 24 melhores reinos [B09-0002, C04-0013]. As duas fichas discordam sobre se essas regras pertencem a team-ups da SoC ou a equipes de Fusão de Reinos; a frase oficial só diz \"formar uma equipe\".\n- **Votação de confronto (1.1.03):** um acampamento recusa o seu confronto se mais de 80% dos votos dentro do acampamento rejeitam o resultado [B09-0002].\n- **As coalizões** começam com 4 alianças (1.1.03) [B09-0002].\n- **Votação de Modo Descanso** (pioneiro, 1.1.08; pode não estar ativa no seu reino): ativada se mais de 50% dos reinos no Reino Perdido votarem a favor; o voto do rei cobre todos os domínios [B09-0002, C04-0031].\n- **Divisão de recompensas (oficial, 1.1.03):** no A+ o líder da coalizão que captura a Crusader Fortress distribui Autarch Testimonies aos acampamentos que não capturaram o Great Ziggurat; no S+ a coalizão do Ziggurat pode dividir uma Star of Champions [B09-0003].\n- **Camp Treaty:** relatado para a 1.1.12 como pioneiro por uma única fonte comercial de terceiros; conteúdo desconhecido [B09-0003].\n\n**Faça isto:** antes de cada votação, combine no conselho como o rei vota e escreva; registre os acordos entre reinos (capturas de tela, datas), pois não ficam guardados no jogo.",
+    "why_md": "O poder do reino que determina o seeding é uma fórmula publicada sobre os 300 melhores governadores [B08-0008], então um conselho vê de antemão como saídas e chegadas o movem. A Licença de Férias é uma alavanca documentada e não violenta sobre a pontuação de matchmaking [B03-0007], embora a ligação dela com o poder de seeding não esteja confirmada. As votações obrigam todo o reino ou acampamento, então o conselho deve decidi-las, não só o rei.",
+    "cards": [
+      "B03-0007",
+      "B08-0008",
+      "B09-0002",
+      "B09-0003",
+      "C04-0013",
+      "C04-0020",
+      "C04-0031",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0013",
+      "C04-0020",
+      "C04-0031",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B09-0003 é organizado/baixa: o Camp Treaty vem apenas de um resumo T3 comercial; as regras de divisão de recompensas nele são oficiais (1.1.03). C04-0013, C04-0020, C04-0031 e C04-0033 são fichas de estado de patch. C04-0013 enquadra a regra de 2 reinos/150 governadores como Fusão de Reinos, B09-0002 como team-up da SoC. Se a \"pontuação de matchmaking\" da Licença de Férias é igual ao poder do reino em faixas dos 300 melhores não é informado, e a cota de licenças por nível de atividade é desconhecida.",
+    "gaps": [
+      "L-B03-03",
+      "L-B09-01",
+      "L-B09-02",
+      "L-B09-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-single-points-of-failure",
+    "title": "Pontos únicos de falha: o rei, o oficial de dados, o autor do bot",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 100,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Erro: uma pessoa concentra as ferramentas do reino.** Três funções costumam fazer isso.\n\n| Quem | O que quebra se sair | Mitigação |\n|---|---|---|\n| **Rei** | Habilidades de rei, aprovações de títulos, lista, Watchlist, votações | Rainha/General/PM compartilham Imprison, Exile, Banish, Leader, Inspire desde a 1.0.96 [B03-0003]; as notas também deixam os \"governantes\" gerir a Watchlist (1.1.03) e aprovar títulos (1.0.91) [B02-0002, B03-0002], mas quem são os governantes é indefinido (L-B03-04), então confira no jogo antes de contar com isso; ligue a aprovação automática de títulos [B03-0002] |\n| **Líder da aliança** | Permissões, expulsões, cancelamentos de demolição | Nomeie mais de um Conselheiro: o líder e os Conselheiros personalizam as permissões dos oficiais e podem cancelar uma demolição [B04-0001]. Jogadores relatam alianças fantasma com líderes ausentes e passagens informais de cargo [B04-0004] |\n| **Oficial de dados** | Varreduras, planilha de DKP, listas de requisitos | Relata-se que os reinos dependem de scanners ou serviços pagos e depois calculam o DKP em planilhas [B08-0003] (risco de ToS: veja o bloco de dados); mantenha a fórmula e a planilha em uma pasta compartilhada do conselho e documente os passos |\n| **Autor do bot** | Verificação, lembretes, formulários de MGE, filas de títulos | Prefira recursos oficiais onde existirem (títulos, Quick Checks, Bugle); mantenha configurações e propriedade dos bots compartilhadas [B07-0001] |\n\n**Escreva também** quem substitui quem e como a coroa é passada. As regras para a transferência da coroa e para a transferência da aliança de um R5 inativo não foram encontradas nas notas de patch.\n\n**Pequeno incentivo oficial:** as conquistas de Liderança de Aliança recompensam o tempo passado liderando (até jan/2026) [B04-0007].",
+    "why_md": "A administração do reino depende de poucos voluntários; quando um desiste, o histórico de DKP, o bot e as habilidades de rei podem desaparecer juntos. Desde a 1.0.96 cinco habilidades de rei podem ser compartilhadas com a Rainha, o General e o Primeiro-Ministro [B03-0003], então concentrá-las em uma só pessoa agora é evitável; os demais poderes do rei ainda dependem do rei ou dos \"governantes\" indefinidos [B02-0002].",
+    "cards": [
+      "B02-0002",
+      "B03-0002",
+      "B03-0003",
+      "B04-0001",
+      "B04-0004",
+      "B04-0007",
+      "B07-0001",
+      "B08-0003"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "B04-0004 (alianças fantasma, sucessão informal) é organizado/baixa. B08-0003 (custo de tempo do README de uma ferramenta) e B07-0001 (bots de Discord) são organizado/media. Quem conta como \"governante\" na 1.1.03 não é definido.",
+    "gaps": [
+      "L-B03-04",
+      "L-B03-05",
+      "L-B04-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-conduct-score-and-tos",
+    "title": "Regras de conduta e anti-bot: não rode nem exija scripts, nunca colete logins",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 110,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Oficial:** desde a 1.1.07 (2026-05-07), jogadores que usam ferramentas de terceiros, como scripts ou trapaças, perdem **Pontuação de Conduta**, e há punições abaixo de certos limites; foi lançada primeiro em reinos da SoC [C04-0006].\n\n**Termos de Serviço (texto exibido 2025-04-15):** nenhum mecanismo, robô ou ferramenta de mineração de dados para acessar ou baixar conteúdo do jogo além de software fornecido pela Lilith ou navegadores padrão [C02-0003]; nenhum acesso automatizado, e **nenhum pedido de credenciais de login de outros membros** [C02-0004].\n\n**O que isso significa para um conselho:**\n- **Nunca exija** que os membros rodem scripts de farm ou de coleta, e não os tolere nas suas regras.\n- **Nunca peça logins** para varrer, preencher eventos ou \"pilotar\" contas.\n- **Scanners** que controlam o cliente por um emulador com ADB [B08-0004] são automação; este guia não os recomenda (veja o bloco de dados).\n- **Bots de Discord** que apenas leem capturas de tela ou formulários rodam fora do cliente do jogo [B07-0001]. Se a Pontuação de Conduta ou os ToS os tratam diferente de scripts no jogo **não é informado** em lugar nenhum; dados tirados de capturas de tela ainda são conteúdo do jogo.\n- Ponha uma linha de conduta nas regras escritas.",
+    "why_md": "Uma regra de conselho que empurra os membros para scripts põe suas contas em risco sob um sistema aplicado dentro do jogo [C04-0006]. Pedir logins viola diretamente os ToS [C02-0004] e é também como começam os roubos de conta.",
+    "cards": [
+      "B07-0001",
+      "B08-0004",
+      "C02-0003",
+      "C02-0004",
+      "C04-0006"
+    ],
+    "patch_cards": [
+      "C04-0006"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0006 é uma ficha de estado de patch (notas oficiais, bruto); limites e punições não são publicados. C02-0003 e C02-0004 são organizado/alta (texto dos ToS). B07-0001 é organizado/media. Se bots de Discord que leem capturas de tela ficam fora da Pontuação de Conduta é a leitura deste guia de \"ferramentas de terceiros, como scripts ou trapaças\", não uma declaração oficial.",
+    "gaps": [
+      "PROPOSED-CONDUCT-SCORE-RULES",
+      "L-A13-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ka-open-questions",
+    "title": "Perguntas em aberto para a administração do reino (pendentes)",
+    "phase": "anytime",
+    "section": "open",
+    "order": 200,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "lider"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "Elas mudariam os conselhos acima. Cada uma está pendente de medição no jogo (T0) ou de entrevistas com líderes.\n\n| Pergunta | Por que importa | Ficha |\n|---|---|---|\n| O que o **ROK Toolkit** mostra (estatísticas de governadores? histórico? exportação?) e quem pode abri-lo | Poderia substituir os scanners para o DKP | B08-0007 |\n| Se existe hoje um **calendário da KvK no jogo** | Decide se as planilhas de cronograma ainda são necessárias | B02-0005 |\n| Cota de **Licença de Férias** por nível de atividade; se \"pontuação de matchmaking\" é igual ao poder do reino em faixas | Gestão do seed | B03-0007 |\n| Conteúdo do **Camp Treaty** (pioneiro da 1.1.12) | Pode ser o primeiro registro de acordos no jogo | B09-0003 |\n| Regras de migração depois da 1.1.09 | As regras de entrada podem já estar desatualizadas | B06-0003 |\n| Tamanho da lista de batalha e quem pode editá-la | Fluxo da lista | B02-0001 |\n| Como funciona o \"rodízio de MGE\"; tetos de pontos | Desenho da política de MGE | B05-0002 |\n| Prática de NAP / acordos de paz; coordenação de fusos horários dentro de um reino | Nenhuma fonte pública encontrada | — |\n| Quem são os \"governantes\" | Quem pode aprovar títulos e gerir a Watchlist | B02-0002 |\n| Momento da Véspera da Cruzada na Temporada 1 depois da 1.1.12 (uma fonte T3 não verificada) | Cronograma de preparação da KvK1 | C04-0002 |",
+    "why_md": "A administração do reino é a área em que o jogo oficial mais mudou desde 2025, e várias dessas mudanças (Toolkit, recursos pioneiros) não estão documentadas em nenhum lugar público. Listá-las mantém o guia honesto sobre o que ainda não se sabe.",
+    "cards": [
+      "B02-0001",
+      "B02-0002",
+      "B02-0005",
+      "B03-0007",
+      "B05-0002",
+      "B06-0003",
+      "B08-0007",
+      "B09-0003",
+      "C04-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "B02-0005 e B05-0002 são organizado/media; B09-0003 é organizado/baixa (só T3); C04-0002 é bruto/baixa (uma fonte comercial). As demais fichas da tabela são notas oficiais, mas deixam em aberto a pergunta listada.",
+    "gaps": [
+      "L-B08-01",
+      "L-B02-01",
+      "L-B02-02",
+      "L-B03-03",
+      "L-B03-04",
+      "L-B09-01",
+      "L-B09-02",
+      "L-B06-03",
+      "L-B05-02",
+      "L-B07-03",
+      "L-B01-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  }
+]

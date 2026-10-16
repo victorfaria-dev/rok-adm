@@ -1,0 +1,29 @@
+---
+// Static list of cited rules (used by /tools/hoard/, /tools/kvk/ and /tools/gems/).
+// Each rule shows its fact cards + confidence, "Comunidade dividida" when sources disagree,
+// and the patch or source date when given.
+import { Cite } from "../kit/Cite";
+import { cite } from "../../../lib/tools-payload";
+
+export interface Rule {
+  id: string;
+  text: string;
+  facts: string[];
+  divided?: boolean;
+  patch?: string;
+}
+interface Props { rules: readonly Rule[]; testId?: string }
+const { rules, testId } = Astro.props;
+---
+<ul class="t-rules" data-testid={testId}>
+  {rules.map((r) => (
+    <li data-rule={r.id}>
+      <span>{r.text}</span>
+      <span class="t-cite">
+        {r.divided ? <span class="t-divided">Comunidade dividida</span> : null}
+        {r.facts.length ? <Cite cite={cite(r.facts)} /> : <span><strong>Sem consenso</strong> (ainda sem ficha de fonte)</span>}
+      </span>
+      {r.patch ? <span class="t-patch">Conferido em: {r.patch}</span> : null}
+    </li>
+  ))}
+</ul>

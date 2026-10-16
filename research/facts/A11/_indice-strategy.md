@@ -24,6 +24,8 @@ Consensus scale used: `unanime` = all sources found agree, none dissent; `majori
 | [A11-0511](A11-0511.md) | Events which F2P should skip | estrategia | majoritario | baixa | — |
 | [A11-0512](A11-0512.md) | Event schedule is not fixed — plan from the in-game calendar | evento | unanime | media | — |
 | [A11-0513](A11-0513.md) | Events confirmed as current in 2026 sources | evento | n/a | baixa | — |
+| [A11-0514](A11-0514.md) | Returnee event series for returning governors (Returnee Shop, Returnee Wheel, Commander Trial) | evento | n/a | alta | — |
+| [A11-0515](A11-0515.md) | Grand Reunion: recurring festival event to bring back old friends | evento | n/a | alta | — |
 
 ## Conflicts / disagreements
 
@@ -61,3 +63,15 @@ Migrated to schema v2 and adversarially re-verified — see `facts/_verificacao-
 | A11-0511 | estrategia | baixa | verificado |  |
 | A11-0512 | evento | media | verificado |  |
 | A11-0513 | evento | media | verificado |  |
+| A11-0514 | evento | alta | organizado |  |
+| A11-0515 | evento | alta | organizado |  |
+
+## Onda J (J3 — recharge events, 2026-10-13)
+
+| ID | Tipo | Conf. | Status | Title |
+|---|---|---|---|---|
+| A11-0600 | evento | alta | verificado | Official recharge-type events: Gem Rush, Road to Greatness, Recharge Rewards |
+| A11-0601 | evento | baixa | verificado | Daily recharge: 2,500 gems/day; 7-day window; ~30 gold heads (T3/T4) |
+| A11-0602 | estrategia | baixa | verificado | Passes count toward recharge thresholds (T4 consensus) |
+
+New gaps L-A11-07, L-A11-08.

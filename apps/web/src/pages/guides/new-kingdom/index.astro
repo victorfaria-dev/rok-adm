@@ -1,0 +1,26 @@
+---
+// F-12: static new-kingdom guide, rendered at build from guides/data/blocks.newkingdom.json
+// with the same block component as /guide/. No island: it applies to every profile.
+import Shell from "../../../layouts/Shell.astro";
+import { GuideBody, GuideMeta } from "../../../components/guide/GuideBody";
+import { buildGuidePayload } from "../../../lib/guide-payload";
+import { fullGuide } from "../../../lib/guide-view";
+import { GuideVisual } from "../../../components/guide/GuideVisual";
+import TimelineScript from "../../../components/guide/TimelineScript.astro";
+import { buildTimeline } from "../../../lib/guide-timeline";
+import "../../../styles/guide.css";
+
+const payload = buildGuidePayload("newkingdom");
+const view = fullGuide(payload);
+const hasTimeline = buildTimeline(view, payload.badges).show;
+---
+<Shell title="Guia do reino novo" description="Sobreviva ao dia 1 de um reino novo e organize as primeiras semanas, com fontes e conferência de atualização em cada passo." mode="read">
+  <div class="g-page">
+    <h1>Guia do reino novo</h1>
+    <GuideMeta view={view} label="Para todos os perfis de gasto, num reino que acabou de abrir" />
+    <p class="g-intro">Leia este primeiro se o seu reino abriu há poucos dias. Depois siga <a href="/guide/">o seu guia</a> pelo resto do caminho até o KvK1.</p>
+    {hasTimeline && <GuideVisual view={view} badges={payload.badges} title="Linha do tempo" />}
+    <GuideBody view={view} badges={payload.badges} profileTags={false} />
+    {hasTimeline && <TimelineScript />}
+  </div>
+</Shell>

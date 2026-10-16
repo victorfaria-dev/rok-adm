@@ -1,0 +1,17 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../../../components/farms/shared/FarmsNav.astro";
+import ShipmentLog from "../../../components/farms/log/ShipmentLog";
+import "../../../components/farms/shared/farms.css";
+---
+<Shell title="Registro de envios" description="Registre o que suas contas farm enviam para a sua principal pelo Entreposto Comercial: imposto pago, quantidade recebida, totais por semana e exportação em CSV. Fica neste navegador." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Registro de envios</h1>
+      <p class="fm-lead">Anote cada assistência de recursos que você envia de uma conta farm para a sua principal. Veja o imposto que pagou e o que a principal recebeu, semana a semana.</p>
+      <p class="fm-note" data-guardrail><strong>Só planejamento e anotações. Você faz cada ação no jogo por conta própria.</strong></p>
+    </header>
+    <FarmsNav />
+    <ShipmentLog client:load />
+  </div>
+</Shell>

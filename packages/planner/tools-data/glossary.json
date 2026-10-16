@@ -1,0 +1,370 @@
+{
+  "_about": "Glossary of /glossary/ (F-88). Definitions are our own words (never copied from the Fandom wiki, CC-BY-SA, C02-0021), at most two sentences, and say only what the cited cards support. The patch shown next to a term is the card's own patch (Fact.patch), read at build time.",
+  "terms": [
+    {
+      "id": "acclaim",
+      "term": "Aclamação",
+      "aliases": ["Acclaim"],
+      "definition": "Moeda de contribuição da KvK nos Reinos Perdidos mais novos da Temporada de Conquista, ganha com as tropas inimigas que você fere ou mata e com as suas próprias perdas, proporcional ao nível da tropa. Algumas Conquistas de Cruzado e a Loja de Aclamação a usam.",
+      "facts": ["C04-0015"],
+      "related": ["kvk", "lost-kingdom"]
+    },
+    {
+      "id": "action-points",
+      "term": "Pontos de Ação",
+      "aliases": ["Action Points", "AP", "PA"],
+      "definition": "A energia que você gasta para atacar bárbaros, com limite de 1.500, mais 500 que você pode coletar por dia. Um ataque a bárbaros custa 50 PA, um pouco menos em golpes consecutivos do mesmo comandante.",
+      "facts": ["A09-0001", "A09-0002"],
+      "related": ["barbarians", "lohars-trial"]
+    },
+    {
+      "id": "alliance-help",
+      "term": "Ajuda da Aliança",
+      "aliases": ["Alliance help", "helps", "ajudas"],
+      "definition": "Aliados tocando em ajudar na sua construção, pesquisa ou cura, em que cada ajuda preenche 1% da barra de progresso. Quantas ajudas uma tarefa pode receber depende do nível do seu Centro da Aliança, e o treinamento de tropas não pode ser ajudado.",
+      "facts": ["A10-0006"],
+      "related": ["speedups"]
+    },
+    {
+      "id": "alliance-territory",
+      "term": "Território da Aliança",
+      "aliases": ["Alliance territory", "territory", "território"],
+      "definition": "A área da sua aliança no mapa, onde coletar em pontos de recurso normais é 25% mais rápido. Desde a 1.1.03, na Temporada de Conquista, cidades dentro do território de outra aliança no seu Reino de Origem não podem ser atacadas.",
+      "facts": ["A03-0009", "C04-0014"],
+      "related": ["zeroing"]
+    },
+    {
+      "id": "ark-of-osiris",
+      "term": "Arca de Osíris",
+      "aliases": ["Ark of Osiris", "AoO"],
+      "definition": "Um campo de batalha de alianças com cerca de 30 jogadores por lado, realizado mais ou menos a cada duas semanas. As fontes discordam sobre quanto um jogador gratuito consegue tirar dele.",
+      "facts": ["A11-0508"]
+    },
+    {
+      "id": "auto-peacekeeping",
+      "term": "Pacificação Automática",
+      "aliases": ["Auto-peacekeeping", "auto barbarians", "bárbaros automático"],
+      "definition": "A opção do próprio jogo que manda suas tropas caçarem bárbaros automaticamente. É a forma permitida de automatizar isso, enquanto scripts de terceiros custam Pontuação de Conduta.",
+      "facts": ["A09-0008", "C04-0006"],
+      "related": ["conduct-score", "barbarians"]
+    },
+    {
+      "id": "barbarians",
+      "term": "Bárbaros",
+      "aliases": ["Barbarians", "barbs", "Barbarian Forts", "forts", "Forte Bárbaro", "fortes"],
+      "definition": "Tropas neutras no mapa que você ataca com PA para ganhar EXP de comandante, recursos e acelerações. Os Fortes Bárbaros são acampamentos mais duros que só um rally consegue vencer.",
+      "facts": ["A09-0003", "A09-0005"],
+      "related": ["action-points", "rally"]
+    },
+    {
+      "id": "books-of-covenant",
+      "term": "Livros do Pacto",
+      "aliases": ["Books of Covenant", "Book of Covenant", "Livro do Pacto"],
+      "definition": "Itens de que as melhorias do Castelo precisam, ganhos principalmente em rallies de Fortes Bárbaros. Cada faixa de recompensa do forte tem cerca de 50% de chance de incluí-los.",
+      "facts": ["A09-0005", "A09-0007"],
+      "related": ["barbarians", "rally"]
+    },
+    {
+      "id": "builder-queue",
+      "term": "Fila de Construção",
+      "aliases": ["Builder queue", "second builder", "segundo construtor"],
+      "definition": "Quantos edifícios você pode melhorar ao mesmo tempo: um por padrão, no máximo dois. O segundo vem de itens de Recrutamento de Construtor (dois dias cada) ou de forma permanente no VIP 6.",
+      "facts": ["A01-0006"],
+      "related": ["vip", "city-hall"]
+    },
+    {
+      "id": "city-hall",
+      "term": "Prefeitura",
+      "aliases": ["City Hall", "CH", "PF"],
+      "definition": "Seu edifício principal: nenhum outro edifício pode passar do nível dela. Grandes desbloqueios dependem dela, como a Prefeitura 25 para se registrar na Temporada de Conquista.",
+      "facts": ["A01-0003", "C04-0033"],
+      "related": ["builder-queue", "season-of-conquest"]
+    },
+    {
+      "id": "civilization",
+      "term": "Civilização",
+      "aliases": ["Civilization", "civ"],
+      "definition": "A nação com que você joga, uma entre 15, cada uma com três bônus, um comandante inicial e uma unidade especial. Você pode trocar depois com um item ou gemas.",
+      "facts": ["A14-0001", "A14-0002"]
+    },
+    {
+      "id": "conduct-score",
+      "term": "Pontuação de Conduta",
+      "aliases": ["Conduct Score"],
+      "definition": "Uma pontuação que o jogo reduz quando detecta ferramentas de terceiros, como scripts ou trapaças, com punições quando ela cai abaixo de certos limites. Chegou na 1.1.07, primeiro em reinos da Temporada de Conquista.",
+      "facts": ["C04-0006"],
+      "related": ["auto-peacekeeping"]
+    },
+    {
+      "id": "daily-objectives",
+      "term": "Objetivos Diários",
+      "aliases": ["Daily Objectives", "dailies", "activity points", "tarefas diárias", "pontos de atividade"],
+      "definition": "A lista de tarefas diárias que reinicia às 00:00 UTC, em que as tarefas dão pontos de atividade para baús aos 20, 40, 60, 80 e 100 pontos. O baú de 100 pontos tem 100 gemas, a única fonte diária de gemas garantida encontrada.",
+      "facts": ["A10-0001", "A04-0001"],
+      "related": ["gems"]
+    },
+    {
+      "id": "dkp",
+      "term": "DKP",
+      "aliases": ["Dead Kill Points", "pontos de morte e abate"],
+      "definition": "Uma pontuação de KvK que cada reino monta a partir de abates de T4 e T5 e de tropas mortas, com pesos que ele mesmo escolhe, geralmente dando mais peso às mortes. Não existe fórmula oficial, então leia as regras do seu próprio reino.",
+      "facts": ["B08-0001"],
+      "related": ["kill-points", "kvk", "t4-t5"]
+    },
+    {
+      "id": "eve-of-the-crusade",
+      "term": "Véspera da Cruzada",
+      "aliases": ["Eve of the Crusade", "pre-KvK", "marauders", "saqueadores"],
+      "definition": "O evento pré-KvK que começa por volta do dia 85 a 95 do reino, em que o PA guardado vai para saqueadores que soltam acelerações, gemas e créditos. Patches mais novos ligam o início dele à abertura do Reino Perdido, e não a um momento antes.",
+      "facts": ["B01-0500", "A09-0007", "B01-0503"],
+      "related": ["kvk", "lost-kingdom", "action-points"]
+    },
+    {
+      "id": "farm-account",
+      "term": "Conta Farm",
+      "aliases": ["Farm account", "farm", "alt"],
+      "definition": "Uma segunda cidade sua no mesmo reino, criada pelo Gerenciamento de Personagens do jogo, que coleta recursos para a sua conta principal. Ela os envia pelo Entreposto Comercial, que cobra uma taxa.",
+      "facts": ["A13-0001", "A13-0010", "C02-0017"],
+      "related": ["trading-post", "zeroing"]
+    },
+    {
+      "id": "garrison",
+      "term": "Guarnição",
+      "aliases": ["Garrison", "garrison lead", "líder de guarnição"],
+      "definition": "Uma das funções de combate da KvK que os reinos distribuem, ao lado de rally e campo aberto, para jogadores que seguram e defendem posições. As alianças podem dar aos oficiais uma permissão separada de Guarnição/Rally.",
+      "facts": ["B02-0003", "B04-0001"],
+      "related": ["rally"]
+    },
+    {
+      "id": "gems",
+      "term": "Gemas",
+      "aliases": ["Gems"],
+      "definition": "A moeda premium, que também compra pontos VIP na proporção de um ponto por gema. As gemas não podem ser saqueadas de forma alguma.",
+      "facts": ["A05-0004", "A03-0007"],
+      "related": ["vip", "more-than-gems", "daily-objectives"]
+    },
+    {
+      "id": "hall-of-heroes",
+      "term": "Salão dos Heróis",
+      "aliases": ["Hall of Heroes"],
+      "definition": "Devolve parte dos recursos que você gastou curando no Reino Perdido quando esse Reino Perdido termina. Esse reembolso existe desde a 1.0.89.",
+      "facts": ["C04-0028"],
+      "related": ["lost-kingdom", "hospital"]
+    },
+    {
+      "id": "hospital",
+      "term": "Hospital",
+      "aliases": ["hospital capacity", "capacidade do hospital"],
+      "definition": "Guarda suas tropas feridas para você curá-las; tropas feridas além da capacidade dele morrem. Alguns ataques, como golpes em cidades e objetivos, sempre matam tropas gravemente feridas.",
+      "facts": ["A08-0502"],
+      "related": ["t4-t5", "hall-of-heroes"]
+    },
+    {
+      "id": "kill-points",
+      "term": "Pontos de Abate",
+      "aliases": ["Kill Points", "KP", "PA de abate"],
+      "definition": "A pontuação de abates que as varreduras do reino coletam de cada governador, ao lado de abates de T1 a T5 e de tropas mortas. As fórmulas de DKP muitas vezes dão peso baixo a ela ou ignoram abates de nível baixo.",
+      "facts": ["B08-0004", "B08-0001"],
+      "related": ["dkp"]
+    },
+    {
+      "id": "kvk",
+      "term": "KvK",
+      "aliases": ["Kingdom vs Kingdom", "Kingdom versus Kingdom", "KvK1", "Reino contra Reino"],
+      "definition": "As temporadas em que vários reinos lutam em um mapa compartilhado, o Reino Perdido. A primeira KvK de um reino novo começa por volta do dia 100.",
+      "facts": ["B01-0500", "B01-0501"],
+      "related": ["lost-kingdom", "season-of-conquest", "dkp"]
+    },
+    {
+      "id": "lohars-trial",
+      "term": "Provação de Lohar",
+      "aliases": ["Lohar's Trial", "Lohar"],
+      "definition": "Um evento em que matar bárbaros comuns rende Colares de Osso para recompensas. Os guias o avaliam bem para jogadores gratuitos e sugerem guardar itens de PA para ele.",
+      "facts": ["A11-0505"],
+      "related": ["action-points", "barbarians"]
+    },
+    {
+      "id": "lost-kingdom",
+      "term": "Reino Perdido",
+      "aliases": ["Lost Kingdom", "KvK map", "mapa da KvK"],
+      "definition": "O mapa separado onde a KvK é disputada; relata-se que a entrada exige Prefeitura 17. Desde a 1.1.03 os Reinos Perdidos vêm em faixas A, A+, S e S+.",
+      "facts": ["B01-0503", "C04-0013"],
+      "related": ["kvk", "eve-of-the-crusade"]
+    },
+    {
+      "id": "march-queue",
+      "term": "Fila de Marcha",
+      "aliases": ["March queue", "marches", "march slots", "marchas", "espaços de marcha"],
+      "definition": "Quantos exércitos você pode enviar ao mesmo tempo, de 1 a 5 conforme a Prefeitura sobe (5 a partir da Prefeitura 22). Uma viagem do Entreposto Comercial também usa uma.",
+      "facts": ["A03-0023"],
+      "related": ["trading-post", "city-hall"]
+    },
+    {
+      "id": "mge",
+      "term": "MGE",
+      "aliases": ["Mightiest Governor", "Mightiest Governor Event", "Governador Mais Poderoso", "Evento do Governador Mais Poderoso"],
+      "definition": "Um evento individual de ranking de seis dias cujas primeiras posições pagam esculturas lendárias de um comandante em destaque. Muitos reinos decidem de antemão quem pode ficar com as primeiras posições, o que se chama MGE fixo.",
+      "facts": ["B05-0001", "B05-0002"],
+      "related": ["sculptures", "dkp"]
+    },
+    {
+      "id": "migration",
+      "term": "Migração",
+      "aliases": ["Migration", "migrate", "immigration", "migrar", "imigração"],
+      "definition": "Mudar sua cidade para outro reino, o que exige Prefeitura 16 ou mais, nenhuma aliança, tropas em casa e recursos dentro da proteção do Depósito. Você também paga páginas de passaporte, e os limites de idade por rota mudam com frequência.",
+      "facts": ["B06-0001", "B06-0003"],
+      "related": ["passport-pages", "storehouse-protection"]
+    },
+    {
+      "id": "more-than-gems",
+      "term": "Mais que Gemas",
+      "aliases": ["More Than Gems", "MTG"],
+      "definition": "Um evento de dois dias que paga recompensas de marcos pelas gemas que você gasta, relatado como acontecendo cerca de uma vez por mês. Os guias o chamam de melhor hora para gastar gemas depois do VIP 6.",
+      "facts": ["A11-0502"],
+      "related": ["gems", "vip"]
+    },
+    {
+      "id": "mysterious-merchant",
+      "term": "Mercador Misterioso",
+      "aliases": ["Mysterious Merchant", "Courier Station", "merchant", "Estação de Correio", "mercador"],
+      "definition": "Um comerciante na Estação de Correio, liberado na Prefeitura 6, que chega às 00:00 UTC com itens vendidos por recursos ou gemas. Os guias dizem para pagar com recursos e usar gemas só com grandes descontos.",
+      "facts": ["A03-0014", "A04-0011"],
+      "related": ["speedups", "resource-items"]
+    },
+    {
+      "id": "passport-pages",
+      "term": "Páginas de Passaporte",
+      "aliases": ["Passport pages", "passports", "passaportes"],
+      "definition": "Os itens que você gasta para migrar, mais deles quanto mais poder você tem, de 1 página abaixo de 10M de poder a 75 acima de 100M. A Loja da Aliança vende um estoque semanal limitado por créditos individuais.",
+      "facts": ["B06-0001"],
+      "related": ["migration"]
+    },
+    {
+      "id": "peerless-scholar",
+      "term": "Erudito Incomparável",
+      "aliases": ["Peerless Scholar", "Lyceum of Wisdom", "quiz", "Liceu da Sabedoria"],
+      "definition": "Um evento de quiz no Liceu da Sabedoria (Prefeitura 10) com um Simulado em todo dia útil e um exame Preliminar e Final a cada duas semanas. Todos que passam dividem um pool de gemas.",
+      "facts": ["A10-0005"],
+      "related": ["gems"]
+    },
+    {
+      "id": "rally",
+      "term": "Rally",
+      "aliases": ["rallies", "ataque em massa"],
+      "definition": "Um ataque conjunto em que aliados somam suas tropas à marcha de um jogador. Os Fortes Bárbaros só podem ser vencidos assim, e os guias mandam contas mais fracas entrarem em rallies fortes em vez de lutar sozinhas.",
+      "facts": ["A09-0005", "A08-0503"],
+      "related": ["garrison", "barbarians"]
+    },
+    {
+      "id": "resource-items",
+      "term": "Itens de Recursos",
+      "aliases": ["Resource items", "RSS items", "resource packs", "itens de RSS", "pacotes de recursos"],
+      "definition": "Recursos guardados como itens da bolsa em vez de estoque bruto, que não podem ser saqueados e não têm limite de armazenamento. Você pode abri-los em recursos brutos sempre que precisar.",
+      "facts": ["A03-0007"],
+      "related": ["storehouse-protection", "zeroing"]
+    },
+    {
+      "id": "sculptures",
+      "term": "Esculturas",
+      "aliases": ["Sculptures", "commander sculptures", "heads", "universal sculptures", "gold heads", "esculturas de comandante", "cabeças", "esculturas universais", "cabeças douradas"],
+      "definition": "Os itens usados para liberar e subir as estrelas dos comandantes; as esculturas lendárias universais servem para qualquer lendário. Os guias dizem para guardar as universais para um lendário de longo prazo.",
+      "facts": ["A06-0510", "A05-0006"],
+      "related": ["mge"]
+    },
+    {
+      "id": "season-of-conquest",
+      "term": "Temporada de Conquista",
+      "aliases": ["Season of Conquest", "SoC"],
+      "definition": "A etapa repetida da KvK que um reino alcança depois da Temporada 3, jogada em histórias rotativas como Song of Troy. Registrar-se em uma história exige Prefeitura 25.",
+      "facts": ["C04-0033", "C04-0017"],
+      "related": ["seasons", "seed", "kvk"]
+    },
+    {
+      "id": "seasons",
+      "term": "Temporadas 1 a 3",
+      "aliases": ["Seasons 1 to 3", "Preparation Season", "Season 1", "Season 2", "Season 3", "Temporada de Preparação", "Temporada 1", "Temporada 2", "Temporada 3"],
+      "definition": "As etapas fixas por que passa um reino novo: Temporada de Preparação, depois as Temporadas 1, 2 e 3, depois a Temporada de Conquista. A Temporada 1 é a primeira KvK do reino.",
+      "facts": ["C04-0033", "B01-0501"],
+      "related": ["season-of-conquest", "kvk"]
+    },
+    {
+      "id": "seed",
+      "term": "Seed",
+      "aliases": ["seeding", "Imperium"],
+      "definition": "A faixa (Imperium, A, B, C ou D) em que um reino é colocado na Temporada de Conquista, definida pelo poder dos seus 300 melhores governadores. O poder de cada governador conta em degraus, e nada acima de 500M conta.",
+      "facts": ["B01-0001", "B08-0008"],
+      "related": ["season-of-conquest", "vacation-permit"]
+    },
+    {
+      "id": "speedups",
+      "term": "Acelerações",
+      "aliases": ["Speedups", "universal speedups", "acelerações universais"],
+      "definition": "Itens que cortam tempo de construção, pesquisa, treinamento ou cura; os universais servem para qualquer um deles. Jogadores gratuitos os conseguem nos Objetivos Diários, com bárbaros, na Loja VIP, em eventos e mais.",
+      "facts": ["A04-0010"],
+      "related": ["alliance-help", "daily-objectives"]
+    },
+    {
+      "id": "storehouse-protection",
+      "term": "Proteção do Depósito",
+      "aliases": ["Storehouse protection", "storehouse", "protected resources", "depósito", "recursos protegidos"],
+      "definition": "A quantidade de cada recurso bruto que o seu Depósito mantém a salvo de saques, 2,5M no nível 25. Os recursos protegidos também não podem ser enviados pelo Entreposto Comercial.",
+      "facts": ["A03-0006", "A03-0030"],
+      "related": ["resource-items", "trading-post", "zeroing"]
+    },
+    {
+      "id": "sunset-canyon",
+      "term": "Cânion do Pôr do Sol",
+      "aliases": ["Sunset Canyon"],
+      "definition": "Um modo ranqueado com tentativas grátis todo dia, mais tentativas extras a partir do VIP 5. Os cinco primeiros do ranking de cada dia ganham recompensas de Chave de Ouro.",
+      "facts": ["A10-0008"]
+    },
+    {
+      "id": "t4-t5",
+      "term": "T4 / T5",
+      "aliases": ["T4", "T5", "tier 4", "tier 5", "troop tiers", "níveis de tropa"],
+      "definition": "Os níveis de tropa 4 e 5, os dois mais fortes. O T4 é o nível de trabalho da primeira KvK de um jogador gratuito, enquanto o T5 exige Prefeitura 25 e custa muito mais para curar.",
+      "facts": ["A08-0500", "A08-0505"],
+      "related": ["dkp", "hospital"]
+    },
+    {
+      "id": "trading-post",
+      "term": "Entreposto Comercial",
+      "aliases": ["Trading Post", "TP", "EC"],
+      "definition": "O edifício que envia recursos à cidade de um aliado, com taxa de 35% no nível 1 até 8% no nível 25. As viagens não são instantâneas: um comerciante caminha até lá e usa uma fila de marcha.",
+      "facts": ["A03-0024", "A03-0026"],
+      "related": ["farm-account", "storehouse-protection", "march-queue"]
+    },
+    {
+      "id": "vacation-permit",
+      "term": "Licença de Férias",
+      "aliases": ["Vacation Permit"],
+      "definition": "Uma licença que o rei pode dar a um governador na Temporada de Conquista e que o tira da pontuação de matchmaking do reino na temporada. Quem a tem também precisa de menos páginas de passaporte para sair.",
+      "facts": ["B03-0007"],
+      "related": ["seed", "passport-pages"]
+    },
+    {
+      "id": "vip",
+      "term": "VIP",
+      "aliases": ["VIP level", "VIP points", "nível de VIP", "pontos VIP"],
+      "definition": "Um nível permanente elevado com pontos VIP, que vêm de gemas (um ponto por gema), de um baú grátis diário e de presentes da aliança. Cada nível acrescenta bônus e um baú diário maior.",
+      "facts": ["A05-0001", "A05-0004", "A05-0006"],
+      "related": ["gems", "builder-queue"]
+    },
+    {
+      "id": "wheel-of-fortune",
+      "term": "Roda da Fortuna",
+      "aliases": ["Wheel of Fortune", "WoF", "Spin Tickets", "Tíquetes de Giro"],
+      "definition": "Um evento de gemas em que você gira por esculturas de um comandante em destaque, o que em temporadas posteriores exige Tíquetes de Giro. Os guias mandam jogadores gratuitos girarem só por um comandante planejado e em geral pararem em 10 giros.",
+      "facts": ["C04-0022", "A11-0503"],
+      "related": ["sculptures", "gems"]
+    },
+    {
+      "id": "zeroing",
+      "term": "Zeragem",
+      "aliases": ["Zeroing", "zeroed", "zero", "zerar", "zerado"],
+      "definition": "Destruir as tropas e a cidade de um governador até não sobrar nada, usada pelos reinos como a punição mais dura. Farms com grandes estoques brutos são alvos frequentes, principalmente durante eventos de abates.",
+      "facts": ["B03-0005", "A13-0005"],
+      "related": ["storehouse-protection", "resource-items", "farm-account"]
+    }
+  ]
+}

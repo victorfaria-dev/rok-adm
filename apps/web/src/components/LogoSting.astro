@@ -1,0 +1,124 @@
+---
+// Logo sting (design/motion/roteiro.md, scenes 1–3, K only, ~1.2 s): the three facets slide in on their own axes,
+// lock with a small pop, and a light sweep crosses the K. Inline SVG + CSS animations, built from the kit's K paths.
+//
+// mode="splash" (default): fixed overlay, shown only in an installed PWA (display-mode: standalone), once per
+// session, never under prefers-reduced-motion. Removed on animationend or after 1.6 s at most.
+// mode="demo": inline stage for /brand/; any [data-sting-play] button on the page replays it.
+import { K_FACETS, K_VIEWBOX } from "../lib/k-icon";
+interface Props { mode?: "splash" | "demo" }
+const { mode = "splash" } = Astro.props;
+const id = `sting-${mode}`;
+const vb = `${K_VIEWBOX.x} ${K_VIEWBOX.y} ${K_VIEWBOX.w} ${K_VIEWBOX.h}`;
+---
+<div id={id} class:list={["sting", mode]} data-sting data-mode={mode} hidden={mode === "splash"} aria-hidden="true">
+  <svg viewBox={vb} focusable="false">
+    <defs>
+      <clipPath id={`${id}-clip`}>
+        <path d={K_FACETS.top} /><path d={K_FACETS.arm} /><path d={K_FACETS.leg} />
+      </clipPath>
+      <linearGradient id={`${id}-light`} x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0.35" stop-opacity="0" /><stop offset="0.5" stop-opacity="0.75" /><stop offset="0.65" stop-opacity="0" />
+      </linearGradient>
+    </defs>
+    <g class="k">
+      <path class="f f-top" d={K_FACETS.top} />
+      <path class="f f-arm" d={K_FACETS.arm} />
+      <path class="f f-leg" d={K_FACETS.leg} />
+      <rect class="sweep" x={K_VIEWBOX.x} y={K_VIEWBOX.y} width={K_VIEWBOX.w} height={K_VIEWBOX.h} fill={`url(#${id}-light)`} clip-path={`url(#${id}-clip)`} />
+    </g>
+  </svg>
+</div>
+
+{mode === "splash" ? (
+  <script is:inline>
+    (function () {
+      var el = document.getElementById("sting-splash");
+      if (!el) return;
+      var ok = false;
+      try {
+        var standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+        var still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        ok = standalone && !still && !sessionStorage.getItem("ko:sting");
+      } catch (e) {}
+      if (!ok) { el.remove(); return; }
+      try { sessionStorage.setItem("ko:sting", "1"); } catch (e) {}
+      el.hidden = false;
+      el.setAttribute("data-playing", "");
+      var done = false;
+      function end() { if (done) return; done = true; el.remove(); }
+      el.addEventListener("animationend", function (e) { if (e.target && e.target.classList.contains("sweep")) end(); });
+      setTimeout(end, 1600);
+    })();
+  </script>
+) : (
+  <script is:inline>
+    // The play button and the note live elsewhere on the page, so wire up after the document is parsed.
+    (function () {
+      if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", setup);
+      else setup();
+    function setup() {
+      var el = document.getElementById("sting-demo");
+      if (!el) return;
+      var buttons = document.querySelectorAll("[data-sting-play]");
+      var notes = document.querySelectorAll("[data-sting-note]");
+      var still = false;
+      try { still = matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) {}
+      if (still) {
+        el.remove();
+        buttons.forEach(function (b) { b.disabled = true; });
+        notes.forEach(function (n) { n.hidden = false; });
+        return;
+      }
+      var timer = 0;
+      function stop() { clearTimeout(timer); el.removeAttribute("data-playing"); }
+      function play() {
+        stop();
+        void el.offsetWidth; // restart the animations
+        el.setAttribute("data-playing", "");
+        timer = setTimeout(stop, 1600);
+      }
+      el.addEventListener("animationend", function (e) { if (e.target && e.target.classList.contains("sweep")) stop(); });
+      buttons.forEach(function (b) { b.addEventListener("click", play); });
+    }
+    })();
+  </script>
+)}
+
+<style>
+  /* Scene 2 asks for an ease-out-back (slight overshoot), which the token set has no curve for. */
+  .sting { --st-back: cubic-bezier(.34, 1.4, .64, 1); --st-sweep: 1; }
+  .splash {
+    position: fixed; inset: 0; z-index: 200; display: grid; place-items: center;
+    background: radial-gradient(ellipse at center, transparent 45%, rgb(0 0 0 / .35)), var(--ko-background);
+  }
+  /* Without JS the splash must stay out of the way (display: grid above would beat [hidden]). */
+  .splash[hidden] { display: none; }
+  .splash svg { width: min(40vw, 168px); height: auto; }
+  .demo { display: grid; place-items: center; padding: var(--ko-space-8); background: var(--ko-surface); border: 1px solid var(--ko-border); }
+  .demo svg { width: min(50%, 160px); height: auto; }
+
+  .f { fill: var(--ko-bronze); }
+  .splash .f { opacity: 0; }
+  .sweep { opacity: 0; }
+  stop { stop-color: var(--ko-ivory); }
+  .k { transform-box: fill-box; transform-origin: center; }
+
+  /* Scene 2: montage (0.05 / 0.15 / 0.25 s, 0.5 s each). Scene 3: lock pulse 4.5% at 0.78 s, light sweep 0.85–1.25 s. */
+  [data-playing] .f-arm { animation: st-arm .5s var(--st-back) .05s both; }
+  [data-playing] .f-top { animation: st-top .5s var(--st-back) .15s both; }
+  [data-playing] .f-leg { animation: st-leg .5s var(--st-back) .25s both; }
+  [data-playing] .k { animation: st-lock .22s var(--ko-ease-in-out) .78s both; }
+  [data-playing] .sweep { animation: st-sweep .4s var(--ko-ease-out) .85s both; opacity: var(--st-sweep); }
+
+  @keyframes st-top { from { opacity: 0; transform: translate(0, -70px); } to { opacity: 1; transform: none; } }
+  @keyframes st-arm { from { opacity: 0; transform: translate(80px, -60px); } to { opacity: 1; transform: none; } }
+  @keyframes st-leg { from { opacity: 0; transform: translate(70px, 55px); } to { opacity: 1; transform: none; } }
+  @keyframes st-lock { 50% { transform: scale(1.045); } }
+  @keyframes st-sweep { from { transform: translateX(-260px); } to { transform: translateX(260px); } }
+
+  /* On the light theme the kit asks to cut the sweep (it vanishes on ivory). */
+  :global([data-theme="light"]) .sting { --st-sweep: 0; }
+  @media (prefers-color-scheme: light) { :global(:root:not([data-theme])) .sting { --st-sweep: 0; } }
+  @media (prefers-reduced-motion: reduce) { .sting { display: none; } }
+</style>

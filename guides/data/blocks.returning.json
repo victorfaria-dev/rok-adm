@@ -1,0 +1,746 @@
+[
+  {
+    "id": "ret-overview-start-here",
+    "title": "Jogador que voltou: comece aqui (descubra a data em que parou, a etapa do seu reino, e então decida)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Este guia é para uma conta que parou de jogar e está voltando. Siga nesta ordem:\n\n1. **Descubra a data em que você parou.** Leia todo bloco \"O que mudou\" a partir dessa data (os blocos abaixo estão divididos por período, do mais antigo para o mais novo; cada bloco seguinte pressupõe que você leu os anteriores).\n2. **Descubra onde o seu reino está agora.** As notas oficiais nomeiam as etapas Temporada de Preparação → Temporada 1 → Temporada 2 (\"Distant Journey\") → Temporada 3 (\"Light and Darkness\") → Temporada de Conquista (SoC), e o registro na história da SoC exige **Prefeitura 25** [C04-0033]. A Temporada 3 está migrando para **King of All Britain** (pioneiro na 1.1.07, maio de 2026; descrito como a história da Temporada 3 em um resumo de terceiros de set/2026) [C04-0007]. Um reino que estava na Temporada 1 quando você saiu pode estar na SoC agora.\n3. **Saiba em que versão você está.** A versão mais nova com notas oficiais em inglês é a **1.1.09** (lançada em **2026-06-30**); as 1.1.10–1.1.12 são conhecidas apenas por uma fonte de terceiros, e a 1.1.12 (2026-09-22) provavelmente está no ar [C04-0001]. Tudo depois da 1.1.09 neste guia está marcado como T3.\n4. **Siga o plano de 14 dias** (dias 1–3, 4–7, 8–14) e tome a decisão **ficar / migrar / recomeçar** até o dia 7.\n\n**Recompensas de quem volta ou eventos de retorno:** as notas oficiais de patch (1.0.88, 1.0.94) citam uma **série de eventos para quem volta (Returnee)** que um governador de volta ativa: uma Provação de Comandante para quem volta, uma Loja de Retorno e uma Roda de Retorno, com conteúdo que depende da temporada do seu reino [A11-0514]. Por quanto tempo você precisa ter ficado fora para se qualificar, quanto dura e o que dá são **desconhecidos** (L-A11-05). Se aparecer na sua lista de eventos, tire uma captura de tela; não planeje em cima dele.\n\nA versão curta deste ramo está no guia do Reino Novo (*Jogador que voltou: o que mudou / dá para mudar de reino / cinco primeiras ações*); este guia vai mais fundo.",
+    "why_md": "Quem volta pergunta \"o que mudou\" e \"devo ficar, mudar ou recomeçar\" (dores D-0016, D-0015, D-0019; funcionalidades F-28 e F-29). A maioria dos erros vem de conselhos que eram verdadeiros no dia em que a pessoa parou, então a data de parada é a chave certa para todo o resto.",
+    "cards": [
+      "A11-0514",
+      "C04-0001",
+      "C04-0007",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0001",
+      "C04-0007",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0001, C04-0007 e C04-0033 são fichas de estado de patch (notas oficiais, status bruto). A parte Temporada 3 = King of All Britain de C04-0007 e as versões 1.1.10–1.1.12 em C04-0001 se apoiam em uma fonte de terceiros (T3). A11-0514 (série de eventos Returnee) é organizado/alta a partir de notas oficiais, mas ainda não verificado; cobre apenas que a série existe e suas três partes citadas.",
+    "gaps": [
+      "L-A11-05",
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-changed-before-2024-06",
+    "title": "O que mudou: se você parou antes de junho de 2024 (1.0.67–1.0.82)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| Se você parou antes de | Mudança | Impacto para quem volta | Ficha |\n|---|---|---|---|\n| 2023-03 | História da SoC **Siege of Orléans** (mar/2023), depois **Storm of Stratagems** (jul/2023), **Tides of War** (nov/2023), **Alliance Invictus** (mar/2024), minitemporada **Warriors Unbound** (mai/2024) | Médio se o seu reino está na SoC: os guias \"SoC = Heroic Anthem\" estão desatualizados | C04-0017 |\n| 2023-07 | Civilização **Grécia** adicionada (1.0.71) | Baixo: mais uma opção se você trocar de civilização | C04-0016 |\n| 2023-12 | **Equipamento icônico**: equipamento Lendário (exceto os conjuntos Trial of the Lost Kingdom e de coleta) pode ser despertado, **5 níveis**, reino na Temporada 1 ou depois (1.0.77) | Médio: suas peças Lendárias antigas podem ser melhoráveis | C04-0027 |\n| 2024-04 | Eventos do Reino Perdido da SoC **Now or Never, Barbarian Buster, Lord of War, Territory Grab, Strategic Reserves** removidos (1.0.81) | Médio para a SoC: planos de preparação de eventos baseados neles perderam o sentido | C04-0030 |\n\n**Não coberto por uma ficha:** como está o meta de comandantes agora. Uma tier list da época em que você saiu provavelmente está desatualizada; confira a data antes de confiar nela (L-A06-01). Continue com o próximo bloco (junho de 2024 – março de 2025).",
+    "why_md": "Um jogador que saiu em 2023 tem o conhecimento mais ultrapassado. Este bloco lista só mudanças apoiadas por uma ficha de patch; é curto de propósito para que os blocos posteriores, de maior impacto, não fiquem enterrados.",
+    "cards": [
+      "C04-0016",
+      "C04-0017",
+      "C04-0027",
+      "C04-0030"
+    ],
+    "patch_cards": [
+      "C04-0016",
+      "C04-0017",
+      "C04-0027",
+      "C04-0030"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Todas as linhas são fichas de estado de patch (notas oficiais, status bruto). O meta atual de comandantes não tem ficha (L-A06-01).",
+    "gaps": [
+      "L-A06-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-changed-2024-06-to-2025-03",
+    "title": "O que mudou: se você parou entre junho de 2024 e março de 2025 (1.0.83–1.0.92)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| Se você parou antes de | Mudança | Impacto para quem volta | Ficha |\n|---|---|---|---|\n| 2024-06 | **Imigração entre temporadas**: depósito reembolsável de **20.000 gemas** quando a elegibilidade é concedida (perdido se não usado); abaixo de **10M** de poder não é elegível; limite de poder entre temporadas reduzido de **100M para 85M** (1.0.83). São os valores de jun/2024; nenhuma ficha posterior os reconfirma | Alto se você pretende mudar de reino | C04-0025 |\n| 2024-06 | História da SoC **Shifting Gears**; depois **King of All Britain** (out/2024) e **Keener Blades** (fev/2025) | Médio para a SoC | C04-0017 |\n| 2024-08 | Formação **Delta** (+10% de combo) (1.0.85) | Baixo–médio | C04-0029 |\n| 2024-10 | **VIP19 e SVIP**; pontos acima do antigo limite foram reembolsados como itens de pontos VIP (1.0.87) | Médio: confira seu inventário de VIP | C04-0024 |\n| 2024-10 | **Licença de Férias** (1.0.87): na SoC o rei pode emitir uma licença; o governador que aceita fica \"de férias\" pelo resto da temporada (não conta na pontuação de matchmaking, não pode sair da província inicial). Desde a 1.0.89 (dez/2024) as licenças podem ser revogadas e quem as tem precisa de menos Páginas de Passaporte para emigrar | Alto se você voltar no meio da SoC: pergunte ao seu rei | B03-0007 |\n| 2024-12 | O **Salão dos Heróis** também devolve parte dos recursos gastos em cura no Reino Perdido (1.0.89) | Médio: parte do que você gasta curando no Reino Perdido volta | C04-0028 |\n| 2025-01 | **Troca de Comandante Lendário**, **Conversão de Armamento**, **Gathering of Heroes**; civilização **Maias** (1.0.90) | **Alto**: investimentos antigos em comandantes e armamentos nem sempre se perdem; mas o evento de Troca foi anunciado para reinos novos por volta do fim da Temporada 2, uma vez por personagem, então o acesso para um reino mais antigo não está confirmado (PROPOSED-SWAP-ACCESS) | C04-0023, C04-0016 |\n| 2025-03 | **A Roda da Fortuna exige Tíquetes de Giro** na Temporada 3 e na SoC (1.0.92) | Médio: a conta antiga de gemas por giro está errada | C04-0022 |\n| 2025-03 | Evento da SoC **Enemy Elimination** substituído por **Midseason Review** (1.0.92) | Baixo | C04-0030 |\n| 2025-03-26 | A **Imigração de Iniciante** deixa de ser dada a personagens novos: acabaram as contas pulo | **Alto** para a opção de recomeçar | C04-0026 |",
+    "why_md": "Este período concentra as duas mudanças que mais afetam as grandes decisões de quem volta: as ferramentas de reescolha (Troca, Conversão) que fazem valer a pena manter uma conta antiga, e o fim do pulo de reino, que torna recomeçar muito menos atraente.",
+    "cards": [
+      "B03-0007",
+      "C04-0016",
+      "C04-0017",
+      "C04-0022",
+      "C04-0023",
+      "C04-0024",
+      "C04-0025",
+      "C04-0026",
+      "C04-0028",
+      "C04-0029",
+      "C04-0030"
+    ],
+    "patch_cards": [
+      "C04-0016",
+      "C04-0017",
+      "C04-0022",
+      "C04-0023",
+      "C04-0024",
+      "C04-0025",
+      "C04-0026",
+      "C04-0028",
+      "C04-0029",
+      "C04-0030"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Todas as linhas C04 são fichas de estado de patch (notas oficiais, status bruto). C04-0026 se apoia em um correio do jogo citado por jogadores mais wiki/guia (sem post oficial no fórum). B03-0007 é firme.",
+    "gaps": [
+      "L-B03-03",
+      "PROPOSED-SWAP-ACCESS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-changed-2025-04-to-2025-12",
+    "title": "O que mudou: se você parou entre abril e dezembro de 2025 (1.0.94–1.1.02)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| Se você parou antes de | Mudança | Impacto para quem volta | Ficha |\n|---|---|---|---|\n| 2025-05 | **Takeda, Cyrus, Cheok, Bertrand** movidos para a Temporada 2; talentos/habilidades de Cheok e Bertrand retrabalhados; esses quatro **não podem mais ser trocados** na Troca de Comandante Lendário (1.0.94) | Alto se você tem um deles | C04-0021 |\n| 2025-05 | Tíquetes de Giro estendidos à Roda da Fortuna da **Temporada 2** (1.0.94) | Médio | C04-0022 |\n| 2025-05 → | **Retrabalho da tecnologia de Cristal** (SoC): Capacidade de Unidade mais cedo, invista só no seu tipo de unidade preferido, retorno instantâneo da Retirada Rápida **200 → 80 gemas** | Médio para a SoC: as antigas ordens de pesquisa estão erradas | C04-0018 |\n| 2025-06 | **Fórmula de poder do reino**: seu poder conta 100% até 150M, 80% de 150–300M, 50% de 300–500M, nada acima de 500M (300 melhores governadores); limiar do Imperium 23,5B (1.0.95) | Baixo para a maioria de quem volta; importa para o seeding da SoC | C04-0020 |\n| 2025-07 | Torneio entre reinos **Supreme Strife** para governadores de Prefeitura 25 na SoC (1.0.96) | Baixo | C04-0019 |\n| 2025-07 | Desmontar equipamento Lendário com talento especial devolve **100% da forja** e **50% do custo de despertar** (1.0.96) | Alto: equipamento errado pode ser reciclado | C04-0010 |\n| 2025-09 | Formação **Double Line** (+10% de velocidade de marcha para bárbaros) (1.0.99) | Baixo | C04-0029 |\n| 2025-10 | Evento **Oasis Bazaar**: vender recursos por gemas (1.1.00); história da SoC **Song of Troy** | Médio: um uso para o estoque de recursos de quem volta | C04-0009, C04-0017 |\n| 2025-11 | **Acclaim** (moeda de contribuição da KvK) nos novos Reinos Perdidos da SoC (1.1.01) | Médio para a SoC | C04-0015 |\n| 2025-11 | **Troca de bônus de civilização na Prefeitura 16** (1.1.01) | Médio: veja a auditoria dos dias 4–7 | C04-0016 |\n| 2025-11 | A **pacificação automática** ganha atribuição em lote e ataques em grupo (1.1.01) | Alto para o tempo disponível: não precisa de scripts | A09-0008 |\n| 2025-12 | A **coleta diária de PA** pode ser feita sempre que o PA estiver abaixo do limite e pode levar o PA acima dele; **Grupos de Exército** para todas as alianças da SoC (1.1.02) | Médio | C04-0032 |",
+    "why_md": "Quem saiu em 2025 perdeu principalmente mudanças de qualidade de vida e sistemas da SoC. As duas que mudam decisões concretas são o retrabalho de comandantes (alguns não podem mais ser trocados) e o reembolso da desmontagem de equipamento (100% da forja, 50% do despertar).",
+    "cards": [
+      "A09-0008",
+      "C04-0009",
+      "C04-0010",
+      "C04-0015",
+      "C04-0016",
+      "C04-0017",
+      "C04-0018",
+      "C04-0019",
+      "C04-0020",
+      "C04-0021",
+      "C04-0022",
+      "C04-0029",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0009",
+      "C04-0010",
+      "C04-0015",
+      "C04-0016",
+      "C04-0017",
+      "C04-0018",
+      "C04-0019",
+      "C04-0020",
+      "C04-0021",
+      "C04-0022",
+      "C04-0029",
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Todas as linhas C04 são fichas de estado de patch (notas oficiais, status bruto). O acesso permanente ao Oasis Bazaar é um pioneiro em reinos selecionados (C04-0009). A09-0008 é firme.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-changed-2026-01-to-2026-06",
+    "title": "O que mudou: se você parou entre janeiro e junho de 2026 (1.1.03–1.1.09)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 50,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "| Se você parou antes de | Mudança | Impacto para quem volta | Ficha |\n|---|---|---|---|\n| 2026-01-20 | **Refino de armamento** (armamentos Lendários): +0,2% por refino até +3,5% para Ataque/Defesa/Vida/Velocidade de Marcha da unidade, ou +0,1% até +2,0% de todo o dano; Pedras de Refino só na seção limitada ao Autarca da Loja de Inscrições do Reino Perdido (1.1.03) | Médio para a SoC | C04-0012 |\n| 2026-01 | A **Fusão de Reinos** exige 2 reinos (eram 3) e 150 governadores ativos (eram 200); coalizões da SoC começam com 4 alianças (eram 2) (1.1.03) | Médio: seu reino pode ter sido fundido | C04-0013 |\n| 2026-01 | Na SoC você **não pode mais atacar cidades dentro do território de outras alianças no Reino de Origem** (1.1.03) | Médio para a SoC | C04-0014 |\n| 2026-02-27 | **Retrabalho de talentos/inscrições**: na Temporada 2+, toda redução de \"dano de habilidade sofrido\" também reduz o dano de **combo e smite** (1.1.04) | Alto: builds de talentos feitos antes disso subvalorizam esses talentos | C04-0011 |\n| 2026-02 | Acclaim de unidades de nível 1 reduzido (contra troca com T1); **Loja de Acclaim** (pioneira) com Poções de Recuperação (1.1.04) | Médio para a SoC | C04-0015 |\n| 2026-03-24 | **Limites de idade de imigração endurecidos**: mesma temporada para um reino SoC de primeira história **150 dias** (eram 240); entre temporadas para a Temporada 2 **80** (eram 120); para a Temporada 3 **120** (eram 180); reinos novos bloqueados de imigração da mesma temporada até o fim da Temporada 1 (pioneiro) (1.1.06) | **Alto** para a opção de migrar | C04-0008 |\n| 2026-03/04 | Oasis Bazaar permanente na SoC pelo Entreposto Comercial Nv25 (pioneiro); eventos de gemas por tempo limitado para redefinir o talento especial de um item Lendário ou desmontar um item com todos os materiais devolvidos (1.1.06) | Médio | C04-0009, C04-0010 |\n| 2026-03 | **Wedge Formation II** (+12% de dano de habilidade) (1.1.06) | Baixo–médio | C04-0029 |\n| 2026-05-07 | **Pontuação de Conduta**: scripts e trapaças perdem pontos e recebem punições, primeiro na SoC (1.1.07) | **Alto**: um velho hábito de bot agora é detectado no jogo | C04-0006 |\n| 2026-05 | **King of All Britain** como pioneiro na história da Temporada 3 (1.1.07) | Médio para reinos da Temporada 3 | C04-0007 |\n| 2026-06-03 | Votação de **Modo Descanso** para uma temporada de Reino Perdido (pioneiro; >50% dos reinos) (1.1.08) | Baixo | C04-0031 |\n| 2026-06-30 | **Itens de impulso de recursos e Tropas Enganosas removidos** (inventários convertidos); bônus de produção do VIP aumentados: VIP0–5 = +5/+10/+15/+20/+28/+37%, acima do VIP5 +25% em relação aos valores antigos; missões diárias que exigiam impulsos substituídas por missões de login e de doação à aliança (1.1.09) | **Alto** para a sua rotina diária | C04-0004 |\n| 2026-06-30 | Evento do **Pelagius Lendário** a partir do dia 5 de reinos novos (1.1.09) | Baixo para quem volta (recurso de reino novo); só importa se você recomeçar | C04-0005 |",
+    "why_md": "Este é o período mais recente com notas oficiais. Um jogador que saiu no início de 2026 precisa principalmente do corte na imigração (decide se mudar é possível), da remoção dos impulsos (muda a rotina diária) e da Pontuação de Conduta (torna os scripts arriscados).",
+    "cards": [
+      "C04-0004",
+      "C04-0005",
+      "C04-0006",
+      "C04-0007",
+      "C04-0008",
+      "C04-0009",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0013",
+      "C04-0014",
+      "C04-0015",
+      "C04-0029",
+      "C04-0031"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0005",
+      "C04-0006",
+      "C04-0007",
+      "C04-0008",
+      "C04-0009",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0013",
+      "C04-0014",
+      "C04-0015",
+      "C04-0029",
+      "C04-0031"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Todas as linhas são fichas de estado de patch (notas oficiais, status bruto). Vários itens são pioneiros só em reinos selecionados (bloqueio de imigração da mesma temporada, acesso permanente ao Oasis Bazaar, Modo Descanso, Loja de Acclaim, King of All Britain na Temporada 3), então podem não valer para o seu reino.",
+    "gaps": [
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-changed-since-1-1-09",
+    "title": "O que mudou: de julho de 2026 até agora (1.1.10–1.1.12, só de terceiros)",
+    "phase": "overview",
+    "section": "overview",
+    "order": 60,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Não há notas oficiais de patch em inglês depois da 1.1.09** (2026-06-30). As versões 1.1.10 (2026-07-30), 1.1.11 (2026-08-27) e 1.1.12 (2026-09-22) são conhecidas apenas por um blog comercial de terceiros [C04-0001]. Trate esta tabela como relatada, não confirmada.\n\n| Relatado em | Mudança | Impacto para quem volta | Ficha |\n|---|---|---|---|\n| 1.1.10 (jul/2026) | História da SoC **Mighty Assembly** (pioneira); **Yahya ibn Khalid**, comandante Lendário de coleta desde a Temporada 1; Pincer Formation alterada para +12% de smite | Baixo–médio | C04-0003 |\n| 1.1.12 (set/2026) | **A Roda da Fortuna da Temporada 1 exige Tíquetes de Giro** | Médio | C04-0022 |\n| 1.1.12 (set/2026) | Radiant Rivalry (evento 1v1 do reino) ampliado; Véspera da Cruzada abre junto com o Reino Perdido; Acclaim adicionado às Temporadas 1–2; capítulos-chave das Crônicas fixados de sexta a sábado | Baixo–médio | C04-0002 |\n\n**As regras de migração podem ter mudado neste período** e não estão confirmadas (L-B06-03). Confira a tela de imigração no jogo antes de confiar em qualquer número dos blocos de migração.",
+    "why_md": "Um jogador que saiu há poucos meses precisa saber que as mudanças mais recentes são as menos verificadas. Mostrá-las separadamente mantém limpos os períodos confirmados.",
+    "cards": [
+      "C04-0001",
+      "C04-0002",
+      "C04-0003",
+      "C04-0022"
+    ],
+    "patch_cards": [
+      "C04-0001",
+      "C04-0022"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "C04-0002 e C04-0003 são bruto/baixa (fonte T3 comercial única, não verificada). A parte da Temporada 1 de C04-0022 é apenas T3. C04-0001 e C04-0022 são fichas de estado de patch.",
+    "gaps": [
+      "L-B06-03",
+      "L-B01-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-plan-days-1-3",
+    "title": "Plano de 14 dias, dias 1–3: reinicie as sequências, encontre sua gente, tape os vazamentos",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Objetivo: não perder mais nada enquanto você lê o resto deste guia. **Não gaste esculturas, materiais de armamento nem acelerações guardadas ainda**: a auditoria dos dias 4–7 pode mudar para onde eles devem ir.\n\n**Dia 1**\n- **Colete o baú VIP diário** e continue coletando todo dia: a sequência dá 40 pontos VIP no dia 1, +20 por dia consecutivo, com teto de **200/dia** (alcançado no dia 9 da sequência); perder um dia volta para 40. Os 9 primeiros dias somam **1.080** pontos VIP [A05-0003].\n- **Chegue a 100 pontos nos Objetivos Diários**: o baú final dá **100 gemas** (mais 1 Chave de Ouro, 1 Caixa Mágica, 3 Esculturas de Comandante Épicas) e é a única fonte diária de gemas garantida encontrada [A04-0001]. Na SoC, o baú de 100 atividades dá uma Chave Soberana no lugar da Chave de Ouro desde a 1.1.02 [C04-0032]. A lista de tarefas depois da 1.1.09 não foi reconferida (L-A10-02).\n- **Colete o PA diário** sempre que seu PA estiver abaixo do limite, mesmo perto dele: desde a 1.1.02 a coleta pode levar o PA acima do limite [C04-0032]. O valor por coleta em 2026 não foi remedido (L-A09-02).\n- **Proteja a conta**: nunca compartilhe sua senha nem deixe outra pessoa entrar, incluindo \"ajudantes\" que se oferecem para tocar a sua conta [C02-0005]. Os passos de vinculação e recuperação não são cobertos por uma ficha (PROPOSED-ACCOUNT-RECOVERY).\n\n**Dia 2**\n- **Confira sua aliança.** Jogadores relatam que quem volta costuma encontrar a aliança morta ou com o líder ausente, às vezes com a própria pessoa como líder [B04-0004]. Se estiver inativa, mude para uma **aliança ativa, com quem gasta**: os baús de presente da aliança são uma grande fonte de esculturas, chaves e pontos VIP [A06-0516].\n- **Proteja os recursos**: recursos brutos acima da proteção do Depósito podem ser saqueados [A03-0006]; recursos guardados como itens e gemas não podem, então deixe os itens de recurso fechados até precisar deles (recursos brutos não voltam a virar itens, exceto comprando itens do Mercador Misterioso) [A03-0007].\n\n**Dia 3**\n- **Fale com a liderança do reino** (rei ou aliança principal). Pergunte: em que etapa está o reino, existe uma lista de migração pós-KvK em que você pode estar (jogadores relatam que reinos publicam listas de contas, em geral de baixo DKP para o poder, que precisam sair) [B06-0005] e, se o reino está na SoC, se há uma **Licença de Férias** disponível para você [B03-0007].\n- Leia os blocos \"O que mudou\" a partir da sua data de parada.",
+    "why_md": "Os três primeiros dias decidem se quem volta fica. As sequências e o baú diário de gemas se acumulam desde o dia 1, então vêm primeiro; a aliança e a visão que o reino tem de você decidem se ficar é sequer possível, então vêm antes de qualquer gasto grande.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A04-0001",
+      "A05-0003",
+      "A06-0516",
+      "B03-0007",
+      "B04-0004",
+      "B06-0005",
+      "C02-0005",
+      "C04-0032"
+    ],
+    "patch_cards": [
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B04-0004 (organizado/baixa) e B06-0005 (organizado/media) descrevem a prática dos jogadores, não regras do jogo. C02-0005 cita os Termos de Serviço, mas é organizado. C04-0032 é uma ficha de estado de patch. Se uma conta que volta recebe recompensas especiais no login é desconhecido.",
+    "gaps": [
+      "PROPOSED-ACCOUNT-RECOVERY",
+      "L-A11-05",
+      "L-A03-05",
+      "L-A09-02",
+      "L-A10-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-plan-days-4-7",
+    "title": "Plano de 14 dias, dias 4–7: audite a conta e use as ferramentas de reescolha antes de investir",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Objetivo: saber o que você tem e consertar investimentos passados **antes** de gastar qualquer coisa nova. Depois tome a decisão ficar / migrar / recomeçar (próximo bloco) até o dia 7.\n\n| Confira | O que o jogo permite agora | Ficha |\n|---|---|---|\n| Comandantes de que você se arrepende | A **Troca de Comandante Lendário** troca níveis, níveis de habilidade e estrelas de dois comandantes Lendários usando Tíquetes de Troca; um Q&A de desenvolvedores anterior ao lançamento disse que rodaria em reinos novos por volta do fim da Temporada 2, **uma vez por personagem** (acesso para reinos mais antigos não confirmado, PROPOSED-SWAP-ACCESS). **Gathering of Heroes** dá pontos para recrutar Lendários que você não tem | C04-0023 |\n| Takeda, Cyrus, Cheok, Bertrand | Movidos para a Temporada 2 e **não podem ser trocados**; Cheok e Bertrand foram retrabalhados | C04-0021 |\n| Armamentos Lendários | A **Conversão de Armamento** usa Pedras de Conversão para converter um armamento Lendário no mesmo tipo para outra formação; o **refino** (desde a 1.1.03) soma +0,2% por refino até +3,5% a um atributo da unidade, ou +0,1% até +2,0% de todo o dano, com Pedras de Refino só da seção limitada ao Autarca da Loja de Inscrições do Reino Perdido | C04-0023, C04-0012 |\n| Equipamento Lendário com talento especial | A desmontagem devolve **100% da forja** e **50% do custo de despertar**; eventos de gemas por tempo limitado (a partir de abr/2026) redefinem um talento especial ou desmontam um item com todos os materiais devolvidos | C04-0010 |\n| Talentos (Temporada 2+) | As reduções de \"dano de habilidade sofrido\" agora também cortam o dano de combo e smite: refaça páginas de talentos antigas com isso em mente | C04-0011 |\n| Civilização | A Prefeitura 16 libera a **troca de bônus** de civilização (desde a 1.1.01) [C04-0016]. Uma troca completa de civilização (uma é grátis ao chegar à Prefeitura 10) custa de outro modo **10.000 gemas** na Loja ou **2.000.000 de créditos individuais** na Loja da Aliança [A14-0002]; como a troca de bônus é paga não foi medido (L-A14-01) | C04-0016, A14-0002 |\n\n**Depois concentre-se** (conselho escrito para o F2P de reino inicial, que serve para quem volta e está reconstruindo): termine **uma marcha completa** antes de começar as outras [A06-0500] e guarde as esculturas universais (douradas) para um Lendário de longo prazo, não para coletores nem soluções provisórias [A06-0510].\n\n**Monte uma rotina que você consiga manter**: use a **pacificação automática** nativa para bárbaros, não scripts (scripts perdem Pontuação de Conduta desde a 1.1.07) [A09-0008, C04-0006].",
+    "why_md": "Uma conta que volta costuma ter recursos e comandantes construídos para um meta mais antigo. Desde 2025 existem várias ferramentas de reescolha, então o progresso mais barato costuma ser desfazer um erro passado em vez de começar um investimento novo. Conferir primeiro evita gastar duas vezes.",
+    "cards": [
+      "A06-0500",
+      "A06-0510",
+      "A09-0008",
+      "A14-0002",
+      "C04-0006",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0016",
+      "C04-0021",
+      "C04-0023"
+    ],
+    "patch_cards": [
+      "C04-0006",
+      "C04-0010",
+      "C04-0011",
+      "C04-0012",
+      "C04-0016",
+      "C04-0021",
+      "C04-0023"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0023, C04-0021, C04-0012, C04-0010, C04-0011, C04-0016 e C04-0006 são fichas de estado de patch. Se quem volta em um reino mais antigo (já além da Temporada 2) ainda pode entrar no evento de Troca de Comandante não é dito em nenhuma ficha; o Q&A dos desenvolvedores mira apenas reinos novos por volta do fim da Temporada 2. A mecânica e o custo da troca de bônus da Prefeitura 16 não foram medidos (L-A14-01).",
+    "gaps": [
+      "PROPOSED-SWAP-ACCESS",
+      "L-A14-01",
+      "L-A06-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-plan-days-8-14",
+    "title": "Plano de 14 dias, dias 8–14: uma rotina que não esgote você de novo",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Objetivo: uma rotina diária que você consiga manter depois do dia 14. A essa altura a sequência do VIP chega ao teto de **200/dia** (dia 9 de uma sequência ininterrupta) [A05-0003].\n\n**Todo dia**\n- Objetivos Diários até 100 pontos [A04-0001]; 20 ajudas da aliança valem 10 pontos dos Objetivos Diários [A10-0006].\n- Gaste o PA que regenera em vez de deixá-lo parado no limite; guarde os itens de recuperação de PA para eventos [A09-0007]. PA recorrente grátis: a coleta diária, um item de 100 PA do baú de 60 pontos dos Objetivos Diários e até 30 × 100 PA por semana da Loja VIP a 12.000 de comida cada (VIP 2+) [A09-0006].\n- Não há mais impulsos de recursos para usar: o VIP agora dá bônus de produção maiores no lugar [C04-0004].\n\n**Se o seu reino está em uma temporada de Reino Perdido**\n- Mantenha os hospitais grandes e vazios antes das lutas: tropas feridas além da capacidade do hospital morrem [A08-0502]. O Salão dos Heróis devolve parte dos recursos gastos em cura no fim do Reino Perdido [C04-0028].\n- A Roda da Fortuna exige **Tíquetes de Giro** (Temporada 3/SoC desde mar/2025, Temporada 2 desde mai/2025, Temporada 1 segundo relatos desde set/2026); não use planos antigos de gemas por giro [C04-0022].\n- Na SoC, recursos excedentes podem ser vendidos por gemas no **Oasis Bazaar** (limites semanais; o acesso permanente pelo Entreposto Comercial Nv25 é pioneiro) [C04-0009].\n\n**Revisão do dia 14**: você ainda entra todo dia, e o reino está tratando você como membro? Se não, releia o bloco ficar / migrar / recomeçar. Se sim, passe para os blocos regulares de rotina diária F2P.\n\nOs minutos por tarefa ainda não foram medidos (L-A10-01); mantenha a rotina curta no início.",
+    "why_md": "Quem volta e desiste de novo costuma fazer isso na segunda semana, quando a novidade acaba e uma rotina antiga e pesada retorna. Uma rotina curta e atual (sem impulsos, com pacificação automática, PA coletado acima do limite) mantém a conta avançando a um custo menor.",
+    "cards": [
+      "A04-0001",
+      "A05-0003",
+      "A08-0502",
+      "A09-0006",
+      "A09-0007",
+      "A10-0006",
+      "C04-0004",
+      "C04-0009",
+      "C04-0022",
+      "C04-0028"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0009",
+      "C04-0022",
+      "C04-0028"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0004, C04-0022, C04-0009 e C04-0028 são fichas de estado de patch; a parte da Temporada 1 de C04-0022 é apenas T3. O valor da coleta diária de PA em 2026 não foi remedido (L-A09-02). A renda real de gemas diária além do baú de 100 gemas é desconhecida (L-A04-01).",
+    "gaps": [
+      "L-A10-01",
+      "L-A09-02",
+      "L-A04-01",
+      "L-A10-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-decision-stay-migrate-restart",
+    "title": "Ficar, migrar ou recomeçar: as condições que decidem",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Decida até o dia 7. Confira as condições nesta ordem; a primeira que falhar costuma decidir por você.\n\n| Opção | Condições que precisam valer | Ficha |\n|---|---|---|\n| **Migrar (mesma temporada)** | Para um reino SoC em sua **primeira história**: seu personagem pode ser no máximo **150 dias mais velho** que o reino de destino (desde a 1.1.06; outras rotas da mesma temporada não têm ficha de idade); reinos novos podem estar bloqueados de imigração da mesma temporada até o fim da Temporada 1 (pioneiro) | B06-0003, C04-0008 |\n| **Migrar (entre temporadas)** | Para a Temporada 2: no máximo **80 dias** mais velho; para a Temporada 3: no máximo **120 dias** (desde a 1.1.06). Poder de pelo menos **10M** e no máximo **85M**, e um depósito reembolsável de **20.000 gemas** quando a elegibilidade é concedida (perdido se não usado): esses valores entre temporadas datam de jun/2024 (1.0.83) e não foram reconfirmados desde então | B06-0003, C04-0025 |\n| Migrar: o que os jogadores relatam além disso | Prefeitura 16+, sem aliança, tropas em casa, recursos dentro da proteção do Depósito, Páginas de Passaporte proporcionais ao poder, cerca de 30 dias de espera depois de uma mudança | B06-0001 |\n| Migrar: o lado do reino de destino | Relatado: o rei define o limite de poder de imigração e aprova imigração especial, mas não pode contornar regras de temporada, idade, espera ou do sistema [B06-0002]; os reinos acrescentam formulários e mínimos próprios [B06-0004] e esperam que você pergunte antes [B03-0006] | B06-0002, B06-0004, B03-0006 |\n| **Ficar** | Você não passa em nenhuma das regras de idade acima, **ou** o reino está ativo e a liderança aceita você. Na SoC, uma **Licença de Férias** mantém você fora da pontuação de matchmaking e, se você sair depois, significa menos Páginas de Passaporte | B03-0007 |\n| **Recomeçar** | Só se a conta não valer a pena manter. Um personagem novo não recebe **Imigração de Iniciante** desde 2025-03-26 (sem pulo de reino) [C04-0026]; a KvK1 começa por volta do **dia 100 do reino** [B01-0500]; e uma fonte fraca diz que a diferença entre F2P e quem gasta é maior em reinos novos [B01-0506] | C04-0026, B01-0500, B01-0506 |\n\n**Sinais que apontam para mudar em vez de ficar:** seu nome está em uma lista de migração pós-KvK com prazo (prática dos jogadores) [B06-0005], ou sua aliança e seu reino estão inativos [B04-0004].\n\n**Nunca compre nem venda uma conta para pular esta decisão**: os Termos de Serviço dizem que você não tem direito de propriedade sobre a conta e não pode vender nem transferir itens ou moeda virtuais [C02-0010].",
+    "why_md": "\"Nenhum reino aceita jogadores que voltam\" e \"sou velho demais para migrar\" são as duas reclamações mais comuns de quem volta (dor D-0016). As regras de idade e de poder são regras do jogo (firmes ou de notas oficiais); todo o resto é prática do reino, que pode ser negociada. Recomeçar perdeu sua principal vantagem quando o pulo de reino acabou, então é a última opção, não o padrão.",
+    "cards": [
+      "B01-0500",
+      "B01-0506",
+      "B03-0006",
+      "B03-0007",
+      "B04-0004",
+      "B06-0001",
+      "B06-0002",
+      "B06-0003",
+      "B06-0004",
+      "B06-0005",
+      "C02-0010",
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B06-0001 (tabela de passaportes, Prefeitura 16, espera de 30 dias; T3), B06-0002, B06-0004, B06-0005 são organizado; B03-0006 e B04-0004 são organizado/baixa; B01-0506 é verificado/baixa; C02-0010 cita os Termos de Serviço, mas é organizado. C04-0008, C04-0025 e C04-0026 são fichas de estado de patch; C04-0026 se apoia em um correio do jogo mais wiki/guia. As regras de migração podem ter mudado na 1.1.10–1.1.12 (L-B06-03).",
+    "gaps": [
+      "L-B06-01",
+      "L-B06-02",
+      "L-B06-03",
+      "L-B03-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-returning-into-soc",
+    "title": "Voltando para um reino da Temporada de Conquista: o que há de novo lá",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 50,
+    "stage": [
+      "soc"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Se o seu reino chegou à Temporada de Conquista enquanto você estava fora, estes sistemas são novos para você:\n\n- O **registro** em uma história da SoC exige **Prefeitura 25**; depois que uma temporada termina, o próximo registro pode começar imediatamente [C04-0033].\n- O **Acclaim** (nos novos Reinos Perdidos da SoC desde a 1.1.01) é a moeda de contribuição da KvK, ganha com ferimentos graves e abates (causados e sofridos), proporcional ao nível da tropa; algumas Conquistas de Cruzado o exigem [C04-0015].\n- **Grupos de Exército**: um oficial controla tropas que os membros atribuem [C04-0032].\n- Você **não pode atacar cidades dentro do território de outras alianças** no Reino de Origem depois que a SoC começa [C04-0014].\n- A **Pontuação de Conduta** pune scripts e trapaças, lançada primeiro na SoC [C04-0006].\n- A **tecnologia de Cristal** foi retrabalhada: invista só no seu tipo de unidade preferido [C04-0018].\n- O **Oasis Bazaar** (Entreposto Comercial Nv25; pioneiro) vende recursos por gemas [C04-0009]; o **refino de armamento** usa Pedras de Refino da seção limitada ao Autarca da Loja de Inscrições do Reino Perdido [C04-0012].\n- **Licença de Férias**: se você não pode jogar a temporada inteira, peça ao rei; você não contará para a pontuação de matchmaking, mas não pode sair da província inicial [B03-0007].\n\nVários deles são pioneiros só em reinos selecionados; confira no jogo quais o seu reino tem.",
+    "why_md": "Quem volta e cujo reino passou das Temporadas 1–3 para a SoC enfrenta um jogo diferente: a contribuição é medida pelo Acclaim, e táticas antigas como atacar cidades no território de origem de outros não funcionam mais. Conhecer as novas regras evita ser listado como baixa contribuição na primeira temporada de volta.",
+    "cards": [
+      "B03-0007",
+      "C04-0006",
+      "C04-0009",
+      "C04-0012",
+      "C04-0014",
+      "C04-0015",
+      "C04-0018",
+      "C04-0032",
+      "C04-0033"
+    ],
+    "patch_cards": [
+      "C04-0006",
+      "C04-0009",
+      "C04-0012",
+      "C04-0014",
+      "C04-0015",
+      "C04-0018",
+      "C04-0032",
+      "C04-0033"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Todas as fichas C04 aqui são fichas de estado de patch (notas oficiais, status bruto); o acesso permanente ao Oasis Bazaar e a Loja de Acclaim são pioneiros. B03-0007 é firme. As cotas de Licença de Férias por reino são desconhecidas (L-B03-03).",
+    "gaps": [
+      "L-B03-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-mistakes-returners-make",
+    "title": "Erros que jogadores que voltam cometem",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Gastar esculturas antes de conferir as ferramentas de reescolha.** A Troca de Comandante (se o seu reino ainda puder obtê-la), a Conversão de Armamento e o reembolso da desmontagem de equipamento (100% da forja, 50% do despertar) podem consertar um investimento antigo de forma mais barata [C04-0023, C04-0010]; quatro comandantes não podem mais ser trocados [C04-0021].\n2. **Seguir a rotina de que você se lembra.** Os impulsos de recursos acabaram [C04-0004]; a Roda da Fortuna exige Tíquetes de Giro [C04-0022]; a coleta diária de PA funciona sempre que o PA está abaixo do limite e pode passar dele [C04-0032].\n3. **Usar páginas de talentos antigas na Temporada 2+.** Talentos de redução de dano agora também cortam o dano de combo e smite [C04-0011].\n4. **Voltar a bots ou scripts.** Eles violam os Termos de Serviço [C02-0002] e perdem Pontuação de Conduta desde a 1.1.07 [C04-0006]; use a pacificação automática [A09-0008].\n5. **Quebrar a sequência do VIP na semana 1.** Um dia perdido volta para 40 pontos [A05-0003].\n6. **Migrar com números antigos ou sem pedir.** Os limites de idade foram cortados em março de 2026 [C04-0008]; jogadores relatam que os reinos esperam que você peça ao rei primeiro, e migrantes sem aviso podem ser atacados [B03-0006].\n7. **Deixar o estoque de quem volta como recursos brutos.** Recursos brutos acima da proteção do Depósito podem ser saqueados [A03-0006]; itens de recurso não [A03-0007].\n8. **Recomeçar para \"pular\" para um reino novo.** A Imigração de Iniciante já não é dada a personagens novos [C04-0026].\n9. **Deixar outra pessoa jogar a conta, ou comprar uma.** Os Termos de Serviço proíbem compartilhar conta [C02-0005] e vender ou transferir itens virtuais; você não tem direito de propriedade sobre a conta [C02-0010].",
+    "why_md": "Cada item é um hábito que era razoável quando o jogador saiu e hoje é errado ou arriscado. Listá-los em um só lugar é mais rápido do que procurá-los nos blocos de cada época.",
+    "cards": [
+      "A03-0007",
+      "A05-0003",
+      "A09-0008",
+      "B03-0006",
+      "C02-0002",
+      "C02-0005",
+      "C02-0010",
+      "C04-0004",
+      "C04-0006",
+      "C04-0008",
+      "C04-0010",
+      "C04-0011",
+      "C04-0021",
+      "C04-0022",
+      "C04-0023",
+      "C04-0026",
+      "C04-0032",
+      "A03-0006"
+    ],
+    "patch_cards": [
+      "C04-0004",
+      "C04-0006",
+      "C04-0008",
+      "C04-0010",
+      "C04-0011",
+      "C04-0021",
+      "C04-0022",
+      "C04-0023",
+      "C04-0026",
+      "C04-0032"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C02-0002, C02-0005 e C02-0010 citam os Termos de Serviço, mas são organizado. B03-0006 é organizado/baixa (prática dos jogadores). As fichas C04 são fichas de estado de patch; C04-0026 se apoia em um correio do jogo mais wiki/guia.",
+    "gaps": [
+      "L-B06-03",
+      "PROPOSED-SWAP-ACCESS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "ret-open-pending",
+    "title": "Perguntas em aberto para jogadores que voltam (pesquisa pendente)",
+    "phase": "anytime",
+    "section": "open",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "Estas partes do guia de quem volta ficam vazias até serem medidas ou terem fonte:\n- **Série de eventos Returnee**: ela existe [A11-0514], mas o que dá, quanto dura e por quanto tempo você precisa ter ficado fora para se qualificar são desconhecidos (L-A11-05).\n- **O que acontece com uma cidade inativa**: estado do escudo, se pode ser queimada ou realocada, e se a inatividade afeta o cargo ou os títulos na aliança (PROPOSED-INACTIVE-ACCOUNT-STATE). Transferência de liderança quando um R5 está inativo (L-B04-03).\n- **Acesso à Troca de Comandante para reinos mais antigos**: se quem volta e cujo reino já passou da Temporada 2 ainda pode usar o evento de Troca, uma vez por personagem (PROPOSED-SWAP-ACCESS).\n- **Passos de vinculação e recuperação de conta** (PROPOSED-ACCOUNT-RECOVERY).\n- **Mudanças de migração na 1.1.10–1.1.12** (L-B06-03), a tabela de passaportes no jogo (L-B06-01), a interface do limite de imigração do rei (L-B06-02) e as cotas de Licença de Férias (L-B03-03).\n- **Meta atual de comandantes** para a reconstrução de quem volta (L-A06-01) e o custo da troca de bônus da Prefeitura 16 (L-A14-01).\n- **Tempo por tarefa diária** (L-A10-01) e a lista atual dos Objetivos Diários depois da 1.1.09 (L-A10-02).",
+    "why_md": "Quem volta precisa saber quais partes do conselho não estão confirmadas. Listá-las também diz ao lado da pesquisa o que medir com uma conta que ficou fora.",
+    "cards": [
+      "A11-0514"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": " A11-0514 é organizado (ainda não verificado).",
+    "gaps": [
+      "L-A11-05",
+      "PROPOSED-INACTIVE-ACCOUNT-STATE",
+      "PROPOSED-SWAP-ACCESS",
+      "PROPOSED-ACCOUNT-RECOVERY",
+      "L-B04-03",
+      "L-B06-03",
+      "L-B06-01",
+      "L-B06-02",
+      "L-B03-03",
+      "L-A06-01",
+      "L-A14-01",
+      "L-A10-01",
+      "L-A10-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  }
+]

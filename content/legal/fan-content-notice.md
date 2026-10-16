@@ -1,20 +1,20 @@
-# Fan content notice (site footer)
+# Aviso de conteúdo de fã (rodapé do site)
 
-> **DRAFT — needs legal review before monetization.** Footer text for every page (F-56). Keep it short; link to the full Trust & Privacy page.
+> **RASCUNHO — precisa de revisão jurídica antes de qualquer monetização.** Texto de rodapé para todas as páginas (F-56). Mantenha curto; leve para a página completa de Confiança e privacidade.
 
-## Footer (standard)
+## Rodapé (padrão)
 
-Fan-made planner. Not affiliated with, endorsed by, or sponsored by Lilith Games. Rise of Kingdoms is a trademark of Lilith Games. We never ask for your login, never automate the game, and store your answers only in your browser. [Trust & Privacy](./trust-and-privacy.md)
+Planejador feito por fãs. Sem afiliação, aval ou patrocínio da Lilith Games. Rise of Kingdoms é marca registrada da Lilith Games. Nunca pedimos o seu login, nunca automatizamos o jogo e guardamos as suas respostas apenas no seu navegador. [Confiança e privacidade](./trust-and-privacy.md)
 
-## Footer (compact, mobile)
+## Rodapé (compacto, mobile)
 
-Unofficial fan project, not affiliated with Lilith Games. No logins, no bots, nothing stored on our servers. [Trust & Privacy](./trust-and-privacy.md)
+Projeto de fã não oficial, sem afiliação com a Lilith Games. Sem login, sem bots, nada guardado em nossos servidores. [Confiança e privacidade](./trust-and-privacy.md)
 
-## Guide pages (add under the footer)
+## Páginas de guia (adicionar abaixo do rodapé)
 
-Game facts are checked against official patch notes where available; each block shows its sources and the patch it was checked on. Game rules change — if something looks outdated, tell us.
+Os fatos do jogo são conferidos com as notas oficiais de patch quando existem; cada bloco mostra as suas fontes e o patch em que foi conferido. As regras do jogo mudam — se algo parecer desatualizado, avise a gente.
 
-## Notes for the build
+## Notas para o build
 
-- Do not use Lilith logos, game art or the game's name in the site name, logo, icon or meta tags (ToS 17.1.3, 17.1.9).
-- Show the standard footer on every page, including shared/OG preview pages.
+- Não use logotipos da Lilith, arte do jogo nem o nome do jogo no nome do site, no logotipo, no ícone ou nas meta tags (ToS 17.1.3, 17.1.9).
+- Mostre o rodapé padrão em todas as páginas, inclusive nas páginas compartilhadas/de pré-visualização OG.

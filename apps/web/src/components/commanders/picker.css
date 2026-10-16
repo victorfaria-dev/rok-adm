@@ -1,0 +1,130 @@
+/* Commander picker (ckp-) and tile (ckt-). Depth "layers" (styles/depth.css): the picker is a level-1 panel with a
+   recessed header strip, tiles are level-2 cards. Only --ko-* tokens. */
+
+/* Level 1: panel. Phone: edge to edge through the 16px gutter; wider: rounded and hung out by its padding. */
+.ckp {
+  --ckp-pad: var(--ko-space-4);
+  display: grid; gap: var(--ko-space-3); min-width: 0;
+  margin-inline: calc(-1 * var(--ko-space-4));
+  padding: var(--ckp-pad);
+  background: var(--ko-surface-1);
+  border-block: 1px solid var(--ko-border);
+}
+@media (min-width: 768px) {
+  .ckp { --ckp-pad: var(--ko-space-6); margin-inline: calc(-1 * var(--ckp-pad)); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-lg); }
+}
+.ckp-title {
+  margin: calc(-1 * var(--ckp-pad)) calc(-1 * var(--ckp-pad)) 0;
+  padding: var(--ko-space-4) var(--ckp-pad);
+  font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl);
+  background: var(--ko-surface-head); border-bottom: 1px solid var(--ko-border);
+}
+@media (min-width: 768px) { .ckp-title { border-radius: calc(var(--ko-radius-lg) - 1px) calc(var(--ko-radius-lg) - 1px) 0 0; } }
+
+.ckp-tools { display: grid; gap: var(--ko-space-3); min-width: 0; }
+.ckp-search { display: grid; gap: var(--ko-space-1); max-width: 28rem; }
+.ckp-label { font-weight: var(--ko-weight-semibold); }
+.ckp-input {
+  width: 100%; min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
+  color: var(--ko-text); background: var(--ko-surface-0);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+}
+.ckp-input:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.ckp-filters { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-3); }
+
+/* Rarity: a segmented control made of real radios. */
+.ckp-seg { display: inline-flex; margin: 0; padding: 0; border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md); overflow: hidden; }
+.ckp-seg-opt { position: relative; display: inline-flex; }
+.ckp-seg-opt + .ckp-seg-opt { border-inline-start: 1px solid var(--ko-control-border); }
+.ckp-seg-opt input { position: absolute; inset: 0; margin: 0; opacity: 0; cursor: pointer; }
+.ckp-seg-opt span {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding-inline: var(--ko-space-3);
+  font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); color: var(--ko-text-muted); background: var(--ko-surface-0);
+}
+.ckp-seg-opt input:checked + span { color: var(--ko-on-accent); background: var(--ko-accent); font-weight: var(--ko-weight-semibold); }
+.ckp-seg-opt input:focus-visible + span { outline: 2px solid var(--ko-focus); outline-offset: -4px; }
+.ckp-check { display: inline-flex; align-items: center; gap: var(--ko-space-2); min-height: 44px; cursor: pointer; }
+.ckp-check input { width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); }
+
+.ckp-hint, .ckp-empty { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.ckp-note:empty { margin: 0; }
+.ckp-note:not(:empty) { border-inline-start: 3px solid var(--ko-info); padding: var(--ko-space-1) 0 var(--ko-space-1) var(--ko-space-3); }
+
+/* The grid scrolls inside the panel so the evaluator below stays close; period headers stick to its top. */
+.ckp-scroll {
+  max-height: min(34rem, 62svh); overflow-y: auto; overscroll-behavior: contain;
+  margin-inline: calc(-1 * var(--ckp-pad)); padding: 0 var(--ckp-pad) var(--ko-space-3);
+  border-block: 1px solid var(--ko-border);
+}
+.ckp-group { display: grid; gap: var(--ko-space-2); }
+.ckp-period {
+  position: sticky; top: 0; z-index: 1;
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ko-space-2);
+  margin-inline: calc(-1 * var(--ckp-pad)); padding: var(--ko-space-2) var(--ckp-pad);
+  font: var(--ko-weight-semibold) var(--ko-text-sm)/var(--ko-leading-sm) var(--ko-font-display); letter-spacing: .02em;
+  background: var(--ko-surface-head); border-bottom: 1px solid var(--ko-border);
+}
+.ckp-later {
+  padding: 0 var(--ko-space-2); font-size: var(--ko-text-xs); line-height: var(--ko-leading-xs); text-transform: uppercase; letter-spacing: .04em;
+  color: var(--ko-text-muted); border: 1px dashed var(--ko-control-border); border-radius: var(--ko-radius-sm);
+}
+.ckp-grid {
+  display: grid; gap: var(--ko-space-2);
+  grid-template-columns: repeat(auto-fill, minmax(4.75rem, 1fr));
+  padding-block: var(--ko-space-1) var(--ko-space-3);
+}
+.ckp-credit { color: var(--ko-text-muted); font-size: var(--ko-text-xs); line-height: var(--ko-leading-xs); }
+
+/* Level 2: tile (card). */
+.ckt {
+  position: relative; display: grid; justify-items: center; align-content: start; gap: var(--ko-space-1);
+  min-width: 0; min-height: 44px; padding: var(--ko-space-2) var(--ko-space-1);
+  color: var(--ko-text); font: inherit; text-align: center;
+  background: var(--ko-surface-2); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md);
+  box-shadow: var(--ko-shadow-2);
+}
+button.ckt { cursor: pointer; transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out); }
+.ckt:focus-visible { outline: 3px solid var(--ko-focus); outline-offset: 2px; z-index: 2; }
+.ckt[aria-pressed="true"] { border: 2px solid var(--ko-accent); padding: calc(var(--ko-space-2) - 1px) calc(var(--ko-space-1) - 1px); background: var(--ko-surface-raised); }
+.ckt[aria-pressed="true"]::after {
+  content: "✓"; position: absolute; top: var(--ko-space-1); right: var(--ko-space-1);
+  display: grid; place-items: center; width: 20px; height: 20px; border-radius: var(--ko-radius-pill);
+  font: var(--ko-weight-bold) var(--ko-text-xs)/1 var(--ko-font-body); color: var(--ko-on-accent); background: var(--ko-accent);
+}
+.ckt-face {
+  position: relative; display: grid; place-items: center; width: 56px; height: 56px; flex: none;
+  border-radius: var(--ko-radius-sm); overflow: hidden;
+  background: var(--ko-surface-head); box-shadow: inset 0 -3px 0 var(--ckt-rarity, var(--ko-border));
+}
+.ckt-img { display: block; width: 56px; height: 56px; object-fit: cover; }
+.ckt-initials { font: var(--ko-weight-bold) var(--ko-text-lg)/1 var(--ko-font-display); color: var(--ko-text-muted); letter-spacing: .04em; }
+/* Rarity gem: a small diamond in the corner, colour from the rarity tokens; the name also says it to screen readers. */
+.ckt-gem {
+  position: absolute; left: 4px; top: 4px; width: 10px; height: 10px; transform: rotate(45deg);
+  background: var(--ckt-rarity); border: 1px solid var(--ko-surface-0);
+}
+.ckt[data-rarity="legendary"] { --ckt-rarity: var(--ko-rarity-legendary); }
+.ckt[data-rarity="epic"] { --ckt-rarity: var(--ko-rarity-epic); }
+.ckt-name {
+  max-width: 100%; font-size: var(--ko-text-xs); line-height: var(--ko-leading-xs); font-weight: var(--ko-weight-semibold);
+  overflow-wrap: break-word; hyphens: auto;
+}
+
+/* Coming later: portrait dimmed, text stays readable (contrast), dashed edge and a period chip. */
+.ckt[data-future] { background: var(--ko-surface-1); border-style: dashed; box-shadow: none; }
+.ckt[data-future] .ckt-img, .ckt[data-future] .ckt-initials { opacity: .4; filter: grayscale(1); }
+.ckt[data-future] .ckt-name { color: var(--ko-text-muted); font-weight: var(--ko-weight-regular); }
+.ckt-chip {
+  padding: 0 var(--ko-space-1); font: var(--ko-weight-semibold) var(--ko-text-xs)/var(--ko-leading-xs) var(--ko-font-display);
+  color: var(--ko-text-muted); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-sm); white-space: nowrap;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  button.ckt:not([data-future]):hover { border-color: var(--ko-text-muted); }
+  button.ckt[aria-pressed="true"]:hover { border-color: var(--ko-accent); }
+}
+button.ckt:not([data-future]):active { background: var(--ko-surface-raised); }
+@media (prefers-reduced-motion: reduce) { button.ckt { transition: none; } }
+
+.ckp-more > summary { min-height: 44px; padding-block: var(--ko-space-2); cursor: pointer; font-weight: var(--ko-weight-semibold); }
+.ckp-more[open] > summary { margin-bottom: var(--ko-space-2); }

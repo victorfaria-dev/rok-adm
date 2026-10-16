@@ -1,0 +1,540 @@
+[
+  {
+    "id": "rz-dont-quit-today",
+    "title": "Acabou de ser zerado? Não desista hoje",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 100,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Ser zerado dá a sensação de perder tudo. Pelo que as nossas fontes dizem, em geral não é assim:\n- **Suas gemas e seus itens de recurso não foram levados.** Itens não podem ser saqueados e gemas não podem ser saqueadas de forma alguma [A03-0007]. Os recursos brutos até a proteção do seu Depósito também estavam protegidos [A03-0006].\n- **Muitas das suas tropas podem estar feridas, não mortas.** Guias de terceiros dizem que as tropas feridas vão para o hospital até a capacidade dele e o excedente morre [A08-0502]; não há texto oficial sobre essas regras. Confira o hospital antes de contar suas perdas.\n- **A única coisa que desistir hoje custa com certeza é a sua sequência.** O baú VIP diário dá 40 pontos no primeiro dia, +20 por dia consecutivo até 200; pular um dia volta para 40 [A05-0003]. O baú de 100 gemas dos Objetivos Diários se perde em qualquer dia que você pular [A04-0001].\n\n**Hoje, faça só isto:** entre, colete o baú VIP, abra o hospital e comece a curar (próximo bloco), e pergunte à sua aliança o que aconteceu. Decida sobre a conta amanhã, não esta noite.",
+    "why_md": "Ser zerado é uma das dores mais relatadas e muitas vezes o momento em que os jogadores desistem (dor D-0003). A decisão de desistir costuma ser tomada na primeira hora, com o pior retrato do estrago. As fichas mostram que os ativos mais caros para um F2P (gemas, itens, sequências) sobrevivem, e que as tropas feridas ainda podem ser curadas.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A04-0001",
+      "A05-0003",
+      "A08-0502"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A08-0502 se apoia apenas em guias de terceiros; as regras exatas de ferimento grave/morte não têm texto oficial (L-A08-03). O que mais uma zeragem pode ou não atingir (edifícios, comandantes, pesquisa, nível de VIP) não é coberto por nenhuma ficha (PROPOSED-ZEROING-LOSS-SCOPE); veja o bloco *O que uma zeragem pode e não pode levar*.",
+    "gaps": [
+      "L-A08-03",
+      "PROPOSED-ZEROING-LOSS-SCOPE"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-first-hour",
+    "title": "Zerado: a primeira hora",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 110,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Hospital primeiro.** Guias de terceiros dizem que tropas feridas além da capacidade do hospital morrem [A08-0502], então as tropas que ainda estão no hospital são as que você pode salvar. Comece a curar agora.\n2. **Peça ajuda da aliança em toda cura.** Os aliados podem ajudar a cura, a construção e a pesquisa (não o treinamento de tropas); cada ajuda preenche 1% da barra, e o número de ajudas por tarefa cresce com o nível do seu Centro da Aliança (5 no Nv.1, 18 no Nv.14, 30 no Nv.25) [A10-0006]. Lotes curtos de cura recebem cada um as suas ajudas; se isso dá mais tempo total economizado é desconhecido (veja as notas).\n3. **Cure antes de retreinar.** Curar é em geral tratado como mais barato que retreinar, mas nenhuma fonte que temos quantifica a diferença (L-A08-01) [A08-0502].\n4. **Impeça o segundo golpe.** Se os recursos brutos ainda estão acima da proteção do Depósito, gaste-os ou deixe o resto como itens fechados; itens não podem ser saqueados [A03-0006, A03-0007]. Não abra caixas de recurso \"para reconstruir\" até que uma melhoria ou cura específica precise deles.\n5. **Escudo:** confira na loja do jogo um escudo de paz. Duração e custos ainda não foram pesquisados (PROPOSED-SHIELDS); não confie em números de guias antigos.\n6. **Descubra o porquê** antes de reagir: leia o correio e pergunte a um oficial. O próximo bloco (*Por que você foi zerado?*) define o seu caminho.",
+    "why_md": "A primeira hora decide quanto do estrago vira permanente: tropas ainda no hospital são recuperáveis, recursos brutos deixados expostos podem ser levados de novo, e um contra-ataque apressado pode transformar uma ação de imposição de regras em uma caçada. Cada passo aqui não custa gemas.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A08-0502",
+      "A10-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A08-0502 se apoia apenas em guias de terceiros. O custo de curar contra retreinar não foi quantificado (L-A08-01); as regras de ferimento grave/morte não têm texto oficial (L-A08-03). As regras de escudo são desconhecidas (PROPOSED-SHIELDS). Se agrupar curas em lotes realmente rende mais tempo total de ajuda depende de a ajuda ser 1% do total ou do que resta da barra, o que A10-0006 deixa em aberto.",
+    "gaps": [
+      "L-A08-01",
+      "L-A08-03",
+      "PROPOSED-SHIELDS"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-why-were-you-zeroed",
+    "title": "Por que você foi zerado? Escolha o seu caminho",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 120,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "O seu caminho depende da causa. Pergunte aos oficiais da aliança; a tag da aliança do atacante e as suas ações recentes costumam dizer em qual caso você está.\n\n| Causa | Sinais | Caminho |\n|---|---|---|\n| **Ataque oportunista** | Grande estoque bruto, Prefeitura baixa, um evento de abates rolando | Corrija a exposição (Depósito, itens, hospital) e fique. Os guias dizem isso sobre contas farm: grandes estoques brutos em Prefeitura baixa atraem ataques, principalmente durante eventos de abates [A13-0005]. |\n| **Imposição de regras do reino** | Você foi expulso, mandado migrar até um prazo, ou quebrou uma regra (ordens, acordos de MGE, DKP) | Sites de regras de reinos e jogadores relatam imposição por expulsão, depois prazo para migrar (p. ex., 2 semanas), depois zeragem; alianças líderes podem continuar caçando até você sair [B03-0005]. Negocie com a liderança ou planeje uma mudança (veja *Migrar ou ficar*). Não reconstrua um exército só para perdê-lo de novo. |\n| **Migrante sem aviso** | Você entrou sem pedir ao rei | Jogadores relatam (evidência fraca) que os reinos esperam aprovação antes e podem tratar migrantes sem aviso como espiões ou farms [B03-0006]. Fale agora com o rei ou com a aliança principal. |\n| **Lista de migração pós-KvK** | Você tem muito poder e pouco DKP depois da KvK | Segundo relatos, alguns reinos publicam listas de quem precisa sair e impõem com prazo e zeragem [B06-0005]. |\n\n**Estado do patch (apenas Reino de Origem na SoC):** desde a 1.1.03, depois de entrar na Temporada de Conquista, os governadores não podem mais atacar cidades dentro do território de outra aliança no Reino de Origem [C04-0014]. Se você foi atingido em casa na SoC, mova sua cidade para dentro do território da sua própria aliança: isso bloqueia atacantes de outras alianças, não da sua própria, e não adianta nada se você não tem aliança. Fora do Reino de Origem da SoC (pré-KvK, mapas da KvK) essa proteção não vale.",
+    "why_md": "\"Reconstrua e siga em frente\" é um bom conselho depois de um ataque aleatório, mas esforço perdido quando um reino decidiu que você precisa sair. Saber em qual caso você está evita reconstruir tropas que serão zeradas de novo.",
+    "cards": [
+      "A13-0005",
+      "B03-0005",
+      "B03-0006",
+      "B06-0005",
+      "C04-0014"
+    ],
+    "patch_cards": [
+      "C04-0014"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005 e B06-0005 são organizado (sites de regras de reinos e Reddit; dois sites de reinos compartilham um modelo). B03-0006 é organizado/baixa (uma voz do Reddit mais um guia de marketplace de contas). C04-0014 é uma ficha de estado de patch (notas oficiais da 1.1.03). A tabela de casos é uma síntese editorial dessas fichas, não uma regra do jogo. A13-0005 (ataques a farms) é restrita a contas farm e, segundo as próprias notas, o conselho de risco de zeragem dela não vale mais dentro do território da aliança no Reino de Origem da SoC (C04-0014).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-what-zeroing-takes",
+    "title": "O que uma zeragem pode e não pode levar (segundo as fichas)",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 130,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Não pode ser levado** (dito pelas fichas):\n- Recursos guardados como **itens**; eles também não têm limite de armazenamento [A03-0007].\n- **Gemas**, em qualquer forma [A03-0007].\n- **Recursos brutos até a proteção do Depósito** [A03-0006].\n\n**Pode ser perdido:**\n- **Recursos brutos acima da proteção do Depósito** (saque) [A03-0006].\n- **Tropas:** segundo guias de terceiros, feridos além da capacidade do hospital morrem [A08-0502]. Os mesmos guias dizem que atacar cidades ou alguns objetivos sempre mata os gravemente feridos do atacante, então um contra-ataque pode aumentar as suas perdas.\n\n**Ainda não coberto por nenhuma ficha:** se uma zeragem pode afetar edifícios, comandantes, pesquisa, equipamento ou nível de VIP. Este hub não tem nenhuma afirmação com fonte nem num sentido nem no outro (PROPOSED-ZEROING-LOSS-SCOPE). Confira as telas da sua cidade depois do ataque e compare.\n\n**Só na KvK:** desde a 1.0.89 o Salão dos Heróis também devolve parte dos recursos que você gastou curando no Reino Perdido quando ele termina (Reinos Perdidos iniciados depois dessa atualização) [C04-0028]. O percentual não está nas notas, e não vale para uma zeragem no seu Reino de Origem.",
+    "why_md": "Uma lista clara do que sobreviveu é o melhor argumento contra desistir, mas só se for verdadeira. Listamos apenas o que as fichas afirmam e marcamos o resto como desconhecido, em vez de repetir suposições de fóruns.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A08-0502",
+      "C04-0028"
+    ],
+    "patch_cards": [
+      "C04-0028"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "C04-0028 é uma ficha de estado de patch (notas oficiais da 1.0.89); o percentual de reembolso e qualquer taxa de retorno de unidades não são informados (L-A08-04). A08-0502 se apoia apenas em guias de terceiros; as regras de ferimento grave não têm texto oficial (L-A08-03). Os valores de proteção do Depósito abaixo do Nv25 diferem entre as fontes (L-A03-05).",
+    "gaps": [
+      "L-A03-05",
+      "L-A08-03",
+      "PROPOSED-ZEROING-LOSS-SCOPE",
+      "L-A08-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-hospital-mechanics",
+    "title": "Hospitais e perda de tropas: os números que temos",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 140,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Capacidade por hospital** (sem bônus): 7.500 no Nv.1, 29.000 no Nv.15, 75.000 no Nv.25 [A01-0008]. O Nv.15 é confirmado pelo quiz do jogo; os outros valores vêm da tabela da wiki. Tabelas mais antigas que mostram 3.000 no Nv.1 estão desatualizadas (mesma ficha).\n- **Número de hospitais:** o 2º é liberado na Prefeitura 4, o 3º na 9, o 4º na 15 [A01-0001].\n- **O excedente morre** (guias de terceiros). Feridos além da capacidade total se perdem para sempre; atacar cidades ou alguns objetivos sempre mata os gravemente feridos [A08-0502].\n- **As curas de T5 custam muito mais** recursos e tempo que as de T4 (guias; não quantificado); sem uma economia estável, lute com T4 e mantenha uma reserva de T4 [A08-0505].\n- **A cura pode ser ajudada pela aliança; o treinamento não** [A10-0006].\n\n**Depois de uma zeragem:** melhore ou mantenha os hospitais antes de retreinar até a sua contagem antiga de tropas. Um exército reconstruído maior que seus hospitais repete a mesma perda na próxima vez.\n\nAinda não se sabe: custo de curar contra retreinar (L-A08-01), uma meta de capacidade de hospital para a KvK1 (L-A08-02), as regras exatas de ferimento grave (L-A08-03).",
+    "why_md": "A capacidade do hospital é o único número defensivo que um F2P controla por completo. Ela decide se o próximo golpe custa cura ou retreino; curar é tratado como mais barato, mas a diferença não foi medida (L-A08-01).",
+    "cards": [
+      "A01-0001",
+      "A01-0008",
+      "A08-0502",
+      "A08-0505",
+      "A10-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Os valores de hospital além do Nv.15 se apoiam em uma única fonte da wiki (notas de A01-0008). A08-0502 e A08-0505 dependem apenas de guias de terceiros (sem texto oficial).",
+    "gaps": [
+      "L-A08-01",
+      "L-A08-02",
+      "L-A08-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-resource-protection",
+    "title": "Protegendo o que você reconstrói: Depósito e itens",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 150,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Proteção do Depósito** por recurso (comida/madeira/pedra/ouro): Nv1 300K/300K/225K/150K; Nv25 2,5M cada [A03-0006]. Os níveis Nv6–Nv24 diferem em 10–35% entre as fontes, então leia a tela do seu próprio Depósito (L-A03-05).\n- **Itens são a forma segura.** Itens não podem ser saqueados e não têm limite; você pode abri-los quando quiser, mas recursos brutos só voltam a virar itens **comprando** itens de recurso no Mercador Misterioso [A03-0007]. Então abra caixas apenas para uma melhoria ou cura específica.\n- **Mercador:** na Estação de Correio (Prefeitura 6), aparece às 00:00 UTC, e alguns itens são vendidos por comida ou madeira [A03-0014]. Compre com recursos; os guias dizem para gastar gemas ali só em acelerações com ~60–70% de desconto e em recursos só com 80–90% de desconto [A04-0011].\n- **Recursos protegidos não podem ser enviados.** Desde a 1.0.44, recursos protegidos pelo Depósito não podem ser enviados pelo Entreposto Comercial, então só a quantidade acima da proteção pode ser enviada [A03-0030]. Uma farm que alimenta uma conta principal zerada só pode enviar o excedente.\n- **As farms também são alvos:** os guias dizem que grandes estoques brutos em uma farm de Prefeitura baixa atraem ataques, principalmente em eventos de abates; transfira o excedente para a conta principal [A13-0005]. **Estado do patch:** no Reino de Origem da SoC, desde a 1.1.03, outras alianças não podem mais atacar uma cidade dentro do território da própria aliança [C04-0014], então esse risco vale principalmente antes da SoC, nos mapas da KvK ou para farms fora do território da aliança.",
+    "why_md": "Depois de uma zeragem, todo recurso que você coleta é material de reconstrução. Mantê-lo como itens ou sob proteção é a diferença entre reconstruir uma vez e reconstruir duas.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A03-0014",
+      "A03-0030",
+      "A04-0011",
+      "A13-0005",
+      "C04-0014"
+    ],
+    "patch_cards": [
+      "C04-0014"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "Todas as fichas A são firmes. C04-0014 é uma ficha de estado de patch (notas oficiais da 1.1.03; status bruto), por isso o bloco é médio, não alto; as próprias notas de A13-0005 dizem que C04-0014 invalida o conselho de risco de zeragem dela na SoC. Os valores do Depósito Nv6–Nv24 conflitam entre as fontes (L-A03-05). A03-0014 se apoia em uma revisão da wiki de 2020. \"Só o excesso é transferível\" é a leitura derivada da ficha para o texto da 1.0.44.",
+    "gaps": [
+      "L-A03-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-first-3-days",
+    "title": "Zerado: dias 1–3, reconstrua uma marcha com segurança",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 160,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Mantenha as coletas diárias:** o baú VIP diário, cuja sequência reinicia se você perder um dia [A05-0003], e o baú de 100 gemas dos Objetivos Diários (100 pontos de atividade) [A04-0001].\n2. **Cure em ordem e depois retreine só o que uma marcha precisa.** Termine uma marcha completa antes de qualquer outra coisa; os guias dizem que comandantes pela metade dão pouco valor [A06-0500]. Para a KvK1 o nível de trabalho é T4 [A08-0500]; evite reconstruir T5 primeiro, as curas dele custam muito mais [A08-0505].\n3. **Colete onde você não pode ser atingido.** Exércitos coletando em um centro de recursos da aliança não podem ser atacados (Prefeitura 8+, um exército por governador por centro) [A03-0012]. Nós normais dentro do território da aliança são 25% mais rápidos [A03-0009, A10-0007].\n4. **Acelere a coleta de forma barata:** itens de Coleta Aprimorada (+50%, 8h ou 24h) podem ser comprados com recursos no Mercador Misterioso [A03-0013].\n5. **Não lidere lutas.** Fique atrás da aliança, recue cedo, encha rallies fortes e reforce [A08-0503].\n6. **Use a pacificação automática, nunca um script,** para bárbaros [A09-0008].",
+    "why_md": "Nos primeiros dias a conta está no ponto mais fraco e mais visível. O plano não gasta nada insubstituível, mantém a renda vinda de fontes que não podem ser atacadas e reconstrói primeiro o menor exército útil.",
+    "cards": [
+      "A03-0009",
+      "A03-0012",
+      "A03-0013",
+      "A04-0001",
+      "A05-0003",
+      "A06-0500",
+      "A08-0500",
+      "A08-0503",
+      "A08-0505",
+      "A09-0008",
+      "A10-0007"
+    ],
+    "patch_cards": [],
+    "confidence": "high",
+    "uncertain_notes": "Todas as fichas são firmes, mas A06-0500, A08-0500, A08-0503 e A08-0505 se apoiam apenas em guias de terceiros. A velocidade com que um F2P consegue reconstruir uma marcha não foi medida (L-A03-02).",
+    "gaps": [
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-first-2-weeks",
+    "title": "Zerado: semanas 1–2, reconstrua a economia antes do exército",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 170,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "1. **Esteja em uma aliança ativa, com quem gasta.** Os baús de presente da aliança são uma grande parte das esculturas, chaves e pontos VIP de um F2P [A06-0516]. Se a sua aliança participou da sua zeragem, ou expulsou você, este é o momento de achar outra no reino.\n2. **Acumule para eventos pontuados, como itens.** A maioria dos guias aconselha guardar acelerações, recursos (como itens) e PA para eventos pontuados e para a cura na KvK [A11-0501].\n3. **Dimensione os hospitais antes da contagem de tropas** (veja *Hospitais e perda de tropas*) [A08-0502].\n4. **Se você tem uma farm,** envie apenas o excedente acima da proteção do Depósito [A03-0030]; cada viagem usa uma fila de marcha e tempo de percurso, então mantenha a farm perto [A03-0026].\n5. **Gaste gemas onde os guias concordam:** VIP primeiro [A11-0504]; depois do VIP 6, o Mais que Gemas é a melhor janela de gasto de gemas para o F2P [A11-0502].\n6. **Reconfira a causa.** Se a liderança ainda quiser você fora depois de duas semanas, leia *Migrar ou ficar*.",
+    "why_md": "Um F2P zerado não consegue comprar as tropas de volta, então o exército só volta tão rápido quanto a renda permite. Duas semanas de renda de fontes seguras e de presentes da aliança, protegidas como itens, são com o que o próximo exército é construído.",
+    "cards": [
+      "A03-0026",
+      "A03-0030",
+      "A06-0516",
+      "A08-0502",
+      "A11-0501",
+      "A11-0502",
+      "A11-0504"
+    ],
+    "patch_cards": [],
+    "confidence": "high",
+    "uncertain_notes": "Todas as fichas são firmes. A11-0501 tem uma visão minoritária (2021) de jogar tudo na Prefeitura. A periodicidade do evento em A11-0502 é disputada (mesma ficha). Quanto tempo leva uma reconstrução completa não foi medido (L-A03-02).",
+    "gaps": [
+      "L-A03-02"
+    ],
+    "low_spender_note": "Quem gasta pouco pode encurtar a reconstrução com pacotes de valor, mas a ordem (capacidade do hospital, uma marcha, coleta segura) não muda.",
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-migrate-or-stay",
+    "title": "Depois de uma zeragem: migrar ou ficar?",
+    "phase": "anytime",
+    "section": "recovery",
+    "order": 180,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "**Considere mudar** quando a zeragem foi imposição de regras e o reino ainda quer você fora: os reinos impõem com um prazo para migrar e podem caçar você até você sair [B03-0005].\n\n**Fique e reconstrua** quando foi um ataque aleatório: as regras de migração do jogo podem bloquear você de qualquer jeito.\n\n**O que o jogo verifica** (oficial): limites de idade, p. ex., um personagem pode ser no máximo 150 dias mais velho que um reino SoC de primeira história (mesma temporada), 80 dias entre temporadas para a Temporada 2, 120 dias para a Temporada 3; reinos novos ficam fechados à imigração da mesma temporada até o fim da Temporada 1 (regra pioneira em continentes selecionados) [B06-0003, C04-0008]. Desde a 1.0.83, a imigração entre temporadas exige um depósito de 20.000 gemas (reembolsável, mas perdido se a elegibilidade concedida não for usada) e pelo menos 10M de poder (máx. 85M) [C04-0025]; uma zeragem que derrubasse seu poder abaixo de 10M bloquearia essa rota. Mudanças posteriores nesses limites não foram conferidas (L-B06-03). Pular um personagem novo para um reino novo (Imigração de Iniciante) acabou em 2025-03-26 [C04-0026].\n\n**O que os jogadores relatam** (não verificado no jogo): Prefeitura 16+, sem aliança, tropas em casa, recursos dentro da proteção do Depósito, Páginas de Passaporte proporcionais ao poder (1 página com 0–10M de poder), cerca de 30 dias de espera depois de uma mudança [B06-0001]. O rei define o limite normal de poder de imigração [B06-0002]. Os reinos acrescentam formulários e mínimos [B06-0004] e esperam que você pergunte **antes** de mudar [B03-0006].\n\n**Ordem prática:** pergunte primeiro ao rei do reino de destino, confira a regra de idade e depois o custo de passaportes.",
+    "why_md": "A migração é a fuga mais comum depois de uma zeragem por imposição de regras, mas as regras mudaram em 2026 e muitas respostas antigas estão erradas. Separar as regras do jogo das regras de cada reino diz se vale negociar ou ficar.",
+    "cards": [
+      "B03-0005",
+      "B03-0006",
+      "B06-0001",
+      "B06-0002",
+      "B06-0003",
+      "B06-0004",
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "patch_cards": [
+      "C04-0008",
+      "C04-0025",
+      "C04-0026"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005, B06-0001, B06-0002 e B06-0004 são organizado (guias de terceiros, um deles de marketplace de contas, mais Reddit); B03-0006 é organizado/baixa. C04-0008, C04-0025 e C04-0026 são fichas de estado de patch; C04-0026 se apoia em um correio do jogo mais wiki/guia. As regras podem ter mudado na 1.1.10–1.1.12 (L-B06-03).",
+    "gaps": [
+      "L-B06-01",
+      "L-B06-02",
+      "L-B06-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-logoff-checklist",
+    "title": "Lista de risco de 30 segundos para quando sair do jogo",
+    "phase": "anytime",
+    "section": "mistakes",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [
+      "f2p",
+      "low"
+    ],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Antes de largar o celular:\n- [ ] **Recursos brutos no limite da proteção do Depósito ou abaixo**; o resto fica como itens fechados [A03-0006, A03-0007].\n- [ ] **Hospital vazio ou curando** (o excedente morre, segundo os guias), e capacidade total de pelo menos as tropas em casa [A08-0502, A01-0008].\n- [ ] **Coletores em nós seguros ou rápidos:** centro de recursos da aliança (não pode ser atacado) [A03-0012] ou dentro do território da aliança [A10-0007].\n- [ ] **Evento de abates rolando?** Os guias dizem que farms são cercadas durante eventos de abates; seja ainda mais rigoroso [A13-0005].\n- [ ] **Farms:** excedente acima da proteção do Depósito enviado à conta principal [A13-0005, A03-0030].\n- [ ] **Nenhuma ordem em aberto nem regra quebrada hoje** (ordens da aliança, acordos de MGE, aprovação de migração) [B03-0005, B03-0006].\n- [ ] **Reino de Origem da SoC:** cidade dentro do território da sua aliança; desde a 1.1.03 os governadores ali não podem atacar cidades dentro do território de outra aliança [C04-0014] (protege só de outras alianças).\n- [ ] **Escudo:** confira no jogo; duração e custos não foram pesquisados (PROPOSED-SHIELDS).\n- [ ] **Bárbaros na pacificação automática, não em script** [A09-0008].\n\nO tempo que isso leva não foi medido; com a prática é uma olhada em três telas (Depósito, Hospital, mapa).",
+    "why_md": "A maior parte das zeragens evitáveis vem de um estoque exposto, um hospital transbordando, uma farm alvo ou uma regra do reino quebrada. Esta lista amplia a lista de cinco pontos do reino novo com coleta, farms e território da SoC, para continuar útil depois das primeiras semanas.",
+    "cards": [
+      "A01-0008",
+      "A03-0006",
+      "A03-0007",
+      "A03-0012",
+      "A03-0030",
+      "A08-0502",
+      "A09-0008",
+      "A10-0007",
+      "A13-0005",
+      "B03-0005",
+      "B03-0006",
+      "C04-0014"
+    ],
+    "patch_cards": [
+      "C04-0014"
+    ],
+    "confidence": "medium",
+    "uncertain_notes": "B03-0005 é organizado; B03-0006 é organizado/baixa. C04-0014 é uma ficha de estado de patch (notas oficiais da 1.1.03), vale só no Reino de Origem da SoC; ali ela invalida em parte o risco de ataque a farms de A13-0005 (notas de A13-0005). A08-0502 se apoia apenas em guias de terceiros. Regras de escudo: PROPOSED-SHIELDS. Valores do Depósito abaixo do Nv25: L-A03-05.",
+    "gaps": [
+      "PROPOSED-SHIELDS",
+      "L-A03-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "rz-open-pending",
+    "title": "Zeragem e recuperação: o que ainda é desconhecido",
+    "phase": "anytime",
+    "section": "open",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "todas"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "Essas lacunas limitam o manual de recuperação; os blocos acima dizem \"desconhecido\" em vez de chutar:\n- **Escudos de paz:** durações, custos, fontes e o que os quebra (PROPOSED-SHIELDS).\n- **Alcance de uma zeragem:** se algo além de tropas e recursos brutos saqueáveis pode ser perdido (PROPOSED-ZEROING-LOSS-SCOPE).\n- **Custo de curar contra retreinar** em T4/T5 (L-A08-01) e as regras oficiais de **ferimento grave** (L-A08-03).\n- **Percentual de retorno do Salão dos Heróis** depois de um Reino Perdido [C04-0028] (L-A08-04).\n- **Realocação da cidade (teletransporte)** depois de uma zeragem: custos e regras (PROPOSED-TELEPORT).\n- **Proteção do Depósito** Nv6–Nv24 (L-A03-05) e **regras de migração** depois da 1.1.09 (L-B06-03).\n- **Velocidade de reconstrução:** quantos dias um F2P precisa para recuperar uma marcha (L-A03-02).",
+    "why_md": "Listar o que é desconhecido mantém o conselho de recuperação honesto e dá ao plano de medição T0 uma lista clara de alvos.",
+    "cards": [
+      "C04-0028"
+    ],
+    "patch_cards": [
+      "C04-0028"
+    ],
+    "confidence": "pending",
+    "uncertain_notes": "C04-0028 é uma ficha de estado de patch (notas oficiais da 1.0.89) sem percentual.",
+    "gaps": [
+      "PROPOSED-SHIELDS",
+      "PROPOSED-ZEROING-LOSS-SCOPE",
+      "L-A08-04",
+      "PROPOSED-TELEPORT",
+      "L-A08-01",
+      "L-A08-03",
+      "L-A03-05",
+      "L-B06-03",
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  }
+]

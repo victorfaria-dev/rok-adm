@@ -1,0 +1,35 @@
+---
+// City Hall tab (UX stage 1): the player's home. Built from existing data only: the A01 City Hall
+// table (building costs tool), the routine planner and the guide's Budget reality check (F2P baseline).
+import Shell from "../../layouts/Shell.astro";
+import CityHall from "../../components/cityhall/CityHall";
+import { defaultProfile } from "@rokadm/core";
+import { facts } from "@rokadm/data";
+import { realityCheck } from "@rokadm/planner";
+import type { CityHallTargets } from "../../lib/city-hall";
+import { levelTable } from "../../lib/tools-payload";
+
+const rows = levelTable("A01-city-hall").rows.map(({ level, food, wood, stone, gold, seconds, extra, requirements, garbled }) => ({
+  level, food, wood, stone, gold, seconds, extra, requirements, ...(garbled ? { garbled } : {}),
+}));
+
+const rc = realityCheck({ ...defaultProfile(), spending: "f2p", kingdomDay: null }, facts);
+const k = rc.kvk1;
+if (!k) throw new Error("City Hall targets need the F2P KvK1 reality check");
+const targets: CityHallTargets = {
+  kvk1Day: k.startDay.value,
+  chWorkable: k.cityHall.value.workableMin,
+  chNotExpected: k.cityHall.value.notExpected,
+  lostKingdomCH: k.lostKingdomEntryCH.value,
+  t4Day: k.t4Day.value,
+  powerMillions: { min: k.power.value.minMillions, max: k.power.value.maxMillions },
+  vipTargets: rc.vipTargets?.value ?? [],
+  chMilestones: rc.oneTimeGems
+    .filter((g): g is typeof g & { unlockCityHall: number } => g.unlockCityHall !== null)
+    .sort((a, b) => a.unlockCityHall - b.unlockCityHall)
+    .map((g) => ({ label: g.label, gems: g.value, cityHall: g.unlockCityHall })),
+};
+---
+<Shell title="Prefeitura" description="Sua conta num relance: o que não pode faltar hoje, o próximo nível da Prefeitura e o custo dele, e quanto falta para as metas da KvK1." mode="operate">
+  <CityHall client:load rows={rows} targets={targets} />
+</Shell>

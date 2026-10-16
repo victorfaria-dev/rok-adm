@@ -150,3 +150,45 @@ Fichas B02–B09 migradas para slugs em 2026-10-13 (PL01–PL13).
 - `src:heaven-guardian` declara copiar um guia-fonte; tabelas de Trading Post ≈ `src:rkg`.
 - `src:rkg-lyceum` (texto oficial do quiz) **é** independente de `src:fandom`, mas pode estar desatualizado.
 - `src:youtube-summary` é derivado de `src:youtube` e não é literal.
+
+## Onda J (2026-10-13) — fontes novas por frente
+
+Cada frente da onda J registra aqui, **só na sua subseção**, as fontes novas que cita (mesmas colunas da tabela de guias). Evita conflito de merge entre worktrees.
+
+### J1 — Progressão tardia: comandantes e equipamento (A06, A07)
+
+| Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | IDs antigos | Notas |
+|---|---|---|---|---|---|---|---|---|
+| `src:topuplive` | TopUpLive blog (topuplive.com/news): "Rise of Kingdoms Commanders Tier List 2026" | T3 (vendedor de recarga: **conflito de interesse**) | pub 2026-08-14, mod 2026-08-18 | curl (UA padrão) | — | **sim** (top-up) | — | Mantém conteúdo antigo com data nova (ex.: recomenda Alexander/Saladin para KvK3). Versões em outros idiomas trazem listas diferentes. Não é independente de outras lojas (lootbar/topuplist) em formato, mas o texto não é cópia literal das que foram verificadas. |
+
+<!-- separador J1/J2: não editar -->
+<!-- . -->
+<!-- . -->
+
+### J2 — Progressão tardia: tropas, cura, pesquisa, economia de gemas (A08, A02, A04, B01)
+
+| Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | IDs antigos | Notas |
+|---|---|---|---|---|---|---|---|---|
+
+Sem slugs novos. Notas de acesso da J2 (2026-10-13):
+
+- `src:lilith-forum` · 832 official posts via list API (`limit=100`, offsets 0–800) — list pages already include full `content` · curl, header `language: en_US` · Latest English post still 2026-06-23 (1.1.09). Key late-game posts: 1030636, 1062616, 1071541, 1108303/1108923, 1359527, 1589003, 1599092, 1831889, 1868790, 1896244, 2030530, 2179486, 2213663.
+- `src:rkg` · WordPress REST `wp-json/wp/v2/posts/<id>` and `?search=`; `date` = real publication, `modified` 2026-01-02 = mass edit · curl default UA · Calculator constants live in plugin JS (e.g. `plugins/healing-calculator/healing-calculator.js`) — literal but T3 tool data.
+- `src:fandom` · `Buildings/Hospital`, `Technology/Medical_Corps`, `Technology/Royal_Guard`, `Buildings/Castle/Requirements`, `Frequently_Asked_Questions`, `Events/The_Mightiest_Governor` · MediaWiki API · No Hall of Heroes / Healing / Crystal Technology pages; no per-unit troop costs.
+- `src:packsify`, `src:lootbar`, `src:boostroom` · late-game T5/healing/KvK-prep guides (2026) · curl Firefox UA · CoI (top-up / boosting sellers).
+- `src:reddit` · — · Arctic Shift full-text search returned "Timeout"/"Too many requests" all session · Not used by J2.
+- (appgamer.com, everycalculators.com) · — · Cloudflare 403 · Not cited.
+
+<!-- separador J2/J3: não editar -->
+<!-- . -->
+<!-- . -->
+
+### J3 — Compras baratas (Low spender) e valor por dólar (A12, A11)
+
+| Slug | Fonte | Tier | Última atualização vista | Como acessar | copia_de | CoI | IDs antigos | Notas |
+|---|---|---|---|---|---|---|---|---|
+| `src:gamerefinery` | GameRefinery blog — "Rise of Kingdoms: a player perspective on monetization" (analista de monetização escrevendo como jogador) | T3 | pub 2021-01-07 | curl -L (URL com barra final) | — | — (consultoria de mercado) | — | Antigo; útil para VIP Special Privileges e para o método de valorar itens pelo preço em gemas. |
+| `src:igitems` | igitems.com — página de venda de gemas RoK (FAQ) | T3 | `dateModified` = data de acesso (não confiável) | curl | — | **sim** (vende gemas/contas) | — | Só a FAQ do 30-day gem supply ($4.99; 2,000 + 650/dia). |
+
+Reutilizados por J3 (sem linha nova): `src:lilith-forum` (lista de posts via API, 832 posts, grep local), `src:fandom` (Buildings/Shop rev. 2023-10-12; VIP rev. 2026-08-02), `src:rkg` (bundles, gems), `src:lootbar` (spending guide 2026-03-20), `src:packsify` (growth fund/monthly pass 2026-03-21), `src:rokhandbook` (riseofkingdomshandbook.com: shop-and-bundles e best-events, 2026-08-18), `src:reddit` (Arctic Shift: busca de posts funcionou; busca de comentários por texto deu timeout quase sempre; por `link_id` funcionou).
+Falharam: `src:ldshop` (spending-guide e bundles-spending-guide: Access Denied/Akamai mesmo com UA Firefox), heaven-guardian (túnel fechado), gamsgo (página JS sem texto), AppGamer (403, não tentado de novo).

@@ -1,0 +1,1085 @@
+[
+  {
+    "id": "farms-general-purpose",
+    "title": "Para que serve uma farm",
+    "phase": "overview",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Uma farm é uma segunda cidade que **você mesmo joga**. Ela coleta recursos e os envia à conta principal pelo Entreposto Comercial, que cobra uma taxa [A13-0010].\n\nOs guias também listam usos secundários: pontos do MGE, Livros do Pacto e apoio na KvK (bucha de canhão, honra) [A13-0010].\n\nOs guias dizem que as farms ficam especialmente valiosas quando a conta principal libera o T5, porque o gasto de ouro e de recursos dispara [A13-0010].",
+    "why_md": "Uma farm custa minutos diários, então só faz sentido se o que ela envia valer esse tempo. A finalidade está bem documentada (três guias concordam, A13-0010), mas os minutos por dia e o rendimento por dia ainda não foram medidos, então a troca para um jogador F2P com pouco tempo continua em aberto.",
+    "cards": [
+      "A13-0010"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Os minutos por farm por dia e o rendimento por dia não foram medidos (L-A13-01). Nenhuma fonte diz quantas farms cabem em cada faixa de gasto (L-A13-04).",
+    "gaps": [
+      "L-A13-01",
+      "L-A13-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-accounts",
+    "title": "Contas: uma segunda cidade no seu reino, jogada à mão",
+    "phase": "overview",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "**Como conseguir uma.** O Gerenciamento de Personagens nativo permite criar uma segunda cidade no mesmo reino; o limite mais documentado é de duas cidades por reino [A13-0001]. Caminho relatado por um guia: Perfil → Configurações → Gerenciamento de Personagens → Criar Novo Personagem → escolher o número do reino [A13-0001]. Mais contas em um reino são relatadas apenas via migração/passaportes, e essa afirmação não foi verificada [A13-0001].\n\n**O que as regras dizem.** Guias secundários afirmam que contas farm são permitidas e que criar e trocar de personagem manualmente pelo Gerenciamento de Personagens é um recurso normal do jogo, enquanto bots, macros, coleta automatizada e clientes modificados devem ser evitados [A13-0008]. É apenas uma fonte secundária: ainda não foi coletado nenhum texto oficial.\n\nDesde a 1.1.07, jogadores que usam ferramentas de terceiros, como scripts ou trapaças, perdem Pontuação de Conduta, e há punições abaixo de certos limites [C04-0006].\n\n**O que isso significa para você:**\n- Você faz toda ação na farm à mão: trocar de cidade, coletar, enviar.\n- Sem bots, macros, scripts nem clientes modificados.\n- O KingdomOps só ajuda você a planejar e a fazer anotações.",
+    "why_md": "Errar aqui pode custar a conta principal, não só a farm. O sistema de Pontuação de Conduta (C04-0006) pune scripts de terceiros, e as únicas afirmações de que farms são aceitáveis vêm de guias secundários (A13-0008), então a leitura segura é: farms à mão, nada automatizado.",
+    "cards": [
+      "A13-0001",
+      "A13-0008",
+      "C04-0006"
+    ],
+    "patch_cards": [
+      "C04-0006"
+    ],
+    "confidence": "low",
+    "uncertain_notes": "A13-0001 é organizado, mas não verificado: o limite de duas cidades é \"comumente documentado\" por guias, não um número oficial, e a afirmação sobre migração não pôde ser buscada de novo. A13-0008 é verificado, mas de baixa confiança: apenas fontes secundárias, uma delas um marketplace de contas (conflito de interesse); a posição oficial cabe à pesquisa dos Termos de Serviço, ainda não coletada. C04-0006 é uma ficha de estado de patch (notas oficiais de patch, ainda sem checagem cruzada).",
+    "gaps": [
+      "L-A13-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-ch-targets",
+    "title": "Metas de Prefeitura para a farm: Prefeitura 11, 17, 22",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "O número de marchas que uma cidade pode enviar ao mesmo tempo cresce com a Prefeitura: 1 abaixo da Prefeitura 5, 2 a partir da 5, 3 a partir da 11, 4 a partir da 17, 5 a partir da 22 [A03-0023].\n\nOs guias fixam os marcos da farm nesses degraus:\n- **Prefeitura 11** (3 marchas) como meta inicial.\n- **Prefeitura 17** (4 marchas) como mínimo prático para uma farm séria.\n- **Prefeitura 22** (5 marchas, T4) como a meta geral mais forte.\n- Prefeitura 24–25 só para farms avançadas.\n\nFonte dos marcos: [A13-0002]. Os custos e tempos de construção da Prefeitura estão na tabela da Prefeitura [A01-0001]; nenhuma fonte dá o tempo ou o custo de cada marco para uma farm.",
+    "why_md": "Cada marcha extra é mais um exército coletando ao mesmo tempo, então os degraus de marcha são onde a produção de uma farm dá um salto. Um guia avisa que levar uma conta à Prefeitura 22 toma muito tempo (A13-0002), e o ganho de rendimento por degrau ainda não foi medido.",
+    "cards": [
+      "A01-0001",
+      "A03-0023",
+      "A13-0002"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "O rendimento ganho por marcha e os minutos de farm por dia não foram medidos (L-A13-01).",
+    "gaps": [
+      "L-A13-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-trading-post",
+    "title": "Entreposto Comercial: a taxa, o nível a mirar e a Mina de Ouro de que ele precisa",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 5,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "**Taxa por nível do Entreposto Comercial:** 35% no Nv1, 31% no Nv5, 26% no Nv10, 21% no Nv15, 19% no Nv17, 16% no Nv20, 15% no Nv21, 14% no Nv22, 12% no Nv23, 10% no Nv24, 8% no Nv25 [A03-0024].\n\n**Nível a mirar na farm:**\n- Os guias recomendam um Entreposto Comercial na farm de **15 ou mais** (21% de taxa) [A13-0003].\n- Faixas de um guia: casual 15–16, ativa 21 (15%), frequente/KvK 24 (10%); Nv25 (8%) só para farms bem desenvolvidas [A13-0003].\n- A sua conta principal precisa de Entreposto Comercial 24 de qualquer jeito para a Prefeitura 25 [A13-0003].\n\n**Requisito de Mina de Ouro:** o Entreposto Comercial Nv10+ exige uma Mina de Ouro do mesmo nível [A03-0024], então a farm também sobe suas Minas de Ouro.\n\n**O que a taxa significa:** para receber X na conta principal com taxa t, a farm envia X / (1 − t): 1,27× com 21% e 1,11× com 10% [A03-0024].\n\n**Quando ele é liberado é disputado:** Prefeitura 12 é o mais provável, contra Prefeitura 10 em uma tabela mais antiga. Pendente de verificação no jogo [A03-0025, A01-0009].",
+    "why_md": "A taxa é o preço de cada envio e cai bastante com o nível do Entreposto Comercial, então o Entreposto Comercial é o edifício da farm que se paga de forma mais direta. A tabela de taxas concorda em todas as fontes (A03-0024, alta confiança); o nível de desbloqueio, não.",
+    "cards": [
+      "A01-0009",
+      "A03-0024",
+      "A03-0025",
+      "A13-0003"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0025 é disputado (desbloqueio do Entreposto Comercial: Prefeitura 12 contra 10). A01-0009 é disputado e de baixa confiança (os pré-requisitos iniciais diferem entre a wiki e um site de guia). O requisito de Mina de Ouro começa no Nv10 na wiki, mas no Nv1 em um site de guia (conflito menor anotado em A03-0024).",
+    "gaps": [
+      "L-A03-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-storehouse",
+    "title": "Só o que está acima da proteção do Depósito pode ser enviado",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 50,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "Desde a atualização 1.0.44 (março de 2021), os recursos protegidos pelo Depósito não podem mais ser enviados pelo Entreposto Comercial; só os recursos acima da quantidade protegida são transferíveis [A03-0030].\n\n- O Depósito protege 2,5M de cada recurso no Nv25; os valores de níveis menores diferem entre as fontes a partir do Nv6 [A03-0006].\n- Então um Depósito alto na farm **não** ajuda a alimentar a conta principal: a quantidade protegida é um piso que você não pode enviar [A03-0030].\n- Recursos guardados como itens (caixas fechadas) não podem ser saqueados e não têm limite de armazenamento [A03-0007].",
+    "why_md": "Os jogadores costumam subir o Depósito da farm esperando proteger mais para enviar; desde a 1.0.44 esse estoque é exatamente o que não pode ser enviado (A03-0030, notas oficiais). Ler \"só o excesso é transferível\" segue o texto da nota de patch e ainda precisa de verificação no jogo.",
+    "cards": [
+      "A03-0006",
+      "A03-0007",
+      "A03-0030"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A proteção do Depósito entre Nv6 e Nv24 difere em 10–35% entre duas tabelas (A03-0006).",
+    "gaps": [
+      "L-A03-05"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-transfer-march",
+    "title": "Todo envio leva uma marcha e tempo de viagem",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 60,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "As transferências não são instantâneas: um comerciante ocupa uma fila de despacho de tropas (compartilhada com os comandantes), caminha até a cidade de destino e volta [A03-0026]. Cada transferência do Entreposto Comercial ocupa uma fila de marcha [A03-0023].\n\n- Enquanto um envio viaja, essa marcha não está coletando.\n- Mantenha a farm perto da conta principal para encurtar as viagens [A03-0026].\n- Capacidade por viagem: o Entreposto Comercial Nv25 carrega 10.000.000 (patch oficial 1.0.90); a wiki dá Nv1 10.000, Nv15 1,6M, Nv24 4,0M, e tabelas de guias com metade desses valores estão desatualizadas [A03-0025].",
+    "why_md": "Em uma farm com 3 ou 4 marchas, um envio é um custo real: tira um dos exércitos de coleta do mapa durante toda a viagem de ida e volta. A capacidade no Nv25 é oficial; os níveis menores se apoiam só na wiki.",
+    "cards": [
+      "A03-0023",
+      "A03-0025",
+      "A03-0026"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0025 é disputado (desbloqueio da Prefeitura) e as capacidades Nv1–Nv24 dela vêm de uma única fonte da wiki.",
+    "gaps": [
+      "L-A03-04"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-gathering",
+    "title": "Coleta em uma farm: o que a deixa mais rápida",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 70,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Território da aliança:** coletar em pontos de recurso normais dentro do território da sua aliança é 25% mais rápido [A03-0009].\n- **Itens de Coleta Aprimorada:** +50% de velocidade de coleta para todos os recursos por 8 ou 24 horas. Ambos aparecem no Mercador Misterioso e podem ser comprados com recursos (p. ex., 90 mil de madeira) em vez de gemas; desde a 1.1.09 podem ser usados em massa [A03-0013]. Os itens de impulso de *produção* de recursos foram removidos na 1.1.09; os impulsos de coleta não foram afetados [A03-0013].\n- **Tamanho do nó:** nós de nível maior guardam mais, mas não coletam mais rápido. Online, envie ao nó mais próximo; antes de sair, envie a nós grandes para a marcha não voltar cedo [A03-0016].\n- **Tipo de tropa:** as unidades de cerco carregam mais por unidade: Aríete (T1) 20 contra Infantaria T1 7 [A03-0015].\n- **Comandante de coleta:** só os talentos do comandante principal valem; o nível 37 libera Ferramentas Superiores (~25% de velocidade de coleta) [A03-0017].",
+    "why_md": "Essas são as alavancas que uma farm controla sem gastar: onde coleta, quais impulsos compra com recursos, quais nós escolhe, o que envia e quem lidera a marcha. A quantidade por nível de nó e a velocidade base de coleta não são publicadas em nenhum lugar a que chegamos, então os rendimentos exatos continuam pendentes.",
+    "cards": [
+      "A03-0009",
+      "A03-0013",
+      "A03-0015",
+      "A03-0016",
+      "A03-0017"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "Os valores de talento (A03-0017) podem ter mudado desde 2020. As quantidades por nível de nó e a velocidade base de coleta estão pendentes (L-A03-01); o rendimento por Prefeitura está pendente (L-A03-02).",
+    "gaps": [
+      "L-A03-01",
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-safety",
+    "title": "Evite que a farm vire um alvo",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 80,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Farms com grandes estoques brutos em Prefeitura baixa atraem ataques, principalmente durante eventos de abates. Envie o excedente à conta principal e mantenha os recursos brutos expostos dentro da proteção do Depósito [A13-0005].\n- Recursos guardados como itens não podem ser saqueados [A03-0007].\n- Um guia sugere um comandante defensivo (Sun Tzu ou Kusunoki) porque as farms são cercadas durante eventos de abates [A13-0005].\n- Alguns jogadores zeram a própria farm para pontos de MGE ou de abates; o autor do guia desaconselha, a menos que você precise disso para um comandante [A13-0005].",
+    "why_md": "O estoque de uma farm só serve quando chega à conta principal. Dois guias concordam que uma farm de Prefeitura baixa sentada sobre uma pilha grande é o alvo mais fácil do reino (A13-0005).",
+    "cards": [
+      "A03-0007",
+      "A13-0005"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-placement",
+    "title": "Onde a farm mora: etiqueta de aliança e de reino",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 90,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "Visão A (mesma aliança): um guia de 2019 prefere ter a conta principal e a farm na aliança principal [A13-0006]. Visão B (aliança de farm separada): um guia de 2026 diz que as vagas da aliança podem ser necessárias para combatentes, então uma farm fraca não deve entrar na aliança principal sem aprovação [A13-0006].",
+    "body_md": "- Ponha a farm na aliança da sua conta principal ou em uma aliança de farms aprovada, e colete dentro do território (+25%) [A13-0006, A03-0009].\n- Não mova uma farm fraca para a aliança principal (de combate) sem aprovação: as vagas podem ser necessárias para combatentes [A13-0006].\n- O que uma farm faz na KvK e se pontos de MGE podem ser trocados seguem as regras do seu reino e da sua aliança, que variam. Pergunte à sua liderança [A13-0006].\n- Instale a farm perto da conta principal para os envios serem curtos [A03-0026].",
+    "why_md": "Os reinos definem as próprias regras de farm e não achamos um conjunto concreto de regras para citar, então este bloco só pode dizer que perguntas fazer. Território (+25%, A03-0009) e distância (A03-0026) são mecânicas; o resto é etiqueta.",
+    "cards": [
+      "A03-0009",
+      "A03-0026",
+      "A13-0006"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0006 é verificado, mas de baixa confiança: dois guias, nenhum conjunto concreto de regras de reino encontrado.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-daily-routine",
+    "title": "Um dia de farm (apenas qualitativo; minutos não medidos)",
+    "phase": "daily",
+    "section": "farms",
+    "order": 100,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "Nenhuma fonte quantifica minutos por farm por dia [A13-0007]. A orientação é qualitativa:\n- Minimize o tempo de farm.\n- Ao entrar, despache; atualize durante o dia; antes de sair, despache para nós grandes.\n- Colete os edifícios em até 10 horas: eles armazenam 10× a produção por hora e param de produzir quando cheios [A03-0002].\n- Entre pelo menos duas vezes por dia para as marchas do centro de recursos da aliança.\n- Envie o que está acima da proteção do Depósito [A03-0030].\n\nFonte da rotina: [A13-0007]. Todo passo é feito à mão no jogo.",
+    "why_md": "O tempo que uma farm custa decide se vale a pena tê-la, e ninguém o mediu. Até existir uma medição com cronômetro no jogo (L-A13-01), esta página mostra a rotina, mas nenhum minuto.",
+    "cards": [
+      "A03-0002",
+      "A03-0030",
+      "A13-0007"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0007 é verificado, mas de baixa confiança: apenas conselho qualitativo, sem minutos medidos.",
+    "gaps": [
+      "L-A13-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-bottlenecks",
+    "title": "O que falta à sua conta principal, por etapa da Prefeitura",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 110,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Início do jogo:** comida e madeira dominam os custos de construção [A03-0021].\n- **Por volta da Prefeitura 6:** a pedra passa a ser exigida pela maioria dos edifícios, é o principal recurso da Muralha e é produzida mais devagar [A03-0021]. As melhorias da Prefeitura custam comida e madeira, mais pedra a partir da Prefeitura 6, e nenhum ouro [A01-0001].\n- **A partir da Prefeitura 10:** o ouro é liberado com a primeira Mina de Ouro na Prefeitura 10. Não é usado em nenhum edifício, mas é exigido para toda tecnologia da Academia depois da Academia 10 e para tropas de Nível 3+ [A03-0001, A03-0021].\n- **Perto do T5:** o ouro vira o principal gargalo ao se aproximar ou usar o T5 (treinamento e cura) [A03-0021].\n\nEntão uma farm alimenta primeiro comida e madeira, depois pedra, depois ouro. Veja os guias por recurso abaixo.",
+    "why_md": "Uma farm só serve se enviar o que a conta principal está precisando. Nenhuma fonte dá uma tabela exata Prefeitura por Prefeitura, mas a ordem comida/madeira → pedra → ouro é consensual (A03-0021).",
+    "cards": [
+      "A01-0001",
+      "A03-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0001 é disputado apenas no desbloqueio da pedra (primeira Pedreira na Prefeitura 4 ou 6); os fatos de ouro nela não são disputados.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-general-variants",
+    "title": "Que tipo de farm: uma farm geral é o normal",
+    "phase": "overview",
+    "section": "farms",
+    "order": 120,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Uma farm que coleta tudo (o padrão).** Os guias descrevem uma farm ativa como o normal [A13-0007]; um guia recomenda a França para uma única farm ativa (início com Joana d'Arc, +10% de madeira) [A13-0009].\n- **Uma farm por recurso:** apenas um guia de 2019, que diz que isso é só para jogadores que dedicam muito tempo [A13-0009]. O limite comumente documentado de duas cidades por reino também atrapalha [A13-0001]. Evidência fraca.\n- **Farm de ouro:** disputado. O ouro pode ser enviado pelo Entreposto Comercial [A03-0027], mas os guias aconselham coletar ouro na conta principal [A13-0004]. Veja o guia de ouro.\n- **Farm de dois recursos:** nenhuma fonte recomenda pares. O único par discutido aqui é uma hipótese rotulada (comida + madeira), mostrada abaixo.",
+    "why_md": "Farms especializadas multiplicam o custo diário de tempo, que é justamente o que falta a um jogador F2P, e a única fonte para elas é um único guia de 2019. Uma farm geral é o que todo guia pressupõe.",
+    "cards": [
+      "A03-0027",
+      "A13-0001",
+      "A13-0004",
+      "A13-0007",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0007 e A13-0009 são verificado, mas de baixa confiança (A13-0009 se apoia em um guia de 2019). A13-0001 é organizado, mas não verificado. A13-0004 é organizado, de baixa confiança e dividido. O envio de ouro (A03-0027) ainda precisa de verificação no jogo.",
+    "gaps": [
+      "L-A03-03",
+      "L-A13-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-pair-food-wood",
+    "title": "Hipótese: uma farm de comida + madeira",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 130,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 1,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "n/a",
+    "split_views": null,
+    "body_md": "Hipótese: uma farm que coleta principalmente comida e madeira pode ser o único par que compensa com uma Prefeitura baixa na farm. **Nenhuma fonte recomenda pares de recursos**; este é raciocínio derivado nosso, não conselho.\n\nEntradas:\n- Comida e madeira ganham a primeira tecnologia de +15% de coleta na Academia 5–9, enquanto pedra e ouro precisam da Academia 12–15 [A03-0028].\n- Comida e madeira dominam os custos de construção iniciais da conta principal [A03-0021].\n- Roma (+10% de coleta de comida) e França (+10% de coleta de madeira) [A03-0029].\n\nMétodo: comparar o menor nível de Academia que dá +15% a cada recurso com o gargalo inicial da conta principal. Não testado no jogo: o rendimento diário de uma farm está pendente de medição.",
+    "why_md": "Nenhuma fonte recomenda pares de recursos: a pesquisa de farms diz isso explicitamente (A13-0009). Este bloco existe só para o raciocínio ficar visível. Ele é derivado de três entradas: o momento das tecnologias da Academia (A03-0028), o gargalo inicial da conta principal (A03-0021) e os bônus das civilizações (A03-0029). Até que rendimentos de farms no jogo o testem (L-A13-03), trate como hipótese.",
+    "cards": [
+      "A03-0021",
+      "A03-0028",
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "pending",
+    "uncertain_notes": "A13-0009 é verificado, mas de baixa confiança e é citado só pela ausência de qualquer fonte sobre pares. A recomendação em si não tem fonte.",
+    "gaps": [
+      "L-A13-03"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-food-when",
+    "title": "Quando a sua conta principal precisa de comida",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Comida e madeira dominam os custos de construção no início do jogo [A03-0021].\n- As melhorias da Prefeitura custam comida e madeira (pedra a partir da Prefeitura 6, nenhum ouro) [A01-0001].\n- A comida continua em toda melhoria da Prefeitura, então a comida da farm segue útil depois, mas deixa de ser o recurso mais escasso quando pedra e ouro entram [A03-0021].",
+    "why_md": "Uma farm nova pode coletar comida desde o primeiro dia, e comida é o que a conta principal queima primeiro, então comida é o primeiro envio natural.",
+    "cards": [
+      "A01-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-food-tech",
+    "title": "Academia: as tecnologias de coleta de comida vêm cedo",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Sickle:** +15% de coleta de comida na Academia 5–9 [A03-0028].\n- **Scythe:** +35% de coleta de comida na Academia 17–20 [A03-0028].\n\nUma farm jovem chega à primeira tecnologia de comida muito antes das de pedra e ouro (Academia 12–15).",
+    "why_md": "As tecnologias de coleta são o impulso de velocidade permanente da própria farm. Os valores vêm de revisões antigas da wiki e podem ter sido reequilibrados desde então.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-food-civ",
+    "title": "Civilização: Roma dá +10% de coleta de comida",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Roma:** +10% de coleta de comida; **Japão:** +5% de coleta de todos os recursos [A03-0029].\n- **Espanha:** +20% de *produção* de recursos — edifícios da cidade, **não** coleta [A03-0029].\n- Um guia de 2019: se você montar várias contas farm e esta coletar comida, Roma é a melhor escolha [A13-0009].",
+    "why_md": "O bônus de uma civilização é uma porcentagem permanente sobre tudo o que a farm coleta. Só a tabela de bônus é firme; o conselho de Roma para comida vem de um guia voltado a jogadores com várias farms.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 é verificado, mas de baixa confiança (um guia de 2019). Um guia, segundo relatos, lista o Japão sem bônus de coleta (conflito menor em A03-0029).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-food-buildings",
+    "title": "Comida dos edifícios da própria farm",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- Um edifício Fazenda produz 400/h no Nv1, subindo para 10.400/h no Nv24 e 20.800/h no Nv25 [A03-0002].\n- O armazenamento é sempre 10× a produção por hora, então ele para de produzir se você não coletar em ~10 horas [A03-0002].\n- Relata-se que a coleta no mapa supera bastante os edifícios, mas os números por trás disso estão desatualizados [A03-0022].",
+    "why_md": "Os edifícios produzem sem marchas, mas devagar; a coleta é de onde vem o volume de uma farm. Ainda faltam rendimentos de coleta medidos por Prefeitura.",
+    "cards": [
+      "A03-0002",
+      "A03-0022"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0022 é parcialmente desatualizado e de baixa confiança: rendimentos de autores de 2019–2020, antes das mudanças de coleta da 1.0.49.",
+    "gaps": [
+      "L-A03-02"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-wood-when",
+    "title": "Quando a sua conta principal precisa de madeira",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Comida e madeira dominam os custos de construção no início do jogo [A03-0021].\n- As melhorias da Prefeitura custam comida e madeira (pedra a partir da Prefeitura 6, nenhum ouro) [A01-0001].\n- Como a comida, a madeira continua em toda melhoria da Prefeitura, mas deixa de ser o recurso mais escasso quando pedra e ouro entram [A03-0021].",
+    "why_md": "A madeira é o outro recurso de construção inicial, disponível desde o primeiro dia na farm, então é enviada desde o começo junto com a comida.",
+    "cards": [
+      "A01-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-wood-tech",
+    "title": "Academia: as tecnologias de coleta de madeira vêm cedo",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Handaxe:** +15% de coleta de madeira na Academia 5–9 [A03-0028].\n- **Whipsaw:** +35% de coleta de madeira na Academia 17–20 [A03-0028].",
+    "why_md": "Mesmo momento da comida: uma farm jovem ganha a primeira tecnologia de madeira cedo. Os valores vêm de revisões antigas da wiki e podem ter sido reequilibrados desde então.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-wood-civ",
+    "title": "Civilização: a França dá +10% de coleta de madeira",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **França:** +10% de coleta de madeira; **Japão:** +5% de coleta de todos os recursos [A03-0029].\n- **Espanha:** +20% de *produção* de recursos — edifícios da cidade, **não** coleta [A03-0029].\n- Um guia de 2019 recomenda a França para uma única farm ativa (início com Joana d'Arc, +10% de madeira) [A13-0009].",
+    "why_md": "Se você tem uma farm geral, a única civilização que um guia cita para ela é a França. O bônus é firme; a recomendação é de um guia.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 é verificado, mas de baixa confiança (um guia de 2019).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-wood-merchant",
+    "title": "A madeira compra impulsos de coleta no Mercador Misterioso",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- Itens de Coleta Aprimorada (+50% por 8 ou 24 horas) aparecem no Mercador Misterioso e podem ser comprados com recursos (p. ex., 90 mil de madeira) em vez de gemas [A03-0013].\n- A Serraria tem a mesma tabela da Fazenda: 400/h no Nv1, 10.400/h no Nv24, 20.800/h no Nv25 [A03-0002].",
+    "why_md": "Gastar a madeira da farm em impulsos de coleta transforma um recurso em excesso em coleta mais rápida de tudo, sem gemas.",
+    "cards": [
+      "A03-0002",
+      "A03-0013"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-stone-when",
+    "title": "Quando a sua conta principal precisa de pedra",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- Por volta da Prefeitura 6 a pedra passa a ser exigida pela maioria dos edifícios; é o principal recurso da Muralha e é produzida mais devagar [A03-0021].\n- As melhorias da Prefeitura custam pedra a partir da Prefeitura 6 [A01-0001].\n- A pedra é liberada com a primeira Pedreira, e a coleta no mapa exige a tecnologia Quarrying; se a primeira Pedreira vem na Prefeitura 4 ou 6 é disputado [A03-0001, A01-0009].",
+    "why_md": "A pedra é onde a maioria das contas principais sente falta primeiro, porque os custos de construção a exigem e ela é produzida devagar. Uma farm que consegue enviar pedra ajuda a partir do meio do jogo.",
+    "cards": [
+      "A01-0001",
+      "A01-0009",
+      "A03-0001",
+      "A03-0021"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0001 e A01-0009 são disputados quanto ao nível de desbloqueio da pedra (Prefeitura 4 contra 6).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-stone-tech",
+    "title": "Academia: as tecnologias de pedra vêm depois, então a pedra é uma etapa tardia da farm",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Handcart:** +15% de coleta de pedra na Academia 12–15 [A03-0028].\n- **Stone Saw:** +35% de coleta de pedra na Academia 20–25 [A03-0028].\n\nUma farm precisa de Academia 12+ antes de a pedra ser coletada em ritmo impulsionado, então a pedra combina com uma farm mais desenvolvida.",
+    "why_md": "Comparadas com comida e madeira (Academia 5–9), as tecnologias de pedra exigem uma farm muito mais desenvolvida. Os valores vêm de revisões antigas da wiki e podem ter sido reequilibrados desde então.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-stone-civ",
+    "title": "Civilização: Grécia e Bizâncio dão +10% de coleta de pedra",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Grécia:** +10% de coleta de pedra; **Bizâncio:** +10% de coleta de pedra; **Japão:** +5% de coleta de todos os recursos [A03-0029].\n- Um guia de 2019 cita o Bizâncio para uma farm de pedra em um esquema de uma farm por recurso, que ele diz ser só para jogadores que dedicam muito tempo [A13-0009].",
+    "why_md": "Duas civilizações impulsionam a pedra. Uma farm só de pedra tem pouco respaldo (um guia, jogadores dedicados), então para a maioria dos jogadores esse bônus só importa se a farm geral já usar uma delas.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 é verificado, mas de baixa confiança (um guia de 2019).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-gold-when",
+    "title": "Quando a sua conta principal precisa de ouro",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 10,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- O ouro é liberado com a primeira Mina de Ouro na Prefeitura 10 (a coleta no mapa exige Metallurgy). Não é usado em nenhuma melhoria de edifício, mas é exigido para toda tecnologia da Academia depois da Academia 10 e para treinar ou melhorar tropas de Nível 3+ [A03-0001].\n- Ele vira o principal gargalo ao se aproximar ou usar o T5 (treinamento e cura) [A03-0021].\n- Um guia: ao liberar tropas de nível 5, você vai precisar de uma conta farm [A13-0010].\n- A farm sobe as Minas de Ouro de qualquer forma: o Entreposto Comercial Nv10+ exige uma Mina de Ouro do mesmo nível [A03-0024].",
+    "why_md": "O ouro é o gargalo tardio, então decide quão útil uma farm é no longo prazo, e é também onde o debate da farm de ouro abaixo importa.",
+    "cards": [
+      "A03-0001",
+      "A03-0021",
+      "A03-0024",
+      "A13-0010"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A03-0001 é disputado apenas no desbloqueio da pedra; os fatos de ouro dela não são disputados.",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-gold-tech",
+    "title": "Academia: as tecnologias de ouro vêm tarde, então o ouro é uma etapa tardia da farm",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 20,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 3,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "mechanic",
+    "split_views": null,
+    "body_md": "- **Placer Mining:** +15% de coleta de ouro na Academia 12–15 [A03-0028].\n- **Shaft Mining:** +35% de coleta de ouro na Academia 20–25 [A03-0028].\n\nA faixa de +35% exige Academia 20+, que uma farm só alcança tarde.",
+    "why_md": "A conta principal costuma ter essas tecnologias muito antes da farm, o que é um dos motivos de os guias mandarem coletar ouro na conta principal. Os valores vêm de revisões antigas da wiki e podem ter sido reequilibrados desde então.",
+    "cards": [
+      "A03-0028"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-gold-civ",
+    "title": "Civilização: Maias dão +10% de coleta de ouro",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 30,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 2,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "majority",
+    "split_views": null,
+    "body_md": "- **Maias:** +10% de coleta de ouro; **Japão:** +5% de coleta de todos os recursos [A03-0029].\n- Um guia de 2019 citou o Japão para uma farm de ouro; esse conselho é anterior aos Maias [A13-0009, A03-0029].",
+    "why_md": "Se uma farm coleta ouro, os Maias são hoje a única civilização com bônus específico de ouro.",
+    "cards": [
+      "A03-0029",
+      "A13-0009"
+    ],
+    "patch_cards": [],
+    "confidence": "medium",
+    "uncertain_notes": "A13-0009 é verificado, mas de baixa confiança (um guia de 2019). Um guia, segundo relatos, lista o Japão sem bônus de coleta (conflito menor em A03-0029).",
+    "gaps": [],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  },
+  {
+    "id": "farms-gold-ship-or-main",
+    "title": "Ouro na farm ou na conta principal? As fontes estão divididas",
+    "phase": "anytime",
+    "section": "farms",
+    "order": 40,
+    "stage": [
+      "todos"
+    ],
+    "perfil": [
+      "todos"
+    ],
+    "funcao": [
+      "farm"
+    ],
+    "hours_min_per_day": null,
+    "time_cost_min": null,
+    "priority": 4,
+    "recommended_for": [],
+    "ch_range": null,
+    "civ": [],
+    "consensus": "split",
+    "split_views": "Visão A (a farm pode enviar ouro): o ouro é um dos quatro recursos que você pode escolher na assistência de recursos (\"Escolha Comida, Madeira, Pedra ou Ouro\"), um relato de jogador de 2021 descreve a doação de ouro, e o limite é a regra do Depósito: só a quantidade acima da proteção pode ser enviada [A03-0027, A03-0030]. Visão B (coletar ouro na conta principal): os guias aconselham coletar ouro na conta principal, porque ela tem um melhor comandante de coleta e tecnologia e evita a taxa de transferência [A13-0004].",
+    "body_md": "**Uma farm pode enviar ouro?** Sim, segundo a melhor evidência que temos: o ouro pode ser escolhido na assistência de recursos, e só a quantidade acima da proteção do Depósito pode ser enviada [A03-0027, A03-0030]. Isso ainda precisa de verificação no jogo, incluindo se a assistência de ouro exige algum nível específico do Entreposto Comercial.\n\n**Deveria?** Os guias aconselham coletar ouro na conta principal: melhor comandante e tecnologia, sem taxa [A13-0004]. Gemas não podem ser transferidas de farms de jeito nenhum, então a coleta de gemas é só da conta principal [A13-0004].\n\n**Nosso padrão para o F2P:** não monte uma farm dedicada de ouro até a verificação no jogo confirmar o envio de ouro e o rendimento. Uma farm geral ainda pode enviar o ouro que tiver acima da proteção.",
+    "why_md": "O ouro é o gargalo tardio, então a pergunta importa, mas os dois lados respondem perguntas diferentes: um fala do que o jogo permite (A03-0027), o outro do que é eficiente (A13-0004). Nenhum dos dois tem medição no jogo por trás ainda.",
+    "cards": [
+      "A03-0027",
+      "A03-0030",
+      "A13-0004"
+    ],
+    "patch_cards": [],
+    "confidence": "low",
+    "uncertain_notes": "A13-0004 é organizado, de baixa confiança e dividido; a afirmação sobre gemas é uma paráfrase que não pôde ser relocalizada. A03-0027 é verificado com confiança média, mas ainda aguarda uma verificação no jogo (L-A03-03).",
+    "gaps": [
+      "L-A03-03",
+      "L-A13-01"
+    ],
+    "low_spender_note": null,
+    "as_of": "2026-10-13",
+    "patch_ref": "1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3)"
+  }
+]

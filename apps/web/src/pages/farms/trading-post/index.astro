@@ -1,0 +1,18 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import FarmsNav from "../../../components/farms/shared/FarmsNav.astro";
+import TradingPostCalc from "../../../components/farms/tools/TradingPostCalc";
+import "../../../components/farms/shared/farms.css";
+import "../../../components/farms/tools/tools.css";
+---
+<Shell title="Calculadora do Entreposto Comercial" description="Quanto uma conta farm precisa enviar pelo Entreposto Comercial para a sua principal receber o que precisa: imposto, viagens, rodadas de marcha e o que o Depósito permite enviar." mode="operate">
+  <div class="fm">
+    <header class="fm-head">
+      <h1>Calculadora do Entreposto Comercial</h1>
+      <p class="fm-lead">Digite o que a sua principal precisa. Calculamos quanto a conta farm deve enviar depois do imposto, quantas viagens isso leva e se ela tem o suficiente acima da proteção do Depósito.</p>
+      <p class="ft-guardrail" data-guardrail>Só planejamento e anotações. Você faz cada ação no jogo por conta própria.</p>
+    </header>
+    <FarmsNav />
+    <TradingPostCalc client:load />
+  </div>
+</Shell>

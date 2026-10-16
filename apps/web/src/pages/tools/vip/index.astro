@@ -1,0 +1,35 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import VipCalc from "../../../components/tools/vip/VipCalc";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite, sourced } from "../../../lib/tools-payload";
+import { getTable } from "@rokadm/data";
+import vip from "../../../../../../packages/planner/tools-data/vip.json";
+import "../../../components/tools/kit/tools.css";
+
+const t = getTable("A05-vip-levels");
+const levels = t.rows
+  .map((r) => ({ vip: Number(r.vip_level), threshold: Number(r.vip_points_threshold) }))
+  .filter((l) => Number.isFinite(l.vip) && Number.isFinite(l.threshold));
+const perGem = sourced(vip.gemToVip), start = sourced(vip.chestStart), inc = sourced(vip.chestIncrement), cap = sourced(vip.chestCap), daily = sourced(vip.dailyGems);
+const props = {
+  levels,
+  rule: { start: start.value, increment: inc.value, cap: cap.value },
+  perGem: perGem.value,
+  dailyGems: daily.value,
+  cites: { thresholds: cite(t.factIds), chest: cite(vip.chestStart.facts), gems: cite(vip.gemToVip.facts), dailyGems: cite(vip.dailyGems.facts) },
+};
+const ids = [...t.factIds, ...vip.chestStart.facts, ...vip.gemToVip.facts, ...vip.dailyGems.facts];
+---
+<Shell title="Gemas para VIP" description="Quantos pontos VIP e gemas você precisa para o próximo nível de VIP, e quantos dias o baú diário leva. Cada número cita a sua ficha de fonte." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Gemas para VIP</h1>
+      <p class="t-lead">Pontos e gemas até o nível de VIP desejado, e os dias que leva com o baú VIP diário. Os valores ficam neste aparelho.</p>
+      <DataStamp />
+    </header>
+    <VipCalc client:load {...props} />
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

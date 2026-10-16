@@ -1,0 +1,29 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import HealingCalc from "../../../components/tools/healing/HealingCalc";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite, levelTable } from "../../../lib/tools-payload";
+import healing from "../../../../../../packages/planner/tools-data/healing.json";
+import "../../../components/tools/kit/tools.css";
+
+const COL = "Hospital Capacity";
+const h = levelTable("A01-buildings-hospital", [COL]);
+const capacities = h.rows.flatMap((r) => (r.stats[COL] == null ? [] : [{ level: r.level, capacity: r.stats[COL]! }]));
+const props = {
+  capacities,
+  cites: { capacity: h.cite, overflow: cite(healing.overflowDies.facts), t5: cite(healing.t5HealsCostMore.facts) },
+};
+const ids = [...h.cite.facts, ...healing.overflowDies.facts, ...healing.t5HealsCostMore.facts];
+---
+<Shell title="Planejador de cura" description="Capacidade do hospital por nível, quantos feridos morrem além dela e quanto custa curar um hospital cheio com os seus números por tropa." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Planejador de cura</h1>
+      <p class="t-lead">Quantos feridos os seus hospitais comportam, quantos morreriam além disso e quanto custa curar um hospital cheio em recursos, tempo e acelerações de cura. Os valores ficam neste aparelho.</p>
+      <DataStamp />
+    </header>
+    <HealingCalc client:load {...props} />
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

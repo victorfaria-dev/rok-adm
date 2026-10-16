@@ -1,0 +1,17 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
+import RequirementsBuilder from "../../../components/kingdom/requirements/RequirementsBuilder";
+import "../../../components/kingdom/shared/kingdom.css";
+import "../../../components/kingdom/requirements/requirements.css";
+---
+<Shell title="Cartão de requisitos" description="Defina a fórmula de DKP e o requisito de KvK do seu reino, teste em contas de exemplo e publique um cartão que seus jogadores abrem para ver a própria meta." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>Cartão de requisitos</h1>
+      <p class="kg-lead">Escreva sua fórmula de DKP e o requisito de KvK, confira em contas de exemplo e publique um link que todo jogador pode abrir para ver a própria meta.</p>
+    </header>
+    <KingdomNav section="members" />
+    <RequirementsBuilder client:load />
+  </div>
+</Shell>

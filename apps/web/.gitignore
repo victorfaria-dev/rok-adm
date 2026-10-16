@@ -1,0 +1,11 @@
+dist/
+dist-auth-e2e/
+.env
+.env.*
+!.env.example
+.astro/
+public/icons/
+public/manifest.webmanifest
+test-results/
+playwright-report/
+public/ocr/

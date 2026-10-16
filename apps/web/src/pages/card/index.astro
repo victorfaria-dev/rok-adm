@@ -1,0 +1,51 @@
+---
+// F-60 Governor card: Experience mode (one brand moment), Operate for the form below it.
+import Shell from "../../layouts/Shell.astro";
+import ShareCardNav from "../../components/ShareCardNav.astro";
+import GovernorCard from "../../components/GovernorCard.tsx";
+import { RARITIES, RARITY_LABELS, RARITY_MEANING, RARITY_RANGES } from "../../lib/rarity";
+---
+<Shell title="Cartão do governador" description="Seu cartão de governador colecionável: raridade pela Prefeitura, cores da aliança e um avatar em PNG para baixar." mode="operate">
+  <ShareCardNav />
+  <section class="intro">
+    <h1>Cartão do governador</h1>
+    <p class="sub">Um número define a raridade: a sua Prefeitura. Incline o cartão, deixe-o com a sua cara e baixe o PNG como avatar.</p>
+  </section>
+
+  <GovernorCard client:load />
+
+  <section class="rules" aria-labelledby="rules-h">
+    <h2 id="rules-h">Como a raridade é conquistada</h2>
+    <table>
+      <thead><tr><th scope="col">Raridade</th><th scope="col">Prefeitura</th><th scope="col">O que significa no jogo</th></tr></thead>
+      <tbody>
+        {RARITIES.map((r) => {
+          const [lo, hi] = RARITY_RANGES[r];
+          return (
+            <tr>
+              <td><span class="pill" style={`color: var(--ko-rarity-${r})`}>{RARITY_LABELS[r]}</span></td>
+              <td class="mono">{lo === hi ? lo : `${lo}–${hi}`}</td>
+              <td>{RARITY_MEANING[r]}</td>
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+    <p>A raridade mede progresso, não habilidade: quem gasta chega mais cedo, mas toda conta pode chegar a Lendário. Contas F2P em Raro ou acima ganham a marca Conquista F2P.</p>
+    <p>Todo cartão é, por enquanto, <strong>Autodeclarado</strong>. O selo <strong>Verificado</strong> (um print da Prefeitura) vem com o leitor de prints, que ainda não está pronto. Nada aqui usa arte do jogo: o cartão desenha o K do KingdomOps e as suas próprias palavras.</p>
+  </section>
+</Shell>
+
+<style>
+  .intro { display: grid; gap: var(--ko-space-3); padding-block: var(--ko-space-2) var(--ko-space-8); }
+  h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  .sub { color: var(--ko-text-muted); max-width: 48ch; }
+  .rules { display: grid; gap: var(--ko-space-4); margin-top: var(--ko-space-12); }
+  h2 { font-size: var(--ko-text-sm); letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); }
+  table { border-collapse: collapse; width: 100%; font-size: var(--ko-text-sm); }
+  th, td { text-align: left; padding: var(--ko-space-2) var(--ko-space-3); border-bottom: 1px solid var(--ko-border); vertical-align: top; }
+  th { font-size: var(--ko-text-xs); letter-spacing: .04em; text-transform: uppercase; color: var(--ko-text-muted); font-weight: var(--ko-weight-semibold); }
+  .pill { font: var(--ko-weight-semibold) var(--ko-text-xs)/1 var(--ko-font-display); letter-spacing: .08em; text-transform: uppercase; padding: 6px 10px; border: 1px solid currentColor; white-space: nowrap; }
+  .rules p { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 72ch; }
+  .rules strong { color: var(--ko-text); font-weight: var(--ko-weight-semibold); }
+</style>

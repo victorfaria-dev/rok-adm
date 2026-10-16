@@ -1,5 +1,7 @@
 # Prompt — identidade visual v2 (para o Codex)
 
+> **Substituído (2026-10-13):** a identidade visual final é o kit do Victor em `design/brand/`, com tokens em `design/tokens/`. Este prompt não deve mais ser usado.
+
 Substitui `prompt-identidade-visual.md` (v1), que pedia design system completo + telas e travou. A v2 é só **identidade visual**: logo, paleta, estilos e fontes. Componentes e telas virão depois, com as skills de `skills-frontend.md`.
 
 Copie o bloco abaixo.

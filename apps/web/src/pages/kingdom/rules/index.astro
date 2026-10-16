@@ -1,0 +1,18 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
+import RulesBuilder from "../../../components/kingdom/rules/RulesBuilder";
+import "../../../components/kingdom/shared/kingdom.css";
+import "../../../components/kingdom/rules/rules.css";
+---
+<Shell title="Página de regras" description="Escreva as regras e a carta do seu reino em seções, comece por sugestões de temas comuns e depois compartilhe um link só de leitura ou imprima. Fica no seu navegador." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>Página de regras do reino</h1>
+      <p class="kg-lead">Escreva as regras do seu reino onde todo membro, migrante e grupo de idioma possa lê-las: uma página, em seções, com link só de leitura e versão para imprimir.</p>
+    </header>
+    <KingdomNav section="kingdom" />
+    <RulesBuilder client:load />
+    <p class="kg-note">Como outros conselhos combinam, registram e revisam suas regras: leia o <a href="/guides/kingdom-admin/">guia de administração do reino</a>. Para os requisitos de KvK, monte um <a href="/kingdom/requirements/">cartão de requisitos</a> e coloque o link nas suas regras.</p>
+  </div>
+</Shell>

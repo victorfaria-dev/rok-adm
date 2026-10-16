@@ -1,0 +1,169 @@
+---
+// Public landing page (UX stage 1). First visit: what KingdomOps is, for whom, three concrete
+// examples, trust points and one "Start". A returning visitor with a saved profile is sent to their
+// role's home tab before paint (LANDING_REDIRECT_SCRIPT); "/?about" always shows this page.
+import Shell from "../layouts/Shell.astro";
+import Logo from "../components/Logo.astro";
+import { LANDING_REDIRECT_SCRIPT } from "../lib/role";
+
+// Where "Start" goes. Sign-in (Supabase, later) slots in here: point START_HREF at the login step,
+// which then continues to /start/. Nothing else on the page needs to change.
+const START_HREF = "/start/";
+
+// Every user-facing string on this page, in one place.
+const S = {
+  docTitle: "KingdomOps: planejador para jogadores e líderes de reino de Rise of Kingdoms",
+  description: "Um planejador gratuito para Rise of Kingdoms: o que não pode faltar hoje no seu tempo de jogo, metas da Prefeitura, análise de pacotes e, para líderes de reino, regras, MGE e recrutamento. Sem bots, sem login do jogo.",
+  guides: "Guias",
+  start: "Começar",
+  startHint: "5 perguntas rápidas. Sem cadastro.",
+  openHome: "Abrir minha aba inicial",
+  presents: "Sun Tzu apresenta",
+  bubble: "Estratégia é saber o que fazer hoje e o que deixar para amanhã. Eu mostro os dois.",
+  h1: "Planeje sua conta de Rise of Kingdoms com o tempo que você realmente tem.",
+  sub: "O KingdomOps transforma dados do jogo com fonte em um plano curto: o que fazer hoje, o que a sua próxima Prefeitura exige e se uma compra vale a pena.",
+  forH: "Para quem é",
+  who: [
+    { name: "Jogadores", text: "Quem joga de graça ou gasta pouco e quer um plano diário claro, metas da Prefeitura e respostas honestas das ferramentas.", tabs: "Prefeitura · Ferramentas · Eu" },
+    { name: "Líderes de reino e de aliança", text: "Reis, R4s e membros do conselho que publicam regras, definem requisitos de membros, planejam o MGE e recrutam.", tabs: "Reino · Membros · Eventos · Eu" },
+  ],
+  examplesH: "O que ele resolve",
+  examples: [
+    { q: "“Tenho 30 minutos. O que faço hoje?”", a: "A aba Prefeitura mostra as 3 tarefas essenciais que cabem no seu tempo, em ordem de valor." },
+    { q: "“Esse pacote de US$ 20 vale a pena?”", a: "O valor do pacote transforma o preço que você vê em gemas e pontos de VIP por dólar, para você comparar." },
+    { q: "“Onde ficam nossas regras, as posições do MGE e o anúncio de recrutamento?”", a: "Os líderes guardam regras, planejamento do MGE e um anúncio de recrutamento em um só lugar, compartilhados por links somente para leitura." },
+  ],
+  trustH: "Por que confiar",
+  trust: [
+    { t: "Dados com fonte", d: "Cada número aponta para uma ficha de fatos pesquisada e para o patch do jogo em que foi conferido." },
+    { t: "Sem bots", d: "Nunca automatizamos o jogo e nunca pedimos o seu login do jogo. Você faz cada ação dentro do jogo." },
+    { t: "Dentro dos termos da Lilith", d: "Sem arquivos do jogo, sem leitura de dados do jogo, sem arte do jogo. Feito por fãs e sem afiliação com a Lilith Games." },
+  ],
+  browse: "Ver os guias",
+};
+---
+<Shell title="Boas-vindas" docTitle={S.docTitle} description={S.description} mode="operate" bare headScript={LANDING_REDIRECT_SCRIPT}>
+  <div class="lp">
+    <header class="lp-top">
+      <a class="lp-logo" href="/?about" aria-label="KingdomOps"><Logo variant="horizontal" class="lp-wide" /></a>
+      <nav aria-label="Principal">
+        <a class="lp-link" href="/guides/">{S.guides}</a>
+        <a class="btn btn-primary lp-start-sm" href={START_HREF} data-start>{S.start}</a>
+      </nav>
+    </header>
+
+    <section class="lp-hero" aria-labelledby="lp-h1">
+      <figure class="lp-mascot">
+        <video class="lp-video" muted playsinline loop preload="none" poster="/mascot/greet-poster.webp" width="160" height="160" aria-hidden="true" data-mascot>
+          <source src="/mascot/idle-480.mp4" type="video/mp4" />
+        </video>
+        <figcaption>
+          <span class="lp-presents">{S.presents}</span>
+          <span class="lp-bubble">{S.bubble}</span>
+        </figcaption>
+      </figure>
+      <div class="lp-copy">
+        <h1 id="lp-h1">{S.h1}</h1>
+        <p class="lp-sub">{S.sub}</p>
+        <div class="lp-actions">
+          <a class="btn btn-primary" href={START_HREF} data-start data-primary data-open-label={S.openHome}>{S.start}</a>
+          <a class="btn btn-secondary" href="/guides/">{S.browse}</a>
+        </div>
+        <p class="lp-hint">{S.startHint}</p>
+      </div>
+    </section>
+
+    <section aria-labelledby="lp-for-h">
+      <h2 id="lp-for-h">{S.forH}</h2>
+      <ul class="lp-cards">
+        {S.who.map((w) => (
+          <li class="lp-card"><h3>{w.name}</h3><p>{w.text}</p><p class="lp-tabs mono">{w.tabs}</p></li>
+        ))}
+      </ul>
+    </section>
+
+    <section aria-labelledby="lp-ex-h">
+      <h2 id="lp-ex-h">{S.examplesH}</h2>
+      <ol class="lp-examples">
+        {S.examples.map((e) => <li><p class="lp-q">{e.q}</p><p>{e.a}</p></li>)}
+      </ol>
+    </section>
+
+    <section aria-labelledby="lp-trust-h">
+      <h2 id="lp-trust-h">{S.trustH}</h2>
+      <dl class="lp-trust">
+        {S.trust.map((x) => <div><dt>{x.t}</dt><dd>{x.d}</dd></div>)}
+      </dl>
+    </section>
+
+    <div class="lp-end">
+      <a class="btn btn-primary" href={START_HREF} data-start>{S.start}</a>
+    </div>
+  </div>
+</Shell>
+
+<style>
+  .lp { display: grid; gap: var(--ko-space-10); }
+  .lp-top { display: flex; align-items: center; justify-content: space-between; gap: var(--ko-space-3); }
+  .lp-logo { display: inline-flex; align-items: center; min-height: 48px; }
+  .lp-logo :global(.lp-wide) { width: 160px; height: auto; }
+  .lp-top nav { display: flex; align-items: center; gap: var(--ko-space-2); }
+  .lp-link { display: inline-flex; align-items: center; min-height: 48px; padding-inline: var(--ko-space-3); color: var(--ko-text); }
+  .lp-hero { display: grid; gap: var(--ko-space-6); align-items: center; }
+  .lp-mascot { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: var(--ko-space-4); align-items: center; }
+  .lp-video { width: 112px; height: 112px; border-radius: var(--ko-radius-pill); background: var(--ko-surface); object-fit: cover; border: 2px solid var(--ko-border); }
+  figcaption { display: grid; gap: var(--ko-space-2); }
+  .lp-presents { font: var(--ko-weight-semibold) var(--ko-text-xs)/1.2 var(--ko-font-display); letter-spacing: .1em; text-transform: uppercase; color: var(--ko-accent); }
+  .lp-bubble { padding: var(--ko-space-3) var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-copy { display: grid; gap: var(--ko-space-4); }
+  h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); max-width: 20ch; }
+  .lp-sub { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); color: var(--ko-text-muted); max-width: 52ch; }
+  .lp-actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); }
+  .lp-hint { font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+  h2 { font-size: var(--ko-text-sm); line-height: 1.2; letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); margin-bottom: var(--ko-space-4); }
+  h3 { font-size: var(--ko-text-lg); line-height: var(--ko-leading-lg); }
+  ul, ol { list-style: none; margin: 0; padding: 0; }
+  .lp-cards { display: grid; gap: var(--ko-space-3); grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+  .lp-card { display: grid; gap: var(--ko-space-2); padding: var(--ko-space-5); background: var(--ko-surface); border: 1px solid var(--ko-border); border-radius: var(--ko-radius-md); }
+  .lp-card p { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-card .lp-tabs { color: var(--ko-text); font-size: var(--ko-text-xs); }
+  .lp-examples { display: grid; gap: var(--ko-space-4); counter-reset: ex; }
+  .lp-examples li { display: grid; gap: var(--ko-space-1); padding-left: var(--ko-space-10); position: relative; counter-increment: ex; }
+  .lp-examples li::before { content: counter(ex); position: absolute; left: 0; top: 0; font: var(--ko-weight-bold) var(--ko-text-2xl)/1 var(--ko-font-mono); color: var(--ko-accent); }
+  .lp-q { font-weight: var(--ko-weight-semibold); }
+  .lp-examples p:not(.lp-q) { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-trust { margin: 0; display: grid; gap: var(--ko-space-5); grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  .lp-trust div { display: grid; gap: var(--ko-space-1); border-top: 2px solid var(--ko-accent); padding-top: var(--ko-space-3); }
+  .lp-trust dt { font: var(--ko-weight-semibold) var(--ko-text-md)/1.3 var(--ko-font-display); }
+  .lp-trust dd { margin: 0; color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+  .lp-end { display: flex; justify-content: center; }
+  @media (min-width: 768px) {
+    .lp { gap: var(--ko-space-12); }
+    .lp-hero { grid-template-columns: minmax(0, 3fr) minmax(0, 2fr); }
+    .lp-mascot { order: 2; grid-template-columns: 1fr; justify-items: center; text-align: center; }
+    .lp-video { width: 200px; height: 200px; }
+    h1 { font-size: var(--ko-text-4xl); line-height: var(--ko-leading-4xl); }
+  }
+</style>
+
+<script>
+  import { readStore } from "../lib/store";
+  import { profileFromCode } from "../lib/profile";
+  import { HOME_FOR } from "../lib/nav";
+
+  // Seen from "/?about" with a saved profile: Start becomes "open my home tab".
+  const s = readStore();
+  if (profileFromCode(s.profileCode)) {
+    for (const a of document.querySelectorAll<HTMLAnchorElement>("[data-start]")) {
+      a.href = HOME_FOR[s.playingAs];
+      if (a.dataset.openLabel) a.textContent = a.dataset.openLabel;
+    }
+  }
+
+  // Sun Tzu moves only when motion is welcome; otherwise his poster stays.
+  const video = document.querySelector<HTMLVideoElement>("[data-mascot]");
+  if (video && window.matchMedia("(prefers-reduced-motion: no-preference)").matches) {
+    video.preload = "auto";
+    video.play().catch(() => {});
+  }
+</script>

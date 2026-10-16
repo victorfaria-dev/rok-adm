@@ -1,0 +1,53 @@
+---
+// F-32 Play It Safe FAQ + F-82 Support Ticket Builder. FAQ and checklist come from tools-data/safety.json.
+import Shell from "../../../layouts/Shell.astro";
+import TicketBuilder from "../../../components/tools/safety/TicketBuilder";
+import { Checklist } from "../../../components/tools/kit/Checklist";
+import { Cite } from "../../../components/tools/kit/Cite";
+import DataStamp from "../../../components/tools/kit/DataStamp.astro";
+import SourcesList from "../../../components/tools/kit/SourcesList.astro";
+import { cite } from "../../../lib/tools-payload";
+import safety from "../../../../../../packages/planner/tools-data/safety.json";
+import "../../../components/tools/kit/tools.css";
+import "../../../components/tools/safety/safety.css";
+
+const faq = safety.faq.map((f) => ({ ...f, community: "community" in f && f.community === true, cite: cite(f.facts) }));
+const checks = safety.checklist.map((c) => ({ id: c.id, text: c.text, ...("detail" in c && c.detail ? { detail: c.detail } : {}), cite: cite(c.facts) }));
+const ids = [...safety.faq.flatMap((f) => f.facts), ...safety.checklist.flatMap((c) => c.facts)];
+---
+<Shell title="Jogue com segurança" description="O que faz contas de Rise of Kingdoms serem banidas ou silenciadas pelos Termos de Serviço, uma lista de segurança da conta e um montador de ticket de suporte para recuperação, apelações e denúncias." mode="operate">
+  <div class="t-page">
+    <header>
+      <h1>Jogue com segurança</h1>
+      <p class="t-lead">O que as regras dizem sobre bots, compartilhamento e venda de contas, como manter a conta sua, e um ticket pronto para colar no suporte do próprio jogo.</p>
+      <DataStamp />
+    </header>
+
+    <section class="s-faq" aria-labelledby="s-faq-h">
+      <h2 id="s-faq-h">O que faz contas serem banidas ou silenciadas</h2>
+      {faq.map((f) => (
+        <article id={`faq-${f.id}`} aria-labelledby={`faq-${f.id}-q`}>
+          <h3 id={`faq-${f.id}-q`}>{f.q}</h3>
+          <p>{f.a}</p>
+          {f.community
+            ? <p class="s-community"><strong>Relatado pela comunidade.</strong> Ainda sem ficha de fonte.</p>
+            : <Cite cite={f.cite} />}
+        </article>
+      ))}
+    </section>
+
+    <Checklist client:load listId="safety-account" title="Lista de segurança da conta" items={checks} />
+
+    <section class="t-page-body" aria-labelledby="s-ticket-h">
+      <h2 id="s-ticket-h">Montador de ticket de suporte</h2>
+      <p class="t-lead">Preencha o que o suporte precisa e copie o texto. Nada do que você digita aqui é salvo nem enviado pelo KingdomOps: feche a página e some.</p>
+      <div class="s-where">
+        <p>Para onde enviar: só o suporte do próprio jogo. No jogo, abra <strong>Configurações</strong> e escolha a opção de suporte ou contato, depois cole o texto e anexe seus prints lá.</p>
+        <p>Nunca coloque sua senha em um ticket, e nunca a envie a quem diz ser do suporte.</p>
+      </div>
+      <TicketBuilder client:load />
+    </section>
+
+    <SourcesList ids={ids} />
+  </div>
+</Shell>

@@ -1,0 +1,144 @@
+{
+  "_about": "Play It Safe FAQ and account checklist of /tools/safety/ (F-32). Written from a compliance angle: what the rules say and what to do instead, never how to avoid detection. An entry with \"community\": true has no fact card and is shown as reported by the community.",
+  "faq": [
+    {
+      "id": "bots",
+      "q": "Bots, scripts e auto-clickers são permitidos?",
+      "a": "Não. Os Termos de Serviço proíbem trapaças, bots, mods e qualquer software de terceiros que dê vantagem ou interfira no jogo, e proíbem jogar por meios automatizados. Desde o patch 1.1.07 o jogo reduz a sua Pontuação de Conduta quando detecta scripts ou trapaças, com punições abaixo de certos limites.",
+      "facts": ["C02-0002", "C02-0004", "C04-0006"],
+      "evidence": {
+        "C02-0002": "Users may not use cheats, exploits, hacks, bots, mods or third-party software designed to gain an advantage",
+        "C02-0004": "access the Services by automated means including bots, robots and spiders",
+        "C04-0006": "players using third-party tools such as scripts or cheats lose Conduct Score"
+      }
+    },
+    {
+      "id": "auto-hunt",
+      "q": "Existe uma forma permitida de caçar bárbaros automaticamente?",
+      "a": "Sim: a pacificação automática do próprio jogo manda suas tropas atrás de bárbaros, com ataques em lote e em grupo. Use-a no lugar de qualquer ferramenta externa.",
+      "facts": ["A09-0008"],
+      "evidence": {
+        "A09-0008": "The game has a built-in auto-peacekeeping feature that sends troops to fight barbarians automatically"
+      }
+    },
+    {
+      "id": "ban-history",
+      "q": "A Lilith realmente bane por isso?",
+      "a": "Sim. A Lilith publicou relatórios numerados contra bots listando contas banidas de vez, citando auto-clickers e pagamentos de terceiros, e as regras permitem que ela suspenda ou encerre uma conta a seu critério.",
+      "facts": ["C02-0012", "C02-0011"],
+      "evidence": {
+        "C02-0012": "listing permanently banned accounts, targeting botting tools such as auto-clickers and third-party payments",
+        "C02-0011": "Lilith may suspend or terminate an account if it suspects or determines, in its own discretion, a ToS violation"
+      }
+    },
+    {
+      "id": "emulator",
+      "q": "Jogar em um emulador ou no cliente de PC é permitido?",
+      "a": "Um guia da comunidade de 2026 diz que emuladores e o cliente de PC são aceitáveis, e que automação e clientes modificados é que levam ao banimento de contas. É uma leitura da comunidade, não uma declaração oficial.",
+      "facts": ["C02-0014"],
+      "evidence": {
+        "C02-0014": "playing on emulators or the PC client is fine, while third-party automation and modified clients are what get accounts banned"
+      }
+    },
+    {
+      "id": "sharing",
+      "q": "Um amigo, um piloto ou um \"cuidador\" de conta pode jogar a minha conta?",
+      "a": "Não. Compartilhar uma conta, inclusive passar seu usuário e senha para outra pessoa entrar, vai contra os Termos de Serviço, e isso vale para pilotos pagos de MGE ou KvK. Mantenha o seu login só com você.",
+      "facts": ["C02-0005"],
+      "evidence": {
+        "C02-0005": "Account sharing, including sharing username and password for others to log in, is prohibited"
+      }
+    },
+    {
+      "id": "selling",
+      "q": "Posso comprar ou vender uma conta, gemas ou itens?",
+      "a": "Não. Pelos Termos você não é dono da sua conta nem dos itens virtuais dela, e não pode vendê-los nem transferi-los por dinheiro. Pagamentos de terceiros também aparecem nos relatórios de banimento da Lilith.",
+      "facts": ["C02-0010", "C02-0012"],
+      "evidence": {
+        "C02-0010": "may not sell or transfer virtual items or currency or redeem them for anything of monetary value",
+        "C02-0012": "third-party payments"
+      }
+    },
+    {
+      "id": "tools",
+      "q": "E as ferramentas de terceiros que leem o jogo?",
+      "a": "Os Termos proíbem ferramentas que extraem conteúdo do jogo que não sejam o software da própria Lilith ou um navegador comum, e proíbem a engenharia reversa do cliente. O KingdomOps nunca lê o jogo: você digita os seus próprios números.",
+      "facts": ["C02-0003", "C02-0006"],
+      "evidence": {
+        "C02-0003": "Users may not access, search or download Lilith Content from the Services using any engine, software, tool or mechanism",
+        "C02-0006": "Users may not decipher, decompile, disassemble or reverse engineer the software"
+      }
+    },
+    {
+      "id": "credentials",
+      "q": "Um bot ou site pede o meu login do jogo. Devo dar?",
+      "a": "Não. Os Termos proíbem pedir a outros jogadores os dados de login, então nenhum serviço legítimo precisa deles. O KingdomOps nunca pede o seu login.",
+      "facts": ["C02-0004"],
+      "evidence": {
+        "C02-0004": "Users may not solicit other members' login credentials"
+      }
+    },
+    {
+      "id": "discord-links",
+      "q": "Posso colar um link de Discord no chat do jogo?",
+      "a": "Não. Jogadores relatam ter sido silenciados ou banidos por postar ou pedir links de Discord e outras informações de terceiros no chat do jogo, então compartilhe links fora do jogo e nunca peça a ninguém que cole um.",
+      "facts": [],
+      "community": true
+    },
+    {
+      "id": "farms",
+      "q": "Contas farm são permitidas?",
+      "a": "Guias de fãs dizem que uma segunda cidade criada pelo Gerenciamento de Personagens do jogo é um recurso normal, em geral duas por reino. Os mesmos guias dizem para evitar bots, macros e coleta automatizada em qualquer conta; não achamos texto oficial sobre farms.",
+      "facts": ["C02-0017", "A13-0008"],
+      "evidence": {
+        "C02-0017": "create additional characters via Settings > Character Management",
+        "A13-0008": "while bots, macros, automated gathering and modified clients should be avoided"
+      }
+    },
+    {
+      "id": "appeal",
+      "q": "Fui banido ou silenciado por engano. E agora?",
+      "a": "Fale com o suporte oficial de dentro do jogo, com o seu ID de governador, a hora em que começou e o aviso exato. Os Termos dizem que uma conta encerrada não pode ser reativada, então recorra cedo e seja objetivo.",
+      "facts": ["C02-0011"],
+      "evidence": {
+        "C02-0011": "terminated accounts cannot be reinstated"
+      }
+    }
+  ],
+  "checklist": [
+    {
+      "id": "bind",
+      "text": "Vincule a sua conta a um login que só você controla.",
+      "detail": "O jogo oferece vinculação de conta (até paga gemas por vincular ao Facebook). Use um e-mail ou login que só você consiga abrir.",
+      "facts": ["A04-0005"],
+      "evidence": { "A04-0005": "binding the account to Facebook" }
+    },
+    {
+      "id": "password",
+      "text": "Nunca compartilhe sua senha nem deixe mais ninguém entrar.",
+      "detail": "Isso inclui amigos, oficiais da aliança, pilotos e cuidadores de conta.",
+      "facts": ["C02-0005"],
+      "evidence": { "C02-0005": "users must not disclose their password or let any third party use their account" }
+    },
+    {
+      "id": "no-login-elsewhere",
+      "text": "Não digite o seu login do jogo em bots, sites ou ferramentas.",
+      "detail": "Nenhum serviço legítimo precisa dele.",
+      "facts": ["C02-0004"],
+      "evidence": { "C02-0004": "Users may not solicit other members' login credentials" }
+    },
+    {
+      "id": "official-client",
+      "text": "Jogue só no cliente oficial, sem scripts, auto-clickers nem mods.",
+      "detail": "Use a pacificação automática nativa para os bárbaros.",
+      "facts": ["C02-0002", "C04-0006", "A09-0008"],
+      "evidence": { "C02-0002": "Users may not use cheats, exploits, hacks, bots, mods" }
+    },
+    {
+      "id": "no-trading",
+      "text": "Não compre nem venda contas, gemas ou itens fora do jogo.",
+      "facts": ["C02-0010"],
+      "evidence": { "C02-0010": "Users have no ownership interest in their Lilith Account" }
+    }
+  ]
+}

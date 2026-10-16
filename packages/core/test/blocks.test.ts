@@ -36,7 +36,7 @@ describe("selectBlocks — spending profile", () => {
     const g = selectBlocks(BLOCKS, profile({ role: "lutador" }));
     const expected = forProfile("f2p").filter((b) => b.funcao.includes("todas") || b.funcao.includes("lutador"));
     // pk-kvk1-behaviour is kvk1-only; farm-brief is farm-only.
-    expect(ids(g)).toEqual(expected.filter((b) => b.stage.includes("pre_kvk")).map((b) => b.id));
+    expect(ids(g)).toEqual(expected.filter((b) => b.stage.includes("pre_kvk") || b.stage.includes("todos")).map((b) => b.id));
     expect(g.alreadyDone).toEqual([]);
   });
 
@@ -63,7 +63,7 @@ describe("selectBlocks — spending profile", () => {
     expect(got.length).toBeGreaterThan(0);
     for (const s of got) expect(s.block.perfil.some((p) => p === "todos" || p === "whale")).toBe(true);
     expect(ids(g)).not.toContain("ov-budget-reality-check");
-    expect(g.excluded.find((e) => e.id === "ov-budget-reality-check")?.reasons[0]).toMatch(/Only for F2P; you are Whale/);
+    expect(g.excluded.find((e) => e.id === "ov-budget-reality-check")?.reasons[0]).toMatch(/Só para F2P; você é Whale/);
   });
 
   it("orders by section, then order", () => {
@@ -182,7 +182,10 @@ describe("selectBlocks — City Hall, time, civilization, kingdom day", () => {
   it("stage filter: kvk1-only block appears only at kvk1", () => {
     expect(ids(selectBlocks(BLOCKS, profile({ kingdomStage: "pre_kvk" })))).not.toContain("pk-kvk1-behaviour");
     expect(ids(selectBlocks(BLOCKS, profile({ kingdomStage: "kvk1" })))).toContain("pk-kvk1-behaviour");
-    expect(ids(selectBlocks(BLOCKS, profile({ kingdomStage: "soc" })))).toEqual([]);
+    // Only stage-independent blocks (the daily routine) reach later stages.
+    const soc = ids(selectBlocks(BLOCKS, profile({ kingdomStage: "soc" })));
+    expect(soc.length).toBeGreaterThan(0);
+    for (const id of soc) expect(BLOCKS.find((b) => b.id === id)!.stage).toContain("todos");
   });
 });
 
@@ -191,18 +194,18 @@ describe("explainSelection", () => {
     const b = BLOCKS.find((x) => x.id === "farm-brief")!;
     const no = explainSelection(b, profile({ role: "lutador" }));
     expect(no.placement).toBe("excluded");
-    expect(no.reasons.join(" ")).toMatch(/Only for roles farm; your role is lutador/);
+    expect(no.reasons.join(" ")).toMatch(/Só para as funções farm; a sua função é lutador/);
     const yes = explainSelection(b, profile({ role: "farm" }));
     expect(yes.included).toBe(true);
     expect(yes.checks.every((c) => c.passed)).toBe(true);
-    expect(yes.reasons).toContain("Recommended for F2P.");
+    expect(yes.reasons).toContain("Recomendado para F2P.");
   });
 
   it("explains already-done and time failures", () => {
     const civ = BLOCKS.find((x) => x.id === "d0-civilization")!;
     const e = explainSelection(civ, profile({ cityHall: 15 }));
     expect(e.placement).toBe("alreadyDone");
-    expect(e.reasons[0]).toMatch(/CH 1–10; you are CH15/);
+    expect(e.reasons[0]).toMatch(/Prefeitura 1–10; você está na Prefeitura 15/);
     const d60 = BLOCKS.find((x) => x.id === "daily-60min")!;
     const t = explainSelection(d60, profile({ minutesPerDay: 30 }));
     expect(t.placement).toBe("excluded");
@@ -247,16 +250,16 @@ describe("renderGuideMarkdown", () => {
     const all = BLOCKS.map((b) => ({ ...b, funcao: ["todas" as const], stage: ["todos" as const] }));
     const md = renderGuideMarkdown(selectBlocks(all, profile()));
     const heads = (s: string) =>
-      s.split("\n").filter((l) => /^#{2,4} /.test(l) && !/^## (Contents|How to read|Appendix|Already)/.test(l))
-        .filter((l) => !/^### (Gaps referenced|Block confidence|Known contradictions)/.test(l));
-    const pyHeads = heads(GUIDE_MD.split("## Appendix")[0]!).filter((l) => !l.startsWith("# "));
+      s.split("\n").filter((l) => /^#{2,4} /.test(l) && !/^## (Sumário|Como ler este guia|Apêndice|Já feito)/.test(l))
+        .filter((l) => !/^### (Lacunas referenciadas|Confiança dos blocos|Contradições conhecidas)/.test(l));
+    const pyHeads = heads(GUIDE_MD.split("## Apêndice")[0]!).filter((l) => !l.startsWith("# "));
     expect(heads(md).filter((l) => !l.startsWith("# "))).toEqual(pyHeads);
-    expect(md).toContain("**Recommended** for F2P");
+    expect(md).toContain("**Recomendado** para F2P");
   });
 
   it("renders an Already done? list", () => {
     const md = renderGuideMarkdown(selectBlocks(BLOCKS, profile({ cityHall: 20 })));
-    expect(md).toContain("## Already done?");
-    expect(md).toMatch(/- \*\*Choose your civilization[^\n]*\(CH 1–10\)/);
+    expect(md).toContain("## Já feito?");
+    expect(md).toMatch(/- \*\*Escolha sua civilização[^\n]*\(Prefeitura 1–10\)/);
   });
 });

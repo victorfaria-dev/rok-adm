@@ -1,0 +1,175 @@
+/* Questionnaire island (/start): a chat with Sun Tzu. Operate mode: Plex Sans for labels and options, Chakra Petch for
+   the question title and buttons, Plex Mono for numbers. Only --ko-* tokens. */
+
+.q { max-width: 640px; margin-inline: auto; display: grid; gap: var(--ko-space-4); min-width: 0; }
+
+.q-top { display: flex; align-items: center; justify-content: space-between; gap: var(--ko-space-3); }
+.q-close {
+  display: inline-flex; align-items: center; gap: var(--ko-space-2);
+  min-height: 48px; min-width: 48px; margin-left: calc(-1 * var(--ko-space-2)); padding-inline: var(--ko-space-2);
+  color: var(--ko-text-muted); text-decoration: none; font-size: var(--ko-text-sm);
+}
+.q-progress { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+
+.q-bar { height: 2px; background: var(--ko-border); overflow: hidden; }
+.q-bar span {
+  display: block; height: 100%; background: var(--ko-accent); transform-origin: left center;
+  transition: transform var(--ko-duration-base) var(--ko-ease-out);
+}
+
+/* Chat log: Sun Tzu's messages on the left with the mascot, the player's answers on the right. */
+.q-log { display: grid; gap: var(--ko-space-3); padding-top: var(--ko-space-2); min-width: 0; }
+.q-msg { display: flex; align-items: flex-start; gap: var(--ko-space-2); min-width: 0; }
+.q-msg-bot { scroll-margin-top: var(--ko-space-4); }
+/* The current question: Sun Tzu's stage on top, the bubble below at full width. */
+.q-msg-bot[data-current] { flex-direction: column; align-items: stretch; }
+.q-msg-bot[data-current] .q-bubble { max-width: none; }
+.q-bubble {
+  position: relative; display: grid; gap: var(--ko-space-1); min-width: 0; max-width: 65ch;
+  padding: var(--ko-space-2) var(--ko-space-3);
+  background: var(--ko-surface); border: 1px solid var(--ko-border);
+  border-radius: var(--ko-radius-sm) var(--ko-radius-lg) var(--ko-radius-lg) var(--ko-radius-lg);
+  overflow-wrap: anywhere;
+}
+.q-msg-bot[data-current] .q-bubble { padding: var(--ko-space-3) var(--ko-space-4); gap: var(--ko-space-2); }
+.q-bubble-text { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.q-who { font: var(--ko-weight-semibold) var(--ko-text-xs)/var(--ko-leading-xs) var(--ko-font-display); letter-spacing: .08em; text-transform: uppercase; color: var(--ko-text-muted); }
+.q-lead { line-height: var(--ko-leading-md); }
+.q-asked { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-msg-user { justify-content: flex-end; padding-left: var(--ko-space-10); }
+.q-bubble-user {
+  display: block; background: var(--ko-surface-raised); font-weight: var(--ko-weight-medium);
+  border-radius: var(--ko-radius-lg) var(--ko-radius-sm) var(--ko-radius-lg) var(--ko-radius-lg);
+}
+
+/* Typing dots: shown only for a new message, for one slow duration, over text that is already in
+   the DOM (screen readers and the reply area never wait). None under reduced motion. */
+.q-typing { display: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .q-msg[data-typing] .q-typing {
+    position: absolute; top: var(--ko-space-4); left: var(--ko-space-4);
+    display: inline-flex; gap: var(--ko-space-1);
+    animation: q-hide 1ms linear var(--ko-duration-slow) forwards;
+  }
+  .q-typing span {
+    width: 6px; height: 6px; border-radius: var(--ko-radius-pill); background: var(--ko-text-muted);
+    animation: q-dot var(--ko-duration-slow) var(--ko-ease-in-out) infinite alternate;
+  }
+  .q-typing span:nth-child(2) { animation-delay: var(--ko-duration-instant); }
+  .q-typing span:nth-child(3) { animation-delay: calc(var(--ko-duration-instant) * 2); }
+  .q-msg[data-typing] .q-bubble-text, .q-msg[data-typing] .q-who {
+    animation: q-reveal var(--ko-duration-fast) var(--ko-ease-out) var(--ko-duration-slow) backwards;
+  }
+}
+@keyframes q-hide { to { visibility: hidden; opacity: 0; } }
+@keyframes q-dot { from { opacity: .35; transform: translateY(0); } to { opacity: 1; transform: translateY(-2px); } }
+@keyframes q-reveal { from { opacity: 0; } to { opacity: 1; } }
+
+/* Reply area: a short fade when a new question's replies appear; no lift with reduced motion. */
+.q-reply {
+  display: grid; gap: var(--ko-space-4);
+  transition: opacity var(--ko-duration-fast) var(--ko-ease-out), transform var(--ko-duration-fast) var(--ko-ease-out);
+}
+@starting-style {
+  .q-reply { opacity: 0; transform: translateY(var(--ko-space-2)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .q-reply, .q-bar span { transition: none; }
+  @starting-style { .q-reply { transform: none; } }
+}
+
+.q-title {
+  font-family: var(--ko-font-display); font-weight: var(--ko-weight-bold); text-wrap: balance;
+  font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl);
+  outline: none; scroll-margin-top: var(--ko-space-6); overflow-wrap: anywhere;
+}
+.q-title:focus-visible { outline: 2px solid var(--ko-focus); outline-offset: 4px; }
+.q-help { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 65ch; }
+
+.q-body { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.q-note { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); max-width: 65ch; }
+
+/* Quick replies: large buttons (whole row is the target, >= 48 px) with a one-line why. The radio
+   is kept for keyboard and screen readers but drawn as the button itself; a check mark (not just
+   color) shows the picked one. */
+.q-options { display: grid; gap: var(--ko-space-2); }
+.q-option {
+  position: relative;
+  display: grid; grid-template-columns: 1fr auto; align-items: center; gap: var(--ko-space-3);
+  min-height: 48px; padding: var(--ko-space-3) var(--ko-space-4);
+  background: var(--ko-surface); border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-lg);
+  cursor: pointer; user-select: none; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  transition: border-color var(--ko-duration-fast) var(--ko-ease-out), background-color var(--ko-duration-fast) var(--ko-ease-out), transform var(--ko-duration-fast) var(--ko-ease-out);
+}
+.q-option input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+.q-option:has(input:checked) { border-color: var(--ko-accent); background: var(--ko-surface-raised); }
+.q-option:has(input:focus-visible) { outline: 2px solid var(--ko-focus); outline-offset: 2px; }
+.q-option:active { background: var(--ko-surface-raised); transform: scale(.97); }
+.q-option-text { display: grid; gap: var(--ko-space-1); min-width: 0; overflow-wrap: anywhere; }
+.q-option-label { font-weight: var(--ko-weight-medium); }
+.q-option-help { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-option-check { color: var(--ko-accent); visibility: hidden; }
+.q-option:has(input:checked) .q-option-check { visibility: visible; }
+@media (prefers-reduced-motion: reduce) {
+  .q-option:active { transform: none; }
+}
+
+/* Number field: label above, hint, input, error below. */
+.q-field { display: grid; gap: var(--ko-space-2); min-width: 0; }
+.q-label { font-weight: var(--ko-weight-semibold); }
+.q-hint { color: var(--ko-text-muted); font-size: var(--ko-text-sm); }
+.q-input {
+  width: 100%; min-height: 48px; padding: var(--ko-space-2) var(--ko-space-3);
+  font-family: var(--ko-font-mono); font-size: 16px; font-variant-numeric: tabular-nums;
+  color: var(--ko-text); background: var(--ko-surface); caret-color: var(--ko-accent);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-md);
+}
+.q-input[aria-invalid="true"] { border-color: var(--ko-error); }
+.q-error { color: var(--ko-error); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); font-weight: var(--ko-weight-medium); }
+.q-error[hidden] { display: none; }
+
+/* Actions stay in reach of the thumb on long lists (civilization). */
+.q-actions {
+  position: sticky; bottom: 0; z-index: 1;
+  display: flex; flex-wrap: wrap; gap: var(--ko-space-2);
+  margin-inline: calc(-1 * var(--ko-space-4)); padding: var(--ko-space-3) var(--ko-space-4) calc(var(--ko-space-3) + env(safe-area-inset-bottom, 0px));
+  background: var(--ko-background); border-top: 1px solid var(--ko-border);
+}
+.q-actions .btn { flex: 1 1 auto; }
+.q-next { order: 1; flex-basis: 40%; }
+
+/* Summary. */
+.q-review { margin: 0; display: grid; border-top: 1px solid var(--ko-border); }
+.q-review-row { display: grid; gap: var(--ko-space-1); padding-block: var(--ko-space-3); border-bottom: 1px solid var(--ko-border); min-width: 0; }
+.q-review dt { color: var(--ko-text-muted); font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-review dd { margin: 0; display: flex; align-items: center; justify-content: space-between; gap: var(--ko-space-3); min-width: 0; }
+.q-answer { font-weight: var(--ko-weight-medium); overflow-wrap: anywhere; min-width: 0; }
+.q-change {
+  flex: none; min-height: 48px; padding-inline: var(--ko-space-3);
+  background: transparent; border: 0; color: var(--ko-accent); cursor: pointer;
+  font: var(--ko-weight-semibold) var(--ko-text-sm)/1 var(--ko-font-body); text-decoration: underline; text-underline-offset: 3px;
+}
+.q-notes { display: grid; gap: var(--ko-space-2); padding: var(--ko-space-4); background: var(--ko-surface); border: 1px solid var(--ko-warning); border-radius: var(--ko-radius-md); }
+.q-notes-error { border-color: var(--ko-error); }
+.q-notes h2 { font-size: var(--ko-text-md); line-height: var(--ko-leading-md); }
+.q-notes ul { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-2); }
+.q-notes li p { overflow-wrap: anywhere; font-size: var(--ko-text-sm); line-height: var(--ko-leading-sm); }
+.q-notes-error li { display: grid; justify-items: start; }
+.q-notes-error .q-change { padding-inline: 0; }
+
+/* Phones: the stage may be stuck on top as a 72 px strip; keep a focused heading clear of it. */
+@media (max-width: 767.98px) {
+  .q-title { scroll-margin-top: calc(72px + var(--ko-space-4)); }
+  .q-option, .q-input { scroll-margin-top: calc(72px + var(--ko-space-2)); }
+}
+@media (min-width: 768px) {
+  .q-title { font-size: var(--ko-text-2xl); line-height: var(--ko-leading-2xl); }
+  .q-actions { margin-inline: 0; padding-inline: 0; }
+  .q-actions .btn { flex: 0 0 auto; }
+  .q-next { margin-left: auto; min-width: 200px; }
+}
+@media (hover: hover) and (pointer: fine) {
+  .q-option:hover { border-color: var(--ko-text-muted); }
+  .q-option:has(input:checked):hover { border-color: var(--ko-accent); }
+  .q-close:hover { color: var(--ko-text); }
+}

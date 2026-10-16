@@ -1,0 +1,12 @@
+---
+// Me tab (UX stage 1): sign-in panel (Supabase, when configured), then the profile header, "Playing as"
+// and a grouped list hub (Guides, profile and accounts, share card / appearance, data, backup /
+// trust and about). Long text sits behind the rows. "Back up everything" lives in the Backup row.
+import Shell from "../../layouts/Shell.astro";
+import Me from "../../components/me/Me";
+import AccountPanel from "../../components/auth/AccountPanel";
+---
+<Shell title="Eu" description="Como você usa o KingdomOps (jogador ou líder), os guias, seu perfil e contas, cartão para compartilhar, aparência e dados: exportar, importar, fazer backup ou apagar. Tudo fica neste navegador." mode="operate">
+  <AccountPanel client:idle />
+  <Me client:load />
+</Shell>

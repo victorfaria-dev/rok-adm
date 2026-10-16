@@ -1,0 +1,49 @@
+---
+// "My commanders" (UX stage 1): the commander checklist scoped to the account in use. Each account
+// keeps its own answers (lib/accounts.ts swaps them on a switch). The public commander guide is
+// /commanders/ under Guides. Stage 1 reuses the existing evaluator; an owned-commanders list comes later.
+import Shell from "../../../layouts/Shell.astro";
+import Commanders from "../../../components/commanders/Commanders";
+import { buildPickerRoster } from "../../../lib/commander-roster";
+
+const roster = buildPickerRoster();
+
+const S = {
+  title: "Meus comandantes",
+  description: "Suas checagens de comandantes para a conta em uso: principal, farm ou alt guardam cada uma as suas respostas.",
+  crumb: "Prefeitura",
+  lead: "Confira um comandante antes de esta conta gastar esculturas nele.",
+  account: "Conta:",
+  guide: "Escolhas gerais:",
+  guideLink: "guia de comandantes",
+};
+---
+<Shell title={S.title} description={S.description} mode="operate">
+  <nav class="crumb" aria-label="Trilha de navegação"><a href="/city-hall/">{S.crumb}</a> <span aria-hidden="true">/</span> <span aria-current="page">{S.title}</span></nav>
+  <section class="intro" aria-labelledby="mc-h">
+    <h1 id="mc-h">{S.title}</h1>
+    <p>{S.lead} {S.guide} <a href="/commanders/">{S.guideLink}</a>.</p>
+    <p class="acct" data-account-name hidden>{S.account} <strong></strong></p>
+  </section>
+  <Commanders roster={roster} client:load />
+</Shell>
+
+<style>
+  .crumb { display: flex; gap: var(--ko-space-2); align-items: center; font-size: var(--ko-text-sm); color: var(--ko-text-muted); margin-bottom: var(--ko-space-2); }
+  .crumb a { color: var(--ko-text); min-height: 44px; display: inline-flex; align-items: center; }
+  .intro { display: grid; gap: var(--ko-space-3); margin-bottom: var(--ko-space-6); }
+  h1 { font-size: var(--ko-text-3xl); line-height: var(--ko-leading-3xl); }
+  p { color: var(--ko-text-muted); max-width: 65ch; }
+  .acct strong { color: var(--ko-text); }
+</style>
+
+<script>
+  import { readStore } from "../../../lib/store";
+  import { activeAccount } from "../../../lib/accounts";
+  const a = activeAccount(readStore());
+  const el = document.querySelector<HTMLElement>("[data-account-name]");
+  if (a && el) {
+    el.querySelector("strong")!.textContent = a.name;
+    el.hidden = false;
+  }
+</script>

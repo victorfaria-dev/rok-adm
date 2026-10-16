@@ -1,0 +1,20 @@
+---
+import Shell from "../layouts/Shell.astro";
+---
+<Shell title="Página não encontrada" description="Esta página não existe." mode="read">
+  <section class="nf">
+    <h1>Página não encontrada</h1>
+    <p>O link pode estar antigo ou digitado errado.</p>
+    <div class="actions">
+      <a class="btn btn-primary" href="/guide/">Abrir o guia</a>
+      <a class="btn btn-secondary" href="/">Ir para o início</a>
+    </div>
+  </section>
+</Shell>
+
+<style>
+  .nf { display: grid; gap: var(--ko-space-4); padding-block: var(--ko-space-6); }
+  h1 { font-size: var(--ko-text-3xl); }
+  p { color: var(--ko-text-muted); }
+  .actions { display: flex; flex-wrap: wrap; gap: var(--ko-space-3); }
+</style>

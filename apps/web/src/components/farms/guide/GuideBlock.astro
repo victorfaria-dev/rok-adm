@@ -1,0 +1,83 @@
+---
+// One guide block: title, confidence, body (Markdown subset with citation chips), split views,
+// uncertain notes, open gaps and the "Why" in a <details>. Static HTML only.
+import type { GuideBlock } from "@rokadm/core";
+import ConfidenceBadge from "./ConfidenceBadge.astro";
+import FactList from "./FactList.astro";
+import { displayTitle, gapLine, isHypothesis, renderMd, type CardMeta } from "../../../lib/farms-guide";
+
+interface Props {
+  block: GuideBlock;
+  /** Card meta for every card the block cites (resolved in the page frontmatter). */
+  metas: Readonly<Record<string, CardMeta>>;
+}
+const { block, metas } = Astro.props;
+const lookup = (id: string) => metas[id];
+const hypothesis = isHypothesis(block);
+const title = displayTitle(block);
+
+const CONSENSUS: Record<string, string> = {
+  unanimous: "Todas as fontes concordam",
+  majority: "A maioria das fontes concorda",
+  split: "As fontes divergem",
+  minority: "Visão minoritária",
+  "single-source": "Fonte única",
+  mechanic: "Mecânica do jogo",
+};
+const consensus = CONSENSUS[block.consensus];
+const splitViews = block.consensus === "split" && typeof block.split_views === "string"
+  ? block.split_views.split(/\s(?=View [B-Z]\b)/).map((v) => renderMd(v.replace(/^(View [A-Z](?: \([^)]*\))?):/, "**$1:**"), lookup))
+  : [];
+const body = renderMd(block.body_md, lookup);
+const cards = block.cards.map((id) => metas[id]).filter((m): m is CardMeta => m !== undefined);
+---
+<article class:list={["fg-block", { "fg-hypothesis": hypothesis }]} id={block.id} data-block={block.id} aria-labelledby={`${block.id}-h`}>
+  <header class="fg-block-head">
+    <h2 id={`${block.id}-h`}>{hypothesis && <span class="visually-hidden">Hipótese: </span>}{title}</h2>
+    <p class="fg-badges">
+      {hypothesis && <ConfidenceBadge hypothesis />}
+      <ConfidenceBadge confidence={block.confidence} />
+      {consensus && <span class="fg-consensus">{consensus}</span>}
+    </p>
+  </header>
+
+  {hypothesis ? (
+    <>
+      <p class="fg-hyp-note"><strong>Nenhuma fonte recomenda isto.</strong> É raciocínio derivado nosso, mostrado para você conferir. Não planeje em cima dele até um teste no jogo confirmar.</p>
+      <details class="fg-details">
+        <summary>Ler o raciocínio</summary>
+        <div class="fg-body" set:html={body} />
+      </details>
+    </>
+  ) : (
+    <div class="fg-body" set:html={body} />
+  )}
+
+  {splitViews.length > 0 && (
+    <section class="fg-split" aria-label="As duas visões" data-split>
+      <h3>As duas visões</h3>
+      {splitViews.map((v) => <div class="fg-view" set:html={v} />)}
+    </section>
+  )}
+
+  {block.uncertain_notes && (
+    <div class="fg-uncertain">
+      <p class="fg-label">Incerto</p>
+      <div set:html={renderMd(block.uncertain_notes)} />
+    </div>
+  )}
+
+  {block.gaps.length > 0 && (
+    <ul class="fg-gaps">
+      {block.gaps.map((g) => <li>{gapLine(g)}</li>)}
+    </ul>
+  )}
+
+  <details class="fg-details fg-why">
+    <summary>Por quê</summary>
+    <div class="fg-body" set:html={renderMd(block.why_md, lookup)} />
+    <p class="fg-label">Fichas citadas</p>
+    <FactList cards={cards} />
+    <p class="fg-checked">Conferido em {block.as_of}{block.patch_ref ? ` contra o patch ${block.patch_ref}` : ""}.</p>
+  </details>
+</article>

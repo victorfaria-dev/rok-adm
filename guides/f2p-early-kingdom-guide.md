@@ -1,948 +1,948 @@
-# Rise of Kingdoms — F2P early-kingdom guide (new kingdom → KvK1), v1
+# Rise of Kingdoms — Guia F2P para o reino inicial (reino novo → KvK1), v1
 
-*As of 2026-10-13. Checked against official patch notes up to 1.1.09 (latest official EN notes); 1.1.12 reported live (T3). Profile: **F2P**. Assembled automatically from `guides/data/blocks.f2p.json` (43 blocks) by `guides/tools/assemble_guide.py`: edit the blocks, not this file.*
+*Atualizado em 2026-10-13. Conferido com as notas oficiais de patch até 1.1.09 (notas oficiais em inglês mais recentes); 1.1.12 relatada como ativa (T3). Perfil: **F2P**. Montado automaticamente a partir de `guides/data/blocks.f2p.json` (43 blocos) por `guides/tools/assemble_guide.py`: edite os blocos, não este arquivo.*
 
-## How to read this guide
+## Como ler este guia
 
-- **Every number and recommendation cites fact cards** (e.g. [A01-0001](../research/facts/A01/A01-0001.md)). Firm statements use only cards with status `verificado` and confidence `media` or `alta`.
-- **Uncertain**: the claim relies on a weaker, contested or partly outdated card; the note says why.
-- **Pending in-game measurement (T0)**: nobody has measured it yet; the gap ID points to `research/facts/<domain>/_lacunas.md` and the T0 diary (`research/protocolos/t0-medicao.md`).
-- **Patch state**: some patch-change cards (C04) come from official notes but have not yet been through the formal verification pass; they are shown as patch state.
-- **Consensus**: *unanimous* / *majority* / *split* (both views shown) / *mechanic* (a game rule, not an opinion).
-- **Recommended** marks the default option for the F2P profile. **Low spender notes** flag where spending a little changes the advice materially (a full Low-spender delta guide comes later).
-- **Time costs**: no source publishes minutes per task; they are pending the T0 stopwatch (L-A10-01).
-- Block IDs (`like-this`) are what the future questionnaire uses to filter the guide.
+- **Todo número e toda recomendação citam fichas de fatos** (p. ex. [A01-0001](../research/facts/A01/A01-0001.md)). As afirmações firmes usam apenas fichas com status `verificado` e confiança `media` ou `alta`.
+- **Incerto**: a afirmação se apoia em uma ficha mais fraca, contestada ou parcialmente desatualizada; a nota explica o motivo.
+- **Pendente de medição no jogo (T0)**: ninguém mediu ainda; o ID da lacuna aponta para `research/facts/<domínio>/_lacunas.md` e para o diário T0 (`research/protocolos/t0-medicao.md`).
+- **Estado do patch**: algumas fichas de mudança de patch (C04) vêm de notas oficiais mas ainda não passaram pela verificação formal; aparecem como estado do patch.
+- **Consenso**: *unânime* / *maioria* / *dividido* (as duas visões são mostradas) / *mecânica* (regra do jogo, não opinião).
+- **Recomendado** marca a opção padrão para o perfil F2P. As **notas para quem gasta pouco (Low)** indicam onde gastar um pouco muda bastante o conselho (um guia delta completo para o perfil Low virá depois).
+- **Custos de tempo**: nenhuma fonte publica minutos por tarefa; eles aguardam o cronômetro do T0 (L-A10-01).
+- Os IDs dos blocos (`como-este`) são o que o futuro questionário usa para filtrar o guia.
 
-## Contents
+## Sumário
 
-- [1. Overview and realistic expectations](#1-overview-and-realistic-expectations)
-- [2. Day 0–3 setup: civilization and first choices](#2-day-03-setup-civilization-and-first-choices)
-- [3. Phase-by-phase plan to KvK1](#3-phase-by-phase-plan-to-kvk1)
-- [4. Daily routine by time budget](#4-daily-routine-by-time-budget)
-- [5. Events calendar and preparation](#5-events-calendar-and-preparation)
+- [1. Visão geral e expectativas realistas](#1-visão-geral-e-expectativas-realistas)
+- [2. Preparação dos dias 0–3: civilização e primeiras escolhas](#2-preparação-dos-dias-03-civilização-e-primeiras-escolhas)
+- [3. Plano fase a fase até a KvK1](#3-plano-fase-a-fase-até-a-kvk1)
+- [4. Rotina diária por tempo disponível](#4-rotina-diária-por-tempo-disponível)
+- [5. Calendário de eventos e preparação](#5-calendário-de-eventos-e-preparação)
 - [6. Farms](#6-farms)
-- [7. Mistakes to avoid](#7-mistakes-to-avoid)
-- [8. If you got zeroed](#8-if-you-got-zeroed)
-- [9. Open questions and pending measurements](#9-open-questions-and-pending-measurements)
-- [Appendix: Sources and confidence](#appendix-sources-and-confidence)
+- [7. Erros a evitar](#7-erros-a-evitar)
+- [8. Se você foi zerado](#8-se-você-foi-zerado)
+- [9. Perguntas em aberto e medições pendentes](#9-perguntas-em-aberto-e-medições-pendentes)
+- [Apêndice: fontes e confiança](#apêndice-fontes-e-confiança)
 
-## 1. Overview and realistic expectations
+## 1. Visão geral e expectativas realistas
 
-### Budget Reality Check: what a F2P can expect by KvK1
+### Realidade do orçamento: o que um F2P pode esperar até a KvK1
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 5/5 · **Recommended for:** F2P · `ov-budget-reality-check`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 5/5 · **Recomendado para:** F2P · `ov-budget-reality-check`
 
-**What is solid**
-- The first KvK (Season 1) starts at about **kingdom day 100**; pre-KvK (Eve of the Crusade) around day 85–95 [[B01-0500](../research/facts/B01/B01-0500.md)].
-- **T4 is the working troop tier for a F2P in KvK1**; T5 needs CH25 and heavy investment and is a long-term goal [[A08-0500](../research/facts/A08/A08-0500.md)]. T4 unlocks at **CH21** [[A01-0001](../research/facts/A01/A01-0001.md)].
-- Your only *guaranteed* recurring gem income is **100 gems/day** from the 100-point Daily Objectives chest [[A04-0001](../research/facts/A04/A04-0001.md)]. Everything else (events, barbarians, alliance gifts) is variable.
-- Your best free channel for sculptures, keys and VIP points is **an alliance with spenders** (gift chests) [[A06-0516](../research/facts/A06/A06-0516.md)].
+**O que é sólido**
+- A primeira KvK (Temporada 1) começa por volta do **dia 100 do reino**; a pré-KvK (Véspera da Cruzada) fica em torno dos dias 85–95 [[B01-0500](../research/facts/B01/B01-0500.md)].
+- **T4 é o nível de tropa de trabalho de um F2P na KvK1**; T5 exige Prefeitura 25 e muito investimento, e é meta de longo prazo [[A08-0500](../research/facts/A08/A08-0500.md)]. T4 é liberado na **Prefeitura 21** [[A01-0001](../research/facts/A01/A01-0001.md)].
+- Sua única renda de gemas *garantida* e recorrente são as **100 gemas/dia** do baú de 100 pontos dos Objetivos Diários [[A04-0001](../research/facts/A04/A04-0001.md)]. Todo o resto (eventos, bárbaros, presentes da aliança) é variável.
+- Seu melhor canal gratuito de esculturas, chaves e pontos VIP é **uma aliança com jogadores que gastam** (baús de presente) [[A06-0516](../research/facts/A06/A06-0516.md)].
 
-**Realistic targets (Uncertain: player reports and derived upper bounds)**
-- Enter KvK1 at about **CH21–22 with T4**, not CH25; 10–20M power is "realistic" per 2026 player reports [[B01-0700](../research/facts/B01/B01-0700.md)].
-- **VIP 6** around day 41 *at the latest* if every free gem goes to VIP; **VIP 10** is far beyond KvK1 on guaranteed income alone (≈ day 503 upper bound) [[A05-0007](../research/facts/A05/A05-0007.md)].
+**Metas realistas (Incerto: relatos de jogadores e limites superiores derivados)**
+- Entrar na KvK1 com cerca de **Prefeitura 21–22 e T4**, não Prefeitura 25; 10–20M de poder é "realista" segundo relatos de jogadores de 2026 [[B01-0700](../research/facts/B01/B01-0700.md)].
+- **VIP 6** por volta do dia 41 *no máximo*, se toda gema gratuita for para o VIP; **VIP 10** fica muito além da KvK1 só com renda garantida (≈ dia 503 como limite superior) [[A05-0007](../research/facts/A05/A05-0007.md)].
 
-**Where a F2P competes, and where not**
-- Compete: MGE *milestones* (not ranking) [[A11-0500](../research/facts/A11/A11-0500.md)]; filling strong rallies and fighting with complete marches [[A08-0503](../research/facts/A08/A08-0503.md)].
-- Don't compete: open power rankings and repeated gem-spending events [[A11-0511](../research/facts/A11/A11-0511.md)].
+**Onde um F2P compete e onde não**
+- Compete: *marcos* do MGE (não o ranking) [[A11-0500](../research/facts/A11/A11-0500.md)]; encher bons ataques em massa (rallies) e lutar com marchas completas [[A08-0503](../research/facts/A08/A08-0503.md)].
+- Não compete: rankings abertos de poder e eventos repetidos que exigem gastar gemas [[A11-0511](../research/facts/A11/A11-0511.md)].
 
-**Why:** The most common F2P pain is feeling that hours of play are erased by spenders. Most of that comes from comparing yourself with the wrong target. New kingdoms are hardest for F2P early: spenders dominate the first 60–90 days [[B01-0506](../research/facts/B01/B01-0506.md)]. A plan built around **one complete T4 march by day ~100** is reachable. A plan built around matching whales is not, and abandoning the account out of frustration is the worst outcome.
+**Por quê:** A dor mais comum do F2P é sentir que horas de jogo são apagadas por quem gasta. A maior parte disso vem de se comparar com a meta errada. Reinos novos são os mais difíceis para o F2P no começo: quem gasta domina os primeiros 60–90 dias [[B01-0506](../research/facts/B01/B01-0506.md)]. Um plano centrado em **uma marcha T4 completa por volta do dia 100** é alcançável. Um plano centrado em igualar as baleias (whales) não é, e abandonar a conta por frustração é o pior resultado.
 
-> **Uncertain:** Targets come from [B01-0700](../research/facts/B01/B01-0700.md) (T4 player comments, baixa), [A05-0007](../research/facts/A05/A05-0007.md) (derived, baixa: assumes cumulative VIP thresholds, an unbroken streak and no other VIP sources, so real dates are earlier) and [B01-0506](../research/facts/B01/B01-0506.md) (baixa). [A11-0511](../research/facts/A11/A11-0511.md) is baixa. The F2P gem income beyond 100/day is unmeasured.
+> **Incerto:** As metas vêm de [B01-0700](../research/facts/B01/B01-0700.md) (comentários de jogadores sobre T4, baixa), [A05-0007](../research/facts/A05/A05-0007.md) (derivado, baixa: pressupõe limiares de VIP acumulados, sequência ininterrupta e nenhuma outra fonte de VIP, então as datas reais são mais cedo) e [B01-0506](../research/facts/B01/B01-0506.md) (baixa). [A11-0511](../research/facts/A11/A11-0511.md) é baixa. A renda de gemas do F2P além de 100/dia não foi medida.
 >
-> **Pending in-game measurement (T0):** L-A04-01, L-A05-01, L-B01-02, L-A02-03
+> **Pendente de medição no jogo (T0):** L-A04-01, L-A05-01, L-B01-02, L-A02-03
 
-> **Low spender note:** Growth Fund (~$15 once, ~81,000 gems paid out as CH milestones are reached) and the 30-day gem supply (~$10, ~19,500 gems) are the two packs every guide ranks first [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md)]. They mostly move the VIP 6 → VIP 10 dates earlier; the plan stays the same [[A12-0005](../research/facts/A12/A12-0005.md)]. Prices are from seller sites; confirm in your store (L-A12-01).
+> **Nota para quem gasta pouco (Low):** O Fundo de Crescimento (~US$ 15 uma vez, ~81.000 gemas pagas conforme se alcançam os marcos da Prefeitura) e o suprimento de gemas de 30 dias (~US$ 10, ~19.500 gemas) são os dois pacotes que os guias colocam em primeiro e segundo lugar [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md)]. Eles servem principalmente para antecipar as datas de VIP 6 → VIP 10; o plano continua o mesmo [[A12-0005](../research/facts/A12/A12-0005.md)]. Os preços vêm de sites de vendedores; confirme na sua loja (L-A12-01).
 
-### Current patch state: what older guides get wrong
+### Estado atual do patch: o que os guias antigos erram
 
-**Confidence:** medium · **Consensus:** mechanic · **Priority:** 4/5 · **Recommended for:** F2P, Low · `ov-patch-state`
+**Confiança:** média · **Consenso:** mecânica · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · `ov-patch-state`
 
-Written against official notes up to **1.1.09 (2026-06-30)**; 1.1.10–1.1.12 are known only from a third-party source [[C04-0001](../research/facts/C04/C04-0001.md)].
+Escrito com base nas notas oficiais até a **1.1.09 (2026-06-30)**; as versões 1.1.10–1.1.12 são conhecidas apenas por uma fonte de terceiros [[C04-0001](../research/facts/C04/C04-0001.md)].
 
-| Old advice | Today | Card |
+| Conselho antigo | Hoje | Ficha |
 |---|---|---|
-| "Use Beginner's Immigration / a jumper account to restart in a fresh kingdom" | Distribution stopped **2025-03-26** for new characters | [C04-0026](../research/facts/C04/C04-0026.md) |
-| "Pop 8h/24h resource boosts daily; buy them in the shops" | **Removed in 1.1.09**; VIP production bonuses raised instead | [C04-0004](../research/facts/C04/C04-0004.md) |
-| "AP cap is 1,000; don't claim daily AP near the cap" | Cap is **1,500**; the daily claim can push AP *above* the cap since 1.1.02 | [A09-0001](../research/facts/A09/A09-0001.md), [C04-0032](../research/facts/C04/C04-0032.md) |
-| "Wheel of Fortune costs X gems per spin" | Spins need **Spin Tickets** (Season 2/3/SoC official; Season 1 since 1.1.12 per T3) | [C04-0022](../research/facts/C04/C04-0022.md) |
-| "Pelagius is an epic commander" | **Legendary Pelagius** event from kingdom **day 5** (1.1.09) | [C04-0005](../research/facts/C04/C04-0005.md) |
-| "Civilization perks are all-or-nothing" | **CH16** unlocks civilization *buff switching* (1.1.01) | [A14-0002](../research/facts/A14/A14-0002.md) |
-| "Bots for barbarians/gathering are low risk" | Built-in **auto-peacekeeping** exists; scripts lose **Conduct Score** (1.1.07) | [A09-0008](../research/facts/A09/A09-0008.md), [C04-0006](../research/facts/C04/C04-0006.md) |
-| "Sculptures/armaments are locked forever" | Legendary Commander Swap, Armament Conversion (1.0.90) and full-refund equipment dismantle (1.0.96) exist | [C04-0023](../research/facts/C04/C04-0023.md), [C04-0010](../research/facts/C04/C04-0010.md) |
-| "A new kingdom has 6 starting provinces" | **3** since 1.0.78 | [C04-0033](../research/facts/C04/C04-0033.md) |
+| "Use a Imigração de Iniciante / uma conta pulo para recomeçar em um reino novo" | A distribuição parou em **2025-03-26** para personagens novos | [C04-0026](../research/facts/C04/C04-0026.md) |
+| "Use os impulsos de recursos de 8h/24h todo dia; compre nas lojas" | **Removidos na 1.1.09**; os bônus de produção do VIP foram aumentados no lugar | [C04-0004](../research/facts/C04/C04-0004.md) |
+| "O limite de PA é 1.000; não colete os PA diários perto do limite" | O limite é **1.500**; desde a 1.1.02 a coleta diária pode levar os PA *acima* do limite | [A09-0001](../research/facts/A09/A09-0001.md), [C04-0032](../research/facts/C04/C04-0032.md) |
+| "A Roda da Fortuna custa X gemas por giro" | Os giros exigem **Tíquetes de Giro** (oficial nas Temporadas 2/3/SoC; Temporada 1 desde a 1.1.12 segundo T3) | [C04-0022](../research/facts/C04/C04-0022.md) |
+| "Pelagius é um comandante épico" | Evento do **Pelagius Lendário** a partir do **dia 5** do reino (1.1.09) | [C04-0005](../research/facts/C04/C04-0005.md) |
+| "Os bônus de civilização são tudo ou nada" | A **Prefeitura 16** libera a *troca de bônus* de civilização (1.1.01) | [A14-0002](../research/facts/A14/A14-0002.md) |
+| "Bots para bárbaros/coleta têm pouco risco" | Existe **pacificação automática** nativa; scripts perdem **Pontuação de Conduta** (1.1.07) | [A09-0008](../research/facts/A09/A09-0008.md), [C04-0006](../research/facts/C04/C04-0006.md) |
+| "Esculturas/armamentos ficam travados para sempre" | Existem Troca de Comandante Lendário, Conversão de Armamento (1.0.90) e desmontagem de equipamento com reembolso total (1.0.96) | [C04-0023](../research/facts/C04/C04-0023.md), [C04-0010](../research/facts/C04/C04-0010.md) |
+| "Um reino novo tem 6 províncias iniciais" | **3** desde a 1.0.78 | [C04-0033](../research/facts/C04/C04-0033.md) |
 
-**Why:** Advice that ignores these changes wastes scarce resources (gems on boosts that no longer exist, gem math for a Wheel that now needs tickets) or plans around options that are gone (jumping). Every block in this guide carries the patch it was checked against.
+**Por quê:** Conselhos que ignoram essas mudanças desperdiçam recursos escassos (gemas em impulsos que não existem mais, conta de gemas para uma Roda que agora exige tíquetes) ou planejam em torno de opções que acabaram (pular de reino). Cada bloco deste guia indica o patch em que foi conferido.
 
-> **Uncertain:** [C04-0001](../research/facts/C04/C04-0001.md) (version) is third-party for 1.1.10–1.1.12. The Season 1 part of [C04-0022](../research/facts/C04/C04-0022.md) is T3 only. [C04-0026](../research/facts/C04/C04-0026.md) rests on an in-game mail quoted by players plus wiki/guide (no official forum post).
+> **Incerto:** [C04-0001](../research/facts/C04/C04-0001.md) (versão) é de terceiros para a 1.1.10–1.1.12. A parte da Temporada 1 de [C04-0022](../research/facts/C04/C04-0022.md) é apenas T3. [C04-0026](../research/facts/C04/C04-0026.md) se apoia em um correio do jogo citado por jogadores mais wiki/guia (sem post oficial no fórum).
 >
-> **Patch state:** [C04-0001](../research/facts/C04/C04-0001.md), [C04-0004](../research/facts/C04/C04-0004.md), [C04-0005](../research/facts/C04/C04-0005.md), [C04-0006](../research/facts/C04/C04-0006.md), [C04-0010](../research/facts/C04/C04-0010.md), [C04-0022](../research/facts/C04/C04-0022.md), [C04-0023](../research/facts/C04/C04-0023.md), [C04-0026](../research/facts/C04/C04-0026.md), [C04-0032](../research/facts/C04/C04-0032.md), [C04-0033](../research/facts/C04/C04-0033.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0001](../research/facts/C04/C04-0001.md), [C04-0004](../research/facts/C04/C04-0004.md), [C04-0005](../research/facts/C04/C04-0005.md), [C04-0006](../research/facts/C04/C04-0006.md), [C04-0010](../research/facts/C04/C04-0010.md), [C04-0022](../research/facts/C04/C04-0022.md), [C04-0023](../research/facts/C04/C04-0023.md), [C04-0026](../research/facts/C04/C04-0026.md), [C04-0032](../research/facts/C04/C04-0032.md), [C04-0033](../research/facts/C04/C04-0033.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-B01-04
+> **Pendente de medição no jogo (T0):** L-B01-04
 
-## 2. Day 0–3 setup: civilization and first choices
+## 2. Preparação dos dias 0–3: civilização e primeiras escolhas
 
-### Choose your civilization (China recommended)
+### Escolha sua civilização (China recomendada)
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 5/5 · **Recommended for:** F2P · **CH:** 1–10 · `d0-civilization`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 5/5 · **Recomendado para:** F2P · **Prefeitura:** 1–10 · `d0-civilization`
 
-- **Recommended (F2P): China** — +5% building speed, +5% AP recovery, starts with **Sun Tzu** [[A14-0003](../research/facts/A14/A14-0003.md), [A14-0001](../research/facts/A14/A14-0001.md)]. Consensus: **majority**.
-- Cited alternatives: **Britain** (Boudica, +5% training) and **Spain** (+10% barbarian EXP, +20% resource production, Pelagius) [[A14-0003](../research/facts/A14/A14-0003.md), [A14-0001](../research/facts/A14/A14-0001.md)].
-- Your **first civilization change is free at CH10**; otherwise it costs 10,000 gems or 2M individual alliance credits. A change does **not** replace the starting commander you already own [[A14-0002](../research/facts/A14/A14-0002.md)].
-- From **CH16** you can switch civilization *buffs* (1.1.01) [[A14-0002](../research/facts/A14/A14-0002.md)].
-- Around KvK, guides suggest switching to **Germany** (training, AP) or a role civilization [[A14-0003](../research/facts/A14/A14-0003.md)].
+- **Recomendado (F2P): China** — +5% de velocidade de construção, +5% de recuperação de PA, começa com **Sun Tzu** [[A14-0003](../research/facts/A14/A14-0003.md), [A14-0001](../research/facts/A14/A14-0001.md)]. Consenso: **maioria**.
+- Alternativas citadas: **Grã-Bretanha** (Boudica, +5% de treinamento) e **Espanha** (+10% de EXP de bárbaros, +20% de produção de recursos, Pelagius) [[A14-0003](../research/facts/A14/A14-0003.md), [A14-0001](../research/facts/A14/A14-0001.md)].
+- Sua **primeira troca de civilização é grátis na Prefeitura 10**; fora isso custa 10.000 gemas ou 2M de créditos individuais da aliança. A troca **não** substitui o comandante inicial que você já tem [[A14-0002](../research/facts/A14/A14-0002.md)].
+- A partir da **Prefeitura 16** você pode trocar os *bônus* da civilização (1.1.01) [[A14-0002](../research/facts/A14/A14-0002.md)].
+- Perto da KvK, os guias sugerem trocar para a **Alemanha** (treinamento, PA) ou para uma civilização de função [[A14-0003](../research/facts/A14/A14-0003.md)].
 
-**Why:** Building speed is the bottleneck of the whole CH21 path, and AP recovery feeds barbarians and events, so China's two perks hit the two daily levers. Sun Tzu is also the safest early F2P commander [[A06-0501](../research/facts/A06/A06-0501.md)]. Because the change at CH10 is free, the starting pick only has to be right for CH1–CH10.
+**Por quê:** A velocidade de construção é o gargalo de todo o caminho até a Prefeitura 21, e a recuperação de PA alimenta bárbaros e eventos; assim, os dois bônus da China acertam as duas alavancas diárias. Sun Tzu também é o comandante inicial F2P mais seguro [[A06-0501](../research/facts/A06/A06-0501.md)]. Como a troca na Prefeitura 10 é grátis, a escolha inicial só precisa servir da Prefeitura 1 à 10.
 
-> **Uncertain:** No source re-evaluates Spain after the day-5 Legendary Pelagius event ([C04-0005](../research/facts/C04/C04-0005.md)); this could strengthen Spain (gap L-A14-02). The value of +5% building speed over the CH chain is not quantified (L-A14-03). The cost/cooldown of CH16 buff switching is unknown (L-A14-01).
+> **Incerto:** Nenhuma fonte reavalia a Espanha depois do evento do Pelagius Lendário no dia 5 ([C04-0005](../research/facts/C04/C04-0005.md)); isso pode fortalecer a Espanha (lacuna L-A14-02). O valor de +5% de velocidade de construção ao longo da cadeia de Prefeituras não foi quantificado (L-A14-03). O custo/tempo de espera da troca de bônus na Prefeitura 16 é desconhecido (L-A14-01).
 >
-> **Patch state:** [C04-0005](../research/facts/C04/C04-0005.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0005](../research/facts/C04/C04-0005.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A14-01, L-A14-02, L-A14-03
+> **Pendente de medição no jogo (T0):** L-A14-01, L-A14-02, L-A14-03
 
-### Starting in a new kingdom in 2026
+### Começando em um reino novo em 2026
 
-**Confidence:** medium · **Consensus:** mechanic · **Priority:** 4/5 · **Recommended for:** F2P, Low · **CH:** 1–10 · `d0-new-kingdom-start`
+**Confiança:** média · **Consenso:** mecânica · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · **Prefeitura:** 1–10 · `d0-new-kingdom-start`
 
-- **No jumping:** Beginner's Immigration is no longer given to new characters (since 2025-03-26) [[C04-0026](../research/facts/C04/C04-0026.md)]. The kingdom you start in is, in practice, the one you will grow in until migration opens; same-season immigration is restricted for new kingdoms until the end of Season 1 on some continents (pioneer) [[C04-0008](../research/facts/C04/C04-0008.md)].
-- A new kingdom runs in the **Preparation Season** (Kingdom Chronicles) for about 85–100 days before KvK1 [[B01-0500](../research/facts/B01/B01-0500.md)]; since 1.0.78 it opens with **3 starting provinces**, not 6 [[C04-0033](../research/facts/C04/C04-0033.md)].
-- **Join an active alliance with spenders in the first days** (see next block) [[A06-0516](../research/facts/A06/A06-0516.md)].
-- Expect the **first 60–90 days** to set the kingdom's hierarchy, with spenders far ahead early [[B01-0506](../research/facts/B01/B01-0506.md)].
+- **Sem pular de reino:** a Imigração de Iniciante não é mais dada a personagens novos (desde 2025-03-26) [[C04-0026](../research/facts/C04/C04-0026.md)]. O reino em que você começa é, na prática, aquele em que vai crescer até a migração abrir; a imigração na mesma temporada é restrita para reinos novos até o fim da Temporada 1 em alguns continentes (pioneiro) [[C04-0008](../research/facts/C04/C04-0008.md)].
+- Um reino novo passa pela **Temporada de Preparação** (Crônicas do Reino) por cerca de 85–100 dias antes da KvK1 [[B01-0500](../research/facts/B01/B01-0500.md)]; desde a 1.0.78 ele abre com **3 províncias iniciais**, não 6 [[C04-0033](../research/facts/C04/C04-0033.md)].
+- **Entre em uma aliança ativa com jogadores que gastam nos primeiros dias** (veja o próximo bloco) [[A06-0516](../research/facts/A06/A06-0516.md)].
+- Espere que os **primeiros 60–90 dias** definam a hierarquia do reino, com quem gasta bem à frente no início [[B01-0506](../research/facts/B01/B01-0506.md)].
 
-**Why:** Old "how to start" advice assumes you can test a kingdom and jump if it looks bad. That is gone, so the first-week decisions that still matter are *alliance* and *safety*, not kingdom shopping.
+**Por quê:** Os conselhos antigos de "como começar" supõem que dá para testar um reino e pular se ele parecer ruim. Isso acabou; então as decisões da primeira semana que ainda importam são *aliança* e *segurança*, não escolher reino.
 
-> **Uncertain:** [B01-0506](../research/facts/B01/B01-0506.md) is baixa (T3). [C04-0026](../research/facts/C04/C04-0026.md) and [C04-0033](../research/facts/C04/C04-0033.md) are patch-state cards (status bruto). [C04-0008](../research/facts/C04/C04-0008.md)'s new-kingdom lock is a pioneer on select continents. Whether a F2P should start in a brand-new kingdom at all is an open disagreement (no card).
+> **Incerto:** [B01-0506](../research/facts/B01/B01-0506.md) é baixa (T3). [C04-0026](../research/facts/C04/C04-0026.md) e [C04-0033](../research/facts/C04/C04-0033.md) são fichas de estado de patch (status bruto). O bloqueio de reino novo de [C04-0008](../research/facts/C04/C04-0008.md) é um pioneiro em continentes selecionados. Se um F2P deve mesmo começar em um reino totalmente novo é uma discordância em aberto (sem ficha).
 >
-> **Patch state:** [C04-0008](../research/facts/C04/C04-0008.md), [C04-0026](../research/facts/C04/C04-0026.md), [C04-0033](../research/facts/C04/C04-0033.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0008](../research/facts/C04/C04-0008.md), [C04-0026](../research/facts/C04/C04-0026.md), [C04-0033](../research/facts/C04/C04-0033.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-B01-02
+> **Pendente de medição no jogo (T0):** L-B01-02
 
-### Join an active, spending alliance early
+### Entre cedo em uma aliança ativa, com jogadores que gastam
 
-**Confidence:** medium · **Consensus:** unanimous · **Priority:** 5/5 · **Recommended for:** F2P, Low, Medium · `d0-join-alliance`
+**Confiança:** média · **Consenso:** unânime · **Prioridade:** 5/5 · **Recomendado para:** F2P, Low, Medium · `d0-join-alliance`
 
-- **Recommended (all profiles):** join an active alliance with spenders as soon as you can [[A06-0516](../research/facts/A06/A06-0516.md)]. Consensus: **unanimous**.
-- What it gives you:
-  - **Gift chests** generated by spenders: sculptures, keys and VIP points [[A06-0516](../research/facts/A06/A06-0516.md), [A05-0004](../research/facts/A05/A05-0004.md)].
-  - **Helps:** each help fills 1% of a construction/research/healing bar; helps per job grow with the Alliance Center level (5 at Lv1 up to 30 at Lv25) [[A10-0006](../research/facts/A10/A10-0006.md)].
-  - **+25% gathering speed** inside alliance territory [[A03-0009](../research/facts/A03/A03-0009.md)].
-  - Fort rallies (Books of Covenant, alliance gifts) once forts unlock [[A09-0005](../research/facts/A09/A09-0005.md)].
+- **Recomendado (todos os perfis):** entre em uma aliança ativa com jogadores que gastam o quanto antes [[A06-0516](../research/facts/A06/A06-0516.md)]. Consenso: **unânime**.
+- O que ela oferece:
+  - **Baús de presente** gerados por quem gasta: esculturas, chaves e pontos VIP [[A06-0516](../research/facts/A06/A06-0516.md), [A05-0004](../research/facts/A05/A05-0004.md)].
+  - **Ajudas:** cada ajuda preenche 1% de uma barra de construção/pesquisa/cura; as ajudas por tarefa crescem com o nível do Centro da Aliança (5 no Nv1 até 30 no Nv25) [[A10-0006](../research/facts/A10/A10-0006.md)].
+  - **+25% de velocidade de coleta** dentro do território da aliança [[A03-0009](../research/facts/A03/A03-0009.md)].
+  - Rallies em fortes (Livros do Pacto, presentes da aliança) quando os fortes forem liberados [[A09-0005](../research/facts/A09/A09-0005.md)].
 
-**Why:** For a F2P, the alliance is the largest free income source outside the daily chest: other people's spending turns into your sculptures and VIP points, and their helps shorten every timer. An inactive alliance gives none of this.
+**Por quê:** Para um F2P, a aliança é a maior fonte de renda gratuita fora do baú diário: o gasto dos outros vira suas esculturas e pontos VIP, e as ajudas deles encurtam todo cronômetro. Uma aliança inativa não dá nada disso.
 
-> **Pending in-game measurement (T0):** L-A05-03
+> **Pendente de medição no jogo (T0):** L-A05-03
 
-### First gems go to VIP (target VIP 6), never break the streak
+### As primeiras gemas vão para o VIP (meta VIP 6); nunca quebre a sequência
 
-**Confidence:** medium · **Consensus:** split · **Priority:** 5/5 · **Recommended for:** F2P · `d0-first-gems-vip`
+**Confiança:** média · **Consenso:** dividido · **Prioridade:** 5/5 · **Recomendado para:** F2P · `d0-first-gems-vip`
 
-- **Claim the daily VIP points every day.** The claim starts at 40 and grows by +20 per consecutive day to 200/day; missing one day resets it to 40 [[A05-0003](../research/facts/A05/A05-0003.md)].
-- **Recommended (F2P): put free gems into VIP until VIP 6** (permanent 2nd builder), then save toward VIP 10 [[A05-0008](../research/facts/A05/A05-0008.md), [A04-0009](../research/facts/A04/A04-0009.md)]. Gems convert to VIP points 1:1 [[A05-0004](../research/facts/A05/A05-0004.md)]. Consensus: **majority**.
-- Until VIP 6, keep the second builder running with **Builder Recruitment** items (2 days each, stackable) [[A01-0006](../research/facts/A01/A01-0006.md)].
-- **Don't** finish timers with gems or buy AP with gems [[A04-0009](../research/facts/A04/A04-0009.md), [A04-0008](../research/facts/A04/A04-0008.md)].
+- **Colete os pontos VIP diários todos os dias.** A coleta começa em 40 e cresce +20 por dia consecutivo até 200/dia; perder um dia volta para 40 [[A05-0003](../research/facts/A05/A05-0003.md)].
+- **Recomendado (F2P): ponha as gemas gratuitas no VIP até o VIP 6** (2º construtor permanente), depois poupe para o VIP 10 [[A05-0008](../research/facts/A05/A05-0008.md), [A04-0009](../research/facts/A04/A04-0009.md)]. As gemas viram pontos VIP na proporção 1:1 [[A05-0004](../research/facts/A05/A05-0004.md)]. Consenso: **maioria**.
+- Até o VIP 6, mantenha o segundo construtor trabalhando com itens de **Recrutamento de Construtor** (2 dias cada, acumuláveis) [[A01-0006](../research/facts/A01/A01-0006.md)].
+- **Não** termine cronômetros com gemas nem compre PA com gemas [[A04-0009](../research/facts/A04/A04-0009.md), [A04-0008](../research/facts/A04/A04-0008.md)].
 
-**Why:** The second builder doubles construction throughput for the rest of the account's life, and construction is the KvK1 bottleneck (CH21 for T4). Gems spent on instant-finishes are gone; gems spent on VIP become permanent buffs and, at VIP 10, a daily legendary sculpture [[A05-0006](../research/facts/A05/A05-0006.md)].
+**Por quê:** O segundo construtor dobra a capacidade de construção pelo resto da vida da conta, e a construção é o gargalo da KvK1 (Prefeitura 21 para T4). Gemas gastas em conclusões instantâneas somem; gemas gastas em VIP viram bônus permanentes e, no VIP 10, uma escultura lendária por dia [[A05-0006](../research/facts/A05/A05-0006.md)].
 
-**Both views (split):** Majority (5 sources): free gems → VIP 6, then VIP 10 [[A05-0008](../research/facts/A05/A05-0008.md)]. Minority (AllClash, 2020): reach VIP through daily play and don't spend gems on it [[A05-0008](../research/facts/A05/A05-0008.md), [A04-0009](../research/facts/A04/A04-0009.md)]. This guide follows the majority.
+**As duas visões (dividido):** Maioria (5 fontes): gemas gratuitas → VIP 6, depois VIP 10 [[A05-0008](../research/facts/A05/A05-0008.md)]. Minoria (AllClash, 2020): chegar ao VIP jogando todo dia e não gastar gemas nisso [[A05-0008](../research/facts/A05/A05-0008.md), [A04-0009](../research/facts/A04/A04-0009.md)]. Este guia segue a maioria.
 
-> **Uncertain:** VIP thresholds are read as cumulative totals (T4 arithmetic supports it; confirm on day 1, L-A05-01).
+> **Incerto:** Os limiares de VIP são lidos como totais acumulados (a aritmética de T4 sustenta isso; confirme no dia 1, L-A05-01).
 >
-> **Pending in-game measurement (T0):** L-A05-01, L-A04-01
+> **Pendente de medição no jogo (T0):** L-A05-01, L-A04-01
 
-> **Low spender note:** Buy the Growth Fund as early as possible: its ~81,000 gems accrue as City Hall levels are reached, so buying early loses nothing [[A12-0001](../research/facts/A12/A12-0001.md)]. Those gems follow the same VIP-first plan.
+> **Nota para quem gasta pouco (Low):** Compre o Fundo de Crescimento o mais cedo possível: as ~81.000 gemas dele são liberadas conforme os níveis da Prefeitura são alcançados, então comprar cedo não custa nada [[A12-0001](../research/facts/A12/A12-0001.md)]. Essas gemas seguem o mesmo plano de VIP primeiro.
 
-### Build order: City Hall and its prerequisites only
+### Ordem de construção: só a Prefeitura e seus pré-requisitos
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 5/5 · **Recommended for:** F2P · **CH:** 1–25 · `d0-build-order`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 5/5 · **Recomendado para:** F2P · **Prefeitura:** 1–25 · `d0-build-order`
 
-- **Recommended (F2P):** spend builder time, resources and speedups on **City Hall and the buildings it requires**; keep both builders busy; defer non-prerequisite buildings (extra resource buildings, Watchtower) [[A01-0007](../research/facts/A01/A01-0007.md)]. Consensus: **majority**.
-- The rules: no building can exceed City Hall [[A01-0003](../research/facts/A01/A01-0003.md)]; CH N (N≥3) needs **Wall N−1 plus one rotating building at N−1** [[A01-0001](../research/facts/A01/A01-0001.md)]; Wall N (N≥5) needs Tavern N, which needs Quarry N; military buildings need their resource building; Trading Post N needs Goldmine N [[A01-0004](../research/facts/A01/A01-0004.md)].
-- Milestones worth knowing [[A01-0001](../research/facts/A01/A01-0001.md), [A03-0023](../research/facts/A03/A03-0023.md)]:
+- **Recomendado (F2P):** gaste tempo de construtor, recursos e acelerações na **Prefeitura e nos edifícios que ela exige**; mantenha os dois construtores ocupados; adie edifícios que não são pré-requisito (edifícios de recursos extras, Torre de Vigia) [[A01-0007](../research/facts/A01/A01-0007.md)]. Consenso: **maioria**.
+- As regras: nenhum edifício pode passar da Prefeitura [[A01-0003](../research/facts/A01/A01-0003.md)]; a Prefeitura N (N≥3) exige **Muralha N−1 mais um edifício rotativo no nível N−1** [[A01-0001](../research/facts/A01/A01-0001.md)]; a Muralha N (N≥5) exige Taverna N, que exige Pedreira N; os edifícios militares exigem seu edifício de recurso; o Entreposto Comercial N exige Mina de Ouro N [[A01-0004](../research/facts/A01/A01-0004.md)].
+- Marcos que vale conhecer [[A01-0001](../research/facts/A01/A01-0001.md), [A03-0023](../research/facts/A03/A03-0023.md)]:
 
-| CH | Unlock |
+| Prefeitura | Libera |
 |---|---|
-| 5 | 2nd march |
-| 8 | queue dashboard (1.1.01), Tier 2 [[A01-0011](../research/facts/A01/A01-0011.md)] |
-| 10 | free Civilization Change reward [[A01-0002](../research/facts/A01/A01-0002.md)], Lyceum |
-| 11 | 3rd march |
-| 16 | Tier 3, Blacksmith |
-| 17 | 4th march |
-| 21 | **Tier 4** |
-| 22 | 5th march |
+| 5 | 2ª marcha |
+| 8 | painel de filas (1.1.01), Nível 2 [[A01-0011](../research/facts/A01/A01-0011.md)] |
+| 10 | recompensa de Troca de Civilização grátis [[A01-0002](../research/facts/A01/A01-0002.md)], Liceu |
+| 11 | 3ª marcha |
+| 16 | Nível 3, Ferreiro |
+| 17 | 4ª marcha |
+| 21 | **Nível 4** |
+| 22 | 5ª marcha |
 
-- Resources come mainly from **gathering** on the map, not city buildings [[A01-0007](../research/facts/A01/A01-0007.md)].
+- Os recursos vêm principalmente da **coleta** no mapa, não dos edifícios da cidade [[A01-0007](../research/facts/A01/A01-0007.md)].
 
-**Why:** Every unlock that matters for KvK1 (marches, T3, T4) is gated by City Hall, and the prerequisite chain is long: the minimum raw build time to CH21 is about 163 builder-days with no buffs [[A01-0005](../research/facts/A01/A01-0005.md)]. Any building outside the chain delays that.
+**Por quê:** Todo desbloqueio que importa para a KvK1 (marchas, T3, T4) depende da Prefeitura, e a cadeia de pré-requisitos é longa: o tempo bruto mínimo de construção até a Prefeitura 21 é de cerca de 163 dias de construtor, sem bônus [[A01-0005](../research/facts/A01/A01-0005.md)]. Qualquer edifício fora da cadeia atrasa isso.
 
-> **Uncertain:** [A01-0005](../research/facts/A01/A01-0005.md) is a derived organizer estimate (baixa), useful for scale only; real time depends on buffs and speedups (L-A01-03). Early unlock levels are contested ([A01-0009](../research/facts/A01/A01-0009.md)): Academy at CH4 or CH6, first Quarry at CH4 or CH6, Trading Post at CH10 or CH12 (CH12 probable). Storehouse and Hospital may deserve attention even when not on the chain ([A01-0007](../research/facts/A01/A01-0007.md) notes).
+> **Incerto:** [A01-0005](../research/facts/A01/A01-0005.md) é uma estimativa derivada do organizador (baixa), útil só para ter a escala; o tempo real depende de bônus e acelerações (L-A01-03). Os níveis de desbloqueio iniciais são contestados ([A01-0009](../research/facts/A01/A01-0009.md)): Academia na Prefeitura 4 ou 6, primeira Pedreira na 4 ou 6, Entreposto Comercial na 10 ou 12 (12 é o mais provável). Depósito e Hospital podem merecer atenção mesmo fora da cadeia (notas de [A01-0007](../research/facts/A01/A01-0007.md)).
 >
-> **Pending in-game measurement (T0):** L-A01-01, L-A01-02, L-A01-03
+> **Pendente de medição no jogo (T0):** L-A01-01, L-A01-02, L-A01-03
 
-### Day-1 safety: protect what you hold
+### Segurança no dia 1: proteja o que você tem
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P, Low · `d0-day1-survival`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · `d0-day1-survival`
 
-- Keep resources as **unopened resource items** until you need them: items cannot be plundered and have no storage limit; gems cannot be plundered at all [[A03-0007](../research/facts/A03/A03-0007.md)].
-- Raw resources above your **Storehouse protection** can be plundered; keep exposed stock low, especially during kill events [[A03-0006](../research/facts/A03/A03-0006.md), [A13-0005](../research/facts/A13/A13-0005.md)].
-- Keep **hospital capacity** ahead of your army: wounded troops beyond capacity die [[A08-0502](../research/facts/A08/A08-0502.md)].
-- **No third-party scripts.** Use the built-in auto-peacekeeping instead [[A09-0008](../research/facts/A09/A09-0008.md)].
+- Mantenha os recursos como **itens de recurso fechados** até precisar deles: itens não podem ser saqueados e não têm limite de armazenamento; gemas não podem ser saqueadas de jeito nenhum [[A03-0007](../research/facts/A03/A03-0007.md)].
+- Recursos brutos acima da sua **proteção do Depósito** podem ser saqueados; mantenha pouco estoque exposto, principalmente durante eventos de abates [[A03-0006](../research/facts/A03/A03-0006.md), [A13-0005](../research/facts/A13/A13-0005.md)].
+- Mantenha a **capacidade do hospital** à frente do seu exército: tropas feridas além da capacidade morrem [[A08-0502](../research/facts/A08/A08-0502.md)].
+- **Nada de scripts de terceiros.** Use a pacificação automática nativa [[A09-0008](../research/facts/A09/A09-0008.md)].
 
-**Why:** New players are attacked mostly for what is lying around. Converting what you keep into unplunderable form costs nothing and removes the reward for hitting you.
+**Por quê:** Jogadores novos são atacados principalmente pelo que está dando sopa. Converter o que você guarda em uma forma que não pode ser saqueada não custa nada e tira a recompensa de quem bate em você.
 
-> **Uncertain:** Shield durations, beginner protection and their costs are not covered by any fact card yet (proposed gap PROPOSED-SHIELDS). Storehouse protection values below L25 differ between sources ([A03-0006](../research/facts/A03/A03-0006.md); L-A03-05).
+> **Incerto:** Duração de escudos, proteção de iniciante e seus custos ainda não estão em nenhuma ficha (lacuna proposta PROPOSED-SHIELDS). Os valores de proteção do Depósito abaixo do Nv25 diferem entre as fontes ([A03-0006](../research/facts/A03/A03-0006.md); L-A03-05).
 >
-> **Pending in-game measurement (T0):** L-A03-05, PROPOSED-SHIELDS
+> **Pendente de medição no jogo (T0):** L-A03-05, PROPOSED-SHIELDS
 
-### AP discipline from day 1
+### Disciplina de PA desde o dia 1
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P, Low · `d0-ap-discipline`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · `d0-ap-discipline`
 
-- **AP cap is 1,500**; regenerating AP above the cap is wasted, so spend it [[A09-0001](../research/facts/A09/A09-0001.md), [A09-0007](../research/facts/A09/A09-0007.md)].
-- Spend regenerating AP on **barbarians** early (commander EXP, resources, Daily Objective tasks) [[A09-0007](../research/facts/A09/A09-0007.md)]. A barbarian costs 50 AP, minus 2 per consecutive hit without returning (minimum 40) [[A09-0002](../research/facts/A09/A09-0002.md)]. At opening only Lv1–6 barbarians exist; higher levels unlock over the following days [[A09-0004](../research/facts/A09/A09-0004.md)].
-- **Save AP potions/items** for Lohar's Trial / Arms Training and for Eve of the Crusade [[A11-0505](../research/facts/A11/A11-0505.md), [A09-0007](../research/facts/A09/A09-0007.md)]. Consensus: **majority**.
-- Claim the **daily AP** every day, even near the cap (it can exceed the cap since 1.1.02) [[A09-0006](../research/facts/A09/A09-0006.md), [C04-0032](../research/facts/C04/C04-0032.md)].
+- **O limite de PA é 1.500**; PA que regenera acima do limite é desperdiçado, então gaste [[A09-0001](../research/facts/A09/A09-0001.md), [A09-0007](../research/facts/A09/A09-0007.md)].
+- Gaste o PA que regenera com **bárbaros** logo no início (EXP de comandante, recursos, tarefas dos Objetivos Diários) [[A09-0007](../research/facts/A09/A09-0007.md)]. Um bárbaro custa 50 PA, menos 2 por golpe consecutivo sem voltar (mínimo 40) [[A09-0002](../research/facts/A09/A09-0002.md)]. Na abertura só existem bárbaros Nv1–6; os níveis maiores são liberados nos dias seguintes [[A09-0004](../research/facts/A09/A09-0004.md)].
+- **Guarde poções/itens de PA** para a Provação de Lohar / Treino de Armas e para a Véspera da Cruzada [[A11-0505](../research/facts/A11/A11-0505.md), [A09-0007](../research/facts/A09/A09-0007.md)]. Consenso: **maioria**.
+- Colete os **PA diários** todos os dias, mesmo perto do limite (desde a 1.1.02 eles podem passar do limite) [[A09-0006](../research/facts/A09/A09-0006.md), [C04-0032](../research/facts/C04/C04-0032.md)].
 
-**Why:** Regenerating AP is free and disappears at the cap; AP items keep. Spending the free stream daily and banking the items for events that pay more per AP is the cheapest gain in the game.
+**Por quê:** O PA que regenera é grátis e some no limite; os itens de PA ficam guardados. Gastar o fluxo gratuito todo dia e guardar os itens para eventos que pagam mais por PA é o ganho mais barato do jogo.
 
-> **Uncertain:** Base AP regeneration per hour is unknown (L-A09-01). The daily claim amount is 500 per the official 1.0.41 notes (2020); the 2026 amount is unconfirmed (L-A09-02).
+> **Incerto:** A regeneração base de PA por hora é desconhecida (L-A09-01). O valor da coleta diária é 500 segundo as notas oficiais da 1.0.41 (2020); o valor de 2026 não foi confirmado (L-A09-02).
 >
-> **Patch state:** [C04-0032](../research/facts/C04/C04-0032.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0032](../research/facts/C04/C04-0032.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A09-01, L-A09-02, L-A09-05
+> **Pendente de medição no jogo (T0):** L-A09-01, L-A09-02, L-A09-05
 
-## 3. Phase-by-phase plan to KvK1
+## 3. Plano fase a fase até a KvK1
 
-### Days 4–14 (about CH8 → CH12)
+### Dias 4–14 (Prefeitura 8 → 12, aproximadamente)
 
-#### CH8–CH12 checkpoints
+#### Marcos da Prefeitura 8 à 12
 
-**Confidence:** medium · **Consensus:** mechanic · **Priority:** 3/5 · **Recommended for:** F2P · **CH:** 8–12 · `d4-ch8-ch12-checkpoints`
+**Confiança:** média · **Consenso:** mecânica · **Prioridade:** 3/5 · **Recomendado para:** F2P · **Prefeitura:** 8–12 · `d4-ch8-ch12-checkpoints`
 
-- **CH8:** queue dashboard — refill construction, training, research, healing and scouting from one screen [[A01-0011](../research/facts/A01/A01-0011.md)]. Reward: 2× 8h universal speedups [[A01-0002](../research/facts/A01/A01-0002.md)].
-- **CH9:** reward 1× 24h universal speedup; 3rd hospital [[A01-0002](../research/facts/A01/A01-0002.md), [A01-0008](../research/facts/A01/A01-0008.md)].
-- **CH10:** **free Civilization Change** (keep it unless you plan to switch) [[A14-0002](../research/facts/A14/A14-0002.md)]; Lyceum of Wisdom (Peerless Scholar) [[A10-0005](../research/facts/A10/A10-0005.md)]; gold enters the economy (needed for Academy tech after Academy 10 and T3+ troops) [[A03-0021](../research/facts/A03/A03-0021.md)].
-- **CH11:** 3rd march [[A03-0023](../research/facts/A03/A03-0023.md)].
-- **CH12:** Trading Post (probable) — see Uncertain.
+- **Prefeitura 8:** painel de filas — reabasteça construção, treinamento, pesquisa, cura e exploração em uma só tela [[A01-0011](../research/facts/A01/A01-0011.md)]. Recompensa: 2× aceleração universal de 8h [[A01-0002](../research/facts/A01/A01-0002.md)].
+- **Prefeitura 9:** recompensa de 1× aceleração universal de 24h; 3º hospital [[A01-0002](../research/facts/A01/A01-0002.md), [A01-0008](../research/facts/A01/A01-0008.md)].
+- **Prefeitura 10:** **Troca de Civilização grátis** (guarde-a, a menos que planeje trocar) [[A14-0002](../research/facts/A14/A14-0002.md)]; Liceu da Sabedoria (Erudito Incomparável) [[A10-0005](../research/facts/A10/A10-0005.md)]; o ouro entra na economia (necessário para tecnologias da Academia após a Academia 10 e para tropas T3+) [[A03-0021](../research/facts/A03/A03-0021.md)].
+- **Prefeitura 11:** 3ª marcha [[A03-0023](../research/facts/A03/A03-0023.md)].
+- **Prefeitura 12:** Entreposto Comercial (provável) — veja Incerto.
 
-**Why:** These are the first levels where the game hands out big free speedups and new daily income (Lyceum gem pool). Knowing them helps you keep speedups for the long timers that start right after.
+**Por quê:** Esses são os primeiros níveis em que o jogo entrega grandes acelerações grátis e uma nova renda diária (pool de gemas do Liceu). Conhecê-los ajuda a guardar as acelerações para os cronômetros longos que começam logo depois.
 
-> **Uncertain:** Trading Post unlock CH10 vs CH12 is contested ([A03-0025](../research/facts/A03/A03-0025.md), [A01-0009](../research/facts/A01/A01-0009.md)); CH12 is probable. Raw CH upgrade times come from the Fandom developer dataset (L-A01-02).
+> **Incerto:** Entreposto Comercial na Prefeitura 10 ou 12 é contestado ([A03-0025](../research/facts/A03/A03-0025.md), [A01-0009](../research/facts/A01/A01-0009.md)); 12 é o mais provável. Os tempos brutos de melhoria da Prefeitura vêm do conjunto de dados de desenvolvedor do Fandom (L-A01-02).
 >
-> **Pending in-game measurement (T0):** L-A01-01, L-A03-04
+> **Pendente de medição no jogo (T0):** L-A01-01, L-A03-04
 
-#### Academy: economy and speed techs first
+#### Academia: primeiro as tecnologias de economia e velocidade
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P · **CH:** 4–16 · `d4-research-economy`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P · **Prefeitura:** 4–16 · `d4-research-economy`
 
-- **Recommended (F2P):** research **speed and economy techs first** — Writing, Masonry, Engineering, Mathematics — before military [[A02-0500](../research/facts/A02/A02-0500.md)]. Consensus: **majority** (minor disagreement on which of the first two goes first).
-- Keep the research queue busy at every login [[A10-0002](../research/facts/A10/A10-0002.md)].
+- **Recomendado (F2P):** pesquise **primeiro as tecnologias de velocidade e economia** — Escrita, Alvenaria, Engenharia, Matemática — antes das militares [[A02-0500](../research/facts/A02/A02-0500.md)]. Consenso: **maioria** (pequena discordância sobre qual das duas primeiras vem antes).
+- Mantenha a fila de pesquisa ocupada em todo login [[A10-0002](../research/facts/A10/A10-0002.md)].
 
-**Why:** Building and research speed compound: every later timer on the CH21 / T4 path gets shorter. Military techs are useless until the troops they improve are unlocked.
+**Por quê:** A velocidade de construção e de pesquisa se acumula: cada cronômetro seguinte no caminho da Prefeitura 21 / T4 fica mais curto. Tecnologias militares não servem de nada até as tropas que elas melhoram serem liberadas.
 
-> **Uncertain:** Tech names may have changed since the 2019–2026 sources; no ordered research path with times exists yet (L-A02-01). The Academy unlocks at CH4 or CH6 (contested, [A01-0009](../research/facts/A01/A01-0009.md)). [A10-0002](../research/facts/A10/A10-0002.md) is a single commercial checklist (baixa).
+> **Incerto:** Os nomes das tecnologias podem ter mudado desde as fontes de 2019–2026; ainda não existe um caminho de pesquisa ordenado com tempos (L-A02-01). A Academia é liberada na Prefeitura 4 ou 6 (contestado, [A01-0009](../research/facts/A01/A01-0009.md)). [A10-0002](../research/facts/A10/A10-0002.md) é uma única lista de verificação comercial (baixa).
 >
-> **Pending in-game measurement (T0):** L-A02-01, L-A01-01
+> **Pendente de medição no jogo (T0):** L-A02-01, L-A01-01
 
-#### Early commanders: Sun Tzu + one barbarian farmer
+#### Comandantes iniciais: Sun Tzu + um fazendeiro de bárbaros
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P · `d4-early-commanders`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P · `d4-early-commanders`
 
-- **Concentrate:** finish one complete march before starting others [[A06-0500](../research/facts/A06/A06-0500.md)]. Consensus: **unanimous**.
-- **Recommended (F2P): Sun Tzu** as your early primary — epic, needs no gold sculptures, still used in KvK1 [[A06-0501](../research/facts/A06/A06-0501.md)]. Consensus: **majority**.
-- Level **only one** of Boudica or Lohar for barbarians/PvE, and never put universal (gold) sculptures into them [[A06-0505](../research/facts/A06/A06-0505.md)]. Consensus: **majority**.
-- Level a **gathering commander** early: only the primary's talents apply; level 37 unlocks Superior Tools (~25% gathering speed) [[A03-0017](../research/facts/A03/A03-0017.md)].
+- **Concentre:** termine uma marcha completa antes de começar as outras [[A06-0500](../research/facts/A06/A06-0500.md)]. Consenso: **unânime**.
+- **Recomendado (F2P): Sun Tzu** como seu principal inicial — épico, não precisa de esculturas douradas e ainda é usado na KvK1 [[A06-0501](../research/facts/A06/A06-0501.md)]. Consenso: **maioria**.
+- Evolua **apenas um** entre Boudica ou Lohar para bárbaros/PvE, e nunca coloque esculturas universais (douradas) neles [[A06-0505](../research/facts/A06/A06-0505.md)]. Consenso: **maioria**.
+- Evolua cedo um **comandante de coleta**: só os talentos do principal valem; o nível 37 libera Ferramentas Superiores (~25% de velocidade de coleta) [[A03-0017](../research/facts/A03/A03-0017.md)].
 
-**Why:** Sculptures are the scarcest F2P resource and skill levels are front-loaded, so one finished commander beats three half-built ones. Epic commanders level from cheap epic sculptures (3 per day from the daily chest [[A04-0001](../research/facts/A04/A04-0001.md)]).
+**Por quê:** Esculturas são o recurso mais escasso do F2P e os níveis de habilidade pesam no começo, então um comandante terminado vale mais que três pela metade. Comandantes épicos sobem com esculturas épicas baratas (3 por dia vindas do baú diário [[A04-0001](../research/facts/A04/A04-0001.md)]).
 
-> **Uncertain:** Sun Tzu's long-term value is disputed: one 2026 tier list rates nearly all epics F/C overall ([A06-0509](../research/facts/A06/A06-0509.md), divided; it is a horizon disagreement). "Gatherer to 37 first, Centurion easiest" is [A06-0506](../research/facts/A06/A06-0506.md) (baixa). A Sun Tzu intro post appeared on the official forum on 2026-02-04 (game-state pack); whether the epic Sun Tzu changed is not checked.
+> **Incerto:** O valor de longo prazo do Sun Tzu é disputado: uma tier list de 2026 dá F/C para quase todos os épicos no geral ([A06-0509](../research/facts/A06/A06-0509.md), dividido; é uma discordância de horizonte). "Coletor até o 37 primeiro, Centurião é o mais fácil" é de [A06-0506](../research/facts/A06/A06-0506.md) (baixa). Um post de apresentação do Sun Tzu apareceu no fórum oficial em 2026-02-04 (pacote de estado do jogo); não foi conferido se o Sun Tzu épico mudou.
 >
-> **Pending in-game measurement (T0):** L-A06-01, L-A06-03
+> **Pendente de medição no jogo (T0):** L-A06-01, L-A06-03
 
-#### Legendary Pelagius event (day 5): decide before you spend
+#### Evento do Pelagius Lendário (dia 5): decida antes de gastar
 
-**Confidence:** low · **Consensus:** split · **Priority:** 3/5 · **Recommended for:** F2P · `d4-pelagius-day5`
+**Confiança:** baixa · **Consenso:** dividido · **Prioridade:** 3/5 · **Recomendado para:** F2P · `d4-pelagius-day5`
 
-- Since 1.1.09 a **Legendary Pelagius** upgrade event runs from **kingdom day 5** [[C04-0005](../research/facts/C04/C04-0005.md)].
-- Opinions are **split**: "early-server monster" vs KvK1 B-tier [[A06-0508](../research/facts/A06/A06-0508.md)].
-- **Recommended (F2P):** treat it as a decision, not an automatic buy. Apply the Commander Decision Checklist (day 15–40 block) before spending anything scarce on it.
+- Desde a 1.1.09 há um evento de melhoria do **Pelagius Lendário** a partir do **dia 5 do reino** [[C04-0005](../research/facts/C04/C04-0005.md)].
+- As opiniões estão **divididas**: "monstro de servidor novo" contra tier B na KvK1 [[A06-0508](../research/facts/A06/A06-0508.md)].
+- **Recomendado (F2P):** trate como uma decisão, não como compra automática. Aplique a Lista de Decisão de Comandante (bloco dos dias 15–40) antes de gastar qualquer coisa escassa nele.
 
-**Why:** It is the first legendary offered to every new kingdom, so it will compete for the same scarce resources as your long-term legendary. There is no current F2P cost/benefit analysis for it.
+**Por quê:** É o primeiro lendário oferecido a todo reino novo, então vai disputar os mesmos recursos escassos que o seu lendário de longo prazo. Não há hoje uma análise de custo/benefício para F2P sobre ele.
 
-**Both views (split):** "Early-server monster" (AllClash) vs B-tier for KvK1 (LootBar) [[A06-0508](../research/facts/A06/A06-0508.md)].
+**As duas visões (dividido):** "Monstro de servidor novo" (AllClash) contra tier B na KvK1 (LootBar) [[A06-0508](../research/facts/A06/A06-0508.md)].
 
-> **Uncertain:** [A06-0508](../research/facts/A06/A06-0508.md) is baixa/divided. The event's costs and rewards are not captured (screenshot on day 5, T0 protocol).
+> **Incerto:** [A06-0508](../research/facts/A06/A06-0508.md) é baixa/dividida. Os custos e recompensas do evento não foram registrados (captura de tela no dia 5, protocolo T0).
 >
-> **Patch state:** [C04-0005](../research/facts/C04/C04-0005.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0005](../research/facts/C04/C04-0005.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A06-02, L-A14-02
+> **Pendente de medição no jogo (T0):** L-A06-02, L-A14-02
 
-#### Gathering setup that does not need babysitting
+#### Coleta que não precisa de babá
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 3/5 · **Recommended for:** F2P, Low · `d4-gathering-setup`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 3/5 · **Recomendado para:** F2P, Low · `d4-gathering-setup`
 
-- Gather **inside alliance territory** (+25% speed) [[A03-0009](../research/facts/A03/A03-0009.md)].
-- When online, use nearby nodes; **before logging off, send marches to large nodes** so they don't come back early. Node level changes the amount, not the speed [[A03-0016](../research/facts/A03/A03-0016.md)].
-- **Enhanced Gathering** items (+50% for 8h/24h) still exist and can be bought with resources at the Mysterious Merchant [[A03-0013](../research/facts/A03/A03-0013.md)]. *Production* boost items were removed in 1.1.09 [[C04-0004](../research/facts/C04/C04-0004.md)].
-- March count grows with CH: 2 at CH5, 3 at CH11, 4 at CH17, 5 at CH22 [[A03-0023](../research/facts/A03/A03-0023.md)].
+- Colete **dentro do território da aliança** (+25% de velocidade) [[A03-0009](../research/facts/A03/A03-0009.md)].
+- Online, use nós próximos; **antes de sair, envie marchas para nós grandes** para que não voltem cedo. O nível do nó muda a quantidade, não a velocidade [[A03-0016](../research/facts/A03/A03-0016.md)].
+- Itens de **Coleta Aprimorada** (+50% por 8h/24h) ainda existem e podem ser comprados com recursos no Mercador Misterioso [[A03-0013](../research/facts/A03/A03-0013.md)]. Os itens de impulso de *produção* foram removidos na 1.1.09 [[C04-0004](../research/facts/C04/C04-0004.md)].
+- A quantidade de marchas cresce com a Prefeitura: 2 na Prefeitura 5, 3 na 11, 4 na 17, 5 na 22 [[A03-0023](../research/facts/A03/A03-0023.md)].
 
-**Why:** Resources for the CH path come from gathering [[A01-0007](../research/facts/A01/A01-0007.md)]. Long marches sent at logoff turn offline hours into resources at zero extra minutes, which is the core of a low-time routine.
+**Por quê:** Os recursos do caminho da Prefeitura vêm da coleta [[A01-0007](../research/facts/A01/A01-0007.md)]. Marchas longas enviadas ao sair transformam horas offline em recursos sem nenhum minuto extra, que é o núcleo de uma rotina de pouco tempo.
 
-> **Patch state:** [C04-0004](../research/facts/C04/C04-0004.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0004](../research/facts/C04/C04-0004.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A03-01, L-A03-02
+> **Pendente de medição no jogo (T0):** L-A03-01, L-A03-02
 
-### Days 15–40 (about CH12 → CH17, VIP 6)
+### Dias 15–40 (Prefeitura 12 → 17, VIP 6, aproximadamente)
 
-#### CH10 → CH17: T3, Blacksmith, 4th march
+#### Prefeitura 10 → 17: T3, Ferreiro, 4ª marcha
 
-**Confidence:** medium · **Consensus:** mechanic · **Priority:** 4/5 · **Recommended for:** F2P · **CH:** 10–17 · `d15-ch10-ch17`
+**Confiança:** média · **Consenso:** mecânica · **Prioridade:** 4/5 · **Recomendado para:** F2P · **Prefeitura:** 10–17 · `d15-ch10-ch17`
 
-- **CH16:** Tier 3 troops and the Blacksmith; reward **7-day universal speedup + 100 gems**; civilization buff switching [[A01-0001](../research/facts/A01/A01-0001.md), [A01-0002](../research/facts/A01/A01-0002.md), [A14-0002](../research/facts/A14/A14-0002.md)].
-- **CH17:** 4th march [[A03-0023](../research/facts/A03/A03-0023.md)].
-- Raw (unbuffed) City Hall upgrade times: CH10 22h, CH16 4d, CH17 4d 20h [[A01-0001](../research/facts/A01/A01-0001.md)]. The whole prerequisite set grows much faster than City Hall itself [[A01-0005](../research/facts/A01/A01-0005.md)].
-- Resource pressure shifts: **stone** joins around CH6 (Wall chain), **gold** from CH10 for research and T3+ troops [[A03-0021](../research/facts/A03/A03-0021.md)].
+- **Prefeitura 16:** tropas de Nível 3 e o Ferreiro; recompensa de **aceleração universal de 7 dias + 100 gemas**; troca de bônus de civilização [[A01-0001](../research/facts/A01/A01-0001.md), [A01-0002](../research/facts/A01/A01-0002.md), [A14-0002](../research/facts/A14/A14-0002.md)].
+- **Prefeitura 17:** 4ª marcha [[A03-0023](../research/facts/A03/A03-0023.md)].
+- Tempos brutos (sem bônus) de melhoria da Prefeitura: Prefeitura 10 22h, 16 4d, 17 4d 20h [[A01-0001](../research/facts/A01/A01-0001.md)]. O conjunto de pré-requisitos cresce muito mais rápido que a própria Prefeitura [[A01-0005](../research/facts/A01/A01-0005.md)].
+- A pressão sobre os recursos muda: a **pedra** entra por volta da Prefeitura 6 (cadeia da Muralha), o **ouro** a partir da 10 para pesquisa e tropas T3+ [[A03-0021](../research/facts/A03/A03-0021.md)].
 
-**Why:** CH16–CH17 is where the plan stops being cheap: each level needs several multi-day prerequisites, and gold starts to bind. Stockpiling gold through gathering before CH16 avoids stalls.
+**Por quê:** As Prefeituras 16–17 são onde o plano deixa de ser barato: cada nível exige vários pré-requisitos de vários dias, e o ouro começa a pesar. Acumular ouro coletando antes da Prefeitura 16 evita travas.
 
-> **Uncertain:** [A01-0005](../research/facts/A01/A01-0005.md) (derived, baixa): about 70 raw builder-days to CH17, before buffs. Real times need the T0 buff chart (L-A01-03). A Lost Kingdom entry requirement of CH17 is single-source ([B01-0503](../research/facts/B01/B01-0503.md), see pre-KvK).
+> **Incerto:** [A01-0005](../research/facts/A01/A01-0005.md) (derivado, baixa): cerca de 70 dias brutos de construtor até a Prefeitura 17, antes de bônus. Os tempos reais dependem do quadro de bônus do T0 (L-A01-03). O requisito de Prefeitura 17 para entrar no Reino Perdido tem fonte única ([B01-0503](../research/facts/B01/B01-0503.md), veja pré-KvK).
 >
-> **Pending in-game measurement (T0):** L-A01-02, L-A01-03
+> **Pendente de medição no jogo (T0):** L-A01-02, L-A01-03
 
-#### Research: T3 → T4 (skip siege) → shared combat techs
+#### Pesquisa: T3 → T4 (sem cerco) → tecnologias de combate compartilhadas
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P · **CH:** 10–21 · `d15-research-military`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P · **Prefeitura:** 10–21 · `d15-research-military`
 
-- **Recommended (F2P):** after the economy techs, unlock **T3**, then **T4 for infantry, cavalry and archers (skip T4 siege)**, then the shared combat techs (Combat Tactics, Defensive Formation, Herbal Medicine), then one troop branch; T5 last [[A02-0501](../research/facts/A02/A02-0501.md)]. Consensus: **majority**.
-- Pick **one troop type** that matches your best commanders; infantry or cavalry are preferred for a first T5 [[A08-0506](../research/facts/A08/A08-0506.md)].
+- **Recomendado (F2P):** depois das tecnologias de economia, libere o **T3**, depois o **T4 de infantaria, cavalaria e arqueiros (pule o T4 de cerco)**, depois as tecnologias de combate compartilhadas (Táticas de Combate, Formação Defensiva, Medicina Herbal), depois um ramo de tropa; T5 por último [[A02-0501](../research/facts/A02/A02-0501.md)]. Consenso: **maioria**.
+- Escolha **um tipo de tropa** que combine com seus melhores comandantes; infantaria ou cavalaria são preferíveis para o primeiro T5 [[A08-0506](../research/facts/A08/A08-0506.md)].
 
-**Why:** T4 research must be ready when CH21 lands, or the CH21 rush is wasted. Siege T4 adds little for a F2P field fighter, and splitting research across troop types delays every branch.
+**Por quê:** A pesquisa de T4 precisa estar pronta quando a Prefeitura 21 chegar, senão a corrida até a Prefeitura 21 é desperdiçada. O T4 de cerco agrega pouco a um F2P de campo, e dividir a pesquisa entre tipos de tropa atrasa todos os ramos.
 
-> **Uncertain:** Research is slow: one guide says Combat Tactics 10 takes about 100 days for an average player ([A02-0504](../research/facts/A02/A02-0504.md), single source, baixa). Time to T4 is unmeasured (L-A02-03).
+> **Incerto:** A pesquisa é lenta: um guia diz que Táticas de Combate 10 leva cerca de 100 dias para um jogador médio ([A02-0504](../research/facts/A02/A02-0504.md), fonte única, baixa). O tempo até o T4 não foi medido (L-A02-03).
 >
-> **Pending in-game measurement (T0):** L-A02-01, L-A02-03
+> **Pendente de medição no jogo (T0):** L-A02-01, L-A02-03
 
-#### VIP 6 milestone, then switch to saving
+#### Marco do VIP 6 e depois mudar para poupar
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P · `d15-vip6-milestone`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P · `d15-vip6-milestone`
 
-- At **VIP 6** (11,500 cumulative VIP points) the 2nd builder becomes permanent; Builder Recruitment items then convert into 60-minute building speedups [[A05-0001](../research/facts/A05/A05-0001.md), [A01-0006](../research/facts/A01/A01-0006.md)].
-- **After VIP 6**, stop buying VIP directly and **save gems for More Than Gems** (see Events) [[A11-0502](../research/facts/A11/A11-0502.md), [A11-0504](../research/facts/A11/A11-0504.md)]. Next target: **VIP 10** (150,000 cumulative), which adds 1 legendary sculpture per day [[A05-0001](../research/facts/A05/A05-0001.md), [A05-0006](../research/facts/A05/A05-0006.md)].
+- No **VIP 6** (11.500 pontos VIP acumulados) o 2º construtor se torna permanente; os itens de Recrutamento de Construtor passam a converter em acelerações de construção de 60 minutos [[A05-0001](../research/facts/A05/A05-0001.md), [A01-0006](../research/facts/A01/A01-0006.md)].
+- **Depois do VIP 6**, pare de comprar VIP diretamente e **poupe gemas para o Mais que Gemas** (veja Eventos) [[A11-0502](../research/facts/A11/A11-0502.md), [A11-0504](../research/facts/A11/A11-0504.md)]. Próxima meta: **VIP 10** (150.000 acumulados), que adiciona 1 escultura lendária por dia [[A05-0001](../research/facts/A05/A05-0001.md), [A05-0006](../research/facts/A05/A05-0006.md)].
 
-**Why:** Below VIP 6, the builder is worth more than any event bonus. Above it, the same gems buy VIP *and* event milestone rewards if spent during More Than Gems.
+**Por quê:** Abaixo do VIP 6, o construtor vale mais que qualquer bônus de evento. Acima dele, as mesmas gemas compram VIP *e* as recompensas de marcos do evento, se gastas durante o Mais que Gemas.
 
-> **Uncertain:** Derived F2P timeline ([A05-0007](../research/facts/A05/A05-0007.md), baixa): VIP 6 about day 41 with 100 gems/day + daily claim; earlier with alliance gifts and event gems. Cumulative reading of thresholds pending T0 (L-A05-01).
+> **Incerto:** Cronograma F2P derivado ([A05-0007](../research/facts/A05/A05-0007.md), baixa): VIP 6 por volta do dia 41 com 100 gemas/dia + coleta diária; mais cedo com presentes da aliança e gemas de eventos. A leitura acumulada dos limiares aguarda o T0 (L-A05-01).
 >
-> **Pending in-game measurement (T0):** L-A05-01, L-A04-01
+> **Pendente de medição no jogo (T0):** L-A05-01, L-A04-01, L-A12-02
 
-> **Low spender note:** The 30-day gem supply (~650 gems/day vs the F2P 100/day) is what makes VIP 10 reachable before or around KvK1 for a low spender [[A12-0002](../research/facts/A12/A12-0002.md), [A04-0001](../research/facts/A04/A04-0001.md)].
+> **Nota para quem gasta pouco (Low):** O suprimento de gemas de 30 dias (~650 gemas/dia contra as 100/dia do F2P) antecipa os marcos de VIP de quem gasta pouco [[A12-0002](../research/facts/A12/A12-0002.md), [A04-0001](../research/facts/A04/A04-0001.md)]; nenhuma ficha dá uma data para o VIP 10 (L-A12-02).
 
-#### Commander Decision Checklist (before spending gold sculptures)
+#### Lista de Decisão de Comandante (antes de gastar esculturas douradas)
 
-**Confidence:** medium · **Consensus:** split · **Priority:** 4/5 · **Recommended for:** F2P · `d15-commander-checklist`
+**Confiança:** média · **Consenso:** dividido · **Prioridade:** 4/5 · **Recomendado para:** F2P · `d15-commander-checklist`
 
-**Rule:** bank universal (gold) sculptures for **one long-term legendary**; never spend them on gatherers or temporary picks [[A06-0510](../research/facts/A06/A06-0510.md)]. Consensus: **majority**. Yi Seong-Gye (YSG) is the most cited target [[A06-0502](../research/facts/A06/A06-0502.md)].
+**Regra:** guarde as esculturas universais (douradas) para **um lendário de longo prazo**; nunca as gaste em coletores ou escolhas temporárias [[A06-0510](../research/facts/A06/A06-0510.md)]. Consenso: **maioria**. Yi Seong-Gye (YSG) é o alvo mais citado [[A06-0502](../research/facts/A06/A06-0502.md)].
 
-**Before spending, answer:**
-1. **Is it your troop type?** You should be researching one type [[A08-0506](../research/facts/A08/A08-0506.md)].
-2. **Does it complete a march?** Partial commanders give little value [[A06-0500](../research/facts/A06/A06-0500.md)].
-3. **Will it still matter after KvK1?** Mid-tier legendaries (Richard I, Charles Martel, Cao Cao) are strong in KvK1 but lose value later — split opinion [[A06-0503](../research/facts/A06/A06-0503.md)].
-4. **Is a better-timed option coming?** YSG is reported on the Wheel of Fortune around day 94 [[A06-0502](../research/facts/A06/A06-0502.md)]; the Wheel needs Spin Tickets in Season 2+ [[C04-0022](../research/facts/C04/C04-0022.md)].
-5. **Is it a free legendary you can grow instead?** Aethelflaed comes from the Expedition store (1,500 medals per sculpture) [[A06-0504](../research/facts/A06/A06-0504.md), [A10-0004](../research/facts/A10/A10-0004.md)].
+**Antes de gastar, responda:**
+1. **É do seu tipo de tropa?** Você deve estar pesquisando um tipo só [[A08-0506](../research/facts/A08/A08-0506.md)].
+2. **Completa uma marcha?** Comandantes soltos dão pouco valor [[A06-0500](../research/facts/A06/A06-0500.md)].
+3. **Ainda vai importar depois da KvK1?** Lendários de nível médio (Richard I, Charles Martel, Cao Cao) são fortes na KvK1 mas perdem valor depois — opinião dividida [[A06-0503](../research/facts/A06/A06-0503.md)].
+4. **Vem uma opção com momento melhor?** O YSG é relatado na Roda da Fortuna por volta do dia 94 [[A06-0502](../research/facts/A06/A06-0502.md)]; a Roda exige Tíquetes de Giro da Temporada 2 em diante [[C04-0022](../research/facts/C04/C04-0022.md)].
+5. **É um lendário gratuito que você pode evoluir no lugar?** Aethelflaed vem da loja da Expedição (1.500 medalhas por escultura) [[A06-0504](../research/facts/A06/A06-0504.md), [A10-0004](../research/facts/A10/A10-0004.md)].
 
-Verdict: **invest** (yes to 1, 2, 3), **wait** (no to 4), **avoid** (no to 1 or 3).
+Veredito: **invista** (sim para 1, 2, 3), **espere** (não para 4), **evite** (não para 1 ou 3).
 
-Shelf-life note: since 2025 there are respec tools (Legendary Commander Swap, around the end of Season 2) [[C04-0023](../research/facts/C04/C04-0023.md)], so a wrong pick is costly but no longer permanent.
+Nota de validade: desde 2025 existem ferramentas de reescolha (Troca de Comandante Lendário, por volta do fim da Temporada 2) [[C04-0023](../research/facts/C04/C04-0023.md)]; assim, uma escolha errada custa caro, mas já não é permanente.
 
-**Why:** Gold sculptures arrive very slowly for a F2P (VIP 10 is far away), and commander regret is one of the most common F2P pains. A fixed checklist turns a tier-list argument into five yes/no questions you can answer yourself.
+**Por quê:** As esculturas douradas chegam muito devagar para um F2P (o VIP 10 está longe), e o arrependimento com comandantes é uma das dores mais comuns do F2P. Uma lista fixa transforma uma discussão de tier list em cinco perguntas de sim/não que você mesmo pode responder.
 
-**Both views (split):** YSG timing: consensus long-term target, but some 2026 players say a pure F2P should skip him for KvK1 (low spenders can) [[A06-0502](../research/facts/A06/A06-0502.md)]. Mid-tier legendaries: divided [[A06-0503](../research/facts/A06/A06-0503.md)].
+**As duas visões (dividido):** Momento do YSG: consenso de alvo de longo prazo, mas alguns jogadores de 2026 dizem que um F2P puro deve pular o YSG na KvK1 (quem gasta pouco pode) [[A06-0502](../research/facts/A06/A06-0502.md)]. Lendários de nível médio: dividido [[A06-0503](../research/facts/A06/A06-0503.md)].
 
-> **Uncertain:** [A06-0503](../research/facts/A06/A06-0503.md) is baixa/divided. The checklist is a guide construction (S-D-0008) built on these cards, not a source consensus. YSG Wheel timing (day ~94) is single T3. Sculpture income per week is unmeasured (L-A06-03).
+> **Incerto:** [A06-0503](../research/facts/A06/A06-0503.md) é baixa/dividida. A lista é uma construção do guia (S-D-0008) feita sobre essas fichas, não um consenso das fontes. O momento do YSG na Roda (dia ~94) é T3 único. A renda semanal de esculturas não foi medida (L-A06-03).
 >
-> **Patch state:** [C04-0022](../research/facts/C04/C04-0022.md), [C04-0023](../research/facts/C04/C04-0023.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0022](../research/facts/C04/C04-0022.md), [C04-0023](../research/facts/C04/C04-0023.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A06-01, L-A06-02, L-A06-03, L-A11-03
+> **Pendente de medição no jogo (T0):** L-A06-01, L-A06-02, L-A06-03, L-A11-03
 
-> **Low spender note:** Low spenders can realistically aim at YSG for KvK1 [[A06-0502](../research/facts/A06/A06-0502.md)]; the rest of the checklist is unchanged.
+> **Nota para quem gasta pouco (Low):** Quem gasta pouco pode mirar de forma realista o YSG para a KvK1 [[A06-0502](../research/facts/A06/A06-0502.md)]; o resto da lista não muda.
 
-#### Expedition medals → Aethelflaed
+#### Medalhas da Expedição → Aethelflaed
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 3/5 · **Recommended for:** F2P · `d15-expedition-aethelflaed`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 3/5 · **Recomendado para:** F2P · `d15-expedition-aethelflaed`
 
-- Claim the daily Expedition chest from 3-star missions and use the free daily Medal Shop refresh [[A10-0004](../research/facts/A10/A10-0004.md)].
-- **Recommended (F2P):** spend medals on **Aethelflaed**, the main free legendary (1,500 medals per legendary sculpture) [[A06-0504](../research/facts/A06/A06-0504.md), [A10-0004](../research/facts/A10/A10-0004.md)]. Consensus: **majority**.
-- Sun Tzu + Aethelflaed is the most cited F2P KvK1 pair [[A06-0501](../research/facts/A06/A06-0501.md)].
+- Colete o baú diário da Expedição das missões de 3 estrelas e use a renovação diária grátis da Loja de Medalhas [[A10-0004](../research/facts/A10/A10-0004.md)].
+- **Recomendado (F2P):** gaste as medalhas na **Aethelflaed**, o principal lendário gratuito (1.500 medalhas por escultura lendária) [[A06-0504](../research/facts/A06/A06-0504.md), [A10-0004](../research/facts/A10/A10-0004.md)]. Consenso: **maioria**.
+- Sun Tzu + Aethelflaed é a dupla F2P de KvK1 mais citada [[A06-0501](../research/facts/A06/A06-0501.md)].
 
-**Why:** Aethelflaed is the one legendary a F2P can grow without gold sculptures or spending, and the medals accrue from a short daily claim.
+**Por quê:** Aethelflaed é o único lendário que um F2P pode evoluir sem esculturas douradas nem gastos, e as medalhas se acumulam com uma coleta diária rápida.
 
-> **Uncertain:** Medal income per day is unknown (L-A10-04).
+> **Incerto:** A renda diária de medalhas é desconhecida (L-A10-04).
 >
-> **Pending in-game measurement (T0):** L-A10-04
+> **Pendente de medição no jogo (T0):** L-A10-04
 
-#### Equipment: cheap sets now, epic for KvK1
+#### Equipamento: conjuntos baratos agora, épico para a KvK1
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 2/5 · **Recommended for:** F2P · **CH:** 16–25 · `d15-equipment`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 2/5 · **Recomendado para:** F2P · **Prefeitura:** 16–25 · `d15-equipment`
 
-- **Recommended (F2P):** craft cheap green/blue pieces (Windswept, Vanguard) early and move all main commanders to **epic** before any legendary crafting [[A07-0500](../research/facts/A07/A07-0500.md)]. Consensus: **majority**.
-- The Blacksmith unlocks at CH16 [[A01-0001](../research/facts/A01/A01-0001.md)].
+- **Recomendado (F2P):** forje peças baratas verdes/azuis (Windswept, Vanguard) cedo e passe todos os comandantes principais para **épico** antes de forjar qualquer lendário [[A07-0500](../research/facts/A07/A07-0500.md)]. Consenso: **maioria**.
+- O Ferreiro é liberado na Prefeitura 16 [[A01-0001](../research/facts/A01/A01-0001.md)].
 
-**Why:** Early pieces are replaced quickly; epic is the realistic KvK1 baseline. A legendary piece adds little over epic per piece (one source) and costs materials you will want later.
+**Por quê:** As peças iniciais são substituídas rápido; o épico é a base realista da KvK1. Uma peça lendária acrescenta pouco sobre o épico por peça (uma fonte) e gasta materiais que você vai querer depois.
 
-> **Uncertain:** Hoarding legendary materials ([A07-0501](../research/facts/A07/A07-0501.md), organizado, baixa) and "legendary over epic adds ~2% per piece" ([A07-0504](../research/facts/A07/A07-0504.md), single source, baixa) are uncertain. Since 1.0.96 special-talent equipment dismantles refund 100% of forging ([C04-0010](../research/facts/C04/C04-0010.md)).
+> **Incerto:** Acumular materiais lendários ([A07-0501](../research/facts/A07/A07-0501.md), organizado, baixa) e "lendário sobre épico acrescenta ~2% por peça" ([A07-0504](../research/facts/A07/A07-0504.md), fonte única, baixa) são incertos. Desde a 1.0.96, desmontar equipamento de talento especial devolve 100% da forja ([C04-0010](../research/facts/C04/C04-0010.md)).
 >
-> **Patch state:** [C04-0010](../research/facts/C04/C04-0010.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0010](../research/facts/C04/C04-0010.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A07-01
+> **Pendente de medição no jogo (T0):** L-A07-01
 
-### Days 41–90 (CH17 → CH21/22, T4)
+### Dias 41–90 (Prefeitura 17 → 21/22, T4)
 
-#### CH21 for T4: the main pre-KvK goal
+#### Prefeitura 21 para o T4: a principal meta pré-KvK
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 5/5 · **Recommended for:** F2P · **CH:** 17–22 · `d41-ch21-t4`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 5/5 · **Recomendado para:** F2P · **Prefeitura:** 17–22 · `d41-ch21-t4`
 
-- **Recommended (F2P): target CH21** — it unlocks **Tier 4**, the KvK1 working tier [[A01-0001](../research/facts/A01/A01-0001.md), [A08-0500](../research/facts/A08/A08-0500.md)]. Reward: 7-day universal speedup + 200 gems [[A01-0002](../research/facts/A01/A01-0002.md)].
-- CH22 adds the 5th march [[A03-0023](../research/facts/A03/A03-0023.md)]; CH25 is **not** expected by KvK1 for a F2P [[B01-0700](../research/facts/B01/B01-0700.md)].
-- Raw City Hall times: CH21 11d, CH22 17d 3h [[A01-0001](../research/facts/A01/A01-0001.md)].
+- **Recomendado (F2P): mire a Prefeitura 21** — ela libera o **Nível 4**, o nível de trabalho da KvK1 [[A01-0001](../research/facts/A01/A01-0001.md), [A08-0500](../research/facts/A08/A08-0500.md)]. Recompensa: aceleração universal de 7 dias + 200 gemas [[A01-0002](../research/facts/A01/A01-0002.md)].
+- A Prefeitura 22 traz a 5ª marcha [[A03-0023](../research/facts/A03/A03-0023.md)]; a Prefeitura 25 **não** é esperada na KvK1 para um F2P [[B01-0700](../research/facts/B01/B01-0700.md)].
+- Tempos brutos da Prefeitura: 21 11d, 22 17d 3h [[A01-0001](../research/facts/A01/A01-0001.md)].
 
-**Why:** T4 is the difference between filling rallies usefully and being fodder. Everything earlier in this guide (two builders, economy techs, hoarded speedups) exists to land CH21 and T4 research before KvK1.
+**Por quê:** O T4 é a diferença entre encher rallies com utilidade e ser bucha de canhão. Tudo o que vem antes neste guia (dois construtores, tecnologias de economia, acelerações guardadas) existe para chegar à Prefeitura 21 e à pesquisa de T4 antes da KvK1.
 
-> **Uncertain:** Timing conflict: 2026 player reports say T4 comes "around day 30" ([B01-0700](../research/facts/B01/B01-0700.md), baixa), while the derived raw build budget to CH21 is about 163 builder-days ([A01-0005](../research/facts/A01/A01-0005.md), baixa), i.e. well over 80 days with two builders before buffs and speedups. Both are weak; the T0 diary must settle the real CH21 date (L-A02-03, L-A01-03).
+> **Incerto:** Conflito de prazos: relatos de jogadores de 2026 dizem que o T4 chega "por volta do dia 30" ([B01-0700](../research/facts/B01/B01-0700.md), baixa), enquanto o orçamento bruto derivado de construção até a Prefeitura 21 é de cerca de 163 dias de construtor ([A01-0005](../research/facts/A01/A01-0005.md), baixa), ou seja, bem mais de 80 dias com dois construtores antes de bônus e acelerações. Ambos são fracos; o diário T0 deve definir a data real da Prefeitura 21 (L-A02-03, L-A01-03).
 >
-> **Pending in-game measurement (T0):** L-A01-03, L-A02-03
+> **Pendente de medição no jogo (T0):** L-A01-03, L-A02-03
 
-#### Hospital capacity before KvK1
+#### Capacidade do hospital antes da KvK1
 
-**Confidence:** medium · **Consensus:** unanimous · **Priority:** 4/5 · **Recommended for:** F2P, Low · `d41-hospital`
+**Confiança:** média · **Consenso:** unânime · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · `d41-hospital`
 
-- Wounded troops beyond hospital capacity **die**; some actions (attacking cities/objectives) always kill severely wounded. Keep hospitals large and empty before fights [[A08-0502](../research/facts/A08/A08-0502.md)]. Consensus: **unanimous**.
-- Capacity per hospital (unbuffed): 7,500 at Lv1, 29,000 at Lv15, 75,000 at Lv25; CH4/CH9/CH15 unlock the 2nd/3rd/4th hospital [[A01-0008](../research/facts/A01/A01-0008.md)].
-- T5 heals cost much more than T4; without a strong economy, fight with T4 [[A08-0505](../research/facts/A08/A08-0505.md)].
+- Tropas feridas além da capacidade do hospital **morrem**; algumas ações (atacar cidades/objetivos) sempre matam tropas gravemente feridas. Mantenha os hospitais grandes e vazios antes das lutas [[A08-0502](../research/facts/A08/A08-0502.md)]. Consenso: **unânime**.
+- Capacidade por hospital (sem bônus): 7.500 no Nv1, 29.000 no Nv15, 75.000 no Nv25; as Prefeituras 4/9/15 liberam o 2º/3º/4º hospital [[A01-0008](../research/facts/A01/A01-0008.md)].
+- As curas de T5 custam muito mais que as de T4; sem uma economia forte, lute com T4 [[A08-0505](../research/facts/A08/A08-0505.md)].
 
-**Why:** For a F2P, dead troops are the most expensive loss in the game (a full retrain); healing is far cheaper. Hospital level is also a CH prerequisite at several levels, so it is rarely wasted.
+**Por quê:** Para um F2P, tropas mortas são a perda mais cara do jogo (um retreino completo); curar é bem mais barato. O nível do hospital também é pré-requisito da Prefeitura em vários níveis, então raramente é desperdício.
 
-> **Uncertain:** Heal vs retrain cost is not quantified (L-A08-01); no hospital target for KvK1 yet (L-A08-02). The Hall of Heroes returns part of KvK healing resources since 1.0.89 ([C04-0028](../research/facts/C04/C04-0028.md)), percentage unknown.
+> **Incerto:** O custo de curar contra retreinar não foi quantificado (L-A08-01); ainda não há meta de hospital para a KvK1 (L-A08-02). O Salão dos Heróis devolve parte dos recursos de cura da KvK desde a 1.0.89 ([C04-0028](../research/facts/C04/C04-0028.md)), percentual desconhecido.
 >
-> **Patch state:** [C04-0028](../research/facts/C04/C04-0028.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0028](../research/facts/C04/C04-0028.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A08-01, L-A08-02, L-A08-03
+> **Pendente de medição no jogo (T0):** L-A08-01, L-A08-02, L-A08-03
 
-#### Speedups: spend or hoard? (split debate)
+#### Acelerações: gastar ou guardar? (debate dividido)
 
-**Confidence:** medium · **Consensus:** split · **Priority:** 4/5 · **Recommended for:** F2P · `d41-speedups-spend-vs-hoard`
+**Confiança:** média · **Consenso:** dividido · **Prioridade:** 4/5 · **Recomendado para:** F2P · `d41-speedups-spend-vs-hoard`
 
-**Free speedup income:** about **170 min/day** from Daily Objectives chests (derived from a 2020 wiki revision), plus CH rewards (8h, 24h, 7-day universals), barbarians, the VIP Shop (food-priced 5-min speedups), Expedition, alliance and merchant [[A04-0010](../research/facts/A04/A04-0010.md), [A01-0002](../research/facts/A01/A01-0002.md), [A04-0007](../research/facts/A04/A04-0007.md)].
+**Renda de acelerações gratuitas:** cerca de **170 min/dia** dos baús dos Objetivos Diários (derivado de uma revisão de wiki de 2020), mais recompensas da Prefeitura (universais de 8h, 24h e 7 dias), bárbaros, a Loja VIP (acelerações de 5 min vendidas por comida), Expedição, aliança e mercador [[A04-0010](../research/facts/A04/A04-0010.md), [A01-0002](../research/facts/A01/A01-0002.md), [A04-0007](../research/facts/A04/A04-0007.md)].
 
-**The debate**
-- **Hoard (majority):** keep speedups, resource items and AP items for scored events and KvK healing [[A11-0501](../research/facts/A11/A11-0501.md)].
-- **Spend:** pour them into City Hall (older minority view) or **only into research** (one source) [[A02-0503](../research/facts/A02/A02-0503.md), [A11-0501](../research/facts/A11/A11-0501.md)].
+**O debate**
+- **Guardar (maioria):** guarde acelerações, itens de recurso e itens de PA para eventos pontuados e para a cura na KvK [[A11-0501](../research/facts/A11/A11-0501.md)].
+- **Gastar:** jogue tudo na Prefeitura (visão minoritária mais antiga) ou **só em pesquisa** (uma fonte) [[A02-0503](../research/facts/A02/A02-0503.md), [A11-0501](../research/facts/A11/A11-0501.md)].
 
-**Recommended (F2P): hoard by default, with one exception.** Use speedups on the CH21 / T4-research path when a timer would otherwise make you miss **T4 before KvK1**; keep the rest for scored events (more reward per minute spent) and KvK healing.
+**Recomendado (F2P): guardar por padrão, com uma exceção.** Use acelerações no caminho da Prefeitura 21 / pesquisa de T4 quando um cronômetro, de outro modo, fizer você perder o **T4 antes da KvK1**; guarde o resto para eventos pontuados (mais recompensa por minuto gasto) e para a cura na KvK.
 
-**Why:** The tension is real: the guide's goal is strength by KvK1, which argues for spending, while event rewards and KvK healing argue for hoarding. Hoarded speedups keep their full value until used; a late CH21 cannot be fixed later. There is no quantitative model yet, so the exception rule is a judgment, not a calculation.
+**Por quê:** A tensão é real: o objetivo do guia é ter força na KvK1, o que pede gastar, enquanto as recompensas de eventos e a cura na KvK pedem guardar. Acelerações guardadas mantêm todo o valor até serem usadas; uma Prefeitura 21 atrasada não se corrige depois. Ainda não há modelo quantitativo, então a regra da exceção é um julgamento, não um cálculo.
 
-**Both views (split):** Majority: hoard for events/KvK [[A11-0501](../research/facts/A11/A11-0501.md)]. Minority: speedups into City Hall [[A11-0501](../research/facts/A11/A11-0501.md) dissent]. One source: universal speedups only on research [[A02-0503](../research/facts/A02/A02-0503.md)].
+**As duas visões (dividido):** Maioria: guardar para eventos/KvK [[A11-0501](../research/facts/A11/A11-0501.md)]. Minoria: acelerações na Prefeitura [[A11-0501](../research/facts/A11/A11-0501.md) dissidente]. Uma fonte: acelerações universais só em pesquisa [[A02-0503](../research/facts/A02/A02-0503.md)].
 
-> **Uncertain:** [A02-0503](../research/facts/A02/A02-0503.md) is baixa/divided. The 170 min/day figure ([A04-0010](../research/facts/A04/A04-0010.md)) is derived and the 1.1.09 Daily Objectives change may have altered it ([A10-0001](../research/facts/A10/A10-0001.md), partially obsolete). The exception rule is this guide's synthesis, not a sourced consensus.
+> **Incerto:** [A02-0503](../research/facts/A02/A02-0503.md) é baixa/dividida. O valor de 170 min/dia ([A04-0010](../research/facts/A04/A04-0010.md)) é derivado e a mudança dos Objetivos Diários na 1.1.09 pode tê-lo alterado ([A10-0001](../research/facts/A10/A10-0001.md), parcialmente obsoleto). A regra da exceção é uma síntese deste guia, não um consenso com fonte.
 >
-> **Pending in-game measurement (T0):** L-A02-02, L-A04-04
+> **Pendente de medição no jogo (T0):** L-A02-02, L-A04-04
 
-#### VIP 10 is a long game for a pure F2P
+#### O VIP 10 é um jogo longo para um F2P puro
 
-**Confidence:** low · **Consensus:** mechanic · **Priority:** 3/5 · **Recommended for:** F2P · `d41-vip10-reality`
+**Confiança:** baixa · **Consenso:** mecânica · **Prioridade:** 3/5 · **Recomendado para:** F2P · `d41-vip10-reality`
 
-- VIP 10 needs **150,000 cumulative** VIP points [[A05-0001](../research/facts/A05/A05-0001.md)].
-- On guaranteed income only (daily claim + 100 gems/day), the derived estimate is about **day 503** [[A05-0007](../research/facts/A05/A05-0007.md)] — an upper bound, since alliance gifts and event gems shorten it.
-- Keep buying VIP only **during More Than Gems** [[A11-0502](../research/facts/A11/A11-0502.md)].
+- O VIP 10 exige **150.000 pontos VIP acumulados** [[A05-0001](../research/facts/A05/A05-0001.md)].
+- Só com renda garantida (coleta diária + 100 gemas/dia), a estimativa derivada é de cerca do **dia 503** [[A05-0007](../research/facts/A05/A05-0007.md)] — um limite superior, já que presentes da aliança e gemas de eventos o encurtam.
+- Só continue comprando VIP **durante o Mais que Gemas** [[A11-0502](../research/facts/A11/A11-0502.md)].
 
-**Why:** Many F2P plans assume VIP 10 (daily legendary sculpture) arrives early. On guaranteed income it does not, so plan your commander path around Sun Tzu, Aethelflaed and banked gold sculptures for KvK1.
+**Por quê:** Muitos planos de F2P supõem que o VIP 10 (escultura lendária diária) chega cedo. Com renda garantida ele não chega, então planeje seu caminho de comandantes em torno de Sun Tzu, Aethelflaed e esculturas douradas guardadas para a KvK1.
 
-> **Uncertain:** [A05-0007](../research/facts/A05/A05-0007.md) is derived (baixa); real F2P gem and VIP income is unmeasured (L-A04-01, L-A05-03).
+> **Incerto:** [A05-0007](../research/facts/A05/A05-0007.md) é derivado (baixa); a renda real de gemas e VIP do F2P não foi medida (L-A04-01, L-A05-03).
 >
-> **Pending in-game measurement (T0):** L-A04-01, L-A05-03
+> **Pendente de medição no jogo (T0):** L-A04-01, L-A05-03
 
-> **Low spender note:** With the Growth Fund and the 30-day supply, VIP 10 becomes a pre-KvK1 or early-KvK1 target; reaching it earlier is the main payoff of low spending [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md), [A12-0005](../research/facts/A12/A12-0005.md)].
+> **Nota para quem gasta pouco (Low):** Com o Fundo de Crescimento e o suprimento de 30 dias, o VIP 10 chega mais cedo que com a renda F2P; nenhuma ficha dá uma data, e o Fundo de Crescimento só paga por inteiro conforme os marcos da Prefeitura são alcançados [[A12-0001](../research/facts/A12/A12-0001.md), [A12-0002](../research/facts/A12/A12-0002.md), [A12-0005](../research/facts/A12/A12-0005.md)].
 
-### Pre-KvK1 and KvK1 (about day 85–100+)
+### Pré-KvK1 e KvK1 (aproximadamente dia 85–100+)
 
-#### Eve of the Crusade: cash in the hoard
+#### Véspera da Cruzada: use o que você guardou
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P, Low · `pk-eve-of-crusade`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · `pk-eve-of-crusade`
 
-- **Recommended (F2P):** spend the saved **AP items on marauders** during Eve of the Crusade (speedups, gems, credits) [[A09-0007](../research/facts/A09/A09-0007.md)]. Auto-peacekeeping can also attack marauders since 1.1.02 [[A09-0008](../research/facts/A09/A09-0008.md)].
-- Since 1.1.12 (T3), Eve of the Crusade opens **together with the Lost Kingdom** in Season 1 [[B01-0503](../research/facts/B01/B01-0503.md), [C04-0002](../research/facts/C04/C04-0002.md)].
+- **Recomendado (F2P):** gaste os **itens de PA** guardados em **saqueadores** durante a Véspera da Cruzada (acelerações, gemas, créditos) [[A09-0007](../research/facts/A09/A09-0007.md)]. A pacificação automática também pode atacar saqueadores desde a 1.1.02 [[A09-0008](../research/facts/A09/A09-0008.md)].
+- Desde a 1.1.12 (T3), a Véspera da Cruzada abre **junto com o Reino Perdido** na Temporada 1 [[B01-0503](../research/facts/B01/B01-0503.md), [C04-0002](../research/facts/C04/C04-0002.md)].
 
-**Why:** This is the event the AP-item hoard was built for: its rewards (speedups and gems) feed directly into KvK1 healing and the last CH/T4 timers.
+**Por quê:** Este é o evento para o qual o estoque de itens de PA foi feito: as recompensas dele (acelerações e gemas) alimentam direto a cura da KvK1 e os últimos cronômetros de Prefeitura/T4.
 
-> **Uncertain:** [B01-0503](../research/facts/B01/B01-0503.md) is partially obsolete/baixa: the Lost Kingdom entry requirement (CH17) is single T3, and the Season 1 overlap comes from a T3 patch summary ([C04-0002](../research/facts/C04/C04-0002.md), baixa) plus one player report.
+> **Incerto:** [B01-0503](../research/facts/B01/B01-0503.md) é parcialmente obsoleto/baixa: o requisito de entrada no Reino Perdido (Prefeitura 17) é T3 único, e a sobreposição na Temporada 1 vem de um resumo de patch T3 ([C04-0002](../research/facts/C04/C04-0002.md), baixa) mais um relato de jogador.
 >
-> **Pending in-game measurement (T0):** L-B01-03
+> **Pendente de medição no jogo (T0):** L-B01-03
 
-#### KvK1 readiness checklist
+#### Lista de prontidão para a KvK1
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P · `pk-kvk1-readiness`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P · `pk-kvk1-readiness`
 
-- [ ] **CH21 reached and T4 researched** for your one troop type [[A01-0001](../research/facts/A01/A01-0001.md), [A02-0501](../research/facts/A02/A02-0501.md), [A08-0506](../research/facts/A08/A08-0506.md)].
-- [ ] **One complete march** (e.g. Sun Tzu + Aethelflaed) on epic gear [[A06-0500](../research/facts/A06/A06-0500.md), [A06-0501](../research/facts/A06/A06-0501.md), [A07-0500](../research/facts/A07/A07-0500.md)].
-- [ ] **Hospitals** upgraded and empty [[A08-0502](../research/facts/A08/A08-0502.md)].
-- [ ] **Speedups** (especially healing-usable ones) and **resource items** banked [[A11-0501](../research/facts/A11/A11-0501.md), [A03-0007](../research/facts/A03/A03-0007.md)].
-- [ ] Civilization: consider the planned switch (Germany or a role civilization) [[A14-0003](../research/facts/A14/A14-0003.md)].
+- [ ] **Prefeitura 21 alcançada e T4 pesquisado** para o seu tipo de tropa [[A01-0001](../research/facts/A01/A01-0001.md), [A02-0501](../research/facts/A02/A02-0501.md), [A08-0506](../research/facts/A08/A08-0506.md)].
+- [ ] **Uma marcha completa** (p. ex., Sun Tzu + Aethelflaed) com equipamento épico [[A06-0500](../research/facts/A06/A06-0500.md), [A06-0501](../research/facts/A06/A06-0501.md), [A07-0500](../research/facts/A07/A07-0500.md)].
+- [ ] **Hospitais** melhorados e vazios [[A08-0502](../research/facts/A08/A08-0502.md)].
+- [ ] **Acelerações** (principalmente as que servem para cura) e **itens de recurso** guardados [[A11-0501](../research/facts/A11/A11-0501.md), [A03-0007](../research/facts/A03/A03-0007.md)].
+- [ ] Civilização: considere a troca planejada (Alemanha ou uma civilização de função) [[A14-0003](../research/facts/A14/A14-0003.md)].
 
-**Why:** KvK1 is where the 100 days of preparation are scored. A short checklist catches the cheap misses (full hospital, no speedups) that cost more troops than any commander choice.
+**Por quê:** A KvK1 é onde os 100 dias de preparação são pontuados. Uma lista curta pega os deslizes baratos (hospital cheio, sem acelerações) que custam mais tropas que qualquer escolha de comandante.
 
-> **Uncertain:** KvK1 duration is contested ([B01-0502](../research/facts/B01/B01-0502.md): 60 days per a 2024 T3 source vs "all KvKs last 50 days" per a 2026 player).
+> **Incerto:** A duração da KvK1 é contestada ([B01-0502](../research/facts/B01/B01-0502.md): 60 dias segundo uma fonte T3 de 2024 contra "todas as KvK duram 50 dias" segundo um jogador de 2026).
 >
-> **Pending in-game measurement (T0):** L-B01-02, L-A08-02
+> **Pendente de medição no jogo (T0):** L-B01-02, L-A08-02
 
-#### How a F2P fights in KvK1
+#### Como um F2P luta na KvK1
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P · `pk-kvk1-behaviour`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P · `pk-kvk1-behaviour`
 
-- **Recommended (F2P):** don't lead, stay behind, retreat early, **fill strong rallies** and reinforce instead of trading alone [[A08-0503](../research/facts/A08/A08-0503.md)]. Consensus: **majority**.
-- Run **fewer, complete marches** rather than every march slot with weak ones [[A08-0504](../research/facts/A08/A08-0504.md)].
-- Protect hospital capacity throughout [[A08-0502](../research/facts/A08/A08-0502.md)].
+- **Recomendado (F2P):** não lidere, fique atrás, recue cedo, **encha rallies fortes** e reforce em vez de trocar golpes sozinho [[A08-0503](../research/facts/A08/A08-0503.md)]. Consenso: **maioria**.
+- Use **menos marchas, mas completas**, em vez de todos os espaços de marcha com marchas fracas [[A08-0504](../research/facts/A08/A08-0504.md)].
+- Proteja a capacidade do hospital o tempo todo [[A08-0502](../research/facts/A08/A08-0502.md)].
 
-**Why:** A F2P's T4 march trades badly against spenders' T5 in the open, but adds real value inside a rally or garrison. Fewer, better marches are also cheaper to heal.
+**Por quê:** A marcha T4 de um F2P se sai mal contra o T5 de quem gasta em campo aberto, mas agrega valor real dentro de um rally ou guarnição. Menos marchas, e melhores, também são mais baratas de curar.
 
-> **Uncertain:** [A08-0504](../research/facts/A08/A08-0504.md) is organizado (quote not literal). F2P pairs for KvK1 differ by source ([A06-0513](../research/facts/A06/A06-0513.md), divided): Sun Tzu + Aethelflaed; Aethelflaed + Baibars; YSG + flexible; Alexander + YSG. Field AoE over rally/garrison commanders is single-source ([A06-0512](../research/facts/A06/A06-0512.md)).
+> **Incerto:** [A08-0504](../research/facts/A08/A08-0504.md) é organizado (citação não literal). As duplas F2P para a KvK1 variam conforme a fonte ([A06-0513](../research/facts/A06/A06-0513.md), dividido): Sun Tzu + Aethelflaed; Aethelflaed + Baibars; YSG + flexível; Alexander + YSG. AoE de campo acima de comandantes de rally/guarnição é fonte única ([A06-0512](../research/facts/A06/A06-0512.md)).
 >
-> **Pending in-game measurement (T0):** L-A06-01
+> **Pendente de medição no jogo (T0):** L-A06-01
 
-## 4. Daily routine by time budget
+## 4. Rotina diária por tempo disponível
 
-### Daily routine — 15 minutes
+### Rotina diária — 15 minutos
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 5/5 · **Recommended for:** F2P, Low · **Time budget:** ≥ 15 min/day · **Time cost:** pending T0 (L-A10-01) · `daily-15min`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 5/5 · **Recomendado para:** F2P, Low · **Tempo disponível:** ≥ 15 min/dia · **Custo de tempo:** pendente de T0 (L-A10-01) · `daily-15min`
 
-Do these every day, in this order. **Time cost per task: Pending in-game measurement (T0), gap L-A10-01.**
+Faça isto todos os dias, nesta ordem. **Custo de tempo por tarefa: Pendente de medição no jogo (T0), lacuna L-A10-01.**
 
-| # | Task | Why it is in the 15-minute tier | Cards |
+| # | Tarefa | Por que está no nível de 15 minutos | Fichas |
 |---|---|---|---|
-| 1 | Claim **VIP points + VIP chest** | Breaking the streak resets 200/day to 40 | [A05-0003](../research/facts/A05/A05-0003.md), [A05-0006](../research/facts/A05/A05-0006.md) |
-| 2 | Claim **daily AP** | Free AP; can exceed the cap | [A09-0006](../research/facts/A09/A09-0006.md), [C04-0032](../research/facts/C04/C04-0032.md) |
-| 3 | **Refill all queues** (2 builders, research, training, healing) — from the CH8 dashboard | Idle queues are lost progress | [A01-0011](../research/facts/A01/A01-0011.md), [A01-0006](../research/facts/A01/A01-0006.md) |
-| 4 | **Alliance help** (help all) | 20 helps = 10 Daily Objective points | [A10-0006](../research/facts/A10/A10-0006.md) |
-| 5 | Start **auto-peacekeeping** on barbarians with regenerating AP | Uses AP that would cap | [A09-0008](../research/facts/A09/A09-0008.md), [A09-0007](../research/facts/A09/A09-0007.md) |
-| 6 | Send **gatherers to large nodes** in alliance territory before logging off | Offline hours become resources | [A03-0016](../research/facts/A03/A03-0016.md), [A03-0009](../research/facts/A03/A03-0009.md) |
+| 1 | Colete **pontos VIP + baú VIP** | Quebrar a sequência derruba os 200/dia para 40 | [A05-0003](../research/facts/A05/A05-0003.md), [A05-0006](../research/facts/A05/A05-0006.md) |
+| 2 | Colete os **PA diários** | PA grátis; pode passar do limite | [A09-0006](../research/facts/A09/A09-0006.md), [C04-0032](../research/facts/C04/C04-0032.md) |
+| 3 | **Reabasteça todas as filas** (2 construtores, pesquisa, treinamento, cura) — pelo painel da Prefeitura 8 | Fila parada é progresso perdido | [A01-0011](../research/facts/A01/A01-0011.md), [A01-0006](../research/facts/A01/A01-0006.md) |
+| 4 | **Ajuda da aliança** (ajudar todos) | 20 ajudas = 10 pontos dos Objetivos Diários | [A10-0006](../research/facts/A10/A10-0006.md) |
+| 5 | Inicie a **pacificação automática** em bárbaros com o PA que regenera | Usa PA que bateria no limite | [A09-0008](../research/facts/A09/A09-0008.md), [A09-0007](../research/facts/A09/A09-0007.md) |
+| 6 | Envie **coletores a nós grandes** no território da aliança antes de sair | Horas offline viram recursos | [A03-0016](../research/facts/A03/A03-0016.md), [A03-0009](../research/facts/A03/A03-0009.md) |
 
-**Skip today if short on time:** Sunset Canyon, Lyceum mock exam, manual barbarians, merchant browsing.
+**Pule hoje se estiver sem tempo:** Cânion do Pôr do Sol, simulado do Liceu, bárbaros manuais, passeio pelo mercador.
 
-**Why:** The highest-value daily actions are claims (free, streak-based) and keeping timers running. Everything here either protects a streak or keeps the account producing while you are offline.
+**Por quê:** As ações diárias de maior valor são as coletas (grátis, baseadas em sequência) e manter os cronômetros rodando. Tudo aqui protege uma sequência ou mantém a conta produzindo enquanto você está offline.
 
-> **Uncertain:** No source publishes minutes per task; time costs are pending the T0 stopwatch (L-A10-01). The ordering is this guide's judgment from sourced value per completion, not a measured value per minute.
+> **Incerto:** Nenhuma fonte publica minutos por tarefa; os custos de tempo aguardam o cronômetro do T0 (L-A10-01). A ordem é um julgamento deste guia a partir do valor com fonte por conclusão, não um valor medido por minuto.
 >
-> **Patch state:** [C04-0032](../research/facts/C04/C04-0032.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0032](../research/facts/C04/C04-0032.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A10-01, L-A09-04
+> **Pendente de medição no jogo (T0):** L-A10-01, L-A09-04
 
-### Daily routine — 30 minutes (adds Daily Objectives)
+### Rotina diária — 30 minutos (inclui os Objetivos Diários)
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P, Low · **Time budget:** ≥ 30 min/day · **Time cost:** pending T0 (L-A10-01) · `daily-30min`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · **Tempo disponível:** ≥ 30 min/dia · **Custo de tempo:** pendente de T0 (L-A10-01) · `daily-30min`
 
-Everything in the 15-minute tier, plus. **Time cost: Pending T0 (L-A10-01).**
+Tudo do nível de 15 minutos, mais o seguinte. **Custo de tempo: Pendente de T0 (L-A10-01).**
 
-| Task | Value | Cards |
+| Tarefa | Valor | Fichas |
 |---|---|---|
-| Finish **Daily Objectives to 100 points** | 100 gems, Golden Key, 3 epic sculptures; chests on the way give speedups (~170 min/day derived) and 100 AP | [A04-0001](../research/facts/A04/A04-0001.md), [A04-0010](../research/facts/A04/A04-0010.md) |
-| Open free **Tavern silver chests** (3/day at Tavern 1–4, up to 10 at Tavern 25) | sculptures, speedups, tomes | [A10-0003](../research/facts/A10/A10-0003.md) |
-| **Courier Station / Mysterious Merchant**: free refresh, buy with resources (10 purchases also count for Daily Objectives) | discounted speedups | [A04-0011](../research/facts/A04/A04-0011.md), [A03-0014](../research/facts/A03/A03-0014.md) |
-| **Expedition**: claim the 3-star chest, free medal refresh | medals for Aethelflaed | [A10-0004](../research/facts/A10/A10-0004.md) |
+| Complete os **Objetivos Diários até 100 pontos** | 100 gemas, Chave de Ouro, 3 esculturas épicas; os baús pelo caminho dão acelerações (~170 min/dia derivado) e 100 PA | [A04-0001](../research/facts/A04/A04-0001.md), [A04-0010](../research/facts/A04/A04-0010.md) |
+| Abra os **baús de prata da Taverna** grátis (3/dia na Taverna 1–4, até 10 na Taverna 25) | esculturas, acelerações, tomos | [A10-0003](../research/facts/A10/A10-0003.md) |
+| **Estação de Correio / Mercador Misterioso**: renovação grátis, compre com recursos (10 compras também contam para os Objetivos Diários) | acelerações com desconto | [A04-0011](../research/facts/A04/A04-0011.md), [A03-0014](../research/facts/A03/A03-0014.md) |
+| **Expedição**: colete o baú de 3 estrelas, renovação grátis de medalhas | medalhas para a Aethelflaed | [A10-0004](../research/facts/A10/A10-0004.md) |
 
-**Why:** The 100-point chest is the only guaranteed gem income a F2P has [[A04-0001](../research/facts/A04/A04-0001.md)]; it is worth the extra minutes on any day you have them.
+**Por quê:** O baú de 100 pontos é a única renda de gemas garantida que um F2P tem [[A04-0001](../research/facts/A04/A04-0001.md)]; vale os minutos extras em qualquer dia em que você os tenha.
 
-> **Uncertain:** No source publishes minutes per task; time costs are pending the T0 stopwatch (L-A10-01). The ordering is this guide's judgment from sourced value per completion, not a measured value per minute. The Daily Objectives task list changed in 1.1.09 (boost tasks replaced by login and alliance-donation tasks); [A10-0001](../research/facts/A10/A10-0001.md) is partially obsolete and the 170 min/day speedup figure is derived.
+> **Incerto:** Nenhuma fonte publica minutos por tarefa; os custos de tempo aguardam o cronômetro do T0 (L-A10-01). A ordem é um julgamento deste guia a partir do valor com fonte por conclusão, não um valor medido por minuto. A lista de tarefas dos Objetivos Diários mudou na 1.1.09 (tarefas de impulso trocadas por tarefas de login e de doação à aliança); [A10-0001](../research/facts/A10/A10-0001.md) é parcialmente obsoleto e o valor de 170 min/dia de acelerações é derivado.
 >
-> **Pending in-game measurement (T0):** L-A10-01, L-A10-02, L-A04-04
+> **Pendente de medição no jogo (T0):** L-A10-01, L-A10-02, L-A04-04
 
-### Daily routine — 60 minutes (adds PvE and modes)
+### Rotina diária — 60 minutos (inclui PvE e modos)
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 3/5 · **Recommended for:** F2P · **Time budget:** ≥ 60 min/day · **Time cost:** pending T0 (L-A10-01) · `daily-60min`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 3/5 · **Recomendado para:** F2P · **Tempo disponível:** ≥ 60 min/dia · **Custo de tempo:** pendente de T0 (L-A10-01) · `daily-60min`
 
-Everything in the 30-minute tier, plus. **Time cost: Pending T0 (L-A10-01).**
+Tudo do nível de 30 minutos, mais o seguinte. **Custo de tempo: Pendente de T0 (L-A10-01).**
 
-| Task | Value | Cards |
+| Tarefa | Valor | Fichas |
 |---|---|---|
-| **Manual barbarians** in chains (−2 AP per consecutive hit, min 40) and **fort rallies** once forts unlock | EXP, speedups, Books of Covenant (~50% per tier), alliance gifts | [A09-0002](../research/facts/A09/A09-0002.md), [A09-0005](../research/facts/A09/A09-0005.md) |
-| **Sunset Canyon** attempts | daily/season rewards; top 5 daily → Golden Key | [A10-0008](../research/facts/A10/A10-0008.md) |
-| **Peerless Scholar** mock exam (Mon–Fri, CH10+) | Flashes of Insight; biweekly exams split a gem pool | [A10-0005](../research/facts/A10/A10-0005.md) |
-| Active **event** tasks (see Events) | per event | [A11-0512](../research/facts/A11/A11-0512.md) |
+| **Bárbaros manuais** em sequência (−2 PA por golpe consecutivo, mín. 40) e **rallies em fortes** quando os fortes forem liberados | EXP, acelerações, Livros do Pacto (~50% por nível), presentes da aliança | [A09-0002](../research/facts/A09/A09-0002.md), [A09-0005](../research/facts/A09/A09-0005.md) |
+| Tentativas no **Cânion do Pôr do Sol** | recompensas diárias/de temporada; top 5 diário → Chave de Ouro | [A10-0008](../research/facts/A10/A10-0008.md) |
+| Simulado do **Erudito Incomparável** (seg–sex, Prefeitura 10+) | Lampejos de Percepção; exames quinzenais dividem um pool de gemas | [A10-0005](../research/facts/A10/A10-0005.md) |
+| Tarefas de **eventos** ativos (veja Eventos) | por evento | [A11-0512](../research/facts/A11/A11-0512.md) |
 
-**Why:** These add value but either have no quantified yield per minute yet or depend on unlocks. They are the first things to cut when time is short.
+**Por quê:** Isso agrega valor, mas ou ainda não tem rendimento quantificado por minuto, ou depende de desbloqueios. São as primeiras coisas a cortar quando o tempo é curto.
 
-> **Uncertain:** No source publishes minutes per task; time costs are pending the T0 stopwatch (L-A10-01). The ordering is this guide's judgment from sourced value per completion, not a measured value per minute.
+> **Incerto:** Nenhuma fonte publica minutos por tarefa; os custos de tempo aguardam o cronômetro do T0 (L-A10-01). A ordem é um julgamento deste guia a partir do valor com fonte por conclusão, não um valor medido por minuto.
 >
-> **Pending in-game measurement (T0):** L-A10-01, L-A10-03, L-A09-03, L-A04-05
+> **Pendente de medição no jogo (T0):** L-A10-01, L-A10-03, L-A09-03, L-A04-05
 
-### Weekly and fortnightly tasks
+### Tarefas semanais e quinzenais
 
-**Confidence:** medium · **Consensus:** mechanic · **Priority:** 4/5 · **Recommended for:** F2P, Low · **Time budget:** ≥ 15 min/day · **Time cost:** pending T0 (L-A10-01) · `daily-weekly`
+**Confiança:** média · **Consenso:** mecânica · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · **Tempo disponível:** ≥ 15 min/dia · **Custo de tempo:** pendente de T0 (L-A10-01) · `daily-weekly`
 
-- **VIP Shop (Monday 00:00 UTC):** buy the **food-priced** rows — 30× 100 AP for 12,000 food each (VIP 2) and 50× 5-min universal speedups for 7,000 food each (VIP 3) [[A04-0007](../research/facts/A04/A04-0007.md)].
-- **Peerless Scholar** preliminary and final every two weeks (gem pool) [[A10-0005](../research/facts/A10/A10-0005.md)].
-- Check the **event calendar** a few days ahead [[A11-0512](../research/facts/A11/A11-0512.md)].
+- **Loja VIP (segunda-feira 00:00 UTC):** compre as linhas pagas em **comida** — 30× 100 PA por 12.000 de comida cada (VIP 2) e 50× acelerações universais de 5 min por 7.000 de comida cada (VIP 3) [[A04-0007](../research/facts/A04/A04-0007.md)].
+- **Erudito Incomparável**, fase preliminar e final a cada duas semanas (pool de gemas) [[A10-0005](../research/facts/A10/A10-0005.md)].
+- Confira o **calendário de eventos** com alguns dias de antecedência [[A11-0512](../research/facts/A11/A11-0512.md)].
 
-**Why:** The food-priced VIP Shop rows cost no gems and add about 3,000 AP and 250 minutes of speedups per week; if all free AP sources are claimed, the derived weekly total is about 7,200 AP [[A09-0006](../research/facts/A09/A09-0006.md)].
+**Por quê:** As linhas da Loja VIP pagas em comida não custam gemas e somam cerca de 3.000 PA e 250 minutos de acelerações por semana; se todas as fontes gratuitas de PA forem coletadas, o total semanal derivado é de cerca de 7.200 PA [[A09-0006](../research/facts/A09/A09-0006.md)].
 
-> **Uncertain:** The 7,200 AP/week figure is derived ([A09-0006](../research/facts/A09/A09-0006.md) method) and excludes natural regeneration (L-A09-01). Time cost pending T0 (L-A10-01).
+> **Incerto:** O valor de 7.200 PA/semana é derivado (método de [A09-0006](../research/facts/A09/A09-0006.md)) e não inclui a regeneração natural (L-A09-01). Custo de tempo pendente de T0 (L-A10-01).
 >
-> **Pending in-game measurement (T0):** L-A09-01, L-A10-01
+> **Pendente de medição no jogo (T0):** L-A09-01, L-A10-01
 
-### Light days and Break Mode
+### Dias leves e Modo Pausa
 
-**Confidence:** medium · **Consensus:** mechanic · **Priority:** 3/5 · **Recommended for:** F2P, Low · **Time budget:** ≥ 0 min/day · **Time cost:** pending T0 (L-A10-01) · `daily-break-mode`
+**Confiança:** média · **Consenso:** mecânica · **Prioridade:** 3/5 · **Recomendado para:** F2P, Low · **Tempo disponível:** ≥ 0 min/dia · **Custo de tempo:** pendente de T0 (L-A10-01) · `daily-break-mode`
 
-On days you can't play properly, do only:
-1. **Claim VIP points** — a missed day costs up to 720 VIP points over the next 8 days (derived) [[A05-0003](../research/facts/A05/A05-0003.md)].
-2. **Refill queues with long timers** and send gatherers to large nodes [[A01-0011](../research/facts/A01/A01-0011.md), [A03-0016](../research/facts/A03/A03-0016.md)].
-3. Before a longer break: keep raw resources at or below Storehouse protection and the rest as **unopened items** [[A03-0006](../research/facts/A03/A03-0006.md), [A03-0007](../research/facts/A03/A03-0007.md), [A13-0005](../research/facts/A13/A13-0005.md)].
+Nos dias em que você não consegue jogar direito, faça só:
+1. **Colete os pontos VIP** — um dia perdido custa até 720 pontos VIP nos 8 dias seguintes (derivado) [[A05-0003](../research/facts/A05/A05-0003.md)].
+2. **Reabasteça as filas com cronômetros longos** e envie coletores a nós grandes [[A01-0011](../research/facts/A01/A01-0011.md), [A03-0016](../research/facts/A03/A03-0016.md)].
+3. Antes de uma pausa mais longa: mantenha os recursos brutos no limite da proteção do Depósito ou abaixo, e o resto como **itens fechados** [[A03-0006](../research/facts/A03/A03-0006.md), [A03-0007](../research/facts/A03/A03-0007.md), [A13-0005](../research/facts/A13/A13-0005.md)].
 
-**Why:** Burnout is a top reason players quit. A two-minute floor keeps the streaks and the account safe, so a bad week does not become a reason to stop.
+**Por quê:** O esgotamento é um dos principais motivos para largar o jogo. Um piso de dois minutos mantém as sequências e a conta seguras, então uma semana ruim não vira motivo para parar.
 
-> **Uncertain:** Shield use for multi-day breaks is not covered by any card (PROPOSED-SHIELDS). The 720-point figure is derived from [A05-0003](../research/facts/A05/A05-0003.md).
+> **Incerto:** O uso de escudo em pausas de vários dias não é coberto por nenhuma ficha (PROPOSED-SHIELDS). O valor de 720 pontos é derivado de [A05-0003](../research/facts/A05/A05-0003.md).
 >
-> **Pending in-game measurement (T0):** PROPOSED-SHIELDS, L-A10-01
+> **Pendente de medição no jogo (T0):** PROPOSED-SHIELDS, L-A10-01
 
-## 5. Events calendar and preparation
+## 5. Calendário de eventos e preparação
 
-### Events: plan from the in-game calendar
+### Eventos: planeje pelo calendário do jogo
 
-**Confidence:** medium · **Consensus:** unanimous · **Priority:** 4/5 · **Recommended for:** F2P, Low · `ev-calendar-rule`
+**Confiança:** média · **Consenso:** unânime · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · `ev-calendar-rule`
 
-- Events **do not follow a fixed schedule**; the in-game calendar shows a few days ahead, and kingdoms differ by age and Monument progress [[A11-0512](../research/facts/A11/A11-0512.md)]. Consensus: **unanimous**.
-- What is known for a new kingdom:
+- Os eventos **não seguem um cronograma fixo**; o calendário do jogo mostra alguns dias à frente, e os reinos variam conforme a idade e o progresso do Monumento [[A11-0512](../research/facts/A11/A11-0512.md)]. Consenso: **unânime**.
+- O que se sabe para um reino novo:
 
-| Event | Timing | Confidence | Cards |
+| Evento | Momento | Confiança | Fichas |
 |---|---|---|---|
-| Legendary Pelagius | from day 5 (official) | high (patch note) | [C04-0005](../research/facts/C04/C04-0005.md) |
-| More Than Gems | ~monthly, 2 days, kingdoms older than ~21 days | medium | [A11-0502](../research/facts/A11/A11-0502.md) |
-| Peerless Scholar | weekdays + biweekly exams | high | [A10-0005](../research/facts/A10/A10-0005.md) |
-| Pioneer / Road to Revival | ~day 20–23 | Uncertain (single T3) | [A11-0510](../research/facts/A11/A11-0510.md) |
-| First Wheel of Fortune | ~day 24; YSG ~day 94 | Uncertain (single T3) | [A11-0503](../research/facts/A11/A11-0503.md) |
-| Ark of Osiris | ~every two weeks | Uncertain (T3) | [A11-0508](../research/facts/A11/A11-0508.md) |
-| Sunset Canyon | daily attempts, 7-day seasons | Uncertain (T3) | [A11-0507](../research/facts/A11/A11-0507.md) |
+| Pelagius Lendário | a partir do dia 5 (oficial) | alta (nota de patch) | [C04-0005](../research/facts/C04/C04-0005.md) |
+| Mais que Gemas | ~mensal, 2 dias, reinos com mais de ~21 dias | média | [A11-0502](../research/facts/A11/A11-0502.md) |
+| Erudito Incomparável | dias úteis + exames quinzenais | alta | [A10-0005](../research/facts/A10/A10-0005.md) |
+| Pioneiro / Caminho do Renascimento | ~dia 20–23 | Incerto (T3 único) | [A11-0510](../research/facts/A11/A11-0510.md) |
+| Primeira Roda da Fortuna | ~dia 24; YSG ~dia 94 | Incerto (T3 único) | [A11-0503](../research/facts/A11/A11-0503.md) |
+| Arca de Osíris | ~a cada duas semanas | Incerto (T3) | [A11-0508](../research/facts/A11/A11-0508.md) |
+| Cânion do Pôr do Sol | tentativas diárias, temporadas de 7 dias | Incerto (T3) | [A11-0507](../research/facts/A11/A11-0507.md) |
 
-- Live in 2026 per official notes: Sunset Canyon, Champions of Olympia, Arms Training with Lohar [[A11-0513](../research/facts/A11/A11-0513.md)].
+- Ativos em 2026 segundo as notas oficiais: Cânion do Pôr do Sol, Campeões de Olímpia, Treino de Armas com Lohar [[A11-0513](../research/facts/A11/A11-0513.md)].
 
-**Why:** Any fixed day-by-day event plan would be wrong for most kingdoms. Hoarding rules (what to keep for which kind of event) work without dates; the calendar tells you when.
+**Por quê:** Qualquer plano de eventos dia a dia seria errado para a maioria dos reinos. As regras de acúmulo (o que guardar para qual tipo de evento) funcionam sem datas; o calendário diz quando.
 
-> **Uncertain:** [A11-0510](../research/facts/A11/A11-0510.md), [A11-0503](../research/facts/A11/A11-0503.md) (partially obsolete), [A11-0508](../research/facts/A11/A11-0508.md) and [A11-0507](../research/facts/A11/A11-0507.md) are baixa. First-occurrence days are a T0 target.
+> **Incerto:** [A11-0510](../research/facts/A11/A11-0510.md), [A11-0503](../research/facts/A11/A11-0503.md) (parcialmente obsoleto), [A11-0508](../research/facts/A11/A11-0508.md) e [A11-0507](../research/facts/A11/A11-0507.md) são baixa. Os dias da primeira ocorrência são um alvo do T0.
 >
-> **Patch state:** [C04-0005](../research/facts/C04/C04-0005.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0005](../research/facts/C04/C04-0005.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A11-01, L-B01-01
+> **Pendente de medição no jogo (T0):** L-A11-01, L-B01-01
 
-### More Than Gems: the window to spend gems
+### Mais que Gemas: a janela para gastar gemas
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P · `ev-more-than-gems`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P · `ev-more-than-gems`
 
-- **Recommended (F2P, from VIP 6 on):** save gems and spend them on VIP points **during More Than Gems** [[A11-0502](../research/facts/A11/A11-0502.md), [A11-0504](../research/facts/A11/A11-0504.md)]. Consensus: **majority**.
-- Reported structure: a **2-day** event with daily gem-spend milestones; reported tiers 7,000 gems/day → 5 universal legendary sculptures and 25,000/day → 13; about **monthly**, only in kingdoms older than ~21 days [[A11-0502](../research/facts/A11/A11-0502.md)].
+- **Recomendado (F2P, a partir do VIP 6):** poupe gemas e gaste-as em pontos VIP **durante o Mais que Gemas** [[A11-0502](../research/facts/A11/A11-0502.md), [A11-0504](../research/facts/A11/A11-0504.md)]. Consenso: **maioria**.
+- Estrutura relatada: um evento de **2 dias** com marcos diários de gasto de gemas; faixas relatadas de 7.000 gemas/dia → 5 esculturas lendárias universais e 25.000/dia → 13; cerca de **mensal**, só em reinos com mais de ~21 dias [[A11-0502](../research/facts/A11/A11-0502.md)].
 
-**Why:** The same gems buy VIP points either way; during MTG they also pay milestone rewards, including gold sculptures, which a F2P otherwise barely sees before VIP 10.
+**Por quê:** As mesmas gemas compram pontos VIP de qualquer forma; durante o Mais que Gemas elas também pagam recompensas de marcos, incluindo esculturas douradas, que um F2P quase não vê antes do VIP 10.
 
-> **Uncertain:** Tier amounts are T3/T4 reports to confirm in game; the cadence was resolved from T3 + T4 ([A11-0502](../research/facts/A11/A11-0502.md) notes).
+> **Incerto:** Os valores das faixas são relatos T3/T4 a confirmar no jogo; a periodicidade foi definida a partir de T3 + T4 (notas de [A11-0502](../research/facts/A11/A11-0502.md)).
 >
-> **Pending in-game measurement (T0):** L-A11-01, L-A11-02
+> **Pendente de medição no jogo (T0):** L-A11-01, L-A11-02
 
-> **Low spender note:** Low spenders should hold purchased gems (Supply Depot, Growth Fund payouts) for MTG as well and time any top-up around the Recharge event [[A12-0005](../research/facts/A12/A12-0005.md), [A12-0002](../research/facts/A12/A12-0002.md)].
+> **Nota para quem gasta pouco (Low):** Quem gasta pouco deve guardar as gemas compradas (Depósito de Suprimentos, pagamentos do Fundo de Crescimento) também para o Mais que Gemas e escolher o momento de qualquer recarga em torno do evento de Recarga [[A12-0005](../research/facts/A12/A12-0005.md), [A12-0002](../research/facts/A12/A12-0002.md)].
 
-### Lohar's Trial / Arms Training: where AP potions go
+### Provação de Lohar / Treino de Armas: para onde vão as poções de PA
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 4/5 · **Recommended for:** F2P, Low · `ev-lohar-ap`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 4/5 · **Recomendado para:** F2P, Low · `ev-lohar-ap`
 
-- **Recommended (F2P):** save your AP potions for **Lohar's Trial / Arms Training** and spend them there [[A11-0505](../research/facts/A11/A11-0505.md), [A09-0007](../research/facts/A09/A09-0007.md)]. Consensus: **majority**.
-- Arms Training with Lohar is confirmed live in 2026 [[A11-0513](../research/facts/A11/A11-0513.md)].
+- **Recomendado (F2P):** guarde suas poções de PA para a **Provação de Lohar / Treino de Armas** e gaste-as lá [[A11-0505](../research/facts/A11/A11-0505.md), [A09-0007](../research/facts/A09/A09-0007.md)]. Consenso: **maioria**.
+- O Treino de Armas com Lohar está confirmado como ativo em 2026 [[A11-0513](../research/facts/A11/A11-0513.md)].
 
-**Why:** It is one of the few events where a F2P's AP turns into gems and high-value rewards at a better rate than ordinary barbarians.
+**Por quê:** É um dos poucos eventos em que o PA de um F2P vira gemas e recompensas de alto valor a uma taxa melhor que a dos bárbaros comuns.
 
-> **Uncertain:** First occurrence day and reward tables are not captured (L-A11-01, L-A11-02).
+> **Incerto:** O dia da primeira ocorrência e as tabelas de recompensa não foram registrados (L-A11-01, L-A11-02).
 >
-> **Pending in-game measurement (T0):** L-A11-01, L-A11-02
+> **Pendente de medição no jogo (T0):** L-A11-01, L-A11-02
 
-### Mightiest Governor (MGE): milestones, not ranking
+### Governador Mais Poderoso (MGE): marcos, não ranking
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 3/5 · **Recommended for:** F2P · `ev-mge`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 3/5 · **Recomendado para:** F2P · `ev-mge`
 
-- **Recommended (F2P):** take MGE **milestone** rewards; don't chase the ranking — or follow your kingdom's MGE rules [[A11-0500](../research/facts/A11/A11-0500.md)]. Consensus: **majority**.
+- **Recomendado (F2P):** pegue as recompensas de **marcos** do MGE; não corra atrás do ranking — ou siga as regras de MGE do seu reino [[A11-0500](../research/facts/A11/A11-0500.md)]. Consenso: **maioria**.
 
-**Why:** Ranking rewards go to spenders in a new kingdom; milestones are reachable and cost only what you would use anyway. Many kingdoms also assign MGE ranks, and breaking those rules has social costs.
+**Por quê:** As recompensas de ranking vão para quem gasta em um reino novo; os marcos são alcançáveis e custam só o que você usaria de qualquer jeito. Muitos reinos também definem as posições do MGE, e quebrar essas regras tem custo social.
 
-> **Uncertain:** Current MGE format is not captured (L-A11-04, L-B05-01).
+> **Incerto:** O formato atual do MGE não foi registrado (L-A11-04, L-B05-01).
 >
-> **Pending in-game measurement (T0):** L-A11-04, L-B05-01
+> **Pendente de medição no jogo (T0):** L-A11-04, L-B05-01
 
-### Wheel of Fortune: planned target only
+### Roda da Fortuna: só com alvo planejado
 
-**Confidence:** low · **Consensus:** majority · **Priority:** 2/5 · **Recommended for:** F2P · `ev-wheel-of-fortune`
+**Confiança:** baixa · **Consenso:** maioria · **Prioridade:** 2/5 · **Recomendado para:** F2P · `ev-wheel-of-fortune`
 
-- F2P consensus: spin only for a **planned target**, usually stopping at **10 spins**, ideally after VIP 10 [[A11-0503](../research/facts/A11/A11-0503.md)].
-- Spins now need **Spin Tickets** in Season 2/3/SoC (official) and, per a third-party summary, in Season 1 since 1.1.12 [[C04-0022](../research/facts/C04/C04-0022.md)]. Older gem-per-spin math is wrong where tickets apply.
+- Consenso F2P: gire só por um **alvo planejado**, em geral parando em **10 giros**, de preferência depois do VIP 10 [[A11-0503](../research/facts/A11/A11-0503.md)].
+- Os giros agora exigem **Tíquetes de Giro** nas Temporadas 2/3/SoC (oficial) e, segundo um resumo de terceiros, na Temporada 1 desde a 1.1.12 [[C04-0022](../research/facts/C04/C04-0022.md)]. A conta antiga de gemas por giro está errada onde os tíquetes valem.
 
-**Why:** The Wheel is the main early route to a featured legendary (YSG is reported around day 94 [[A06-0502](../research/facts/A06/A06-0502.md)]), but unplanned spins are the classic F2P gem sink.
+**Por quê:** A Roda é o principal caminho inicial para um lendário em destaque (o YSG é relatado por volta do dia 94 [[A06-0502](../research/facts/A06/A06-0502.md)]), mas giros sem planejamento são o clássico ralo de gemas do F2P.
 
-> **Uncertain:** [A11-0503](../research/facts/A11/A11-0503.md) is partially obsolete/baixa (its gem cost predates Spin Tickets). Home-kingdom pricing is unknown (L-A11-03).
+> **Incerto:** [A11-0503](../research/facts/A11/A11-0503.md) é parcialmente obsoleto/baixa (o custo em gemas dele é anterior aos Tíquetes de Giro). O preço no reino de origem é desconhecido (L-A11-03).
 >
-> **Patch state:** [C04-0022](../research/facts/C04/C04-0022.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0022](../research/facts/C04/C04-0022.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A11-03
+> **Pendente de medição no jogo (T0):** L-A11-03
 
-### Which events to prioritise and which to skip
+### Quais eventos priorizar e quais pular
 
-**Confidence:** low · **Consensus:** split · **Priority:** 2/5 · **Recommended for:** F2P · `ev-priorities`
+**Confiança:** baixa · **Consenso:** dividido · **Prioridade:** 2/5 · **Recomendado para:** F2P · `ev-priorities`
 
-- **Prioritise:** guaranteed-milestone and alliance PvE events — Lohar's Trial, Karuak Ceremony, Golden Kingdom, Ceroli Crisis, Alliance Mobilization, Shadow Legion [[A11-0506](../research/facts/A11/A11-0506.md)].
-- **Skip:** Race Against Time, repeated gem-spending events, open power rankings [[A11-0511](../research/facts/A11/A11-0511.md)].
-- **Split:** Ark of Osiris — good sculpture source vs "F2P cannot compete" [[A11-0508](../research/facts/A11/A11-0508.md)]. Champions of Olympia is called the most F2P-friendly mode by one source [[A11-0509](../research/facts/A11/A11-0509.md)]. Pioneer / Road to Revival: buy the four gold keys first (one source) [[A11-0510](../research/facts/A11/A11-0510.md)].
+- **Priorize:** eventos de marcos garantidos e de PvE da aliança — Provação de Lohar, Cerimônia Karuak, Reino Dourado, Crise de Ceroli, Mobilização da Aliança, Legião Sombria [[A11-0506](../research/facts/A11/A11-0506.md)].
+- **Pule:** Corrida Contra o Tempo, eventos repetidos de gasto de gemas, rankings abertos de poder [[A11-0511](../research/facts/A11/A11-0511.md)].
+- **Dividido:** Arca de Osíris — boa fonte de esculturas contra "o F2P não consegue competir" [[A11-0508](../research/facts/A11/A11-0508.md)]. Campeões de Olímpia é chamado de o modo mais amigável ao F2P por uma fonte [[A11-0509](../research/facts/A11/A11-0509.md)]. Pioneiro / Caminho do Renascimento: compre primeiro as quatro chaves de ouro (uma fonte) [[A11-0510](../research/facts/A11/A11-0510.md)].
 
-**Why:** Events with guaranteed milestones pay F2P effort; events ranked on spending or raw power do not.
+**Por quê:** Eventos com marcos garantidos recompensam o esforço do F2P; eventos ranqueados por gasto ou poder bruto, não.
 
-**Both views (split):** Ark of Osiris: valuable for sculptures vs not competitive for F2P [[A11-0508](../research/facts/A11/A11-0508.md)].
+**As duas visões (dividido):** Arca de Osíris: valiosa para esculturas contra pouco competitiva para o F2P [[A11-0508](../research/facts/A11/A11-0508.md)].
 
-> **Uncertain:** All five cards ([A11-0506](../research/facts/A11/A11-0506.md), [A11-0511](../research/facts/A11/A11-0511.md), [A11-0508](../research/facts/A11/A11-0508.md), [A11-0509](../research/facts/A11/A11-0509.md), [A11-0510](../research/facts/A11/A11-0510.md)) are baixa. Reward tables per event are a gap.
+> **Incerto:** As cinco fichas ([A11-0506](../research/facts/A11/A11-0506.md), [A11-0511](../research/facts/A11/A11-0511.md), [A11-0508](../research/facts/A11/A11-0508.md), [A11-0509](../research/facts/A11/A11-0509.md), [A11-0510](../research/facts/A11/A11-0510.md)) são baixa. As tabelas de recompensa por evento são uma lacuna.
 >
-> **Pending in-game measurement (T0):** L-A11-02
+> **Pendente de medição no jogo (T0):** L-A11-02
 
 ## 6. Farms
 
-*Brief only. The dedicated farm guide (F-03: single-resource, general and resource-pair farms) will replace this section.*
+*Apenas um resumo. O guia dedicado a farms (F-03: farms de recurso único, gerais e de par de recursos) vai substituir esta seção.*
 
-### Farm accounts (brief; full guide to come)
+### Contas farm (resumo; guia completo em breve)
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 2/5 · **Recommended for:** F2P, Low · `farm-brief`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 2/5 · **Recomendado para:** F2P, Low · `farm-brief`
 
-- **Purpose:** a farm gathers resources and ships them to the main through the Trading Post (taxed); side uses include MGE points, Books of Covenant and KvK support [[A13-0010](../research/facts/A13/A13-0010.md)]. Consensus: **majority**.
-- **Targets:** CH11 (3 marches) to start, CH17 (4) as the practical minimum, CH22 (5) as a strong target [[A13-0002](../research/facts/A13/A13-0002.md)]; Trading Post ≥ 15 on the farm [[A13-0003](../research/facts/A13/A13-0003.md)].
-- **Tax** falls from 35% (Trading Post L1) to 21% (L15), 10% (L24) and 8% (L25) [[A03-0024](../research/facts/A03/A03-0024.md)].
-- Only resources **above Storehouse protection** can be shipped [[A03-0030](../research/facts/A03/A03-0030.md)]; gold can be sent [[A03-0027](../research/facts/A03/A03-0027.md)]; each transfer uses a march and travel time [[A03-0026](../research/facts/A03/A03-0026.md)].
-- Ship surplus regularly; don't keep big raw piles on a low-CH farm during kill events [[A13-0005](../research/facts/A13/A13-0005.md)].
-- **No scripts on farms** (Conduct Score) [[C04-0006](../research/facts/C04/C04-0006.md)].
+- **Finalidade:** a farm coleta recursos e os envia à conta principal pelo Entreposto Comercial (com taxa); usos secundários incluem pontos do MGE, Livros do Pacto e apoio na KvK [[A13-0010](../research/facts/A13/A13-0010.md)]. Consenso: **maioria**.
+- **Metas:** Prefeitura 11 (3 marchas) para começar, Prefeitura 17 (4) como mínimo prático, Prefeitura 22 (5) como meta forte [[A13-0002](../research/facts/A13/A13-0002.md)]; Entreposto Comercial ≥ 15 na farm [[A13-0003](../research/facts/A13/A13-0003.md)].
+- A **taxa** cai de 35% (Entreposto Nv1) para 21% (Nv15), 10% (Nv24) e 8% (Nv25) [[A03-0024](../research/facts/A03/A03-0024.md)].
+- Só recursos **acima da proteção do Depósito** podem ser enviados [[A03-0030](../research/facts/A03/A03-0030.md)]; ouro pode ser enviado [[A03-0027](../research/facts/A03/A03-0027.md)]; cada transferência usa uma marcha e tempo de viagem [[A03-0026](../research/facts/A03/A03-0026.md)].
+- Envie o excedente com regularidade; não mantenha grandes pilhas de recursos brutos em uma farm de Prefeitura baixa durante eventos de abates [[A13-0005](../research/facts/A13/A13-0005.md)].
+- **Sem scripts em farms** (Pontuação de Conduta) [[C04-0006](../research/facts/C04/C04-0006.md)].
 
-The dedicated farm guide (single-resource, general and resource-pair variants) is planned as F-03.
+O guia dedicado a farms (variantes de recurso único, geral e de par de recursos) está planejado como F-03.
 
-**Why:** Farms are the most common way a F2P main gets extra resources without spending, but they cost daily minutes that are not yet measured, so they belong after the main routine is under control.
+**Por quê:** Farms são a forma mais comum de uma conta principal F2P conseguir recursos extras sem gastar, mas custam minutos diários que ainda não foram medidos, então vêm depois que a rotina da conta principal está sob controle.
 
-> **Uncertain:** Two cities per kingdom via Character Management ([A13-0001](../research/facts/A13/A13-0001.md), organizado). Farm minutes and yield per day are unknown. Resource-pair farms have no source (hypothesis only). Official farm policy is unconfirmed.
+> **Incerto:** Duas cidades por reino pelo Gerenciamento de Personagens ([A13-0001](../research/facts/A13/A13-0001.md), organizado). Os minutos e o rendimento diário da farm são desconhecidos. Farms de par de recursos não têm fonte (apenas hipótese). A política oficial sobre farms não foi confirmada.
 >
-> **Patch state:** [C04-0006](../research/facts/C04/C04-0006.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0006](../research/facts/C04/C04-0006.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A13-01, L-A13-02, L-A13-03, L-A03-03
+> **Pendente de medição no jogo (T0):** L-A13-01, L-A13-02, L-A13-03, L-A03-03
 
-## 7. Mistakes to avoid
+## 7. Erros a evitar
 
-### Mistakes that cost F2P the most
+### Erros que mais custam ao F2P
 
-**Confidence:** medium · **Consensus:** majority · **Priority:** 5/5 · **Recommended for:** F2P, Low · `mistakes-economy`
+**Confiança:** média · **Consenso:** maioria · **Prioridade:** 5/5 · **Recomendado para:** F2P, Low · `mistakes-economy`
 
-1. **Breaking the VIP streak** (back to 40/day) [[A05-0003](../research/facts/A05/A05-0003.md)].
-2. **Sitting at the AP cap** (1,500) instead of spending regenerating AP [[A09-0001](../research/facts/A09/A09-0001.md), [A09-0007](../research/facts/A09/A09-0007.md)].
-3. **Finishing timers with gems** or **buying AP with gems** [[A04-0009](../research/facts/A04/A04-0009.md), [A04-0008](../research/facts/A04/A04-0008.md)].
-4. **Spreading sculptures** over several commanders [[A06-0500](../research/facts/A06/A06-0500.md)]; **gold sculptures on gatherers or temporary picks** [[A06-0510](../research/facts/A06/A06-0510.md)].
-5. **Letting hospitals overflow** (overflow dies) [[A08-0502](../research/facts/A08/A08-0502.md)].
-6. **Leading fights** as a F2P instead of filling rallies [[A08-0503](../research/facts/A08/A08-0503.md)].
-7. **Keeping raw resources above Storehouse protection** when items would be safe [[A03-0007](../research/facts/A03/A03-0007.md), [A13-0005](../research/facts/A13/A13-0005.md)].
-8. **Building outside the CH chain** before CH21 [[A01-0007](../research/facts/A01/A01-0007.md)].
+1. **Quebrar a sequência do VIP** (volta para 40/dia) [[A05-0003](../research/facts/A05/A05-0003.md)].
+2. **Ficar parado no limite de PA** (1.500) em vez de gastar o PA que regenera [[A09-0001](../research/facts/A09/A09-0001.md), [A09-0007](../research/facts/A09/A09-0007.md)].
+3. **Terminar cronômetros com gemas** ou **comprar PA com gemas** [[A04-0009](../research/facts/A04/A04-0009.md), [A04-0008](../research/facts/A04/A04-0008.md)].
+4. **Espalhar esculturas** por vários comandantes [[A06-0500](../research/facts/A06/A06-0500.md)]; **esculturas douradas em coletores ou escolhas temporárias** [[A06-0510](../research/facts/A06/A06-0510.md)].
+5. **Deixar os hospitais transbordarem** (o excesso morre) [[A08-0502](../research/facts/A08/A08-0502.md)].
+6. **Liderar lutas** sendo F2P em vez de encher rallies [[A08-0503](../research/facts/A08/A08-0503.md)].
+7. **Manter recursos brutos acima da proteção do Depósito** quando itens estariam seguros [[A03-0007](../research/facts/A03/A03-0007.md), [A13-0005](../research/facts/A13/A13-0005.md)].
+8. **Construir fora da cadeia da Prefeitura** antes da Prefeitura 21 [[A01-0007](../research/facts/A01/A01-0007.md)].
 
-**Why:** Each of these wastes something a F2P cannot buy back: a streak, free AP, gems, sculptures or troops.
+**Por quê:** Cada um desses erros desperdiça algo que o F2P não consegue comprar de volta: uma sequência, PA grátis, gemas, esculturas ou tropas.
 
 
-### Mistake: following outdated advice
+### Erro: seguir conselhos desatualizados
 
-**Confidence:** medium · **Consensus:** mechanic · **Priority:** 3/5 · **Recommended for:** F2P, Low · `mistakes-outdated-advice`
+**Confiança:** média · **Consenso:** mecânica · **Prioridade:** 3/5 · **Recomendado para:** F2P, Low · `mistakes-outdated-advice`
 
-Check the date and patch of any guide. Common outdated items [[C04-0004](../research/facts/C04/C04-0004.md), [C04-0026](../research/facts/C04/C04-0026.md), [C04-0022](../research/facts/C04/C04-0022.md), [C04-0024](../research/facts/C04/C04-0024.md), [C04-0006](../research/facts/C04/C04-0006.md)]:
-- resource boosts (removed in 1.1.09);
-- jumper accounts / Beginner's Immigration (gone since 2025-03-26);
-- gem-per-spin Wheel of Fortune math (Spin Tickets);
-- "VIP caps at 18" (VIP19 and SVIP since 1.0.87);
-- bots for barbarians/gathering (Conduct Score since 1.1.07).
+Confira a data e o patch de qualquer guia. Itens desatualizados comuns [[C04-0004](../research/facts/C04/C04-0004.md), [C04-0026](../research/facts/C04/C04-0026.md), [C04-0022](../research/facts/C04/C04-0022.md), [C04-0024](../research/facts/C04/C04-0024.md), [C04-0006](../research/facts/C04/C04-0006.md)]:
+- impulsos de recursos (removidos na 1.1.09);
+- contas pulo / Imigração de Iniciante (acabou em 2025-03-26);
+- conta de gemas por giro da Roda da Fortuna (Tíquetes de Giro);
+- "o VIP para no 18" (VIP19 e SVIP desde a 1.0.87);
+- bots para bárbaros/coleta (Pontuação de Conduta desde a 1.1.07).
 
-**Why:** Many top search results are years old or show auto-bumped dates. Following them wastes resources on things that no longer exist.
+**Por quê:** Muitos dos primeiros resultados de busca têm anos ou mostram datas atualizadas automaticamente. Segui-los gasta recursos com coisas que não existem mais.
 
-> **Uncertain:** [C04-0026](../research/facts/C04/C04-0026.md) rests on an in-game mail quoted by players plus wiki/guide.
+> **Incerto:** [C04-0026](../research/facts/C04/C04-0026.md) se apoia em um correio do jogo citado por jogadores mais wiki/guia.
 >
-> **Patch state:** [C04-0004](../research/facts/C04/C04-0004.md), [C04-0006](../research/facts/C04/C04-0006.md), [C04-0022](../research/facts/C04/C04-0022.md), [C04-0024](../research/facts/C04/C04-0024.md), [C04-0026](../research/facts/C04/C04-0026.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0004](../research/facts/C04/C04-0004.md), [C04-0006](../research/facts/C04/C04-0006.md), [C04-0022](../research/facts/C04/C04-0022.md), [C04-0024](../research/facts/C04/C04-0024.md), [C04-0026](../research/facts/C04/C04-0026.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 
-## 8. If you got zeroed
+## 8. Se você foi zerado
 
-### If you got zeroed
+### Se você foi zerado
 
-**Confidence:** low · **Consensus:** mechanic · **Priority:** 3/5 · **Recommended for:** F2P, Low · `recovery-zeroed`
+**Confiança:** baixa · **Consenso:** mecânica · **Prioridade:** 3/5 · **Recomendado para:** F2P, Low · `recovery-zeroed`
 
-**What survives** [[A03-0007](../research/facts/A03/A03-0007.md), [A08-0502](../research/facts/A08/A08-0502.md)]:
-- Resource **items** and **gems** cannot be plundered.
-- Troops are wounded into hospitals up to capacity; beyond capacity they die, and some actions always kill severely wounded.
+**O que sobrevive** [[A03-0007](../research/facts/A03/A03-0007.md), [A08-0502](../research/facts/A08/A08-0502.md)]:
+- **Itens** de recurso e **gemas** não podem ser saqueados.
+- As tropas são feridas e vão para os hospitais até a capacidade; além dela morrem, e algumas ações sempre matam os gravemente feridos.
 
-**What to do now**
-1. **Heal before retraining** — healing is far cheaper than retraining (direction agreed by sources; amounts not quantified) [[A08-0502](../research/facts/A08/A08-0502.md)].
-2. **Stop the bleeding:** keep raw resources at or below Storehouse protection, the rest as items [[A03-0006](../research/facts/A03/A03-0006.md), [A03-0007](../research/facts/A03/A03-0007.md), [A13-0005](../research/facts/A13/A13-0005.md)].
-3. **Restart vs continue:** a fresh account can no longer jump to a new kingdom with Beginner's Immigration [[C04-0026](../research/facts/C04/C04-0026.md)]; immigration rules were tightened in 2026 [[C04-0008](../research/facts/C04/C04-0008.md)]. Continuing is usually the only realistic F2P option.
-4. Re-check the readiness checklist and rebuild **one** complete march first [[A06-0500](../research/facts/A06/A06-0500.md)].
+**O que fazer agora**
+1. **Cure antes de retreinar** — curar é bem mais barato que retreinar (direção concordada pelas fontes; valores não quantificados) [[A08-0502](../research/facts/A08/A08-0502.md)].
+2. **Estanque a sangria:** mantenha os recursos brutos no limite da proteção do Depósito ou abaixo, e o resto como itens [[A03-0006](../research/facts/A03/A03-0006.md), [A03-0007](../research/facts/A03/A03-0007.md), [A13-0005](../research/facts/A13/A13-0005.md)].
+3. **Recomeçar ou continuar:** uma conta nova já não pode pular para um reino novo com a Imigração de Iniciante [[C04-0026](../research/facts/C04/C04-0026.md)]; as regras de imigração foram endurecidas em 2026 [[C04-0008](../research/facts/C04/C04-0008.md)]. Continuar costuma ser a única opção realista para o F2P.
+4. Releia a lista de prontidão e reconstrua primeiro **uma** marcha completa [[A06-0500](../research/facts/A06/A06-0500.md)].
 
-**Why:** Being zeroed is a top reason players quit. Knowing what was *not* lost, and what to rebuild first, turns a disaster into a delay.
+**Por quê:** Ser zerado é um dos principais motivos para largar o jogo. Saber o que *não* foi perdido, e o que reconstruir primeiro, transforma um desastre em um atraso.
 
-> **Uncertain:** Severe-wound/death rules lack official text (L-A08-03); heal vs retrain cost is not quantified (L-A08-01). Shield rules are not researched (PROPOSED-SHIELDS). [C04-0008](../research/facts/C04/C04-0008.md) is a patch-state card (immigration limits, pioneer parts).
+> **Incerto:** As regras de ferimento grave/morte não têm texto oficial (L-A08-03); o custo de curar contra retreinar não foi quantificado (L-A08-01). As regras de escudo não foram pesquisadas (PROPOSED-SHIELDS). [C04-0008](../research/facts/C04/C04-0008.md) é uma ficha de estado de patch (limites de imigração, partes de pioneiro).
 >
-> **Patch state:** [C04-0008](../research/facts/C04/C04-0008.md), [C04-0026](../research/facts/C04/C04-0026.md) (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).
+> **Estado do patch:** [C04-0008](../research/facts/C04/C04-0008.md), [C04-0026](../research/facts/C04/C04-0026.md) (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).
 >
-> **Pending in-game measurement (T0):** L-A08-01, L-A08-03, PROPOSED-SHIELDS, L-B06-03
+> **Pendente de medição no jogo (T0):** L-A08-01, L-A08-03, PROPOSED-SHIELDS, L-B06-03
 
-## 9. Open questions and pending measurements
+## 9. Perguntas em aberto e medições pendentes
 
-### Open questions / pending in-game measurements (T0)
+### Perguntas em aberto / medições pendentes no jogo (T0)
 
-**Confidence:** pending · **Consensus:** n/a · **Priority:** 1/5 · `open-pending-measurements`
+**Confiança:** pendente · **Consenso:** n/d · **Prioridade:** 1/5 · `open-pending-measurements`
 
-These gaps weaken specific parts of this guide; the T0 protocol (`research/protocolos/t0-medicao.md`) is designed to close them.
+Essas lacunas enfraquecem partes específicas deste guia; o protocolo T0 (`research/protocolos/t0-medicao.md`) foi desenhado para fechá-las.
 
-| Gap | What it would change | Blocks affected |
+| Lacuna | O que mudaria | Blocos afetados |
 |---|---|---|
-| L-A10-01 minutes per task | Time costs and the 15/30/60 ordering | daily-* |
-| L-A04-01 real F2P gem income | VIP 6 / VIP 10 dates, MTG budget | ov-budget-reality-check, d15-vip6-milestone |
-| L-A01-03 buffed build times | Real CH17/CH21 dates | d0-build-order, d41-ch21-t4 |
-| L-A02-03 time to T4 | Resolves "T4 ~day 30" vs ~163 raw builder-days | d41-ch21-t4 |
-| L-A02-02 speedup allocation model | Turns the spend-vs-hoard split into a rule | d41-speedups-spend-vs-hoard |
-| L-A04-04 speedup income/day | Speedup budget for CH21 | d41-speedups-spend-vs-hoard |
-| L-A09-01 AP regeneration | Barbarians/day | d0-ap-discipline |
-| L-A10-02 Daily Objectives after 1.1.09 | Cheapest path to 100 points | daily-30min |
-| L-A11-01 event first-occurrence days | Event calendar | ev-calendar-rule |
-| L-A06-03 sculpture income | Commander plan | d15-commander-checklist |
-| L-A01-01 early unlock levels | Academy / Quarry / Trading Post CH | d0-build-order |
-| L-B01-03 Lost Kingdom entry, Eve timing | Pre-KvK plan | pk-eve-of-crusade |
-| PROPOSED-SHIELDS shield and beginner protection | Safety and Break Mode advice | d0-day1-survival, recovery-zeroed |
+| L-A10-01 minutos por tarefa | Custos de tempo e a ordem de 15/30/60 | daily-* |
+| L-A04-01 renda real de gemas do F2P | Datas de VIP 6 / VIP 10, orçamento do Mais que Gemas | ov-budget-reality-check, d15-vip6-milestone |
+| L-A01-03 tempos de construção com bônus | Datas reais da Prefeitura 17/21 | d0-build-order, d41-ch21-t4 |
+| L-A02-03 tempo até o T4 | Resolve "T4 ~dia 30" contra ~163 dias brutos de construtor | d41-ch21-t4 |
+| L-A02-02 modelo de alocação de acelerações | Transforma o debate gastar-ou-guardar em regra | d41-speedups-spend-vs-hoard |
+| L-A04-04 renda de acelerações/dia | Orçamento de acelerações para a Prefeitura 21 | d41-speedups-spend-vs-hoard |
+| L-A09-01 regeneração de PA | Bárbaros/dia | d0-ap-discipline |
+| L-A10-02 Objetivos Diários após a 1.1.09 | Caminho mais barato até 100 pontos | daily-30min |
+| L-A11-01 dias da primeira ocorrência de eventos | Calendário de eventos | ev-calendar-rule |
+| L-A06-03 renda de esculturas | Plano de comandantes | d15-commander-checklist |
+| L-A01-01 níveis de desbloqueio iniciais | Prefeitura de Academia / Pedreira / Entreposto Comercial | d0-build-order |
+| L-B01-03 entrada no Reino Perdido, momento da Véspera | Plano pré-KvK | pk-eve-of-crusade |
+| PROPOSED-SHIELDS escudo e proteção de iniciante | Conselhos de segurança e de Modo Pausa | d0-day1-survival, recovery-zeroed |
 
-**Why:** Saying what we don't know is part of the guide's value: you can see which advice is solid and which is waiting for measurement.
+**Por quê:** Dizer o que não sabemos faz parte do valor do guia: você vê quais conselhos são sólidos e quais aguardam medição.
 
-> **Pending in-game measurement (T0):** L-A10-01, L-A04-01, L-A01-03, L-A02-03, L-A02-02, L-A04-04, L-A09-01, L-A10-02, L-A11-01, L-A06-03, L-A01-01, L-B01-03, PROPOSED-SHIELDS
+> **Pendente de medição no jogo (T0):** L-A10-01, L-A04-01, L-A01-03, L-A02-03, L-A02-02, L-A04-04, L-A09-01, L-A10-02, L-A11-01, L-A06-03, L-A01-01, L-B01-03, PROPOSED-SHIELDS
 
-## Appendix: Sources and confidence
+## Apêndice: fontes e confiança
 
-**120 fact cards cited**; 77 pass the firm filter (`verificado` + `media`/`alta`). The others appear only inside *Uncertain* notes or as *Patch state*.
+**120 fichas de fatos citadas**; 77 passam no filtro firme (`verificado` + `media`/`alta`). As demais aparecem apenas dentro das notas *Incerto* ou como *Estado do patch*.
 
-| Card | Title | Status | Confidence | Consensus | Firm? | Used in |
+| Ficha | Título | Status | Confiança | Consenso | Firme? | Usada em |
 |---|---|---|---|---|---|---|
-| [A01-0001](../research/facts/A01/A01-0001.md) | City Hall CH1→CH25: requirements, cost, raw time, troop capacity, unlocks (table) | verificado | media | n/a | yes | `ov-budget-reality-check`, `d0-build-order`, `d15-ch10-ch17`, `d15-equipment`, `d41-ch21-t4`, `pk-kvk1-readiness` |
-| [A01-0002](../research/facts/A01/A01-0002.md) | City Hall upgrade rewards per level (resources, speedups, gems, civilization change) | verificado | media | n/a | yes | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17`, `d41-ch21-t4`, `d41-speedups-spend-vs-hoard` |
-| [A01-0003](../research/facts/A01/A01-0003.md) | City Hall level caps the level of every other building | verificado | media | n/a | yes | `d0-build-order` |
-| [A01-0004](../research/facts/A01/A01-0004.md) | Prerequisite rule for each building in the City Hall chain (table) | verificado | media | n/a | yes | `d0-build-order` |
-| [A01-0005](../research/facts/A01/A01-0005.md) | Minimum building set and total raw build time to reach CH10/13/16/17/20/21/22/25 (derived) | verificado | baixa | n/a | no | `d0-build-order`, `d15-ch10-ch17`, `d41-ch21-t4` |
-| [A01-0006](../research/facts/A01/A01-0006.md) | Builder queue: 1 by default, 2nd via Builder Recruitment (2 days) or permanently at VIP 6 | verificado | alta | n/a | yes | `d0-first-gems-vip`, `d15-vip6-milestone`, `daily-15min` |
-| [A01-0007](../research/facts/A01/A01-0007.md) | F2P build priority: City Hall and its prerequisites first; everything else waits | verificado | media | majoritario | yes | `d0-build-order`, `d4-gathering-setup`, `mistakes-economy` |
-| [A01-0008](../research/facts/A01/A01-0008.md) | Hospital capacity per level: outdated values in riseofkingdomsguides (Lv1 3,000 / Lv15 24, | verificado | alta | n/a | yes | `d4-ch8-ch12-checkpoints`, `d41-hospital` |
-| [A01-0009](../research/facts/A01/A01-0009.md) | Conflicting low-level prerequisites between Fandom and riseofkingdomsguides (Academy, Stab | contestado | baixa | n/a | no | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `d4-research-economy` |
-| [A01-0011](../research/facts/A01/A01-0011.md) | Queue management dashboard unlocks at City Hall 8 (construction, training, research, heali | verificado | alta | n/a | yes | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `daily-15min`, `daily-break-mode` |
-| [A02-0500](../research/facts/A02/A02-0500.md) | Research: speed/economy techs first (Writing, Masonry/Engineering, Mathematics) | verificado | media | majoritario | yes | `d4-research-economy` |
-| [A02-0501](../research/facts/A02/A02-0501.md) | Military path: T3 → T4 (skip siege) → shared combat techs → one branch → T5 | verificado | media | majoritario | yes | `d15-research-military`, `pk-kvk1-readiness` |
-| [A02-0503](../research/facts/A02/A02-0503.md) | Where universal speedups go: research vs City Hall — divided | verificado | baixa | dividido | no | `d41-speedups-spend-vs-hoard` |
-| [A02-0504](../research/facts/A02/A02-0504.md) | Time cost of research is long (Combat Tactics 10 ≈ 100 days, avg player) | verificado | baixa | fonte_unica | no | `d15-research-military` |
-| [A03-0006](../research/facts/A03/A03-0006.md) | Storehouse protection capacity by level | verificado | media | n/a | yes | `d0-day1-survival`, `daily-break-mode`, `recovery-zeroed` |
-| [A03-0007](../research/facts/A03/A03-0007.md) | Resource items vs raw resources (plunder safety) | verificado | media | n/a | yes | `d0-day1-survival`, `pk-kvk1-readiness`, `daily-break-mode`, `mistakes-economy`, `recovery-zeroed` |
-| [A03-0009](../research/facts/A03/A03-0009.md) | Alliance territory gives +25% gathering speed | verificado | alta | n/a | yes | `d0-join-alliance`, `d4-gathering-setup`, `daily-15min` |
-| [A03-0013](../research/facts/A03/A03-0013.md) | Enhanced Gathering boost items (+50%, 8h/24h) and how to get them | verificado | alta | n/a | yes | `d4-gathering-setup` |
-| [A03-0014](../research/facts/A03/A03-0014.md) | Mysterious Merchant: daily at 00:00 UTC, food/wood-priced items | verificado | media | n/a | yes | `daily-30min` |
-| [A03-0016](../research/facts/A03/A03-0016.md) | Node level affects total amount, not gathering speed; pick node by availability | verificado | media | majoritario | yes | `d4-gathering-setup`, `daily-15min`, `daily-break-mode` |
-| [A03-0017](../research/facts/A03/A03-0017.md) | Gathering commander setup: talents, level 37, primary only | verificado | media | majoritario | yes | `d4-early-commanders` |
-| [A03-0021](../research/facts/A03/A03-0021.md) | Resource bottleneck progression by CH stage | verificado | media | majoritario | yes | `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17` |
-| [A03-0023](../research/facts/A03/A03-0023.md) | March queues (gathering armies) by CH level | verificado | media | n/a | yes | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `d4-gathering-setup`, `d15-ch10-ch17`, `d41-ch21-t4` |
-| [A03-0024](../research/facts/A03/A03-0024.md) | Trading Post tax rate by level | verificado | alta | n/a | yes | `farm-brief` |
-| [A03-0025](../research/facts/A03/A03-0025.md) | Trading Post capacity per trip and unlock CH (conflicting) | contestado | media | n/a | no | `d4-ch8-ch12-checkpoints` |
-| [A03-0026](../research/facts/A03/A03-0026.md) | Trading Post transfers use a march queue and travel time | verificado | media | n/a | yes | `farm-brief` |
-| [A03-0027](../research/facts/A03/A03-0027.md) | Gold CAN be sent via Trading Post (only the amount above Storehouse protection is sendable | verificado | media | majoritario | yes | `farm-brief` |
-| [A03-0030](../research/facts/A03/A03-0030.md) | Storehouse-protected resources cannot be transported | verificado | alta | n/a | yes | `farm-brief` |
-| [A04-0001](../research/facts/A04/A04-0001.md) | Daily Objectives 100-activity-point chest gives 100 gems per day (main guaranteed F2P gem  | verificado | media | n/a | yes | `ov-budget-reality-check`, `d4-early-commanders`, `d15-vip6-milestone`, `daily-30min` |
-| [A04-0007](../research/facts/A04/A04-0007.md) | VIP Shop: items, gem/resource prices, VIP level required, quantity per refresh (table) + d | verificado | media | n/a | yes | `d41-speedups-spend-vs-hoard`, `daily-weekly` |
-| [A04-0008](../research/facts/A04/A04-0008.md) | Buying Action Points with gems: 500 AP for 100 gems, +50 gems per purchase, resets daily | verificado | media | n/a | yes | `d0-first-gems-vip`, `mistakes-economy` |
-| [A04-0009](../research/facts/A04/A04-0009.md) | Where F2P should spend gems: VIP first; avoid finishing builds with gems; save for More Th | verificado | media | majoritario | yes | `d0-first-gems-vip`, `mistakes-economy` |
-| [A04-0010](../research/facts/A04/A04-0010.md) | Free speedup sources for F2P (qualitative list) and early fixed speedups | verificado | media | n/a | yes | `d41-speedups-spend-vs-hoard`, `daily-30min` |
-| [A04-0011](../research/facts/A04/A04-0011.md) | Mysterious Merchant / Courier Station: 5 refreshes per visit, 1 free refresh per 24h; buy  | verificado | media | majoritario | yes | `daily-30min` |
-| [A05-0001](../research/facts/A05/A05-0001.md) | VIP points needed per VIP level (VIP 1–18) | verificado | media | n/a | yes | `d15-vip6-milestone`, `d41-vip10-reality` |
-| [A05-0003](../research/facts/A05/A05-0003.md) | Daily free VIP points: 40 on day 1, +20 per consecutive day, capped at 200/day; missing a  | verificado | media | n/a | yes | `d0-first-gems-vip`, `daily-15min`, `daily-break-mode`, `mistakes-economy` |
-| [A05-0004](../research/facts/A05/A05-0004.md) | F2P sources of VIP points (daily chest, gems 1:1, alliance shop, alliance gifts, Mysteriou | verificado | media | n/a | yes | `d0-join-alliance`, `d0-first-gems-vip` |
-| [A05-0006](../research/facts/A05/A05-0006.md) | Daily free VIP chest contents by level; legendary commander sculptures from VIP 10 (1/day) | verificado | media | n/a | yes | `d0-first-gems-vip`, `d15-vip6-milestone`, `daily-15min` |
-| [A05-0007](../research/facts/A05/A05-0007.md) | Realistic F2P VIP: days to reach VIP 5/6/7/8/10 from daily chest alone vs daily chest + 10 | verificado | baixa | n/a | no | `ov-budget-reality-check`, `d15-vip6-milestone`, `d41-vip10-reality` |
-| [A05-0008](../research/facts/A05/A05-0008.md) | F2P VIP target: spend free gems on VIP to reach VIP 6 early, then VIP 10 (majority) vs. ne | verificado | media | majoritario | yes | `d0-first-gems-vip` |
-| [A06-0500](../research/facts/A06/A06-0500.md) | F2P: concentrate on one complete march instead of spreading sculptures | verificado | media | unanime | yes | `d4-early-commanders`, `d15-commander-checklist`, `pk-kvk1-readiness`, `mistakes-economy`, `recovery-zeroed` |
-| [A06-0501](../research/facts/A06/A06-0501.md) | Sun Tzu (epic) is the safest early F2P investment | verificado | media | majoritario | yes | `d0-civilization`, `d4-early-commanders`, `d15-expedition-aethelflaed`, `pk-kvk1-readiness` |
-| [A06-0502](../research/facts/A06/A06-0502.md) | Yi Seong-Gye (YSG) is the top F2P legendary target | verificado | media | majoritario | yes | `d15-commander-checklist`, `ev-wheel-of-fortune` |
-| [A06-0503](../research/facts/A06/A06-0503.md) | Mid-tier legendaries (Richard I, Charles Martel, Cao Cao): divided | verificado | baixa | dividido | no | `d15-commander-checklist` |
-| [A06-0504](../research/facts/A06/A06-0504.md) | Aethelflaed is a free legendary obtainable via Expedition Store | verificado | media | majoritario | yes | `d15-commander-checklist`, `d15-expedition-aethelflaed` |
-| [A06-0505](../research/facts/A06/A06-0505.md) | Early barbarian/PvE commander: level only one of Boudica or Lohar; no gold sculptures | verificado | media | majoritario | yes | `d4-early-commanders` |
-| [A06-0506](../research/facts/A06/A06-0506.md) | Level a gathering commander to 37 early (Centurion first) | verificado | baixa | majoritario | no | `d4-early-commanders` |
-| [A06-0508](../research/facts/A06/A06-0508.md) | Pelagius (legendary) as an early-server pick: divided | verificado | baixa | dividido | no | `d4-pelagius-day5` |
-| [A06-0509](../research/facts/A06/A06-0509.md) | Long-term value of epic commanders: divided | verificado | baixa | dividido | no | `d4-early-commanders` |
-| [A06-0510](../research/facts/A06/A06-0510.md) | Reserve universal (gold) sculptures and tomes for one long-term legendary | verificado | media | majoritario | yes | `d15-commander-checklist`, `mistakes-economy` |
-| [A06-0512](../research/facts/A06/A06-0512.md) | F2P should favor open-field (fighting, AoE) commanders over rally/garrison | verificado | baixa | fonte_unica | no | `pk-kvk1-behaviour` |
-| [A06-0513](../research/facts/A06/A06-0513.md) | Pairs suggested for an F2P first KvK | verificado | baixa | dividido | no | `pk-kvk1-behaviour` |
-| [A06-0516](../research/facts/A06/A06-0516.md) | Alliance gift chests are a major F2P sculpture/gem source — join a spending alliance | verificado | media | unanime | yes | `ov-budget-reality-check`, `d0-new-kingdom-start`, `d0-join-alliance` |
-| [A07-0500](../research/facts/A07/A07-0500.md) | Early F2P equipment: cheap green/blue sets; epic as KvK baseline; legendary later | verificado | media | majoritario | yes | `d15-equipment`, `pk-kvk1-readiness` |
-| [A07-0501](../research/facts/A07/A07-0501.md) | Hoard legendary materials; don't burn them on early gear | organizado | baixa | majoritario | no | `d15-equipment` |
-| [A07-0504](../research/facts/A07/A07-0504.md) | Legendary over epic gives small marginal gain per piece | verificado | baixa | fonte_unica | no | `d15-equipment` |
-| [A08-0500](../research/facts/A08/A08-0500.md) | T4 is the troop tier for an F2P first KvK; T5 is a long-term goal | verificado | media | majoritario | yes | `ov-budget-reality-check`, `d41-ch21-t4` |
-| [A08-0502](../research/facts/A08/A08-0502.md) | Hospital overflow kills troops; keep capacity and heal-speedups | verificado | media | unanime | yes | `d0-day1-survival`, `d41-hospital`, `pk-kvk1-readiness`, `pk-kvk1-behaviour`, `mistakes-economy`, `recovery-zeroed` |
-| [A08-0503](../research/facts/A08/A08-0503.md) | F2P combat behavior: never lead, stay behind, retreat early, fill rallies | verificado | media | majoritario | yes | `ov-budget-reality-check`, `pk-kvk1-behaviour`, `mistakes-economy` |
-| [A08-0504](../research/facts/A08/A08-0504.md) | Run fewer, complete marches rather than all march slots | organizado | media | majoritario | no | `pk-kvk1-behaviour` |
-| [A08-0505](../research/facts/A08/A08-0505.md) | T5 heals cost much more; without strong economy fight with T4 | verificado | media | majoritario | yes | `d41-hospital` |
-| [A08-0506](../research/facts/A08/A08-0506.md) | Choose one troop type for T5 (infantry or cavalry first) | verificado | media | majoritario | yes | `d15-research-military`, `d15-commander-checklist`, `pk-kvk1-readiness` |
-| [A09-0001](../research/facts/A09/A09-0001.md) | Action Points: cap 1,500 (raised from 1,000 in 1.0.41, Dec 2020) plus a claimable 500 AP/d | verificado | alta | n/a | yes | `ov-patch-state`, `d0-ap-discipline`, `mistakes-economy` |
-| [A09-0002](../research/facts/A09/A09-0002.md) | Barbarian attack cost: 50 AP, −2 AP per consecutive attack without returning (max −10), fu | verificado | media | n/a | yes | `d0-ap-discipline`, `daily-60min` |
-| [A09-0004](../research/facts/A09/A09-0004.md) | Barbarian level unlocks: personal (beat previous level) and kingdom-wide (only Lv.1–6 at k | verificado | media | n/a | yes | `d0-ap-discipline` |
-| [A09-0005](../research/facts/A09/A09-0005.md) | Barbarian Forts: rally-only; Lv.1–5 recommended troops and alliance gift keys; ~50% chance | verificado | media | n/a | yes | `d0-join-alliance`, `daily-60min` |
-| [A09-0006](../research/facts/A09/A09-0006.md) | Free AP recovery items for F2P: 100 AP daily (Daily Objectives 60-pt chest), 30×100 AP wee | verificado | media | n/a | yes | `d0-ap-discipline`, `daily-15min`, `daily-weekly` |
-| [A09-0007](../research/facts/A09/A09-0007.md) | AP spending strategy for F2P: never cap AP; forts for Books of Covenant until Castle 25; b | verificado | media | majoritario | yes | `d0-ap-discipline`, `pk-eve-of-crusade`, `daily-15min`, `ev-lohar-ap`, `mistakes-economy` |
-| [A09-0008](../research/facts/A09/A09-0008.md) | Built-in auto-peacekeeping (automatic barbarian hunting) exists; third-party scripts are p | verificado | alta | n/a | yes | `ov-patch-state`, `d0-day1-survival`, `pk-eve-of-crusade`, `daily-15min` |
-| [A10-0001](../research/facts/A10/A10-0001.md) | Daily Objectives: tasks, activity points and chest thresholds (20/40/60/80/100) — list par | parcialmente_obsoleto | baixa | n/a | no | `d41-speedups-spend-vs-hoard`, `daily-30min` |
-| [A10-0002](../research/facts/A10/A10-0002.md) | Consolidated F2P daily/weekly checklist (tasks, frequency/cap, yield, dependency) — minute | verificado | baixa | majoritario | no | `d4-research-economy` |
-| [A10-0003](../research/facts/A10/A10-0003.md) | Tavern: daily free silver chests (3 → 10 by Tavern level) and free golden chest interval ( | verificado | media | n/a | yes | `daily-30min` |
-| [A10-0004](../research/facts/A10/A10-0004.md) | Expedition: 3-star missions give a free daily claim; Medal Shop (1 free refresh/day, then  | verificado | media | n/a | yes | `d15-commander-checklist`, `d15-expedition-aethelflaed`, `daily-30min` |
-| [A10-0005](../research/facts/A10/A10-0005.md) | Peerless Scholar (Lyceum of Wisdom, CH10): one Mock Exam per weekday; Preliminary and Fina | verificado | alta | n/a | yes | `d4-ch8-ch12-checkpoints`, `daily-60min`, `daily-weekly`, `ev-calendar-rule` |
-| [A10-0006](../research/facts/A10/A10-0006.md) | Alliance help: each help fills 1% of the bar; times you can be helped = Alliance Center le | verificado | alta | n/a | yes | `d0-join-alliance`, `daily-15min` |
-| [A10-0008](../research/facts/A10/A10-0008.md) | Sunset Canyon: daily free attempts (VIP adds +1…+5); top-5 daily rank gives Golden Key rew | verificado | media | n/a | yes | `daily-60min` |
-| [A11-0500](../research/facts/A11/A11-0500.md) | MGE: F2P should take milestone rewards, not chase ranking | verificado | media | majoritario | yes | `ov-budget-reality-check`, `ev-mge` |
-| [A11-0501](../research/facts/A11/A11-0501.md) | Hoard speedups/resources/AP for scored events and KvK instead of spending as they come | verificado | media | majoritario | yes | `d41-speedups-spend-vs-hoard`, `pk-kvk1-readiness` |
-| [A11-0502](../research/facts/A11/A11-0502.md) | More Than Gems: the best window to spend gems; F2P target 7k/day tier | verificado | media | majoritario | yes | `d15-vip6-milestone`, `d41-vip10-reality`, `ev-calendar-rule`, `ev-more-than-gems` |
-| [A11-0503](../research/facts/A11/A11-0503.md) | Wheel of Fortune: F2P do the first 10 spins on a commander they need | parcialmente_obsoleto | baixa | majoritario | no | `ev-calendar-rule`, `ev-wheel-of-fortune` |
-| [A11-0504](../research/facts/A11/A11-0504.md) | Gem spending priority for F2P: VIP first | verificado | media | majoritario | yes | `d15-vip6-milestone`, `ev-more-than-gems` |
-| [A11-0505](../research/facts/A11/A11-0505.md) | Lohar's Trial is a high-value event for F2P; save AP for it | verificado | media | majoritario | yes | `d0-ap-discipline`, `ev-lohar-ap` |
-| [A11-0506](../research/facts/A11/A11-0506.md) | F2P priority events: guaranteed-milestone & alliance PvE events | verificado | baixa | majoritario | no | `ev-priorities` |
-| [A11-0507](../research/facts/A11/A11-0507.md) | Sunset Canyon: daily free attempts; push before season reset | verificado | baixa | minoritario | no | `ev-calendar-rule` |
-| [A11-0508](../research/facts/A11/A11-0508.md) | Ark of Osiris value for F2P: divided | verificado | baixa | dividido | no | `ev-calendar-rule`, `ev-priorities` |
-| [A11-0509](../research/facts/A11/A11-0509.md) | Champions of Olympia called the most F2P-friendly mode | verificado | baixa | minoritario | no | `ev-priorities` |
-| [A11-0510](../research/facts/A11/A11-0510.md) | Pioneer / Road to Revival (~day 20–23): buy the 4 gold keys | verificado | baixa | fonte_unica | no | `ev-calendar-rule`, `ev-priorities` |
-| [A11-0511](../research/facts/A11/A11-0511.md) | Events which F2P should skip | verificado | baixa | majoritario | no | `ov-budget-reality-check`, `ev-priorities` |
-| [A11-0512](../research/facts/A11/A11-0512.md) | Event schedule is not fixed — plan from the in-game calendar | verificado | media | unanime | yes | `daily-60min`, `daily-weekly`, `ev-calendar-rule` |
-| [A11-0513](../research/facts/A11/A11-0513.md) | Events confirmed as current in 2026 sources | verificado | media | n/a | yes | `ev-calendar-rule`, `ev-lohar-ap` |
-| [A12-0001](../research/facts/A12/A12-0001.md) | Growth Fund: $15 one-time, ~81,000 gems, full value needs CH24 | verificado | media | unanime | yes | `ov-budget-reality-check`, `d0-first-gems-vip`, `d41-vip10-reality` |
-| [A12-0002](../research/facts/A12/A12-0002.md) | Supply Depot (30-day gem supply): ~$10, ~19,500 gems | verificado | media | majoritario | yes | `ov-budget-reality-check`, `d15-vip6-milestone`, `d41-vip10-reality`, `ev-more-than-gems` |
-| [A12-0005](../research/facts/A12/A12-0005.md) | Low-spender spending discipline | verificado | media | majoritario | yes | `ov-budget-reality-check`, `d41-vip10-reality`, `ev-more-than-gems` |
-| [A13-0001](../research/facts/A13/A13-0001.md) | Accounts per kingdom via Character Management | organizado | media | n/a | no | `farm-brief` |
-| [A13-0002](../research/facts/A13/A13-0002.md) | Farm City Hall targets by march queues | verificado | media | majoritario | yes | `farm-brief` |
-| [A13-0003](../research/facts/A13/A13-0003.md) | Farm Trading Post level targets | verificado | media | majoritario | yes | `farm-brief` |
-| [A13-0005](../research/facts/A13/A13-0005.md) | Farm risks: raids, kill events, zeroing | verificado | media | majoritario | yes | `d0-day1-survival`, `farm-brief`, `daily-break-mode`, `mistakes-economy`, `recovery-zeroed` |
-| [A13-0010](../research/facts/A13/A13-0010.md) | Purpose of farms for main growth (F2P) | verificado | media | majoritario | yes | `farm-brief` |
-| [A14-0001](../research/facts/A14/A14-0001.md) | Civilization bonuses, starting commanders and special units (15 civilizations) — table | verificado | media | n/a | yes | `d0-civilization` |
-| [A14-0002](../research/facts/A14/A14-0002.md) | Changing civilization: free item at CH10; otherwise 10,000 gems (Shop) or 2M individual cr | verificado | alta | n/a | yes | `ov-patch-state`, `d0-civilization`, `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17` |
-| [A14-0003](../research/facts/A14/A14-0003.md) | Civilization choice for an early F2P: China (building speed + AP + Sun Tzu) is the most re | verificado | media | majoritario | yes | `d0-civilization`, `pk-kvk1-readiness` |
-| [B01-0500](../research/facts/B01/B01-0500.md) | First KvK starts when kingdom is ~85–100 days old | verificado | media | majoritario | yes | `ov-budget-reality-check`, `d0-new-kingdom-start` |
-| [B01-0502](../research/facts/B01/B01-0502.md) | KvK durations and gaps | contestado | baixa | n/a | no | `pk-kvk1-readiness` |
-| [B01-0503](../research/facts/B01/B01-0503.md) | Lost Kingdom (KvK1) entry needs City Hall 17; opens after Eve of the Crusade | parcialmente_obsoleto | baixa | n/a | no | `d15-ch10-ch17`, `pk-eve-of-crusade` |
-| [B01-0506](../research/facts/B01/B01-0506.md) | New kingdoms: the F2P–spender gap is largest early; first 60–90 days set hierarchy | verificado | baixa | majoritario | no | `ov-budget-reality-check`, `d0-new-kingdom-start` |
-| [B01-0700](../research/facts/B01/B01-0700.md) | Player reports (2026): F2P accounts typically enter KvK1 below CH25 (CH21–22 is workable); | verificado | baixa | majoritario | no | `ov-budget-reality-check`, `d41-ch21-t4` |
-| [C04-0001](../research/facts/C04/C04-0001.md) | Current game version as of 2026-10-13 | bruto | media | n/a | no | `ov-patch-state` |
-| [C04-0002](../research/facts/C04/C04-0002.md) | 1.1.12: Radiant Rivalry 1v1 kingdom event and early-season Lost Kingdom changes (unverifie | bruto | baixa | n/a | no | `pk-eve-of-crusade` |
-| [C04-0004](../research/facts/C04/C04-0004.md) | 1.1.09: resource boost items and Deceptive Troops removed; VIP production buffs raised | bruto | alta | n/a | no | `ov-patch-state`, `d4-gathering-setup`, `mistakes-outdated-advice` |
-| [C04-0005](../research/facts/C04/C04-0005.md) | 1.1.09: Legendary Pelagius event for new kingdoms from day 5 | bruto | alta | n/a | no | `ov-patch-state`, `d0-civilization`, `d4-pelagius-day5`, `ev-calendar-rule` |
-| [C04-0006](../research/facts/C04/C04-0006.md) | 1.1.07: Conduct Score anti-script/cheat system | bruto | alta | n/a | no | `ov-patch-state`, `farm-brief`, `mistakes-outdated-advice` |
-| [C04-0008](../research/facts/C04/C04-0008.md) | 1.1.06: immigration age limits tightened; same-season immigration restricted for new kingd | bruto | alta | n/a | no | `d0-new-kingdom-start`, `recovery-zeroed` |
-| [C04-0010](../research/facts/C04/C04-0010.md) | Legendary equipment respec: special talent reset and full-refund dismantle | bruto | alta | n/a | no | `ov-patch-state`, `d15-equipment` |
-| [C04-0022](../research/facts/C04/C04-0022.md) | Wheel of Fortune now requires Spin Tickets (S3/SoC 2025, S2 2025, S1 2026) | bruto | alta | n/a | no | `ov-patch-state`, `d15-commander-checklist`, `ev-wheel-of-fortune`, `mistakes-outdated-advice` |
-| [C04-0023](../research/facts/C04/C04-0023.md) | 1.0.90: Armament Conversion, Legendary Commander Swap, Gathering of Heroes | bruto | alta | n/a | no | `ov-patch-state`, `d15-commander-checklist` |
-| [C04-0024](../research/facts/C04/C04-0024.md) | 1.0.87: VIP19 and SVIP added | bruto | alta | n/a | no | `mistakes-outdated-advice` |
-| [C04-0026](../research/facts/C04/C04-0026.md) | Beginner's Immigration (jumping) removed for new accounts from 2025-03-26 | bruto | media | n/a | no | `ov-patch-state`, `d0-new-kingdom-start`, `mistakes-outdated-advice`, `recovery-zeroed` |
-| [C04-0028](../research/facts/C04/C04-0028.md) | 1.0.89: Hall of Heroes refunds part of KvK healing resources; Realm of Mystique | bruto | alta | n/a | no | `d41-hospital` |
-| [C04-0032](../research/facts/C04/C04-0032.md) | 1.1.02: daily AP claim can exceed cap; Army Groups for all SoC alliances | bruto | alta | n/a | no | `ov-patch-state`, `d0-ap-discipline`, `daily-15min` |
-| [C04-0033](../research/facts/C04/C04-0033.md) | Kingdom lifecycle: Preparation Season → Season 1 → Season 2 → Season 3 → Season of Conques | bruto | media | n/a | no | `ov-patch-state`, `d0-new-kingdom-start` |
+| [A01-0001](../research/facts/A01/A01-0001.md) | City Hall CH1→CH25: requirements, cost, raw time, troop capacity, unlocks (table) | verificado | media | n/a | sim | `ov-budget-reality-check`, `d0-build-order`, `d15-ch10-ch17`, `d15-equipment`, `d41-ch21-t4`, `pk-kvk1-readiness` |
+| [A01-0002](../research/facts/A01/A01-0002.md) | City Hall upgrade rewards per level (resources, speedups, gems, civilization change) | verificado | media | n/a | sim | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17`, `d41-ch21-t4`, `d41-speedups-spend-vs-hoard` |
+| [A01-0003](../research/facts/A01/A01-0003.md) | City Hall level caps the level of every other building | verificado | media | n/a | sim | `d0-build-order` |
+| [A01-0004](../research/facts/A01/A01-0004.md) | Prerequisite rule for each building in the City Hall chain (table) | verificado | media | n/a | sim | `d0-build-order` |
+| [A01-0005](../research/facts/A01/A01-0005.md) | Minimum building set and total raw build time to reach CH10/13/16/17/20/21/22/25 (derived) | verificado | baixa | n/a | não | `d0-build-order`, `d15-ch10-ch17`, `d41-ch21-t4` |
+| [A01-0006](../research/facts/A01/A01-0006.md) | Builder queue: 1 by default, 2nd via Builder Recruitment (2 days) or permanently at VIP 6 | verificado | alta | n/a | sim | `d0-first-gems-vip`, `d15-vip6-milestone`, `daily-15min` |
+| [A01-0007](../research/facts/A01/A01-0007.md) | F2P build priority: City Hall and its prerequisites first; everything else waits | verificado | media | majoritario | sim | `d0-build-order`, `d4-gathering-setup`, `mistakes-economy` |
+| [A01-0008](../research/facts/A01/A01-0008.md) | Hospital capacity per level: outdated values in riseofkingdomsguides (Lv1 3,000 / Lv15 24, | verificado | alta | n/a | sim | `d4-ch8-ch12-checkpoints`, `d41-hospital` |
+| [A01-0009](../research/facts/A01/A01-0009.md) | Conflicting low-level prerequisites between Fandom and riseofkingdomsguides (Academy, Stab | contestado | baixa | n/a | não | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `d4-research-economy` |
+| [A01-0011](../research/facts/A01/A01-0011.md) | Queue management dashboard unlocks at City Hall 8 (construction, training, research, heali | verificado | alta | n/a | sim | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `daily-15min`, `daily-break-mode` |
+| [A02-0500](../research/facts/A02/A02-0500.md) | Research: speed/economy techs first (Writing, Masonry/Engineering, Mathematics) | verificado | media | majoritario | sim | `d4-research-economy` |
+| [A02-0501](../research/facts/A02/A02-0501.md) | Military path: T3 → T4 (skip siege) → shared combat techs → one branch → T5 | verificado | media | majoritario | sim | `d15-research-military`, `pk-kvk1-readiness` |
+| [A02-0503](../research/facts/A02/A02-0503.md) | Where universal speedups go: research vs City Hall — divided | verificado | baixa | dividido | não | `d41-speedups-spend-vs-hoard` |
+| [A02-0504](../research/facts/A02/A02-0504.md) | Time cost of research is long (Combat Tactics 10 ≈ 100 days, avg player) | verificado | baixa | fonte_unica | não | `d15-research-military` |
+| [A03-0006](../research/facts/A03/A03-0006.md) | Storehouse protection capacity by level | verificado | media | n/a | sim | `d0-day1-survival`, `daily-break-mode`, `recovery-zeroed` |
+| [A03-0007](../research/facts/A03/A03-0007.md) | Resource items vs raw resources (plunder safety) | verificado | media | n/a | sim | `d0-day1-survival`, `pk-kvk1-readiness`, `daily-break-mode`, `mistakes-economy`, `recovery-zeroed` |
+| [A03-0009](../research/facts/A03/A03-0009.md) | Alliance territory gives +25% gathering speed | verificado | alta | n/a | sim | `d0-join-alliance`, `d4-gathering-setup`, `daily-15min` |
+| [A03-0013](../research/facts/A03/A03-0013.md) | Enhanced Gathering boost items (+50%, 8h/24h) and how to get them | verificado | alta | n/a | sim | `d4-gathering-setup` |
+| [A03-0014](../research/facts/A03/A03-0014.md) | Mysterious Merchant: daily at 00:00 UTC, food/wood-priced items | verificado | media | n/a | sim | `daily-30min` |
+| [A03-0016](../research/facts/A03/A03-0016.md) | Node level affects total amount, not gathering speed; pick node by availability | verificado | media | majoritario | sim | `d4-gathering-setup`, `daily-15min`, `daily-break-mode` |
+| [A03-0017](../research/facts/A03/A03-0017.md) | Gathering commander setup: talents, level 37, primary only | verificado | media | majoritario | sim | `d4-early-commanders` |
+| [A03-0021](../research/facts/A03/A03-0021.md) | Resource bottleneck progression by CH stage | verificado | media | majoritario | sim | `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17` |
+| [A03-0023](../research/facts/A03/A03-0023.md) | March queues (gathering armies) by CH level | verificado | media | n/a | sim | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `d4-gathering-setup`, `d15-ch10-ch17`, `d41-ch21-t4` |
+| [A03-0024](../research/facts/A03/A03-0024.md) | Trading Post tax rate by level | verificado | alta | n/a | sim | `farm-brief` |
+| [A03-0025](../research/facts/A03/A03-0025.md) | Trading Post capacity per trip and unlock CH (conflicting) | contestado | media | n/a | não | `d4-ch8-ch12-checkpoints` |
+| [A03-0026](../research/facts/A03/A03-0026.md) | Trading Post transfers use a march queue and travel time | verificado | media | n/a | sim | `farm-brief` |
+| [A03-0027](../research/facts/A03/A03-0027.md) | Gold CAN be sent via Trading Post (only the amount above Storehouse protection is sendable | verificado | media | majoritario | sim | `farm-brief` |
+| [A03-0030](../research/facts/A03/A03-0030.md) | Storehouse-protected resources cannot be transported | verificado | alta | n/a | sim | `farm-brief` |
+| [A04-0001](../research/facts/A04/A04-0001.md) | Daily Objectives 100-activity-point chest gives 100 gems per day (main guaranteed F2P gem  | verificado | media | n/a | sim | `ov-budget-reality-check`, `d4-early-commanders`, `d15-vip6-milestone`, `daily-30min` |
+| [A04-0007](../research/facts/A04/A04-0007.md) | VIP Shop: items, gem/resource prices, VIP level required, quantity per refresh (table) + d | verificado | media | n/a | sim | `d41-speedups-spend-vs-hoard`, `daily-weekly` |
+| [A04-0008](../research/facts/A04/A04-0008.md) | Buying Action Points with gems: 500 AP for 100 gems, +50 gems per purchase, resets daily | verificado | media | n/a | sim | `d0-first-gems-vip`, `mistakes-economy` |
+| [A04-0009](../research/facts/A04/A04-0009.md) | Where F2P should spend gems: VIP first; avoid finishing builds with gems; save for More Th | verificado | media | majoritario | sim | `d0-first-gems-vip`, `mistakes-economy` |
+| [A04-0010](../research/facts/A04/A04-0010.md) | Free speedup sources for F2P (qualitative list) and early fixed speedups | verificado | media | n/a | sim | `d41-speedups-spend-vs-hoard`, `daily-30min` |
+| [A04-0011](../research/facts/A04/A04-0011.md) | Mysterious Merchant / Courier Station: 5 refreshes per visit, 1 free refresh per 24h; buy  | verificado | media | majoritario | sim | `daily-30min` |
+| [A05-0001](../research/facts/A05/A05-0001.md) | VIP points needed per VIP level (VIP 1–18) | verificado | media | n/a | sim | `d15-vip6-milestone`, `d41-vip10-reality` |
+| [A05-0003](../research/facts/A05/A05-0003.md) | Daily free VIP points: 40 on day 1, +20 per consecutive day, capped at 200/day; missing a  | verificado | media | n/a | sim | `d0-first-gems-vip`, `daily-15min`, `daily-break-mode`, `mistakes-economy` |
+| [A05-0004](../research/facts/A05/A05-0004.md) | F2P sources of VIP points (daily chest, gems 1:1, alliance shop, alliance gifts, Mysteriou | verificado | media | n/a | sim | `d0-join-alliance`, `d0-first-gems-vip` |
+| [A05-0006](../research/facts/A05/A05-0006.md) | Daily free VIP chest contents by level; legendary commander sculptures from VIP 10 (1/day) | verificado | media | n/a | sim | `d0-first-gems-vip`, `d15-vip6-milestone`, `daily-15min` |
+| [A05-0007](../research/facts/A05/A05-0007.md) | Realistic F2P VIP: days to reach VIP 5/6/7/8/10 from daily chest alone vs daily chest + 10 | verificado | baixa | n/a | não | `ov-budget-reality-check`, `d15-vip6-milestone`, `d41-vip10-reality` |
+| [A05-0008](../research/facts/A05/A05-0008.md) | F2P VIP target: spend free gems on VIP to reach VIP 6 early, then VIP 10 (majority) vs. ne | verificado | media | majoritario | sim | `d0-first-gems-vip` |
+| [A06-0500](../research/facts/A06/A06-0500.md) | F2P: concentrate on one complete march instead of spreading sculptures | verificado | media | unanime | sim | `d4-early-commanders`, `d15-commander-checklist`, `pk-kvk1-readiness`, `mistakes-economy`, `recovery-zeroed` |
+| [A06-0501](../research/facts/A06/A06-0501.md) | Sun Tzu (epic) is the safest early F2P investment | verificado | media | majoritario | sim | `d0-civilization`, `d4-early-commanders`, `d15-expedition-aethelflaed`, `pk-kvk1-readiness` |
+| [A06-0502](../research/facts/A06/A06-0502.md) | Yi Seong-Gye (YSG) is the top F2P legendary target | verificado | media | majoritario | sim | `d15-commander-checklist`, `ev-wheel-of-fortune` |
+| [A06-0503](../research/facts/A06/A06-0503.md) | Mid-tier legendaries (Richard I, Charles Martel, Cao Cao): divided | verificado | baixa | dividido | não | `d15-commander-checklist` |
+| [A06-0504](../research/facts/A06/A06-0504.md) | Aethelflaed is a free legendary obtainable via Expedition Store | verificado | media | majoritario | sim | `d15-commander-checklist`, `d15-expedition-aethelflaed` |
+| [A06-0505](../research/facts/A06/A06-0505.md) | Early barbarian/PvE commander: level only one of Boudica or Lohar; no gold sculptures | verificado | media | majoritario | sim | `d4-early-commanders` |
+| [A06-0506](../research/facts/A06/A06-0506.md) | Level a gathering commander to 37 early (Centurion first) | verificado | baixa | majoritario | não | `d4-early-commanders` |
+| [A06-0508](../research/facts/A06/A06-0508.md) | Pelagius (legendary) as an early-server pick: divided | verificado | baixa | dividido | não | `d4-pelagius-day5` |
+| [A06-0509](../research/facts/A06/A06-0509.md) | Long-term value of epic commanders: divided | verificado | baixa | dividido | não | `d4-early-commanders` |
+| [A06-0510](../research/facts/A06/A06-0510.md) | Reserve universal (gold) sculptures and tomes for one long-term legendary | verificado | media | majoritario | sim | `d15-commander-checklist`, `mistakes-economy` |
+| [A06-0512](../research/facts/A06/A06-0512.md) | F2P should favor open-field (fighting, AoE) commanders over rally/garrison | verificado | baixa | fonte_unica | não | `pk-kvk1-behaviour` |
+| [A06-0513](../research/facts/A06/A06-0513.md) | Pairs suggested for an F2P first KvK | verificado | baixa | dividido | não | `pk-kvk1-behaviour` |
+| [A06-0516](../research/facts/A06/A06-0516.md) | Alliance gift chests are a major F2P sculpture/gem source — join a spending alliance | verificado | media | unanime | sim | `ov-budget-reality-check`, `d0-new-kingdom-start`, `d0-join-alliance` |
+| [A07-0500](../research/facts/A07/A07-0500.md) | Early F2P equipment: cheap green/blue sets; epic as KvK baseline; legendary later | verificado | media | majoritario | sim | `d15-equipment`, `pk-kvk1-readiness` |
+| [A07-0501](../research/facts/A07/A07-0501.md) | Hoard legendary materials; don't burn them on early gear | organizado | baixa | majoritario | não | `d15-equipment` |
+| [A07-0504](../research/facts/A07/A07-0504.md) | Legendary over epic gives small marginal gain per piece | verificado | baixa | fonte_unica | não | `d15-equipment` |
+| [A08-0500](../research/facts/A08/A08-0500.md) | T4 is the troop tier for an F2P first KvK; T5 is a long-term goal | verificado | media | majoritario | sim | `ov-budget-reality-check`, `d41-ch21-t4` |
+| [A08-0502](../research/facts/A08/A08-0502.md) | Hospital overflow kills troops; keep capacity and heal-speedups | verificado | media | unanime | sim | `d0-day1-survival`, `d41-hospital`, `pk-kvk1-readiness`, `pk-kvk1-behaviour`, `mistakes-economy`, `recovery-zeroed` |
+| [A08-0503](../research/facts/A08/A08-0503.md) | F2P combat behavior: never lead, stay behind, retreat early, fill rallies | verificado | media | majoritario | sim | `ov-budget-reality-check`, `pk-kvk1-behaviour`, `mistakes-economy` |
+| [A08-0504](../research/facts/A08/A08-0504.md) | Run fewer, complete marches rather than all march slots | organizado | media | majoritario | não | `pk-kvk1-behaviour` |
+| [A08-0505](../research/facts/A08/A08-0505.md) | T5 heals cost much more; without strong economy fight with T4 | verificado | media | majoritario | sim | `d41-hospital` |
+| [A08-0506](../research/facts/A08/A08-0506.md) | Choose one troop type for T5 (infantry or cavalry first) | verificado | media | majoritario | sim | `d15-research-military`, `d15-commander-checklist`, `pk-kvk1-readiness` |
+| [A09-0001](../research/facts/A09/A09-0001.md) | Action Points: cap 1,500 (raised from 1,000 in 1.0.41, Dec 2020) plus a claimable 500 AP/d | verificado | alta | n/a | sim | `ov-patch-state`, `d0-ap-discipline`, `mistakes-economy` |
+| [A09-0002](../research/facts/A09/A09-0002.md) | Barbarian attack cost: 50 AP, −2 AP per consecutive attack without returning (max −10), fu | verificado | media | n/a | sim | `d0-ap-discipline`, `daily-60min` |
+| [A09-0004](../research/facts/A09/A09-0004.md) | Barbarian level unlocks: personal (beat previous level) and kingdom-wide (only Lv.1–6 at k | verificado | media | n/a | sim | `d0-ap-discipline` |
+| [A09-0005](../research/facts/A09/A09-0005.md) | Barbarian Forts: rally-only; Lv.1–5 recommended troops and alliance gift keys; ~50% chance | verificado | media | n/a | sim | `d0-join-alliance`, `daily-60min` |
+| [A09-0006](../research/facts/A09/A09-0006.md) | Free AP recovery items for F2P: 100 AP daily (Daily Objectives 60-pt chest), 30×100 AP wee | verificado | media | n/a | sim | `d0-ap-discipline`, `daily-15min`, `daily-weekly` |
+| [A09-0007](../research/facts/A09/A09-0007.md) | AP spending strategy for F2P: never cap AP; forts for Books of Covenant until Castle 25; b | verificado | media | majoritario | sim | `d0-ap-discipline`, `pk-eve-of-crusade`, `daily-15min`, `ev-lohar-ap`, `mistakes-economy` |
+| [A09-0008](../research/facts/A09/A09-0008.md) | Built-in auto-peacekeeping (automatic barbarian hunting) exists; third-party scripts are p | verificado | alta | n/a | sim | `ov-patch-state`, `d0-day1-survival`, `pk-eve-of-crusade`, `daily-15min` |
+| [A10-0001](../research/facts/A10/A10-0001.md) | Daily Objectives: tasks, activity points and chest thresholds (20/40/60/80/100) — list par | parcialmente_obsoleto | baixa | n/a | não | `d41-speedups-spend-vs-hoard`, `daily-30min` |
+| [A10-0002](../research/facts/A10/A10-0002.md) | Consolidated F2P daily/weekly checklist (tasks, frequency/cap, yield, dependency) — minute | verificado | baixa | majoritario | não | `d4-research-economy` |
+| [A10-0003](../research/facts/A10/A10-0003.md) | Tavern: daily free silver chests (3 → 10 by Tavern level) and free golden chest interval ( | verificado | media | n/a | sim | `daily-30min` |
+| [A10-0004](../research/facts/A10/A10-0004.md) | Expedition: 3-star missions give a free daily claim; Medal Shop (1 free refresh/day, then  | verificado | media | n/a | sim | `d15-commander-checklist`, `d15-expedition-aethelflaed`, `daily-30min` |
+| [A10-0005](../research/facts/A10/A10-0005.md) | Peerless Scholar (Lyceum of Wisdom, CH10): one Mock Exam per weekday; Preliminary and Fina | verificado | alta | n/a | sim | `d4-ch8-ch12-checkpoints`, `daily-60min`, `daily-weekly`, `ev-calendar-rule` |
+| [A10-0006](../research/facts/A10/A10-0006.md) | Alliance help: each help fills 1% of the bar; times you can be helped = Alliance Center le | verificado | alta | n/a | sim | `d0-join-alliance`, `daily-15min` |
+| [A10-0008](../research/facts/A10/A10-0008.md) | Sunset Canyon: daily free attempts (VIP adds +1…+5); top-5 daily rank gives Golden Key rew | verificado | media | n/a | sim | `daily-60min` |
+| [A11-0500](../research/facts/A11/A11-0500.md) | MGE: F2P should take milestone rewards, not chase ranking | verificado | media | majoritario | sim | `ov-budget-reality-check`, `ev-mge` |
+| [A11-0501](../research/facts/A11/A11-0501.md) | Hoard speedups/resources/AP for scored events and KvK instead of spending as they come | verificado | media | majoritario | sim | `d41-speedups-spend-vs-hoard`, `pk-kvk1-readiness` |
+| [A11-0502](../research/facts/A11/A11-0502.md) | More Than Gems: the best window to spend gems; F2P target 7k/day tier | verificado | media | majoritario | sim | `d15-vip6-milestone`, `d41-vip10-reality`, `ev-calendar-rule`, `ev-more-than-gems` |
+| [A11-0503](../research/facts/A11/A11-0503.md) | Wheel of Fortune: F2P do the first 10 spins on a commander they need | parcialmente_obsoleto | baixa | majoritario | não | `ev-calendar-rule`, `ev-wheel-of-fortune` |
+| [A11-0504](../research/facts/A11/A11-0504.md) | Gem spending priority for F2P: VIP first | verificado | media | majoritario | sim | `d15-vip6-milestone`, `ev-more-than-gems` |
+| [A11-0505](../research/facts/A11/A11-0505.md) | Lohar's Trial is a high-value event for F2P; save AP for it | verificado | media | majoritario | sim | `d0-ap-discipline`, `ev-lohar-ap` |
+| [A11-0506](../research/facts/A11/A11-0506.md) | F2P priority events: guaranteed-milestone & alliance PvE events | verificado | baixa | majoritario | não | `ev-priorities` |
+| [A11-0507](../research/facts/A11/A11-0507.md) | Sunset Canyon: daily free attempts; push before season reset | verificado | baixa | minoritario | não | `ev-calendar-rule` |
+| [A11-0508](../research/facts/A11/A11-0508.md) | Ark of Osiris value for F2P: divided | verificado | baixa | dividido | não | `ev-calendar-rule`, `ev-priorities` |
+| [A11-0509](../research/facts/A11/A11-0509.md) | Champions of Olympia called the most F2P-friendly mode | verificado | baixa | minoritario | não | `ev-priorities` |
+| [A11-0510](../research/facts/A11/A11-0510.md) | Pioneer / Road to Revival (~day 20–23): buy the 4 gold keys | verificado | baixa | fonte_unica | não | `ev-calendar-rule`, `ev-priorities` |
+| [A11-0511](../research/facts/A11/A11-0511.md) | Events which F2P should skip | verificado | baixa | majoritario | não | `ov-budget-reality-check`, `ev-priorities` |
+| [A11-0512](../research/facts/A11/A11-0512.md) | Event schedule is not fixed — plan from the in-game calendar | verificado | media | unanime | sim | `daily-60min`, `daily-weekly`, `ev-calendar-rule` |
+| [A11-0513](../research/facts/A11/A11-0513.md) | Events confirmed as current in 2026 sources | verificado | media | n/a | sim | `ev-calendar-rule`, `ev-lohar-ap` |
+| [A12-0001](../research/facts/A12/A12-0001.md) | Growth Fund: $15 one-time, ~81,000 gems, full value needs CH24 | verificado | media | unanime | sim | `ov-budget-reality-check`, `d0-first-gems-vip`, `d41-vip10-reality` |
+| [A12-0002](../research/facts/A12/A12-0002.md) | Supply Depot (30-day gem supply): ~$10, ~19,500 gems | verificado | media | majoritario | sim | `ov-budget-reality-check`, `d15-vip6-milestone`, `d41-vip10-reality`, `ev-more-than-gems` |
+| [A12-0005](../research/facts/A12/A12-0005.md) | Low-spender spending discipline | verificado | media | majoritario | sim | `ov-budget-reality-check`, `d41-vip10-reality`, `ev-more-than-gems` |
+| [A13-0001](../research/facts/A13/A13-0001.md) | Accounts per kingdom via Character Management | organizado | media | n/a | não | `farm-brief` |
+| [A13-0002](../research/facts/A13/A13-0002.md) | Farm City Hall targets by march queues | verificado | media | majoritario | sim | `farm-brief` |
+| [A13-0003](../research/facts/A13/A13-0003.md) | Farm Trading Post level targets | verificado | media | majoritario | sim | `farm-brief` |
+| [A13-0005](../research/facts/A13/A13-0005.md) | Farm risks: raids, kill events, zeroing | verificado | media | majoritario | sim | `d0-day1-survival`, `daily-break-mode`, `farm-brief`, `mistakes-economy`, `recovery-zeroed` |
+| [A13-0010](../research/facts/A13/A13-0010.md) | Purpose of farms for main growth (F2P) | verificado | media | majoritario | sim | `farm-brief` |
+| [A14-0001](../research/facts/A14/A14-0001.md) | Civilization bonuses, starting commanders and special units (15 civilizations) — table | verificado | media | n/a | sim | `d0-civilization` |
+| [A14-0002](../research/facts/A14/A14-0002.md) | Changing civilization: free item at CH10; otherwise 10,000 gems (Shop) or 2M individual cr | verificado | alta | n/a | sim | `ov-patch-state`, `d0-civilization`, `d4-ch8-ch12-checkpoints`, `d15-ch10-ch17` |
+| [A14-0003](../research/facts/A14/A14-0003.md) | Civilization choice for an early F2P: China (building speed + AP + Sun Tzu) is the most re | verificado | media | majoritario | sim | `d0-civilization`, `pk-kvk1-readiness` |
+| [B01-0500](../research/facts/B01/B01-0500.md) | First KvK starts when kingdom is ~85–100 days old | verificado | media | majoritario | sim | `ov-budget-reality-check`, `d0-new-kingdom-start` |
+| [B01-0502](../research/facts/B01/B01-0502.md) | KvK durations and gaps | contestado | baixa | n/a | não | `pk-kvk1-readiness` |
+| [B01-0503](../research/facts/B01/B01-0503.md) | Lost Kingdom (KvK1) entry needs City Hall 17; opens after Eve of the Crusade | parcialmente_obsoleto | baixa | n/a | não | `d15-ch10-ch17`, `pk-eve-of-crusade` |
+| [B01-0506](../research/facts/B01/B01-0506.md) | New kingdoms: the F2P–spender gap is largest early; first 60–90 days set hierarchy | verificado | baixa | majoritario | não | `ov-budget-reality-check`, `d0-new-kingdom-start` |
+| [B01-0700](../research/facts/B01/B01-0700.md) | Player reports (2026): F2P accounts typically enter KvK1 below CH25 (CH21–22 is workable); | verificado | baixa | majoritario | não | `ov-budget-reality-check`, `d41-ch21-t4` |
+| [C04-0001](../research/facts/C04/C04-0001.md) | Current game version as of 2026-10-13 | bruto | media | n/a | não | `ov-patch-state` |
+| [C04-0002](../research/facts/C04/C04-0002.md) | 1.1.12: Radiant Rivalry 1v1 kingdom event and early-season Lost Kingdom changes (unverifie | bruto | baixa | n/a | não | `pk-eve-of-crusade` |
+| [C04-0004](../research/facts/C04/C04-0004.md) | 1.1.09: resource boost items and Deceptive Troops removed; VIP production buffs raised | bruto | alta | n/a | não | `ov-patch-state`, `d4-gathering-setup`, `mistakes-outdated-advice` |
+| [C04-0005](../research/facts/C04/C04-0005.md) | 1.1.09: Legendary Pelagius event for new kingdoms from day 5 | bruto | alta | n/a | não | `ov-patch-state`, `d0-civilization`, `d4-pelagius-day5`, `ev-calendar-rule` |
+| [C04-0006](../research/facts/C04/C04-0006.md) | 1.1.07: Conduct Score anti-script/cheat system | bruto | alta | n/a | não | `ov-patch-state`, `farm-brief`, `mistakes-outdated-advice` |
+| [C04-0008](../research/facts/C04/C04-0008.md) | 1.1.06: immigration age limits tightened; same-season immigration restricted for new kingd | bruto | alta | n/a | não | `d0-new-kingdom-start`, `recovery-zeroed` |
+| [C04-0010](../research/facts/C04/C04-0010.md) | Legendary equipment respec: special talent reset and full-refund dismantle | bruto | alta | n/a | não | `ov-patch-state`, `d15-equipment` |
+| [C04-0022](../research/facts/C04/C04-0022.md) | Wheel of Fortune now requires Spin Tickets (S3/SoC 2025, S2 2025, S1 2026) | bruto | alta | n/a | não | `ov-patch-state`, `d15-commander-checklist`, `ev-wheel-of-fortune`, `mistakes-outdated-advice` |
+| [C04-0023](../research/facts/C04/C04-0023.md) | 1.0.90: Armament Conversion, Legendary Commander Swap, Gathering of Heroes | bruto | alta | n/a | não | `ov-patch-state`, `d15-commander-checklist` |
+| [C04-0024](../research/facts/C04/C04-0024.md) | 1.0.87: VIP19 and SVIP added | bruto | alta | n/a | não | `mistakes-outdated-advice` |
+| [C04-0026](../research/facts/C04/C04-0026.md) | Beginner's Immigration (jumping) removed for new accounts from 2025-03-26 | bruto | media | n/a | não | `ov-patch-state`, `d0-new-kingdom-start`, `mistakes-outdated-advice`, `recovery-zeroed` |
+| [C04-0028](../research/facts/C04/C04-0028.md) | 1.0.89: Hall of Heroes refunds part of KvK healing resources; Realm of Mystique | bruto | alta | n/a | não | `d41-hospital` |
+| [C04-0032](../research/facts/C04/C04-0032.md) | 1.1.02: daily AP claim can exceed cap; Army Groups for all SoC alliances | bruto | alta | n/a | não | `ov-patch-state`, `d0-ap-discipline`, `daily-15min` |
+| [C04-0033](../research/facts/C04/C04-0033.md) | Kingdom lifecycle: Preparation Season → Season 1 → Season 2 → Season 3 → Season of Conques | bruto | media | n/a | não | `ov-patch-state`, `d0-new-kingdom-start` |
 
-### Gaps referenced (pending measurement or research)
+### Lacunas referenciadas (medição ou pesquisa pendente)
 
-| Gap | Description | Impact | Blocks |
+| Lacuna | Descrição | Impacto | Blocos |
 |---|---|---|---|
 | L-A01-01 | Early unlock levels: Academy (CH4 vs CH6), first Quarry (CH4 vs CH6), Trading Post (CH10 vs CH12) | medio | `d0-build-order`, `d4-ch8-ch12-checkpoints`, `d4-research-economy`, `open-pending-measurements` |
 | L-A01-02 | No T0/T1 confirmation of the CH1→CH25 requirement table and raw times (only Fandom, 2018 developer dataset) | alto | `d0-build-order`, `d15-ch10-ch17` |
@@ -980,6 +980,7 @@ These gaps weaken specific parts of this guide; the T0 protocol (`research/proto
 | L-A11-02 | Reward tables and time cost per event (value per hour) | alto | `ev-more-than-gems`, `ev-lohar-ap`, `ev-priorities` |
 | L-A11-03 | Wheel of Fortune pricing in the home kingdom (gems vs Spin Tickets) | medio | `d15-commander-checklist`, `ev-wheel-of-fortune` |
 | L-A11-04 | Current MGE format (commander-specific rewards, ranking caps, kingdom rules) | medio | `ev-mge` |
+| L-A12-02 | Official VIP points per $ and Growth Fund milestone table | medio | `d15-vip6-milestone` |
 | L-A13-01 | Minutes per farm per day and yield/day by farm CH | alto | `farm-brief` |
 | L-A13-02 | Official policy on farms/multiple accounts | medio | `farm-brief` |
 | L-A13-03 | Resource-pair farms — no source; only derived reasoning | medio | `farm-brief` |
@@ -994,15 +995,15 @@ These gaps weaken specific parts of this guide; the T0 protocol (`research/proto
 | L-B06-03 | Migration rules changed in 1.1.10–1.1.12 (no official EN notes); mail Lilith sent then deleted (Aug 2026) | alto | `recovery-zeroed` |
 | PROPOSED-SHIELDS | Shield durations/costs and beginner protection rules: no fact card exists yet (proposed gap, to be added by the research side) | alto (proposed) | `d0-day1-survival`, `daily-break-mode`, `recovery-zeroed`, `open-pending-measurements` |
 
-### Block confidence
+### Confiança dos blocos
 
-low: 5, medium: 37, pending: 1
+baixa: 5, média: 37, pendente: 1
 
-### Known contradictions in the research (as of this version)
+### Contradições conhecidas na pesquisa (nesta versão)
 
-- **Time to T4:** 2026 player reports say T4 "around day 30" ([B01-0700](../research/facts/B01/B01-0700.md)), but the derived raw build budget to CH21 (T4 unlock) is about 163 builder-days ([A01-0005](../research/facts/A01/A01-0005.md)). Both are `baixa`; T0 settles it (L-A02-03).
-- **Early unlock levels:** Academy and first Quarry at CH4 vs CH6, Trading Post at CH10 vs CH12 ([A01-0009](../research/facts/A01/A01-0009.md), [A03-0025](../research/facts/A03/A03-0025.md)); the Fandom CH table still lists the Trading Post at CH10.
-- **KvK durations:** 60 days (2024 T3) vs 50 days (2026 T4) ([B01-0502](../research/facts/B01/B01-0502.md)).
-- **Spending gems on VIP:** majority yes, AllClash (2020) no ([A05-0008](../research/facts/A05/A05-0008.md)).
-- **Daily AP claim amount:** 500 AP per official 1.0.41 (2020); the 1.1.02 note does not restate it ([A09-0006](../research/facts/A09/A09-0006.md), L-A09-02).
-- **Patch-state cards** (C04) are still `bruto` although the context packs treat most of them as T1 facts.
+- **Tempo até o T4:** relatos de jogadores de 2026 dizem que o T4 chega "por volta do dia 30" ([B01-0700](../research/facts/B01/B01-0700.md)), mas o orçamento bruto derivado de construção até a Prefeitura 21 (desbloqueio do T4) é de cerca de 163 dias de construtor ([A01-0005](../research/facts/A01/A01-0005.md)). Ambos são `baixa`; o T0 resolve (L-A02-03).
+- **Níveis de desbloqueio iniciais:** Academia e primeira Pedreira na Prefeitura 4 ou 6, Entreposto Comercial na 10 ou 12 ([A01-0009](../research/facts/A01/A01-0009.md), [A03-0025](../research/facts/A03/A03-0025.md)); a tabela de Prefeituras do Fandom ainda lista o Entreposto Comercial na 10.
+- **Duração da KvK:** 60 dias (T3 de 2024) contra 50 dias (T4 de 2026) ([B01-0502](../research/facts/B01/B01-0502.md)).
+- **Gastar gemas em VIP:** maioria diz que sim, AllClash (2020) diz que não ([A05-0008](../research/facts/A05/A05-0008.md)).
+- **Valor da coleta diária de PA:** 500 PA segundo a 1.0.41 oficial (2020); a nota da 1.1.02 não o repete ([A09-0006](../research/facts/A09/A09-0006.md), L-A09-02).
+- **As fichas de estado de patch** (C04) ainda são `bruto`, embora os pacotes de contexto tratem a maioria delas como fatos T1.

@@ -1,78 +1,85 @@
-# guides/ — modular guides (I-05)
+# guides/ — guias modulares (I-05)
 
-Guides are **not** written once per combination of answers. They are built from **tagged blocks** (architecture decision I-05 in `research/brainstorm/backlog-ideias.md`). One block = one recommendation or step, with its reasoning, its evidence (fact-card IDs) and the tags a questionnaire needs to decide whether to show it. The same blocks will later feed the Account Planner (M1) and the Farm Hub (M13).
+Os guias **não** são escritos uma vez para cada combinação de respostas. Eles são montados a partir de **blocos com tags** (decisão de arquitetura I-05 em `research/brainstorm/backlog-ideias.md`). Um bloco = uma recomendação ou passo, com o seu raciocínio, a sua evidência (IDs de fichas de fatos) e as tags de que um questionário precisa para decidir se o mostra. Os mesmos blocos vão alimentar depois o Planejador de Conta (M1) e o Farm Hub (M13).
 
-Pipeline: `research/facts/` (cards) → `guides/data/blocks.*.json` (blocks) → assembled guide (Markdown now, HTML from the Guide Builder M14 later).
+Pipeline: `research/facts/` (fichas) → `guides/data/blocks.*.json` (blocos) → guia montado (Markdown agora, HTML a partir do Guide Builder M14 depois).
 
-## Files
+## Arquivos
 
-| Path | What |
+| Caminho | O quê |
 |---|---|
-| `data/blocks.f2p.json` | F2P base blocks, v1 (43 blocks). **The source of truth**: edit here. |
-| `data/blocks.newkingdom.json` | F-12 New Kingdom Start Guide + Day-1 Survival + Returning-player branch, v1 (14 blocks, ids `nk-*`). |
-| `data/blocks.schema.json` | JSON Schema of a blocks file. |
-| `f2p-early-kingdom-guide.md` | Human-readable F2P guide, **generated** from the blocks. Don't edit by hand. |
-| `tools/validate_blocks.py` | Validator: schema plus editorial rules checked against `research/facts`. With no arguments it checks every `data/blocks.*.json` and that ids are unique across files (profile delta files excepted). Stdlib only. |
-| `tools/assemble_guide.py` | Builds the Markdown guide from a blocks file (filter by profile, order by phase). |
-| `tools/factlib.py` | Shared helpers: read card front matter and gap IDs. |
+| `data/blocks.f2p.json` | Blocos-base F2P, v1 (43 blocos). **A fonte da verdade**: edite aqui. |
+| `data/blocks.newkingdom.json` | F-12 Guia de Início em Reino Novo + Sobrevivência do Dia 1 + ramo de jogador que voltou, v1 (14 blocos, ids `nk-*`). |
+| `data/blocks.low.json` | F-75 delta **só passes** de quem gasta pouco (Low) sobre a base F2P (mesmo `id` substitui, ids novos `low-*`). |
+| `data/blocks.first30.json` | F-11 Caminho dos Primeiros 30 Dias (ids `f30-*`). |
+| `data/blocks.returning.json` | F-29 Modo Jogador que Voltou + F-28 "O que mudou desde…" (ids `ret-*`). |
+| `data/blocks.recovery.json` | F-13 Manual de Recuperação de Zeragem + lista de risco ao sair do jogo (ids `rz-*`). |
+| `data/blocks.kingdomadmin.json` | Guia v1 de administração do reino para reis e conselho (ids `ka-*`, função `lider`). |
+| `data/blocks.schema.json` | JSON Schema de um arquivo de blocos. |
+| `f2p-early-kingdom-guide.md` | Guia F2P legível por humanos, **gerado** a partir dos blocos. Não edite à mão. |
+| `tools/validate_blocks.py` | Validador: schema mais regras editoriais conferidas contra `research/facts`. Sem argumentos, confere todo `data/blocks.*.json` e se os ids são únicos entre os arquivos (arquivos delta de perfil são exceção). Só biblioteca padrão. |
+| `tools/assemble_guide.py` | Monta o guia em Markdown a partir de um arquivo de blocos (filtra por perfil, ordena por fase). |
+| `tools/factlib.py` | Auxiliares compartilhados: ler o front matter das fichas e os IDs de lacunas. |
 
 ```bash
-python3 guides/tools/validate_blocks.py            # must print "0 errors"
-python3 guides/tools/assemble_guide.py             # rewrites f2p-early-kingdom-guide.md
+python3 guides/tools/validate_blocks.py            # deve imprimir "0 errors"
+python3 guides/tools/assemble_guide.py             # reescreve f2p-early-kingdom-guide.md
 ```
 
-## Block fields
+Qual guia é oferecido a qual perfil é decidido em `packages/core/src/guideSets.ts` (registro + `guidesForProfile`); todo arquivo de blocos novo precisa ser registrado ali.
 
-| Field | Meaning | Used by the questionnaire? |
+## Campos do bloco
+
+| Campo | Significado | O questionário usa? |
 |---|---|---|
-| `id` | Stable slug. Never reuse a retired ID. | link target |
-| `title`, `body_md`, `why_md` | What to do, and **why** (every block states its reasoning). | — |
-| `phase` | When in the kingdom's life: `overview`, `day0-3`, `day4-14`, `day15-40`, `day41-90`, `pre-kvk1`, `daily`, `event`, `anytime`. | kingdom day |
-| `section`, `order` | Chapter of the assembled guide and sort key. | — |
-| `stage` | Kingdom stage (`pre_kvk`, `kvk1` … `soc`, `todos`), same codes as `research/schemas/fato.md`. | kingdom stage |
-| `perfil` | Spending profiles that see the block (`f2p` … `kraken`, `todos`); see `research/perfis.md`. | spending profile |
-| `recommended_for` | Profiles for which the block's main option is badged **Recommended**. | spending profile |
-| `low_spender_note` | Where a Low spender's advice changes materially (until the Low delta file exists). | spending profile |
-| `funcao` | Role (`todas`, `lutador`, `farm`, `rally`, `guarnicao`, `lider`). | role |
-| `hours_min_per_day` | Minimum daily play time (hours) at which the block applies; `null` = any. | hours/day |
-| `time_cost_min` | **Measured** minutes the block costs (T0 only); `null` until measured. | hours/day (later) |
-| `ch_range` | `[min, max]` City Hall where the block is relevant; `null` = any. | current CH |
-| `civ` | Civilizations the block is specific to; empty = all. | civilization |
-| `priority` | 1–5; 5 = do first. | ordering / "minimum plan" |
-| `consensus`, `split_views` | `unanimous` / `majority` / `split` / `minority` / `single-source` / `mechanic`. Both views are required when `split`. | — |
-| `cards` | Every fact card cited anywhere in the block. | — |
-| `patch_cards` | C04 patch-change cards cited while still `bruto` (shown as "Patch state"). | — |
-| `confidence` | `high` / `medium` / `low` / `pending`. | optional "hide low" toggle |
-| `uncertain_notes` | Names every weaker card used, and why. | — |
-| `gaps` | Gap IDs (`L-<domain>-NN` from `research/facts/*/_lacunas.md`, or `PROPOSED-*`). | — |
-| `as_of`, `patch_ref` | Date and patch the block was checked against. | "verified on patch" label |
+| `id` | Slug estável. Nunca reutilize um ID aposentado. | alvo de link |
+| `title`, `body_md`, `why_md` | O que fazer, e **por quê** (todo bloco declara o seu raciocínio). | — |
+| `phase` | Quando na vida do reino: `overview`, `day0-3`, `day4-14`, `day15-40`, `day41-90`, `pre-kvk1`, `daily`, `event`, `anytime`. | dia do reino |
+| `section`, `order` | Capítulo do guia montado e chave de ordenação. | — |
+| `stage` | Etapa do reino (`pre_kvk`, `kvk1` … `soc`, `todos`), mesmos códigos de `research/schemas/fato.md`. | etapa do reino |
+| `perfil` | Perfis de gasto que veem o bloco (`f2p` … `kraken`, `todos`); veja `research/perfis.md`. | perfil de gasto |
+| `recommended_for` | Perfis para os quais a opção principal do bloco recebe o selo **Recomendado**. | perfil de gasto |
+| `low_spender_note` | Onde o conselho para quem gasta pouco (Low) muda de forma relevante (até existir o arquivo delta Low). | perfil de gasto |
+| `funcao` | Função (`todas`, `lutador`, `farm`, `rally`, `guarnicao`, `lider`). | função |
+| `hours_min_per_day` | Tempo mínimo de jogo por dia (horas) a partir do qual o bloco vale; `null` = qualquer. | horas/dia |
+| `time_cost_min` | Minutos que o bloco custa, **medidos** (só T0); `null` até serem medidos. | horas/dia (depois) |
+| `ch_range` | `[mín, máx]` de Prefeitura em que o bloco é relevante; `null` = qualquer. | Prefeitura atual |
+| `civ` | Civilizações a que o bloco é específico; vazio = todas. | civilização |
+| `priority` | 1–5; 5 = fazer primeiro. | ordenação / "plano mínimo" |
+| `consensus`, `split_views` | `unanimous` / `majority` / `split` / `minority` / `single-source` / `mechanic`. As duas visões são obrigatórias quando `split`. | — |
+| `cards` | Toda ficha de fatos citada em qualquer ponto do bloco. | — |
+| `patch_cards` | Fichas de mudança de patch C04 citadas enquanto ainda estão `bruto` (exibidas como "Estado do patch"). | — |
+| `confidence` | `high` / `medium` / `low` / `pending`. | alternância opcional "ocultar baixa" |
+| `uncertain_notes` | Nomeia cada ficha mais fraca usada, e por quê. | — |
+| `gaps` | IDs de lacunas (`L-<domínio>-NN` de `research/facts/*/_lacunas.md`, ou `PROPOSED-*`). | — |
+| `as_of`, `patch_ref` | Data e patch com que o bloco foi conferido. | selo "verificado no patch" |
 
-## Editorial rules (enforced by `validate_blocks.py`)
+## Regras editoriais (aplicadas por `validate_blocks.py`)
 
-1. Every card ID mentioned in the text is in `cards` and exists in `research/facts`.
-2. Firm statements rely only on cards with status `verificado` **and** confidence `media`/`alta`. Every other cited card must be named in `uncertain_notes` (shown as **Uncertain**). The exception is C04 patch cards with confidence ≥ `media`, which are listed in `patch_cards` and shown as **Patch state** until the patch front verifies them.
-3. A `high`/`medium` block needs at least one firm or patch card. A `high` block cannot cite non-firm cards.
-4. `consensus: split` requires `split_views`.
-5. Gap IDs must exist in a `_lacunas.md` (`PROPOSED-*` gaps only produce a warning, so the research side can file them).
-6. `time_cost_min` stays `null` until a T0 stopwatch value exists. Daily blocks without it must list `L-A10-01`.
-7. Numbers are never invented. Missing numbers become a gap reference ("Pending in-game measurement (T0)").
+1. Todo ID de ficha mencionado no texto está em `cards` e existe em `research/facts`.
+2. Afirmações firmes se apoiam apenas em fichas com status `verificado` **e** confiança `media`/`alta`. Toda outra ficha citada deve ser nomeada em `uncertain_notes` (exibida como **Incerto**). A exceção são as fichas de patch C04 com confiança ≥ `media`, que são listadas em `patch_cards` e exibidas como **Estado do patch** até a frente de patches verificá-las.
+3. Um bloco `high`/`medium` precisa de pelo menos uma ficha firme ou de patch. Um bloco `high` não pode citar fichas não firmes.
+4. `consensus: split` exige `split_views`.
+5. IDs de lacunas devem existir em um `_lacunas.md` (lacunas `PROPOSED-*` só geram um aviso, para o lado da pesquisa poder registrá-las).
+6. `time_cost_min` fica `null` até existir um valor de cronômetro do T0. Blocos diários sem ele devem listar `L-A10-01`.
+7. Números nunca são inventados. Números ausentes viram uma referência de lacuna ("Pendente de medição no jogo (T0)").
 
-## How the questionnaire (F-01, M14 Guide Builder) will filter the blocks
+## Como o questionário (F-01, M14 Guide Builder) vai filtrar os blocos
 
-The questionnaire asks six questions. Each answer is a filter or a sort over the block fields. A static HTML page can do this in the browser with the JSON file, with no backend.
+O questionário faz seis perguntas. Cada resposta é um filtro ou uma ordenação sobre os campos do bloco. Uma página HTML estática consegue fazer isso no navegador com o arquivo JSON, sem backend.
 
-| Question | Answer codes | Rule |
+| Pergunta | Códigos de resposta | Regra |
 |---|---|---|
-| **Spending profile** | `f2p`, `low`, `medium`, `high`, `whale`, `kraken` | Load the base F2P file plus the delta files up to the chosen profile (`blocks.low.json`, …, when they exist; a delta block with the same `id` replaces the base block). Keep a block if `perfil` contains the answer or `todos`. Badge **Recommended** if `recommended_for` contains it. Show `low_spender_note` when the answer is `low` (until the Low delta exists). |
-| **Role** | `lutador`, `farm`, `rally`, `guarnicao`, `lider` | Keep the block if `funcao` contains the answer or `todas`. A farm-only player still gets `todas` blocks (routine, safety). |
-| **Hours per day** | 0.25 / 0.5 / 1 / 2+ | Keep the block if `hours_min_per_day` is `null` or ≤ the answer. For `daily` blocks, show the **highest tier that fits**, with lower tiers folded into it. Once T0 fills `time_cost_min`, sum costs and flag a plan that exceeds the budget. |
-| **Kingdom stage** | `pre_kvk`, `kvk1`, `kvk2`, `kvk3`, `soc` | Keep the block if `stage` contains the answer or `todos`. A kingdom-day answer (optional) collapses phases that are already past. |
-| **Current City Hall** | 1–25 | Keep the block if `ch_range` is `null` or contains the CH. Blocks whose range ends below the CH are moved to a collapsed "Already done?" list rather than hidden, so a player can catch what they missed. |
-| **Civilization** | e.g. `china`, `spain`, … | Keep the block if `civ` is empty or contains the answer. The civilization-choice block is shown only to CH ≤ 10 players (its `ch_range`), when the free change is still ahead. |
+| **Perfil de gasto** | `f2p`, `low`, `medium`, `high`, `whale`, `kraken` | Carrega o arquivo-base F2P mais os arquivos delta até o perfil escolhido (`blocks.low.json`, …, quando existirem; um bloco delta com o mesmo `id` substitui o bloco-base). Mantém o bloco se `perfil` contém a resposta ou `todos`. Dá o selo **Recomendado** se `recommended_for` a contém. Mostra `low_spender_note` quando a resposta é `low` (até o delta Low existir). |
+| **Função** | `lutador`, `farm`, `rally`, `guarnicao`, `lider` | Mantém o bloco se `funcao` contém a resposta ou `todas`. Quem joga só de farm ainda recebe os blocos `todas` (rotina, segurança). |
+| **Horas por dia** | 0,25 / 0,5 / 1 / 2+ | Mantém o bloco se `hours_min_per_day` é `null` ou ≤ a resposta. Para blocos `daily`, mostra o **maior nível que cabe**, com os níveis menores incorporados a ele. Quando o T0 preencher `time_cost_min`, soma os custos e sinaliza um plano que ultrapasse o tempo. |
+| **Etapa do reino** | `pre_kvk`, `kvk1`, `kvk2`, `kvk3`, `soc` | Mantém o bloco se `stage` contém a resposta ou `todos`. Uma resposta de dia do reino (opcional) recolhe as fases que já passaram. |
+| **Prefeitura atual** | 1–25 | Mantém o bloco se `ch_range` é `null` ou contém a Prefeitura. Blocos cujo intervalo termina abaixo da Prefeitura vão para uma lista recolhida "Já feito?" em vez de ficarem ocultos, para o jogador pegar o que deixou passar. |
+| **Civilização** | p. ex. `china`, `spain`, … | Mantém o bloco se `civ` está vazio ou contém a resposta. O bloco de escolha de civilização só aparece para quem está na Prefeitura ≤ 10 (seu `ch_range`), quando a troca grátis ainda está por vir. |
 
-Ordering after filtering: `phase` (in the order listed above), then `order`. A "minimum plan" view shows only `priority ≥ 4`. An optional toggle hides `confidence: low` and `pending` blocks; it is off by default, so uncertainty stays visible.
+Ordenação após a filtragem: `phase` (na ordem listada acima), depois `order`. Uma visão de "plano mínimo" mostra só `priority ≥ 4`. Uma alternância opcional oculta os blocos `confidence: low` e `pending`; ela vem desligada por padrão, para a incerteza continuar visível.
 
-Sketch:
+Esboço:
 
 ```js
 const keep = b =>
@@ -80,12 +87,12 @@ const keep = b =>
   (b.funcao.includes(a.funcao) || b.funcao.includes("todas")) &&
   (b.stage.includes(a.stage) || b.stage.includes("todos")) &&
   (b.hours_min_per_day === null || b.hours_min_per_day <= a.hours) &&
-  (b.ch_range === null || a.ch <= b.ch_range[1]) &&      // past ranges -> "Already done?"
+  (b.ch_range === null || a.ch <= b.ch_range[1]) &&      // intervalos passados -> "Já feito?"
   (b.civ.length === 0 || b.civ.includes(a.civ));
 ```
 
-## Adding a profile or updating for a patch
+## Adicionar um perfil ou atualizar para um patch
 
-- **New profile (Low, then Medium, …):** write `blocks.<perfil>.json` with only the blocks that change (same `id` to override, new `id` to add), as described in `research/perfis.md`. Don't copy the F2P file.
-- **New patch:** blocks whose cards are invalidated by a new C04 card get new text and a new `as_of` / `patch_ref`. The validator catches cards that dropped below the firm filter, because statuses are read live from `research/facts`.
-- **T0 results:** when a gap closes, the research side updates or adds the card. Then the block moves the number from "Pending" into the body and, for routine tasks, fills `time_cost_min`.
+- **Perfil novo (Low, depois Medium, …):** escreva `blocks.<perfil>.json` só com os blocos que mudam (mesmo `id` para substituir, `id` novo para acrescentar), como descrito em `research/perfis.md`. Não copie o arquivo F2P.
+- **Patch novo:** blocos cujas fichas são invalidadas por uma nova ficha C04 recebem texto novo e novos `as_of` / `patch_ref`. O validador pega fichas que caíram abaixo do filtro firme, porque os status são lidos ao vivo de `research/facts`.
+- **Resultados do T0:** quando uma lacuna se fecha, o lado da pesquisa atualiza ou acrescenta a ficha. Então o bloco move o número de "Pendente" para o corpo e, nas tarefas de rotina, preenche `time_cost_min`.

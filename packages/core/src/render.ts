@@ -3,7 +3,7 @@
 // tests and as a no-JS fallback. The fact-card appendix needs card metadata
 // (status/confidence) that blocks do not carry, so it is not rendered here.
 
-import { PHASE_TITLES, PROFILE_NAMES } from "./blocks";
+import { CONFIDENCE_LABELS, CONSENSUS_LABELS, PHASE_TITLES, PROFILE_NAMES } from "./blocks";
 import type { SelectedBlock, StructuredGuide } from "./blocks";
 import type { GuidePhase, SpendingProfile } from "./types";
 
@@ -31,7 +31,7 @@ const PLAN_PHASES: GuidePhase[] = ["day4-14", "day15-40", "day41-90", "pre-kvk1"
 export const defaultCardHref = (id: string): string => `../research/facts/${id.slice(0, 3)}/${id}.md`;
 
 function anchor(title: string): string {
-  return "#" + title.toLowerCase().replace(/[^a-z0-9 -]/g, "").replace(/ /g, "-");
+  return "#" + title.toLowerCase().replace(/[^\p{L}\p{N}_ -]/gu, "").replace(/ /g, "-");
 }
 
 function makeLinker(s: SelectedBlock, opts: RenderOptions): (text: string) => string {
@@ -49,37 +49,41 @@ export function renderBlockMarkdown(s: SelectedBlock, opts: RenderOptions = {}, 
   const b = s.block;
   const link = makeLinker(s, opts);
   const L: string[] = [`${"#".repeat(headingLevel)} ${b.title}`, ""];
-  const meta = [`**Confidence:** ${b.confidence}`, `**Consensus:** ${b.consensus}`, `**Priority:** ${b.priority}/5`];
+  const meta = [
+    `**Confiança:** ${CONFIDENCE_LABELS[b.confidence] ?? b.confidence}`,
+    `**Consenso:** ${CONSENSUS_LABELS[b.consensus] ?? b.consensus}`,
+    `**Prioridade:** ${b.priority}/5`,
+  ];
   if (b.recommended_for.length > 0) {
-    meta.push("**Recommended for:** " + b.recommended_for.map((p) => PROFILE_NAMES[p]).join(", "));
+    meta.push("**Recomendado para:** " + b.recommended_for.map((p) => PROFILE_NAMES[p]).join(", "));
   }
-  if (b.ch_range) meta.push(`**CH:** ${b.ch_range[0]}–${b.ch_range[1]}`);
-  if (b.hours_min_per_day !== null) meta.push(`**Time budget:** ≥ ${Math.round(b.hours_min_per_day * 60)} min/day`);
-  if (b.time_cost_min !== null) meta.push(`**Time cost:** ${b.time_cost_min} min (T0)`);
-  else if (b.section === "daily") meta.push("**Time cost:** pending T0 (L-A10-01)");
+  if (b.ch_range) meta.push(`**Prefeitura:** ${b.ch_range[0]}–${b.ch_range[1]}`);
+  if (b.hours_min_per_day !== null) meta.push(`**Tempo disponível:** ≥ ${Math.round(b.hours_min_per_day * 60)} min/dia`);
+  if (b.time_cost_min !== null) meta.push(`**Custo de tempo:** ${b.time_cost_min} min (T0)`);
+  else if (b.section === "daily") meta.push("**Custo de tempo:** pendente de T0 (L-A10-01)");
   meta.push(`\`${b.id}\``);
 
   const badges: string[] = [];
-  if (opts.profile && s.flags.recommended) badges.push(`**Recommended** for ${PROFILE_NAMES[opts.profile]}`);
-  if (opts.profile && s.flags.upcoming && b.ch_range) badges.push(`Upcoming (from CH${b.ch_range[0]})`);
+  if (opts.profile && s.flags.recommended) badges.push(`**Recomendado** para ${PROFILE_NAMES[opts.profile]}`);
+  if (opts.profile && s.flags.upcoming && b.ch_range) badges.push(`Em breve (a partir da Prefeitura ${b.ch_range[0]})`);
 
   L.push(meta.join(" · "), "");
   if (badges.length > 0) L.push(`*${badges.join(" · ")}*`, "");
-  L.push(link(b.body_md), "", "**Why:** " + link(b.why_md), "");
+  L.push(link(b.body_md), "", "**Por quê:** " + link(b.why_md), "");
   if (typeof b.split_views === "string" && b.split_views !== "") {
-    L.push("**Both views (split):** " + link(b.split_views), "");
+    L.push("**As duas visões (dividido):** " + link(b.split_views), "");
   }
-  if (b.uncertain_notes) L.push("> **Uncertain:** " + link(b.uncertain_notes).replace(/\n/g, " "), ">");
+  if (b.uncertain_notes) L.push("> **Incerto:** " + link(b.uncertain_notes).replace(/\n/g, " "), ">");
   if (b.patch_cards.length > 0) {
     L.push(
-      "> **Patch state:** " + b.patch_cards.map(link).join(", ") +
-        " (patch-change cards, C04: official notes or patch-tracking sources, not yet through formal verification).",
+      "> **Estado do patch:** " + b.patch_cards.map(link).join(", ") +
+        " (fichas de mudança de patch, C04: notas oficiais ou fontes de acompanhamento de patches, ainda sem verificação formal).",
       ">",
     );
   }
-  if (b.gaps.length > 0) L.push("> **Pending in-game measurement (T0):** " + b.gaps.join(", "), ">");
+  if (b.gaps.length > 0) L.push("> **Pendente de medição no jogo (T0):** " + b.gaps.join(", "), ">");
   while (L.length > 0 && L[L.length - 1] === ">") L.pop();
-  if (s.lowSpenderNote) L.push("", "> **Low spender note:** " + link(s.lowSpenderNote));
+  if (s.lowSpenderNote) L.push("", "> **Nota para quem gasta pouco (Low):** " + link(s.lowSpenderNote));
   L.push("");
   return L.join("\n");
 }
@@ -88,25 +92,25 @@ export function renderBlockMarkdown(s: SelectedBlock, opts: RenderOptions = {}, 
 export function renderGuideMarkdown(guide: StructuredGuide, opts: RenderOptions = {}): string {
   const p = guide.profile;
   const profileName = PROFILE_NAMES[p.spending];
-  const title = opts.title ?? `Rise of Kingdoms — ${profileName} early-kingdom guide`;
+  const title = opts.title ?? `Rise of Kingdoms — Guia ${profileName} para o reino inicial`;
   const withTitle: RenderOptions = { ...opts, title, profile: opts.profile ?? p.spending };
   const out: string[] = [];
 
   out.push(`# ${title}`, "");
-  const asOf = guide.meta.asOf ? `As of ${guide.meta.asOf}. ` : "";
-  const patch = guide.meta.patchRef ? `Checked against official patch notes up to ${guide.meta.patchRef}. ` : "";
+  const asOf = guide.meta.asOf ? `Atualizado em ${guide.meta.asOf}. ` : "";
+  const patch = guide.meta.patchRef ? `Conferido com as notas oficiais de patch até ${guide.meta.patchRef}. ` : "";
   out.push(
-    `*${asOf}${patch}Profile: **${profileName}** · ${p.minutesPerDay} min/day · role \`${p.role}\` · ` +
-      `stage \`${p.kingdomStage}\` · CH${p.cityHall}` +
-      (p.kingdomDay !== null ? ` · kingdom day ${p.kingdomDay}` : "") +
+    `*${asOf}${patch}Perfil: **${profileName}** · ${p.minutesPerDay} min/dia · função \`${p.role}\` · ` +
+      `etapa \`${p.kingdomStage}\` · Prefeitura ${p.cityHall}` +
+      (p.kingdomDay !== null ? ` · dia ${p.kingdomDay} do reino` : "") +
       (p.civilization ? ` · ${p.civilization}` : "") +
-      `. ${guide.meta.shownBlocks} of ${guide.meta.totalBlocks} blocks apply to you.*`,
+      `. ${guide.meta.shownBlocks} de ${guide.meta.totalBlocks} blocos se aplicam a você.*`,
     "",
   );
 
-  out.push("## Contents", "");
+  out.push("## Sumário", "");
   for (const s of guide.sections) out.push(`- [${s.title}](${anchor(s.title)})`);
-  if ((opts.includeAlreadyDone ?? true) && guide.alreadyDone.length > 0) out.push(`- [Already done?](#already-done)`);
+  if ((opts.includeAlreadyDone ?? true) && guide.alreadyDone.length > 0) out.push(`- [Já feito?](#já-feito)`);
   out.push("");
 
   const renderWithFolded = (s: SelectedBlock, level: number): string[] => [
@@ -128,15 +132,15 @@ export function renderGuideMarkdown(guide: StructuredGuide, opts: RenderOptions 
       continue;
     }
     if (sec.id === "farms") {
-      out.push("*Brief only. The dedicated farm guide (F-03: single-resource, general and resource-pair farms) will replace this section.*", "");
+      out.push("*Apenas um resumo. O guia dedicado a farms (F-03: farms de recurso único, gerais e de par de recursos) vai substituir esta seção.*", "");
     }
     for (const b of sec.blocks) out.push(...renderWithFolded(b, 3));
   }
 
   if ((opts.includeAlreadyDone ?? true) && guide.alreadyDone.length > 0) {
-    out.push("## Already done?", "", "*Steps for an earlier City Hall or kingdom phase. Check you didn't miss any.*", "");
+    out.push("## Já feito?", "", "*Passos de uma Prefeitura ou fase do reino anterior. Confira se você não deixou nenhum para trás.*", "");
     for (const s of guide.alreadyDone) {
-      const range = s.block.ch_range ? ` (CH ${s.block.ch_range[0]}–${s.block.ch_range[1]})` : "";
+      const range = s.block.ch_range ? ` (Prefeitura ${s.block.ch_range[0]}–${s.block.ch_range[1]})` : "";
       out.push(`- **${s.block.title}**${range} · \`${s.block.id}\``);
     }
     out.push("");

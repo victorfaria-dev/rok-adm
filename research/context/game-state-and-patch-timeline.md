@@ -48,11 +48,12 @@ Gap: no official per-season day counts were found. Third-party guides give "~60 
 
 | Date | Version | Change | Invalidates | Card |
 |---|---|---|---|---|
+| 2021-04 | 1.0.45 | Hall of Heroes troops return at the end of the Season of Conquest even if the governor is offline; separate siege healing zone outside hospital capacity (added in wave J). | A08 | C04-0621 |
 | 2023-03 | 1.0.67 | SoC story Siege of Orléans (auxiliary commanders). Legendary engineering and gathering equipment. Armament transmute. | B02, A07 | C04-0017 |
 | 2023-07 | 1.0.71 | **Greece civilization**. SoC story Storm of Stratagems (S–D team classes). Armament transmutation (max 10). | A14, B02, A07 | C04-0016 |
 | 2023-08 | 1.0.72 | Commander Trust system. Season 2/3 Crusader rewards add Formation Choice Chests. | A06 | — |
 | 2023-11 | 1.0.76 | SoC story Tides of War. Heroic Anthem fog removed; story set to 50 days. | B02 | C04-0017 |
-| 2023-12 | 1.0.77 | **Iconic equipment awakening (5 tiers, Season 1+)**. City theme transmog. Hall of Fame. | A07 | C04-0027 |
+| 2023-12 | 1.0.77 | **Iconic equipment awakening (5 tiers, Season 1+)**. City theme transmog. Hall of Fame. King of the Nile seasonal strategies capped per season (C04-0620, wave J). | A07, A08 | C04-0027, C04-0620 |
 | 2024-01 | 1.0.78 | Preparation Season starting provinces cut from 6 to 3. Talents and inscriptions can trigger on ranged attacks. | B01, A06 | C04-0033 |
 | 2024-02 | 1.0.79 | Rare inscriptions and two new formations. Guarantee: a rare inscription every 150 Legendary armaments. Transmutation Crystals. | A07 | — |
 | 2024-03 | 1.0.80 | SoC story Alliance Invictus (Curios). | B02 | C04-0017 |

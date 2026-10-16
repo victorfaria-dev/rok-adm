@@ -1,0 +1,67 @@
+/* Farm hub islands (/farms/, /farms/log/). Only --ko-* tokens. */
+
+.fh { display: grid; gap: var(--ko-space-6); min-width: 0; }
+.fh h2 { font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl); }
+.fh h4 { margin: 0; }
+.fh a { color: var(--ko-text); text-underline-offset: 3px; }
+.fh-notice {
+  padding: var(--ko-space-3); border: 1px solid var(--ko-warning); border-radius: var(--ko-radius-sm);
+  font-size: var(--ko-text-sm);
+}
+.fh-empty ul { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
+
+.fh-fieldset { margin: 0; padding: 0; border: 0; min-width: 0; display: grid; gap: var(--ko-space-2); }
+.fh-fieldset legend { padding: 0; margin-bottom: var(--ko-space-2); }
+.fh-section { padding-top: var(--ko-space-3); border-top: 1px solid var(--ko-border); display: grid; gap: var(--ko-space-2); min-width: 0; }
+
+.fh-radios { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); }
+.fh-radio {
+  display: inline-flex; align-items: center; gap: var(--ko-space-2); min-height: 44px; padding-inline: var(--ko-space-3);
+  border: 1px solid var(--ko-control-border); border-radius: var(--ko-radius-pill); cursor: pointer; font-size: var(--ko-text-sm);
+}
+.fh-radio:has(input:checked) { border-color: var(--ko-accent); }
+.fh-radio input, .fh-task input { width: 20px; height: 20px; margin: 0; accent-color: var(--ko-accent); flex: none; }
+
+.fh-levels { display: grid; gap: var(--ko-space-3); grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+
+.fh-list { display: grid; gap: var(--ko-space-4); min-width: 0; }
+.fh-list-head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ko-space-3); }
+.fh-farm-head { display: grid; gap: var(--ko-space-2); }
+.fh-farm h3 { font-size: var(--ko-text-xl); line-height: var(--ko-leading-xl); }
+.fh-meta { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-2); font-size: var(--ko-text-sm); }
+.fh-chip {
+  display: inline-flex; align-items: center; padding: 2px var(--ko-space-2);
+  border: 1px solid var(--ko-border); border-radius: var(--ko-radius-pill); font-size: var(--ko-text-xs); white-space: nowrap;
+}
+.fh-optional { margin-left: var(--ko-space-2); color: var(--ko-text-muted); }
+.fh-links { display: flex; flex-wrap: wrap; gap: var(--ko-space-1) var(--ko-space-4); }
+.fh-links a { display: inline-flex; align-items: center; min-height: 44px; }
+
+.fh-status { font-size: var(--ko-text-sm); }
+.fh-quick, .fh-row { display: flex; flex-wrap: wrap; align-items: end; gap: var(--ko-space-2); }
+.fh-row > .fm-field { flex: 1 1 140px; }
+.fh-time { max-width: 220px; }
+.btn.fh-small { min-height: 44px; padding-inline: var(--ko-space-3); }
+
+.fh-tasks { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--ko-space-3); }
+.fh-task { display: flex; align-items: flex-start; gap: var(--ko-space-2); }
+.fh-task input { margin-top: 12px; }
+.fh-task label { flex: 1; min-height: 44px; display: flex; flex-wrap: wrap; align-items: center; cursor: pointer; }
+.fh-task-detail { padding-left: calc(20px + var(--ko-space-2)); }
+.fh-why { padding-left: calc(20px + var(--ko-space-2)); }
+.fh-why summary { display: inline-flex; align-items: center; min-height: 44px; cursor: pointer; font-size: var(--ko-text-sm); color: var(--ko-text-muted); }
+
+.fh-progress { display: grid; gap: var(--ko-space-1); font-size: var(--ko-text-sm); }
+.fh-progress progress { width: 100%; height: 12px; accent-color: var(--ko-accent); }
+
+.fh-farm-actions { padding-top: var(--ko-space-3); border-top: 1px solid var(--ko-border); }
+.fh-confirm { display: grid; gap: var(--ko-space-2); }
+.fh-confirm p { font-weight: var(--ko-weight-medium); }
+
+.fh-visit { display: grid; gap: var(--ko-space-2); }
+.fh-visit-list { margin: 0; padding-left: var(--ko-space-5); display: grid; gap: var(--ko-space-1); }
+.fh-visit-list li { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ko-space-1) var(--ko-space-3); }
+.fh-visit-list a { display: inline-flex; align-items: center; min-height: 44px; font-weight: var(--ko-weight-medium); }
+.fh-visit-when { font-size: var(--ko-text-sm); }
+
+.fh-data { display: grid; gap: var(--ko-space-3); }

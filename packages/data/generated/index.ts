@@ -26,6 +26,7 @@ import t_A03_resource_buildings from "./tables/A03-resource-buildings.json";
 import t_A03_trading_post from "./tables/A03-trading-post.json";
 import t_A04_vip_shop from "./tables/A04-vip-shop.json";
 import t_A05_vip_levels from "./tables/A05-vip-levels.json";
+import t_A06_rkg_commander_season from "./tables/A06-rkg-commander-season.json";
 
 export const rawFacts: unknown = facts;
 export const rawPatches: unknown = patches;
@@ -55,4 +56,5 @@ export const rawTables: Record<string, unknown> = {
   "A03-trading-post": t_A03_trading_post,
   "A04-vip-shop": t_A04_vip_shop,
   "A05-vip-levels": t_A05_vip_levels,
+  "A06-rkg-commander-season": t_A06_rkg_commander_season,
 };

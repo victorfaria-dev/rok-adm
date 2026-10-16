@@ -1,0 +1,32 @@
+---
+// "Cartão para compartilhar" (UX stage 1): the governor card and the alliance crest as one entry under Me, two tabs.
+// A leader reaches the crest from the Kingdom tab instead (KingdomNav), so this row is player-only.
+import { isActive } from "../lib/nav";
+
+const LABEL = "Cartão para compartilhar";
+const LINKS = [
+  { href: "/card/", label: "Cartão do governador" },
+  { href: "/crest/", label: "Brasão da aliança" },
+];
+const path = Astro.url.pathname;
+---
+<nav class="sc" aria-label={LABEL}>
+  <p class="sc-label" aria-hidden="true">{LABEL}</p>
+  <ul>
+    {LINKS.map((l) => <li><a href={l.href} aria-current={isActive(l.href, path) ? "page" : undefined}>{l.label}</a></li>)}
+  </ul>
+</nav>
+
+<style>
+  .sc { display: grid; gap: var(--ko-space-2); margin-bottom: var(--ko-space-4); }
+  :global(:root[data-role="leader"]) .sc { display: none; }
+  .sc-label { font: var(--ko-weight-semibold) var(--ko-text-xs)/1.2 var(--ko-font-display); letter-spacing: .1em; text-transform: uppercase; color: var(--ko-accent); }
+  ul { display: flex; flex-wrap: wrap; gap: var(--ko-space-2); margin: 0; padding: 0; list-style: none; }
+  a {
+    display: inline-flex; align-items: center; min-height: 44px; padding-inline: var(--ko-space-3);
+    border: 1px solid var(--ko-border); border-radius: var(--ko-radius-pill); color: var(--ko-text-muted); text-decoration: none; font-size: var(--ko-text-sm);
+  }
+  a[aria-current="page"] { color: var(--ko-text); border-color: var(--ko-accent); }
+  @media (hover: hover) and (pointer: fine) { a:hover { color: var(--ko-text); } }
+  @media print { .sc { display: none; } }
+</style>

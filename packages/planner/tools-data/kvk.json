@@ -1,0 +1,176 @@
+{
+  "_about": "KvK readiness checklist and season explainer (/tools/kvk/, F-26). Items with \"facts\": [] have no card and show \"No consensus\".",
+  "groups": [
+    {
+      "id": "city-hall",
+      "title": "Prefeitura",
+      "items": [
+        {
+          "id": "ch17",
+          "text": "Prefeitura 17 para entrar no Reino Perdido.",
+          "detail": "Só um guia mais antigo; confirme no seu reino antes da KvK.",
+          "facts": ["B01-0503"],
+          "evidence": { "B01-0503": "Entering the Lost Kingdom requires City Hall 17" }
+        }
+      ]
+    },
+    {
+      "id": "troops",
+      "title": "Tropas",
+      "items": [
+        {
+          "id": "t4",
+          "text": "Lute sua primeira KvK com T4; trate o T5 como meta de longo prazo.",
+          "facts": ["A08-0500"],
+          "evidence": { "A08-0500": "For KvK1 the working tier is T4" }
+        },
+        {
+          "id": "t4-reserve",
+          "text": "Se você tem T5, mantenha uma reserva de T4: as curas de T5 custam muito mais.",
+          "facts": ["A08-0505"],
+          "evidence": { "A08-0505": "accounts without steady economy should keep fighting with T4 and maintain a T4 reserve" }
+        },
+        {
+          "id": "marches",
+          "text": "Use cerca de 3 marchas completas, não 5 fracas.",
+          "facts": ["A08-0504"],
+          "evidence": { "A08-0504": "~3 best marches or one complete march are more useful and cheaper to heal" }
+        }
+      ]
+    },
+    {
+      "id": "hospital",
+      "title": "Hospital",
+      "items": [
+        {
+          "id": "hospital-size",
+          "text": "Mantenha a capacidade do hospital alta e esvazie-o antes de toda luta.",
+          "detail": "Tropas feridas além da capacidade morrem. Use o planejador de cura para os seus números.",
+          "facts": ["A08-0502"],
+          "evidence": { "A08-0502": "Wounded troops beyond hospital capacity die" }
+        },
+        {
+          "id": "severe",
+          "text": "Saiba que atacar cidades e objetivos pode matar de vez as tropas gravemente feridas.",
+          "facts": ["A08-0502"],
+          "evidence": { "A08-0502": "some actions (attacking cities/objectives) always kill severely wounded" }
+        }
+      ]
+    },
+    {
+      "id": "stock",
+      "title": "Acelerações e recursos",
+      "items": [
+        {
+          "id": "hoard",
+          "text": "Chegue com acelerações, itens de recurso e itens de recuperação de PA guardados para a cura na KvK e para eventos pontuados.",
+          "facts": ["A11-0501"],
+          "evidence": { "A11-0501": "save speedups, resources (as items), AP potions for scoring events and KvK healing" }
+        },
+        {
+          "id": "heal-speedups",
+          "text": "Mantenha as acelerações de cura separadas das outras.",
+          "facts": ["A08-0502"],
+          "evidence": { "A08-0502": "keep capacity and heal-speedups" }
+        },
+        {
+          "id": "eve-ap",
+          "text": "Guarde itens de recuperação de PA para a Véspera da Cruzada (pré-KvK).",
+          "facts": ["A09-0007"],
+          "evidence": { "A09-0007": "especially the pre-KvK Eve of the Crusade" }
+        }
+      ]
+    },
+    {
+      "id": "commanders",
+      "title": "Comandantes",
+      "items": [
+        {
+          "id": "pairs",
+          "text": "Decida quais duplas de comandantes lideram suas marchas e evolua essas, não muitas.",
+          "facts": []
+        },
+        {
+          "id": "troop-type",
+          "text": "Monte em torno de um tipo de tropa que combine com seus melhores comandantes.",
+          "facts": ["A08-0506"],
+          "evidence": { "A08-0506": "Pick one troop type matching your best commanders" }
+        }
+      ]
+    },
+    {
+      "id": "alliance",
+      "title": "Aliança e comportamento",
+      "items": [
+        {
+          "id": "requirements",
+          "text": "Leia os requisitos de KvK do seu reino antes de ela começar (muitas vezes uma meta como % do seu poder).",
+          "detail": "Os resultados são comparados depois da KvK, e alguns reinos então publicam uma lista de migração.",
+          "facts": ["B08-0002", "B06-0005"],
+          "evidence": {
+            "B08-0002": "Requirements are commonly a DKP (or dead+kill) target proportional to power",
+            "B06-0005": "After KvK, leadership publishes who must leave"
+          }
+        },
+        {
+          "id": "behaviour",
+          "text": "Não ataque primeiro: fique atrás, recue cedo, encha rallies fortes e reforce.",
+          "facts": ["A08-0503"],
+          "evidence": { "A08-0503": "should not engage first, should stay behind lanes, retreat early, fill strong rallies and reinforce rather than trade alone" }
+        },
+        {
+          "id": "fight-times",
+          "text": "Saiba os horários de luta da sua aliança e como ela convoca rallies.",
+          "facts": []
+        }
+      ]
+    }
+  ],
+  "explainer": [
+    {
+      "id": "stages",
+      "text": "Um reino vai de uma Temporada de Preparação para a Temporada 1 (sua primeira KvK), a Temporada 2, a Temporada 3 e depois a Temporada de Conquista, que se repete.",
+      "facts": ["B01-0500", "C04-0007"],
+      "patch": "guias 2019–2026",
+      "evidence": { "B01-0500": "KvK1 begins around kingdom day 100" }
+    },
+    {
+      "id": "timing",
+      "text": "O evento pré-KvK, a Véspera da Cruzada, começa por volta do dia 85–95 do reino, e a KvK1 por volta do dia 100.",
+      "facts": ["B01-0500"],
+      "patch": "guias 2019–2026",
+      "evidence": { "B01-0500": "Pre-KvK (Eve of the Crusade) starts around day 85–95 and KvK1 begins around kingdom day 100" }
+    },
+    {
+      "id": "overlap",
+      "text": "O Reino Perdido é o mapa compartilhado da KvK. Relatos recentes dizem que a Véspera da Cruzada agora abre junto com ele.",
+      "facts": ["B01-0503", "C04-0002"],
+      "patch": "1.1.12 (resumo de terceiros)",
+      "evidence": {
+        "B01-0503": "the first ~6 days of pre-KvK now overlap the opening of the Lost Kingdom in Season 1 too",
+        "C04-0002": "makes Eve of the Crusade open together with the Lost Kingdom"
+      }
+    },
+    {
+      "id": "season3",
+      "text": "A Temporada 3 está passando da história Light and Darkness para King of All Britain.",
+      "facts": ["C04-0007"],
+      "patch": "pioneiro da 1.1.07, resumo da 1.1.12",
+      "evidence": { "C04-0007": "In 1.1.07 (May 2026) select Season 3 kingdoms started a pioneer of the 'King of All Britain' story in Season 3" }
+    },
+    {
+      "id": "after",
+      "text": "Depois de cada KvK, os resultados são comparados com os requisitos do reino; quem contribui pouco pode ser convidado a migrar.",
+      "facts": ["B06-0005"],
+      "patch": "regras de reinos, 2026",
+      "evidence": { "B06-0005": "After KvK, leadership publishes who must leave" }
+    },
+    {
+      "id": "immigration",
+      "text": "Entre temporadas, a migração segue limites de idade que foram endurecidos em março de 2026.",
+      "facts": ["B06-0003"],
+      "patch": "1.1.06",
+      "evidence": { "B06-0003": "Official 1.1.06 (2026-03-24)" }
+    }
+  ]
+}

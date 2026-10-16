@@ -1,0 +1,21 @@
+---
+// The fact cards a block cites: id, title, confidence and status (resolved at build time).
+import type { CardMeta } from "../../../lib/farms-guide";
+
+interface Props {
+  cards: readonly CardMeta[];
+}
+const { cards } = Astro.props;
+const CONF = { high: "alta", medium: "média", low: "baixa" } as const;
+---
+{cards.length > 0 && (
+  <ul class="fg-facts">
+    {cards.map((c) => (
+      <li>
+        <span class="mono">{c.id}</span>
+        <span>{c.title}</span>
+        <span class="fg-facts-meta">{c.confidence === "pending" ? "pendente" : `confiança ${CONF[c.confidence]}`} · {c.status}{c.badge ? ` · ${c.badge}` : ""}</span>
+      </li>
+    ))}
+  </ul>
+)}

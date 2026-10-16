@@ -1,0 +1,18 @@
+---
+import Shell from "../../../layouts/Shell.astro";
+import KingdomNav from "../../../components/kingdom/shared/KingdomNav.astro";
+import RecruitBuilder from "../../../components/kingdom/recruit/RecruitBuilder";
+import "../../../components/kingdom/shared/kingdom.css";
+import "../../../components/kingdom/recruit/recruit.css";
+---
+<Shell title="Post de recrutamento" description="Preencha a fase do seu reino, os requisitos, o que você oferece e as funções de que precisa; receba um post de recrutamento pronto para copiar para o Discord, o Reddit ou texto simples." mode="operate">
+  <div class="kg">
+    <header class="kg-head">
+      <h1>Post de recrutamento</h1>
+      <p class="kg-lead">Diga uma vez quem você procura e o que oferece. Receba um post para Discord, Reddit ou qualquer outro lugar, sem nada que você não tenha escrito.</p>
+    </header>
+    <KingdomNav section="members" />
+    <RecruitBuilder client:load />
+    <p class="kg-note">Coloque o link da sua <a href="/kingdom/rules/">página de regras</a> e do seu <a href="/kingdom/requirements/">cartão de requisitos</a> no mesmo canal para os recrutas saberem o que esperar. Mais sobre a triagem de novatos no <a href="/guides/kingdom-admin/">guia de administração do reino</a>.</p>
+  </div>
+</Shell>

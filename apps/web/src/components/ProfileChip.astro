@@ -1,0 +1,35 @@
+---
+// Server render = "no profile" state; the script swaps in the saved profile summary.
+---
+<a class="chip" href="/start/" data-profile-chip>
+  <span data-chip-text>Configurar perfil</span>
+</a>
+
+<style>
+  .chip {
+    display: inline-flex; align-items: center; min-height: 36px; padding-inline: var(--ko-space-3);
+    border: 1px solid var(--ko-border); color: var(--ko-text);
+    font: var(--ko-weight-medium) var(--ko-text-xs)/1.2 var(--ko-font-mono); font-variant-numeric: tabular-nums;
+    text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%;
+  }
+  .chip[data-empty] { border-color: var(--ko-accent); color: var(--ko-accent); font-family: var(--ko-font-display); letter-spacing: .04em; }
+  @media (hover: hover) and (pointer: fine) { .chip:hover { border-color: var(--ko-text-muted); } }
+</style>
+
+<script>
+  import { readStore } from "../lib/store";
+  import { profileFromCode, profileSummary } from "../lib/profile";
+
+  const profile = profileFromCode(readStore().profileCode);
+  for (const chip of document.querySelectorAll<HTMLAnchorElement>("[data-profile-chip]")) {
+    const text = chip.querySelector("[data-chip-text]")!;
+    if (profile) {
+      text.textContent = profileSummary(profile);
+      chip.href = "/me/";
+      chip.removeAttribute("data-empty");
+      chip.setAttribute("aria-label", `Seu perfil: ${profileSummary(profile)}`);
+    } else {
+      chip.setAttribute("data-empty", "");
+    }
+  }
+</script>

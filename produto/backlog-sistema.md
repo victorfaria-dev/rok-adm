@@ -85,7 +85,7 @@ Mantidas como decisões do dono. Onde a evidência é fraca, a árvore propõe u
 | F-50 | **Rules & Formula Library** ("verified on patch X") | Plataforma / E-P1 | M18 | hab. (crítico) | — | M | pipeline `facts/` com patch/data | MVP (v0) → R1 | baixo | construindo (v0 em `packages/data`) |
 | F-51 | **Content Block Engine** (blocos com tags) | Plataforma / E-P1 | M11/M14 | hab. | — | M | F-50 | MVP | nenhum | construindo |
 | F-52 | **App Shell** (PWA, local-first, sem login) | Plataforma / E-P2 | — | hab. | — | M | identidade visual; F-85 | MVP | baixo | backlog (bloqueado pela identidade visual) |
-| F-53 | **Accounts & Sync** (backend, auth, estado compartilhado) | Plataforma / E-P2 | — | hab. | — | M | F-52, F-56; **decisão 1 do Victor** (primeiro backend) | R2 | médio | especificar |
+| F-53 | **Accounts & Sync** (backend, auth, estado compartilhado) | Plataforma / E-P2 | — | hab. | — | M | F-52, F-56; primeiro backend = reino + sync de farms (decidido 2026-10-13) | R2 | médio | especificar |
 | F-54 | **Own-Screenshot OCR** (só prints do próprio usuário) | Plataforma / E-P2 | M19 | hab. | — | M | T0: qualidade do OCR (fora do protocolo) | R2 | baixo | especificar |
 | F-55 | **Verification Code** (código curto, sem URL) | Plataforma / E-P2 | M15 | hab. | — | S | T0: código no anúncio da aliança (fora do protocolo) | R1 (teste) → R2 | baixo | especificar |
 | F-56 | **Trust & Privacy Center** (ToS, consentimento, opt-out, LGPD/GDPR) | Plataforma / E-P3 | — | hab. | — | S | revisão jurídica antes de cobrar | MVP | nenhum | construindo (`content/legal/`) |
@@ -133,7 +133,7 @@ Mantidas como decisões do dono. Onde a evidência é fraca, a árvore propõe u
 
 ## Decisões do dono em aberto
 
-1. **Primeiro backend:** estado compartilhado do reino (F-35/F-36/F-37 + sync de farms) ou identidade (I-06)? Recomendação da árvore: reino + farms. Continua pendente.
+1. **Primeiro backend:** estado compartilhado do reino (F-35/F-36/F-37 + sync de farms) ou identidade (I-06)? **Decidido (2026-10-13): reino + sync de farms.**
 2. **F-73 Pack Value Advisor:** o hub compara valor por dólar de pacotes? Recomendação: sim, anti-FOMO, sem link de compra.
 3. **F-37:** aceitar arquivos de scanners de terceiros com atestado e opt-out?
 4. **F-84:** segunda língua (PT-BR é candidata; decidir pelo tráfego do MVP).

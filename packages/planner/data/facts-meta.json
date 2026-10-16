@@ -42,12 +42,42 @@
       "gameVersion": "1.1.01"
     },
     {
+      "id": "A03-0001",
+      "title": "Resource types, unlock stages and what consumes gold",
+      "confidence": "media",
+      "status": "contestado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
       "id": "A03-0002",
       "title": "Farm and Lumber Mill production per hour and capacity by level",
       "confidence": "media",
       "status": "verificado",
       "consensus": "n/a",
       "validUntil": "2026-09-19",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0006",
+      "title": "Storehouse protection capacity by level",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2021-04-08",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0007",
+      "title": "Resource items vs raw resources (plunder safety)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-05-31",
       "invalidatedBy": null,
       "gameVersion": "desconhecida"
     },
@@ -62,6 +92,16 @@
       "gameVersion": "desconhecida"
     },
     {
+      "id": "A03-0013",
+      "title": "Enhanced Gathering boost items (+50%, 8h/24h) and how to get them",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-06-23",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.09"
+    },
+    {
       "id": "A03-0014",
       "title": "Mysterious Merchant: daily at 00:00 UTC, food/wood-priced items",
       "confidence": "media",
@@ -72,8 +112,38 @@
       "gameVersion": "desconhecida"
     },
     {
+      "id": "A03-0015",
+      "title": "Troop load per unit by tier (siege vs infantry)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-09-28",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
       "id": "A03-0016",
       "title": "Node level affects total amount, not gathering speed; pick node by availability",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0017",
+      "title": "Gathering commander setup: talents, level 37, primary only",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0021",
+      "title": "Resource bottleneck progression by CH stage",
       "confidence": "media",
       "status": "verificado",
       "consensus": "majoritario",
@@ -90,6 +160,76 @@
       "validUntil": "2026-10-02",
       "invalidatedBy": null,
       "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0024",
+      "title": "Trading Post tax rate by level",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-11",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0025",
+      "title": "Trading Post capacity per trip and unlock CH (conflicting)",
+      "confidence": "media",
+      "status": "contestado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.90+"
+    },
+    {
+      "id": "A03-0026",
+      "title": "Trading Post transfers use a march queue and travel time",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-06-05",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0027",
+      "title": "Gold CAN be sent via Trading Post (only the amount above Storehouse protection is sendable)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0028",
+      "title": "Academy gathering-speed techs per resource (timing differs)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2024-04-04",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0029",
+      "title": "Civilization gathering bonuses",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-12-04",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A03-0030",
+      "title": "Storehouse-protected resources cannot be transported",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2021-03-04",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.44"
     },
     {
       "id": "A04-0001",
@@ -252,6 +392,16 @@
       "gameVersion": "desconhecida"
     },
     {
+      "id": "A05-0600",
+      "title": "VIP Special Privileges: one-time paid pack per VIP level, $0.99 (VIP 0-3) to $99.99; VIP 0-9 packs carry Minamoto sculptures (10 to 270)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
       "id": "A06-0500",
       "title": "F2P: concentrate on one complete march instead of spreading sculptures",
       "confidence": "media",
@@ -400,6 +550,106 @@
       "validUntil": "2026-04-10",
       "invalidatedBy": null,
       "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A06-0600",
+      "title": "Commander pools are season-gated: Season 3 Mightiest Governor/Wheel of Fortune include all commanders",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-05",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.91 (2025-02-10); history 2021–2023"
+    },
+    {
+      "id": "A06-0601",
+      "title": "King Arthur: free via King's Trials only after the kingdom completes Season 2",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-02-24",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.90 (2025-01-07)"
+    },
+    {
+      "id": "A06-0700",
+      "title": "Season in which each commander becomes available, per the rkg tier list (Season 0 / 2 / 3) — table",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-01",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page modified 2026-10-01, first published 2022-03-29)"
+    },
+    {
+      "id": "A06-0701",
+      "title": "Since 1.0.55: Yi Seong-Gye unlocks in the offseason before Season 1; Saladin, Genghis Khan, Edward of Woodstock and Tomyris in the offseason before Season 2",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2022-03-01",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.55 (2022-03)"
+    },
+    {
+      "id": "A06-0702",
+      "title": "Archimedes and Mary I (1.0.96): Wheel of Fortune in Season 2, Legendary Tavern in later seasons",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-13",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.96 (2025-07)"
+    },
+    {
+      "id": "A06-0703",
+      "title": "Golden Chests gained Pepin III and Casimir III (1.1.01); Achilles and Hector joined the Legendary Tavern, a Season of Conquest event since 1.0.44",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-11-08",
+      "invalidatedBy": null,
+      "gameVersion": "1.1.01 (2025-11); 1.0.44 (2021-03)"
+    },
+    {
+      "id": "A06-0704",
+      "title": "Prime Ragnar Lodbrok is a Season of Conquest commander: usable only in SoC, sold only in SoC kingdoms",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-02-06",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.87 (2024-10) – 1.0.91 (2025-02)"
+    },
+    {
+      "id": "A06-0705",
+      "title": "Pyrrhus and Pericles (1.0.71): Golden Chests and Expedition Shop (Pericles also Silver Chests); Pyrrhus Daily Special Offers from day 43",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2023-07-04",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.71 (2023-07)"
+    },
+    {
+      "id": "A06-0706",
+      "title": "How Fandom says early and Season 2 legendaries are obtained: gold chests, VIP chests, Wheel of Fortune, \"kingdoms over 140/240 days\"",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-01-03",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (page revisions 2020-09 to 2026-01)"
+    },
+    {
+      "id": "A06-0707",
+      "title": "Wheel of Fortune commander order by kingdom age (rkg, 2022): Richard day 38, Yi Seong-Gye day 94, Genghis Khan day 150 …",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2022-01-25",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida (before 1.0.55)"
     },
     {
       "id": "A09-0001",
@@ -570,6 +820,326 @@
       "validUntil": "2026-10-02",
       "invalidatedBy": null,
       "gameVersion": "desconhecida (guias 2019–2026; ver publicado_em)"
+    },
+    {
+      "id": "A11-0600",
+      "title": "Official recharge-type events: Gem Rush (21+ day kingdoms, before Season 2), Road to Greatness / Epic Glory (Season 2+ counterparts), Recharge Rewards (recharge daily)",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-05-13",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.94"
+    },
+    {
+      "id": "A11-0601",
+      "title": "Daily recharge event: buy 2,500 gems per day (packs force ~3,000-3,600); 7-day window, rewards over 5 days; ~30 gold heads total (T3/T4)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-02-15",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A11-0602",
+      "title": "Pass purchases (30-day Gem Supply, material supply, daily offers) count toward recharge-event thresholds (T4 consensus)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "unanime",
+      "validUntil": "2026-04-30",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0001",
+      "title": "Growth Fund: $15 one-time, ~81,000 gems, full value needs CH24",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "unanime",
+      "validUntil": "2026-03-21",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0002",
+      "title": "Supply Depot (30-day gem supply): ~$10, ~19,500 gems",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-18",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0005",
+      "title": "Low-spender spending discipline",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-18",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0601",
+      "title": "30-day Gem Supply: ~2,200 gems on purchase + 650/day for 30 days (~21,700 total); 19,500 counts only the daily part",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-04-30",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0602",
+      "title": "30-day Gem Supply price: $9.99 (one 2026 player) / ~$10 (guides); one-time 50%-off version ~$5 / 5 EUR",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-09-11",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0603",
+      "title": "30-day Gem Supply must be claimed daily; unclaimed days are forfeited (single seller source)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-08-18",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0605",
+      "title": "Growth Fund: the City Hall 25 milestone pays 40,000 gems (about half of the ~81,000 total) (T4)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-04-08",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0606",
+      "title": "Growth Fund bought late still pays past City Hall milestones (majority) vs. early milestones are lost (Packsify)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-05-27",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0607",
+      "title": "Growth Fund price varies: US$14.99 / 17.99 EUR / '$15' in guides; store shows '2000%' value; one player lists '4600 gems + 75h speedups + 11.8M resources' (T4)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0608",
+      "title": "Super-value bundle ladder (Call of the Ancients, King’s Coronation, etc.): $5/$10/$20/$50/$100 tiers give 1,050/2,200/4,600/12,000/25,000 gems and 525/1,000/2,000/4,000 VIP, then 6,000 (rkg 2022) or 5,000 (LootBar 2026) VIP at $100",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0609",
+      "title": "Lucerne Scrolls paid tier (Divine Inheritance): about $5 (US$5.99 / 5 EUR in posts), more ($20) to unlock everything; free tier = Ancestor’s Legacy",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0610",
+      "title": "Daily Special Offer (official): three daily offers with chosen-commander sculptures, from kingdom day 43; an extra advanced bundle after buying all three",
+      "confidence": "alta",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2025-11-13",
+      "invalidatedBy": null,
+      "gameVersion": "1.0.98"
+    },
+    {
+      "id": "A12-0611",
+      "title": "Daily Special Offer cost/contents: about $3 per day for all three (~$90/month); ~1,200 gems/day per players and LootBar (weak)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0612",
+      "title": "7-day (weekly) Material Supply: ~$5 / $4.99; gems per pack conflict (1,000 vs ~1,050 vs ~700) plus materials",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0613",
+      "title": "Writer of History pop-up: $5 when a new legendary commander is acquired; ~1,050 gems, 525 VIP and 10 sculptures of that commander",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0614",
+      "title": "'Low spender' means anything from ~$20/month (gem supply + Lucerne) to $100-200/month in the community",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0615",
+      "title": "Low-spender purchase order (community): Growth Fund > 30-day Gem Supply > Lucerne Scrolls > Writer of History / dailies",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0616",
+      "title": "Shop list prices in gems (Fandom, rev. 2023): 60-min speedup 120, 24-h 1,500, 7-day 10,000; VIP point items cost 1 gem per point",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2023-10-12",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0617",
+      "title": "Community 'gem value per dollar' table (2022): items valued at the cheapest in-game gem price (sculpture 800, 1-h speedup 25), not the game's advertised value",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "fonte_unica",
+      "validUntil": "2022-03-04",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A12-0618",
+      "title": "Value-per-dollar method for the Low planner: raw gems (and VIP) per USD is defensible; item valuation only as a labelled range",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "n/a",
+      "validUntil": "2026-03-20",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0001",
+      "title": "Accounts per kingdom via Character Management",
+      "confidence": "media",
+      "status": "organizado",
+      "consensus": "n/a",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0002",
+      "title": "Farm City Hall targets by march queues",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0003",
+      "title": "Farm Trading Post level targets",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-10-07",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0004",
+      "title": "Gold and gems: gather on main, not farm",
+      "confidence": "baixa",
+      "status": "organizado",
+      "consensus": "dividido",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0005",
+      "title": "Farm risks: raids, kill events, zeroing",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0006",
+      "title": "Farm alliance placement and kingdom etiquette",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-10-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0007",
+      "title": "Farm time cost and daily routine (qualitative only)",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0009",
+      "title": "Specialised farms by resource and civilization choice",
+      "confidence": "baixa",
+      "status": "verificado",
+      "consensus": "dividido",
+      "validUntil": "2026-01-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
+    },
+    {
+      "id": "A13-0010",
+      "title": "Purpose of farms for main growth (F2P)",
+      "confidence": "media",
+      "status": "verificado",
+      "consensus": "majoritario",
+      "validUntil": "2026-09-02",
+      "invalidatedBy": null,
+      "gameVersion": "desconhecida"
     },
     {
       "id": "A14-0001",
