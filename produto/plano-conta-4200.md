@@ -74,3 +74,8 @@ Anotar toda semana: US$ gastos, gemas recebidas, gemas gastas e em quê, nível 
 - Preços oficiais e em reais; tabela de VIP por dólar; marcos do Fundo de Crescimento (A12 `_lacunas.md`).
 - Limite de cidades por reino e por conta (seção 5).
 - Calendário exato de eventos de um reino novo: só há datas para o Gem Rush (dia 22 em diante, antes da Temporada 2) e para as Ofertas Diárias (a partir do dia 43).
+
+## Notas confirmadas pelo Victor
+
+- **Pelágio Lendário (2026-10-16):** a promoção funciona como reset: devolve tudo o que foi gasto no Pelágio épico, e o Pelágio lendário começa do zero. Logo, esculturas épicas investidas nele não se perdem.
+- **Esculturas épicas:** decisão de gastá-las no Sun Tzu (âncora; 5511 primeiro, expertise depois de nível 60 e 6 estrelas).
